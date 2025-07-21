@@ -113,7 +113,7 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 	}
 	fPath := "/" + strings.ReplaceAll(data.RemotePath.ValueString(), "://", "")
 	bPath := fmt.Sprintf("/mgmt/filestore/%s", data.AppDomain.ValueString())
-	dir := filepath.Dir(fPath)
+	dir := filepath.ToSlash(filepath.Dir(fPath))
 
 	// Create directory, if needed
 	if len(strings.Split(dir, "/")) > 2 {
@@ -127,7 +127,7 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 	body := fmt.Sprintf(`{"file": {"name": "%s", "content": "%s"}}`, filepath.Base(fPath), fileData)
 	_, err = r.client.Post(bPath+dir, body)
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to upload remote file (%s), got error: %s", bPath+fPath, err))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to upload remote file (%s), got error: %s", bPath+dir, err))
 		return
 	}
 
