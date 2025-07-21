@@ -1,0 +1,13 @@
+name: DmJOSEHeader
+model_only: true
+list_item: true
+attributes:
+  - name: HeaderName
+    type: String
+    description: 'Name'
+    example: 'HEADER'
+  - name: HeaderValue
+    type: String
+    required: true
+    example: 'VALUE'
+    description: 'Value'

@@ -1,0 +1,15 @@
+name: DmJWTValMethod
+model_only: true
+attributes:
+  - name: decrypt
+    type: Bool
+    default: false
+    description: 'Decrypt'
+  - name: verify
+    type: Bool
+    default: false
+    description: 'Verify'
+  - name: customized
+    type: Bool
+    default: false
+    description: 'Custom processing'

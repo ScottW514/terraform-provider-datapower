@@ -1,0 +1,96 @@
+name: UserGroup
+description: 'User group'
+cli_alias: 'usergroup'
+cmd_group: 'usergroup'
+rest_endpoint: '/mgmt/config/default/UserGroup'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'UserGroup_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: AccessPolicies
+    type: List
+    element_type: String
+    list_default:
+      - '*/*/*?Access=r'
+    list_example:
+      - '10.10.1.1/domainA/services/xslproxy?Access=r+w&Name=foo.*'
+    test_value: '["*/*/*?Access=r"]'
+    description: 'Access policies'
+    cli_alias: access-policy
+  - name: CommandGroup
+    type: List
+    enum:
+      - 'aaapolicy'
+      - 'acl'
+      - 'assembly'
+      - 'b2b'
+      - 'common'
+      - 'compile-options'
+      - 'config-management'
+      - 'configuration'
+      - 'crl'
+      - 'quota-enforcement'
+      - 'crypto'
+      - 'device-management'
+      - 'diagnostics'
+      - 'document-crypto-map'
+      - 'domain'
+      - 'failure-notification'
+      - 'file-management'
+      - 'firewallcred'
+      - 'flash'
+      - 'httpserv'
+      - 'input-conversion'
+      - 'interface'
+      - 'load-balancer'
+      - 'logging'
+      - 'matching'
+      - 'messages'
+      - 'monitors'
+      - 'mpgw'
+      - 'mq-qm'
+      - 'idg-mqqm'
+      - 'network'
+      - 'radius'
+      - 'rbm'
+      - 'schema-exception-map'
+      - 'service-monitor'
+      - 'snmp'
+      - 'sql'
+      - 'sslforwarder'
+      - 'stylesheetaction'
+      - 'stylesheetpolicy'
+      - 'stylesheetrule'
+      - 'system'
+      - 'tam'
+      - 'tcpproxy'
+      - 'urlmap'
+      - 'urlrefresh'
+      - 'urlrewrite'
+      - 'useragent'
+      - 'usergroup'
+      - 'validation'
+      - 'webservice'
+      - 'wsm-agent'
+      - 'xmlfirewall'
+      - 'xmlmgr'
+      - 'xpath-routing'
+      - 'xslcoproc'
+      - 'xslproxy'
+      - 'http'
+      - 'document-cache'
+      - 'parserlimit'
+      - 'rule'
+      - 'password-change'
+      - 'reserved50'
+    element_type: String
+    description: 'Command group'
+    cli_alias: add

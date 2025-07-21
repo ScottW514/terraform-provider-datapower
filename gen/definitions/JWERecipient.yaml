@@ -1,0 +1,53 @@
+name: JWERecipient
+description: 'JWE Recipient'
+cli_alias: 'jwe-recipient'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/JWERecipient'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'JWERecipient_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Algorithm
+    type: String
+    enum:
+      - 'RSA1_5'
+      - 'RSA-OAEP'
+      - 'RSA-OAEP-256'
+      - 'A128KW'
+      - 'A192KW'
+      - 'A256KW'
+      - 'dir'
+    required: true
+    default: 'RSA1_5'
+    description: 'Algorithm'
+    cli_alias: alg
+  - name: SSKey
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Shared Secret Key'
+    cli_alias: sskey
+  - name: Certificate
+    type: String
+    reference_to: CryptoCertificate
+    test_value: 'datapower_cryptocertificate.test.id'
+    description: 'Certificate'
+    cli_alias: cert
+  - name: UnprotectedHeader
+    type: List
+    element_type: DmJOSEHeader
+    description: 'Unprotected Header'
+    cli_alias: unprotected-header

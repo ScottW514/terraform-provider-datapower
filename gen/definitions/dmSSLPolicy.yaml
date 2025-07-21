@@ -1,0 +1,27 @@
+name: DmSSLPolicy
+model_only: true
+list_item: true
+attributes:
+  - name: RegExp
+    type: String
+    required: true
+    example: '*'
+    description: 'URL matching expression'
+  # DEPRACATED
+  # - name: SSLProxyProfile
+  #   type: String
+  #   reference_to: SSLProxyProfile
+  #   description: 'TLS proxy profile (deprecated)'
+  #   deprecated: true
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    required: true
+    default: 'proxy'
+    description: 'TLS client type'
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'

@@ -1,0 +1,14 @@
+name: DmUploadChunkedPolicy
+model_only: true
+list_item: true
+attributes:
+  - name: RegExp
+    type: String
+    required: true
+    example: '*'
+    description: 'URL matching expression'
+  - name: UploadChunked
+    type: Bool
+    default: false
+    required: true
+    description: 'Chunk body of HTTP/1.1 requests'

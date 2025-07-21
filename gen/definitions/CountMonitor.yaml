@@ -1,0 +1,66 @@
+name: CountMonitor
+description: 'Message Count Monitor'
+cli_alias: 'monitor-count'
+cmd_group: 'monitors'
+rest_endpoint: '/mgmt/config/{domain}/CountMonitor'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CookieAttributePolicy_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Measure
+    type: String
+    enum:
+      - 'requests'
+      - 'responses'
+      - 'xpath'
+      - 'errors'
+    required: true
+    default: 'requests'
+    description: 'Measure'
+    cli_alias: measure
+  - name: Source
+    type: String
+    enum:
+      - 'all'
+      - 'each-ip'
+      - 'ip-from-header'
+    required: true
+    default: 'all'
+    description: 'Source'
+    cli_alias: source
+  - name: Header
+    type: String
+    default: 'X-Client-IP'
+    description: 'Header'
+    cli_alias: header
+  - name: Filter
+    type: List
+    element_type: DmCountMonitorFilter
+    description: 'Thresholds/Filters'
+    cli_alias: filter
+  - name: MaxSources
+    type: Int64
+    required: true
+    default: 10000
+    description: 'Maximum Distinct Sources'
+    cli_alias: distinct-sources
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: MessageType
+    type: String
+    reference_to: MessageType
+    required: true
+    description: 'Message Type'
+    cli_alias: message-type

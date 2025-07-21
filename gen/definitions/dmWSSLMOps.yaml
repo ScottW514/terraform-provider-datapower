@@ -1,0 +1,41 @@
+name: DmWSSLMOps
+model_only: true
+list_item: true
+attributes:
+  - name: Operation
+    type: String
+    enum:
+      - 'all'
+    required: true
+    default: 'all'
+    description: 'Operation name'
+    cli_alias: operation
+  - name: Target
+    type: String
+    enum:
+      - 'front'
+      - 'rate'
+    required: true
+    example: 'front'
+    description: 'Target to monitor'
+    cli_alias: target
+  - name: Severity
+    type: String
+    enum:
+      - 'low'
+      - 'high'
+    required: true
+    example: 'low'
+    description: 'Threshold Level'
+    cli_alias: severity
+  - name: Threshold
+    type: Int64
+    description: 'Threshold value'
+    cli_alias: threshold
+  - name: Action
+    type: String
+    enum:
+      - 'log'
+      - 'throttle'
+    description: 'Threshold action'
+    cli_alias: action

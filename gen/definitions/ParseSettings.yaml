@@ -1,0 +1,93 @@
+name: ParseSettings
+description: 'Parse settings'
+cli_alias: 'parse-settings'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/ParseSettings'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'ParseSettings_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: DocumentType
+    type: String
+    enum:
+      - 'detect'
+      - 'xml'
+      - 'json'
+      - 'binary'
+      - 'graphql'
+    default: 'detect'
+    description: 'Document type'
+    cli_alias: document-type
+  - name: DocumentSize
+    type: Int64
+    maximum: 5368709121
+    default: 4194304
+    description: 'Max document size'
+    cli_alias: document-size
+  - name: NestingDepth
+    type: Int64
+    maximum: 4096
+    default: 512
+    description: 'Max nesting depth'
+    cli_alias: nesting-depth
+  - name: Width
+    type: Int64
+    maximum: 65535
+    default: 4096
+    description: 'Max width'
+    cli_alias: width
+  - name: NameLength
+    type: Int64
+    maximum: 8192
+    default: 256
+    description: 'Max name length'
+    cli_alias: name-length
+  - name: ValueLength
+    type: Int64
+    maximum: 5368709121
+    default: 8192
+    description: 'Max value length'
+    cli_alias: value-length
+  - name: UniquePrefixes
+    type: Int64
+    maximum: 262143
+    default: 1024
+    description: 'Max unique prefixes'
+    cli_alias: unique-prefixes
+  - name: UniqueNamespaces
+    type: Int64
+    maximum: 65535
+    default: 1024
+    description: 'Max unique namespaces'
+    cli_alias: unique-namespaces
+  - name: UniqueNames
+    type: Int64
+    maximum: 1048575
+    default: 1024
+    description: 'Max unique names'
+    cli_alias: unique-names
+  - name: NumberLength
+    type: Int64
+    maximum: 256
+    default: 128
+    description: 'Max number length'
+    cli_alias: number-length
+  - name: StrictUTF8Encoding
+    type: Bool
+    default: false
+    description: 'Strict UTF-8 encoding'
+    cli_alias: strict-utf8-encoding

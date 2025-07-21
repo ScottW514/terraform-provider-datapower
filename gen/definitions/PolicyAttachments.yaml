@@ -1,0 +1,57 @@
+name: PolicyAttachments
+description: 'Policy Attachment'
+cli_alias: 'policy-attachments'
+cmd_group: 'webservice'
+rest_endpoint: '/mgmt/config/{domain}/PolicyAttachments'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'PolicyAttachments_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: EnforcementMode
+    type: String
+    enum:
+      - 'filter'
+      - 'enforce'
+    required: true
+    default: 'enforce'
+    description: 'Policy Enforcement Mode'
+    cli_alias: enforcement-mode
+  - name: PolicyReferences
+    type: Bool
+    default: false
+    required: true
+    description: 'Policy References'
+    cli_alias: policy-references
+  - name: IgnoredPolicyAttachmentPoints
+    type: List
+    element_type: DmPolicyAttachmentPoint
+    description: 'Ignore Embedded Policy'
+    cli_alias: ignore-attachment-point
+  - name: ExternalPolicy
+    type: List
+    element_type: DmExternalAttachedPolicy
+    description: 'External Policy'
+    cli_alias: external-policy
+  - name: SLAEnforcementMode
+    type: String
+    enum:
+      - 'allow-if-no-sla'
+      - 'reject-if-no-sla'
+    required: true
+    default: 'allow-if-no-sla'
+    description: 'SLA Enforcement Mode'
+    cli_alias: sla-enforcement-mode

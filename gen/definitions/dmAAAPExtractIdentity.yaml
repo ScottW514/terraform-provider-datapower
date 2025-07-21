@@ -1,0 +1,112 @@
+name: DmAAAPExtractIdentity
+model_only: true
+attributes:
+  - name: EIBitmap
+    dm_type: DmAAAPEIBitmap
+    # required: true
+    description: 'Methods'
+    cli_alias: method
+  - name: EICustomURL
+    type: String
+    description: 'Custom processing URL'
+    cli_alias: custom-url
+  - name: EIXPath
+    type: String
+    description: 'XPath expression'
+    cli_alias: xpath
+  - name: EISignerDNValcred
+    type: String
+    reference_to: CryptoValCred
+    description: 'Validation credentials for signing certificate'
+    cli_alias: valcred
+  - name: EICookieName
+    type: String
+    description: 'Cookie name'
+    cli_alias: cookie-name
+  - name: EIBasicAuthRealm
+    type: String
+    default: 'login'
+    description: 'HTTP Basic Authentication Realm'
+    cli_alias: basic-auth-realm
+  - name: EIUseWSSec
+    type: Bool
+    default: false
+    description: 'Use WS-Security token first'
+    cli_alias: use-wssec-token
+  - name: EIMetadata
+    type: String
+    reference_to: ProcessingMetadata
+    description: 'Processing metadata items'
+    cli_alias: metadata
+  - name: EIAllowRemoteTokenReference
+    type: Bool
+    default: false
+    description: 'Retrieve remote WS-Security token'
+    cli_alias: remote-token-allowed
+  - name: EIRemoteTokenProcessService
+    type: String
+    description: 'URL to process remote token'
+    cli_alias: remote-token-url
+  - name: EIPasswordRetrievalMechanism
+    type: String
+    enum:
+      - 'xmlfile'
+      - 'custom'
+    default: 'xmlfile'
+    description: 'Password-retrieval method'
+    cli_alias: password-retrieval-method
+  - name: EIPasswordRetrievalCustomURL
+    type: String
+    sensitive: true
+    description: 'Password-retrieval processing URL'
+    cli_alias: password-retrieval-custom-url
+  - name: EIPasswordRetrievalAAAInfoURL
+    type: String
+    sensitive: true
+    description: 'AAA information file URL'
+    cli_alias: password-retrieval-xmlfile-url
+  # DEPRACATED
+  # - name: EISSLProxyProfile
+  #   type: String
+  #   reference_to: SSLProxyProfile
+  #   description: 'TLS proxy profile (deprecated)'
+  #   deprecated: true
+  #   cli_alias: ssl
+  - name: EIFormsLoginPolicy
+    type: String
+    reference_to: FormsLoginPolicy
+    description: 'HTML forms-based login policy'
+    cli_alias: forms-login-policy
+  - name: EIOAuthClientGroup
+    type: String
+    reference_to: OAuthSupportedClientGroup
+    description: 'Registered OAuth clients'
+    cli_alias: oauth-client-group
+  - name: EISSLClientConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    default: 'proxy'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: EISSLClientProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: EIJWTValidator
+    type: String
+    reference_to: AAAJWTValidator
+    description: 'JWT validator'
+    cli_alias: validate-jwt
+  - name: EISocialLoginPolicy
+    type: String
+    reference_to: SocialLoginPolicy
+    description: 'Social login policy'
+    cli_alias: social-login-policy
+  - name: EISAMLResponseValCred
+    type: String
+    reference_to: CryptoValCred
+    description: 'SAML response validation credentials'
+    cli_alias: saml-response-valcred

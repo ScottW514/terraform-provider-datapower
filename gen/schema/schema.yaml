@@ -1,0 +1,39 @@
+---
+name: str() # Name of the type/resource/data source
+model_only: bool(required=False) # Generate only model
+list_item: bool(required=False) # This model is a list item
+rest_endpoint: str() # REST endpoint path
+update_only: bool(required=False) # Set to true if this endpoint is update only
+put_create: bool(required=False) # Set to true if the PUT request is used for create
+description: str(required=False) # Define description
+deprecated: bool(required=False) # Set to true if deprecated
+skip_minimum_test: bool(required=False) # Do not perform a "minimum" (only mandatory attributes) test
+attributes: list(include('attribute'), required=False) # List of attributes
+test_prerequisites: str(required=False) # HCL code that is included in the acceptance tests to define prerequisites
+update_computed: bool(required=False) # Set to true if model has attributes that need to be updated after a write
+---
+attributes:
+  name: str(required=False) # Name of the attribute in the model
+  path: str(required=False) # JSON path to the attribute. Defaults to name
+  tf_name: str(required=False) # Terraform name for the attribute
+  type: enum('String', 'Int64', 'Float64', 'Bool', 'List', 'Set', 'Map', 'Object', required=False) # Type of the attribute
+  dm_type: str(required=False) # Datapower Type
+  element_type: enum('String', 'Int64', required=False) # only relevant if type is either 'List' or 'Set'
+  required: bool(required=False) # Set to true if the attribute is mandatory
+  computed: bool(required=False) # Set to true if the attribute is computed
+  write_only: bool(required=False) # Set to true if the attribute is write-only, meaning we cannot read the value
+  description: str(required=False) # Attribute description
+  deprecated: bool(required=False) # Set to true if deprecated
+  sensitive: bool(required=False) # Set to true if sensitive value
+  cli_alias: str(require=False) # CLI Alias for the endpoint
+  test_value: str(required=False) # Value used for acceptance test. Overrides example, list_example, default and list_default.
+  example: any(str(), int(), bool(), num(), required=False) # Example value for documentation, also used for acceptance test if test_value is not set
+  default: any(str(), int(), bool(), required=False) # Default value for the attribute, also used for acceptance test in test_value and example are not set
+  enum: list(str(), required=False) # List of enum values, only relevant if type is "String"
+  minimum: int(required=False) # Minimum value of an integer, only relevant if type is "Int64"
+  maximum: int(required=False) # Maximum value of an integer, only relevant if type is "Int64"
+  string_patterns: list(str(), required=False) # List of regular expressions that the string must match, only relevant if type is "String"
+  string_min_length: int(required=False) # Minimum length of a string, only relevant if type is "String"
+  string_max_length: int(required=False) # Maximum length of a string, only relevant if type is "String"
+  attributes: list(include('attribute'), required=False) # List of attributes, only relevant if type is "List" or "Set"
+  file_upload: bool(required=False) # Set to true if this is a local file that should be uploaded

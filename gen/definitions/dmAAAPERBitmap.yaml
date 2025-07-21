@@ -1,0 +1,31 @@
+name: DmAAAPERBitmap
+model_only: true
+attributes:
+  - name: target-url
+    type: Bool
+    default: false
+    description: 'URL sent to back end'
+  - name: original-url
+    type: Bool
+    default: false
+    description: 'URL sent by client'
+  - name: request-uri
+    type: Bool
+    default: false
+    description: 'URI of top level element in message'
+  - name: request-opname
+    type: Bool
+    default: false
+    description: 'Local name of request element'
+  - name: http-method
+    type: Bool
+    default: false
+    description: 'HTTP operation (GET or POST)'
+  - name: XPath
+    type: Bool
+    default: false
+    description: 'XPath expression'
+  - name: metadata
+    type: Bool
+    default: false
+    description: 'Processing metadata'

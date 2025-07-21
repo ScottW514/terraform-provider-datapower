@@ -1,0 +1,122 @@
+name: SSHClientProfile
+description: 'SSH client profile'
+cli_alias: 'sshclientprofile'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/SSHClientProfile'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'SSHClientProfile_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: UserName
+    type: String
+    required: true
+    example: "someuser"
+    description: 'User'
+    cli_alias: user-name
+  - name: ProfileUsage
+    type: String
+    enum:
+      - 'sftp'
+      - 'scc'
+    required: true
+    default: 'sftp'
+    description: 'Profile usage'
+    cli_alias: profile-usage
+  - name: SSHUserAuthentication
+    dm_type: DmSSHUserAuthenticationMethods
+    default: 'publickey+password'
+    description: 'User authentication'
+    cli_alias: user-auth
+  - name: UserPrivateKey
+    type: String
+    reference_to: CryptoKey
+    description: 'User private key'
+    cli_alias: user-private-key
+  - name: Password
+    type: String
+    sensitive: true
+    description: 'Password (deprecated)'
+    deprecated: true
+    cli_alias: user-password
+  - name: PasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    sensitive: true
+    description: 'Password Alias'
+    cli_alias: user-password-alias
+  - name: PersistentConnections
+    type: Bool
+    default: true
+    description: 'Persistent connections'
+    cli_alias: persistent-connections
+  - name: PersistentConnectionTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    default: 120
+    description: 'Persistent connection idle timeout'
+    cli_alias: persistent-connection-timeout
+  - name: StrictHostKeyChecking
+    type: Bool
+    default: false
+    description: 'Strict host key checking'
+    cli_alias: strict-host-key-checking
+  - name: Ciphers
+    type: List
+    enum:
+      - 'CHACHA20-POLY1305_AT_OPENSSH.COM'
+      - 'AES128-CTR'
+      - 'AES192-CTR'
+      - 'AES256-CTR'
+      - 'AES128-GCM_AT_OPENSSH.COM'
+      - 'AES256-GCM_AT_OPENSSH.COM'
+    element_type: String
+    list_example:
+      - 'CHACHA20-POLY1305_AT_OPENSSH.COM'
+    description: 'Ciphers'
+    cli_alias: ciphers
+  - name: KEXAlg
+    type: List
+    enum:
+      - 'DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256'
+      - 'ECDH-SHA2-NISTP256'
+      - 'ECDH-SHA2-NISTP384'
+      - 'ECDH-SHA2-NISTP521'
+      - 'CURVE25519-SHA256_AT_LIBSSH.ORG'
+    element_type: String
+    list_example:
+      - 'DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256'
+    description: 'Key exchange algorithms'
+    cli_alias: kex-alg
+  - name: MACAlg
+    type: List
+    enum:
+      - 'HMAC-SHA1'
+      - 'HMAC-SHA2-256'
+      - 'HMAC-SHA2-512'
+      - 'UMAC-64_AT_OPENSSH.COM'
+      - 'UMAC-128_AT_OPENSSH.COM'
+      - 'HMAC-SHA1-ETM_AT_OPENSSH.COM'
+      - 'HMAC-SHA2-256-ETM_AT_OPENSSH.COM'
+      - 'HMAC-SHA2-512-ETM_AT_OPENSSH.COM'
+      - 'UMAC-64-ETM_AT_OPENSSH.COM'
+      - 'UMAC-128-ETM_AT_OPENSSH.COM'
+    element_type: String
+    list_example:
+      - 'HMAC-SHA1'
+    description: 'Message authentication codes'
+    cli_alias: mac-alg

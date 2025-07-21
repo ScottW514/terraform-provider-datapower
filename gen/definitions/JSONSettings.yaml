@@ -1,0 +1,58 @@
+name: JSONSettings
+description: 'JSON settings'
+cli_alias: 'json-settings'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/JSONSettings'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'JSONSettings_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: JSONMaxNestingDepth
+    type: Int64
+    minimum: 64
+    maximum: 256
+    default: 64
+    description: 'Max nesting depth'
+    cli_alias: max-nesting-depth
+  - name: JSONMaxLabelLength
+    type: Int64
+    minimum: 256
+    maximum: 8192
+    default: 256
+    description: 'Max label length'
+    cli_alias: max-label-string-length
+  - name: JSONMaxValueLength
+    type: Int64
+    minimum: 8192
+    maximum: 5368709121
+    default: 8192
+    description: 'Max value length for strings'
+    cli_alias: max-value-string-length
+  - name: JSONMaxNumberLength
+    type: Int64
+    minimum: 128
+    maximum: 256
+    default: 128
+    description: 'Max value length for numbers'
+    cli_alias: max-number-length
+  - name: JSONDocumentSize
+    type: Int64
+    minimum: 4194304
+    maximum: 5368709121
+    default: 4194304
+    description: 'Max document size'
+    cli_alias: max-document-size

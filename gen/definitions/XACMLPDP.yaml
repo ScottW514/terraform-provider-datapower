@@ -1,0 +1,56 @@
+name: XACMLPDP
+description: 'XACML Policy Decision Point'
+cli_alias: 'xacml-pdp'
+cmd_group: 'aaapolicy'
+rest_endpoint: '/mgmt/config/{domain}/XACMLPDP'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'XACMLPDP_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: EqualPolicies
+    type: Bool
+    default: false
+    description: 'Evaluate Individual Policies Equally'
+    cli_alias: equal-policies
+  - name: GeneralPolicy
+    type: String
+    description: 'General Policy File'
+    cli_alias: general-policy
+  - name: CombiningAlg
+    type: String
+    enum:
+      - 'first-applicable'
+      - 'deny-overrides'
+      - 'permit-overrides'
+      - 'only-one-applicable'
+    description: 'Dependent Policies Combining'
+    cli_alias: combining-alg
+  - name: DependentPolicy
+    type: List
+    element_type: String
+    description: 'Dependent Policy Files'
+    cli_alias: dependent-policy
+  - name: Directory
+    type: List
+    element_type: String
+    description: 'Other Policy Files from Directory'
+    cli_alias: directory
+  - name: CacheTTL
+    type: Int64
+    maximum: 2678400
+    description: 'XACML Policies Cache Lifetime'
+    cli_alias: cache-ttl

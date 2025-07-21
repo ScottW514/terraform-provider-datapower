@@ -1,0 +1,12 @@
+name: DmScheduledRule
+model_only: true
+list_item: true
+attributes:
+  - name: Rule
+    type: String
+    reference_to: StylePolicyRule
+    required: true
+    description: 'Rule'
+  - name: Interval
+    type: Int64
+    description: 'Interval'

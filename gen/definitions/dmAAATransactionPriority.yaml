@@ -1,0 +1,29 @@
+name: DmAAATransactionPriority
+model_only: true
+list_item: true
+attributes:
+  - name: Credential
+    type: String
+    required: true
+    example: 'cred'
+    description: 'Credential name'
+  - name: Priority
+    type: String
+    enum:
+      - 'unknown'
+      - 'high-min'
+      - 'high'
+      - 'high-max'
+      - 'normal-min'
+      - 'normal'
+      - 'normal-max'
+      - 'low-min'
+      - 'low'
+      - 'low-max'
+    required: true
+    example: 'unknown'
+    description: 'Transaction priority'
+  - name: Authorization
+    type: Bool
+    default: false
+    description: 'Require authorization'

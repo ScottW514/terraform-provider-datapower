@@ -1,0 +1,111 @@
+name: HTTPUserAgent
+description: 'User agent'
+cli_alias: 'user-agent'
+cmd_group: 'useragent'
+rest_endpoint: '/mgmt/config/{domain}/HTTPUserAgent'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'HTTPUserAgent_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Identifier
+    type: String
+    description: 'HTTP request-header'
+    cli_alias: identifier
+  - name: MaxRedirects
+    type: Int64
+    maximum: 128
+    default: 8
+    description: 'Max redirects'
+    cli_alias: max-redirects
+  - name: Timeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    default: 300
+    description: 'Timeout'
+    cli_alias: timeout
+  - name: ProxyPolicies
+    type: List
+    element_type: DmProxyPolicy
+    description: 'Proxy policy'
+    cli_alias: proxy
+  - name: SSLPolicies
+    type: List
+    element_type: DmSSLPolicy
+    description: 'TLS profile policy'
+    cli_alias: ssl
+  - name: BasicAuthPolicies
+    type: List
+    element_type: DmBasicAuthPolicy
+    description: 'Basic authentication policy'
+    cli_alias: basicauth
+  - name: SoapActionPolicies
+    type: List
+    element_type: DmSoapActionPolicy
+    description: 'SOAPAction policy'
+    cli_alias: soapaction
+  - name: PubkeyAuthPolicies
+    type: List
+    element_type: DmPubkeyAuthPolicy
+    description: 'Public key authentication policy'
+    cli_alias: pubkeyauth
+  - name: AllowCompressionPolicies
+    type: List
+    element_type: DmAllowCompressionPolicy
+    description: 'Allow compression policy'
+    cli_alias: compression-policy
+  - name: HeaderRetentionPolicies
+    type: List
+    element_type: DmHeaderRetentionPolicy
+    description: 'Header retention policy'
+    cli_alias: headerretention-policy
+  - name: Restrict10Policies
+    type: List
+    element_type: DmRestrict10Policy
+    description: 'Restrict to HTTP/1.0 policy (deprecated)'
+    deprecated: true
+    cli_alias: restrict-http-policy
+  - name: HTTPVersionPolicies
+    type: List
+    element_type: DmHTTPVersionPolicy
+    description: 'HTTP version policy'
+    cli_alias: http-version-policy
+  - name: AddHeaderPolicies
+    type: List
+    element_type: DmAddHeaderPolicy
+    description: 'Header injection policy'
+    cli_alias: add-header-policy
+  - name: UploadChunkedPolicies
+    type: List
+    element_type: DmUploadChunkedPolicy
+    description: 'Chunked upload policy'
+    cli_alias: chunked-uploads-policy
+  - name: FTPPolicies
+    type: List
+    element_type: DmFTPPolicy
+    description: 'FTP client policy'
+    cli_alias: ftp-policy
+  - name: SMTPPolicies
+    type: List
+    element_type: DmSMTPPolicy
+    description: 'SMTP client policy'
+    cli_alias: smtp-policy
+  - name: SFTPPolicies
+    type: List
+    element_type: DmSFTPPolicy
+    description: 'SFTP client policy'
+    cli_alias: sftp-policy

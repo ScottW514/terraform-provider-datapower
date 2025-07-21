@@ -1,0 +1,45 @@
+name: CryptoKey
+description: 'Key'
+cli_alias: 'key'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/CryptoKey'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CryptoKey_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Filename
+    type: String
+    required: true
+    description: 'File'
+    cli_alias: file-name
+    example: 'cert:///acc-test-server.key'
+  # DEPRECATED
+  # - name: Password
+  #   type: String
+  #   sensitive: true
+  #   description: 'Password (deprecated)'
+  #   deprecated: true
+  #   cli_alias: password
+  # DEPRECATED
+  # - name: PasswordAlias
+  #   type: String
+  #   type: Bool
+  #   default: false
+  #   description: 'Password alias toggle (deprecated)'
+  #   deprecated: true
+  - name: Alias
+    type: String
+    reference_to: PasswordAlias
+    test_value: 'datapower_passwordalias.test.id'
+    description: 'Password alias'
+    cli_alias: password-alias

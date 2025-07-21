@@ -1,0 +1,29 @@
+name: MPGWErrorHandlingPolicy
+description: 'Multi-Protocol Gateway Error Policy'
+cli_alias: 'mpgw-error-handling'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/MPGWErrorHandlingPolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'MPGWErrorHandlingPolicy_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: PolicyMaps
+    type: List
+    element_type: DmWebGWErrorPolicyMap
+    required: true
+    description: 'Policy Maps'
+    cli_alias: match

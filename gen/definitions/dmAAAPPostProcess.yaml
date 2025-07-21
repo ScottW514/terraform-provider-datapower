@@ -1,0 +1,534 @@
+name: DmAAAPPostProcess
+model_only: true
+attributes:
+  - name: PPEnabled
+    type: Bool
+    default: false
+    description: 'Run postprocessing custom processing'
+    cli_alias: custom-processing
+  - name: PPCustomURL
+    type: String
+    description: 'Custom processing'
+    cli_alias: custom-url
+  - name: PPSAMLAuthAssertion
+    type: Bool
+    default: false
+    description: 'Generate SAML assertion with SAML authentication statement'
+    cli_alias: saml-generate-assertion
+  - name: PPSAMLServerName
+    type: String
+    default: 'XS'
+    description: 'SAML Issuer identity'
+    cli_alias: saml-server-name
+  - name: PPSAMLNameQualifier
+    type: String
+    description: 'SAML name qualifier'
+    cli_alias: saml-name-qualifier
+  - name: PPKerberosTicket
+    type: Bool
+    default: false
+    description: 'Include a WS-Security Kerberos AP-REQ token'
+    cli_alias: kerberos-include-token
+  - name: PPKerberosClient
+    type: String
+    description: 'Kerberos client principal'
+    cli_alias: kerberos-client-principal
+  - name: PPKerberosClientPassword
+    type: String
+    sensitive: true
+  - name: PPKerberosServer
+    type: String
+    description: 'Kerberos server principal'
+    cli_alias: kerberos-server
+  - name: PPWSTrust
+    type: Bool
+    default: false
+    description: 'Process WS-Trust SCT STS request'
+    cli_alias: ws-trust-generate-resp
+  - name: PPTimestamp
+    type: Bool
+    default: true
+    description: 'Output WS-Trust token time stamp'
+    cli_alias: ws-trust-add-timestamp
+  - name: PPTimestampExpiry
+    type: Int64
+    maximum: 31622400
+    default: 0
+    description: 'Security context validity'
+    cli_alias: ws-trust-timestamp-expiry
+  - name: PPAllowRenewal
+    type: Bool
+    default: false
+    description: 'Allow WS-Trust token renewal'
+    cli_alias: ws-trust-allow-renewal
+  - name: PPSAMLVersion
+    type: String
+    enum:
+      - '2'
+      - '1.1'
+      - '1'
+    default: '2'
+    description: 'SAML version'
+    cli_alias: saml-version
+  - name: PPSAMLSendSLO
+    type: Bool
+    default: false
+    description: 'Send SAML Single Logout request (SAML 2.0 only)'
+    cli_alias: saml-send-slo
+  - name: PPSAMLSLOEndpoint
+    type: String
+    description: 'SAML SLO service URL'
+    cli_alias: saml-slo-endpoint
+  # DEPRACATED
+  # - name: PPSSLProxyProfile
+  #   type: String
+  #   reference_to: SSLProxyProfile
+  #   description: 'TLS proxy profile (deprecated)'
+  #   deprecated: true
+  #   cli_alias: ssl
+  - name: PPWSUsernameToken
+    type: Bool
+    default: false
+    description: 'Add WS-Security UsernameToken'
+    cli_alias: wssec-add-user-name-token
+  - name: PPWSUsernameTokenPasswordType
+    type: String
+    enum:
+      - 'Text'
+      - 'Digest'
+    default: 'Digest'
+    sensitive: true
+    description: 'WS-Security UsernameToken password type'
+    cli_alias: wssec-user-name-token-type
+  - name: PPSAMLValidity
+    type: Int64
+    default: 0
+    description: 'Assertion validity'
+    cli_alias: saml-validity
+  - name: PPSAMLSkew
+    type: Int64
+    default: 0
+    description: 'Skew time'
+    cli_alias: saml-skew
+  - name: PPWSUsernameTokenIncludePwd
+    type: Bool
+    default: true
+    description: 'Include password in UsernameToken'
+    cli_alias: wssec-user-name-token-contains-pwd
+  - name: PPLTPA
+    type: Bool
+    default: false
+    description: 'Generate LTPA token'
+    cli_alias: lpta-generate-token
+  - name: PPLTPAVersion
+    type: String
+    enum:
+      - 'LTPA'
+      - 'LTPA1FIPS'
+      - 'LTPA2'
+      - 'LTPA2WAS7'
+      - 'LTPADomino'
+    default: 'LTPA2'
+    description: 'LTPA token version'
+    cli_alias: lpta-version
+  - name: PPLTPAExpiry
+    type: Int64
+    minimum: 1
+    maximum: 628992000
+    default: 600
+    description: 'LTPA token expiry'
+    cli_alias: lpta-expiry
+  - name: PPLTPAKeyFile
+    type: String
+    description: 'LTPA key file'
+    cli_alias: lpta-key-file
+  - name: PPLTPAKeyFilePassword
+    type: String
+    sensitive: true
+    description: 'LTPA key file password'
+    cli_alias: lpta-key-file-password
+  - name: PPLTPAStashFile
+    type: String
+    description: 'LTPA stash file'
+    cli_alias: lpta-stash-file
+  - name: PPKerberosSPNEGOToken
+    type: Bool
+    default: false
+    description: 'Generate Kerberos SPNEGO token'
+    cli_alias: kerberos-generate-spnego
+  - name: PPKerberosBstValueType
+    type: String
+    enum:
+      - 'http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ'
+      - 'http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ'
+      - 'http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ1510'
+      - 'http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ1510'
+      - 'http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ4120'
+      - 'http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ4120'
+      - 'http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#Kerberosv5_AP_REQ'
+      - 'http://docs.oasis-open.org/wss/2005/xx/oasis-2005xx-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ'
+      - 'http://www.docs.oasis-open.org/wss/2004/07/oasis-000000-wss-kerberos-token-profile-1.0#Kerberosv5_AP_REQ'
+    default: 'http://docs.oasis-open.org/wss/oasis-wss-kerberos-token-profile-1.1#GSS_Kerberosv5_AP_REQ'
+    description: 'ValueType for generated Kerberos BinarySecurityToken'
+    cli_alias: kerberos-value-type
+  - name: PPSAMLUseWSSec
+    type: Bool
+    default: false
+    description: 'Wrap SAML assertion in WS-Security Security header'
+    cli_alias: saml-in-wssec
+  - name: PPKerberosClientKeytab
+    type: String
+    reference_to: CryptoKerberosKeytab
+    description: 'Kerberos client keytab'
+    cli_alias: kerberos-client-keytab
+  - name: PPUseWSSec
+    type: Bool
+    default: false
+    description: 'Wrap token in WS-Security Security header'
+    cli_alias: wssec-header-wrap-token
+  - name: PPActorRoleID
+    type: String
+    description: 'Actor or role identifier'
+    cli_alias: wssec-actor-role-id
+  - name: PPTFIMTokenMapping
+    type: Bool
+    default: false
+    description: 'Request Federated Identity Manager token mapping (deprecated)'
+    deprecated: true
+    cli_alias: tfim-token-mapping
+  - name: PPTFIMEndpoint
+    type: String
+    reference_to: TFIMEndpoint
+    description: 'Federated Identity Manager endpoint'
+    cli_alias: tfim-endpoint
+  - name: PPWSDerivedKeyUsernameToken
+    type: Bool
+    default: false
+    description: 'Use Derived-Key variant of WS-Security UsernameToken'
+    cli_alias: wssec-use-derived-key
+  - name: PPWSDerivedKeyUsernameTokenIterations
+    type: Int64
+    minimum: 2
+    maximum: 65535
+    default: 1000
+    description: 'Hashing iteration count'
+    cli_alias: wssec-derived-key-hash-iter
+  - name: PPWSUsernameTokenAllowReplacement
+    type: Bool
+    default: false
+    description: 'Replace existing UsernameToken'
+    cli_alias: wssec-replace-existing
+  - name: PPTFIMReplaceMethod
+    type: String
+    enum:
+      - 'all'
+      - 'replace'
+      - 'preserve'
+    default: 'all'
+    description: 'Replacement method (deprecated)'
+    deprecated: true
+    cli_alias: tfim-replace-method
+  - name: PPTFIMRetrieveMode
+    type: String
+    enum:
+      - 'CallTFIM'
+      - 'FromMC'
+    default: 'CallTFIM'
+    description: 'Retrieval method (deprecated)'
+    deprecated: true
+    cli_alias: tfim-retrieval-method
+  - name: PPHMACSigningAlg
+    type: String
+    enum:
+      - 'hmac-sha1'
+      - 'hmac-sha224'
+      - 'hmac-sha256'
+      - 'hmac-sha384'
+      - 'hmac-sha512'
+      - 'hmac-ripemd160'
+      - 'hmac-md5'
+    default: 'hmac-sha1'
+    description: 'HMAC signing algorithm'
+    cli_alias: hmac-signing-algorithm
+  - name: PPSigningHashAlg
+    type: String
+    enum:
+      - 'sha1'
+      - 'sha256'
+      - 'sha512'
+      - 'ripemd160'
+      - 'sha224'
+      - 'sha384'
+      - 'md5'
+    default: 'sha1'
+    description: 'Signing message digest algorithm'
+    cli_alias: message-digest-algorithm
+  - name: PPWSTrustHeader
+    type: Bool
+    default: false
+    description: 'Return the WS-Trust token as SOAP header'
+    cli_alias: ws-trust-in-header
+  - name: PPWSSCKeySource
+    type: String
+    enum:
+      - 'client-entropy'
+      - 'in-kerberos'
+      - 'in-encryptedkey'
+      - 'static'
+      - 'random'
+    default: 'random'
+    description: 'Source of shared secret to initialize SecurityContext'
+    cli_alias: ws-trust-key-source
+  - name: PPSharedSecretKey
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Shared secret key'
+    cli_alias: ws-trust-shared-key
+  - name: PPWSTrustRenewalWait
+    type: Int64
+    maximum: 2678400
+    default: 0
+    description: 'Wait time for renewal'
+    cli_alias: ws-trust-renewal-wait
+  - name: PPWSTrustNewInstance
+    type: Bool
+    default: false
+    description: 'Issue new Instance for WS-Trust renewal'
+    cli_alias: ws-trust-new-instance
+  - name: PPWSTrustNewKey
+    type: Bool
+    default: false
+    description: 'Update context key for WS-Trust renewal'
+    cli_alias: ws-trust-new-key
+  - name: PPWSTrustNeverExpire
+    type: Bool
+    default: false
+    description: 'WS-Trust SecurityContext never expires'
+    cli_alias: ws-trust-never-expire
+  - name: PPICRXToken
+    type: Bool
+    default: false
+    description: 'Generate ICRX token for z/OS identity propagation'
+    cli_alias: generate-icrx
+  - name: PPICRXUserRealm
+    type: String
+    description: 'ICRX realm'
+    cli_alias: icrx-user-realm
+  - name: PPSAMLIdentityProvider
+    type: Bool
+    default: false
+    description: 'Generate SAML assertion or response'
+    cli_alias: generate-saml-assertion
+  - name: PPSAMLProtocol
+    type: String
+    enum:
+      - 'assertion'
+      - 'response'
+    default: 'assertion'
+    description: 'SAML protocol or profile'
+    cli_alias: saml-protocol
+  - name: PPSAMLResponseDestination
+    type: String
+    description: 'Response destination'
+    cli_alias: saml-response-destination
+  - name: PPResultWrapup
+    type: String
+    enum:
+      - 'wssec-replace'
+      - 'wssec-new'
+      - 'wssec-inject'
+      - 'soap-body'
+      - 'none'
+    default: 'wssec-replace'
+    description: 'Wrap up result'
+    cli_alias: result-wrapup
+  - name: PPSAMLAssertionType
+    dm_type: DmSAMLStatementType
+    default: 'authentication+attribute'
+    description: 'SAML assertion type'
+    cli_alias: saml-assertion-type
+  - name: PPSAMLSubjectConfirm
+    type: String
+    enum:
+      - 'bearer'
+      - 'hok'
+      - 'sv'
+    default: 'bearer'
+    description: 'SAML subject confirmation method'
+    cli_alias: saml-subject-confirm
+  - name: PPSAMLNameID
+    type: Bool
+    default: true
+    description: 'SAML subject contains name identifier'
+    cli_alias: saml-nid
+  - name: PPSAMLNameIDFormat
+    type: String
+    description: 'SAML name identifier format'
+    cli_alias: saml-nid-format
+  - name: PPSAMLRecipient
+    type: String
+    description: 'SAML recipient'
+    cli_alias: saml-recipient
+  - name: PPSAMLAudience
+    type: String
+    description: 'SAML audience'
+    cli_alias: saml-audience
+  - name: PPSAMLOmitNotBefore
+    type: Bool
+    default: false
+    description: 'Omit NotBefore attribute'
+    cli_alias: saml-omit-notbefore
+  - name: PPOneTimeUse
+    type: Bool
+    default: false
+    description: 'One time use only'
+    cli_alias: one-time-use
+  - name: PPSAMLProxy
+    type: Bool
+    default: false
+    description: 'Allow SAML ProxyRestriction'
+    cli_alias: saml-proxy
+  - name: PPSAMLProxyAudience
+    type: String
+    description: 'SAML proxy audience'
+    cli_alias: saml-proxy-audience
+  - name: PPSAMLProxyCount
+    type: Int64
+    maximum: 65535
+    default: 0
+    description: 'SAML proxy count'
+    cli_alias: saml-proxy-count
+  - name: PPSAMLAuthzAction
+    type: String
+    enum:
+      - 'AllHTTP'
+      - 'POST'
+      - 'GET'
+      - 'PUT'
+      - 'HEAD'
+      - 'General'
+      - 'Read'
+      - 'Write'
+      - 'Execute'
+      - 'Delete'
+      - 'Control'
+      - 'NegatedRead'
+      - 'NegatedWrite'
+      - 'NegatedExecute'
+      - 'NegatedDelete'
+      - 'NegatedControl'
+    default: 'AllHTTP'
+    description: 'Action for SAML Authorization decision'
+    cli_alias: saml-authz-action
+  - name: PPSAMLAttributes
+    type: String
+    reference_to: SAMLAttributes
+    description: 'SAML attribute definition'
+    cli_alias: saml-attributes
+  - name: PPLTPAInsertCookie
+    type: Bool
+    default: true
+    description: 'Insert LTPA Set-Cookie'
+    cli_alias: ltpa-insert-cookie
+  - name: PPTAMPACPropagate
+    type: Bool
+    default: false
+    description: 'Generate an Access Manager PAC token'
+    cli_alias: propagate-tam-pac
+  - name: PPTAMHeader
+    type: String
+    default: 'iv-creds'
+    description: 'Privilege Attribute Certificate header name'
+    cli_alias: tam-header
+  - name: PPTAMHeaderSize
+    type: Int64
+    default: 0
+    description: 'PAC header value size'
+    cli_alias: tam-header-size
+  - name: PPKerberosUseS4U2Proxy
+    type: Bool
+    default: false
+    description: 'Use constrained delegation'
+    cli_alias: kerberos-use-s4u2proxy
+  - name: PPCookieAttributes
+    type: String
+    reference_to: CookieAttributePolicy
+    description: 'Cookie attribute policy'
+    cli_alias: cookie-attributes
+  - name: PPKerberosUseS4U2SelfAndS4U2Proxy
+    type: Bool
+    default: false
+    description: 'Use protocol transition and constrained delegation'
+    cli_alias: kerberos-use-s4u2self
+  - name: PPKerberosClientSource
+    type: String
+    enum:
+      - 'mc-output'
+      - 'custom-url'
+      - 'ctx-var'
+    default: 'mc-output'
+    description: 'Kerberos client principal source'
+    cli_alias: kerberos-client-source
+  - name: PPKerberosSelf
+    type: String
+    description: 'Kerberos self principal'
+    cli_alias: kerberos-self-principal
+  - name: PPKerberosSelfKeytab
+    type: String
+    reference_to: CryptoKerberosKeytab
+    description: 'Kerberos self keytab'
+    cli_alias: kerberos-self-keytab
+  - name: PPKerberosClientCustomURL
+    type: String
+    description: 'Kerberos client principal - custom processing'
+    cli_alias: kerberos-client-custom-url
+  - name: PPKerberosClientCtxVar
+    type: String
+    description: 'Kerberos client principal - context variable'
+    cli_alias: kerberos-client-ctx-var
+  - name: PPKerberosServerSource
+    type: String
+    enum:
+      - 'as-is-string'
+      - 'custom-url'
+      - 'ctx-var'
+    default: 'as-is-string'
+    description: 'Kerberos server principal source'
+    cli_alias: kerberos-server-source
+  - name: PPKerberosServerCustomURL
+    type: String
+    description: 'Kerberos server principal - custom processing'
+    cli_alias: kerberos-server-custom-url
+  - name: PPKerberosServerCtxVar
+    type: String
+    description: 'Kerberos server principal - context variable'
+    cli_alias: kerberos-server-ctx-var
+  - name: PPSSLClientConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    default: 'proxy'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: PPSSLClientProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: PPLTPAKeyFilePasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    sensitive: true
+    description: 'LTPA key file password alias'
+    cli_alias: ltpa-key-file-password-alias
+  - name: PPJWT
+    type: Bool
+    default: false
+    description: 'Generate a JWT token'
+    cli_alias: jwt
+  - name: PPJWTGenerator
+    type: String
+    reference_to: AAAJWTGenerator
+    description: 'JWT Generator settings'
+    cli_alias: generate-jwt

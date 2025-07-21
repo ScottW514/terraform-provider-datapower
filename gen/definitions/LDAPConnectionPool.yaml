@@ -1,0 +1,42 @@
+name: LDAPConnectionPool
+description: 'LDAP connection pool'
+cli_alias: 'ldap-connection-pool'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/LDAPConnectionPool'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'LDAPConnectionPool_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: IdleTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    default: 120
+    description: 'Idle timeout'
+    cli_alias: idle-timeout
+  - name: MaxPoolSize
+    type: Int64
+    minimum: 1
+    maximum: 2000
+    default: 35
+    description: 'Max pool size'
+    cli_alias: max-pool-size
+  - name: RejectOnPoolLimit
+    type: Bool
+    default: false
+    description: 'Reject on pool limit'
+    cli_alias: reject-on-pool-limit

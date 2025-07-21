@@ -1,0 +1,29 @@
+name: DmMCFilter
+model_only: true
+list_item: true
+attributes:
+  - name: FilterName
+    type: String
+    required: true
+    description: 'Name'
+    example: 'mc_filter_name'
+  - name: Type
+    type: String
+    enum:
+      - 'http'
+      - 'xpath'
+    required: true
+    description: 'Type'
+    example: 'http'
+  - name: HttpName
+    type: String
+    description: 'HTTP Header Name'
+  - name: HttpValue
+    type: String
+    description: 'HTTP Header Value'
+  - name: XPathExpression
+    type: String
+    description: 'XPath Expression'
+  - name: XPathValue
+    type: String
+    description: 'XPath Value'

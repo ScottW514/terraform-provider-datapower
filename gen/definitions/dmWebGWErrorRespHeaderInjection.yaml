@@ -1,0 +1,13 @@
+name: DmWebGWErrorRespHeaderInjection
+model_only: true
+list_item: true
+attributes:
+  - name: HeaderTag
+    type: String
+    description: 'Header Name'
+    example: 'HEADER_NAME'
+  - name: HeaderTagValue
+    type: String
+    required: true
+    description: 'Header Value'
+    example: 'HEADER_VALUE'

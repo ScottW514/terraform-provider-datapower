@@ -1,0 +1,71 @@
+name: MessageMatching
+description: 'Message Matching'
+cli_alias: 'message-matching'
+cmd_group: 'messages'
+rest_endpoint: '/mgmt/config/{domain}/MessageMatching'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'MessageMatching_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: IPAddress
+    type: String
+    enum:
+      - '[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]{1,2}'
+      - '[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+ [0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+'
+      - '((([\\da-fA-F]{1,4}|:|)(:|)){1,7}([\\da-fA-F]{1,4}|:)/([1-9]?\\d|1[01]\\d|12[0-8]))'
+      - '((([\\da-fA-F]{1,4}|:|)(:|)){1,5}([\\da-fA-F]{1,4}|):(([1-9]?\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}([1-9]?\\d|1\\d{2}|2[0-4]\\d|25[0-5])/([1-9]?\\d|1[01]\\d|12[0-8]))'
+    description: 'IP Addresses'
+    cli_alias: ip
+  - name: IPExclude
+    type: String
+    enum:
+      - '[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]{1,2}'
+      - '[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+ [0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+'
+      - '((([\\da-fA-F]{1,4}|:|)(:|)){1,7}([\\da-fA-F]{1,4}|:)/([1-9]?\\d|1[01]\\d|12[0-8]))'
+      - '((([\\da-fA-F]{1,4}|:|)(:|)){1,5}([\\da-fA-F]{1,4}|):(([1-9]?\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}([1-9]?\\d|1\\d{2}|2[0-4]\\d|25[0-5])/([1-9]?\\d|1[01]\\d|12[0-8]))'
+    description: 'Excluded IP Addresses'
+    cli_alias: ip-exclude
+  - name: HTTPMethod
+    type: String
+    enum:
+      - 'any'
+      - 'OPTIONS'
+      - 'GET'
+      - 'HEAD'
+      - 'POST'
+      - 'PUT'
+      - 'PATCH'
+      - 'DELETE'
+      - 'TRACE'
+      - 'CONNECT'
+    default: 'any'
+    description: 'HTTP Method'
+    cli_alias: method
+  - name: HTTPHeader
+    type: List
+    element_type: DmHTTPHeader
+    description: 'HTTP Headers'
+    cli_alias: http-header
+  - name: HTTPHeaderExclude
+    type: List
+    element_type: DmHTTPHeader
+    description: 'Excluded HTTP Headers'
+    cli_alias: http-header-exclude
+  - name: RequestURL
+    type: String
+    description: 'Request URL'
+    cli_alias: request-url

@@ -1,0 +1,29 @@
+name: MessageType
+description: 'Message Type'
+cli_alias: 'message-type'
+cmd_group: 'messages'
+rest_endpoint: '/mgmt/config/{domain}/MessageType'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'MessageType_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Matching
+    type: List
+    reference_to: MessageMatching
+    element_type: String
+    description: 'Message Matchings'
+    cli_alias: message-matching

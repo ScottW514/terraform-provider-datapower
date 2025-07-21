@@ -1,0 +1,48 @@
+name: JOSERecipientIdentifier
+description: 'Recipient Identifier'
+cli_alias: 'jose-recipient-identifier'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/JOSERecipientIdentifier'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'JOSERecipientIdentifier_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Type
+    type: String
+    enum:
+      - 'key'
+      - 'sskey'
+    test_value: '"key"'
+    description: 'Key Material Type'
+    cli_alias: type
+  - name: Key
+    type: String
+    reference_to: CryptoKey
+    test_value: 'datapower_cryptokey.test.id'
+    description: 'Key Material'
+    cli_alias: key
+  - name: SSKey
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Key Material'
+    cli_alias: sskey
+  - name: HeaderParam
+    type: List
+    element_type: DmJOSEHeader
+    required: true
+    description: 'Header Parameters'
+    cli_alias: header-param

@@ -1,0 +1,61 @@
+name: WSRRSavedSearchSubscription
+description: 'WSRR saved search subscription'
+cli_alias: 'wsrr-saved-search-subscription'
+cmd_group: 'webservice'
+rest_endpoint: '/mgmt/config/{domain}/WSRRSavedSearchSubscription'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'test_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Server
+    type: String
+    reference_to: WSRRServer
+    required: true
+    description: 'WSRR server'
+    cli_alias: server
+  - name: SavedSearchName
+    type: String
+    required: true
+    example: 'saved_search_name'
+    description: 'Saved search or named query'
+    cli_alias: saved-search-name
+  - name: SavedSearchParameters
+    type: List
+    element_type: String
+    description: 'Query parameters'
+    cli_alias: params
+  - name: Method
+    type: String
+    enum:
+      - 'manual'
+      - 'poll'
+      - 'automatic'
+    default: 'poll'
+    description: 'Synchronization method'
+    cli_alias: method
+  - name: RefreshInterval
+    type: Int64
+    minimum: 60
+    maximum: 4294967
+    default: 86400
+    description: 'Refresh interval'
+    cli_alias: refresh-interval
+  - name: FetchPolicyAttachments
+    type: Bool
+    default: false
+    description: 'Fetch policy attachments'
+    cli_alias: fetch-policy-attachments
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary

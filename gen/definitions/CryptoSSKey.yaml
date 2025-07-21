@@ -1,0 +1,25 @@
+name: CryptoSSKey
+description: 'Shared secret key'
+cli_alias: 'sskey'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/CryptoSSKey'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CryptoSSKey_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Filename
+    type: String
+    required: true
+    example: 'cert:///acc-test-server.key'
+    description: 'File name'
+    cli_alias: file-name

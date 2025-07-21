@@ -1,0 +1,151 @@
+name: CompileOptionsPolicy
+description: 'Compile Options Policy'
+cli_alias: 'compile-options'
+cmd_group: 'compile-options'
+rest_endpoint: '/mgmt/config/{domain}/CompileOptionsPolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CompileOptionsPolicy_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: XSLTVersion
+    type: String
+    enum:
+      - 'XSLT10'
+      - 'XSLT10_IT23272'
+      - 'XSLT20'
+      - 'StylesheetSpecified'
+    default: 'XSLT10'
+    description: 'XSLT Version'
+    cli_alias: xslt-version
+  - name: Strict
+    type: Bool
+    default: false
+    description: 'Strict'
+    cli_alias: strict
+  - name: Profile
+    type: String
+    reference_to: URLMap
+    description: 'Profile Rule'
+    cli_alias: profile
+  - name: Debug
+    type: String
+    reference_to: URLMap
+    description: 'Debug Rule'
+    cli_alias: debug
+  - name: Stream
+    type: String
+    reference_to: URLMap
+    description: 'Streaming Rule'
+    cli_alias: stream
+  - name: TryStream
+    type: String
+    reference_to: URLMap
+    description: 'Attempt Streaming Rule'
+    cli_alias: try-stream
+  - name: MinimumEscaping
+    type: String
+    reference_to: URLMap
+    description: 'Minimum Output Escaping Rule'
+    cli_alias: minesc
+  - name: StackSize
+    type: Int64
+    minimum: 10240
+    maximum: 104857600
+    default: 524288
+    description: 'Maximum Stack Size'
+    cli_alias: stack-size
+  - name: PreferXG4
+    type: String
+    reference_to: URLMap
+    description: 'XML Hardware Acceleration Preferred Rule'
+    cli_alias: prefer-xg4
+  - name: DisallowXG4
+    type: String
+    reference_to: URLMap
+    description: 'XML Hardware Acceleration Disallowed Rule'
+    cli_alias: disallow-xg4
+  - name: WSIValidation
+    type: String
+    enum:
+      - 'ignore'
+      - 'warn'
+      - 'fail'
+    default: 'ignore'
+    description: 'WS-I Basic Profile Validation'
+    cli_alias: wsi-validate
+  - name: WSDLValidateBody
+    type: String
+    enum:
+      - 'strict'
+      - 'lax'
+      - 'skip'
+    default: 'strict'
+    description: 'Validate Message Body'
+    cli_alias: wsdl-validate-body
+  - name: WSDLValidateHeaders
+    type: String
+    enum:
+      - 'strict'
+      - 'lax'
+      - 'skip'
+    default: 'lax'
+    description: 'Validate Message Headers'
+    cli_alias: wsdl-validate-headers
+  - name: WSDLValidateFaults
+    type: String
+    enum:
+      - 'strict'
+      - 'lax'
+      - 'skip'
+    default: 'strict'
+    description: 'Validate Message Fault details'
+    cli_alias: wsdl-validate-faults
+  - name: WSDLWrappedFaults
+    type: Bool
+    default: false
+    description: 'Require wrappers on fault-details specified by type'
+    cli_alias: wsdl-wrapped-faults
+  - name: AllowSoapEncArray
+    type: String
+    reference_to: URLMap
+    description: "Specifically Allow xsi:type='SOAP-ENC:Array' Rule"
+    cli_alias: allow-soap-enc-array
+  - name: ValidateSoapEncArray
+    type: String
+    reference_to: URLMap
+    description: 'Validate SOAP 1.1 Encoding Rule'
+    cli_alias: validate-soap-enc-array
+  - name: WildcardsIgnoreXsiType
+    type: String
+    reference_to: URLMap
+    description: 'Wildcards Ignore xsi:type Rule'
+    cli_alias: wildcards-ignore-xsi-type
+  - name: WSDLStrictSOAPVersion
+    type: Bool
+    default: false
+    description: 'Strict SOAP Envelope Version'
+    cli_alias: wsdl-strict-soap-version
+  - name: XACMLDebug
+    type: Bool
+    default: false
+    description: 'Debug XACML Policy'
+    cli_alias: xacml-debug
+  - name: AllowXOPInclude
+    type: String
+    reference_to: URLMap
+    description: 'Accept MTOM/XOP Optimized Messages'
+    cli_alias: allow-xop-include

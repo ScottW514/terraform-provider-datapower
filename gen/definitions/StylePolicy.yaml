@@ -1,0 +1,43 @@
+name: StylePolicy
+description: 'Processing Policy'
+cli_alias: 'stylepolicy'
+cmd_group: 'stylesheetpolicy'
+rest_endpoint: '/mgmt/config/{domain}/StylePolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'StylePolicy_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: DefStylesheetForSoap
+    type: String
+    default: 'store:///filter-reject-all.xsl'
+    description: 'Default style sheet for SOAP'
+    cli_alias: filter
+  - name: DefStylesheetForXsl
+    type: String
+    default: 'store:///identity.xsl'
+    description: 'Default style sheet for XSL transforms'
+    cli_alias: xsldefault
+  - name: DefXQueryForJSON
+    type: String
+    default: 'store:///reject-all-json.xq'
+    description: 'Default XQuery style sheet for JSON'
+    cli_alias: xquerydefault
+  - name: PolicyMaps
+    type: List
+    element_type: DmPolicyMap
+    description: 'Policy Maps'
+    cli_alias: match

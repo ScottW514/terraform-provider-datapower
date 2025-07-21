@@ -1,0 +1,15 @@
+name: DmLTPATokenVersion
+model_only: true
+attributes:
+  - name: LTPA
+    type: Bool
+    default: false
+    description: 'WebSphere version 1'
+  - name: LTPA2
+    type: Bool
+    default: true
+    description: 'WebSphere version 2'
+  - name: LTPADomino
+    type: Bool
+    default: false
+    description: 'Domino'

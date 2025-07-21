@@ -1,0 +1,18 @@
+name: DmPolicyAttachmentPoint
+model_only: true
+list_item: true
+attributes:
+  - name: PolicyAttachWSDLComponentType
+    type: String
+    enum:
+      - 'service'
+      - 'port'
+      - 'fragmentid'
+      - 'rest'
+    description: 'WSDL Component Type'
+  - name: PolicyAttachWSDLComponentValue
+    type: String
+    description: 'WSDL Component Value'
+  - name: PolicyAttachFragmentID
+    type: String
+    description: 'Fragment Identifier'

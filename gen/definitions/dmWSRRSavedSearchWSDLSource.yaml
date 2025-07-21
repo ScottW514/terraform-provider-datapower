@@ -1,0 +1,12 @@
+name: DmWSRRSavedSearchWSDLSource
+model_only: true
+list_item: true
+attributes:
+  - name: WSRRSavedSearchSubscription
+    type: String
+    reference_to: WSRRSavedSearchSubscription
+    description: 'Saved Search Subscription'
+  - name: WSRRAttachment
+    type: String
+    reference_to: PolicyAttachments
+    description: 'Policy Attachment'

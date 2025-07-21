@@ -1,0 +1,27 @@
+name: DmJWTClaims
+model_only: true
+attributes:
+  - name: aud
+    type: Bool
+    default: false
+    description: 'Audience'
+  - name: nbf
+    type: Bool
+    default: false
+    description: 'Not before'
+  - name: iat
+    type: Bool
+    default: false
+    description: 'Issued at'
+  - name: jti
+    type: Bool
+    default: false
+    description: 'JWT ID'
+  - name: nonce
+    type: Bool
+    default: false
+    description: 'Nonce'
+  - name: custom
+    type: Bool
+    default: false
+    description: 'Custom'

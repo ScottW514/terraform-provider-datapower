@@ -1,0 +1,50 @@
+name: DmMatchRule
+model_only: true
+list_item: true
+attributes:
+  - name: Type
+    type: String
+    enum:
+      - 'url'
+      - 'http'
+      - 'errorcode'
+      - 'xpath'
+      - 'fullyqualifiedurl'
+      - 'host'
+      - 'method'
+    required: true
+    description: 'Matching type'
+    example: 'url'
+  - name: HttpTag
+    type: String
+    description: 'HTTP header'
+  - name: HttpValue
+    type: String
+    description: 'HTTP value match'
+  - name: Url
+    type: String
+    description: 'URL match'
+  - name: ErrorCode
+    type: String
+    description: 'Error code'
+  - name: XPATHExpression
+    type: String
+    description: 'XPath expression'
+  - name: Method
+    type: String
+    enum:
+      - 'GET'
+      - 'POST'
+      - 'PUT'
+      - 'PATCH'
+      - 'DELETE'
+      - 'HEAD'
+      - 'OPTIONS'
+      - 'TRACE'
+      - 'custom'
+      - 'default'
+    description: 'HTTP method'
+    default: 'default'
+  - name: CustomMethod
+    type: String
+    description: 'Custom method'

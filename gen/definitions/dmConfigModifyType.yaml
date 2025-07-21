@@ -1,0 +1,28 @@
+name: DmConfigModifyType
+model_only: true
+list_item: true
+attributes:
+  - name: Match
+    type: String
+    required: true
+    example: '10.10.1.1/domainA/services/xslproxy?Value=myhost'
+    description: 'Configuration Match'
+    cli_alias: match
+  - name: Type
+    type: String
+    enum:
+      - 'add'
+      - 'delete'
+      - 'change'
+    required: true
+    example: 'change'
+    description: 'Modification Type'
+    cli_alias: type
+  - name: Property
+    type: String
+    description: 'Configuration Property'
+    cli_alias: name
+  - name: Value
+    type: String
+    description: 'Configuration Value'
+    cli_alias: value

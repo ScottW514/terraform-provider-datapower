@@ -1,0 +1,70 @@
+name: StylePolicyRule
+description: 'Processing Rule'
+cli_alias: 'rule'
+cmd_group: 'stylesheetrule'
+rest_endpoint: '/mgmt/config/{domain}/StylePolicyRule'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'StylePolicyRule_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Actions
+    type: List
+    reference_to: StylePolicyAction
+    element_type: String
+    description: 'Rule Action'
+    cli_alias: action
+  - name: Direction
+    type: String
+    enum:
+      - 'rule'
+      - 'request-rule'
+      - 'response-rule'
+      - 'error-rule'
+    required: true
+    default: 'rule'
+    description: 'Rule Direction'
+    cli_alias: type
+  - name: InputFormat
+    type: String
+    enum:
+      - 'none'
+      - 'gzip'
+      - 'pkzip'
+    required: true
+    default: 'none'
+    description: 'Input Filter'
+    cli_alias: input-filter
+  - name: OutputFormat
+    type: String
+    enum:
+      - 'none'
+      - 'gzip'
+      - 'pkzip'
+    required: true
+    default: 'none'
+    description: 'Output Filter'
+    cli_alias: output-filter
+  - name: NonXMLProcessing
+    type: Bool
+    default: false
+    description: 'Non-XML Processing'
+    cli_alias: non-xml-processing
+  - name: Unprocessed
+    type: Bool
+    default: false
+    description: 'Unprocessed'
+    cli_alias: unprocessed
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary

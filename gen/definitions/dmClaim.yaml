@@ -1,0 +1,19 @@
+name: DmClaim
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    description: 'Name'
+  - name: Value
+    type: String
+    required: true
+    example: 'value'
+    description: 'Value'
+  - name: Type
+    type: String
+    enum:
+      - 'string'
+      - 'bool'
+      - 'number'
+    description: 'Type'

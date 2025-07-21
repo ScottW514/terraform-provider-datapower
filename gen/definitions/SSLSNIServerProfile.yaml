@@ -1,0 +1,55 @@
+name: SSLSNIServerProfile
+description: 'TLS SNI server profile'
+cli_alias: 'ssl-sni-server'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/SSLSNIServerProfile'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'SSLSNIServerProfile_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Protocols
+    dm_type: DmSSLProtoVersionsBitmap
+    default: 'TLSv1d1+TLSv1d2+TLSv1d3'
+    description: 'Protocols'
+    cli_alias: protocols
+  - name: SNIServerMapping
+    type: String
+    reference_to: SSLSNIMapping
+    required: true
+    description: 'TLS hostname map'
+    cli_alias: sni-server-mapping
+  - name: SNIServerDefault
+    type: String
+    reference_to: SSLServerProfile
+    description: 'Default server profile'
+    cli_alias: sni-server-default
+  - name: SSLOptions
+    dm_type: DmSSLOptions
+    description: 'Advanced TLS options'
+    cli_alias: ssl-options
+  - name: MaxSSLDuration
+    type: Int64
+    minimum: 1
+    maximum: 691200
+    default: 3600
+    description: 'Maximum TLS session duration'
+    cli_alias: max-duration
+  - name: NumberOfRenegotiationAllowed
+    type: Int64
+    maximum: 512
+    description: 'Maximum client initiated renegotiations'
+    cli_alias: max-renegotiation-allowed

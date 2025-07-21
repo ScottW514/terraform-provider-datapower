@@ -1,0 +1,23 @@
+name: DmLTPAUserAttributeNameAndValue
+model_only: true
+list_item: true
+attributes:
+  - name: LTPAUserAttributeName
+    type: String
+    required: true
+    example: 'name'
+    description: 'Attribute name'
+  - name: LTPAUserAttributeType
+    type: String
+    enum:
+      - 'static'
+      - 'xpath'
+    description: 'Attribute type'
+    test_value: '"static"'
+  - name: LTPAUserAttributeStaticValue
+    type: String
+    description: 'Static attribute value'
+    test_value: '"test"'
+  - name: LTPAUserAttributeXPathValue
+    type: String
+    description: 'XPath attribute value'

@@ -1,0 +1,30 @@
+name: DmSQLServer
+model_only: true
+list_item: true
+attributes:
+  - name: Host
+    type: String
+    required: true
+    example: 'sql.host'
+    description: 'Data source host'
+    cli_alias: host
+  - name: Port
+    type: Int64
+    required: true
+    default: 1521
+    description: 'Data source port'
+    cli_alias: port
+  - name: Type
+    type: String
+    enum:
+      - 'Unspecified'
+      - 'OracleListener'
+      - 'OracleONS'
+    default: 'OracleListener'
+    description: 'Type'
+    cli_alias: type
+  - name: DataSourceID
+    path: 'ID'
+    type: String
+    description: 'Data Source ID'
+    cli_alias: id

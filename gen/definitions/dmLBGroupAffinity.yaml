@@ -1,0 +1,40 @@
+name: DmLBGroupAffinity
+model_only: true
+attributes:
+  - name: EnableSA
+    type: Bool
+    default: true
+    required: true
+    description: 'Enable Session Affinity'
+    cli_alias: enable-affinity
+  - name: InsertionCookieName
+    type: String
+    default: 'DPJSESSIONID'
+    description: 'Insertion Cookie Name'
+    cli_alias: i-cookie-name
+  - name: InsertionPath
+    type: String
+    default: '/'
+    description: 'Insertion Path'
+    cli_alias: i-path
+  - name: InsertionDomain
+    type: String
+    default: 'datapower.com'
+    description: 'Insertion Domain'
+    cli_alias: i-domain
+  - name: AffinityWLMOverride
+    type: Bool
+    default: false
+    description: 'Override WebSphere Cell Session Affinity'
+    cli_alias: override-wlm-affinity
+  - name: AffinityMode
+    type: String
+    enum:
+      - 'active'
+      - 'activeConditional'
+    description: 'Mode'
+    cli_alias: affinity-mode
+  - name: InsertionAttributes
+    dm_type: DmInsertionAttributes
+    description: 'Insert cookie attributes'
+    cli_alias: i-cookie-attributes

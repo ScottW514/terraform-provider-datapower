@@ -1,0 +1,144 @@
+name: DmLBGroupCheck
+model_only: true
+attributes:
+  - name: Active
+    type: Bool
+    default: false
+    required: true
+    description: 'Enabled'
+    cli_alias: admin-state
+  - name: URI
+    type: String
+    default: '/'
+    description: 'URI'
+    cli_alias: target-uri
+  - name: Port
+    type: Int64
+    required: true
+    default: 80
+    description: 'Remote Port'
+    cli_alias: target-port
+  - name: SSL
+    type: String
+    enum:
+      - 'Standard'
+      - 'LDAP'
+      - 'IMSConnect'
+      - 'TCPConnection'
+      - 'on'
+      - 'off'
+    required: true
+    example: 'off'
+    description: 'Health Check Type'
+    cli_alias: type
+  - name: Post
+    type: Bool
+    default: true
+    description: 'Send SOAP Request?'
+    cli_alias: use-soap
+  - name: Input
+    type: String
+    default: 'store:///healthcheck.xml'
+    description: 'SOAP Request Document'
+    cli_alias: send-soap
+  - name: Timeout
+    type: Int64
+    minimum: 2
+    maximum: 86400
+    required: true
+    default: 10
+    description: 'Timeout'
+    cli_alias: timeout
+  - name: Frequency
+    type: Int64
+    minimum: 5
+    maximum: 86400
+    required: true
+    default: 180
+    description: 'Frequency'
+    cli_alias: frequency
+  - name: XPath
+    type: String
+    default: '/'
+    description: 'XPath Expression'
+    cli_alias: xpath
+  - name: Filter
+    type: String
+    default: 'store:///healthcheck.xsl'
+    description: 'XSL Health Check Filter'
+    cli_alias: filter
+  # DEPRECATED
+  # - name: SSLProxyProfile
+  #   type: String
+  #   reference_to: SSLProxyProfile
+  #   description: 'TLS proxy profile (deprecated)'
+  #   deprecated: true
+  #   cli_alias: sslproxy
+  - name: EnforceTimeout
+    type: Bool
+    default: false
+    description: 'Enforce Health Check Timeouts'
+    cli_alias: enforce-timeout
+  - name: IndependentChecks
+    type: Bool
+    default: false
+    description: 'Independent Health Checks'
+    cli_alias: independent-checks
+  - name: GatewayScriptChecks
+    type: Bool
+    default: false
+    description: 'Process with GatewayScript'
+    cli_alias: gatewayscript-checks
+  - name: GatewayScriptReqMethod
+    type: String
+    enum:
+      - 'GET'
+      - 'HEAD'
+      - 'POST'
+      - 'PUT'
+      - 'Custom'
+    description: 'HTTP Method'
+    cli_alias: request-method
+  - name: GatewayScriptCustomReqMethod
+    type: String
+    description: 'Custom Method'
+    cli_alias: request-custom-method
+  - name: GatewayScriptReqDoc
+    type: String
+    default: 'store:///healthcheck.json'
+    description: 'Request Document'
+    cli_alias: request-doc
+  - name: GatewayScriptReqContentType
+    type: String
+    default: 'application/json'
+    description: 'Content Type'
+    cli_alias: request-content-type
+  - name: GatewayScriptRspHandlerMetadata
+    type: String
+    description: 'Response Evaluator Metadata'
+    cli_alias: response-evaluator-metadata
+  - name: GatewayScriptRspHandler
+    type: String
+    default: 'store:///healthcheck.js'
+    description: 'GatewayScript Response Evaluator'
+    cli_alias: response-evaluator
+  - name: TCPConnectionType
+    type: String
+    enum:
+      - 'Full'
+      - 'Partial'
+    description: 'TCP Connection Type'
+    cli_alias: tcp-conn-type
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client

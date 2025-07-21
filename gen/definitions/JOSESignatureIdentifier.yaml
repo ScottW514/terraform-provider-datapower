@@ -1,0 +1,73 @@
+name: JOSESignatureIdentifier
+description: 'Signature Identifier'
+cli_alias: 'jose-signature-identifier'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/JOSESignatureIdentifier'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'JOSESignatureIdentifier_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Type
+    type: String
+    enum:
+      - 'certificate'
+      - 'sskey'
+    test_value: '"certificate"'
+    description: 'Key Material Type'
+    cli_alias: type
+  - name: SSKey
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Key Material'
+    cli_alias: sskey
+  - name: Certificate
+    type: String
+    reference_to: CryptoCertificate
+    test_value: 'datapower_cryptocertificate.test.id'
+    description: 'Key Material'
+    cli_alias: cert
+  - name: ValidAlgorithms
+    type: List
+    enum:
+      - 'HS256'
+      - 'HS384'
+      - 'HS512'
+      - 'RS256'
+      - 'RS384'
+      - 'RS512'
+      - 'ES256'
+      - 'ES384'
+      - 'ES512'
+      - 'PS256'
+      - 'PS384'
+      - 'PS512'
+    element_type: String
+    description: 'Valid algorithms'
+    cli_alias: alg
+  - name: HeaderParam
+    type: List
+    element_type: DmJOSEHeader
+    required: true
+    description: 'Header Parameters'
+    cli_alias: header-param
+  - name: Verify
+    type: Bool
+    default: true
+    required: true
+    description: 'Verify (deprecated)'
+    deprecated: true
+    cli_alias: verify

@@ -1,0 +1,14 @@
+name: DmPolicyParameter
+model_only: true
+list_item: true
+attributes:
+  - name: ParameterName
+    type: String
+    required: true
+    description: 'Name'
+    example: 'PolicyParameterName'
+  - name: ParameterValue
+    type: String
+    required: true
+    description: 'Value'
+    example: 'PolicyParameterValue'

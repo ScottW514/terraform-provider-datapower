@@ -1,0 +1,229 @@
+name: OAuthSupportedClient
+description: 'OAuth Client Profile'
+cli_alias: 'oauth-supported-client'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/OAuthSupportedClient'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'OAuthSupportedClient_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Customized
+    type: Bool
+    default: false
+    description: 'Customized OAuth'
+    cli_alias: customized
+  - name: CustomizedProcessUrl
+    type: String
+    description: 'Customized OAuth Process'
+    cli_alias: customized-process-url
+  - name: OAuthRole
+    dm_type: DmOAuthRole
+    description: 'OAuth Role'
+    cli_alias: oauth-role
+  - name: AZGrant
+    dm_type: DmOAuthAZGrantType
+    description: 'Supported Type'
+    cli_alias: az-grant
+  - name: ClientType
+    type: String
+    enum:
+      - 'confidential'
+      - 'public'
+    default: 'confidential'
+    description: 'Client Type'
+    cli_alias: client-type
+  - name: CheckClientCredential
+    type: Bool
+    default: false
+    description: 'Verify Client Credential'
+    cli_alias: check-client-credential
+  - name: UseValidationUrl
+    type: Bool
+    default: false
+    description: 'Use Validation URL'
+    cli_alias: use-validation-url
+  - name: ClientAuthenMethod
+    type: String
+    enum:
+      - 'secret'
+      - 'ssl'
+      - 'jwt'
+    default: 'secret'
+    description: 'Authentication Method'
+    cli_alias: client-authen-method
+  - name: ClientValCred
+    type: String
+    reference_to: CryptoValCred
+    description: 'Client TLS Credentials'
+    cli_alias: client-valcred
+  - name: GenerateClientSecret
+    type: Bool
+    default: true
+    description: 'Generate Client Secret'
+    cli_alias: generate-client-secret
+  - name: ClientSecret
+    type: String
+    description: 'Client Secret'
+    cli_alias: client-secret
+  - name: Caching
+    type: String
+    enum:
+      - 'replay'
+      - 'system'
+      - 'custom'
+      - 'diststore'
+    default: 'replay'
+    description: 'Caching'
+    cli_alias: caching
+  - name: ValidationURL
+    type: String
+    example: 'https://example.com/validate-token'
+    description: 'Validation URL'
+    cli_alias: validation-url
+  # DEPRACATED
+  # - name: ValidationURLSSLProfile
+  #   type: String
+  #   reference_to: SSLProxyProfile
+  #   description: 'Validation TLS Proxy Profile (deprecated)'
+  #   deprecated: true
+  #   cli_alias: validation-url-ssl-profile
+  - name: ValidationFeatures
+    dm_type: DmValidationFeatures
+    description: 'Validation Grant Features'
+    cli_alias: validation-features
+  - name: RedirectURI
+    type: List
+    element_type: String
+    list_example:
+      - '^https://example.com/redirect$'
+    description: 'Redirect URI'
+    cli_alias: redirect-uri
+  - name: CustomScopeCheck
+    type: Bool
+    default: false
+    description: 'Customized Scope Check'
+    cli_alias: custom-scope-check
+  - name: Scope
+    type: String
+    example: '^MyPicture$|^MyVideo$'
+    description: 'Scope'
+    cli_alias: scope
+  - name: ScopeUrl
+    type: String
+    description: 'Scope Customized Process'
+    cli_alias: scope-url
+  - name: DefaultScope
+    type: String
+    description: 'Default Scope'
+    cli_alias: default-scope
+  - name: TokenSecret
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Shared Secret'
+    cli_alias: token-secret
+  - name: LocalAZPageUrl
+    type: String
+    default: 'store:///OAuth-Generate-HTML.xsl'
+    description: 'Authorization Form'
+    cli_alias: local-az-page-url
+  - name: DPStateLifeTime
+    type: Int64
+    minimum: 1
+    maximum: 600
+    default: 300
+    description: 'DataPower State Lifetime'
+    cli_alias: dp-state-lifetime
+  - name: AUCodeLifeTime
+    type: Int64
+    minimum: 1
+    maximum: 600
+    default: 300
+    description: 'Authorization Grant Lifetime'
+    cli_alias: au-code-lifetime
+  - name: AccessTokenLifeTime
+    type: Int64
+    minimum: 1
+    maximum: 63244800
+    default: 3600
+    description: 'Access Token Lifetime'
+    cli_alias: access-token-lifetime
+  - name: RefreshTokenAllowed
+    type: Int64
+    maximum: 4096
+    description: 'Number of Refresh Token Allowed'
+    cli_alias: refresh-token-allowed
+  - name: RefreshTokenLifeTime
+    type: Int64
+    minimum: 2
+    maximum: 252979200
+    default: 5400
+    description: 'Refresh Token Lifetime'
+    cli_alias: refresh-token-lifetime
+  - name: MaxConsentLifeTime
+    type: Int64
+    maximum: 2529792000
+    description: 'Maximum Consent Lifetime'
+    cli_alias: max-consent-lifetime
+  - name: CustomResourceOwner
+    type: Bool
+    default: false
+    description: 'Custom Resource Owner Handling'
+    cli_alias: custom-resource-owner
+  - name: ResourceOwnerUrl
+    type: String
+    description: 'Resource Owner Process'
+    cli_alias: resource-owner-url
+  - name: AdditionalOAuthProcessUrl
+    type: String
+    description: 'Additional OAuth Process'
+    cli_alias: additional-oauth-process-url
+  - name: RSSetHeader
+    dm_type: DmOAuthRSSetHeader
+    description: 'Create HTTP Headers for'
+    cli_alias: rs-set-header
+  - name: ValidationURLSSLClientType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    default: 'client'
+    description: 'Validation TLS client type'
+    cli_alias: validation-url-ssl-client-type
+  - name: ValidationURLSSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'Validation TLS Client Profile'
+    cli_alias: validation-url-ssl-client
+  - name: JWTGrantValidator
+    type: String
+    reference_to: AAAJWTValidator
+    description: 'Authorization grant JWT validator'
+    cli_alias: jwt-grant-validator
+  - name: ClientJWTValidator
+    type: String
+    reference_to: AAAJWTValidator
+    description: 'Client authentication JWT validator'
+    cli_alias: client-jwt-validator
+  - name: OIDCIDTokenGenerator
+    type: String
+    reference_to: AAAJWTGenerator
+    description: 'ID token JWT generator'
+    cli_alias: idtoken-generator
+  - name: OAuthFeatures
+    dm_type: DmOAuthFeatures
+    description: 'Features'
+    cli_alias: oauth-features

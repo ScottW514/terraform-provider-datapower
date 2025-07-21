@@ -1,0 +1,32 @@
+name: DmMSDebugTriggerType
+model_only: true
+list_item: true
+attributes:
+  - name: ClientIP
+    type: String
+    description: 'Client-IP Match'
+    example: '127.0.0.1'
+  - name: InURLMatch
+    type: String
+    description: 'Inbound URL Match'
+  - name: OutURLMatch
+    type: String
+    description: 'Outbound URL Match'
+  - name: RuleType
+    type: String
+    enum:
+      - 'all'
+      - 'response'
+      - 'request'
+      - 'call'
+      - 'error'
+      - 'scheduled'
+      - 'lbhealth'
+    description: 'Processing Type'
+    example: 'all'
+  - name: RuleMatch
+    type: String
+    description: 'Processing Rule Match'
+  - name: XPath
+    type: String
+    description: 'XPath Expression Match'

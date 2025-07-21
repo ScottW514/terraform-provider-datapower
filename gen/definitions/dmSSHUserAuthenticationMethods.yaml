@@ -1,0 +1,13 @@
+name: DmSSHUserAuthenticationMethods
+model_only: true
+attributes:
+  - name: publickey
+    type: Bool
+    default: true
+    required: true
+    description: 'Public key'
+  - name: password
+    type: Bool
+    default: true
+    required: true
+    description: 'Password'

@@ -1,0 +1,19 @@
+name: DmOAuthRSSetHeader
+model_only: true
+attributes:
+  - name: owner
+    type: Bool
+    default: false
+    description: 'Resource Owner'
+  - name: clientid
+    type: Bool
+    default: false
+    description: 'Client ID'
+  - name: scope
+    type: Bool
+    default: false
+    description: 'Scope'
+  - name: miscinfo
+    type: Bool
+    default: false
+    description: 'Customized Info'

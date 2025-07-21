@@ -1,0 +1,51 @@
+name: DmURLRewriteRule
+model_only: true
+list_item: true
+attributes:
+  - name: Type
+    type: String
+    enum:
+      - 'rewrite'
+      - 'absolute-rewrite'
+      - 'post-body'
+      - 'header-rewrite'
+      - 'content-type'
+    required: true
+    description: 'URL Rewrite Type'
+    cli_alias: type
+    example: 'header-rewrite'
+  - name: MatchRegexp
+    type: String
+    required: true
+    description: 'Match Expression'
+    cli_alias: match
+    example: 'Test'
+  - name: InputReplaceRegexp
+    type: String
+    description: 'Input Replace Expression'
+    cli_alias: input-expression
+    example: 'Replace'
+  - name: StyleReplaceRegexp
+    type: String
+    description: 'Stylesheet Replace Expression'
+    cli_alias: stylesheet-expression
+  - name: InputUnescape
+    type: Bool
+    default: false
+    description: 'Input URL Unescape'
+    cli_alias: input-unescape
+  - name: StylesheetUnescape
+    type: Bool
+    default: true
+    description: 'Stylesheet URL Unescape'
+    cli_alias: stylesheet-unescape
+  - name: Header
+    type: String
+    default: 'none'
+    description: 'Header Name'
+    example: 'HEADER'
+  - name: NormalizeURL
+    type: Bool
+    default: false
+    description: 'URL Normalization'
+    cli_alias: normalize-url

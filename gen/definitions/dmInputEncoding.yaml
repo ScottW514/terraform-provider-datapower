@@ -1,0 +1,21 @@
+name: DmInputEncoding
+model_only: true
+list_item: true
+attributes:
+  - name: InputMatch
+    type: String
+    description: 'Input Match PCRE'
+    cli_alias: input-name
+  - name: Encoding
+    type: String
+    enum:
+      - 'plain'
+      - 'urlencoded'
+      - 'xml'
+      - 'urlencoded-xml'
+      - 'base64'
+      - 'base64-text'
+      - 'base64-xml'
+      - 'json'
+    description: 'Encoding'
+    cli_alias: encoding

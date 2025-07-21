@@ -1,0 +1,55 @@
+name: OAuthSupportedClientGroup
+description: 'OAuth Client Group'
+cli_alias: 'oauth-supported-client-group'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/OAuthSupportedClientGroup'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'OAuthSupportedClientGroup_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Customized
+    type: Bool
+    default: false
+    description: 'Customized OAuth'
+    cli_alias: customized
+  - name: CustomizedType
+    type: String
+    enum:
+      - 'custom'
+      - 'template'
+    default: 'custom'
+    description: 'Customization Type'
+    cli_alias: customized-type
+  - name: OAuthRole
+    dm_type: DmOAuthRole
+    description: 'OAuth Role'
+    cli_alias: oauth-role
+  - name: Client
+    type: List
+    reference_to: OAuthSupportedClient
+    element_type: String
+    description: 'Client'
+    cli_alias: client
+  - name: TemplateProcessUrl
+    type: String
+    description: 'OAuth Template Process'
+    cli_alias: template-process-url
+  - name: ClientTemplate
+    type: String
+    reference_to: OAuthSupportedClient
+    description: 'OAuth Client Template'
+    cli_alias: client-template

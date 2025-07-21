@@ -1,0 +1,62 @@
+name: MPGWErrorAction
+description: 'Multi-Protocol Gateway Error Action'
+cli_alias: 'mpgw-error-action'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/MPGWErrorAction'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'MPGWErrorAction_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Type
+    type: String
+    enum:
+      - 'error-rule'
+      - 'proxy'
+      - 'redirect'
+      - 'static'
+    default: 'static'
+    description: 'Mode'
+    cli_alias: type
+  - name: RemoteURL
+    type: String
+    description: 'Remote URL'
+    test_value: '"http://google.com"'
+    cli_alias: remote-url
+  - name: LocalURL
+    type: String
+    description: 'Local page location'
+    cli_alias: local-url
+  - name: ErrorRule
+    type: String
+    reference_to: StylePolicyRule
+    description: 'Error Rule'
+    cli_alias: rule
+  - name: StatusCode
+    type: Int64
+    minimum: 100
+    maximum: 999
+    description: 'Response Code'
+    cli_alias: status-code
+  - name: ReasonPhrase
+    type: String
+    description: 'Reason Phrase'
+    cli_alias: reason-phrase
+  - name: HeaderInjection
+    type: List
+    element_type: DmWebGWErrorRespHeaderInjection
+    description: 'HTTP Header Injection'
+    cli_alias: header-inject

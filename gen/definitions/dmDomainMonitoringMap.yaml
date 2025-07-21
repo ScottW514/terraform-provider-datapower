@@ -1,0 +1,11 @@
+name: DmDomainMonitoringMap
+model_only: true
+attributes:
+  - name: Audit
+    type: Bool
+    default: false
+    description: 'Enable auditing'
+  - name: Log
+    type: Bool
+    default: false
+    description: 'Enable logging'

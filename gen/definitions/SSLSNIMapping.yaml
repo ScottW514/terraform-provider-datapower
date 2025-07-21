@@ -1,0 +1,29 @@
+name: SSLSNIMapping
+description: 'TLS hostname map'
+cli_alias: 'ssl-sni-mapping'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/SSLSNIMapping'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'SSLSNIMapping_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: SNIMapping
+    type: List
+    element_type: DmHostToSSLServerProfile
+    required: true
+    description: 'SNI mapping'
+    cli_alias: sni-mapping

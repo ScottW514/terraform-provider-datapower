@@ -1,0 +1,28 @@
+name: PolicyParameters
+description: 'Policy Parameters'
+cli_alias: 'policy-parameters'
+cmd_group: 'webservice'
+rest_endpoint: '/mgmt/config/{domain}/PolicyParameters'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'test_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: PolicyParameter
+    type: List
+    element_type: DmPolicyParameter
+    description: 'Policy Parameter'
+    cli_alias: parameter

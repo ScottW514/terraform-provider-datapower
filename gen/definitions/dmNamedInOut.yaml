@@ -1,0 +1,13 @@
+name: DmNamedInOut
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    example: 'test'
+    description: 'Name'
+  - name: Context
+    type: String
+    required: true
+    example: 'context'
+    description: 'Context'

@@ -1,0 +1,14 @@
+name: DmSQLDataSourceConfigNVPair
+model_only: true
+list_item: true
+attributes:
+  - name: ParamName
+    type: String
+    required: true
+    example: 'param_name'
+    description: 'Name'
+  - name: ParamValue
+    type: String
+    required: true
+    example: 'param_value'
+    description: 'Value'

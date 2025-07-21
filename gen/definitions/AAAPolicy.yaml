@@ -1,0 +1,241 @@
+name: AAAPolicy
+description: 'AAA policy'
+cli_alias: 'aaapolicy'
+cmd_group: 'aaapolicy'
+rest_endpoint: '/mgmt/config/{domain}/AAAPolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'AAAPolicy_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: AuthorizedCounter
+    type: String
+    reference_to: CountMonitor
+    description: 'Authorized counter'
+    cli_alias: authorized-counter
+  - name: RejectedCounter
+    type: String
+    reference_to: CountMonitor
+    description: 'Rejected counter'
+    cli_alias: rejected-counter
+  - name: NamespaceMapping
+    type: List
+    element_type: DmNamespaceMapping
+    description: 'Namespace mapping'
+    cli_alias: namespace-mapping
+  - name: ExtractIdentity
+    dm_type: DmAAAPExtractIdentity
+    description: 'Identity extraction'
+    cli_alias: extract-identity
+  - name: Authenticate
+    dm_type: DmAAAPAuthenticate
+    description: 'Authentication'
+    cli_alias: authenticate
+  - name: MapCredentials
+    dm_type: DmAAAPMapCredentials
+    description: 'Credential mapping'
+    cli_alias: map-credentials
+  - name: ExtractResource
+    dm_type: DmAAAPExtractResource
+    description: 'Resource extraction'
+    cli_alias: extract-resource
+  - name: MapResource
+    dm_type: DmAAAPMapResource
+    description: 'Resource mapping'
+    cli_alias: map-resource
+  - name: Authorize
+    dm_type: DmAAAPAuthorize
+    description: 'Authorization'
+    cli_alias: authorize
+  - name: PostProcess
+    dm_type: DmAAAPPostProcess
+    description: 'Postprocessing'
+    cli_alias: post-process
+  - name: SAMLAttribute
+    type: List
+    element_type: DmSAMLAttributeNameAndValue
+    description: 'SAML attributes'
+    cli_alias: saml-attribute
+  - name: LTPAAttributes
+    type: List
+    element_type: DmLTPAUserAttributeNameAndValue
+    description: 'LTPA user attributes'
+    cli_alias: ltpa-attribute
+  - name: TransactionPriority
+    type: List
+    element_type: DmAAATransactionPriority
+    description: 'Transaction priority'
+    cli_alias: transaction-priority
+  - name: SAMLValcred
+    type: String
+    reference_to: CryptoValCred
+    description: 'SAML signature validation credentials'
+    cli_alias: saml-valcred
+  - name: SAMLSigningKey
+    type: String
+    reference_to: CryptoKey
+    description: 'SAML message signing key'
+    cli_alias: saml-sign-key
+  - name: SAMLSigningCert
+    type: String
+    reference_to: CryptoCertificate
+    description: 'SAML message signing certificate'
+    cli_alias: saml-sign-cert
+  - name: SAMLSigningHashAlg
+    type: String
+    enum:
+      - 'sha1'
+      - 'sha256'
+      - 'sha512'
+      - 'ripemd160'
+      - 'sha224'
+      - 'sha384'
+      - 'md5'
+    description: 'SAML signing message digest algorithm'
+    cli_alias: saml-sign-hash
+  - name: SAMLSigningAlg
+    type: String
+    enum:
+      - 'rsa-sha1'
+      - 'dsa-sha1'
+      - 'rsa-sha256'
+      - 'rsa-sha384'
+      - 'rsa-sha512'
+      - 'rsa-ripemd160'
+      - 'rsa-ripemd160-2010'
+      - 'sha256-rsa-MGF1'
+      - 'rsa-md5'
+      - 'rsa'
+      - 'dsa'
+      - 'ecdsa-sha1'
+      - 'ecdsa-sha224'
+      - 'ecdsa-sha256'
+      - 'ecdsa-sha384'
+      - 'ecdsa-sha512'
+    description: 'SAML message signing algorithm'
+    cli_alias: saml-sign-alg
+  - name: LDAPsuffix
+    type: String
+    description: 'LDAP suffix'
+    cli_alias: ldap-suffix
+  - name: LogAllowed
+    type: Bool
+    default: false
+    description: 'Log allowed'
+    cli_alias: log-allowed
+  - name: LogAllowedLevel
+    type: String
+    enum:
+      - 'emerg'
+      - 'alert'
+      - 'critic'
+      - 'error'
+      - 'warn'
+      - 'notice'
+      - 'info'
+      - 'debug'
+    default: 'info'
+    description: 'Log allowed level'
+    cli_alias: log-allowed-level
+  - name: LogRejected
+    type: Bool
+    default: true
+    description: 'Log rejected'
+    cli_alias: log-rejected
+  - name: LogRejectedLevel
+    type: String
+    enum:
+      - 'emerg'
+      - 'alert'
+      - 'critic'
+      - 'error'
+      - 'warn'
+      - 'notice'
+      - 'info'
+      - 'debug'
+    default: 'warn'
+    description: 'Log rejected level'
+    cli_alias: log-rejected-level
+  - name: WSSecureConversationCryptoKey
+    type: String
+    reference_to: CryptoCertificate
+    description: 'WS-Trust encryption recipient certificate'
+    cli_alias: wstrust-encrypt-key
+  - name: SAMLSourceIDMappingFile
+    type: String
+    description: 'SAML Artifact mapping file'
+    cli_alias: saml-artifact-mapping
+  - name: PingIdentityCompatibility
+    type: Bool
+    default: false
+    description: 'PingFederate compatibility'
+    cli_alias: ping-identity-compatibility
+  - name: SAML2MetadataFile
+    type: String
+    description: 'SAML 2.0 metadata file'
+    cli_alias: saml2-metadata
+  - name: DoSValve
+    type: Int64
+    minimum: 1
+    maximum: 1000
+    default: 3
+    description: 'DoS flooding attack valve'
+    cli_alias: dos-valve
+  - name: LDAPVersion
+    type: String
+    enum:
+      - 'v2'
+      - 'v3'
+    default: 'v2'
+    description: 'LDAP version'
+    cli_alias: ldap-version
+  - name: EnforceSOAPActor
+    type: Bool
+    default: true
+    description: 'Enforce actor or role for WS-Security message'
+    cli_alias: enforce-actor-role
+  - name: WSSecActorRoleID
+    type: String
+    description: 'WS-Security actor or role identifier'
+    cli_alias: actor-role-id
+  - name: AUSMHTTPHeader
+    type: List
+    element_type: String
+    description: 'HTTP headers'
+    cli_alias: au-sm-http-header
+  - name: AZSMHTTPHeader
+    type: List
+    element_type: String
+    description: 'HTTP headers'
+    cli_alias: az-sm-http-header
+  - name: DynConfig
+    type: String
+    enum:
+      - 'none'
+      - 'current-aaa'
+      - 'external-aaa'
+    default: 'none'
+    description: 'Dynamic configuration type'
+    cli_alias: dyn-config
+  - name: ExternalAAATemplate
+    type: String
+    reference_to: AAAPolicy
+    description: 'External AAA policy template'
+    cli_alias: external-aaa-template
+  - name: DynConfigCustomURL
+    type: String
+    description: 'Dynamic configuration custom URL'
+    cli_alias: dyn-config-custom-url

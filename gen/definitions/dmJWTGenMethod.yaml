@@ -1,0 +1,11 @@
+name: DmJWTGenMethod
+model_only: true
+attributes:
+  - name: sign
+    type: Bool
+    default: false
+    description: 'Sign'
+  - name: encrypt
+    type: Bool
+    default: false
+    description: 'Encrypt'

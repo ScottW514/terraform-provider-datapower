@@ -1,0 +1,33 @@
+name: DmDomainFileMap
+model_only: true
+attributes:
+  - name: CopyFrom
+    type: Bool
+    default: true
+    required: true
+    description: 'Allow files to be copied from'
+  - name: CopyTo
+    type: Bool
+    default: true
+    required: true
+    description: 'Allow files to be copied to'
+  - name: Delete
+    type: Bool
+    default: true
+    required: true
+    description: 'Allow files to be deleted'
+  - name: Display
+    type: Bool
+    default: true
+    required: true
+    description: 'Allow file content to be displayed'
+  - name: Exec
+    type: Bool
+    default: true
+    required: true
+    description: 'Allow files to be run as scripts'
+  - name: Subdir
+    type: Bool
+    default: true
+    required: true
+    description: 'Allow subdirectories to be created'

@@ -1,0 +1,31 @@
+name: DmCountMonitorFilter
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    description: 'Name'
+    example: 'Filter1'
+  - name: Interval
+    type: Int64
+    required: true
+    description: 'Interval'
+    example: 1000
+  - name: RateLimit
+    type: Int64
+    minimum: 1
+    maximum: 4294967295
+    required: true
+    description: 'Rate Limit'
+    example: 50
+  - name: BurstLimit
+    type: Int64
+    required: true
+    description: 'Burst Limit'
+    example: 100
+  - name: Action
+    type: String
+    reference_to: FilterAction
+    required: true
+    description: 'Action'

@@ -1,0 +1,67 @@
+name: CryptoValCred
+description: 'Validation credentials'
+cli_alias: 'valcred'
+cmd_group: 'validation'
+rest_endpoint: '/mgmt/config/{domain}/CryptoValCred'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CryptoValCred_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Certificate
+    type: List
+    reference_to: CryptoCertificate
+    element_type: String
+    description: 'Certificates'
+    cli_alias: certificate
+  - name: CertValidationMode
+    type: String
+    enum:
+      - 'legacy'
+      - 'pkix'
+      - 'exact-match'
+    default: 'legacy'
+    description: 'Certificate validation mode'
+    cli_alias: cert-validation-mode
+  - name: UseCRL
+    type: Bool
+    default: true
+    description: 'Use CRL'
+    cli_alias: use-crl
+  - name: RequireCRL
+    type: Bool
+    default: false
+    description: 'Require CRL'
+    cli_alias: require-crl
+  - name: CRLDPHandling
+    type: String
+    enum:
+      - 'ignore'
+      - 'require'
+    default: 'ignore'
+    description: 'CRL distribution points handling'
+    cli_alias: crldp
+  - name: InitialPolicySet
+    type: List
+    element_type: String
+    description: 'Initial certificate policy set'
+    cli_alias: initial-policy-set
+  - name: ExplicitPolicy
+    type: Bool
+    default: false
+    description: 'Require explicit certificate policy'
+    cli_alias: explicit-policy
+  - name: CheckDates
+    type: Bool
+    default: true
+    description: 'Check dates'
+    cli_alias: check-dates

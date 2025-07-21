@@ -1,0 +1,95 @@
+name: DmAAAPEIBitmap
+model_only: true
+attributes:
+  - name: http-basic-auth
+    type: Bool
+    default: false
+    description: 'HTTP Authentication header'
+  - name: wssec-username
+    type: Bool
+    default: false
+    description: 'Password-carrying UsernameToken element from WS-Security header'
+  - name: wssec-derived-key
+    type: Bool
+    default: false
+    description: 'Derived-key UsernameToken element from WS-Security header'
+  - name: wssec-binary-token
+    type: Bool
+    default: false
+    description: 'BinarySecurityToken element from WS-Security header'
+  - name: ws-secure-conversation
+    type: Bool
+    default: false
+    description: 'WS-SecureConversation identifier'
+  - name: ws-trust
+    type: Bool
+    default: false
+    description: 'WS-Trust Base or Supporting token'
+  - name: kerberos
+    type: Bool
+    default: false
+    description: 'Kerberos AP-REQ from WS-Security header'
+  - name: kerberos-spnego
+    type: Bool
+    default: false
+    description: 'Kerberos AP-REQ from SPNEGO token'
+  - name: client-ssl
+    type: Bool
+    default: false
+    description: 'Subject DN of TLS certificate from connection peer'
+  - name: saml-attr-name
+    type: Bool
+    default: false
+    description: 'Name from SAML attribute assertion'
+  - name: saml-authen-name
+    type: Bool
+    default: false
+    description: 'Name from SAML authentication assertion'
+  - name: saml-artifact
+    type: Bool
+    default: false
+    description: 'SAML artifact'
+  - name: client-ip-address
+    type: Bool
+    default: false
+    description: 'Client IP address'
+  - name: signer-dn
+    type: Bool
+    default: false
+    description: 'Subject DN from certificate in message signature'
+  - name: token
+    type: Bool
+    default: false
+    description: 'Token extracted from message'
+  - name: cookie-token
+    type: Bool
+    default: false
+    description: 'Token extracted as cookie value'
+  - name: ltpa
+    type: Bool
+    default: false
+    description: 'LTPA token'
+  - name: metadata
+    type: Bool
+    default: false
+    description: 'Processing metadata'
+  - name: jwt
+    type: Bool
+    default: false
+    description: 'JWT'
+  - name: custom
+    type: Bool
+    default: false
+    description: 'Custom processing'
+  - name: html-forms-auth
+    type: Bool
+    default: false
+    description: 'HTML forms-based authentication'
+  - name: social-login
+    type: Bool
+    default: false
+    description: 'Redirect to a social login provider'
+  - name: oauth
+    type: Bool
+    default: false
+    description: 'OAuth'

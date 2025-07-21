@@ -1,0 +1,11 @@
+name: DmSSLOptions
+model_only: true
+attributes:
+  - name: max-duration
+    type: Bool
+    default: false
+    description: 'Set maximum TLS session duration'
+  - name: max-renegotiation
+    type: Bool
+    default: false
+    description: 'Set maximum number client initiated renegotiation allow'

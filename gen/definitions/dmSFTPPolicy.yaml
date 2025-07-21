@@ -1,0 +1,19 @@
+name: DmSFTPPolicy
+model_only: true
+list_item: true
+attributes:
+  - name: RegExp
+    type: String
+    required: true
+    example: '*'
+    description: 'URL matching expression'
+  - name: SSHClientProfile
+    type: String
+    reference_to: SSHClientProfile
+    required: true
+    description: 'SSH client profile'
+  - name: UseUniqueFilenames
+    type: Bool
+    default: false
+    required: true
+    description: 'Use unique file names'

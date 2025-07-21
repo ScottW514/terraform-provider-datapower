@@ -1,0 +1,30 @@
+name: AccessProfile
+description: 'Access profile'
+cli_alias: 'access-profile'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/AccessProfile'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'AccessProfile_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: AccessPolicies
+    type: List
+    element_type: String
+    list_example:
+      - '10.10.1.1/domainA/services/xslproxy?Access=r+w&Name=foo.*'
+    description: 'Access policies'
+    cli_alias: access-policy

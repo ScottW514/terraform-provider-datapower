@@ -1,0 +1,18 @@
+name: DmDynamicParseSettingsReference
+model_only: true
+attributes:
+  - name: URL
+    type: String
+    description: 'URL reference'
+    test_value: '"some_url"'
+    cli_alias: url
+  - name: Literal
+    type: String
+    example: 'literal'
+    description: 'Literal configuration'
+    cli_alias: literal
+  - name: Default
+    type: String
+    reference_to: ParseSettings
+    description: 'Object reference'
+    cli_alias: default

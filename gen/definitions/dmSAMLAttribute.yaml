@@ -1,0 +1,31 @@
+name: DmSAMLAttribute
+model_only: true
+list_item: true
+attributes:
+  - name: SourceType
+    type: String
+    enum:
+      - 'var'
+      - 'xpath'
+      - 'static'
+    required: true
+    example: 'var'
+    description: 'Data Source Type'
+  - name: Name
+    type: String
+    description: 'Name'
+  - name: Format
+    type: String
+    description: 'Attribute NameSpace/Format'
+  - name: XPath
+    type: String
+    description: 'XPath to Input Message'
+  - name: ValueData
+    type: String
+    description: 'Data for Attribute Value'
+  - name: SubValueData
+    type: String
+    description: 'Supplementary Data'
+  - name: FriendlyName
+    type: String
+    description: 'Friendly Name'

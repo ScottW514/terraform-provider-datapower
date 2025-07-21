@@ -1,0 +1,98 @@
+name: Domain
+description: 'Application domain'
+cli_alias: 'domain'
+rest_endpoint: '/mgmt/config/default/Domain/{domain}'
+put_create: true
+attributes:
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'Domain_test'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: ConfigDir
+    type: String
+    default: 'config:///'
+    description: 'Configuration directory'
+  - name: NeighborDomain
+    type: List
+    reference_to: Domain
+    element_type: String
+    list_default:
+      - 'default'
+    description: 'Visible domains'
+    cli_alias: visible-domain
+  - name: DomainUser
+    type: List
+    reference_to: User
+    element_type: String
+    description: 'CLI user access'
+    cli_alias: domain-user
+  - name: FileMap
+    dm_type: DmDomainFileMap
+    description: 'File permission to the local: directory'
+    cli_alias: file-permissions
+  - name: MonitoringMap
+    dm_type: DmDomainMonitoringMap
+    description: 'File-monitoring of the local: directory'
+    cli_alias: file-monitoring
+  - name: ConfigMode
+    type: String
+    enum:
+      - 'local'
+      - 'import'
+    default: 'local'
+    description: 'Configuration mode'
+    cli_alias: config-mode
+  - name: ImportURL
+    type: String
+    description: 'Import URL'
+    cli_alias: import-url
+  - name: ImportFormat
+    type: String
+    enum:
+      - 'ZIP'
+      - 'XML'
+    default: 'ZIP'
+    description: 'Import format'
+    cli_alias: import-format
+  - name: DeploymentPolicy
+    type: String
+    reference_to: ConfigDeploymentPolicy
+    description: 'Deployment policy'
+    cli_alias: deployment-policy
+  - name: DeploymentPolicyParameters
+    type: String
+    reference_to: DeploymentPolicyParametersBinding
+    description: 'Deployment policy variables'
+    cli_alias: deployment-policy-variables
+  - name: LocalIPRewrite
+    type: Bool
+    default: true
+    description: 'Rewrite local IP addresses'
+    cli_alias: local-ip-rewrite
+  - name: MaxChkpoints
+    type: Int64
+    minimum: 1
+    maximum: 5
+    default: 3
+    description: 'Checkpoint limit'
+    cli_alias: maxchkpoints
+  - name: ConfigPermissionsMode
+    type: String
+    enum:
+      - 'scope-domain'
+      - 'global-profile'
+      - 'specific-profile'
+    default: 'scope-domain'
+    description: 'Configuration permissions mode'
+    cli_alias: config-permissions-mode
+  - name: ConfigPermissionsProfile
+    type: String
+    reference_to: AccessProfile
+    description: 'Global permissions profile'
+    cli_alias: config-permissions-profile

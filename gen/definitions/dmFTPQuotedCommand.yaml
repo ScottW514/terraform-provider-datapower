@@ -1,0 +1,9 @@
+name: DmFTPQuotedCommand
+model_only: true
+list_item: true
+attributes:
+  - name: QuotedCommand
+    type: String
+    required: true
+    example: 'ls'
+    description: 'Quoted Command'

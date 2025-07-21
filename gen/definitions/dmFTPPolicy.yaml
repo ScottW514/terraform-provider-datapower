@@ -1,0 +1,73 @@
+name: DmFTPPolicy
+model_only: true
+list_item: true
+attributes:
+  - name: RegExp
+    type: String
+    required: true
+    example: '*'
+    description: 'URL matching expression'
+  - name: Passive
+    type: String
+    enum:
+      - 'pasv-off'
+      - 'pasv-opt'
+      - 'pasv-req'
+    required: true
+    default: 'pasv-req'
+    description: 'Passive mode'
+  - name: AuthTLS
+    type: String
+    enum:
+      - 'auth-off'
+      - 'auth-tls-opt'
+      - 'auth-tls-req'
+      - 'auth-tls-imp'
+    required: true
+    default: 'auth-off'
+    description: 'Encrypt command connection'
+  - name: UseCCC
+    type: String
+    enum:
+      - 'ccc-off'
+      - 'ccc-opt'
+      - 'ccc-req'
+    required: true
+    default: 'ccc-off'
+    description: 'Stop command encryption after authentication'
+  - name: EncryptData
+    type: String
+    enum:
+      - 'enc-data-off'
+      - 'enc-data-opt'
+      - 'enc-data-req'
+    required: true
+    default: 'enc-data-off'
+    description: 'Encrypt file transfers'
+  - name: DataType
+    type: String
+    enum:
+      - 'ascii'
+      - 'binary'
+    required: true
+    default: 'binary'
+    description: 'Data type'
+  - name: SlashSTOU
+    type: String
+    enum:
+      - 'slash-stou-off'
+      - 'slash-stou-on'
+    required: true
+    default: 'slash-stou-on'
+    description: 'Write unique file name if trailing slash'
+  - name: QuotedCommands
+    type: String
+    reference_to: FTPQuoteCommands
+    description: 'Quoted commands'
+  - name: SizeCheck
+    type: String
+    enum:
+      - 'size-check-optional'
+      - 'size-check-disabled'
+    default: 'size-check-optional'
+    description: 'Size check'

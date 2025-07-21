@@ -1,0 +1,15 @@
+name: DmSAMLStatementType
+model_only: true
+attributes:
+  - name: authentication
+    type: Bool
+    default: true
+    description: 'Authentication statement'
+  - name: attribute
+    type: Bool
+    default: true
+    description: 'Attribute statement'
+  - name: authorization
+    type: Bool
+    default: false
+    description: 'Authorization decision statement'

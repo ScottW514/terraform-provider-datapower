@@ -1,0 +1,100 @@
+name: SocialLoginPolicy
+description: 'Social Login Policy'
+cli_alias: 'social-login-policy'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/SocialLoginPolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'SocialLoginPolicy_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: ClientID
+    type: String
+    required: true
+    example: 'client_id'
+    description: 'Client ID'
+    cli_alias: client-id
+  - name: ClientSecret
+    type: String
+    required: true
+    example: 'client_secret'
+    description: 'Client secret'
+    cli_alias: client-secret
+  - name: ClientGrant
+    type: String
+    enum:
+      - 'code'
+      - 'implicit'
+      - 'password'
+      - 'client'
+      - 'code-id_token'
+    description: 'Client grant type'
+    cli_alias: client-grant
+  - name: ClientScope
+    type: String
+    description: 'Scope'
+    cli_alias: client-scope
+  - name: ClientRedirectURI
+    type: String
+    default: 'URL-in/social-login-callback'
+    example: 'https://datapower.ibm.com:10087/social-login-callback'
+    description: 'Client redirection URI'
+    cli_alias: client-redirect-uri
+  - name: ClientOptionalQueryParams
+    type: String
+    description: 'Client Optional Query Parameters'
+    cli_alias: client-opt-query-params
+  - name: ClientSSLProfile
+    type: String
+    reference_to: SSLClientProfile
+    required: true
+    description: 'TLS client profile'
+    cli_alias: client-ssl
+  - name: Provider
+    tf_name: social_provider
+    type: String
+    enum:
+      - 'google'
+      - 'oidc'
+      - 'facebook'
+      - 'custom'
+    required: true
+    example: 'google'
+    description: 'Social login provider'
+    cli_alias: provider
+  - name: ProviderAZEndpoint
+    type: String
+    required: true
+    example: 'https://example.com/auth'
+    description: 'Authorization endpoint URL'
+    cli_alias: provider-az-endpoint
+  - name: ProviderTokenEndpoint
+    type: String
+    required: true
+    example: 'https://example.com/token'
+    description: 'Token endpoint URL'
+    cli_alias: provider-token-endpoint
+  - name: ValidateJWTToken
+    type: Bool
+    default: true
+    required: true
+    description: 'Enable JWT token validation'
+    cli_alias: validate-jwt-token
+  - name: JWTValidator
+    type: String
+    reference_to: AAAJWTValidator
+    description: 'JWT Validator'
+    cli_alias: jwt-validator

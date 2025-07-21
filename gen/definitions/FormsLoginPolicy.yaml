@@ -1,0 +1,163 @@
+name: FormsLoginPolicy
+description: 'HTML forms login policy'
+cli_alias: 'forms-login-policy'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/FormsLoginPolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'FormsLoginPolicy_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LoginForm
+    type: String
+    required: true
+    default: '/LoginPage.htm'
+    description: 'Login'
+    cli_alias: login-url
+  - name: UseCookieAttributes
+    type: String
+    enum:
+      - 'no'
+      - 'yes'
+    required: true
+    default: 'no'
+    description: 'Attach cookie attribute policy'
+    cli_alias: use-cookie-attribute
+  - name: CookieAttributes
+    type: String
+    reference_to: CookieAttributePolicy
+    description: 'Cookie attributes'
+    cli_alias: cookie-attributes
+  - name: UseSSLForLogin
+    type: Bool
+    default: true
+    description: 'Use TLS for Login'
+    cli_alias: use-ssl
+  - name: EnableMigration
+    type: Bool
+    default: false
+    required: true
+    description: 'Enable session migration'
+    cli_alias: enable-migration
+  - name: SSLPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 8080
+    description: 'TLS port'
+    cli_alias: ssl-port
+  - name: SharedSecret
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Shared secret'
+    cli_alias: shared-secret
+  - name: ErrorPage
+    type: String
+    required: true
+    default: '/ErrorPage.htm'
+    description: 'Error'
+    cli_alias: error-url
+  - name: LogoutPage
+    type: String
+    required: true
+    default: '/LogoutPage.htm'
+    description: 'Logout'
+    cli_alias: logout-url
+  - name: DefaultURL
+    type: String
+    required: true
+    default: '/'
+    description: 'Default'
+    cli_alias: default-url
+  - name: FormsLocation
+    type: String
+    enum:
+      - 'backend'
+      - 'appliance'
+    default: 'backend'
+    description: 'Forms storage location'
+    cli_alias: forms-location
+  - name: LocalLoginForm
+    type: String
+    default: 'store:///LoginPage.htm'
+    description: 'Local login form'
+    cli_alias: local-login-page
+  - name: LocalErrorPage
+    type: String
+    default: 'store:///ErrorPage.htm'
+    description: 'Local error page'
+    cli_alias: local-error-page
+  - name: LocalLogoutPage
+    type: String
+    default: 'store:///LogoutPage.htm'
+    description: 'Local logout page'
+    cli_alias: local-logout-page
+  - name: UsernameField
+    type: String
+    required: true
+    default: 'j_username'
+    description: 'Username field name'
+    cli_alias: username-field
+  - name: PasswordField
+    type: String
+    required: true
+    sensitive: true
+    default: 'j_password'
+    description: 'Password field name'
+    cli_alias: password-field
+  - name: RedirectField
+    type: String
+    required: true
+    default: 'originalUrl'
+    description: 'Target URL field name'
+    cli_alias: redirect-field
+  - name: FormProcessingURL
+    type: String
+    required: true
+    default: '/j_security_check'
+    description: 'Form POST action URL'
+    cli_alias: post-action-url
+  - name: InactivityTimeout
+    type: Int64
+    default: 600
+    description: 'Inactivity timeout'
+    cli_alias: inactivity-timeout
+  - name: SessionLifetime
+    type: Int64
+    default: 10800
+    description: 'Session lifetime'
+    cli_alias: session-lifetime
+  - name: RedirectURLType
+    type: String
+    enum:
+      - 'urlin'
+      - 'host'
+    default: 'urlin'
+    description: 'Redirect URL Type'
+    cli_alias: redirect-url-type
+  - name: FormSupportType
+    type: String
+    enum:
+      - 'static'
+      - 'custom'
+    default: 'static'
+    description: 'Source for form processing'
+    cli_alias: support-type
+  - name: FormSupportScript
+    type: String
+    default: 'store:///Form-Generate-HTML.xsl'
+    description: 'Custom processing for form'
+    cli_alias: script-location

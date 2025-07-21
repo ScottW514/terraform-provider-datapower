@@ -1,0 +1,15 @@
+name: DmHeaderSuppression
+model_only: true
+list_item: true
+attributes:
+  - name: Direction
+    type: String
+    enum:
+      - 'front'
+      - 'back'
+    example: 'front'
+    description: 'Direction'
+  - name: HeaderTag
+    type: String
+    description: 'Header Tag'
+    example: 'HEADER-TAG'

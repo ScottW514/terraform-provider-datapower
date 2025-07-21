@@ -1,0 +1,72 @@
+name: DmTAMRASTrace
+model_only: true
+attributes:
+  - name: TAMTraceEnable
+    type: Bool
+    default: false
+    required: true
+    description: 'Enable Access Manager Tracing'
+    cli_alias: enable-tam-trace
+  - name: TAMTraceFile
+    type: String
+    description: 'Trace File'
+    cli_alias: tam-trace-file
+  - name: TAMTraceSize
+    type: Int64
+    minimum: 100
+    maximum: 1000000
+    default: 100
+    description: 'Trace File Entries'
+    cli_alias: tam-trace-size
+  - name: TAMTraceType
+    type: String
+    enum:
+      - 'textfile'
+      - 'utf8file'
+      - 'xmlfile'
+    description: 'Trace Format'
+    cli_alias: tam-trace-type
+  - name: TAMTraceComponents
+    type: String
+    default: '*:*.9'
+    description: 'Trace Components'
+    cli_alias: tam-trace-components
+  - name: LDAPTraceEnable
+    type: Bool
+    default: false
+    required: true
+    description: 'Enable Tracing for LDAP'
+    cli_alias: enable-ldap-trace
+  - name: LDAPTraceFile
+    type: String
+    description: 'Trace File for LDAP'
+    cli_alias: ldap-trace-file
+  - name: LDAPTraceSize
+    type: Int64
+    minimum: 10000
+    maximum: 10000000
+    default: 10000
+    description: 'Trace File Size for LDAP'
+    cli_alias: ldap-trace-size
+  - name: LDAPTraceLevel
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 1
+    description: 'Trace Level for LDAP'
+    cli_alias: ldap-trace-level
+  - name: GSKitTraceEnable
+    type: Bool
+    default: false
+    required: true
+    description: 'Enable Tracing for GSKit'
+    cli_alias: enable-gskit-trace
+  - name: GSKitTraceFile
+    type: String
+    description: 'Trace File for GSKit'
+    cli_alias: gskit-trace-file
+  - name: GSKitTraceFlush
+    type: Bool
+    default: false
+    description: 'Flush GSkit Trace to File'
+    cli_alias: gskit-trace-flush

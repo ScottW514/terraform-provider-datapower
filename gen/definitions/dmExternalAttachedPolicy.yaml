@@ -1,0 +1,32 @@
+name: DmExternalAttachedPolicy
+model_only: true
+list_item: true
+attributes:
+  - name: ExternalAttachWSDLComponentType
+    type: String
+    enum:
+      - 'service'
+      - 'port'
+      - 'fragmentid'
+      - 'rest'
+    description: 'Component Type'
+    example: 'rest'
+  - name: ExternalAttachWSDLComponentValue
+    type: String
+    description: 'WSDL Component Value'
+  - name: ExternalAttachPolicyURL
+    type: String
+    required: true
+    description: 'Policy URL'
+    example: 'some.url'
+  - name: ExternalAttachPolicyFragmentID
+    type: String
+    description: 'Fragment Identifier'
+  - name: ExternalAttachMessageContentFilter
+    type: String
+    reference_to: MessageContentFilters
+    description: 'Service Consumer MCF'
+  - name: ExternalAttachMessageContentFilterServiceProvider
+    type: String
+    reference_to: MessageContentFilters
+    description: 'Service Provider MCF'

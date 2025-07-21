@@ -1,0 +1,55 @@
+name: DmTAMFedDir
+model_only: true
+list_item: true
+attributes:
+  - name: FedName
+    type: String
+    required: true
+    example: 'fed_name'
+    description: 'Name'
+    cli_alias: federate-name
+  - name: Suffix
+    type: String
+    required: true
+    example: 'suffix'
+    description: 'Suffix'
+    cli_alias: suffix
+  - name: Host
+    type: String
+    required: true
+    example: 'ldap.host'
+    description: 'LDAP host'
+    cli_alias: hostname
+  - name: Port
+    type: Int64
+    required: true
+    default: 389
+    description: 'LDAP port'
+    cli_alias: port
+  - name: BindDN
+    type: String
+    required: true
+    example: 'dn'
+    description: 'LDAP administrator DN'
+    cli_alias: bind-dn
+  - name: BindPw
+    type: String
+    reference_to: PasswordAlias
+    required: true
+    description: 'LDAP administrator password alias'
+    cli_alias: bind-pw
+  - name: UseSSL
+    type: Bool
+    default: false
+    required: true
+    description: 'Use TLS'
+    cli_alias: UseSSL
+  - name: KeyFileLabel
+    type: String
+    description: 'LDAP server TLS key file label'
+    cli_alias: key-file-label
+  - name: BasicPrincipalAttribute
+    type: String
+    default: 'uid'
+    description: 'Basic user principal attribute'
+    cli_alias: basic-principal-attribute

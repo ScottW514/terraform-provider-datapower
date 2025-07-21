@@ -1,0 +1,16 @@
+name: DmAAAPExtractResource
+model_only: true
+attributes:
+  - name: ERBitmap
+    dm_type: DmAAAPERBitmap
+    description: 'Methods'
+    cli_alias: method
+  - name: ERXPath
+    type: String
+    description: 'XPath expression'
+    cli_alias: xpath
+  - name: ERMetadata
+    type: String
+    reference_to: ProcessingMetadata
+    description: 'Processing metadata items'
+    cli_alias: metadata

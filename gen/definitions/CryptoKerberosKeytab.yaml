@@ -1,0 +1,44 @@
+name: CryptoKerberosKeytab
+description: 'Kerberos Keytab'
+cli_alias: 'kerberos-keytab'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/CryptoKerberosKeytab'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CryptoKerberosKeytab_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Filename
+    type: String
+    required: true
+    example: 'cert:///kerberos-keytab'
+    description: 'File Name'
+    cli_alias: file-name
+  - name: UseReplayCache
+    type: Bool
+    default: true
+    description: 'Use Replay Cache'
+    cli_alias: use-replay-cache
+  - name: GenerateGssChecksum
+    type: Bool
+    default: false
+    description: 'Generate GSS-API Checksum in AP-REQ'
+    cli_alias: generate-gss-checksum
+  - name: GssChecksumFlags
+    dm_type: DmGssChecksumFlags
+    default: 'REPLAY+SEQUENCE+CONF+INTEG'
+    description: 'GSS-API Checksum Flags'
+    cli_alias: gss-checksum-flags

@@ -1,0 +1,14 @@
+name: DmDeploymentPolicyParameter
+model_only: true
+list_item: true
+attributes:
+  - name: ParameterName
+    type: String
+    required: true
+    description: 'Variable Name'
+    example: 'parameter_name'
+  - name: ParameterValue
+    type: String
+    required: true
+    description: 'Variable Value'
+    example: 'parameter_value'

@@ -1,0 +1,120 @@
+name: AAAJWTGenerator
+description: 'JWT Generator'
+cli_alias: 'jwt-generator'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/AAAJWTGenerator'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'AAAJWTGenerator_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Issuer
+    type: String
+    default: 'idg'
+    description: 'Issuer'
+    cli_alias: iss
+  - name: Duration
+    type: Int64
+    minimum: 1
+    maximum: 31622400
+    default: 3600
+    description: 'Validity period'
+    cli_alias: duration
+  - name: AdditionalClaims
+    dm_type: DmJWTClaims
+    description: 'Additional claims'
+    cli_alias: add-claims
+  - name: Audience
+    type: List
+    element_type: String
+    description: 'Audience claim'
+    cli_alias: aud
+  - name: NotBefore
+    type: Int64
+    maximum: 480
+    description: 'Delta for not before claim'
+    cli_alias: nbf
+  - name: CustomClaims
+    type: String
+    description: 'Custom claims'
+    cli_alias: custom-claims
+  - name: GenMethod
+    dm_type: DmJWTGenMethod
+    description: 'JWT generation method'
+    cli_alias: generate-method
+  - name: SignAlgorithm
+    type: String
+    enum:
+      - 'HS256'
+      - 'HS384'
+      - 'HS512'
+      - 'RS256'
+      - 'RS384'
+      - 'RS512'
+      - 'ES256'
+      - 'ES384'
+      - 'ES512'
+      - 'PS256'
+      - 'PS384'
+      - 'PS512'
+    default: 'RS256'
+    description: 'Signing algorithm'
+    cli_alias: sign-alg
+  - name: SignKey
+    type: String
+    reference_to: CryptoKey
+    description: 'Signing key'
+    cli_alias: sign-key
+  - name: SignSSKey
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Signing shared secret'
+    cli_alias: sign-sskey
+  - name: EncAlgorithm
+    type: String
+    enum:
+      - 'A128CBC-HS256'
+      - 'A192CBC-HS384'
+      - 'A256CBC-HS512'
+      - 'A128GCM'
+      - 'A192GCM'
+      - 'A256GCM'
+    default: 'A128CBC-HS256'
+    description: 'Encryption algorithm'
+    cli_alias: enc
+  - name: EncryptAlgorithm
+    type: String
+    enum:
+      - 'RSA1_5'
+      - 'RSA-OAEP'
+      - 'RSA-OAEP-256'
+      - 'A128KW'
+      - 'A192KW'
+      - 'A256KW'
+      - 'dir'
+    default: 'RSA1_5'
+    description: 'Key management algorithm'
+    cli_alias: enc-alg
+  - name: EncryptCertificate
+    type: String
+    reference_to: CryptoCertificate
+    description: 'Encryption certificate'
+    cli_alias: enc-cert
+  - name: EncryptSSKey
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Encryption key'
+    cli_alias: enc-sskey

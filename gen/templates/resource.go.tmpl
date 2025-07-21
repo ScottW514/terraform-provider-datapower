@@ -1,0 +1,432 @@
+//go:build ignore
+// Copyright © 2025 Scott Wiederhold <s.e.wiederhold@gmail.com>
+// All rights reserved.
+//
+// Licensed under the Mozilla Public License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://mozilla.org/MPL/2.0/
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// SPDX-License-Identifier: MPL-2.0
+
+// This file is generated "gen/generator.go"
+// !!CHANGES TO THIS FILE WILL BE OVERWRITTEN!!
+
+package provider
+
+import (
+	"context"
+	"fmt"
+	"strings"
+
+	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/path"
+	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listdefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+)
+
+var _ resource.Resource{{if hasWriteOnlyAttribute .Attributes}}WithModifyPlan{{end}} = &{{.Name}}Resource{}
+
+func New{{.Name}}Resource() resource.Resource {
+	return &{{.Name}}Resource{}
+}
+
+type {{.Name}}Resource struct {
+	client *client.DatapowerClient
+}
+
+func (r *{{.Name}}Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_{{snakeCase .Name}}"
+}
+
+func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = schema.Schema{
+		MarkdownDescription: tfutils.NewAttributeDescription({{quote .Description}}, {{quote .CliAlias}}, "").String,
+
+		Attributes: map[string]schema.Attribute{
+{{- $root := . }}
+{{- range  .Attributes}}
+	{{- if .Type}}
+			"{{.TfName}}": schema.{{if eq .Type "Object"}}SingleNested{{else if isList .}}List{{- if and (ne .ElementType "String") (ne .ElementType "Int64")}}Nested{{end}}{{else}}{{.Type}}{{end}}Attribute{
+				MarkdownDescription: tfutils.NewAttributeDescription({{quote .Description}}, {{quote .CliAlias}}, {{quote (snakeCase .ReferenceTo)}})
+		{{- if len .Enum -}}
+					.AddStringEnum({{range .Enum}}{{quote .}}, {{end}})
+		{{- end -}}
+		{{- if or (ne .Minimum 0) (ne .Maximum 0) -}}
+					.AddIntegerRange({{.Minimum}}, {{.Maximum}})
+		{{- end -}}
+		{{- if .Default -}}
+					.AddDefaultValue({{quote .Default}})
+		{{- end -}}
+					.String,
+		{{- if isList .}}
+			{{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}
+				ElementType:         types.{{.ElementType}}Type,
+			{{- else}}
+				NestedObject:        models.{{.ElementType}}ResourceSchema,
+			{{- end}}
+		{{- end}}
+		{{- if and .Required (not (or (len .Default) (len .ListDefault)))}}
+				Required:            true,
+		{{- else}}
+				Optional:            true,
+		{{- end}}
+		{{- if or .Computed (and (or (len .Default) (len .ListDefault)) (or (ne .Type "List") (or (eq .ElementType "String"))))}}
+				Computed:            true,
+		{{- end}}
+		{{- if .WriteOnly}}
+                WriteOnly:           true,
+		{{- end}}
+		{{- if and .Sensitive (eq .ElementType "String")}}
+                Sensitive:           true,
+		{{- end}}
+		{{- if and (len .Enum) (ne .Type "Object")}}
+				Validators: []validator.{{.Type}}{
+					{{if eq .Type "List"}}listvalidator.ValueStringsAre({{end}}stringvalidator.OneOf({{range .Enum}}{{quote .}}, {{end}}){{if eq .Type "List"}}){{end}},
+				},
+		{{- else if or (len .StringPatterns) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
+				Validators: []validator.{{.Type}}{
+			{{if eq .Type "List"}}
+					listvalidator.ValueStringsAre(
+			{{end}}
+			{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
+						stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
+			{{- end}}
+			{{- range .StringPatterns}}
+						stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
+			{{- end}}
+			{{if eq .Type "List"}}
+					),
+			{{end}}
+				},
+		{{- else if or (ne .Minimum 0) (ne .Maximum 0)}}
+				Validators: []validator.{{.Type}}{
+			{{if eq .Type "List"}}
+					listvalidator.ValueInt64sAre(
+			{{end}}
+						int64validator.Between({{.Minimum}}, {{.Maximum}}),
+			{{if eq .Type "List"}}
+					),
+			{{end}}
+				},
+		{{- end}}
+		{{- if len .Default}}
+			{{- if eq .Type "Int64"}}
+				Default:             int64default.StaticInt64({{.Default}}),
+			{{- else if eq .Type "Bool"}}
+				Default:             booldefault.StaticBool({{.Default}}),
+			{{- else if eq .Type "String"}}
+				Default:             stringdefault.StaticString({{quote .Default}}),
+			{{- end}}
+		{{- else if and (eq .Type "List") (or (eq .ElementType "String")) (len .ListDefault)}}
+				Default:             listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{
+				{{- range .ListDefault}}
+										types.StringValue({{quote .}}),
+				{{- end}}
+									 })),
+		{{- end}}
+		{{- if or .Computed (eq .Name "AppDomain") (eq .Name "Id")}}
+				PlanModifiers: []planmodifier.{{.Type}}{
+			{{- if eq .Name "AppDomain"}}
+					ImmutableAfterSet(),
+			{{- else if eq .Name "Id"}}
+					stringplanmodifier.RequiresReplace(),
+			{{- else if .Computed}}
+					{{snakeCase .Type}}planmodifier.UseStateForUnknown(),
+			{{- end}}
+				},
+		{{- end}}
+			},
+	{{- else if .DmType}}
+			"{{.TfName}}": models.Get{{.DmType}}ResourceSchema({{quote .Description}}, {{quote .CliAlias}}, {{quote (snakeCase .ReferenceTo)}}, {{if .Required}}true{{else}}false{{end}}),
+	{{- end}}
+	{{- if .WriteOnly}}
+			"{{.TfName}}_update": schema.BoolAttribute{
+				MarkdownDescription: "Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.",
+				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(false),
+				DeprecationMessage:  "This attribute is for INTERNAL PROVIDER USE. Set values are ignored.",
+			},
+	{{- end}}
+{{- end}}
+		},
+	}
+}
+
+func (r *{{.Name}}Resource) Configure(_ context.Context, req resource.ConfigureRequest, _ *resource.ConfigureResponse) {
+	if req.ProviderData == nil {
+		return
+	}
+
+	r.client = *req.ProviderData.(**client.DatapowerClient)
+}
+
+func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var data models.{{.Name}}
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+{{- if hasWriteOnlyAttribute .Attributes}}
+
+	var config models.{{.Name}}
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	{{- $name := .Name}}
+	{{- range .Attributes}}
+		{{- if .WriteOnly}}
+		data.{{toGoName .TfName}} = config.{{toGoName .TfName}}
+		resp.Diagnostics.Append(resp.Private.SetKey(ctx, "{{$name}}.{{.Name}}", []byte("{\"value\": \""+tfutils.GenerateHash(config.{{.Name}}.ValueString())+"\"}"))...)
+		{{- end}}
+	{{- end}}
+{{- end}}
+
+	body := data.ToBody(ctx, `{{.Name}}`)
+	{{- if or .PutCreate .UpdateOnly}}
+	res, err := r.client.Put(data.GetPath(), body)
+	{{- else}}
+	res, err := r.client.Post(data.GetPath(), body)
+	{{- end}}
+	{{/* TODO: Implement better race condition handling */}}
+	if err != nil && res.RawResponse.StatusCode != 409 {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s, %s", {{if or .PutCreate .UpdateOnly}}"PUT"{{else}}"POST"{{end}}, err, res.String()))
+		return
+	}
+{{- if or (hasDomainAttribute .Attributes) (eq .Name "Domain")}}
+
+	res, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s, %s", "POST", err, res.String()))
+		return
+	}
+
+{{- end}}
+{{- if eq .Name "Domain"}}
+
+	res, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s, %s", "POST", err, res.String()))
+		return
+	}
+
+{{- end}}
+{{- if .UpdateComputed}}
+
+	{{- if or (eq .Name "Domain") .UpdateOnly}}
+	getRes, getErr := r.client.Get(data.GetPath())
+	{{- else}}
+	getRes, getErr := r.client.Get(data.GetPath()+"/"+data.Id.ValueString())
+	{{- end}}
+	if getErr != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object after creation (GET), got error: %s", getErr))
+		return
+	}
+	data.UpdateUnknownFromBody(ctx, `{{.Name}}`, getRes)
+
+{{- end}}
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *{{.Name}}Resource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var data models.{{.Name}}
+
+	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+{{- if or (eq .Name "Domain") .UpdateOnly}}
+	res, err := r.client.Get(data.GetPath())
+{{- else}}
+	res, err := r.client.Get(data.GetPath()+"/"+data.Id.ValueString())
+{{- end}}
+	if err != nil && (strings.Contains(err.Error(), "StatusCode 404") || strings.Contains(err.Error(), "StatusCode 406") || strings.Contains(err.Error(), "StatusCode 500") || strings.Contains(err.Error(), "StatusCode 400")) {
+		resp.State.RemoveResource(ctx)
+		return
+	} else if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		return
+	}
+
+	if data.IsNull() {
+		// Import
+		data.FromBody(ctx, `{{.Name}}`, res)
+	} else {
+		// Update
+		data.UpdateFromBody(ctx, `{{.Name}}`, res)
+	}
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var data{{if hasWriteOnlyAttribute .Attributes}}, config{{end}} models.{{.Name}}
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+{{- if hasWriteOnlyAttribute .Attributes}}
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+{{- end}}
+{{- if hasWriteOnlyAttribute .Attributes}}
+	{{- $name := .Name}}
+	{{- range .Attributes}}
+		{{- if .WriteOnly}}
+
+    if data.{{toGoName .TfName}}Update.IsUnknown() {
+		data.{{toGoName .TfName}} = config.{{.Name}}
+		data.{{toGoName .TfName}}Update = types.BoolValue(false)
+        resp.Diagnostics.Append(resp.Private.SetKey(ctx, "{{$name}}.{{.Name}}", []byte("{\"value\": \""+tfutils.GenerateHash(config.{{.Name}}.ValueString())+"\"}"))...)
+    }
+		{{- end}}
+	{{- end}}
+{{- end}}
+
+{{- if or (eq .Name "Domain") .UpdateOnly}}
+	res, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`))
+{{- else}}
+	res, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `{{.Name}}`))
+{{- end}}
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s, %s", err, res.String()))
+		return
+	}
+
+{{- if or (hasDomainAttribute .Attributes) (eq .Name "Domain")}}
+	res, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s, %s", "POST", err, res.String()))
+		return
+	}
+{{- end}}
+{{- if eq .Name "Domain"}}
+
+	res, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s, %s", "POST", err, res.String()))
+		return
+	}
+
+{{- end}}
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+{{- if not .UpdateOnly}}
+	var data models.{{.Name}}
+
+	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+{{- if eq .Name "Domain"}}
+	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
+	auRes, auErr := r.client.Get("/mgmt/status/default/ActiveUsers")
+	if auErr != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get Active Users, got error: %s, %s", auErr, auRes.String()))
+		return
+	}
+	if userList := auRes.Get("ActiveUsers"); userList.Exists() {
+		for _, session := range userList.Array() {
+			if d := session.Get("domain"); d.Exists() && d.Str == data.AppDomain.ValueString() {
+				if id := session.Get("session"); id.Exists() {
+					r.client.Post("/mgmt/actionqueue/default", fmt.Sprintf("{\"Disconnect\": {\"id\": %d}}", id.Int()))
+				}
+			}
+		}
+	}
+{{- end}}
+
+{{- if or (eq .Name "Domain") .UpdateOnly}}
+	res, err := r.client.Delete(data.GetPath())
+{{- else}}
+	res, err := r.client.Delete(data.GetPath()+"/"+data.Id.ValueString())
+{{- end}}
+	if err != nil && res.RawResponse.StatusCode != 404 && res.RawResponse.StatusCode != 409 {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
+		return
+	}
+{{- end}}
+{{- if eq .Name "Domain"}}
+
+	res, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
+	if err != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s, %s", "POST", err, res.String()))
+		return
+	}
+
+{{- end}}
+
+	resp.State.RemoveResource(ctx)
+}
+{{- if hasWriteOnlyAttribute .Attributes}}
+func (r *{{.Name}}Resource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
+	if req.Plan.Raw.IsNull() {
+		return
+	}
+	var data, config models.{{.Name}}
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	{{- if hasWriteOnlyAttribute .Attributes}}
+	var val []byte
+	var diags diag.Diagnostics
+	{{- end}}
+
+	{{- $name := .Name}}
+	{{- range .Attributes}}
+		{{- if .WriteOnly}}
+	val, diags = req.Private.GetKey(ctx, "{{$name}}.{{.Name}}")
+	resp.Diagnostics.Append(diags...)
+	if val != nil {
+		if hash := gjson.GetBytes(val, "value"); hash.Exists() && !tfutils.VerifyHash(config.{{.Name}}.ValueString(), hash.String()) {
+			data.{{toGoName .TfName}}Update = types.BoolUnknown()
+		}
+	}
+		{{- end}}
+	{{- end}}
+
+	resp.Diagnostics.Append(resp.Plan.Set(ctx, &data)...)
+}
+{{- end}}

@@ -1,0 +1,10 @@
+name: DmNamespaceMapping
+model_only: true
+list_item: true
+attributes:
+  - name: Prefix
+    type: String
+    description: 'Prefix'
+  - name: URI
+    type: String
+    description: 'URI'

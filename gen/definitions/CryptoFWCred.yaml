@@ -1,0 +1,38 @@
+name: CryptoFWCred
+description: 'Firewall credentials'
+cli_alias: 'fwcred'
+cmd_group: 'firewallcred'
+rest_endpoint: '/mgmt/config/{domain}/CryptoFWCred'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CryptoFWCred_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: PrivateKey
+    type: List
+    reference_to: CryptoKey
+    element_type: String
+    test_value: '[datapower_cryptokey.test.id]'
+    description: 'Private key'
+    cli_alias: key
+  - name: SharedSecretKey
+    type: List
+    reference_to: CryptoSSKey
+    element_type: String
+    description: 'Shared secret key'
+    cli_alias: sskey
+  - name: Certificate
+    type: List
+    reference_to: CryptoCertificate
+    element_type: String
+    description: 'Certificate'
+    cli_alias: certificate

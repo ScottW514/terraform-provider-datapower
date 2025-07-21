@@ -1,0 +1,13 @@
+name: DmSAMLAttributeNameAndValue
+model_only: true
+list_item: true
+attributes:
+  - name: URI
+    type: String
+    description: 'Namespace URI'
+  - name: LocalName
+    type: String
+    description: 'Local name'
+  - name: Value
+    type: String
+    description: 'Attribute value'

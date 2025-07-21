@@ -1,0 +1,13 @@
+name: DmStylesheetParameter
+model_only: true
+list_item: true
+attributes:
+  - name: ParameterName
+    type: String
+    description: 'Parameter Name'
+    example: 'PARAMETER'
+  - name: ParameterValue
+    type: String
+    required: true
+    description: 'Parameter Value'
+    example: 'PARAMETER-VALUE'

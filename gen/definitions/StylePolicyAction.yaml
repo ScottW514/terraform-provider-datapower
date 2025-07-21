@@ -1,0 +1,570 @@
+name: StylePolicyAction
+description: 'Processing action'
+cli_alias: 'action'
+cmd_group: 'stylesheetaction'
+rest_endpoint: '/mgmt/config/{domain}/StylePolicyAction'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'StylePolicyAction_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Type
+    type: String
+    enum:
+      - 'validate'
+      - 'filter'
+      - 'route-action'
+      - 'aaa'
+      - 'xformpi'
+      - 'xformbin'
+      - 'cryptobin'
+      - 'xform'
+      - 'convert-http'
+      - 'log'
+      - 'results'
+      - 'results-async'
+      - 'setvar'
+      - 'fetch'
+      - 'extract'
+      - 'rewrite'
+      - 'route-set'
+      - 'strip-attachments'
+      - 'call'
+      - 'on-error'
+      - 'checkpoint'
+      - 'slm'
+      - 'quota-enforcement'
+      - 'sql'
+      - 'conditional'
+      - 'for-each'
+      - 'event-sink'
+      - 'method-rewrite'
+      - 'xformng'
+      - 'gatewayscript'
+      - 'jose-sign'
+      - 'jose-verify'
+      - 'jose-encrypt'
+      - 'jose-decrypt'
+      - 'parse'
+    required: true
+    default: 'xform'
+    description: 'Action type'
+    cli_alias: type
+  - name: Input
+    type: String
+    description: 'Input'
+    cli_alias: input
+  - name: Transform
+    type: String
+    description: 'Transform file'
+    cli_alias: transform
+  - name: ParseSettingsReference
+    dm_type: DmDynamicParseSettingsReference
+    description: 'Parse settings'
+    cli_alias: parse-settings-reference
+  - name: ParseMetricsResultType
+    type: String
+    enum:
+      - 'none'
+      - 'xml'
+      - 'json'
+      - 'graphql'
+    default: 'none'
+    description: 'Parse metrics result type'
+    cli_alias: parse-settings-result-type
+  - name: ParseMetricsResultLocation
+    type: String
+    description: 'Parse metrics result location'
+    cli_alias: parse-settings-result-location
+  # TODO: Missing API Endpoint
+  # - name: DFDLSettingsReference
+  #   type: String
+  #   reference_to: DFDLSettings
+  #   description: 'DFDL settings'
+  #   cli_alias: dfdl-settings-reference
+  - name: InputLanguage
+    type: String
+    enum:
+      - 'xml'
+      - 'dfdl'
+      - 'xsd'
+      - 'json'
+    default: 'xml'
+    description: 'Input language'
+    cli_alias: input-language
+  - name: DFDLInputRootName
+    type: String
+    description: 'DFDL input root name'
+    cli_alias: input-root-name
+  - name: InputDescriptor
+    type: String
+    description: 'Input descriptor'
+    cli_alias: input-descriptor
+  - name: OutputDescriptor
+    type: String
+    description: 'Output descriptor'
+    cli_alias: output-descriptor
+  - name: TransformLanguage
+    type: String
+    enum:
+      - 'none'
+      - 'xquery'
+    default: 'none'
+    description: 'Transform language'
+    cli_alias: transform-language
+  - name: OutputLanguage
+    type: String
+    enum:
+      - 'default'
+      - 'dfdl'
+    default: 'default'
+    description: 'Output language'
+    cli_alias: output-language
+  - name: TxMap
+    type: String
+    description: 'ITX map file'
+    cli_alias: tx-map
+  - name: GatewayScriptLocation
+    type: String
+    description: 'GatewayScript file'
+    cli_alias: gatewayscript-location
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable GatewayScript debug'
+    cli_alias: debug
+  - name: TxTopLevelMap
+    type: String
+    description: 'ITX top-level map name'
+    cli_alias: tx-tlm
+  - name: TxMode
+    type: String
+    enum:
+      - 'default'
+      - 'no-map'
+      - 'dpa'
+    description: 'ITX map mode'
+    cli_alias: tx-mode
+  - name: TxAuditLog
+    type: String
+    description: 'ITX audit log'
+    cli_alias: tx-audit-log
+  - name: Output
+    type: String
+    description: 'Output'
+    cli_alias: output
+  - name: NoTranscodeUtf8
+    type: Bool
+    default: false
+    description: 'Retain input encoding'
+    cli_alias: charset-transparency
+  - name: NamedInOutLocationType
+    type: String
+    enum:
+      - 'default'
+      - 'explicit'
+      - 'dynamic'
+      - 'interop'
+    default: 'default'
+    description: 'Locate named inputs and outputs'
+    cli_alias: named-inouts
+  - name: NamedInputs
+    type: List
+    element_type: DmNamedInOut
+    description: 'Named inputs'
+    cli_alias: named-input
+    test_value: 'null'
+  - name: NamedOutputs
+    type: List
+    element_type: DmNamedInOut
+    description: 'Named outputs'
+    cli_alias: named-output
+    test_value: 'null'
+  - name: Destination
+    type: String
+    description: 'External URL'
+    cli_alias: destination
+  - name: SchemaURL
+    type: String
+    description: 'Schema URL'
+    cli_alias: schema-url
+  - name: JSONSchemaURL
+    type: String
+    description: 'JSON schema URL'
+    cli_alias: json-schema-url
+  - name: WsdlURL
+    type: String
+    description: 'WSDL URL'
+    cli_alias: wsdl-url
+  - name: Policy
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'URL rewrite policy'
+    cli_alias: urlrewrite-policy
+  - name: AAA
+    type: String
+    reference_to: AAAPolicy
+    description: 'AAA policy'
+    cli_alias: aaa-policy
+  - name: DynamicSchema
+    type: String
+    description: 'Dynamic schema'
+    cli_alias: dynamic-schema
+  - name: DynamicStylesheet
+    type: String
+    description: 'Dynamic stylesheet'
+    cli_alias: dynamic-stylesheet
+  - name: InputConversion
+    type: String
+    reference_to: HTTPInputConversionMap
+    description: 'Input conversion'
+    cli_alias: input-conversion
+  - name: XPath
+    type: String
+    description: 'XPath'
+    cli_alias: xpath
+  - name: Variable
+    type: String
+    example: 'var://context/CONTEXT-NAME/VAR-NAME'
+    description: 'Variable name'
+    cli_alias: variable
+  - name: Value
+    type: String
+    description: 'Variable value'
+    cli_alias: value
+  - name: SSLCred
+    type: String
+    description: 'TLS proxy profile (deprecated)'
+    deprecated: true
+    cli_alias: sslcred
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: SSLClientCred
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: AttachmentURI
+    type: String
+    description: 'Attachment URI'
+    cli_alias: attachment-uri
+  - name: StylesheetParameters
+    type: List
+    element_type: DmStylesheetParameter
+    description: 'Stylesheet parameters'
+    cli_alias: parameter
+  - name: ErrorMode
+    type: String
+    enum:
+      - 'abort'
+      - 'continue'
+      - 'alternative'
+    description: 'Error mode'
+    cli_alias: error-mode
+  - name: ErrorInput
+    type: String
+    description: 'Error input'
+    cli_alias: error-input
+  - name: ErrorOutput
+    type: String
+    description: 'Error output'
+    cli_alias: error-output
+  - name: Rule
+    type: String
+    description: 'Processing rule'
+    cli_alias: rule
+  - name: OutputType
+    type: String
+    enum:
+      - 'default'
+      - 'binary'
+      - 'xml'
+    description: 'Output type'
+    cli_alias: output-type
+  - name: LogLevel
+    type: String
+    enum:
+      - 'emerg'
+      - 'alert'
+      - 'critic'
+      - 'error'
+      - 'warn'
+      - 'notice'
+      - 'info'
+      - 'debug'
+    description: 'Log level'
+    cli_alias: log-level
+  - name: LogType
+    type: String
+    reference_to: LogLabel
+    description: 'Log type'
+    cli_alias: log-type
+  - name: Transactional
+    type: Bool
+    default: false
+    description: 'Transactional'
+    cli_alias: transactional
+  - name: CheckpointEvent
+    type: String
+    enum:
+      - 'Request'
+      - 'Response'
+      - 'Fault'
+      - 'AuthComplete'
+    description: 'Event'
+    cli_alias: event
+  - name: SLMPolicy
+    type: String
+    description: 'SLM policy'
+    cli_alias: slm
+  - name: SQLDataSource
+    type: String
+    reference_to: SQLDataSource
+    description: 'SQL Data Source'
+    cli_alias: sql-source
+  - name: SQLText
+    type: String
+    description: 'SQL text'
+    cli_alias: sql-text
+  - name: SOAPValidation
+    type: String
+    enum:
+      - 'body'
+      - 'body-or-detail'
+      - 'ignore-faults'
+      - 'envelope'
+    default: 'body'
+    description: 'SOAP validation'
+    cli_alias: soap-validation
+  - name: SQLSourceType
+    type: String
+    enum:
+      - 'static'
+      - 'variable'
+      - 'stylesheet'
+      - 'static_internal'
+    default: 'static'
+    description: 'SQL input method'
+    cli_alias: sql-source-type
+  - name: JOSESerializationType
+    type: String
+    enum:
+      - 'compact'
+      - 'json'
+      - 'json_flat'
+    description: 'Serialization'
+    cli_alias: serialization
+  - name: JWEEncAlgorithm
+    type: String
+    enum:
+      - 'A128CBC-HS256'
+      - 'A192CBC-HS384'
+      - 'A256CBC-HS512'
+      - 'A128GCM'
+      - 'A192GCM'
+      - 'A256GCM'
+    description: 'Algorithm'
+    cli_alias: jwe-enc
+  - name: JWSSignatureObject
+    type: String
+    reference_to: JWSSignature
+    description: 'Signature'
+    cli_alias: jws-signature
+  - name: JWEHeaderObject
+    type: String
+    reference_to: JWEHeader
+    description: 'JWE Header'
+    cli_alias: jwe-header
+  - name: JOSEVerifyType
+    type: String
+    enum:
+      - 'identifiers'
+      - 'single-cert'
+      - 'single-sskey'
+    description: 'Identifier type'
+    cli_alias: jose-verify-type
+  - name: JOSEDecryptType
+    type: String
+    enum:
+      - 'identifiers'
+      - 'single-key'
+      - 'single-sskey'
+      - 'direct-key'
+    description: 'Identifier Type'
+    cli_alias: jose-decrypt-type
+  - name: SignatureIdentifier
+    type: List
+    reference_to: JOSESignatureIdentifier
+    element_type: String
+    description: 'Signature Identifiers'
+    cli_alias: signature-identifier
+  - name: RecipientIdentifier
+    type: List
+    reference_to: JOSERecipientIdentifier
+    element_type: String
+    description: 'Recipient Identifiers'
+    cli_alias: recipient-identifier
+  - name: SingleCertificate
+    type: String
+    reference_to: CryptoCertificate
+    description: 'Certificate'
+    cli_alias: single-cert
+  - name: SingleKey
+    type: String
+    reference_to: CryptoKey
+    description: 'Private Key'
+    cli_alias: single-key
+  - name: SingleSSKey
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Shared Secret Key'
+    cli_alias: single-sskey
+  - name: JWEDirectKeyObject
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Direct Key'
+    cli_alias: direct-key
+  - name: JWSVerifyStripSignature
+    type: Bool
+    default: true
+    description: 'Strip Signature'
+    cli_alias: strip-signature
+  - name: Asynchronous
+    type: Bool
+    default: false
+    description: 'Asynchronous'
+    cli_alias: asynchronous
+  - name: Condition
+    type: List
+    element_type: DmCondition
+    description: 'Condition'
+    cli_alias: condition
+  - name: ResultsMode
+    type: String
+    enum:
+      - 'first-available'
+      - 'require-all'
+      - 'attempt-all'
+    default: 'first-available'
+    description: 'Multi-way results mode'
+    cli_alias: results-mode
+  - name: RetryCount
+    type: Int64
+    description: 'Number of retries'
+    cli_alias: retry-count
+  - name: RetryInterval
+    type: Int64
+    default: 1000
+    description: 'Retry interval'
+    cli_alias: retry-interval
+  - name: MultipleOutputs
+    type: Bool
+    default: false
+    description: 'Use multiple outputs'
+    cli_alias: multiple-outputs
+  - name: IteratorType
+    type: String
+    enum:
+      - 'XPATH'
+      - 'COUNT'
+    default: 'XPATH'
+    description: 'Iterator type'
+    cli_alias: iterator-type
+  - name: IteratorExpression
+    type: String
+    description: 'XPath expression'
+    cli_alias: iterator-expression
+  - name: IteratorCount
+    type: Int64
+    minimum: 1
+    maximum: 32768
+    description: 'Iterator count'
+    cli_alias: iterator-count
+  - name: LoopAction
+    type: String
+    description: 'Loop action'
+    cli_alias: loop-action
+  - name: AsyncAction
+    type: List
+    element_type: String
+    description: 'Asynchronous actions'
+    cli_alias: async-action
+  - name: Timeout
+    type: Int64
+    description: 'Timeout'
+    cli_alias: timeout
+  - name: WSDLPortQName
+    type: String
+    description: 'WSDL Port QName'
+    cli_alias: wsdl-port
+  - name: WSDLOperationName
+    type: String
+    description: 'WSDL Operation Name'
+    cli_alias: wsdl-operation
+  - name: WSDLMessageDirectionOrName
+    type: String
+    description: 'WSDL Message Direction or Name'
+    cli_alias: wsdl-message-direction-or-name
+  - name: WSDLAttachmentPart
+    type: String
+    description: 'WSDL Attachment Part Name'
+    cli_alias: wsdl-attachment-part
+  - name: MethodRewriteType
+    type: String
+    enum:
+      - 'POST'
+      - 'GET'
+      - 'PUT'
+      - 'PATCH'
+      - 'DELETE'
+      - 'HEAD'
+    default: 'GET'
+    description: 'Method'
+    cli_alias: http-method
+  - name: MethodType
+    type: String
+    enum:
+      - 'POST'
+      - 'GET'
+      - 'PUT'
+      - 'PATCH'
+      - 'DELETE'
+      - 'HEAD'
+    default: 'POST'
+    description: 'Method'
+    cli_alias: http-method-limited
+  - name: MethodType2
+    type: String
+    enum:
+      - 'POST'
+      - 'GET'
+      - 'PUT'
+      - 'PATCH'
+      - 'DELETE'
+      - 'HEAD'
+    default: 'POST'
+    description: 'Method'
+    cli_alias: http-method-limited2
+  - name: PolicyKey
+    type: String
+    description: 'Policy identifier (for internal use)'
+    cli_alias: policy-key

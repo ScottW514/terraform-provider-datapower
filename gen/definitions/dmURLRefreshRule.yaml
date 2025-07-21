@@ -1,0 +1,25 @@
+name: DmURLRefreshRule
+model_only: true
+list_item: true
+attributes:
+  - name: URLMap
+    type: String
+    reference_to: URLMap
+    required: true
+    description: 'URL Map'
+    cli_alias: urlmap
+  - name: URLRefreshPolicy
+    type: String
+    enum:
+      - 'default'
+      - 'no-cache'
+      - 'no-flush'
+      - 'protocol-specified'
+    description: 'Refresh Rule Type'
+    cli_alias: type
+    default: 'default'
+  - name: URLRefreshInterval
+    type: Int64
+    description: 'Refresh Interval'
+    cli_alias: interval
+    default: 0

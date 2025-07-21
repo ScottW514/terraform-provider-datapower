@@ -1,0 +1,19 @@
+name: DmHeaderRetentionBitmap
+model_only: true
+attributes:
+  - name: TE
+    type: Bool
+    default: false
+    description: 'TE'
+  - name: Accept-Encoding
+    type: Bool
+    default: false
+    description: 'Accept-Encoding'
+  - name: Range
+    type: Bool
+    default: false
+    description: 'Range'
+  - name: MQMD
+    type: Bool
+    default: false
+    description: 'MQMD'

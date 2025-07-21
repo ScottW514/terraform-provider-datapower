@@ -1,0 +1,134 @@
+name: AAAJWTValidator
+description: 'JWT Validator'
+cli_alias: 'jwt-validator'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/AAAJWTValidator'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'AAAJWTValidator_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Issuer
+    type: String
+    description: 'Issuer'
+    cli_alias: iss
+  - name: Aud
+    type: String
+    description: 'Audience'
+    cli_alias: aud
+  - name: ValMethod
+    dm_type: DmJWTValMethod
+    description: 'Validation method'
+    cli_alias: validate-method
+  - name: CustomizedScript
+    type: String
+    description: 'Custom validation method processing'
+    cli_alias: customized-script
+  - name: DecryptCredentialType
+    type: String
+    enum:
+      - 'pkix'
+      - 'ssecret'
+      - 'jwk'
+      - 'jwk-remote'
+      - 'custom'
+    description: 'Decrypt method'
+    cli_alias: decrypt-type
+  - name: DecryptKey
+    type: String
+    reference_to: CryptoKey
+    description: 'Decrypt key'
+    cli_alias: decrypt-key
+  - name: DecryptSSecret
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Decrypt shared secret'
+    cli_alias: decrypt-ssecret
+  - name: DecryptJWK
+    type: String
+    description: 'Decrypt JWK'
+    cli_alias: decrypt-jwk
+  - name: DecryptFetchCredURL
+    type: String
+    default: 'http://example.com/v3/key'
+    example: 'https://example.com/v3/key'
+    description: 'Decrypt credential URL'
+    cli_alias: decrypt-fetch-cred-url
+  - name: DecryptFetchCredSSLProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'Decrypt credential TLS client profile'
+    cli_alias: decrypt-fetch-cred-sslprofile
+  - name: ValidateCustom
+    type: String
+    description: 'Custom decrypt/verify processing'
+    cli_alias: validate-custom
+  - name: VerifyCredentialType
+    type: String
+    enum:
+      - 'pkix'
+      - 'ssecret'
+      - 'jwk'
+      - 'jwk-remote'
+      - 'custom'
+    description: 'Verify method'
+    cli_alias: verify-type
+  - name: VerifyCertificate
+    type: String
+    reference_to: CryptoCertificate
+    description: 'Verify certificate'
+    cli_alias: verify-certificate
+  - name: VerifyCertificateAgainstValCred
+    type: Bool
+    default: false
+    description: 'Signature validation credentials'
+    cli_alias: verify-certificate-against-valcred
+  - name: VerifyValCred
+    type: String
+    reference_to: CryptoValCred
+    description: 'Validation credentials'
+    cli_alias: valcred
+  - name: VerifySSecret
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Verify shared secret'
+    cli_alias: verify-ssecret
+  - name: VerifyJWK
+    type: String
+    description: 'Verify JWK'
+    cli_alias: verify-jwk
+  - name: VerifyFetchCredURL
+    type: String
+    default: 'http://example.com/v3/certs'
+    example: 'https://example.com/v3/certs'
+    description: 'Verify credential URL'
+    cli_alias: verify-fetch-cred-url
+  - name: VerifyFetchCredSSLProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'Verify credential TLS client profile'
+    cli_alias: verify-fetch-cred-sslprofile
+  - name: Claims
+    type: List
+    element_type: DmClaim
+    description: 'Validate claims'
+    cli_alias: claims
+  - name: UsernameClaim
+    type: String
+    required: true
+    default: 'sub'
+    description: 'Claim used as username'
+    cli_alias: username-claim

@@ -1,0 +1,14 @@
+name: DmHostToSSLServerProfile
+model_only: true
+list_item: true
+attributes:
+  - name: HostNameWildmat
+    type: String
+    required: true
+    example: 'hostname_wildmat'
+    description: 'Hostname match'
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    required: true
+    description: 'Server profile'

@@ -1,0 +1,14 @@
+name: DmRestrict10Policy
+model_only: true
+list_item: true
+attributes:
+  - name: RegExp
+    type: String
+    required: true
+    example: '*'
+    description: 'URL matching expression'
+  - name: Restrict10
+    type: Bool
+    default: false
+    required: true
+    description: 'Restrict to HTTP/1.0'

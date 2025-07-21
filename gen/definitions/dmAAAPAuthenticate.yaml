@@ -1,0 +1,348 @@
+name: DmAAAPAuthenticate
+model_only: true
+attributes:
+  - name: AUMethod
+    type: String
+    enum:
+      - 'xmlfile'
+      - 'ldap'
+      - 'tivoli'
+      - 'netegrity'
+      - 'oblix'
+      - 'cleartrust'
+      - 'radius'
+      - 'client-ssl'
+      - 'validate-signer'
+      - 'saml-signature'
+      - 'saml-artifact'
+      - 'saml-authen-query'
+      - 'ws-trust'
+      - 'ws-secureconversation'
+      - 'token'
+      - 'kerberos'
+      - 'ltpa'
+      - 'binarytokenx509'
+      - 'zosnss'
+      - 'verified-oauth'
+      - 'custom'
+    required: true
+    default: 'ldap'
+    description: 'Method'
+    cli_alias: method
+  - name: AUCustomURL
+    type: String
+    description: 'Custom URL'
+    cli_alias: custom-url
+  - name: AUMapURL
+    type: String
+    description: 'AAA information file URL'
+    cli_alias: xmlfile-url
+  - name: AUHost
+    type: String
+    description: 'Host'
+    cli_alias: remote-host
+  - name: AUPort
+    type: Int64
+    description: 'Port'
+    default: 389
+    cli_alias: remote-port
+  - name: AUSSLValcred
+    type: String
+    reference_to: CryptoValCred
+    description: 'TLS client validation credentials'
+    cli_alias: valcred
+  - name: AUCacheAllow
+    type: String
+    enum:
+      - 'absolute'
+      - 'disabled'
+      - 'maximum'
+      - 'minimum'
+    required: true
+    default: 'absolute'
+    description: 'Cache authentication results'
+    cli_alias: cache-type
+  - name: AUCacheTTL
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    default: 3
+    description: 'Cache lifetime'
+    cli_alias: cache-ttl
+  - name: AUKerberosPrincipal
+    type: String
+    description: 'Kerberos principal name'
+    cli_alias: kerberos-principal
+  - name: AUKerberosPassword
+    type: String
+    sensitive: true
+  - name: AUClearTrustServerURL
+    type: String
+    description: 'ClearTrust server URL'
+    cli_alias: cleartrust-url
+  - name: AUClearTrustApplication
+    type: String
+  - name: AUSAMLArtifactResponder
+    type: String
+    description: 'SAML Artifact responder'
+    cli_alias: saml-artifact-responder
+  - name: AUKerberosVerifySignature
+    type: Bool
+    default: true
+  - name: AUNetegrityBaseURI
+    type: String
+    description: 'CA Single Sign-On base URI'
+    cli_alias: netegrity-base-uri
+  - name: AUSAMLAuthQueryServer
+    type: String
+    description: 'SAML Authentication query server'
+    cli_alias: saml-authen-query-url
+  - name: AUSAMLVersion
+    type: String
+    enum:
+      - '2.0'
+      - '1.1'
+      - '1.0'
+    default: '1.1'
+    description: 'SAML version'
+    cli_alias: saml-version
+  - name: AULDAPPrefix
+    type: String
+    default: 'cn='
+    description: 'LDAP DN prefix'
+    cli_alias: ldap-prefix
+  - name: AULDAPSuffix
+    type: String
+    description: 'LDAP DN suffix'
+    cli_alias: ldap-suffix
+  - name: AULDAPLoadBalanceGroup
+    type: String
+    reference_to: LoadBalancerGroup
+    description: 'LDAP load balancer group'
+    cli_alias: ldap-lbgroup
+  - name: AUKerberosKeytab
+    type: String
+    reference_to: CryptoKerberosKeytab
+    description: 'Kerberos keytab'
+    cli_alias: kerberos-keytab
+  - name: AUWSTrustURL
+    type: String
+    description: 'WS-Trust token server'
+    cli_alias: ws-trust-url
+  - name: AUSAML2Issuer
+    type: String
+  - name: AUSignerValcred
+    type: String
+    reference_to: CryptoValCred
+    description: 'Signature validation credentials'
+    cli_alias: valcred
+  - name: AUSignedXPath
+    type: String
+    description: 'XPath expression'
+    cli_alias: signed-xpath
+  # DEPRECATED
+  # - name: AUSSLProxyProfile
+  #   type: String
+  #   reference_to: SSLProxyProfile
+  #   description: 'TLS proxy profile (deprecated)'
+  #   deprecated: true
+  #   cli_alias: ssl
+  # TODO: Missing API Endpoint
+  # - name: AUNetegrityConfig
+  #   type: String
+  #   reference_to: Reserved117
+  - name: AULDAPBindDN
+    type: String
+    description: 'LDAP bind DN'
+    cli_alias: ldap-bind-dn
+  - name: AULDAPBindPassword
+    type: String
+    sensitive: true
+    description: 'LDAP bind password (deprecated)'
+    deprecated: true
+    cli_alias: ldap-bind-password
+  - name: AULDAPSearchAttribute
+    type: String
+    default: 'userPassword'
+    description: 'LDAP search attribute'
+    cli_alias: ldap-search-attr
+  - name: AULTPATokenVersionsBitmap
+    dm_type: DmLTPATokenVersion
+    default: 'LTPA2'
+    description: 'Acceptable LTPA versions'
+    cli_alias: lpta-version
+  - name: AULTPAKeyFile
+    type: String
+    description: 'LTPA key file'
+    cli_alias: lpta-key-file
+  - name: AULTPAKeyFilePassword
+    type: String
+    sensitive: true
+    description: 'LTPA key file password (deprecated)'
+    deprecated: true
+    cli_alias: lpta-key-password
+  - name: AULTPAStashFile
+    type: String
+    description: 'LTPA stash file'
+    cli_alias: lpta-stash-file
+  - name: AUBinaryTokenX509Valcred
+    type: String
+    reference_to: CryptoValCred
+    description: 'X.509 BinarySecurityToken validation credentials'
+    cli_alias: x509-bin-token-valcred
+  - name: AUTAMServer
+    type: String
+    reference_to: TAM
+    description: 'IBM Security Access Manager client'
+    cli_alias: tam
+  - name: AUAllowRemoteTokenReference
+    type: Bool
+    default: false
+    description: 'Retrieve remote WS-Security token'
+    cli_alias: remote-token-allowed
+  - name: AURemoteTokenProcessService
+    type: String
+    description: 'URL to process remote token'
+    cli_alias: remote-token-url
+  - name: AUWSTrustVersion
+    type: String
+    enum:
+      - '1.3'
+      - '1.2'
+      - '1.1'
+    default: '1.2'
+    description: 'WS-Trust compatibility version'
+    cli_alias: ws-trust-version
+  - name: AULDAPSearchForDN
+    type: Bool
+    default: false
+    description: 'Search for DN'
+    cli_alias: ldap-search-for-dn
+  - name: AULDAPSearchParameters
+    type: String
+    reference_to: LDAPSearchParameters
+    description: 'LDAP search parameters'
+    cli_alias: ldap-search-param
+  - name: AUWSTrustRequireClientEntropy
+    type: Bool
+    default: false
+    description: 'Require client entropy'
+    cli_alias: trust-require-client-entropy
+  - name: AUWSTrustClientEntropySize
+    type: Int64
+    minimum: 8
+    maximum: 128
+    default: 32
+    description: 'Client entropy size'
+    cli_alias: trust-client-entropy-size
+  - name: AUWSTrustRequireServerEntropy
+    type: Bool
+    default: false
+    description: 'Require server entropy'
+    cli_alias: trust-require-server-entropy
+  - name: AUWSTrustServerEntropySize
+    type: Int64
+    minimum: 8
+    maximum: 128
+    default: 32
+    description: 'Server entropy size'
+    cli_alias: trust-server-entropy-size
+  - name: AUWSTrustRequireRSTC
+    type: Bool
+    default: false
+    description: 'Require RequestSecurityTokenCollection'
+    cli_alias: trust-require-rstc
+  - name: AUWSTrustRequireAppliesToHeader
+    type: Bool
+    default: false
+    description: 'Require AppliesTo SOAP header'
+    cli_alias: trust-require-applies-to-header
+  - name: AUWSTrustAppliesToHeader
+    type: String
+    description: 'AppliesTo SOAP header'
+    cli_alias: trust-applies-to-header
+  - name: AUWSTrustEncryptionCertificate
+    type: String
+    reference_to: CryptoCertificate
+    description: 'WS-Trust encryption certificate'
+    cli_alias: trust-encryption-certificate
+  - name: AUZOSNSSConfig
+    type: String
+    reference_to: ZosNSSClient
+    description: 'z/OS NSS client configuration'
+    cli_alias: zos-nss-au
+  - name: AULDAPAttributes
+    type: String
+    description: 'User auxiliary LDAP attributes'
+    cli_alias: au-ldap-attributes
+  - name: AUSkewTime
+    type: Int64
+    default: 0
+    description: 'Skew time'
+    cli_alias: au-skew-time
+  - name: AUTAMPACReturn
+    type: Bool
+    default: false
+    description: 'Return Privilege Attribute Certificate'
+    cli_alias: tam-pac-return
+  - name: AULDAPReadTimeout
+    type: Int64
+    maximum: 86400
+    default: 60
+    description: 'LDAP read timeout'
+    cli_alias: ldap-readtimeout
+  - name: AUSSLClientConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: AUSSLClientProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: AULDAPBindPasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    sensitive: true
+    description: 'LDAP bind password alias'
+    cli_alias: ldap-bind-password-alias
+  - name: AULTPAKeyFilePasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    sensitive: true
+    description: 'LTPA key file password alias'
+    cli_alias: ltpa-key-password-alias
+  - name: AUSMRequestType
+    type: String
+    enum:
+      - 'webagent'
+      - 'webservice'
+    default: 'webagent'
+    description: 'Request type'
+    cli_alias: sm-request-type
+  - name: AUSMCookieFlow
+    dm_type: DmSMFlow
+    description: 'Session cookie flow'
+    cli_alias: sm-cookie-flow
+  - name: AUSMHeaderFlow
+    dm_type: DmSMFlow
+    description: 'CA Single Sign-On header flow'
+    cli_alias: sm-header-flow
+  - name: AUSMCookieAttributes
+    type: String
+    reference_to: CookieAttributePolicy
+    description: 'Cookie attribute policy'
+    cli_alias: cookie-attributes
+  - name: AUCacheControl
+    type: String
+    enum:
+      - 'default'
+      - 'disable-all'
+      - 'disable-ldap-failures'
+    default: 'default'
+    description: 'Authentication caching'
+    cli_alias: cache-control

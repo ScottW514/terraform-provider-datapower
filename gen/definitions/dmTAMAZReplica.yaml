@@ -1,0 +1,24 @@
+name: DmTAMAZReplica
+model_only: true
+list_item: true
+attributes:
+  - name: TAMAZReplica
+    type: String
+    required: true
+    example: 'replica'
+    description: 'Host'
+    cli_alias: host
+  - name: TAMAZReplicaPort
+    type: Int64
+    required: true
+    default: 7136
+    description: 'Port'
+    cli_alias: port
+  - name: TAMAZReplicaWeight
+    type: Int64
+    minimum: 1
+    maximum: 10
+    required: true
+    default: 10
+    description: 'Weight'
+    cli_alias: weight

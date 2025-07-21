@@ -1,0 +1,23 @@
+name: DmProxyPolicy
+model_only: true
+list_item: true
+attributes:
+  - name: RegExp
+    type: String
+    required: true
+    example: "*"
+    description: 'URL matching expression'
+  - name: Skip
+    type: Bool
+    default: false
+    required: true
+    description: 'Skip'
+  - name: RemoteAddress
+    type: String
+    description: 'Remote host'
+    example: 'remote.host'
+  - name: RemotePort
+    type: Int64
+    required: true
+    example: 443
+    description: 'Remote port'

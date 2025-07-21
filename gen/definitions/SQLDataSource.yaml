@@ -1,0 +1,186 @@
+name: SQLDataSource
+description: 'SQL data source'
+cli_alias: 'sql-source'
+cmd_group: 'sql'
+rest_endpoint: '/mgmt/config/{domain}/SQLDataSource'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'SQLDataSource_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Database
+    type: String
+    enum:
+      - 'DB2'
+      - 'Oracle'
+      - 'Sybase'
+      - 'MSSQLServer'
+      - 'DB2v9'
+      - 'IMS'
+    required: true
+    example: 'Oracle'
+    description: 'Database type'
+    cli_alias: db
+  - name: Username
+    type: String
+    required: true
+    example: 'username'
+    description: 'Connection username'
+    cli_alias: username
+  - name: PasswordAlias
+    type: String
+    required: true
+    reference_to: PasswordAlias
+    description: 'Connection password alias'
+    cli_alias: password-alias
+  - name: DataSourceID
+    type: String
+    required: true
+    description: 'Data source ID'
+    example: 'datasource_id'
+    cli_alias: id
+  - name: DataSourceHost
+    type: String
+    required: true
+    example: 'datasource.host'
+    description: 'Data source host'
+    cli_alias: host
+  - name: DataSourcePort
+    type: Int64
+    required: true
+    example: 1488
+    description: 'Data source port'
+    cli_alias: port
+  - name: LimitReturnedData
+    type: Bool
+    default: false
+    description: 'Limit returned data'
+    cli_alias: limit
+  - name: LimitReturnedDataSize
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 128
+    description: 'Returned data size limit'
+    cli_alias: limit-size
+  - name: SQLDataSourceConfigNVPairs
+    type: List
+    element_type: DmSQLDataSourceConfigNVPair
+    description: 'Advanced configuration parameters'
+    cli_alias: sql-config-param
+  - name: MaxConnection
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    default: 10
+    description: 'Max connections'
+    cli_alias: maximum-connections
+  - name: OracleDataSourceType
+    type: String
+    enum:
+      - 'SID'
+      - 'ServiceName'
+    default: 'SID'
+    description: 'Data source type - Oracle'
+    cli_alias: oracle-datasource-type
+  - name: OracleObjects
+    type: Bool
+    default: false
+    description: 'Enable object support - Oracle'
+    cli_alias: oracle-objects
+  - name: ConnectTimeout
+    type: Int64
+    required: true
+    default: 15
+    description: 'Connection timeout'
+    cli_alias: connect-timeout
+  - name: QueryTimeout
+    type: Int64
+    required: true
+    example: 30
+    description: 'Query timeout'
+    cli_alias: query-timeout
+  - name: IdleTimeout
+    type: Int64
+    required: true
+    default: 180
+    description: 'Idle connection timeout'
+    cli_alias: idle-timeout
+  - name: LoadBalancing
+    type: Bool
+    default: false
+    description: 'Load distribution - Db2 for z/OS'
+    cli_alias: load-balancing
+  # TODO: Missing object in API response
+  # - name: AncillaryServers
+  #   type: List
+  #   element_type: DmSQLServer
+  #   description: 'Ancillary servers - Oracle'
+  #   cli_alias: ancillary-server
+  - name: EncryptionMethodMSSQL
+    type: String
+    enum:
+      - 'NoEncryption'
+      - 'SSL'
+      - 'RequestSSL'
+      - 'LoginSSL'
+    default: 'NoEncryption'
+    description: 'Encryption method - SQL Server'
+    cli_alias: mssql-encryption-method
+  - name: EncryptionMethodOracle
+    type: String
+    enum:
+      - 'NoEncryption'
+      - 'SSL'
+    default: 'NoEncryption'
+    description: 'Encryption method - Oracle'
+    cli_alias: oracle-encryption-method
+  - name: EncryptionMethodDB2
+    type: String
+    enum:
+      - 'NoEncryption'
+      - 'SSL'
+    default: 'NoEncryption'
+    description: 'Encryption method - Db2'
+    cli_alias: db2-encryption-method
+  - name: TruststoreRef
+    type: String
+    reference_to: CryptoValCred
+    description: 'Truststore'
+    cli_alias: truststore
+  - name: ValidateServerCertificate
+    type: String
+    enum:
+      - 'Disabled'
+      - 'Enabled'
+    default: 'Enabled'
+    description: 'Validate server certificate'
+    cli_alias: validate-server-certificate
+  - name: HostNameInCertificate
+    type: String
+    description: 'Hostname in certificate'
+    cli_alias: hostname-in-certificate
+  - name: ValidateHostName
+    type: Bool
+    default: true
+    description: 'Validate hostname'
+    cli_alias: validate-host-name
+  - name: KeystoreRef
+    type: String
+    reference_to: CryptoIdentCred
+    description: 'Keystore'
+    cli_alias: keystore

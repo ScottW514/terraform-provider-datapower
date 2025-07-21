@@ -1,0 +1,195 @@
+name: TAM
+description: 'Access Manager Client'
+cli_alias: 'tam'
+cmd_group: 'tam'
+rest_endpoint: '/mgmt/config/{domain}/TAM'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'TAM_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: ADUseAD
+    type: Bool
+    default: false
+    description: 'Use Active Directory'
+    cli_alias: ad-use-ad
+  - name: TAMVersion
+    type: String
+    enum:
+      - 'default'
+      - 'v70'
+      - 'v801'
+      - 'v901'
+      - 'v903'
+      - 'v1005'
+    description: 'Access Manager Client Version'
+    cli_alias: tam-version
+  - name: ConfigurationFile
+    type: String
+    required: true
+    example: 'local:///tam.config'
+    description: 'Configuration File for Access Manager'
+    cli_alias: file
+  - name: ADConfigurationFile
+    type: String
+    description: 'Configuration File for Directories'
+    cli_alias: reg_file
+  - name: SSLKeyFile
+    type: String
+    required: true
+    example: 'cert:///ssl.key'
+    description: 'TLS Key File'
+    cli_alias: ssl-key
+  - name: SSLKeyStashFile
+    type: String
+    required: true
+    example: 'cert:///ssl.stash'
+    description: 'TLS Key Stash File'
+    cli_alias: ssl-key-stash
+  - name: UseLocalMode
+    type: Bool
+    default: false
+    required: true
+    description: 'Use Local Policy Database'
+    cli_alias: use-local-mode
+  - name: PollInterval
+    type: String
+    default: 'default'
+    description: 'Local Database Refresh Interval'
+    cli_alias: cache-refresh-interval
+  - name: ListenMode
+    type: Bool
+    default: false
+    description: 'Accept Update Notifications'
+    cli_alias: listen-mode
+  - name: ListenPort
+    type: Int64
+    description: 'Update Notification Port'
+    cli_alias: listen-port
+  - name: ReturningUserAttributes
+    type: Bool
+    default: false
+    description: 'Return User Attributes'
+    cli_alias: return-attributes
+  - name: LDAPUseSSL
+    type: Bool
+    default: false
+    description: 'Use TLS with Registry Server'
+    cli_alias: use-ldap-ssl
+  - name: LDAPSSLPort
+    type: Int64
+    default: 636
+    description: 'LDAP TLS Port'
+    cli_alias: ldap-ssl-port
+  - name: LDAPSSLKeyFile
+    type: String
+    description: 'Registry Server TLS Key File'
+    cli_alias: ldap-ssl-key-file
+  - name: LDAPSSLKeyFilePassword
+    type: String
+    sensitive: true
+    description: 'Registry Server TLS Key File Password (deprecated)'
+    deprecated: true
+    cli_alias: ldap-ssl-key-file-password
+  - name: LDAPSSLKeyFilePasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    sensitive: true
+    description: 'Registry Server TLS Key File Password Alias'
+    cli_alias: ldap-ssl-key-file-password-alias
+  - name: LDAPSSLKeyFileLabel
+    type: String
+    description: 'Registry Server TLS Key File Label'
+    cli_alias: ldap-ssl-key-file-dn
+  - name: TAMUseFIPS
+    type: Bool
+    default: false
+    description: 'Run in FIPS Mode'
+    cli_alias: use-fips
+  - name: TAMChooseNIST
+    type: String
+    enum:
+      - 'fips'
+      - 'sp800_131_transition'
+      - 'sp800_131_strict'
+      - 'suite_b_128'
+      - 'suite_b_192'
+    description: 'Select a NIST Compliance Mode'
+    cli_alias: choose-nist
+  - name: TAMUseBasicUser
+    type: Bool
+    default: false
+    required: true
+    description: 'Enable basic user mode'
+    cli_alias: use-basic-user
+  - name: UserPrincipalAttribute
+    type: String
+    default: 'uid'
+    description: 'User principal attribute'
+    cli_alias: user-principal-attribute
+  - name: UserNoDuplicates
+    type: Bool
+    default: true
+    description: 'Disallow duplicate principals'
+    cli_alias: user-no-duplicates
+  - name: UserSearchSuffixes
+    type: List
+    element_type: String
+    description: 'Principal search suffixes'
+    cli_alias: user-search-suffixes
+  - name: UserSuffixOptimiser
+    type: Bool
+    default: false
+    description: 'Enable suffix optimization'
+    cli_alias: user-suffix-optimiser
+  - name: TAMFedDirs
+    type: List
+    element_type: DmTAMFedDir
+    description: 'Federated directories'
+    cli_alias: federated-directory
+  - name: TAMAZReplicas
+    type: List
+    element_type: DmTAMAZReplica
+    description: 'Authorization Server Replicas'
+    cli_alias: replica
+  - name: TAMRASTrace
+    dm_type: DmTAMRASTrace
+    description: 'Trace Logging'
+    cli_alias: tam-ras-trace
+  - name: AutoRetry
+    type: Bool
+    default: false
+    description: 'Enable Automatic Restart Attempts'
+    cli_alias: auto-retry
+  - name: RetryInterval
+    type: Int64
+    minimum: 1
+    maximum: 3600
+    default: 180
+    description: 'Attempt Interval'
+    cli_alias: retry-interval
+  - name: RetryAttempts
+    type: Int64
+    default: 3
+    description: 'Number of Attempts'
+    cli_alias: retry-attempts
+  - name: LongRetryInterval
+    type: Int64
+    minimum: 1
+    maximum: 3600
+    default: 900
+    description: 'Long Attempt Interval'
+    cli_alias: long-retry-interval

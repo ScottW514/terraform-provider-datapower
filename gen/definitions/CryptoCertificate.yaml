@@ -1,0 +1,49 @@
+name: CryptoCertificate
+description: 'Certificate'
+cli_alias: 'certificate'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/CryptoCertificate'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CryptoCertificate_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Filename
+    type: String
+    required: true
+    description: 'File remote path'
+    cli_alias: file-name
+    example: 'cert:///acc-test-server.crt'
+  # DEPRECATED
+  # - name: Password
+  #   type: String
+  #   sensitive: true
+  #   description: 'Password (deprecated)'
+  #   deprecated: true
+  #   cli_alias: password
+  # DEPRECATED
+  # - name: PasswordAlias
+  #   type: String
+  #   type: Bool
+  #   default: false
+  #   description: 'Password alias toggle (deprecated)'
+  #   deprecated: true
+  - name: Alias
+    type: String
+    reference_to: PasswordAlias
+    description: 'Password alias'
+    cli_alias: password-alias
+  - name: IgnoreExpiration
+    type: Bool
+    default: false
+    description: 'Ignore expiration dates'
+    cli_alias: ignore-expiration

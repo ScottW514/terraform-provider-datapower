@@ -1,0 +1,75 @@
+name: User
+description: 'User account'
+cli_alias: 'user'
+cmd_group: 'usergroup'
+rest_endpoint: '/mgmt/config/default/User'
+update_computed: true
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'User_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Password
+    type: String
+    sensitive: true
+    required: true
+    test_value: '"Password$123"'
+    description: 'Password'
+    cli_alias: password
+    example: 'Password$123'
+    write_only: true
+  # Ignored
+  # - name: HashedPassword
+  #   type: String
+  #   sensitive: true
+  #   cli_alias: password-hashed
+  #   computed: true
+  - name: SuppressPasswordChange
+    type: Bool
+    default: false
+    description: 'Suppress initial password change'
+    cli_alias: suppress-password-change
+  - name: AccessLevel
+    type: String
+    enum:
+      - 'none'
+      - 'privileged'
+      - 'group-defined'
+      - 'technician'
+      - 'expired'
+      - 'config-sequence'
+    required: true
+    default: 'group-defined'
+    description: 'Access level'
+    cli_alias: access-level
+  - name: GroupName
+    type: String
+    reference_to: UserGroup
+    description: 'User group'
+    cli_alias: group
+    test_value: 'datapower_usergroup.test.id'
+  - name: SnmpCreds
+    type: List
+    element_type: DmSnmpCred
+    description: 'SNMP V3 credentials'
+    cli_alias: snmp-cred
+    test_value: 'null'
+  - name: HashedSnmpCreds
+    type: List
+    element_type: DmSnmpCredMasked
+    cli_alias: snmp-cred-hashed
+    test_value: 'null'
+  # DEPRACATED
+  # - name: UserDomain
+  #   type: List
+  #   reference_to: Domain
+  #   element_type: String
+  #   description: 'OBSOLETE'
+  #   cli_alias: domain

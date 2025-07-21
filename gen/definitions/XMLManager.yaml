@@ -1,0 +1,190 @@
+name: XMLManager
+description: 'XML Manager'
+cli_alias: 'xmlmgr'
+cmd_group: 'xmlmgr'
+rest_endpoint: '/mgmt/config/{domain}/XMLManager'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'XMLManager_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  # DEPRECATED
+  # - name: SSLProxy
+  #   type: String
+  #   reference_to: SSLProxyProfile
+  #   description: 'TLS Proxy'
+  - name: URLRefreshPolicy
+    type: String
+    reference_to: URLRefreshPolicy
+    description: 'URL Refresh Policy'
+    cli_alias: xslrefresh
+  - name: CompileOptionsPolicy
+    type: String
+    reference_to: CompileOptionsPolicy
+    description: 'Compile Options Policy'
+    cli_alias: xslconfig
+  - name: CacheMemorySize
+    type: Int64
+    default: 2147483647
+    description: 'Stylesheet cache size'
+    cli_alias: xsl cache memorysize
+  - name: CacheSize
+    type: Int64
+    minimum: 5
+    maximum: 250000
+    default: 256
+    description: 'Stylesheet cache count'
+    cli_alias: xsl cache size
+  - name: SHA1Caching
+    type: Bool
+    default: true
+    description: 'SHA1 Caching'
+    cli_alias: xsl checksummed cache
+  - name: StaticDocumentCalls
+    type: Bool
+    default: true
+    description: 'Static Document Call'
+    cli_alias: static-document-calls
+  - name: SearchResults
+    type: Bool
+    default: true
+    description: 'XSLT Expression Optimization'
+    cli_alias: search results
+  - name: SupportTxWarn
+    type: Bool
+    default: false
+    description: 'Support ITX Warnings'
+    cli_alias: tx-warn
+  - name: VirtualServers
+    type: List
+    reference_to: LoadBalancerGroup
+    element_type: String
+    description: 'Load Balancer Groups'
+    cli_alias: loadbalancer-group
+  # TODO: Can be written, but does not appear in GET response from API
+  # - name: ExtensionFunctions
+  #   type: List
+  #   element_type: DmExtensionFunction
+  #   description: 'Extension Functions'
+  - name: ParserLimitsBytesScanned
+    type: Int64
+    default: 4194304
+    description: 'XML Bytes Scanned'
+    cli_alias: bytes-scanned
+  - name: ParserLimitsElementDepth
+    type: Int64
+    default: 512
+    description: 'XML Element Depth'
+    cli_alias: element-depth
+  - name: ParserLimitsAttributeCount
+    type: Int64
+    default: 128
+    description: 'XML Attribute Count'
+    cli_alias: attribute-count
+  - name: ParserLimitsMaxNodeSize
+    type: Int64
+    minimum: 1024
+    maximum: 4294967295
+    default: 33554432
+    description: 'XML Maximum Node Size'
+    cli_alias: max-node-size
+  - name: ParserLimitsForbidExternalReferences
+    type: Bool
+    default: true
+    description: 'XML Forbid External References'
+    cli_alias: forbid-external-references
+  - name: ParserLimitsExternalReferences
+    type: String
+    enum:
+      - 'forbid'
+      - 'ignore'
+      - 'allow'
+    default: 'forbid'
+    description: 'XML External Reference Handling'
+    cli_alias: external-references
+  - name: ParserLimitsMaxPrefixes
+    type: Int64
+    maximum: 262143
+    default: 1024
+    description: 'XML Maximum Distinct Prefixes'
+    cli_alias: max-prefixes
+  - name: ParserLimitsMaxNamespaces
+    type: Int64
+    maximum: 65535
+    default: 1024
+    description: 'XML Maximum Distinct Namespaces'
+    cli_alias: max-namespaces
+  - name: ParserLimitsMaxLocalNames
+    type: Int64
+    maximum: 1048575
+    default: 60000
+    description: 'XML Maximum Distinct Local Names'
+    cli_alias: max-local-names
+  - name: DocCacheMaxDocs
+    type: Int64
+    minimum: 1
+    maximum: 250000
+    default: 5000
+    description: 'Document Cache Count'
+    cli_alias: maxdocs
+  - name: DocCacheSize
+    type: Int64
+    description: 'Document Cache Size'
+    cli_alias: size
+  - name: DocMaxWrites
+    type: Int64
+    minimum: 1
+    maximum: 32768
+    default: 32768
+    description: 'Maximum concurrent writes'
+    cli_alias: max-writes
+  - name: DocCachePolicy
+    type: List
+    element_type: DmDocCachePolicy
+    description: 'Document Cache Policy'
+    cli_alias: policy
+  - name: SchemaValidation
+    type: List
+    element_type: DmSchemaValidation
+    description: 'Schema Validation Rules'
+    cli_alias: validate
+  - name: ScheduledRule
+    type: List
+    element_type: DmScheduledRule
+    description: 'Scheduled Processing Policy Rule'
+    cli_alias: schedule-rule
+  - name: UserAgent
+    type: String
+    reference_to: HTTPUserAgent
+    default: 'default'
+    description: 'User Agent Configuration'
+    cli_alias: user-agent
+  - name: JSONParserSettings
+    type: String
+    reference_to: JSONSettings
+    description: 'JSON Settings'
+    cli_alias: json-parser-settings
+  # TODO: Missing API Endpoint
+  # - name: DFDLSettingsReference
+  #   type: String
+  #   reference_to: DFDLSettings
+  #   description: 'DFDL Settings'
+  #   cli_alias: dfdl-settings-reference
+  - name: LDAPConnPool
+    type: String
+    reference_to: LDAPConnectionPool
+    description: 'LDAP Connection Pool'
+    cli_alias: ldap-pool

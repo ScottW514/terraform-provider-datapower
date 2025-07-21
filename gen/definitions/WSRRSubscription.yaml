@@ -1,0 +1,80 @@
+name: WSRRSubscription
+description: 'WSRR subscription'
+cli_alias: 'wsrr-subscription'
+cmd_group: 'webservice'
+rest_endpoint: '/mgmt/config/{domain}/WSRRSubscription'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WSRRSubscription_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Server
+    type: String
+    reference_to: WSRRServer
+    required: true
+    description: 'WSRR server'
+    cli_alias: server
+  - name: Namespace
+    type: String
+    description: 'Namespace'
+    cli_alias: namespace
+  - name: ObjectType
+    type: String
+    enum:
+      - 'wsdl'
+      - 'concept'
+      - 'saved-search'
+      - 'service-version'
+    required: true
+    example: 'wsdl'
+    description: 'Subscription object'
+    cli_alias: object-type
+  - name: ObjectName
+    type: String
+    required: true
+    example: 'object_name'
+    description: 'Object name'
+    cli_alias: object-name
+  - name: Method
+    type: String
+    enum:
+      - 'manual'
+      - 'poll'
+      - 'automatic'
+    default: 'poll'
+    description: 'Synchronization method'
+    cli_alias: method
+  - name: RefreshInterval
+    type: Int64
+    minimum: 60
+    maximum: 4294967
+    default: 86400
+    description: 'Refresh interval'
+    cli_alias: refresh-interval
+  - name: UseVersion
+    type: Bool
+    default: false
+    description: 'Use object version'
+    cli_alias: use-version
+  - name: ObjectVersion
+    type: String
+    description: 'Object version'
+    cli_alias: version
+  - name: FetchPolicyAttachments
+    type: Bool
+    default: false
+    description: 'Fetch policy attachments'
+    cli_alias: fetch-policy-attachments
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary

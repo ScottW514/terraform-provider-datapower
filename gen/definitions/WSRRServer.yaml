@@ -1,0 +1,69 @@
+name: WSRRServer
+description: 'WSRR server'
+cli_alias: 'wsrr-server'
+cmd_group: 'webservice'
+rest_endpoint: '/mgmt/config/{domain}/WSRRServer'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WSRRServer_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: SoapURL
+    type: String
+    required: true
+    default: 'https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort'
+    description: 'SOAP URL'
+    cli_alias: soap-url
+  - name: ServerPrefix
+    type: String
+    description: 'WSRR instance prefix'
+    cli_alias: server-prefix
+  # DEPRECATED
+  # - name: SSLProxy
+  #   type: String
+  #   reference_to: SSLProxyProfile
+  #   description: 'TLS proxy profile (deprecated)'
+  #   deprecated: true
+  #   cli_alias: ssl
+  - name: Username
+    type: String
+    description: 'Username'
+    cli_alias: username
+  - name: Password
+    type: String
+    sensitive: true
+    description: 'Password (deprecated)'
+    deprecated: true
+    cli_alias: password
+  - name: PasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    sensitive: true
+    description: 'Password alias'
+    cli_alias: password-alias
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client

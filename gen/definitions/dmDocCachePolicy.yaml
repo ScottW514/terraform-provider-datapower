@@ -1,0 +1,62 @@
+name: DmDocCachePolicy
+model_only: true
+list_item: true
+attributes:
+  - name: Match
+    type: String
+    description: 'URL Match Expression'
+    cli_alias: match
+  - name: Type
+    type: String
+    enum:
+      - 'protocol'
+      - 'no-cache'
+      - 'fixed'
+    required: true
+    default: 'protocol'
+    description: 'Policy Type'
+    cli_alias: type
+  - name: TTL
+    type: Int64
+    minimum: 5
+    maximum: 31708800
+    default: 900
+    description: 'TTL'
+    cli_alias: ttl
+  - name: Priority
+    type: Int64
+    minimum: 1
+    maximum: 255
+    required: true
+    default: 128
+    description: 'Priority'
+    cli_alias: priority
+  - name: XC10Grid
+    type: String
+    description: 'Cache Grid'
+    cli_alias: xc10-grid
+  - name: CacheBackendResponses
+    type: Bool
+    default: false
+    description: 'Cache Back-end Responses'
+    cli_alias: cache-backend-response
+  - name: HTTPCacheValidation
+    type: Bool
+    default: false
+    description: 'HTTP Cache Validation'
+    cli_alias: http-cache-validation
+  - name: ReturnExpired
+    type: Bool
+    default: false
+    description: 'Return Expired Document'
+    cli_alias: return-expired
+  - name: RESTInvalidation
+    type: Bool
+    default: false
+    description: 'RESTful Invalidation'
+    cli_alias: rest-invalidation
+  - name: CacheUnsafeResponse
+    type: Bool
+    default: false
+    description: 'Cache Response to POST and PUT Requests'
+    cli_alias: cache-unsafe-response

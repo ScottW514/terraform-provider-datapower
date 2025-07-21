@@ -1,0 +1,28 @@
+name: DmSMTPPolicy
+model_only: true
+list_item: true
+attributes:
+  - name: RegExp
+    type: String
+    required: true
+    default: 'dpsmtp://*'
+    description: 'URL matching expression'
+  - name: Recipient
+    type: String
+    description: 'Recipient e-mail'
+  - name: Sender
+    type: String
+    description: 'Sender e-mail'
+  - name: Subject
+    type: String
+    description: 'Subject'
+  - name: Options
+    dm_type: DmSMTPOptions
+    description: 'Options'
+  - name: Auth
+    type: String
+    enum:
+      - 'plain'
+      - 'login'
+    default: 'plain'
+    description: 'Authentication method'

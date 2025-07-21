@@ -1,0 +1,34 @@
+name: DmLBGroupMember
+model_only: true
+list_item: true
+attributes:
+  - name: Server
+    type: String
+    required: true
+    example: 'lbhost'
+    description: 'Actual Host'
+    cli_alias: server
+  - name: Weight
+    type: Int64
+    minimum: 1
+    maximum: 65000
+    default: 1
+    description: 'Weight'
+    cli_alias: weight
+  - name: MappedPort
+    type: Int64
+    description: 'Mapped Server Port'
+  - name: Activity
+    type: String
+    description: 'Status'
+  - name: HealthPort
+    type: Int64
+    description: 'Health Port'
+  - name: LBMemberState
+    type: String
+    enum:
+      - 'enabled'
+      - 'disabled'
+    default: 'enabled'
+    description: 'Administrative State'
+    cli_alias: admin-state

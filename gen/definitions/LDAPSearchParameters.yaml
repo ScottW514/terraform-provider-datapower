@@ -1,0 +1,49 @@
+name: LDAPSearchParameters
+description: 'LDAP search parameters'
+cli_alias: 'ldap-search-parameters'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/LDAPSearchParameters'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'LDAPSearchParameters_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LDAPBaseDN
+    type: String
+    description: 'LDAP base DN'
+    cli_alias: base-dn
+  - name: LDAPReturnedAttribute
+    type: String
+    default: 'dn'
+    description: 'LDAP returned attribute'
+    cli_alias: returned-attribute
+  - name: LDAPFilterPrefix
+    type: String
+    description: 'LDAP filter prefix'
+    cli_alias: filter-prefix
+  - name: LDAPFilterSuffix
+    type: String
+    description: 'LDAP filter suffix'
+    cli_alias: filter-suffix
+  - name: LDAPScope
+    type: String
+    enum:
+      - 'subtree'
+      - 'one-level'
+      - 'base'
+    default: 'subtree'
+    description: 'LDAP scope'
+    cli_alias: scope

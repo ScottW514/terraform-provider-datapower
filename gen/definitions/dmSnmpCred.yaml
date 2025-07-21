@@ -1,0 +1,51 @@
+name: DmSnmpCred
+model_only: true
+list_item: true
+attributes:
+  - name: EngineID
+    type: String
+    required: true
+    example: '0DEADBEEF0'
+    description: 'Engine ID'
+  - name: AuthProtocol
+    type: String
+    enum:
+      - 'none'
+      - 'md5'
+      - 'sha'
+    required: true
+    default: 'sha'
+    description: 'Authentication protocol'
+  - name: AuthSecretType
+    type: String
+    enum:
+      - 'password'
+      - 'key'
+    default: 'password'
+    description: 'Authentication value type'
+  - name: AuthSecret
+    type: String
+    description: 'Authentication value'
+    sensitive: true
+    example: 'testauth'
+  - name: PrivProtocol
+    type: String
+    enum:
+      - 'none'
+      - 'des'
+      - 'aes'
+    required: true
+    default: 'des'
+    description: 'Privacy protocol'
+  - name: PrivSecretType
+    type: String
+    enum:
+      - 'password'
+      - 'key'
+    default: 'password'
+    description: 'Privacy value type'
+  - name: PrivSecret
+    type: String
+    sensitive: true
+    example: 'testpriv'
+    description: 'Privacy value'

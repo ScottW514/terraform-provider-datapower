@@ -1,0 +1,15 @@
+name: DmGatewayInOrderMode
+model_only: true
+attributes:
+  - name: Request
+    type: Bool
+    default: false
+    description: 'Request rule in order'
+  - name: Backend
+    type: Bool
+    default: false
+    description: 'Backend in order'
+  - name: Response
+    type: Bool
+    default: false
+    description: 'Response rule in order'

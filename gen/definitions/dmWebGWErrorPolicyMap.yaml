@@ -1,0 +1,14 @@
+name: DmWebGWErrorPolicyMap
+model_only: true
+list_item: true
+attributes:
+  - name: Match
+    type: String
+    reference_to: Matching
+    required: true
+    description: 'Matching Rule'
+  - name: Action
+    type: String
+    reference_to: MPGWErrorAction
+    required: true
+    description: 'Error Action'

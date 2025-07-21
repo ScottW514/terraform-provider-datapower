@@ -1,0 +1,24 @@
+name: DmBasicAuthPolicy
+model_only: true
+list_item: true
+attributes:
+  - name: RegExp
+    type: String
+    required: true
+    example: "*"
+    description: 'URL matching expression'
+  - name: UserName
+    type: String
+    required: true
+    example: "someuser"
+    description: 'Username'
+  - name: Password
+    type: String
+    sensitive: true
+    description: 'Password (deprecated)'
+    deprecated: true
+  - name: PasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    sensitive: true
+    description: 'Password alias'

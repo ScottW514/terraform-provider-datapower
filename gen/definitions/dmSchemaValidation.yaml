@@ -1,0 +1,30 @@
+name: DmSchemaValidation
+model_only: true
+list_item: true
+attributes:
+  - name: Matching
+    type: String
+    reference_to: Matching
+    required: true
+    description: 'URL Match'
+  - name: ValidationMode
+    type: String
+    enum:
+      - 'default'
+      - 'schema'
+      - 'schema-rewrite'
+      - 'attribute-rewrite'
+      - 'dynamic-schema'
+    required: true
+    description: 'Validation Mode'
+    example: 'default'
+  - name: SchemaURL
+    type: String
+    description: 'Schema URL'
+  - name: URLRewritePolicy
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'URL Rewrite Policy'
+  - name: DynamicSchema
+    type: String
+    description: 'Dynamic Schema'

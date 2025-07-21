@@ -1,0 +1,45 @@
+name: DmAAAPMapResource
+model_only: true
+attributes:
+  - name: MRMethod
+    type: String
+    enum:
+      - 'none'
+      - 'custom'
+      - 'xmlfile'
+      - 'xpath'
+      - 'tivoli'
+    required: true
+    default: 'none'
+    description: 'Method'
+    cli_alias: method
+  - name: MRCustomURL
+    type: String
+    description: 'Custom URL'
+    cli_alias: custom-url
+  - name: MRMapURL
+    type: String
+    description: 'AAA information file URL'
+    cli_alias: xmlfile-url
+  - name: MRMapXPath
+    type: String
+    description: 'XPath expression'
+    cli_alias: xpath
+  - name: MRTAMMap
+    type: String
+    enum:
+      - 'TFIM'
+      - 'TAMBI'
+      - 'WebSEAL'
+      - 'Custom'
+    default: 'WebSEAL'
+    description: 'Object space mapping'
+    cli_alias: tam-mapping
+  - name: MRTAMInstancePrefix
+    type: String
+    description: 'Object space prefix'
+    cli_alias: tam-prefix
+  - name: MRTAMWebSEALDynURLFile
+    type: String
+    description: 'WebSEAL DynURL mapping file'
+    cli_alias: webseal-dynurl-file

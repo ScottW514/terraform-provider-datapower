@@ -1,0 +1,33 @@
+name: DmSSLProtoVersionsBitmap
+model_only: true
+attributes:
+  - name: SSLv3
+    tf_name: ssl_v3
+    type: Bool
+    default: false
+    required: true
+    description: 'Enable SSL version 3'
+  - name: TLSv1d0
+    tf_name: tls_v1d0
+    type: Bool
+    default: false
+    required: true
+    description: 'Enable TLS version 1.0'
+  - name: TLSv1d1
+    tf_name: tls_v1d1
+    type: Bool
+    default: true
+    required: true
+    description: 'Enable TLS version 1.1'
+  - name: TLSv1d2
+    tf_name: tls_v1d2
+    type: Bool
+    default: true
+    required: true
+    description: 'Enable TLS version 1.2'
+  - name: TLSv1d3
+    tf_name: tls_v1d3
+    type: Bool
+    default: true
+    required: true
+    description: 'Enable TLS version 1.3'

@@ -1,0 +1,9 @@
+name: DmURLMapRule
+model_only: true
+list_item: true
+attributes:
+  - name: Pattern
+    type: String
+    required: true
+    description: 'Match Pattern'
+    example: 'https://www.company.com/XML/stylesheets/*'

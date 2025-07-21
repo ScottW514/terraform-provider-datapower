@@ -1,0 +1,26 @@
+name: DmMetaItem
+model_only: true
+list_item: true
+attributes:
+  - name: MetaCategory
+    type: String
+    enum:
+      - 'all'
+      - 'mq'
+      - 'tibco'
+      - 'wasjms'
+      - 'http'
+      - 'CUSTOMIZABLE'
+      - 'header'
+      - 'variable'
+    required: true
+    example: 'all'
+    description: 'Metadata Category'
+  - name: MetaName
+    type: String
+    required: true
+    example: 'meta_name'
+    description: 'Metadata Item'
+  - name: DataSource
+    type: String
+    description: 'Custom Data Source'

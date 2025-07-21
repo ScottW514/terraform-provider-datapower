@@ -1,0 +1,31 @@
+name: DmWSPolicyParameters
+model_only: true
+list_item: true
+attributes:
+  - name: PolicyParamParameters
+    type: String
+    reference_to: PolicyParameters
+    required: true
+    description: 'Parameters'
+  - name: PolicyParamWSDLComponentType
+    type: String
+    enum:
+      - 'all'
+      - 'subscription'
+      - 'wsdl'
+      - 'service'
+      - 'port'
+      - 'operation'
+      - 'fragmentid'
+    required: true
+    default: 'all'
+    description: 'WSDL Component Type'
+  - name: PolicyParamWSDLComponentValue
+    type: String
+    description: 'WSDL Component Value'
+  - name: PolicyParamSubscription
+    type: String
+    description: 'Subscription'
+  - name: PolicyParamFragmentID
+    type: String
+    description: 'Fragment Identifier'

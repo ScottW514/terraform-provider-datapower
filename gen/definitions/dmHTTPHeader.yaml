@@ -1,0 +1,14 @@
+name: DmHTTPHeader
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    example: 'HEADER'
+    description: 'Name'
+  - name: Value
+    type: String
+    required: true
+    example: 'VALUE'
+    description: 'Value Match'

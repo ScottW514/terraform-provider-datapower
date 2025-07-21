@@ -1,0 +1,23 @@
+name: DmExtensionFunction
+model_only: true
+list_item: true
+attributes:
+  - name: ExtensionFunctionNamespace
+    type: String
+    required: true
+    description: 'Extension Namespace'
+    example: 'http://www.fredspace/extensions'
+  - name: ExtensionFunction
+    type: String
+    required: true
+    description: 'Extension Function'
+    example: 'nodeset()'
+  - name: LocalFunctionNamespace
+    type: String
+    default: 'http://www.datapower.com/extensions'
+    description: 'Local Namespace'
+  - name: LocalFunction
+    type: String
+    required: true
+    description: 'Local Function'
+    example: 'node-set()'
