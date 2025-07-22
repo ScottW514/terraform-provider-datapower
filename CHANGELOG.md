@@ -1,4 +1,4 @@
-## UNRELEASED
+## 0.1.1
 
 - Fix file path handling on Windows in `datapower_file` resource
 - BREAKING CHANGE: Provider configuration values for `username` and `password` now take precedence over environment variables
