@@ -29,6 +29,16 @@ provider "datapower" {
 }
 ```
 
+## Application Domain
+
+This creates the application domain that the service will live in.
+
+```hcl
+resource "datapower_domain" "mpgw" {
+  app_domain = "basic_example"
+}
+```
+
 ## Style Policy
 
 This creates the style policy that describes how the MPGW will behave.
@@ -131,13 +141,9 @@ resource "datapower_stylepolicy" "mpgw" {
 
 ### Create the Multiprotocol Gateway
 
-Finally, well create a domain, an HTTP protocol handler, and attach them and style policy to a MPGW:
+Finally, we'll create an HTTP protocol handler, and attach it and the style policy to a MPGW:
 
 ```hcl
-resource "datapower_domain" "mpgw" {
-  app_domain = "basic_example"
-}
-
 resource "datapower_httpsourceprotocolhandler" "mpgw" {
   id         = "http_sph"
   app_domain = datapower_domain.mpgw.app_domain
