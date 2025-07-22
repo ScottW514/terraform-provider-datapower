@@ -8,7 +8,8 @@
 - Fix JSON error handling in GET response
 - Enhanced client by adding retry max of 3 and timeout of 30s
 - Enhanced client test suite
-
+- Merged dependabot PR1, PR2, PR3
+- Fix resource client error handling
 
 ## 0.1.0
 

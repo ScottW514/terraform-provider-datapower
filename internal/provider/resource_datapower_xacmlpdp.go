@@ -134,7 +134,7 @@ func (r *XACMLPDPResource) Create(ctx context.Context, req resource.CreateReques
 	body := data.ToBody(ctx, `XACMLPDP`)
 	res, err := r.client.Post(data.GetPath(), body)
 
-	if err != nil && res.RawResponse.StatusCode != 409 {
+	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s, %s", "POST", err, res.String()))
 		return
 	}
@@ -155,7 +155,7 @@ func (r *XACMLPDPResource) Read(ctx context.Context, req resource.ReadRequest, r
 		return
 	}
 	res, err := r.client.Get(data.GetPath() + "/" + data.Id.ValueString())
-	if err != nil && (strings.Contains(err.Error(), "StatusCode 404") || strings.Contains(err.Error(), "StatusCode 406") || strings.Contains(err.Error(), "StatusCode 500") || strings.Contains(err.Error(), "StatusCode 400")) {
+	if err != nil && (strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400")) {
 		resp.State.RemoveResource(ctx)
 		return
 	} else if err != nil {
@@ -203,7 +203,7 @@ func (r *XACMLPDPResource) Delete(ctx context.Context, req resource.DeleteReques
 		return
 	}
 	res, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
-	if err != nil && res.RawResponse.StatusCode != 404 && res.RawResponse.StatusCode != 409 {
+	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
 		return
 	}
