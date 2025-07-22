@@ -161,19 +161,19 @@ func (data DmSSLProtoVersionsBitmap) ToBody(ctx context.Context, pathRoot string
 	}
 	body := ""
 	if !data.SslV3.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLv3`, tfutils.StringFromBool(data.SslV3))
+		body, _ = sjson.Set(body, pathRoot+`SSLv3`, tfutils.StringFromBool(data.SslV3, false))
 	}
 	if !data.TlsV1d0.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TLSv1d0`, tfutils.StringFromBool(data.TlsV1d0))
+		body, _ = sjson.Set(body, pathRoot+`TLSv1d0`, tfutils.StringFromBool(data.TlsV1d0, false))
 	}
 	if !data.TlsV1d1.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TLSv1d1`, tfutils.StringFromBool(data.TlsV1d1))
+		body, _ = sjson.Set(body, pathRoot+`TLSv1d1`, tfutils.StringFromBool(data.TlsV1d1, false))
 	}
 	if !data.TlsV1d2.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TLSv1d2`, tfutils.StringFromBool(data.TlsV1d2))
+		body, _ = sjson.Set(body, pathRoot+`TLSv1d2`, tfutils.StringFromBool(data.TlsV1d2, false))
 	}
 	if !data.TlsV1d3.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TLSv1d3`, tfutils.StringFromBool(data.TlsV1d3))
+		body, _ = sjson.Set(body, pathRoot+`TLSv1d3`, tfutils.StringFromBool(data.TlsV1d3, false))
 	}
 	return body
 }

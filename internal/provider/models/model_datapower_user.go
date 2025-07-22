@@ -153,7 +153,7 @@ func (data User) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Password`, data.Password.ValueString())
 	}
 	if !data.SuppressPasswordChange.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SuppressPasswordChange`, tfutils.StringFromBool(data.SuppressPasswordChange))
+		body, _ = sjson.Set(body, pathRoot+`SuppressPasswordChange`, tfutils.StringFromBool(data.SuppressPasswordChange, false))
 	}
 	if !data.AccessLevel.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AccessLevel`, data.AccessLevel.ValueString())

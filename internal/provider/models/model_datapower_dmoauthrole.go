@@ -113,10 +113,10 @@ func (data DmOAuthRole) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.Azsvr.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`azsvr`, tfutils.StringFromBool(data.Azsvr))
+		body, _ = sjson.Set(body, pathRoot+`azsvr`, tfutils.StringFromBool(data.Azsvr, false))
 	}
 	if !data.Rssvr.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`rssvr`, tfutils.StringFromBool(data.Rssvr))
+		body, _ = sjson.Set(body, pathRoot+`rssvr`, tfutils.StringFromBool(data.Rssvr, false))
 	}
 	return body
 }

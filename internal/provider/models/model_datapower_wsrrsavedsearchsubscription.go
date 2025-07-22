@@ -122,7 +122,7 @@ func (data WSRRSavedSearchSubscription) ToBody(ctx context.Context, pathRoot str
 		body, _ = sjson.Set(body, pathRoot+`RefreshInterval`, data.RefreshInterval.ValueInt64())
 	}
 	if !data.FetchPolicyAttachments.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`FetchPolicyAttachments`, tfutils.StringFromBool(data.FetchPolicyAttachments))
+		body, _ = sjson.Set(body, pathRoot+`FetchPolicyAttachments`, tfutils.StringFromBool(data.FetchPolicyAttachments, false))
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())

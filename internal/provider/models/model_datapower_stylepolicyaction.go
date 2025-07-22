@@ -557,7 +557,7 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`GatewayScriptLocation`, data.GatewayScriptLocation.ValueString())
 	}
 	if !data.ActionDebug.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ActionDebug`, tfutils.StringFromBool(data.ActionDebug))
+		body, _ = sjson.Set(body, pathRoot+`ActionDebug`, tfutils.StringFromBool(data.ActionDebug, false))
 	}
 	if !data.TxTopLevelMap.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TxTopLevelMap`, data.TxTopLevelMap.ValueString())
@@ -572,7 +572,7 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`Output`, data.Output.ValueString())
 	}
 	if !data.NoTranscodeUtf8.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`NoTranscodeUtf8`, tfutils.StringFromBool(data.NoTranscodeUtf8))
+		body, _ = sjson.Set(body, pathRoot+`NoTranscodeUtf8`, tfutils.StringFromBool(data.NoTranscodeUtf8, false))
 	}
 	if !data.NamedInOutLocationType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`NamedInOutLocationType`, data.NamedInOutLocationType.ValueString())
@@ -668,7 +668,7 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`LogType`, data.LogType.ValueString())
 	}
 	if !data.Transactional.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Transactional`, tfutils.StringFromBool(data.Transactional))
+		body, _ = sjson.Set(body, pathRoot+`Transactional`, tfutils.StringFromBool(data.Transactional, false))
 	}
 	if !data.CheckpointEvent.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CheckpointEvent`, data.CheckpointEvent.ValueString())
@@ -733,10 +733,10 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`JWEDirectKeyObject`, data.JweDirectKeyObject.ValueString())
 	}
 	if !data.JwsVerifyStripSignature.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`JWSVerifyStripSignature`, tfutils.StringFromBool(data.JwsVerifyStripSignature))
+		body, _ = sjson.Set(body, pathRoot+`JWSVerifyStripSignature`, tfutils.StringFromBool(data.JwsVerifyStripSignature, false))
 	}
 	if !data.Asynchronous.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Asynchronous`, tfutils.StringFromBool(data.Asynchronous))
+		body, _ = sjson.Set(body, pathRoot+`Asynchronous`, tfutils.StringFromBool(data.Asynchronous, false))
 	}
 	if !data.Condition.IsNull() {
 		var values []DmCondition
@@ -755,7 +755,7 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`RetryInterval`, data.RetryInterval.ValueInt64())
 	}
 	if !data.MultipleOutputs.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MultipleOutputs`, tfutils.StringFromBool(data.MultipleOutputs))
+		body, _ = sjson.Set(body, pathRoot+`MultipleOutputs`, tfutils.StringFromBool(data.MultipleOutputs, false))
 	}
 	if !data.IteratorType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`IteratorType`, data.IteratorType.ValueString())

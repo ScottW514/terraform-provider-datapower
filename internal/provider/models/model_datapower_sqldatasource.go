@@ -214,7 +214,7 @@ func (data SQLDataSource) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DataSourcePort`, data.DataSourcePort.ValueInt64())
 	}
 	if !data.LimitReturnedData.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LimitReturnedData`, tfutils.StringFromBool(data.LimitReturnedData))
+		body, _ = sjson.Set(body, pathRoot+`LimitReturnedData`, tfutils.StringFromBool(data.LimitReturnedData, false))
 	}
 	if !data.LimitReturnedDataSize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LimitReturnedDataSize`, data.LimitReturnedDataSize.ValueInt64())
@@ -233,7 +233,7 @@ func (data SQLDataSource) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`OracleDataSourceType`, data.OracleDataSourceType.ValueString())
 	}
 	if !data.OracleObjects.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OracleObjects`, tfutils.StringFromBool(data.OracleObjects))
+		body, _ = sjson.Set(body, pathRoot+`OracleObjects`, tfutils.StringFromBool(data.OracleObjects, false))
 	}
 	if !data.ConnectTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ConnectTimeout`, data.ConnectTimeout.ValueInt64())
@@ -245,7 +245,7 @@ func (data SQLDataSource) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`IdleTimeout`, data.IdleTimeout.ValueInt64())
 	}
 	if !data.LoadBalancing.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LoadBalancing`, tfutils.StringFromBool(data.LoadBalancing))
+		body, _ = sjson.Set(body, pathRoot+`LoadBalancing`, tfutils.StringFromBool(data.LoadBalancing, false))
 	}
 	if !data.EncryptionMethodMssql.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EncryptionMethodMSSQL`, data.EncryptionMethodMssql.ValueString())
@@ -266,7 +266,7 @@ func (data SQLDataSource) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`HostNameInCertificate`, data.HostNameInCertificate.ValueString())
 	}
 	if !data.ValidateHostName.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ValidateHostName`, tfutils.StringFromBool(data.ValidateHostName))
+		body, _ = sjson.Set(body, pathRoot+`ValidateHostName`, tfutils.StringFromBool(data.ValidateHostName, false))
 	}
 	if !data.KeystoreRef.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`KeystoreRef`, data.KeystoreRef.ValueString())

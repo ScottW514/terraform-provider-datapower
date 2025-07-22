@@ -233,7 +233,7 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.AdUseAd.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ADUseAD`, tfutils.StringFromBool(data.AdUseAd))
+		body, _ = sjson.Set(body, pathRoot+`ADUseAD`, tfutils.StringFromBool(data.AdUseAd, false))
 	}
 	if !data.TamVersion.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TAMVersion`, data.TamVersion.ValueString())
@@ -251,22 +251,22 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`SSLKeyStashFile`, data.SslKeyStashFile.ValueString())
 	}
 	if !data.UseLocalMode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseLocalMode`, tfutils.StringFromBool(data.UseLocalMode))
+		body, _ = sjson.Set(body, pathRoot+`UseLocalMode`, tfutils.StringFromBool(data.UseLocalMode, false))
 	}
 	if !data.PollInterval.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PollInterval`, data.PollInterval.ValueString())
 	}
 	if !data.ListenMode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ListenMode`, tfutils.StringFromBool(data.ListenMode))
+		body, _ = sjson.Set(body, pathRoot+`ListenMode`, tfutils.StringFromBool(data.ListenMode, false))
 	}
 	if !data.ListenPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ListenPort`, data.ListenPort.ValueInt64())
 	}
 	if !data.ReturningUserAttributes.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ReturningUserAttributes`, tfutils.StringFromBool(data.ReturningUserAttributes))
+		body, _ = sjson.Set(body, pathRoot+`ReturningUserAttributes`, tfutils.StringFromBool(data.ReturningUserAttributes, false))
 	}
 	if !data.LdapUseSsl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPUseSSL`, tfutils.StringFromBool(data.LdapUseSsl))
+		body, _ = sjson.Set(body, pathRoot+`LDAPUseSSL`, tfutils.StringFromBool(data.LdapUseSsl, false))
 	}
 	if !data.LdapsslPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LDAPSSLPort`, data.LdapsslPort.ValueInt64())
@@ -284,19 +284,19 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFileLabel`, data.LdapsslKeyFileLabel.ValueString())
 	}
 	if !data.TamUseFips.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TAMUseFIPS`, tfutils.StringFromBool(data.TamUseFips))
+		body, _ = sjson.Set(body, pathRoot+`TAMUseFIPS`, tfutils.StringFromBool(data.TamUseFips, false))
 	}
 	if !data.TamChooseNist.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TAMChooseNIST`, data.TamChooseNist.ValueString())
 	}
 	if !data.TamUseBasicUser.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TAMUseBasicUser`, tfutils.StringFromBool(data.TamUseBasicUser))
+		body, _ = sjson.Set(body, pathRoot+`TAMUseBasicUser`, tfutils.StringFromBool(data.TamUseBasicUser, false))
 	}
 	if !data.UserPrincipalAttribute.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserPrincipalAttribute`, data.UserPrincipalAttribute.ValueString())
 	}
 	if !data.UserNoDuplicates.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UserNoDuplicates`, tfutils.StringFromBool(data.UserNoDuplicates))
+		body, _ = sjson.Set(body, pathRoot+`UserNoDuplicates`, tfutils.StringFromBool(data.UserNoDuplicates, false))
 	}
 	if !data.UserSearchSuffixes.IsNull() {
 		var values []string
@@ -306,7 +306,7 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		}
 	}
 	if !data.UserSuffixOptimiser.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UserSuffixOptimiser`, tfutils.StringFromBool(data.UserSuffixOptimiser))
+		body, _ = sjson.Set(body, pathRoot+`UserSuffixOptimiser`, tfutils.StringFromBool(data.UserSuffixOptimiser, false))
 	}
 	if !data.TamFedDirs.IsNull() {
 		var values []DmTAMFedDir
@@ -328,7 +328,7 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		}
 	}
 	if !data.AutoRetry.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AutoRetry`, tfutils.StringFromBool(data.AutoRetry))
+		body, _ = sjson.Set(body, pathRoot+`AutoRetry`, tfutils.StringFromBool(data.AutoRetry, false))
 	}
 	if !data.RetryInterval.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RetryInterval`, data.RetryInterval.ValueInt64())

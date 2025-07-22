@@ -222,16 +222,16 @@ func (data HTTPSSourceProtocolHandler) ToBody(ctx context.Context, pathRoot stri
 		}
 	}
 	if !data.PersistentConnections.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PersistentConnections`, tfutils.StringFromBool(data.PersistentConnections))
+		body, _ = sjson.Set(body, pathRoot+`PersistentConnections`, tfutils.StringFromBool(data.PersistentConnections, false))
 	}
 	if !data.MaxPersistentConnectionsReuse.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MaxPersistentConnectionsReuse`, data.MaxPersistentConnectionsReuse.ValueInt64())
 	}
 	if !data.AllowCompression.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllowCompression`, tfutils.StringFromBool(data.AllowCompression))
+		body, _ = sjson.Set(body, pathRoot+`AllowCompression`, tfutils.StringFromBool(data.AllowCompression, false))
 	}
 	if !data.AllowWebSocketUpgrade.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllowWebSocketUpgrade`, tfutils.StringFromBool(data.AllowWebSocketUpgrade))
+		body, _ = sjson.Set(body, pathRoot+`AllowWebSocketUpgrade`, tfutils.StringFromBool(data.AllowWebSocketUpgrade, false))
 	}
 	if !data.WebSocketIdleTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WebSocketIdleTimeout`, data.WebSocketIdleTimeout.ValueInt64())
@@ -276,10 +276,10 @@ func (data HTTPSSourceProtocolHandler) ToBody(ctx context.Context, pathRoot stri
 		body, _ = sjson.Set(body, pathRoot+`HTTP2MaxFrameSize`, data.Http2MaxFrameSize.ValueInt64())
 	}
 	if !data.Http2StreamHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HTTP2StreamHeader`, tfutils.StringFromBool(data.Http2StreamHeader))
+		body, _ = sjson.Set(body, pathRoot+`HTTP2StreamHeader`, tfutils.StringFromBool(data.Http2StreamHeader, false))
 	}
 	if !data.ChunkedEncoding.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ChunkedEncoding`, tfutils.StringFromBool(data.ChunkedEncoding))
+		body, _ = sjson.Set(body, pathRoot+`ChunkedEncoding`, tfutils.StringFromBool(data.ChunkedEncoding, false))
 	}
 	if !data.HeaderTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HeaderTimeout`, data.HeaderTimeout.ValueInt64())

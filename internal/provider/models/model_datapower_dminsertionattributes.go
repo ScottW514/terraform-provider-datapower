@@ -113,10 +113,10 @@ func (data DmInsertionAttributes) ToBody(ctx context.Context, pathRoot string) s
 	}
 	body := ""
 	if !data.Secure.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`secure`, tfutils.StringFromBool(data.Secure))
+		body, _ = sjson.Set(body, pathRoot+`secure`, tfutils.StringFromBool(data.Secure, false))
 	}
 	if !data.Httponly.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`httponly`, tfutils.StringFromBool(data.Httponly))
+		body, _ = sjson.Set(body, pathRoot+`httponly`, tfutils.StringFromBool(data.Httponly, false))
 	}
 	return body
 }

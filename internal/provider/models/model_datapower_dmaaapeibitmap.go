@@ -449,73 +449,73 @@ func (data DmAAAPEIBitmap) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.HttpBasicAuth.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`http-basic-auth`, tfutils.StringFromBool(data.HttpBasicAuth))
+		body, _ = sjson.Set(body, pathRoot+`http-basic-auth`, tfutils.StringFromBool(data.HttpBasicAuth, false))
 	}
 	if !data.WssecUsername.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`wssec-username`, tfutils.StringFromBool(data.WssecUsername))
+		body, _ = sjson.Set(body, pathRoot+`wssec-username`, tfutils.StringFromBool(data.WssecUsername, false))
 	}
 	if !data.WssecDerivedKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`wssec-derived-key`, tfutils.StringFromBool(data.WssecDerivedKey))
+		body, _ = sjson.Set(body, pathRoot+`wssec-derived-key`, tfutils.StringFromBool(data.WssecDerivedKey, false))
 	}
 	if !data.WssecBinaryToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`wssec-binary-token`, tfutils.StringFromBool(data.WssecBinaryToken))
+		body, _ = sjson.Set(body, pathRoot+`wssec-binary-token`, tfutils.StringFromBool(data.WssecBinaryToken, false))
 	}
 	if !data.WsSecureConversation.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ws-secure-conversation`, tfutils.StringFromBool(data.WsSecureConversation))
+		body, _ = sjson.Set(body, pathRoot+`ws-secure-conversation`, tfutils.StringFromBool(data.WsSecureConversation, false))
 	}
 	if !data.WsTrust.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ws-trust`, tfutils.StringFromBool(data.WsTrust))
+		body, _ = sjson.Set(body, pathRoot+`ws-trust`, tfutils.StringFromBool(data.WsTrust, false))
 	}
 	if !data.Kerberos.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`kerberos`, tfutils.StringFromBool(data.Kerberos))
+		body, _ = sjson.Set(body, pathRoot+`kerberos`, tfutils.StringFromBool(data.Kerberos, false))
 	}
 	if !data.KerberosSpnego.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`kerberos-spnego`, tfutils.StringFromBool(data.KerberosSpnego))
+		body, _ = sjson.Set(body, pathRoot+`kerberos-spnego`, tfutils.StringFromBool(data.KerberosSpnego, false))
 	}
 	if !data.ClientSsl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`client-ssl`, tfutils.StringFromBool(data.ClientSsl))
+		body, _ = sjson.Set(body, pathRoot+`client-ssl`, tfutils.StringFromBool(data.ClientSsl, false))
 	}
 	if !data.SamlAttrName.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`saml-attr-name`, tfutils.StringFromBool(data.SamlAttrName))
+		body, _ = sjson.Set(body, pathRoot+`saml-attr-name`, tfutils.StringFromBool(data.SamlAttrName, false))
 	}
 	if !data.SamlAuthenName.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`saml-authen-name`, tfutils.StringFromBool(data.SamlAuthenName))
+		body, _ = sjson.Set(body, pathRoot+`saml-authen-name`, tfutils.StringFromBool(data.SamlAuthenName, false))
 	}
 	if !data.SamlArtifact.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`saml-artifact`, tfutils.StringFromBool(data.SamlArtifact))
+		body, _ = sjson.Set(body, pathRoot+`saml-artifact`, tfutils.StringFromBool(data.SamlArtifact, false))
 	}
 	if !data.ClientIpAddress.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`client-ip-address`, tfutils.StringFromBool(data.ClientIpAddress))
+		body, _ = sjson.Set(body, pathRoot+`client-ip-address`, tfutils.StringFromBool(data.ClientIpAddress, false))
 	}
 	if !data.SignerDn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`signer-dn`, tfutils.StringFromBool(data.SignerDn))
+		body, _ = sjson.Set(body, pathRoot+`signer-dn`, tfutils.StringFromBool(data.SignerDn, false))
 	}
 	if !data.Token.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`token`, tfutils.StringFromBool(data.Token))
+		body, _ = sjson.Set(body, pathRoot+`token`, tfutils.StringFromBool(data.Token, false))
 	}
 	if !data.CookieToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`cookie-token`, tfutils.StringFromBool(data.CookieToken))
+		body, _ = sjson.Set(body, pathRoot+`cookie-token`, tfutils.StringFromBool(data.CookieToken, false))
 	}
 	if !data.Ltpa.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ltpa`, tfutils.StringFromBool(data.Ltpa))
+		body, _ = sjson.Set(body, pathRoot+`ltpa`, tfutils.StringFromBool(data.Ltpa, false))
 	}
 	if !data.Metadata.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`metadata`, tfutils.StringFromBool(data.Metadata))
+		body, _ = sjson.Set(body, pathRoot+`metadata`, tfutils.StringFromBool(data.Metadata, false))
 	}
 	if !data.Jwt.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`jwt`, tfutils.StringFromBool(data.Jwt))
+		body, _ = sjson.Set(body, pathRoot+`jwt`, tfutils.StringFromBool(data.Jwt, false))
 	}
 	if !data.Custom.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`custom`, tfutils.StringFromBool(data.Custom))
+		body, _ = sjson.Set(body, pathRoot+`custom`, tfutils.StringFromBool(data.Custom, false))
 	}
 	if !data.HtmlFormsAuth.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`html-forms-auth`, tfutils.StringFromBool(data.HtmlFormsAuth))
+		body, _ = sjson.Set(body, pathRoot+`html-forms-auth`, tfutils.StringFromBool(data.HtmlFormsAuth, false))
 	}
 	if !data.SocialLogin.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`social-login`, tfutils.StringFromBool(data.SocialLogin))
+		body, _ = sjson.Set(body, pathRoot+`social-login`, tfutils.StringFromBool(data.SocialLogin, false))
 	}
 	if !data.Oauth.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`oauth`, tfutils.StringFromBool(data.Oauth))
+		body, _ = sjson.Set(body, pathRoot+`oauth`, tfutils.StringFromBool(data.Oauth, false))
 	}
 	return body
 }

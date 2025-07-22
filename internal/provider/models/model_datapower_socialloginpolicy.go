@@ -166,7 +166,7 @@ func (data SocialLoginPolicy) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`ProviderTokenEndpoint`, data.ProviderTokenEndpoint.ValueString())
 	}
 	if !data.ValidateJwtToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ValidateJWTToken`, tfutils.StringFromBool(data.ValidateJwtToken))
+		body, _ = sjson.Set(body, pathRoot+`ValidateJWTToken`, tfutils.StringFromBool(data.ValidateJwtToken, false))
 	}
 	if !data.JwtValidator.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`JWTValidator`, data.JwtValidator.ValueString())

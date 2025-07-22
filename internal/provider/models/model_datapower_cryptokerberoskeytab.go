@@ -101,10 +101,10 @@ func (data CryptoKerberosKeytab) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`Filename`, data.Filename.ValueString())
 	}
 	if !data.UseReplayCache.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseReplayCache`, tfutils.StringFromBool(data.UseReplayCache))
+		body, _ = sjson.Set(body, pathRoot+`UseReplayCache`, tfutils.StringFromBool(data.UseReplayCache, false))
 	}
 	if !data.GenerateGssChecksum.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`GenerateGssChecksum`, tfutils.StringFromBool(data.GenerateGssChecksum))
+		body, _ = sjson.Set(body, pathRoot+`GenerateGssChecksum`, tfutils.StringFromBool(data.GenerateGssChecksum, false))
 	}
 	if data.GssChecksumFlags != nil {
 		if !data.GssChecksumFlags.IsNull() {

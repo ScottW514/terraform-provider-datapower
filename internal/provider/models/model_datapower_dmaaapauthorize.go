@@ -1039,7 +1039,7 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`AZXACMLPEPType`, data.AzxacmlpepType.ValueString())
 	}
 	if !data.AzxacmlUseOnBoxPdp.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseOnBoxPDP`, tfutils.StringFromBool(data.AzxacmlUseOnBoxPdp))
+		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseOnBoxPDP`, tfutils.StringFromBool(data.AzxacmlUseOnBoxPdp, false))
 	}
 	if !data.Azxacmlpdp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZXACMLPDP`, data.Azxacmlpdp.ValueString())
@@ -1060,7 +1060,7 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`AZXACMLCustomObligation`, data.AzxacmlCustomObligation.ValueString())
 	}
 	if !data.AzxacmlUseSaml2.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseSAML2`, tfutils.StringFromBool(data.AzxacmlUseSaml2))
+		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseSAML2`, tfutils.StringFromBool(data.AzxacmlUseSaml2, false))
 	}
 	if !data.AztamServer.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZTAMServer`, data.AztamServer.ValueString())
@@ -1072,7 +1072,7 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`AZTAMActionResourceMap`, data.AztamActionResourceMap.ValueString())
 	}
 	if !data.AzxacmlUseSoap.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseSOAP`, tfutils.StringFromBool(data.AzxacmlUseSoap))
+		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseSOAP`, tfutils.StringFromBool(data.AzxacmlUseSoap, false))
 	}
 	if !data.AzzosnssConfig.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZZOSNSSConfig`, data.AzzosnssConfig.ValueString())
@@ -1093,16 +1093,16 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`AZTFIMEndpoint`, data.AztfimEndpoint.ValueString())
 	}
 	if !data.AzoAuthEnforceScope.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZOAuthEnforceScope`, tfutils.StringFromBool(data.AzoAuthEnforceScope))
+		body, _ = sjson.Set(body, pathRoot+`AZOAuthEnforceScope`, tfutils.StringFromBool(data.AzoAuthEnforceScope, false))
 	}
 	if !data.AzoAuthExportHeaders.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZOAuthExportHeaders`, tfutils.StringFromBool(data.AzoAuthExportHeaders))
+		body, _ = sjson.Set(body, pathRoot+`AZOAuthExportHeaders`, tfutils.StringFromBool(data.AzoAuthExportHeaders, false))
 	}
 	if !data.AztampacReturn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZTAMPACReturn`, tfutils.StringFromBool(data.AztampacReturn))
+		body, _ = sjson.Set(body, pathRoot+`AZTAMPACReturn`, tfutils.StringFromBool(data.AztampacReturn, false))
 	}
 	if !data.AztampacUse.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZTAMPACUse`, tfutils.StringFromBool(data.AztampacUse))
+		body, _ = sjson.Set(body, pathRoot+`AZTAMPACUse`, tfutils.StringFromBool(data.AztampacUse, false))
 	}
 	if !data.AzldapReadTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZLDAPReadTimeout`, data.AzldapReadTimeout.ValueInt64())

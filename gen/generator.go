@@ -111,6 +111,7 @@ type YamlConfigAttribute struct {
 	Path            string   `yaml:"path"`
 	TfName          string   `yaml:"tf_name"`
 	Type            string   `yaml:"type"`
+	BoolAdmin       bool     `yaml:"bool_admin"`
 	DmType          string   `yaml:"dm_type"`
 	ElementType     string   `yaml:"element_type"`
 	Required        bool     `yaml:"required"`

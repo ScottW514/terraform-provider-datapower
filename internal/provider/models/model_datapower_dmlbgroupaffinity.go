@@ -191,7 +191,7 @@ func (data DmLBGroupAffinity) ToBody(ctx context.Context, pathRoot string) strin
 	}
 	body := ""
 	if !data.EnableSa.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EnableSA`, tfutils.StringFromBool(data.EnableSa))
+		body, _ = sjson.Set(body, pathRoot+`EnableSA`, tfutils.StringFromBool(data.EnableSa, false))
 	}
 	if !data.InsertionCookieName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`InsertionCookieName`, data.InsertionCookieName.ValueString())
@@ -203,7 +203,7 @@ func (data DmLBGroupAffinity) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`InsertionDomain`, data.InsertionDomain.ValueString())
 	}
 	if !data.AffinityWlmOverride.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AffinityWLMOverride`, tfutils.StringFromBool(data.AffinityWlmOverride))
+		body, _ = sjson.Set(body, pathRoot+`AffinityWLMOverride`, tfutils.StringFromBool(data.AffinityWlmOverride, false))
 	}
 	if !data.AffinityMode.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AffinityMode`, data.AffinityMode.ValueString())

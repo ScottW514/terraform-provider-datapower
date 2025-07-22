@@ -200,10 +200,10 @@ func (data FormsLoginPolicy) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`CookieAttributes`, data.CookieAttributes.ValueString())
 	}
 	if !data.UseSslForLogin.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseSSLForLogin`, tfutils.StringFromBool(data.UseSslForLogin))
+		body, _ = sjson.Set(body, pathRoot+`UseSSLForLogin`, tfutils.StringFromBool(data.UseSslForLogin, false))
 	}
 	if !data.EnableMigration.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EnableMigration`, tfutils.StringFromBool(data.EnableMigration))
+		body, _ = sjson.Set(body, pathRoot+`EnableMigration`, tfutils.StringFromBool(data.EnableMigration, false))
 	}
 	if !data.SslPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLPort`, data.SslPort.ValueInt64())

@@ -302,7 +302,7 @@ func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string) string {
 {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")}}
     {{- if and (ne .Name "AppDomain")}}
 	if {{- if .Computed}} data.{{toGoName .TfName}}.Value{{if eq .Type "Int64"}}Int64() != 0{{else}}String() != ""{{end}} &&{{- end}} !data.{{toGoName .TfName}}.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+{{.Path}}, {{if eq .Type "Bool"}}tfutils.StringFromBool(data.{{toGoName .TfName}}){{else}}data.{{toGoName .TfName}}.Value{{.Type}}(){{end}})
+		body, _ = sjson.Set(body, pathRoot+{{.Path}}, {{if eq .Type "Bool"}}tfutils.StringFromBool(data.{{toGoName .TfName}}, {{.BoolAdmin}}){{else}}data.{{toGoName .TfName}}.Value{{.Type}}(){{end}})
 	}
     {{- end}}
 {{- else if isList .}}

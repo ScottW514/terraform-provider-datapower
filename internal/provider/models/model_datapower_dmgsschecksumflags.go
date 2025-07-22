@@ -145,16 +145,16 @@ func (data DmGssChecksumFlags) ToBody(ctx context.Context, pathRoot string) stri
 	}
 	body := ""
 	if !data.Replay.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`REPLAY`, tfutils.StringFromBool(data.Replay))
+		body, _ = sjson.Set(body, pathRoot+`REPLAY`, tfutils.StringFromBool(data.Replay, false))
 	}
 	if !data.Sequence.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SEQUENCE`, tfutils.StringFromBool(data.Sequence))
+		body, _ = sjson.Set(body, pathRoot+`SEQUENCE`, tfutils.StringFromBool(data.Sequence, false))
 	}
 	if !data.Conf.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CONF`, tfutils.StringFromBool(data.Conf))
+		body, _ = sjson.Set(body, pathRoot+`CONF`, tfutils.StringFromBool(data.Conf, false))
 	}
 	if !data.Integ.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`INTEG`, tfutils.StringFromBool(data.Integ))
+		body, _ = sjson.Set(body, pathRoot+`INTEG`, tfutils.StringFromBool(data.Integ, false))
 	}
 	return body
 }

@@ -385,61 +385,61 @@ func (data DmSourceHTTPFeatureType) ToBody(ctx context.Context, pathRoot string)
 	}
 	body := ""
 	if !data.Http1D0.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.0`, tfutils.StringFromBool(data.Http1D0))
+		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.0`, tfutils.StringFromBool(data.Http1D0, false))
 	}
 	if !data.Http1D1.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.1`, tfutils.StringFromBool(data.Http1D1))
+		body, _ = sjson.Set(body, pathRoot+`HTTP-1\.1`, tfutils.StringFromBool(data.Http1D1, false))
 	}
 	if !data.Http2D0.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HTTP-2\.0`, tfutils.StringFromBool(data.Http2D0))
+		body, _ = sjson.Set(body, pathRoot+`HTTP-2\.0`, tfutils.StringFromBool(data.Http2D0, false))
 	}
 	if !data.Post.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`POST`, tfutils.StringFromBool(data.Post))
+		body, _ = sjson.Set(body, pathRoot+`POST`, tfutils.StringFromBool(data.Post, false))
 	}
 	if !data.Get.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`GET`, tfutils.StringFromBool(data.Get))
+		body, _ = sjson.Set(body, pathRoot+`GET`, tfutils.StringFromBool(data.Get, false))
 	}
 	if !data.Put.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PUT`, tfutils.StringFromBool(data.Put))
+		body, _ = sjson.Set(body, pathRoot+`PUT`, tfutils.StringFromBool(data.Put, false))
 	}
 	if !data.Patch.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PATCH`, tfutils.StringFromBool(data.Patch))
+		body, _ = sjson.Set(body, pathRoot+`PATCH`, tfutils.StringFromBool(data.Patch, false))
 	}
 	if !data.Head.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HEAD`, tfutils.StringFromBool(data.Head))
+		body, _ = sjson.Set(body, pathRoot+`HEAD`, tfutils.StringFromBool(data.Head, false))
 	}
 	if !data.Options.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OPTIONS`, tfutils.StringFromBool(data.Options))
+		body, _ = sjson.Set(body, pathRoot+`OPTIONS`, tfutils.StringFromBool(data.Options, false))
 	}
 	if !data.Trace.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TRACE`, tfutils.StringFromBool(data.Trace))
+		body, _ = sjson.Set(body, pathRoot+`TRACE`, tfutils.StringFromBool(data.Trace, false))
 	}
 	if !data.Delete.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DELETE`, tfutils.StringFromBool(data.Delete))
+		body, _ = sjson.Set(body, pathRoot+`DELETE`, tfutils.StringFromBool(data.Delete, false))
 	}
 	if !data.Connect.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CONNECT`, tfutils.StringFromBool(data.Connect))
+		body, _ = sjson.Set(body, pathRoot+`CONNECT`, tfutils.StringFromBool(data.Connect, false))
 	}
 	if !data.CustomMethods.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CustomMethods`, tfutils.StringFromBool(data.CustomMethods))
+		body, _ = sjson.Set(body, pathRoot+`CustomMethods`, tfutils.StringFromBool(data.CustomMethods, false))
 	}
 	if !data.QueryString.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`QueryString`, tfutils.StringFromBool(data.QueryString))
+		body, _ = sjson.Set(body, pathRoot+`QueryString`, tfutils.StringFromBool(data.QueryString, false))
 	}
 	if !data.FragmentIdentifiers.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`FragmentIdentifiers`, tfutils.StringFromBool(data.FragmentIdentifiers))
+		body, _ = sjson.Set(body, pathRoot+`FragmentIdentifiers`, tfutils.StringFromBool(data.FragmentIdentifiers, false))
 	}
 	if !data.DotDot.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DotDot`, tfutils.StringFromBool(data.DotDot))
+		body, _ = sjson.Set(body, pathRoot+`DotDot`, tfutils.StringFromBool(data.DotDot, false))
 	}
 	if !data.DotDotInPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DotDotInPath`, tfutils.StringFromBool(data.DotDotInPath))
+		body, _ = sjson.Set(body, pathRoot+`DotDotInPath`, tfutils.StringFromBool(data.DotDotInPath, false))
 	}
 	if !data.DotDotInQueryString.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DotDotInQueryString`, tfutils.StringFromBool(data.DotDotInQueryString))
+		body, _ = sjson.Set(body, pathRoot+`DotDotInQueryString`, tfutils.StringFromBool(data.DotDotInQueryString, false))
 	}
 	if !data.CmdExe.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CmdExe`, tfutils.StringFromBool(data.CmdExe))
+		body, _ = sjson.Set(body, pathRoot+`CmdExe`, tfutils.StringFromBool(data.CmdExe, false))
 	}
 	return body
 }

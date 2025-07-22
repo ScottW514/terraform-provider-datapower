@@ -2,6 +2,7 @@
 
 - Update getting started guide
 - Enhanced `datasource` testing
+- Enhanced string/bool conversion functions to handle admin state in addition to toggle
 
 ## 0.1.2
 

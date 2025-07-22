@@ -211,7 +211,7 @@ func (data DmTAMFedDir) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`BindPw`, data.BindPw.ValueString())
 	}
 	if !data.UseSsl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseSSL`, tfutils.StringFromBool(data.UseSsl))
+		body, _ = sjson.Set(body, pathRoot+`UseSSL`, tfutils.StringFromBool(data.UseSsl, false))
 	}
 	if !data.KeyFileLabel.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`KeyFileLabel`, data.KeyFileLabel.ValueString())

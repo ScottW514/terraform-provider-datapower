@@ -16,7 +16,8 @@ attributes:
   name: str(required=False) # Name of the attribute in the model
   path: str(required=False) # JSON path to the attribute. Defaults to name
   tf_name: str(required=False) # Terraform name for the attribute
-  type: enum('String', 'Int64', 'Float64', 'Bool', 'List', 'Set', 'Map', 'Object', required=False) # Type of the attribute
+  type: enum('String', 'Int64', 'Bool', 'List', required=False) # Type of the attribute
+  bool_admin: bool(required=False) # Set to true if the attribute is an admin state
   dm_type: str(required=False) # Datapower Type
   element_type: enum('String', 'Int64', required=False) # only relevant if type is either 'List' or 'Set'
   required: bool(required=False) # Set to true if the attribute is mandatory

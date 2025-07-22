@@ -184,7 +184,7 @@ func (data Domain) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DeploymentPolicyParameters`, data.DeploymentPolicyParameters.ValueString())
 	}
 	if !data.LocalIpRewrite.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LocalIPRewrite`, tfutils.StringFromBool(data.LocalIpRewrite))
+		body, _ = sjson.Set(body, pathRoot+`LocalIPRewrite`, tfutils.StringFromBool(data.LocalIpRewrite, false))
 	}
 	if !data.MaxChkpoints.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MaxChkpoints`, data.MaxChkpoints.ValueInt64())

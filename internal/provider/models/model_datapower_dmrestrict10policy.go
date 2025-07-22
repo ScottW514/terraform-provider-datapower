@@ -92,7 +92,7 @@ func (data DmRestrict10Policy) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}
 	if !data.Restrict10.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Restrict10`, tfutils.StringFromBool(data.Restrict10))
+		body, _ = sjson.Set(body, pathRoot+`Restrict10`, tfutils.StringFromBool(data.Restrict10, false))
 	}
 	return body
 }

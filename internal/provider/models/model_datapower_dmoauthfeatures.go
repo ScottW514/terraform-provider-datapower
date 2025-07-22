@@ -145,16 +145,16 @@ func (data DmOAuthFeatures) ToBody(ctx context.Context, pathRoot string) string 
 	}
 	body := ""
 	if !data.Verboseerror.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`verboseerror`, tfutils.StringFromBool(data.Verboseerror))
+		body, _ = sjson.Set(body, pathRoot+`verboseerror`, tfutils.StringFromBool(data.Verboseerror, false))
 	}
 	if !data.Onetimeuse.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`onetimeuse`, tfutils.StringFromBool(data.Onetimeuse))
+		body, _ = sjson.Set(body, pathRoot+`onetimeuse`, tfutils.StringFromBool(data.Onetimeuse, false))
 	}
 	if !data.Pkce.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`pkce`, tfutils.StringFromBool(data.Pkce))
+		body, _ = sjson.Set(body, pathRoot+`pkce`, tfutils.StringFromBool(data.Pkce, false))
 	}
 	if !data.Multipleusesrefreshtoken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`multipleusesrefreshtoken`, tfutils.StringFromBool(data.Multipleusesrefreshtoken))
+		body, _ = sjson.Set(body, pathRoot+`multipleusesrefreshtoken`, tfutils.StringFromBool(data.Multipleusesrefreshtoken, false))
 	}
 	return body
 }

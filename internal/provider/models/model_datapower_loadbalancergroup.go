@@ -158,7 +158,7 @@ func (data LoadBalancerGroup) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`Algorithm`, data.Algorithm.ValueString())
 	}
 	if !data.RetrieveInfo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RetrieveInfo`, tfutils.StringFromBool(data.RetrieveInfo))
+		body, _ = sjson.Set(body, pathRoot+`RetrieveInfo`, tfutils.StringFromBool(data.RetrieveInfo, false))
 	}
 	if !data.WlmRetrieval.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WLMRetrieval`, data.WlmRetrieval.ValueString())
@@ -176,7 +176,7 @@ func (data LoadBalancerGroup) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`Damp`, data.Damp.ValueInt64())
 	}
 	if !data.NeverReturnSickMember.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`NeverReturnSickMember`, tfutils.StringFromBool(data.NeverReturnSickMember))
+		body, _ = sjson.Set(body, pathRoot+`NeverReturnSickMember`, tfutils.StringFromBool(data.NeverReturnSickMember, false))
 	}
 	if !data.LbGroupMembers.IsNull() {
 		var values []DmLBGroupMember
@@ -186,7 +186,7 @@ func (data LoadBalancerGroup) ToBody(ctx context.Context, pathRoot string) strin
 		}
 	}
 	if !data.TryEveryServerBeforeFailing.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TryEveryServerBeforeFailing`, tfutils.StringFromBool(data.TryEveryServerBeforeFailing))
+		body, _ = sjson.Set(body, pathRoot+`TryEveryServerBeforeFailing`, tfutils.StringFromBool(data.TryEveryServerBeforeFailing, false))
 	}
 	if data.LbGroupChecks != nil {
 		if !data.LbGroupChecks.IsNull() {
@@ -194,10 +194,10 @@ func (data LoadBalancerGroup) ToBody(ctx context.Context, pathRoot string) strin
 		}
 	}
 	if !data.MasqueradeMember.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MasqueradeMember`, tfutils.StringFromBool(data.MasqueradeMember))
+		body, _ = sjson.Set(body, pathRoot+`MasqueradeMember`, tfutils.StringFromBool(data.MasqueradeMember, false))
 	}
 	if !data.ApplicationRouting.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ApplicationRouting`, tfutils.StringFromBool(data.ApplicationRouting))
+		body, _ = sjson.Set(body, pathRoot+`ApplicationRouting`, tfutils.StringFromBool(data.ApplicationRouting, false))
 	}
 	if data.LbGroupAffinityConf != nil {
 		if !data.LbGroupAffinityConf.IsNull() {

@@ -145,16 +145,16 @@ func (data DmOAuthRSSetHeader) ToBody(ctx context.Context, pathRoot string) stri
 	}
 	body := ""
 	if !data.Owner.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`owner`, tfutils.StringFromBool(data.Owner))
+		body, _ = sjson.Set(body, pathRoot+`owner`, tfutils.StringFromBool(data.Owner, false))
 	}
 	if !data.Clientid.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`clientid`, tfutils.StringFromBool(data.Clientid))
+		body, _ = sjson.Set(body, pathRoot+`clientid`, tfutils.StringFromBool(data.Clientid, false))
 	}
 	if !data.Scope.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`scope`, tfutils.StringFromBool(data.Scope))
+		body, _ = sjson.Set(body, pathRoot+`scope`, tfutils.StringFromBool(data.Scope, false))
 	}
 	if !data.Miscinfo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`miscinfo`, tfutils.StringFromBool(data.Miscinfo))
+		body, _ = sjson.Set(body, pathRoot+`miscinfo`, tfutils.StringFromBool(data.Miscinfo, false))
 	}
 	return body
 }

@@ -444,7 +444,7 @@ func (data DmLBGroupCheck) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.Active.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Active`, tfutils.StringFromBool(data.Active))
+		body, _ = sjson.Set(body, pathRoot+`Active`, tfutils.StringFromBool(data.Active, false))
 	}
 	if !data.Uri.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`URI`, data.Uri.ValueString())
@@ -456,7 +456,7 @@ func (data DmLBGroupCheck) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`SSL`, data.Ssl.ValueString())
 	}
 	if !data.Post.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Post`, tfutils.StringFromBool(data.Post))
+		body, _ = sjson.Set(body, pathRoot+`Post`, tfutils.StringFromBool(data.Post, false))
 	}
 	if !data.Input.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Input`, data.Input.ValueString())
@@ -474,13 +474,13 @@ func (data DmLBGroupCheck) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`Filter`, data.Filter.ValueString())
 	}
 	if !data.EnforceTimeout.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EnforceTimeout`, tfutils.StringFromBool(data.EnforceTimeout))
+		body, _ = sjson.Set(body, pathRoot+`EnforceTimeout`, tfutils.StringFromBool(data.EnforceTimeout, false))
 	}
 	if !data.IndependentChecks.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`IndependentChecks`, tfutils.StringFromBool(data.IndependentChecks))
+		body, _ = sjson.Set(body, pathRoot+`IndependentChecks`, tfutils.StringFromBool(data.IndependentChecks, false))
 	}
 	if !data.GatewayScriptChecks.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`GatewayScriptChecks`, tfutils.StringFromBool(data.GatewayScriptChecks))
+		body, _ = sjson.Set(body, pathRoot+`GatewayScriptChecks`, tfutils.StringFromBool(data.GatewayScriptChecks, false))
 	}
 	if !data.GatewayScriptReqMethod.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`GatewayScriptReqMethod`, data.GatewayScriptReqMethod.ValueString())

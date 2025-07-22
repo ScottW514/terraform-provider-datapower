@@ -113,10 +113,10 @@ func (data DmSSLOptions) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.MaxDuration.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`max-duration`, tfutils.StringFromBool(data.MaxDuration))
+		body, _ = sjson.Set(body, pathRoot+`max-duration`, tfutils.StringFromBool(data.MaxDuration, false))
 	}
 	if !data.MaxRenegotiation.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`max-renegotiation`, tfutils.StringFromBool(data.MaxRenegotiation))
+		body, _ = sjson.Set(body, pathRoot+`max-renegotiation`, tfutils.StringFromBool(data.MaxRenegotiation, false))
 	}
 	return body
 }

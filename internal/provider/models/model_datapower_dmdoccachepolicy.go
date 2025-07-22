@@ -244,19 +244,19 @@ func (data DmDocCachePolicy) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`XC10Grid`, data.Xc10Grid.ValueString())
 	}
 	if !data.CacheBackendResponses.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CacheBackendResponses`, tfutils.StringFromBool(data.CacheBackendResponses))
+		body, _ = sjson.Set(body, pathRoot+`CacheBackendResponses`, tfutils.StringFromBool(data.CacheBackendResponses, false))
 	}
 	if !data.HttpCacheValidation.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HTTPCacheValidation`, tfutils.StringFromBool(data.HttpCacheValidation))
+		body, _ = sjson.Set(body, pathRoot+`HTTPCacheValidation`, tfutils.StringFromBool(data.HttpCacheValidation, false))
 	}
 	if !data.ReturnExpired.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ReturnExpired`, tfutils.StringFromBool(data.ReturnExpired))
+		body, _ = sjson.Set(body, pathRoot+`ReturnExpired`, tfutils.StringFromBool(data.ReturnExpired, false))
 	}
 	if !data.RestInvalidation.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RESTInvalidation`, tfutils.StringFromBool(data.RestInvalidation))
+		body, _ = sjson.Set(body, pathRoot+`RESTInvalidation`, tfutils.StringFromBool(data.RestInvalidation, false))
 	}
 	if !data.CacheUnsafeResponse.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CacheUnsafeResponse`, tfutils.StringFromBool(data.CacheUnsafeResponse))
+		body, _ = sjson.Set(body, pathRoot+`CacheUnsafeResponse`, tfutils.StringFromBool(data.CacheUnsafeResponse, false))
 	}
 	return body
 }

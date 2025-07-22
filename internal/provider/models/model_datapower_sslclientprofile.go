@@ -192,13 +192,13 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`Idcred`, data.Idcred.ValueString())
 	}
 	if !data.ValidateServerCert.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ValidateServerCert`, tfutils.StringFromBool(data.ValidateServerCert))
+		body, _ = sjson.Set(body, pathRoot+`ValidateServerCert`, tfutils.StringFromBool(data.ValidateServerCert, false))
 	}
 	if !data.Valcred.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Valcred`, data.Valcred.ValueString())
 	}
 	if !data.Caching.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Caching`, tfutils.StringFromBool(data.Caching))
+		body, _ = sjson.Set(body, pathRoot+`Caching`, tfutils.StringFromBool(data.Caching, false))
 	}
 	if !data.CacheTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CacheTimeout`, data.CacheTimeout.ValueInt64())
@@ -225,7 +225,7 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`CustomSNIHostname`, data.CustomSniHostname.ValueString())
 	}
 	if !data.ValidateHostname.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ValidateHostname`, tfutils.StringFromBool(data.ValidateHostname))
+		body, _ = sjson.Set(body, pathRoot+`ValidateHostname`, tfutils.StringFromBool(data.ValidateHostname, false))
 	}
 	if data.HostnameValidationFlags != nil {
 		if !data.HostnameValidationFlags.IsNull() {
@@ -233,13 +233,13 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		}
 	}
 	if !data.HostnameValidationFailOnError.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HostnameValidationFailOnError`, tfutils.StringFromBool(data.HostnameValidationFailOnError))
+		body, _ = sjson.Set(body, pathRoot+`HostnameValidationFailOnError`, tfutils.StringFromBool(data.HostnameValidationFailOnError, false))
 	}
 	if !data.EnableTls13Compat.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EnableTLS13Compat`, tfutils.StringFromBool(data.EnableTls13Compat))
+		body, _ = sjson.Set(body, pathRoot+`EnableTLS13Compat`, tfutils.StringFromBool(data.EnableTls13Compat, false))
 	}
 	if !data.DisableRenegotiation.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DisableRenegotiation`, tfutils.StringFromBool(data.DisableRenegotiation))
+		body, _ = sjson.Set(body, pathRoot+`DisableRenegotiation`, tfutils.StringFromBool(data.DisableRenegotiation, false))
 	}
 	if !data.SigAlgs.IsNull() {
 		var values []string
@@ -249,7 +249,7 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		}
 	}
 	if !data.RequireClosureNotification.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RequireClosureNotification`, tfutils.StringFromBool(data.RequireClosureNotification))
+		body, _ = sjson.Set(body, pathRoot+`RequireClosureNotification`, tfutils.StringFromBool(data.RequireClosureNotification, false))
 	}
 	return body
 }

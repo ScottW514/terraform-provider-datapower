@@ -210,22 +210,22 @@ func (data SSLServerProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`Idcred`, data.Idcred.ValueString())
 	}
 	if !data.RequestClientAuth.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RequestClientAuth`, tfutils.StringFromBool(data.RequestClientAuth))
+		body, _ = sjson.Set(body, pathRoot+`RequestClientAuth`, tfutils.StringFromBool(data.RequestClientAuth, false))
 	}
 	if !data.RequireClientAuth.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RequireClientAuth`, tfutils.StringFromBool(data.RequireClientAuth))
+		body, _ = sjson.Set(body, pathRoot+`RequireClientAuth`, tfutils.StringFromBool(data.RequireClientAuth, false))
 	}
 	if !data.ValidateClientCert.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ValidateClientCert`, tfutils.StringFromBool(data.ValidateClientCert))
+		body, _ = sjson.Set(body, pathRoot+`ValidateClientCert`, tfutils.StringFromBool(data.ValidateClientCert, false))
 	}
 	if !data.SendClientAuthCaList.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SendClientAuthCAList`, tfutils.StringFromBool(data.SendClientAuthCaList))
+		body, _ = sjson.Set(body, pathRoot+`SendClientAuthCAList`, tfutils.StringFromBool(data.SendClientAuthCaList, false))
 	}
 	if !data.Valcred.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Valcred`, data.Valcred.ValueString())
 	}
 	if !data.Caching.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Caching`, tfutils.StringFromBool(data.Caching))
+		body, _ = sjson.Set(body, pathRoot+`Caching`, tfutils.StringFromBool(data.Caching, false))
 	}
 	if !data.CacheTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CacheTimeout`, data.CacheTimeout.ValueInt64())
@@ -242,22 +242,22 @@ func (data SSLServerProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`MaxSSLDuration`, data.MaxSslDuration.ValueInt64())
 	}
 	if !data.DisableRenegotiation.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DisableRenegotiation`, tfutils.StringFromBool(data.DisableRenegotiation))
+		body, _ = sjson.Set(body, pathRoot+`DisableRenegotiation`, tfutils.StringFromBool(data.DisableRenegotiation, false))
 	}
 	if !data.NumberOfRenegotiationAllowed.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`NumberOfRenegotiationAllowed`, data.NumberOfRenegotiationAllowed.ValueInt64())
 	}
 	if !data.ProhibitResumeOnReneg.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ProhibitResumeOnReneg`, tfutils.StringFromBool(data.ProhibitResumeOnReneg))
+		body, _ = sjson.Set(body, pathRoot+`ProhibitResumeOnReneg`, tfutils.StringFromBool(data.ProhibitResumeOnReneg, false))
 	}
 	if !data.Compression.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Compression`, tfutils.StringFromBool(data.Compression))
+		body, _ = sjson.Set(body, pathRoot+`Compression`, tfutils.StringFromBool(data.Compression, false))
 	}
 	if !data.AllowLegacyRenegotiation.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllowLegacyRenegotiation`, tfutils.StringFromBool(data.AllowLegacyRenegotiation))
+		body, _ = sjson.Set(body, pathRoot+`AllowLegacyRenegotiation`, tfutils.StringFromBool(data.AllowLegacyRenegotiation, false))
 	}
 	if !data.PreferServerCiphers.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PreferServerCiphers`, tfutils.StringFromBool(data.PreferServerCiphers))
+		body, _ = sjson.Set(body, pathRoot+`PreferServerCiphers`, tfutils.StringFromBool(data.PreferServerCiphers, false))
 	}
 	if !data.EllipticCurves.IsNull() {
 		var values []string
@@ -267,7 +267,7 @@ func (data SSLServerProfile) ToBody(ctx context.Context, pathRoot string) string
 		}
 	}
 	if !data.PrioritizeChaCha.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PrioritizeChaCha`, tfutils.StringFromBool(data.PrioritizeChaCha))
+		body, _ = sjson.Set(body, pathRoot+`PrioritizeChaCha`, tfutils.StringFromBool(data.PrioritizeChaCha, false))
 	}
 	if !data.SigAlgs.IsNull() {
 		var values []string
@@ -277,7 +277,7 @@ func (data SSLServerProfile) ToBody(ctx context.Context, pathRoot string) string
 		}
 	}
 	if !data.RequireClosureNotification.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RequireClosureNotification`, tfutils.StringFromBool(data.RequireClosureNotification))
+		body, _ = sjson.Set(body, pathRoot+`RequireClosureNotification`, tfutils.StringFromBool(data.RequireClosureNotification, false))
 	}
 	return body
 }

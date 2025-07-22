@@ -1491,13 +1491,13 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	}
 	body := ""
 	if !data.PpEnabled.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPEnabled`, tfutils.StringFromBool(data.PpEnabled))
+		body, _ = sjson.Set(body, pathRoot+`PPEnabled`, tfutils.StringFromBool(data.PpEnabled, false))
 	}
 	if !data.PpCustomUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPCustomURL`, data.PpCustomUrl.ValueString())
 	}
 	if !data.PpsamlAuthAssertion.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLAuthAssertion`, tfutils.StringFromBool(data.PpsamlAuthAssertion))
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLAuthAssertion`, tfutils.StringFromBool(data.PpsamlAuthAssertion, false))
 	}
 	if !data.PpsamlServerName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLServerName`, data.PpsamlServerName.ValueString())
@@ -1506,7 +1506,7 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLNameQualifier`, data.PpsamlNameQualifier.ValueString())
 	}
 	if !data.PpKerberosTicket.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPKerberosTicket`, tfutils.StringFromBool(data.PpKerberosTicket))
+		body, _ = sjson.Set(body, pathRoot+`PPKerberosTicket`, tfutils.StringFromBool(data.PpKerberosTicket, false))
 	}
 	if !data.PpKerberosClient.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosClient`, data.PpKerberosClient.ValueString())
@@ -1518,28 +1518,28 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosServer`, data.PpKerberosServer.ValueString())
 	}
 	if !data.PpwsTrust.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrust`, tfutils.StringFromBool(data.PpwsTrust))
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrust`, tfutils.StringFromBool(data.PpwsTrust, false))
 	}
 	if !data.PpTimestamp.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPTimestamp`, tfutils.StringFromBool(data.PpTimestamp))
+		body, _ = sjson.Set(body, pathRoot+`PPTimestamp`, tfutils.StringFromBool(data.PpTimestamp, false))
 	}
 	if !data.PpTimestampExpiry.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPTimestampExpiry`, data.PpTimestampExpiry.ValueInt64())
 	}
 	if !data.PpAllowRenewal.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPAllowRenewal`, tfutils.StringFromBool(data.PpAllowRenewal))
+		body, _ = sjson.Set(body, pathRoot+`PPAllowRenewal`, tfutils.StringFromBool(data.PpAllowRenewal, false))
 	}
 	if !data.PpsamlVersion.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLVersion`, data.PpsamlVersion.ValueString())
 	}
 	if !data.PpsamlSendSlo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLSendSLO`, tfutils.StringFromBool(data.PpsamlSendSlo))
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLSendSLO`, tfutils.StringFromBool(data.PpsamlSendSlo, false))
 	}
 	if !data.PpsamlsloEndpoint.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLSLOEndpoint`, data.PpsamlsloEndpoint.ValueString())
 	}
 	if !data.PpwsUsernameToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameToken`, tfutils.StringFromBool(data.PpwsUsernameToken))
+		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameToken`, tfutils.StringFromBool(data.PpwsUsernameToken, false))
 	}
 	if !data.PpwsUsernameTokenPasswordType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenPasswordType`, data.PpwsUsernameTokenPasswordType.ValueString())
@@ -1551,10 +1551,10 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLSkew`, data.PpsamlSkew.ValueInt64())
 	}
 	if !data.PpwsUsernameTokenIncludePwd.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenIncludePwd`, tfutils.StringFromBool(data.PpwsUsernameTokenIncludePwd))
+		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenIncludePwd`, tfutils.StringFromBool(data.PpwsUsernameTokenIncludePwd, false))
 	}
 	if !data.Ppltpa.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPA`, tfutils.StringFromBool(data.Ppltpa))
+		body, _ = sjson.Set(body, pathRoot+`PPLTPA`, tfutils.StringFromBool(data.Ppltpa, false))
 	}
 	if !data.PpltpaVersion.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPLTPAVersion`, data.PpltpaVersion.ValueString())
@@ -1572,37 +1572,37 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPLTPAStashFile`, data.PpltpaStashFile.ValueString())
 	}
 	if !data.PpKerberosSpnegoToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPKerberosSPNEGOToken`, tfutils.StringFromBool(data.PpKerberosSpnegoToken))
+		body, _ = sjson.Set(body, pathRoot+`PPKerberosSPNEGOToken`, tfutils.StringFromBool(data.PpKerberosSpnegoToken, false))
 	}
 	if !data.PpKerberosBstValueType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosBstValueType`, data.PpKerberosBstValueType.ValueString())
 	}
 	if !data.PpsamlUseWsSec.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLUseWSSec`, tfutils.StringFromBool(data.PpsamlUseWsSec))
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLUseWSSec`, tfutils.StringFromBool(data.PpsamlUseWsSec, false))
 	}
 	if !data.PpKerberosClientKeytab.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosClientKeytab`, data.PpKerberosClientKeytab.ValueString())
 	}
 	if !data.PpUseWsSec.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPUseWSSec`, tfutils.StringFromBool(data.PpUseWsSec))
+		body, _ = sjson.Set(body, pathRoot+`PPUseWSSec`, tfutils.StringFromBool(data.PpUseWsSec, false))
 	}
 	if !data.PpActorRoleId.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPActorRoleID`, data.PpActorRoleId.ValueString())
 	}
 	if !data.PptfimTokenMapping.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPTFIMTokenMapping`, tfutils.StringFromBool(data.PptfimTokenMapping))
+		body, _ = sjson.Set(body, pathRoot+`PPTFIMTokenMapping`, tfutils.StringFromBool(data.PptfimTokenMapping, false))
 	}
 	if !data.PptfimEndpoint.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPTFIMEndpoint`, data.PptfimEndpoint.ValueString())
 	}
 	if !data.PpwsDerivedKeyUsernameToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSDerivedKeyUsernameToken`, tfutils.StringFromBool(data.PpwsDerivedKeyUsernameToken))
+		body, _ = sjson.Set(body, pathRoot+`PPWSDerivedKeyUsernameToken`, tfutils.StringFromBool(data.PpwsDerivedKeyUsernameToken, false))
 	}
 	if !data.PpwsDerivedKeyUsernameTokenIterations.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPWSDerivedKeyUsernameTokenIterations`, data.PpwsDerivedKeyUsernameTokenIterations.ValueInt64())
 	}
 	if !data.PpwsUsernameTokenAllowReplacement.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenAllowReplacement`, tfutils.StringFromBool(data.PpwsUsernameTokenAllowReplacement))
+		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenAllowReplacement`, tfutils.StringFromBool(data.PpwsUsernameTokenAllowReplacement, false))
 	}
 	if !data.PptfimReplaceMethod.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPTFIMReplaceMethod`, data.PptfimReplaceMethod.ValueString())
@@ -1617,7 +1617,7 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPSigningHashAlg`, data.PpSigningHashAlg.ValueString())
 	}
 	if !data.PpwsTrustHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrustHeader`, tfutils.StringFromBool(data.PpwsTrustHeader))
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrustHeader`, tfutils.StringFromBool(data.PpwsTrustHeader, false))
 	}
 	if !data.PpwsscKeySource.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPWSSCKeySource`, data.PpwsscKeySource.ValueString())
@@ -1629,22 +1629,22 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPWSTrustRenewalWait`, data.PpwsTrustRenewalWait.ValueInt64())
 	}
 	if !data.PpwsTrustNewInstance.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNewInstance`, tfutils.StringFromBool(data.PpwsTrustNewInstance))
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNewInstance`, tfutils.StringFromBool(data.PpwsTrustNewInstance, false))
 	}
 	if !data.PpwsTrustNewKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNewKey`, tfutils.StringFromBool(data.PpwsTrustNewKey))
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNewKey`, tfutils.StringFromBool(data.PpwsTrustNewKey, false))
 	}
 	if !data.PpwsTrustNeverExpire.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNeverExpire`, tfutils.StringFromBool(data.PpwsTrustNeverExpire))
+		body, _ = sjson.Set(body, pathRoot+`PPWSTrustNeverExpire`, tfutils.StringFromBool(data.PpwsTrustNeverExpire, false))
 	}
 	if !data.PpicrxToken.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPICRXToken`, tfutils.StringFromBool(data.PpicrxToken))
+		body, _ = sjson.Set(body, pathRoot+`PPICRXToken`, tfutils.StringFromBool(data.PpicrxToken, false))
 	}
 	if !data.PpicrxUserRealm.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPICRXUserRealm`, data.PpicrxUserRealm.ValueString())
 	}
 	if !data.PpsamlIdentityProvider.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLIdentityProvider`, tfutils.StringFromBool(data.PpsamlIdentityProvider))
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLIdentityProvider`, tfutils.StringFromBool(data.PpsamlIdentityProvider, false))
 	}
 	if !data.PpsamlProtocol.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLProtocol`, data.PpsamlProtocol.ValueString())
@@ -1664,7 +1664,7 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLSubjectConfirm`, data.PpsamlSubjectConfirm.ValueString())
 	}
 	if !data.PpsamlNameId.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLNameID`, tfutils.StringFromBool(data.PpsamlNameId))
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLNameID`, tfutils.StringFromBool(data.PpsamlNameId, false))
 	}
 	if !data.PpsamlNameIdFormat.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLNameIDFormat`, data.PpsamlNameIdFormat.ValueString())
@@ -1676,13 +1676,13 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLAudience`, data.PpsamlAudience.ValueString())
 	}
 	if !data.PpsamlOmitNotBefore.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLOmitNotBefore`, tfutils.StringFromBool(data.PpsamlOmitNotBefore))
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLOmitNotBefore`, tfutils.StringFromBool(data.PpsamlOmitNotBefore, false))
 	}
 	if !data.PpOneTimeUse.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPOneTimeUse`, tfutils.StringFromBool(data.PpOneTimeUse))
+		body, _ = sjson.Set(body, pathRoot+`PPOneTimeUse`, tfutils.StringFromBool(data.PpOneTimeUse, false))
 	}
 	if !data.PpsamlProxy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPSAMLProxy`, tfutils.StringFromBool(data.PpsamlProxy))
+		body, _ = sjson.Set(body, pathRoot+`PPSAMLProxy`, tfutils.StringFromBool(data.PpsamlProxy, false))
 	}
 	if !data.PpsamlProxyAudience.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLProxyAudience`, data.PpsamlProxyAudience.ValueString())
@@ -1697,10 +1697,10 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPSAMLAttributes`, data.PpsamlAttributes.ValueString())
 	}
 	if !data.PpltpaInsertCookie.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPLTPAInsertCookie`, tfutils.StringFromBool(data.PpltpaInsertCookie))
+		body, _ = sjson.Set(body, pathRoot+`PPLTPAInsertCookie`, tfutils.StringFromBool(data.PpltpaInsertCookie, false))
 	}
 	if !data.PptampacPropagate.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPTAMPACPropagate`, tfutils.StringFromBool(data.PptampacPropagate))
+		body, _ = sjson.Set(body, pathRoot+`PPTAMPACPropagate`, tfutils.StringFromBool(data.PptampacPropagate, false))
 	}
 	if !data.PptamHeader.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPTAMHeader`, data.PptamHeader.ValueString())
@@ -1709,13 +1709,13 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPTAMHeaderSize`, data.PptamHeaderSize.ValueInt64())
 	}
 	if !data.PpKerberosUseS4u2Proxy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPKerberosUseS4U2Proxy`, tfutils.StringFromBool(data.PpKerberosUseS4u2Proxy))
+		body, _ = sjson.Set(body, pathRoot+`PPKerberosUseS4U2Proxy`, tfutils.StringFromBool(data.PpKerberosUseS4u2Proxy, false))
 	}
 	if !data.PpCookieAttributes.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPCookieAttributes`, data.PpCookieAttributes.ValueString())
 	}
 	if !data.PpKerberosUseS4u2SelfAndS4u2Proxy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPKerberosUseS4U2SelfAndS4U2Proxy`, tfutils.StringFromBool(data.PpKerberosUseS4u2SelfAndS4u2Proxy))
+		body, _ = sjson.Set(body, pathRoot+`PPKerberosUseS4U2SelfAndS4U2Proxy`, tfutils.StringFromBool(data.PpKerberosUseS4u2SelfAndS4u2Proxy, false))
 	}
 	if !data.PpKerberosClientSource.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPKerberosClientSource`, data.PpKerberosClientSource.ValueString())
@@ -1751,7 +1751,7 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`PPLTPAKeyFilePasswordAlias`, data.PpltpaKeyFilePasswordAlias.ValueString())
 	}
 	if !data.Ppjwt.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPJWT`, tfutils.StringFromBool(data.Ppjwt))
+		body, _ = sjson.Set(body, pathRoot+`PPJWT`, tfutils.StringFromBool(data.Ppjwt, false))
 	}
 	if !data.PpjwtGenerator.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPJWTGenerator`, data.PpjwtGenerator.ValueString())

@@ -158,13 +158,13 @@ func (data SSHClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`PasswordAlias`, data.PasswordAlias.ValueString())
 	}
 	if !data.PersistentConnections.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PersistentConnections`, tfutils.StringFromBool(data.PersistentConnections))
+		body, _ = sjson.Set(body, pathRoot+`PersistentConnections`, tfutils.StringFromBool(data.PersistentConnections, false))
 	}
 	if !data.PersistentConnectionTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PersistentConnectionTimeout`, data.PersistentConnectionTimeout.ValueInt64())
 	}
 	if !data.StrictHostKeyChecking.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`StrictHostKeyChecking`, tfutils.StringFromBool(data.StrictHostKeyChecking))
+		body, _ = sjson.Set(body, pathRoot+`StrictHostKeyChecking`, tfutils.StringFromBool(data.StrictHostKeyChecking, false))
 	}
 	if !data.Ciphers.IsNull() {
 		var values []string

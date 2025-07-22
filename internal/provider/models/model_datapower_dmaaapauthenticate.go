@@ -1046,7 +1046,7 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`AUSAMLArtifactResponder`, data.AusamlArtifactResponder.ValueString())
 	}
 	if !data.AuKerberosVerifySignature.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUKerberosVerifySignature`, tfutils.StringFromBool(data.AuKerberosVerifySignature))
+		body, _ = sjson.Set(body, pathRoot+`AUKerberosVerifySignature`, tfutils.StringFromBool(data.AuKerberosVerifySignature, false))
 	}
 	if !data.AuNetegrityBaseUri.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUNetegrityBaseURI`, data.AuNetegrityBaseUri.ValueString())
@@ -1111,7 +1111,7 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`AUTAMServer`, data.AutamServer.ValueString())
 	}
 	if !data.AuAllowRemoteTokenReference.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUAllowRemoteTokenReference`, tfutils.StringFromBool(data.AuAllowRemoteTokenReference))
+		body, _ = sjson.Set(body, pathRoot+`AUAllowRemoteTokenReference`, tfutils.StringFromBool(data.AuAllowRemoteTokenReference, false))
 	}
 	if !data.AuRemoteTokenProcessService.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AURemoteTokenProcessService`, data.AuRemoteTokenProcessService.ValueString())
@@ -1120,28 +1120,28 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`AUWSTrustVersion`, data.AuwsTrustVersion.ValueString())
 	}
 	if !data.AuldapSearchForDn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchForDN`, tfutils.StringFromBool(data.AuldapSearchForDn))
+		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchForDN`, tfutils.StringFromBool(data.AuldapSearchForDn, false))
 	}
 	if !data.AuldapSearchParameters.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchParameters`, data.AuldapSearchParameters.ValueString())
 	}
 	if !data.AuwsTrustRequireClientEntropy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireClientEntropy`, tfutils.StringFromBool(data.AuwsTrustRequireClientEntropy))
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireClientEntropy`, tfutils.StringFromBool(data.AuwsTrustRequireClientEntropy, false))
 	}
 	if !data.AuwsTrustClientEntropySize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUWSTrustClientEntropySize`, data.AuwsTrustClientEntropySize.ValueInt64())
 	}
 	if !data.AuwsTrustRequireServerEntropy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireServerEntropy`, tfutils.StringFromBool(data.AuwsTrustRequireServerEntropy))
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireServerEntropy`, tfutils.StringFromBool(data.AuwsTrustRequireServerEntropy, false))
 	}
 	if !data.AuwsTrustServerEntropySize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUWSTrustServerEntropySize`, data.AuwsTrustServerEntropySize.ValueInt64())
 	}
 	if !data.AuwsTrustRequireRstc.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireRSTC`, tfutils.StringFromBool(data.AuwsTrustRequireRstc))
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireRSTC`, tfutils.StringFromBool(data.AuwsTrustRequireRstc, false))
 	}
 	if !data.AuwsTrustRequireAppliesToHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireAppliesToHeader`, tfutils.StringFromBool(data.AuwsTrustRequireAppliesToHeader))
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireAppliesToHeader`, tfutils.StringFromBool(data.AuwsTrustRequireAppliesToHeader, false))
 	}
 	if !data.AuwsTrustAppliesToHeader.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUWSTrustAppliesToHeader`, data.AuwsTrustAppliesToHeader.ValueString())
@@ -1159,7 +1159,7 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`AUSkewTime`, data.AuSkewTime.ValueInt64())
 	}
 	if !data.AutampacReturn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUTAMPACReturn`, tfutils.StringFromBool(data.AutampacReturn))
+		body, _ = sjson.Set(body, pathRoot+`AUTAMPACReturn`, tfutils.StringFromBool(data.AutampacReturn, false))
 	}
 	if !data.AuldapReadTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AULDAPReadTimeout`, data.AuldapReadTimeout.ValueInt64())

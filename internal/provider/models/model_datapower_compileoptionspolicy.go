@@ -184,7 +184,7 @@ func (data CompileOptionsPolicy) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`XSLTVersion`, data.XsltVersion.ValueString())
 	}
 	if !data.Strict.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Strict`, tfutils.StringFromBool(data.Strict))
+		body, _ = sjson.Set(body, pathRoot+`Strict`, tfutils.StringFromBool(data.Strict, false))
 	}
 	if !data.Profile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Profile`, data.Profile.ValueString())
@@ -223,7 +223,7 @@ func (data CompileOptionsPolicy) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`WSDLValidateFaults`, data.WsdlValidateFaults.ValueString())
 	}
 	if !data.WsdlWrappedFaults.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSDLWrappedFaults`, tfutils.StringFromBool(data.WsdlWrappedFaults))
+		body, _ = sjson.Set(body, pathRoot+`WSDLWrappedFaults`, tfutils.StringFromBool(data.WsdlWrappedFaults, false))
 	}
 	if !data.AllowSoapEncArray.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AllowSoapEncArray`, data.AllowSoapEncArray.ValueString())
@@ -235,10 +235,10 @@ func (data CompileOptionsPolicy) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`WildcardsIgnoreXsiType`, data.WildcardsIgnoreXsiType.ValueString())
 	}
 	if !data.WsdlStrictSoapVersion.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSDLStrictSOAPVersion`, tfutils.StringFromBool(data.WsdlStrictSoapVersion))
+		body, _ = sjson.Set(body, pathRoot+`WSDLStrictSOAPVersion`, tfutils.StringFromBool(data.WsdlStrictSoapVersion, false))
 	}
 	if !data.XacmlDebug.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XACMLDebug`, tfutils.StringFromBool(data.XacmlDebug))
+		body, _ = sjson.Set(body, pathRoot+`XACMLDebug`, tfutils.StringFromBool(data.XacmlDebug, false))
 	}
 	if !data.AllowXopInclude.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AllowXOPInclude`, data.AllowXopInclude.ValueString())

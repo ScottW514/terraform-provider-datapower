@@ -145,16 +145,16 @@ func (data DmHeaderRetentionBitmap) ToBody(ctx context.Context, pathRoot string)
 	}
 	body := ""
 	if !data.Te.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TE`, tfutils.StringFromBool(data.Te))
+		body, _ = sjson.Set(body, pathRoot+`TE`, tfutils.StringFromBool(data.Te, false))
 	}
 	if !data.AcceptEncoding.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Accept-Encoding`, tfutils.StringFromBool(data.AcceptEncoding))
+		body, _ = sjson.Set(body, pathRoot+`Accept-Encoding`, tfutils.StringFromBool(data.AcceptEncoding, false))
 	}
 	if !data.Range.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Range`, tfutils.StringFromBool(data.Range))
+		body, _ = sjson.Set(body, pathRoot+`Range`, tfutils.StringFromBool(data.Range, false))
 	}
 	if !data.Mqmd.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MQMD`, tfutils.StringFromBool(data.Mqmd))
+		body, _ = sjson.Set(body, pathRoot+`MQMD`, tfutils.StringFromBool(data.Mqmd, false))
 	}
 	return body
 }

@@ -223,16 +223,16 @@ func (data XMLManager) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`CacheSize`, data.CacheSize.ValueInt64())
 	}
 	if !data.Sha1Caching.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SHA1Caching`, tfutils.StringFromBool(data.Sha1Caching))
+		body, _ = sjson.Set(body, pathRoot+`SHA1Caching`, tfutils.StringFromBool(data.Sha1Caching, false))
 	}
 	if !data.StaticDocumentCalls.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`StaticDocumentCalls`, tfutils.StringFromBool(data.StaticDocumentCalls))
+		body, _ = sjson.Set(body, pathRoot+`StaticDocumentCalls`, tfutils.StringFromBool(data.StaticDocumentCalls, false))
 	}
 	if !data.SearchResults.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SearchResults`, tfutils.StringFromBool(data.SearchResults))
+		body, _ = sjson.Set(body, pathRoot+`SearchResults`, tfutils.StringFromBool(data.SearchResults, false))
 	}
 	if !data.SupportTxWarn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SupportTxWarn`, tfutils.StringFromBool(data.SupportTxWarn))
+		body, _ = sjson.Set(body, pathRoot+`SupportTxWarn`, tfutils.StringFromBool(data.SupportTxWarn, false))
 	}
 	if !data.VirtualServers.IsNull() {
 		var values []string
@@ -254,7 +254,7 @@ func (data XMLManager) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`ParserLimitsMaxNodeSize`, data.ParserLimitsMaxNodeSize.ValueInt64())
 	}
 	if !data.ParserLimitsForbidExternalReferences.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ParserLimitsForbidExternalReferences`, tfutils.StringFromBool(data.ParserLimitsForbidExternalReferences))
+		body, _ = sjson.Set(body, pathRoot+`ParserLimitsForbidExternalReferences`, tfutils.StringFromBool(data.ParserLimitsForbidExternalReferences, false))
 	}
 	if !data.ParserLimitsExternalReferences.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParserLimitsExternalReferences`, data.ParserLimitsExternalReferences.ValueString())

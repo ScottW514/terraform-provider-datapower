@@ -109,7 +109,7 @@ func (data DmSFTPPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`SSHClientProfile`, data.SshClientProfile.ValueString())
 	}
 	if !data.UseUniqueFilenames.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseUniqueFilenames`, tfutils.StringFromBool(data.UseUniqueFilenames))
+		body, _ = sjson.Set(body, pathRoot+`UseUniqueFilenames`, tfutils.StringFromBool(data.UseUniqueFilenames, false))
 	}
 	return body
 }

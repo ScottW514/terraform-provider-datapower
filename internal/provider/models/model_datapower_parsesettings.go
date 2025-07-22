@@ -161,7 +161,7 @@ func (data ParseSettings) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`NumberLength`, data.NumberLength.ValueInt64())
 	}
 	if !data.StrictUtf8Encoding.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`StrictUTF8Encoding`, tfutils.StringFromBool(data.StrictUtf8Encoding))
+		body, _ = sjson.Set(body, pathRoot+`StrictUTF8Encoding`, tfutils.StringFromBool(data.StrictUtf8Encoding, false))
 	}
 	return body
 }

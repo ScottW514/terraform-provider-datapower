@@ -129,13 +129,13 @@ func (data DmSAMLStatementType) ToBody(ctx context.Context, pathRoot string) str
 	}
 	body := ""
 	if !data.Authentication.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`authentication`, tfutils.StringFromBool(data.Authentication))
+		body, _ = sjson.Set(body, pathRoot+`authentication`, tfutils.StringFromBool(data.Authentication, false))
 	}
 	if !data.Attribute.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`attribute`, tfutils.StringFromBool(data.Attribute))
+		body, _ = sjson.Set(body, pathRoot+`attribute`, tfutils.StringFromBool(data.Attribute, false))
 	}
 	if !data.Authorization.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`authorization`, tfutils.StringFromBool(data.Authorization))
+		body, _ = sjson.Set(body, pathRoot+`authorization`, tfutils.StringFromBool(data.Authorization, false))
 	}
 	return body
 }

@@ -197,16 +197,16 @@ func (data DmURLRewriteRule) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`StyleReplaceRegexp`, data.StyleReplaceRegexp.ValueString())
 	}
 	if !data.InputUnescape.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`InputUnescape`, tfutils.StringFromBool(data.InputUnescape))
+		body, _ = sjson.Set(body, pathRoot+`InputUnescape`, tfutils.StringFromBool(data.InputUnescape, false))
 	}
 	if !data.StylesheetUnescape.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`StylesheetUnescape`, tfutils.StringFromBool(data.StylesheetUnescape))
+		body, _ = sjson.Set(body, pathRoot+`StylesheetUnescape`, tfutils.StringFromBool(data.StylesheetUnescape, false))
 	}
 	if !data.Header.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Header`, data.Header.ValueString())
 	}
 	if !data.NormalizeUrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`NormalizeURL`, tfutils.StringFromBool(data.NormalizeUrl))
+		body, _ = sjson.Set(body, pathRoot+`NormalizeURL`, tfutils.StringFromBool(data.NormalizeUrl, false))
 	}
 	return body
 }

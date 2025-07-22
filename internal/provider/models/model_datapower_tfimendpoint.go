@@ -207,7 +207,7 @@ func (data TFIMEndpoint) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`mOperation`, data.MOperation.ValueString())
 	}
 	if !data.MSchemaValidate.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`mSchemaValidate`, tfutils.StringFromBool(data.MSchemaValidate))
+		body, _ = sjson.Set(body, pathRoot+`mSchemaValidate`, tfutils.StringFromBool(data.MSchemaValidate, false))
 	}
 	if !data.MLtpaValueTypeMode.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mLTPAValueTypeMode`, data.MLtpaValueTypeMode.ValueString())

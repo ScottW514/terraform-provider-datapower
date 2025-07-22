@@ -113,10 +113,10 @@ func (data DmSMTPOptions) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.StartTls.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`StartTLS`, tfutils.StringFromBool(data.StartTls))
+		body, _ = sjson.Set(body, pathRoot+`StartTLS`, tfutils.StringFromBool(data.StartTls, false))
 	}
 	if !data.Auth.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Auth`, tfutils.StringFromBool(data.Auth))
+		body, _ = sjson.Set(body, pathRoot+`Auth`, tfutils.StringFromBool(data.Auth, false))
 	}
 	return body
 }

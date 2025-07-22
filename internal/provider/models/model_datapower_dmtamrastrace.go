@@ -282,7 +282,7 @@ func (data DmTAMRASTrace) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.TamTraceEnable.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TAMTraceEnable`, tfutils.StringFromBool(data.TamTraceEnable))
+		body, _ = sjson.Set(body, pathRoot+`TAMTraceEnable`, tfutils.StringFromBool(data.TamTraceEnable, false))
 	}
 	if !data.TamTraceFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TAMTraceFile`, data.TamTraceFile.ValueString())
@@ -297,7 +297,7 @@ func (data DmTAMRASTrace) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`TAMTraceComponents`, data.TamTraceComponents.ValueString())
 	}
 	if !data.LdapTraceEnable.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPTraceEnable`, tfutils.StringFromBool(data.LdapTraceEnable))
+		body, _ = sjson.Set(body, pathRoot+`LDAPTraceEnable`, tfutils.StringFromBool(data.LdapTraceEnable, false))
 	}
 	if !data.LdapTraceFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LDAPTraceFile`, data.LdapTraceFile.ValueString())
@@ -309,13 +309,13 @@ func (data DmTAMRASTrace) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`LDAPTraceLevel`, data.LdapTraceLevel.ValueInt64())
 	}
 	if !data.GsKitTraceEnable.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`GSKitTraceEnable`, tfutils.StringFromBool(data.GsKitTraceEnable))
+		body, _ = sjson.Set(body, pathRoot+`GSKitTraceEnable`, tfutils.StringFromBool(data.GsKitTraceEnable, false))
 	}
 	if !data.GsKitTraceFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`GSKitTraceFile`, data.GsKitTraceFile.ValueString())
 	}
 	if !data.GsKitTraceFlush.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`GSKitTraceFlush`, tfutils.StringFromBool(data.GsKitTraceFlush))
+		body, _ = sjson.Set(body, pathRoot+`GSKitTraceFlush`, tfutils.StringFromBool(data.GsKitTraceFlush, false))
 	}
 	return body
 }

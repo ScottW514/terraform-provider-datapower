@@ -98,10 +98,10 @@ func (data Matching) ToBody(ctx context.Context, pathRoot string) string {
 		}
 	}
 	if !data.MatchWithPcre.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MatchWithPCRE`, tfutils.StringFromBool(data.MatchWithPcre))
+		body, _ = sjson.Set(body, pathRoot+`MatchWithPCRE`, tfutils.StringFromBool(data.MatchWithPcre, false))
 	}
 	if !data.CombineWithOr.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CombineWithOr`, tfutils.StringFromBool(data.CombineWithOr))
+		body, _ = sjson.Set(body, pathRoot+`CombineWithOr`, tfutils.StringFromBool(data.CombineWithOr, false))
 	}
 	return body
 }

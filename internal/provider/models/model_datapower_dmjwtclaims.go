@@ -177,22 +177,22 @@ func (data DmJWTClaims) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.Aud.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`aud`, tfutils.StringFromBool(data.Aud))
+		body, _ = sjson.Set(body, pathRoot+`aud`, tfutils.StringFromBool(data.Aud, false))
 	}
 	if !data.Nbf.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`nbf`, tfutils.StringFromBool(data.Nbf))
+		body, _ = sjson.Set(body, pathRoot+`nbf`, tfutils.StringFromBool(data.Nbf, false))
 	}
 	if !data.Iat.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`iat`, tfutils.StringFromBool(data.Iat))
+		body, _ = sjson.Set(body, pathRoot+`iat`, tfutils.StringFromBool(data.Iat, false))
 	}
 	if !data.Jti.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`jti`, tfutils.StringFromBool(data.Jti))
+		body, _ = sjson.Set(body, pathRoot+`jti`, tfutils.StringFromBool(data.Jti, false))
 	}
 	if !data.Nonce.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`nonce`, tfutils.StringFromBool(data.Nonce))
+		body, _ = sjson.Set(body, pathRoot+`nonce`, tfutils.StringFromBool(data.Nonce, false))
 	}
 	if !data.Custom.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`custom`, tfutils.StringFromBool(data.Custom))
+		body, _ = sjson.Set(body, pathRoot+`custom`, tfutils.StringFromBool(data.Custom, false))
 	}
 	return body
 }

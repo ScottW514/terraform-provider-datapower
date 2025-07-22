@@ -113,10 +113,10 @@ func (data DmSMFlow) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.Frontend.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`frontend`, tfutils.StringFromBool(data.Frontend))
+		body, _ = sjson.Set(body, pathRoot+`frontend`, tfutils.StringFromBool(data.Frontend, false))
 	}
 	if !data.Backend.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`backend`, tfutils.StringFromBool(data.Backend))
+		body, _ = sjson.Set(body, pathRoot+`backend`, tfutils.StringFromBool(data.Backend, false))
 	}
 	return body
 }

@@ -678,7 +678,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`BackHTTPVersion`, data.BackHttpVersion.ValueString())
 	}
 	if !data.Http2Required.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HTTP2Required`, tfutils.StringFromBool(data.Http2Required))
+		body, _ = sjson.Set(body, pathRoot+`HTTP2Required`, tfutils.StringFromBool(data.Http2Required, false))
 	}
 	if !data.RequestType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RequestType`, data.RequestType.ValueString())
@@ -687,10 +687,10 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`ResponseType`, data.ResponseType.ValueString())
 	}
 	if !data.FollowRedirects.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`FollowRedirects`, tfutils.StringFromBool(data.FollowRedirects))
+		body, _ = sjson.Set(body, pathRoot+`FollowRedirects`, tfutils.StringFromBool(data.FollowRedirects, false))
 	}
 	if !data.RewriteLocationHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RewriteLocationHeader`, tfutils.StringFromBool(data.RewriteLocationHeader))
+		body, _ = sjson.Set(body, pathRoot+`RewriteLocationHeader`, tfutils.StringFromBool(data.RewriteLocationHeader, false))
 	}
 	if !data.StylePolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`StylePolicy`, data.StylePolicy.ValueString())
@@ -699,13 +699,13 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`Type`, data.Type.ValueString())
 	}
 	if !data.AllowCompression.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllowCompression`, tfutils.StringFromBool(data.AllowCompression))
+		body, _ = sjson.Set(body, pathRoot+`AllowCompression`, tfutils.StringFromBool(data.AllowCompression, false))
 	}
 	if !data.EnableCompressedPayloadPassthrough.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EnableCompressedPayloadPassthrough`, tfutils.StringFromBool(data.EnableCompressedPayloadPassthrough))
+		body, _ = sjson.Set(body, pathRoot+`EnableCompressedPayloadPassthrough`, tfutils.StringFromBool(data.EnableCompressedPayloadPassthrough, false))
 	}
 	if !data.AllowCacheControlHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllowCacheControlHeader`, tfutils.StringFromBool(data.AllowCacheControlHeader))
+		body, _ = sjson.Set(body, pathRoot+`AllowCacheControlHeader`, tfutils.StringFromBool(data.AllowCacheControlHeader, false))
 	}
 	if !data.WsrrSavedSearchSubscriptions.IsNull() {
 		var values []DmWSRRSavedSearchWSDLSource
@@ -732,13 +732,13 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		}
 	}
 	if !data.WsmAgentMonitor.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSMAgentMonitor`, tfutils.StringFromBool(data.WsmAgentMonitor))
+		body, _ = sjson.Set(body, pathRoot+`WSMAgentMonitor`, tfutils.StringFromBool(data.WsmAgentMonitor, false))
 	}
 	if !data.WsmAgentMonitorPcm.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSMAgentMonitorPCM`, data.WsmAgentMonitorPcm.ValueString())
 	}
 	if !data.ProxyHttpResponse.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ProxyHTTPResponse`, tfutils.StringFromBool(data.ProxyHttpResponse))
+		body, _ = sjson.Set(body, pathRoot+`ProxyHTTPResponse`, tfutils.StringFromBool(data.ProxyHttpResponse, false))
 	}
 	if !data.ErrorPolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ErrorPolicy`, data.ErrorPolicy.ValueString())
@@ -805,7 +805,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`BackendUrl`, data.BackendUrl.ValueString())
 	}
 	if !data.PropagateUri.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PropagateURI`, tfutils.StringFromBool(data.PropagateUri))
+		body, _ = sjson.Set(body, pathRoot+`PropagateURI`, tfutils.StringFromBool(data.PropagateUri, false))
 	}
 	if !data.ServiceMonitors.IsNull() {
 		var values []string
@@ -838,10 +838,10 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`ResponseAttachments`, data.ResponseAttachments.ValueString())
 	}
 	if !data.RequestAttachmentsFlowControl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RequestAttachmentsFlowControl`, tfutils.StringFromBool(data.RequestAttachmentsFlowControl))
+		body, _ = sjson.Set(body, pathRoot+`RequestAttachmentsFlowControl`, tfutils.StringFromBool(data.RequestAttachmentsFlowControl, false))
 	}
 	if !data.ResponseAttachmentsFlowControl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ResponseAttachmentsFlowControl`, tfutils.StringFromBool(data.ResponseAttachmentsFlowControl))
+		body, _ = sjson.Set(body, pathRoot+`ResponseAttachmentsFlowControl`, tfutils.StringFromBool(data.ResponseAttachmentsFlowControl, false))
 	}
 	if !data.RootPartNotFirstAction.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RootPartNotFirstAction`, data.RootPartNotFirstAction.ValueString())
@@ -853,10 +853,10 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`BackAttachmentFormat`, data.BackAttachmentFormat.ValueString())
 	}
 	if !data.MimeFrontHeaders.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MIMEFrontHeaders`, tfutils.StringFromBool(data.MimeFrontHeaders))
+		body, _ = sjson.Set(body, pathRoot+`MIMEFrontHeaders`, tfutils.StringFromBool(data.MimeFrontHeaders, false))
 	}
 	if !data.MimeBackHeaders.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MIMEBackHeaders`, tfutils.StringFromBool(data.MimeBackHeaders))
+		body, _ = sjson.Set(body, pathRoot+`MIMEBackHeaders`, tfutils.StringFromBool(data.MimeBackHeaders, false))
 	}
 	if !data.StreamOutputToBack.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`StreamOutputToBack`, data.StreamOutputToBack.ValueString())
@@ -868,7 +868,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`MaxMessageSize`, data.MaxMessageSize.ValueInt64())
 	}
 	if !data.GatewayParserLimits.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`GatewayParserLimits`, tfutils.StringFromBool(data.GatewayParserLimits))
+		body, _ = sjson.Set(body, pathRoot+`GatewayParserLimits`, tfutils.StringFromBool(data.GatewayParserLimits, false))
 	}
 	if !data.ParserLimitsElementDepth.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParserLimitsElementDepth`, data.ParserLimitsElementDepth.ValueInt64())
@@ -880,7 +880,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`ParserLimitsMaxNodeSize`, data.ParserLimitsMaxNodeSize.ValueInt64())
 	}
 	if !data.ParserLimitsForbidExternalReferences.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ParserLimitsForbidExternalReferences`, tfutils.StringFromBool(data.ParserLimitsForbidExternalReferences))
+		body, _ = sjson.Set(body, pathRoot+`ParserLimitsForbidExternalReferences`, tfutils.StringFromBool(data.ParserLimitsForbidExternalReferences, false))
 	}
 	if !data.ParserLimitsExternalReferences.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParserLimitsExternalReferences`, data.ParserLimitsExternalReferences.ValueString())
@@ -914,7 +914,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		}
 	}
 	if !data.FlowControl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`FlowControl`, tfutils.StringFromBool(data.FlowControl))
+		body, _ = sjson.Set(body, pathRoot+`FlowControl`, tfutils.StringFromBool(data.FlowControl, false))
 	}
 	if !data.SoapSchemaUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SOAPSchemaURL`, data.SoapSchemaUrl.ValueString())
@@ -932,22 +932,22 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`BackPersistentTimeout`, data.BackPersistentTimeout.ValueInt64())
 	}
 	if !data.IncludeResponseTypeEncoding.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`IncludeResponseTypeEncoding`, tfutils.StringFromBool(data.IncludeResponseTypeEncoding))
+		body, _ = sjson.Set(body, pathRoot+`IncludeResponseTypeEncoding`, tfutils.StringFromBool(data.IncludeResponseTypeEncoding, false))
 	}
 	if !data.PersistentConnections.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PersistentConnections`, tfutils.StringFromBool(data.PersistentConnections))
+		body, _ = sjson.Set(body, pathRoot+`PersistentConnections`, tfutils.StringFromBool(data.PersistentConnections, false))
 	}
 	if !data.LoopDetection.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LoopDetection`, tfutils.StringFromBool(data.LoopDetection))
+		body, _ = sjson.Set(body, pathRoot+`LoopDetection`, tfutils.StringFromBool(data.LoopDetection, false))
 	}
 	if !data.DoHostRewriting.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DoHostRewriting`, tfutils.StringFromBool(data.DoHostRewriting))
+		body, _ = sjson.Set(body, pathRoot+`DoHostRewriting`, tfutils.StringFromBool(data.DoHostRewriting, false))
 	}
 	if !data.DoChunkedUpload.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DoChunkedUpload`, tfutils.StringFromBool(data.DoChunkedUpload))
+		body, _ = sjson.Set(body, pathRoot+`DoChunkedUpload`, tfutils.StringFromBool(data.DoChunkedUpload, false))
 	}
 	if !data.ProcessHttpErrors.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ProcessHTTPErrors`, tfutils.StringFromBool(data.ProcessHttpErrors))
+		body, _ = sjson.Set(body, pathRoot+`ProcessHTTPErrors`, tfutils.StringFromBool(data.ProcessHttpErrors, false))
 	}
 	if !data.HttpClientIpLabel.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HTTPClientIPLabel`, data.HttpClientIpLabel.ValueString())
@@ -967,7 +967,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`WSAMode`, data.WsaMode.ValueString())
 	}
 	if !data.WsaRequireAaa.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSARequireAAA`, tfutils.StringFromBool(data.WsaRequireAaa))
+		body, _ = sjson.Set(body, pathRoot+`WSARequireAAA`, tfutils.StringFromBool(data.WsaRequireAaa, false))
 	}
 	if !data.WsaRewriteReplyTo.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSARewriteReplyTo`, data.WsaRewriteReplyTo.ValueString())
@@ -979,7 +979,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`WSARewriteTo`, data.WsaRewriteTo.ValueString())
 	}
 	if !data.WsaStrip.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSAStrip`, tfutils.StringFromBool(data.WsaStrip))
+		body, _ = sjson.Set(body, pathRoot+`WSAStrip`, tfutils.StringFromBool(data.WsaStrip, false))
 	}
 	if !data.WsaDefaultReplyTo.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSADefaultReplyTo`, data.WsaDefaultReplyTo.ValueString())
@@ -988,7 +988,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`WSADefaultFaultTo`, data.WsaDefaultFaultTo.ValueString())
 	}
 	if !data.WsaForce.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSAForce`, tfutils.StringFromBool(data.WsaForce))
+		body, _ = sjson.Set(body, pathRoot+`WSAForce`, tfutils.StringFromBool(data.WsaForce, false))
 	}
 	if !data.WsaGenStyle.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSAGenStyle`, data.WsaGenStyle.ValueString())
@@ -1003,7 +1003,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`WSATimeout`, data.WsaTimeout.ValueInt64())
 	}
 	if !data.WsrmEnabled.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMEnabled`, tfutils.StringFromBool(data.WsrmEnabled))
+		body, _ = sjson.Set(body, pathRoot+`WSRMEnabled`, tfutils.StringFromBool(data.WsrmEnabled, false))
 	}
 	if !data.WsrmSequenceExpiration.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSRMSequenceExpiration`, data.WsrmSequenceExpiration.ValueInt64())
@@ -1012,37 +1012,37 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`WSRMAAAPolicy`, data.WsrmaaaPolicy.ValueString())
 	}
 	if !data.WsrmDestinationAcceptCreateSequence.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationAcceptCreateSequence`, tfutils.StringFromBool(data.WsrmDestinationAcceptCreateSequence))
+		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationAcceptCreateSequence`, tfutils.StringFromBool(data.WsrmDestinationAcceptCreateSequence, false))
 	}
 	if !data.WsrmDestinationMaximumSequences.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationMaximumSequences`, data.WsrmDestinationMaximumSequences.ValueInt64())
 	}
 	if !data.WsrmDestinationInOrder.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationInOrder`, tfutils.StringFromBool(data.WsrmDestinationInOrder))
+		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationInOrder`, tfutils.StringFromBool(data.WsrmDestinationInOrder, false))
 	}
 	if !data.WsrmDestinationMaximumInOrderQueueLength.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationMaximumInOrderQueueLength`, data.WsrmDestinationMaximumInOrderQueueLength.ValueInt64())
 	}
 	if !data.WsrmDestinationAcceptOffers.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationAcceptOffers`, tfutils.StringFromBool(data.WsrmDestinationAcceptOffers))
+		body, _ = sjson.Set(body, pathRoot+`WSRMDestinationAcceptOffers`, tfutils.StringFromBool(data.WsrmDestinationAcceptOffers, false))
 	}
 	if !data.WsrmFrontForce.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMFrontForce`, tfutils.StringFromBool(data.WsrmFrontForce))
+		body, _ = sjson.Set(body, pathRoot+`WSRMFrontForce`, tfutils.StringFromBool(data.WsrmFrontForce, false))
 	}
 	if !data.WsrmBackForce.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMBackForce`, tfutils.StringFromBool(data.WsrmBackForce))
+		body, _ = sjson.Set(body, pathRoot+`WSRMBackForce`, tfutils.StringFromBool(data.WsrmBackForce, false))
 	}
 	if !data.WsrmBackCreateSequence.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMBackCreateSequence`, tfutils.StringFromBool(data.WsrmBackCreateSequence))
+		body, _ = sjson.Set(body, pathRoot+`WSRMBackCreateSequence`, tfutils.StringFromBool(data.WsrmBackCreateSequence, false))
 	}
 	if !data.WsrmFrontCreateSequence.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMFrontCreateSequence`, tfutils.StringFromBool(data.WsrmFrontCreateSequence))
+		body, _ = sjson.Set(body, pathRoot+`WSRMFrontCreateSequence`, tfutils.StringFromBool(data.WsrmFrontCreateSequence, false))
 	}
 	if !data.WsrmSourceMakeOffer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMakeOffer`, tfutils.StringFromBool(data.WsrmSourceMakeOffer))
+		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMakeOffer`, tfutils.StringFromBool(data.WsrmSourceMakeOffer, false))
 	}
 	if !data.WsrmUsesSequenceSsl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMUsesSequenceSSL`, tfutils.StringFromBool(data.WsrmUsesSequenceSsl))
+		body, _ = sjson.Set(body, pathRoot+`WSRMUsesSequenceSSL`, tfutils.StringFromBool(data.WsrmUsesSequenceSsl, false))
 	}
 	if !data.WsrmFrontAcksTo.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSRMFrontAcksTo`, data.WsrmFrontAcksTo.ValueString())
@@ -1057,7 +1057,7 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`WSRMSourceRetransmissionInterval`, data.WsrmSourceRetransmissionInterval.ValueInt64())
 	}
 	if !data.WsrmSourceExponentialBackoff.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`WSRMSourceExponentialBackoff`, tfutils.StringFromBool(data.WsrmSourceExponentialBackoff))
+		body, _ = sjson.Set(body, pathRoot+`WSRMSourceExponentialBackoff`, tfutils.StringFromBool(data.WsrmSourceExponentialBackoff, false))
 	}
 	if !data.WsrmSourceMaximumRetransmissions.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSRMSourceMaximumRetransmissions`, data.WsrmSourceMaximumRetransmissions.ValueInt64())
@@ -1072,13 +1072,13 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`WSRMSourceInactivityClose`, data.WsrmSourceInactivityClose.ValueInt64())
 	}
 	if !data.ForcePolicyExec.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ForcePolicyExec`, tfutils.StringFromBool(data.ForcePolicyExec))
+		body, _ = sjson.Set(body, pathRoot+`ForcePolicyExec`, tfutils.StringFromBool(data.ForcePolicyExec, false))
 	}
 	if !data.RewriteErrors.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RewriteErrors`, tfutils.StringFromBool(data.RewriteErrors))
+		body, _ = sjson.Set(body, pathRoot+`RewriteErrors`, tfutils.StringFromBool(data.RewriteErrors, false))
 	}
 	if !data.DelayErrors.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DelayErrors`, tfutils.StringFromBool(data.DelayErrors))
+		body, _ = sjson.Set(body, pathRoot+`DelayErrors`, tfutils.StringFromBool(data.DelayErrors, false))
 	}
 	if !data.DelayErrorsDuration.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`DelayErrorsDuration`, data.DelayErrorsDuration.ValueInt64())
