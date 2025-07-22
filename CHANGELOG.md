@@ -1,3 +1,7 @@
+## Unreleased
+
+- Fix resource client error handling
+
 ## 0.1.1
 
 - Fix file path handling on Windows in `datapower_file` resource

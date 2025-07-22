@@ -174,22 +174,22 @@ func (r *DomainResource) Create(ctx context.Context, req resource.CreateRequest,
 	}
 
 	body := data.ToBody(ctx, `Domain`)
-	res, err := r.client.Put(data.GetPath(), body)
+	_, err := r.client.Put(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s, %s", "PUT", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
 		return
 	}
 
-	res, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
+	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s, %s", "POST", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 
-	res, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
+	_, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s, %s", "POST", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -207,7 +207,7 @@ func (r *DomainResource) Read(ctx context.Context, req resource.ReadRequest, res
 		resp.State.RemoveResource(ctx)
 		return
 	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
 		return
 	}
 
@@ -229,20 +229,20 @@ func (r *DomainResource) Update(ctx context.Context, req resource.UpdateRequest,
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `Domain`))
+	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `Domain`))
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s, %s", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
-	res, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
+	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s, %s", "POST", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 
-	res, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
+	_, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s, %s", "POST", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 
@@ -259,7 +259,7 @@ func (r *DomainResource) Delete(ctx context.Context, req resource.DeleteRequest,
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
 	auRes, auErr := r.client.Get("/mgmt/status/default/ActiveUsers")
 	if auErr != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get Active Users, got error: %s, %s", auErr, auRes.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get Active Users, got error: %s", auErr))
 		return
 	}
 	if userList := auRes.Get("ActiveUsers"); userList.Exists() {
@@ -271,15 +271,15 @@ func (r *DomainResource) Delete(ctx context.Context, req resource.DeleteRequest,
 			}
 		}
 	}
-	res, err := r.client.Delete(data.GetPath())
+	_, err := r.client.Delete(data.GetPath())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
 		return
 	}
 
-	res, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
+	_, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s, %s", "POST", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 

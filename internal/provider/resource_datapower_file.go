@@ -179,7 +179,7 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 	body := fmt.Sprintf(`{"file": {"name": "%s", "content": "%s"}}`, filepath.Base(fPath), fileData)
 	_, err = r.client.Put(bPath+fPath, body)
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to update remote file (%s), got error: %s\n%s", bPath+fPath, err, body))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to update remote file (%s), got error: %s", bPath+fPath, err))
 		return
 	}
 
@@ -197,8 +197,8 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 	}
 
 	path := fmt.Sprintf("/mgmt/filestore/%s/%s", data.AppDomain.ValueString(), strings.ReplaceAll(data.RemotePath.ValueString(), "://", ""))
-	res, err := r.client.Delete(path)
-	if err != nil && res.RawResponse.StatusCode != 404 {
+	_, err := r.client.Delete(path)
+	if err != nil && !strings.Contains(err.Error(), "status 404") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to delete remote file (%s), got error: %s", path, err))
 		return
 	}

@@ -142,10 +142,10 @@ func (r *UserResource) Create(ctx context.Context, req resource.CreateRequest, r
 	resp.Diagnostics.Append(resp.Private.SetKey(ctx, "User.Password", []byte("{\"value\": \""+tfutils.GenerateHash(config.Password.ValueString())+"\"}"))...)
 
 	body := data.ToBody(ctx, `User`)
-	res, err := r.client.Post(data.GetPath(), body)
+	_, err := r.client.Post(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s, %s", "POST", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "POST", err))
 		return
 	}
 	getRes, getErr := r.client.Get(data.GetPath() + "/" + data.Id.ValueString())
@@ -169,7 +169,7 @@ func (r *UserResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 		resp.State.RemoveResource(ctx)
 		return
 	} else if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s, %s", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object (GET), got error: %s", err))
 		return
 	}
 
@@ -202,9 +202,9 @@ func (r *UserResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		data.PasswordUpdate = types.BoolValue(false)
 		resp.Diagnostics.Append(resp.Private.SetKey(ctx, "User.Password", []byte("{\"value\": \""+tfutils.GenerateHash(config.Password.ValueString())+"\"}"))...)
 	}
-	res, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `User`))
+	_, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `User`))
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s, %s", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
 
@@ -218,9 +218,9 @@ func (r *UserResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
+	_, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s, %s", err, res.String()))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
 		return
 	}
 
