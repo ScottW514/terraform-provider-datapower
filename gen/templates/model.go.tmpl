@@ -213,7 +213,7 @@ func (data {{.Name}}) GetPath() string {
     rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
         {{- end}}
     {{- end}}
-    return strings.TrimSuffix(rest_path, "/")
+    return rest_path
 }
     {{- if hasWriteOnlyAttribute .Attributes}}
 

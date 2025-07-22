@@ -23,10 +23,10 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/pkg/errors"
 	"github.com/tidwall/gjson"
 )
 
@@ -50,58 +50,69 @@ func NewClient(config *DatapowerClientConfig) (*DatapowerClient, error) {
 	restyClient := resty.New()
 
 	restyClient.SetTransport(&http.Transport{
+		// Necessary to eliminate error log entries on DataPower due resty closing the connection without sending a proper close_notify alert
 		DisableKeepAlives: true,
 	})
 
 	var username string
-	if (config.Username.IsUnknown() || (config.Username.ValueString() == "")) && (os.Getenv("DP_USERNAME") == "") {
-		return nil, errors.Errorf("Client: Cannot use unknown/empty value as username")
+	if (config.Username.IsUnknown() || config.Username.ValueString() == "") && os.Getenv("DP_USERNAME") == "" {
+		return nil, fmt.Errorf("client: Cannot use unknown/empty value as username")
 	}
-
-	if config.Username.IsNull() {
-		username = os.Getenv("DP_USERNAME")
-	} else {
+	if !config.Username.IsNull() && config.Username.ValueString() != "" {
 		username = config.Username.ValueString()
+	} else {
+		username = os.Getenv("DP_USERNAME")
 	}
 
 	var password string
-	if (config.Password.IsUnknown() || (config.Password.ValueString() == "")) && (os.Getenv("DP_PASSWORD") == "") {
-		return nil, errors.Errorf("Client: Cannot use unknown/empty value as password")
+	if (config.Password.IsUnknown() || config.Password.ValueString() == "") && os.Getenv("DP_PASSWORD") == "" {
+		return nil, fmt.Errorf("client: Cannot use unknown/empty value as password")
 	}
-
-	if config.Password.IsNull() {
-		password = os.Getenv("DP_PASSWORD")
-	} else {
+	if !config.Password.IsNull() && config.Password.ValueString() != "" {
 		password = config.Password.ValueString()
+	} else {
+		password = os.Getenv("DP_PASSWORD")
 	}
 
 	// Set Base URL
 	var hostname string
-	if os.Getenv("DP_HOSTNAME") != "" {
-		hostname = os.Getenv("DP_HOSTNAME")
-	} else if !config.Hostname.IsUnknown() && (config.Hostname.ValueString() != "") {
+	if !config.Hostname.IsUnknown() && config.Hostname.ValueString() != "" {
 		hostname = config.Hostname.ValueString()
+	} else if env := os.Getenv("DP_HOSTNAME"); env != "" {
+		hostname = env
 	} else {
 		hostname = "localhost"
 	}
 
 	var port int
-	if os.Getenv("DP_PORT") != "" {
-		p, err := strconv.Atoi(os.Getenv("DP_PORT"))
-		if err != nil {
-			return nil, errors.Errorf("Client: Invalid port value %s", os.Getenv("DP_PORT"))
-		} else {
-			port = p
-		}
-	} else if !config.Port.IsUnknown() && config.Port.ValueInt32() > 0 {
+	if !config.Port.IsUnknown() && config.Port.ValueInt32() > 0 {
 		port = int(config.Port.ValueInt32())
+	} else if env := os.Getenv("DP_PORT"); env != "" {
+		p, err := strconv.Atoi(env)
+		if err != nil {
+			return nil, fmt.Errorf("client: Invalid port value %s", env)
+		}
+		port = p
 	} else {
 		port = 5554
 	}
 
+	if port < 1 || port > 65535 {
+		return nil, fmt.Errorf("invalid port: %d (must be 1-65535)", port)
+	}
+
 	baseURL := fmt.Sprintf("https://%s:%d", hostname, port)
 	restyClient.SetBaseURL(baseURL)
-	if config.Insecure.ValueBool() || (os.Getenv("DP_INSECURE") != "") {
+
+	insecure := config.Insecure.ValueBool()
+	if env := os.Getenv("DP_INSECURE"); env != "" {
+		b, err := strconv.ParseBool(env)
+		if err != nil {
+			return nil, fmt.Errorf("invalid DP_INSECURE value: %s", env)
+		}
+		insecure = insecure || b
+	}
+	if insecure {
 		restyClient.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	}
 
@@ -111,7 +122,12 @@ func NewClient(config *DatapowerClientConfig) (*DatapowerClient, error) {
 	restyClient.
 		AddRetryCondition(func(r *resty.Response, err error) bool {
 			return err != nil || r.StatusCode() >= 500
-		})
+		}).
+		SetRetryCount(3).
+		SetRetryWaitTime(2 * time.Second).
+		SetRetryMaxWaitTime(10 * time.Second)
+
+	restyClient.SetTimeout(30 * time.Second)
 
 	return &DatapowerClient{
 		config: config,
@@ -121,20 +137,20 @@ func NewClient(config *DatapowerClientConfig) (*DatapowerClient, error) {
 
 // Get performs a GET request to the specified path.
 func (c *DatapowerClient) Get(path string) (gjson.Result, error) {
-	pxy := os.Getenv("no_proxy")
-	if pxy == "" {
-
-	}
 	resp, err := c.client.R().
 		SetHeader("Accept", "application/json").
-		Get(path)
+		Get(normalizePath(path))
 	if err != nil {
-		return gjson.Result{}, errors.Wrapf(err, "GET request failed for path %s", path)
+		return gjson.Result{}, fmt.Errorf("GET request failed for path %s: %w", path, err)
 	}
 	if resp.IsError() {
-		return gjson.Result{}, errors.Errorf("GET request to %s returned status %d: %s", path, resp.StatusCode(), resp.String())
+		return gjson.Result{}, fmt.Errorf("GET request to %s returned status %d: %s", path, resp.StatusCode(), resp.String())
 	}
-	return gjson.ParseBytes(resp.Body()), nil
+	result := gjson.ParseBytes(resp.Body())
+	if !result.Exists() {
+		return gjson.Result{}, fmt.Errorf("invalid JSON response from %s: %s", path, resp.String())
+	}
+	return result, nil
 }
 
 // Post performs a POST request to the specified path with the provided body.
@@ -144,10 +160,10 @@ func (c *DatapowerClient) Post(path string, body interface{}) (*resty.Response, 
 		SetBody(body).
 		Post(normalizePath(path))
 	if err != nil {
-		return nil, errors.Wrapf(err, "POST request failed for path %s", path)
+		return nil, fmt.Errorf("POST request failed for path %s: %w", path, err)
 	}
 	if resp.IsError() {
-		return resp, errors.Errorf("POST request to %s returned status %d: %s", path, resp.StatusCode(), resp.String())
+		return resp, fmt.Errorf("POST request to %s returned status %d: %s", path, resp.StatusCode(), resp.String())
 	}
 	return resp, nil
 }
@@ -159,10 +175,10 @@ func (c *DatapowerClient) Put(path string, body interface{}) (*resty.Response, e
 		SetBody(body).
 		Put(normalizePath(path))
 	if err != nil {
-		return nil, errors.Wrapf(err, "PUT request failed for path %s", path)
+		return nil, fmt.Errorf("PUT request failed for path %s: %w", path, err)
 	}
 	if resp.IsError() {
-		return resp, errors.Errorf("PUT request to %s returned status %d: %s\n\nJSON:%vBody:%v", path, resp.StatusCode(), resp.String(), body, resp.Request.Body)
+		return resp, fmt.Errorf("PUT request to %s returned status %d: %s\n\nJSON: %v\nBody: %v", path, resp.StatusCode(), resp.String(), body, resp.Request.Body)
 	}
 	return resp, nil
 }
@@ -172,10 +188,10 @@ func (c *DatapowerClient) Delete(path string) (*resty.Response, error) {
 	resp, err := c.client.R().
 		Delete(normalizePath(path))
 	if err != nil {
-		return nil, errors.Wrapf(err, "DELETE request failed for path %s", path)
+		return nil, fmt.Errorf("DELETE request failed for path %s: %w", path, err)
 	}
 	if resp.IsError() {
-		return resp, errors.Errorf("DELETE request to %s returned status %d: %s", path, resp.StatusCode(), resp.String())
+		return resp, fmt.Errorf("DELETE request to %s returned status %d: %s", path, resp.StatusCode(), resp.String())
 	}
 	return resp, nil
 }

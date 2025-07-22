@@ -49,7 +49,7 @@ var UserGroupObjectType = map[string]attr.Type{
 func (data UserGroup) GetPath() string {
 	rest_path := "/mgmt/config/default/UserGroup"
 	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
-	return strings.TrimSuffix(rest_path, "/")
+	return rest_path
 }
 
 func (data UserGroup) IsNull() bool {

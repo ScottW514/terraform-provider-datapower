@@ -52,7 +52,7 @@ func (data HTTPInputConversionMap) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/HTTPInputConversionMap"
 	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
-	return strings.TrimSuffix(rest_path, "/")
+	return rest_path
 }
 
 func (data HTTPInputConversionMap) IsNull() bool {

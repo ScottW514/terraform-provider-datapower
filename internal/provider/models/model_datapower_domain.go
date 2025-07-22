@@ -73,7 +73,7 @@ var DomainObjectType = map[string]attr.Type{
 func (data Domain) GetPath() string {
 	rest_path := "/mgmt/config/default/Domain/{domain}"
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
-	return strings.TrimSuffix(rest_path, "/")
+	return rest_path
 }
 
 func (data Domain) IsNull() bool {

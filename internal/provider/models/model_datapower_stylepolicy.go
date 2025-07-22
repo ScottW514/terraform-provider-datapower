@@ -56,7 +56,7 @@ func (data StylePolicy) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/StylePolicy"
 	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
-	return strings.TrimSuffix(rest_path, "/")
+	return rest_path
 }
 
 func (data StylePolicy) IsNull() bool {
