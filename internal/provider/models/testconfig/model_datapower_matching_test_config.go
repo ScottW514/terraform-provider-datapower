@@ -24,11 +24,12 @@ var MatchingTestConfig = ModelTestConfig{
 	Name: "Matching",
 	Resource: `
 resource "datapower_matching" "test" {
-  id = "Matching_name"
+  id = "___Matching_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
 data "datapower_matching" "test" {
+  depends_on = [ datapower_matching.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

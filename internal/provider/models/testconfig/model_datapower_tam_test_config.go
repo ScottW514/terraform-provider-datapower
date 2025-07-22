@@ -34,6 +34,7 @@ resource "datapower_tam" "test" {
 }`,
 	Data: `
 data "datapower_tam" "test" {
+  depends_on = [ datapower_tam.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

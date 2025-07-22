@@ -29,6 +29,7 @@ resource "datapower_usergroup" "test" {
 }`,
 	Data: `
 data "datapower_usergroup" "test" {
+  depends_on = [ datapower_usergroup.test ]
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},

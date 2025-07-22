@@ -10,6 +10,7 @@ attributes:
     type: String
     required: true
     example: 'HTTPUserAgent_test'
+    test_value: '"___HTTPUserAgent_test"'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: AppDomain
     tf_name: app_domain

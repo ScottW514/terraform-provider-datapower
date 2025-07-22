@@ -32,14 +32,19 @@ func TestAccDataSourceHTTPSSourceProtocolHandler(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_HTTPSSourceProtocolHandler") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_HTTPSSourceProtocolHandler")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.HTTPSSourceProtocolHandlerTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.id", "HTTPSSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.local_address", "0.0.0.0"),
+					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.http_version", "HTTP/1.1"),
+					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.credential_charset", "protocol"),
+					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.ssl_server_config_type", "server"),
+				}...),
 			},
 		},
 	})

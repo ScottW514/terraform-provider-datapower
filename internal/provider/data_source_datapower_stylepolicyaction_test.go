@@ -32,14 +32,29 @@ func TestAccDataSourceStylePolicyAction(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_StylePolicyAction") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_StylePolicyAction")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.StylePolicyActionTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.id", "___StylePolicyAction_test"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.type", "xform"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.parse_metrics_result_type", "none"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.input_language", "xml"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.transform_language", "none"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.output_language", "default"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.named_in_out_location_type", "default"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.ssl_client_config_type", "client"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.soap_validation", "body"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.sql_source_type", "static"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.results_mode", "first-available"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.iterator_type", "XPATH"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.method_rewrite_type", "GET"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.method_type", "POST"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.method_type2", "POST"),
+				}...),
 			},
 		},
 	})

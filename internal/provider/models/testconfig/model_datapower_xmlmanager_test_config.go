@@ -24,11 +24,12 @@ var XMLManagerTestConfig = ModelTestConfig{
 	Name: "XMLManager",
 	Resource: `
 resource "datapower_xmlmanager" "test" {
-  id = "XMLManager_name"
+  id = "0_XMLManger_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
 data "datapower_xmlmanager" "test" {
+  depends_on = [ datapower_xmlmanager.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

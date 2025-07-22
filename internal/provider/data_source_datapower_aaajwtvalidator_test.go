@@ -32,14 +32,18 @@ func TestAccDataSourceAAAJWTValidator(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_AAAJWTValidator") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_AAAJWTValidator")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.AAAJWTValidatorTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.id", "AAAJWTValidator_test"),
+					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.decrypt_fetch_cred_url", "http://example.com/v3/key"),
+					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.verify_fetch_cred_url", "http://example.com/v3/certs"),
+					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.username_claim", "sub"),
+				}...),
 			},
 		},
 	})

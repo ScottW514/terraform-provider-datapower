@@ -32,14 +32,15 @@ func TestAccDataSourceJOSESignatureIdentifier(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_JOSESignatureIdentifier") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_JOSESignatureIdentifier")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.JOSESignatureIdentifierTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_josesignatureidentifier.test", "result.0.id", "JOSESignatureIdentifier_test"),
+				}...),
 			},
 		},
 	})

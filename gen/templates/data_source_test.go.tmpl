@@ -33,15 +33,22 @@ func TestAccDataSource{{.Name}}(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_{{.Name}}") == "" {
         t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_{{.Name}}")
 	}
-	var checks []resource.TestCheckFunc
-	{{- $name := .Name }}
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.{{.Name}}TestConfig.GetDataConfig(),
-				Check: resource.ComposeTestCheckFunc(checks...),
+		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+{{- $name := .Name }}
+{{- range .Attributes}}
+	{{- if and .Default (eq .Type "String") (ne .Name "Id")}}
+		resource.TestCheckResourceAttr("data.datapower_{{snakeCase $name}}.test", "result.0.{{.TfName}}", {{quote .Default}}),
+	{{- else if eq .Name "Id"}}
+		resource.TestCheckResourceAttr("data.datapower_{{snakeCase $name}}.test", "result.0.id", {{if .TestValue}}{{.TestValue}}{{else}}{{quote .Example}}{{end}}),
+	{{- end}}
+{{- end}}
+		}...),
 			},
 		},
 	})

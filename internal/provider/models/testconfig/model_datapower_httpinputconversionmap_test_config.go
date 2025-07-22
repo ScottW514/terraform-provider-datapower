@@ -24,11 +24,12 @@ var HTTPInputConversionMapTestConfig = ModelTestConfig{
 	Name: "HTTPInputConversionMap",
 	Resource: `
 resource "datapower_httpinputconversionmap" "test" {
-  id = "test_name"
+  id = "___HTTPInputConversionMap_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
 data "datapower_httpinputconversionmap" "test" {
+  depends_on = [ datapower_httpinputconversionmap.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

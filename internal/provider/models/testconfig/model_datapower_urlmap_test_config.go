@@ -24,12 +24,13 @@ var URLMapTestConfig = ModelTestConfig{
 	Name: "URLMap",
 	Resource: `
 resource "datapower_urlmap" "test" {
-  id = "URLMap_name"
+  id = "___URLMap_name"
   app_domain = "acc_test_domain"
   url_map_rule = ` + DmURLMapRuleTestConfig.GetModelListConfig() + `
 }`,
 	Data: `
 data "datapower_urlmap" "test" {
+  depends_on = [ datapower_urlmap.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly: false,

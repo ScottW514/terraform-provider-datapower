@@ -10,7 +10,8 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'User_name'
+    example: 'Username'
+    test_value: '"0user"'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: UserSummary
     type: String

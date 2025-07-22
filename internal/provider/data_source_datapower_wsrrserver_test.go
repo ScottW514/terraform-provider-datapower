@@ -32,14 +32,17 @@ func TestAccDataSourceWSRRServer(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_WSRRServer") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_WSRRServer")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.WSRRServerTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.id", "WSRRServer_name"),
+					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.soap_url", "https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort"),
+					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.ssl_client_config_type", "client"),
+				}...),
 			},
 		},
 	})

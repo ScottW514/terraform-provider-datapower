@@ -32,14 +32,31 @@ func TestAccDataSourceFormsLoginPolicy(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_FormsLoginPolicy") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_FormsLoginPolicy")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.FormsLoginPolicyTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.id", "FormsLoginPolicy_test"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.login_form", "/LoginPage.htm"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.use_cookie_attributes", "no"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.error_page", "/ErrorPage.htm"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.logout_page", "/LogoutPage.htm"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.default_url", "/"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.forms_location", "backend"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.local_login_form", "store:///LoginPage.htm"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.local_error_page", "store:///ErrorPage.htm"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.local_logout_page", "store:///LogoutPage.htm"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.username_field", "j_username"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.password_field", "j_password"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.redirect_field", "originalUrl"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.form_processing_url", "/j_security_check"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.redirect_url_type", "urlin"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.form_support_type", "static"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.form_support_script", "store:///Form-Generate-HTML.xsl"),
+				}...),
 			},
 		},
 	})

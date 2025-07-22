@@ -32,14 +32,20 @@ func TestAccDataSourceOAuthSupportedClient(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_OAuthSupportedClient") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_OAuthSupportedClient")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.OAuthSupportedClientTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.id", "OAuthSupportedClient_name"),
+					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.client_type", "confidential"),
+					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.client_authen_method", "secret"),
+					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.caching", "replay"),
+					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.local_az_page_url", "store:///OAuth-Generate-HTML.xsl"),
+					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.validation_urlssl_client_type", "client"),
+				}...),
 			},
 		},
 	})

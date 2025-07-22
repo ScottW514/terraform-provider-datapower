@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Update getting started guide
+- Enhanced `datasource` testing
 
 ## 0.1.2
 

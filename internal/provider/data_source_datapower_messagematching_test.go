@@ -32,14 +32,16 @@ func TestAccDataSourceMessageMatching(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_MessageMatching") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_MessageMatching")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.MessageMatchingTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_messagematching.test", "result.0.id", "MessageMatching_name"),
+					resource.TestCheckResourceAttr("data.datapower_messagematching.test", "result.0.http_method", "any"),
+				}...),
 			},
 		},
 	})

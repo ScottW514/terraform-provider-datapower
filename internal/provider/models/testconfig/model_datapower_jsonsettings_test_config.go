@@ -29,6 +29,7 @@ resource "datapower_jsonsettings" "test" {
 }`,
 	Data: `
 data "datapower_jsonsettings" "test" {
+  depends_on = [ datapower_jsonsettings.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

@@ -24,11 +24,12 @@ var ProcessingMetadataTestConfig = ModelTestConfig{
 	Name: "ProcessingMetadata",
 	Resource: `
 resource "datapower_processingmetadata" "test" {
-  id = "ProcessingMetadata_name"
+  id = "___ProcessingMetadata_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
 data "datapower_processingmetadata" "test" {
+  depends_on = [ datapower_processingmetadata.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

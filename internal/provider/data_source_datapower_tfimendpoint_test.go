@@ -32,14 +32,18 @@ func TestAccDataSourceTFIMEndpoint(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_TFIMEndpoint") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_TFIMEndpoint")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.TFIMEndpointTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_tfimendpoint.test", "result.0.id", "TFIMEndpoint_name"),
+					resource.TestCheckResourceAttr("data.datapower_tfimendpoint.test", "result.0.m_endpoint_type", "tokenmapping"),
+					resource.TestCheckResourceAttr("data.datapower_tfimendpoint.test", "result.0.m_ltpa_value_type_mode", "static"),
+					resource.TestCheckResourceAttr("data.datapower_tfimendpoint.test", "result.0.m_ssl_client_config_type", "client"),
+				}...),
 			},
 		},
 	})

@@ -24,7 +24,7 @@ var StylePolicyRuleTestConfig = ModelTestConfig{
 	Name: "StylePolicyRule",
 	Resource: `
 resource "datapower_stylepolicyrule" "test" {
-  id = "StylePolicyRule_name"
+  id = "___StylePolicyRule_name"
   app_domain = "acc_test_domain"
   direction = "rule"
   input_format = "none"
@@ -32,6 +32,7 @@ resource "datapower_stylepolicyrule" "test" {
 }`,
 	Data: `
 data "datapower_stylepolicyrule" "test" {
+  depends_on = [ datapower_stylepolicyrule.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

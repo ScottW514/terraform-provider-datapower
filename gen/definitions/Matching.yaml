@@ -10,6 +10,7 @@ attributes:
     type: String
     required: true
     example: 'Matching_name'
+    test_value: '"___Matching_name"'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: AppDomain
     tf_name: app_domain

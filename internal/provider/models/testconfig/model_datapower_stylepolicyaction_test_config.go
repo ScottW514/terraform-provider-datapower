@@ -24,7 +24,7 @@ var StylePolicyActionTestConfig = ModelTestConfig{
 	Name: "StylePolicyAction",
 	Resource: `
 resource "datapower_stylepolicyaction" "test" {
-  id = "StylePolicyAction_test"
+  id = "___StylePolicyAction_test"
   app_domain = "acc_test_domain"
   type = "xform"
   named_inputs = null
@@ -32,6 +32,7 @@ resource "datapower_stylepolicyaction" "test" {
 }`,
 	Data: `
 data "datapower_stylepolicyaction" "test" {
+  depends_on = [ datapower_stylepolicyaction.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly: false,

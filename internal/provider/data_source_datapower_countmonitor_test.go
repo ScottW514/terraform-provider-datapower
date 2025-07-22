@@ -32,14 +32,18 @@ func TestAccDataSourceCountMonitor(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_CountMonitor") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_CountMonitor")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.CountMonitorTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_countmonitor.test", "result.0.id", "CookieAttributePolicy_test"),
+					resource.TestCheckResourceAttr("data.datapower_countmonitor.test", "result.0.measure", "requests"),
+					resource.TestCheckResourceAttr("data.datapower_countmonitor.test", "result.0.source", "all"),
+					resource.TestCheckResourceAttr("data.datapower_countmonitor.test", "result.0.header", "X-Client-IP"),
+				}...),
 			},
 		},
 	})

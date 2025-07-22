@@ -24,7 +24,7 @@ var UserTestConfig = ModelTestConfig{
 	Name: "User",
 	Resource: `
 resource "datapower_user" "test" {
-  id = "User_name"
+  id = "0user"
   password = "Password$123"
   access_level = "group-defined"
   group_name = datapower_usergroup.test.id
@@ -33,6 +33,7 @@ resource "datapower_user" "test" {
 }`,
 	Data: `
 data "datapower_user" "test" {
+  depends_on = [ datapower_user.test ]
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{

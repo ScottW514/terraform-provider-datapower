@@ -29,6 +29,7 @@ resource "datapower_urlrewritepolicy" "test" {
 }`,
 	Data: `
 data "datapower_urlrewritepolicy" "test" {
+  depends_on = [ datapower_urlrewritepolicy.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

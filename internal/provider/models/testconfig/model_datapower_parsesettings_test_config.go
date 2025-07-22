@@ -24,11 +24,12 @@ var ParseSettingsTestConfig = ModelTestConfig{
 	Name: "ParseSettings",
 	Resource: `
 resource "datapower_parsesettings" "test" {
-  id = "ParseSettings_name"
+  id = "___ParseSettings_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
 data "datapower_parsesettings" "test" {
+  depends_on = [ datapower_parsesettings.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

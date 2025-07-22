@@ -32,14 +32,16 @@ func TestAccDataSourceWSRRSubscription(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_WSRRSubscription") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_WSRRSubscription")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.WSRRSubscriptionTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.id", "WSRRSubscription_name"),
+					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.method", "poll"),
+				}...),
 			},
 		},
 	})

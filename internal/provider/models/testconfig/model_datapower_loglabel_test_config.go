@@ -24,11 +24,12 @@ var LogLabelTestConfig = ModelTestConfig{
 	Name: "LogLabel",
 	Resource: `
 resource "datapower_loglabel" "test" {
-  id = "LogLabel_name"
+  id = "___LogLabel_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
 data "datapower_loglabel" "test" {
+  depends_on = [ datapower_loglabel.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

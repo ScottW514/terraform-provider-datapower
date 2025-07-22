@@ -28,6 +28,7 @@ resource "datapower_domain" "test" {
 }`,
 	Data: `
 data "datapower_domain" "test" {
+  depends_on = [ datapower_domain.test ]
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},

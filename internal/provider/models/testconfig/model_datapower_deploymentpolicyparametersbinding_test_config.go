@@ -29,6 +29,7 @@ resource "datapower_deploymentpolicyparametersbinding" "test" {
 }`,
 	Data: `
 data "datapower_deploymentpolicyparametersbinding" "test" {
+  depends_on = [ datapower_deploymentpolicyparametersbinding.test ]
   app_domain = "acc_test_domain"
 }`,
 	ModelOnly:    false,

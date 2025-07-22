@@ -32,14 +32,19 @@ func TestAccDataSourceAAAJWTGenerator(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_AAAJWTGenerator") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_AAAJWTGenerator")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.AAAJWTGeneratorTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.id", "AAAJWTGenerator_test"),
+					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.issuer", "idg"),
+					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.sign_algorithm", "RS256"),
+					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.enc_algorithm", "A128CBC-HS256"),
+					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.encrypt_algorithm", "RSA1_5"),
+				}...),
 			},
 		},
 	})

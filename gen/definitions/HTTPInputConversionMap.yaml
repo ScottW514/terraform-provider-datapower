@@ -9,7 +9,8 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'test_name'
+    example: 'HTTPInputConversionMap_test'
+    test_value: '"___HTTPInputConversionMap_name"'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: AppDomain
     tf_name: app_domain

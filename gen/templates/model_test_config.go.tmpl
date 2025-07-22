@@ -58,13 +58,14 @@ resource "datapower_{{snakeCase .Name}}" "test" {
 }`,
 {{- if not .ModelOnly}}
     Data:   `
-{{- $modelName := .Name}}
 data "datapower_{{snakeCase .Name}}" "test" {
-{{- range  .Attributes}}
-    {{- if and (eq .Name "AppDomain") (ne $modelName "Domain")}}
+  depends_on = [ datapower_{{snakeCase .Name}}.test ]
+    {{- $modelName := .Name}}
+    {{- range  .Attributes}}
+        {{- if and (eq .Name "AppDomain") (ne $modelName "Domain")}}
   app_domain = "acc_test_domain"
+        {{- end}}
     {{- end}}
-{{- end}}
 }`,
 {{- end}}
     ModelOnly:    {{if .ModelOnly}}true{{else}}false{{end}},

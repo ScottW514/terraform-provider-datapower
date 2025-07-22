@@ -32,14 +32,18 @@ func TestAccDataSourceStylePolicyRule(t *testing.T) {
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_StylePolicyRule") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_StylePolicyRule")
 	}
-	var checks []resource.TestCheckFunc
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.StylePolicyRuleTestConfig.GetDataConfig(),
-				Check:  resource.ComposeTestCheckFunc(checks...),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.id", "___StylePolicyRule_name"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.direction", "rule"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.input_format", "none"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.output_format", "none"),
+				}...),
 			},
 		},
 	})
