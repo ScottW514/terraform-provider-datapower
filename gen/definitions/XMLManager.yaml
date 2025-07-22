@@ -64,11 +64,11 @@ attributes:
     default: true
     description: 'XSLT Expression Optimization'
     cli_alias: search results
-  - name: SupportTxWarn
-    type: Bool
-    default: false
-    description: 'Support ITX Warnings'
-    cli_alias: tx-warn
+  # - name: SupportTxWarn
+  #   type: Bool
+  #   default: false
+  #   description: 'Support ITX Warnings'
+  #   cli_alias: tx-warn
   - name: VirtualServers
     type: List
     reference_to: LoadBalancerGroup

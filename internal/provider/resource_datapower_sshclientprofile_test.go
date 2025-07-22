@@ -37,6 +37,9 @@ func TestAccResourceSSHClientProfile(t *testing.T) {
 		Config: testconfig.SSHClientProfileTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_sshclientprofile.test", "profile_usage", "sftp"),
+			resource.TestCheckResourceAttr("datapower_sshclientprofile.test", "persistent_connections", "true"),
+			resource.TestCheckResourceAttr("datapower_sshclientprofile.test", "persistent_connection_timeout", "120"),
+			resource.TestCheckResourceAttr("datapower_sshclientprofile.test", "strict_host_key_checking", "false"),
 		}...),
 	})
 

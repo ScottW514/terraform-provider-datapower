@@ -429,12 +429,6 @@ func (r *MultiProtocolGatewayResource) Schema(ctx context.Context, req resource.
 				},
 				Default: int64default.StaticInt64(33554432),
 			},
-			"parser_limits_forbid_external_references": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML Forbid External References", "forbid-external-references", "").AddDefaultValue("true").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
-			},
 			"parser_limits_external_references": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("XML External Reference Handling", "external-references", "").AddStringEnum("forbid", "ignore", "allow").AddDefaultValue("forbid").String,
 				Optional:            true,

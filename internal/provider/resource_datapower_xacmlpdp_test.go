@@ -35,7 +35,9 @@ func TestAccResourceXACMLPDP(t *testing.T) {
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.XACMLPDPTestConfig.GetResourceConfig(),
-		Check:  resource.ComposeTestCheckFunc([]resource.TestCheckFunc{}...),
+		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_xacmlpdp.test", "equal_policies", "false"),
+		}...),
 	})
 
 	resource.Test(t, resource.TestCase{

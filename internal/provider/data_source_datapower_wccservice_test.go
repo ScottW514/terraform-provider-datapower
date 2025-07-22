@@ -41,6 +41,7 @@ func TestAccDataSourceWCCService(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_wccservice.test", "result.0.id", "WCCService_name"),
 					resource.TestCheckResourceAttr("data.datapower_wccservice.test", "result.0.update_type", "poll"),
+					resource.TestCheckResourceAttr("data.datapower_wccservice.test", "result.0.time_interval", "10"),
 					resource.TestCheckResourceAttr("data.datapower_wccservice.test", "result.0.ssl_client_config_type", "client"),
 				}...),
 			},

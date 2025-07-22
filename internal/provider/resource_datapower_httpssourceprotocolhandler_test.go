@@ -37,9 +37,20 @@ func TestAccResourceHTTPSSourceProtocolHandler(t *testing.T) {
 		Config: testconfig.HTTPSSourceProtocolHandlerTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "local_address", "0.0.0.0"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "local_port", "443"),
 			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "http_version", "HTTP/1.1"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "persistent_connections", "true"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "allow_compression", "false"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "allow_web_socket_upgrade", "false"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "max_url_len", "16384"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "max_total_hdr_len", "128000"),
 			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "credential_charset", "protocol"),
 			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "ssl_server_config_type", "server"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "http2_max_streams", "100"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "http2_max_frame_size", "16384"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "http2_stream_header", "false"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "chunked_encoding", "true"),
+			resource.TestCheckResourceAttr("datapower_httpssourceprotocolhandler.test", "header_timeout", "30000"),
 		}...),
 	})
 

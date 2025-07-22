@@ -305,10 +305,6 @@ func (d *MultiProtocolGatewayDataSource) Schema(ctx context.Context, req datasou
 							MarkdownDescription: "XML Maximum Node Size",
 							Computed:            true,
 						},
-						"parser_limits_forbid_external_references": schema.BoolAttribute{
-							MarkdownDescription: "XML Forbid External References",
-							Computed:            true,
-						},
 						"parser_limits_external_references": schema.StringAttribute{
 							MarkdownDescription: "XML External Reference Handling",
 							Computed:            true,

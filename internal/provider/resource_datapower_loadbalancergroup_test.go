@@ -37,8 +37,14 @@ func TestAccResourceLoadBalancerGroup(t *testing.T) {
 		Config: testconfig.LoadBalancerGroupTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "algorithm", "round-robin"),
+			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "retrieve_info", "false"),
 			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "wlm_retrieval", "use-websphere"),
 			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "wlm_transport", "http"),
+			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "damp", "120"),
+			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "never_return_sick_member", "false"),
+			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "try_every_server_before_failing", "false"),
+			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "masquerade_member", "false"),
+			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "application_routing", "false"),
 		}...),
 	})
 

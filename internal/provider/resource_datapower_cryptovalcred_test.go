@@ -37,7 +37,11 @@ func TestAccResourceCryptoValCred(t *testing.T) {
 		Config: testconfig.CryptoValCredTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_cryptovalcred.test", "cert_validation_mode", "legacy"),
+			resource.TestCheckResourceAttr("datapower_cryptovalcred.test", "use_crl", "true"),
+			resource.TestCheckResourceAttr("datapower_cryptovalcred.test", "require_crl", "false"),
 			resource.TestCheckResourceAttr("datapower_cryptovalcred.test", "crldp_handling", "ignore"),
+			resource.TestCheckResourceAttr("datapower_cryptovalcred.test", "explicit_policy", "false"),
+			resource.TestCheckResourceAttr("datapower_cryptovalcred.test", "check_dates", "true"),
 		}...),
 	})
 

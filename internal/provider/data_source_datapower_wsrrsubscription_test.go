@@ -41,6 +41,9 @@ func TestAccDataSourceWSRRSubscription(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.id", "WSRRSubscription_name"),
 					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.method", "poll"),
+					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.refresh_interval", "86400"),
+					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.use_version", "false"),
+					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.fetch_policy_attachments", "false"),
 				}...),
 			},
 		},

@@ -39,8 +39,8 @@ func TestAccResource{{.Name}}(t *testing.T) {
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 {{- $name := .Name }}
 {{- range .Attributes}}
-	{{- if and .Default (eq .Type "String")}}
-		resource.TestCheckResourceAttr("datapower_{{snakeCase $name}}.test", "{{.TfName}}", {{quote .Default}}),
+	{{- if and .Default (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool"))}}
+		resource.TestCheckResourceAttr("datapower_{{snakeCase $name}}.test", "{{.TfName}}", {{if .TestValue}}{{.TestValue}}{{else}}{{quote .Default}}{{end}}),
 	{{- end}}
 {{- end}}
 		}...),

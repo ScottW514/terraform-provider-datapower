@@ -33,45 +33,41 @@ import (
 )
 
 type User struct {
-	Id                     types.String `tfsdk:"id"`
-	UserSummary            types.String `tfsdk:"user_summary"`
-	Password               types.String `tfsdk:"password"`
-	PasswordUpdate         types.Bool   `tfsdk:"password_update"`
-	SuppressPasswordChange types.Bool   `tfsdk:"suppress_password_change"`
-	AccessLevel            types.String `tfsdk:"access_level"`
-	GroupName              types.String `tfsdk:"group_name"`
-	SnmpCreds              types.List   `tfsdk:"snmp_creds"`
-	HashedSnmpCreds        types.List   `tfsdk:"hashed_snmp_creds"`
+	Id              types.String `tfsdk:"id"`
+	UserSummary     types.String `tfsdk:"user_summary"`
+	Password        types.String `tfsdk:"password"`
+	PasswordUpdate  types.Bool   `tfsdk:"password_update"`
+	AccessLevel     types.String `tfsdk:"access_level"`
+	GroupName       types.String `tfsdk:"group_name"`
+	SnmpCreds       types.List   `tfsdk:"snmp_creds"`
+	HashedSnmpCreds types.List   `tfsdk:"hashed_snmp_creds"`
 }
 type UserWO struct {
-	Id                     types.String `tfsdk:"id"`
-	UserSummary            types.String `tfsdk:"user_summary"`
-	SuppressPasswordChange types.Bool   `tfsdk:"suppress_password_change"`
-	AccessLevel            types.String `tfsdk:"access_level"`
-	GroupName              types.String `tfsdk:"group_name"`
-	SnmpCreds              types.List   `tfsdk:"snmp_creds"`
-	HashedSnmpCreds        types.List   `tfsdk:"hashed_snmp_creds"`
+	Id              types.String `tfsdk:"id"`
+	UserSummary     types.String `tfsdk:"user_summary"`
+	AccessLevel     types.String `tfsdk:"access_level"`
+	GroupName       types.String `tfsdk:"group_name"`
+	SnmpCreds       types.List   `tfsdk:"snmp_creds"`
+	HashedSnmpCreds types.List   `tfsdk:"hashed_snmp_creds"`
 }
 
 var UserObjectType = map[string]attr.Type{
-	"id":                       types.StringType,
-	"user_summary":             types.StringType,
-	"password":                 types.StringType,
-	"password_update":          types.BoolType,
-	"suppress_password_change": types.BoolType,
-	"access_level":             types.StringType,
-	"group_name":               types.StringType,
-	"snmp_creds":               types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
-	"hashed_snmp_creds":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
+	"id":                types.StringType,
+	"user_summary":      types.StringType,
+	"password":          types.StringType,
+	"password_update":   types.BoolType,
+	"access_level":      types.StringType,
+	"group_name":        types.StringType,
+	"snmp_creds":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
+	"hashed_snmp_creds": types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
 }
 var UserObjectTypeWO = map[string]attr.Type{
-	"id":                       types.StringType,
-	"user_summary":             types.StringType,
-	"suppress_password_change": types.BoolType,
-	"access_level":             types.StringType,
-	"group_name":               types.StringType,
-	"snmp_creds":               types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
-	"hashed_snmp_creds":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
+	"id":                types.StringType,
+	"user_summary":      types.StringType,
+	"access_level":      types.StringType,
+	"group_name":        types.StringType,
+	"snmp_creds":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
+	"hashed_snmp_creds": types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
 }
 
 func (data User) GetPath() string {
@@ -96,9 +92,6 @@ func (data User) IsNull() bool {
 	if !data.Password.IsNull() {
 		return false
 	}
-	if !data.SuppressPasswordChange.IsNull() {
-		return false
-	}
 	if !data.AccessLevel.IsNull() {
 		return false
 	}
@@ -118,9 +111,6 @@ func (data UserWO) IsNull() bool {
 		return false
 	}
 	if !data.UserSummary.IsNull() {
-		return false
-	}
-	if !data.SuppressPasswordChange.IsNull() {
 		return false
 	}
 	if !data.AccessLevel.IsNull() {
@@ -151,9 +141,6 @@ func (data User) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.Password.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Password`, data.Password.ValueString())
-	}
-	if !data.SuppressPasswordChange.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SuppressPasswordChange`, tfutils.StringFromBool(data.SuppressPasswordChange, false))
 	}
 	if !data.AccessLevel.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AccessLevel`, data.AccessLevel.ValueString())
@@ -196,11 +183,6 @@ func (data *User) FromBody(ctx context.Context, pathRoot string, res gjson.Resul
 		data.Password = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.Password = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `SuppressPasswordChange`); value.Exists() {
-		data.SuppressPasswordChange = tfutils.BoolFromString(value.String())
-	} else {
-		data.SuppressPasswordChange = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AccessLevel`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AccessLevel = tfutils.ParseStringFromGJSON(value)
@@ -264,11 +246,6 @@ func (data *UserWO) FromBody(ctx context.Context, pathRoot string, res gjson.Res
 		data.UserSummary = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.UserSummary = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `SuppressPasswordChange`); value.Exists() {
-		data.SuppressPasswordChange = tfutils.BoolFromString(value.String())
-	} else {
-		data.SuppressPasswordChange = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `AccessLevel`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AccessLevel = tfutils.ParseStringFromGJSON(value)
@@ -339,11 +316,6 @@ func (data *User) UpdateFromBody(ctx context.Context, pathRoot string, res gjson
 	} else {
 		data.Password = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SuppressPasswordChange`); value.Exists() && !data.SuppressPasswordChange.IsNull() {
-		data.SuppressPasswordChange = tfutils.BoolFromString(value.String())
-	} else if data.SuppressPasswordChange.ValueBool() {
-		data.SuppressPasswordChange = types.BoolNull()
-	}
 	if value := res.Get(pathRoot + `AccessLevel`); value.Exists() && !data.AccessLevel.IsNull() {
 		data.AccessLevel = tfutils.ParseStringFromGJSON(value)
 	} else if data.AccessLevel.ValueString() != "group-defined" {
@@ -412,13 +384,6 @@ func (data *User) UpdateUnknownFromBody(ctx context.Context, pathRoot string, re
 			data.Password = tfutils.ParseStringFromGJSON(value)
 		} else {
 			data.Password = types.StringNull()
-		}
-	}
-	if data.SuppressPasswordChange.IsUnknown() {
-		if value := res.Get(pathRoot + `SuppressPasswordChange`); value.Exists() && !data.SuppressPasswordChange.IsNull() {
-			data.SuppressPasswordChange = tfutils.BoolFromString(value.String())
-		} else {
-			data.SuppressPasswordChange = types.BoolNull()
 		}
 	}
 	if data.AccessLevel.IsUnknown() {

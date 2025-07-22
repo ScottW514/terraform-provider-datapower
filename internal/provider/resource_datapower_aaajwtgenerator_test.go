@@ -37,6 +37,7 @@ func TestAccResourceAAAJWTGenerator(t *testing.T) {
 		Config: testconfig.AAAJWTGeneratorTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_aaajwtgenerator.test", "issuer", "idg"),
+			resource.TestCheckResourceAttr("datapower_aaajwtgenerator.test", "duration", "3600"),
 			resource.TestCheckResourceAttr("datapower_aaajwtgenerator.test", "sign_algorithm", "RS256"),
 			resource.TestCheckResourceAttr("datapower_aaajwtgenerator.test", "enc_algorithm", "A128CBC-HS256"),
 			resource.TestCheckResourceAttr("datapower_aaajwtgenerator.test", "encrypt_algorithm", "RSA1_5"),

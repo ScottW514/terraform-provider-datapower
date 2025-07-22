@@ -47,7 +47,6 @@ type SQLDataSource struct {
 	SqlDataSourceConfigNvPairs types.List   `tfsdk:"sql_data_source_config_nv_pairs"`
 	MaxConnection              types.Int64  `tfsdk:"max_connection"`
 	OracleDataSourceType       types.String `tfsdk:"oracle_data_source_type"`
-	OracleObjects              types.Bool   `tfsdk:"oracle_objects"`
 	ConnectTimeout             types.Int64  `tfsdk:"connect_timeout"`
 	QueryTimeout               types.Int64  `tfsdk:"query_timeout"`
 	IdleTimeout                types.Int64  `tfsdk:"idle_timeout"`
@@ -77,7 +76,6 @@ var SQLDataSourceObjectType = map[string]attr.Type{
 	"sql_data_source_config_nv_pairs": types.ListType{ElemType: types.ObjectType{AttrTypes: DmSQLDataSourceConfigNVPairObjectType}},
 	"max_connection":                  types.Int64Type,
 	"oracle_data_source_type":         types.StringType,
-	"oracle_objects":                  types.BoolType,
 	"connect_timeout":                 types.Int64Type,
 	"query_timeout":                   types.Int64Type,
 	"idle_timeout":                    types.Int64Type,
@@ -140,9 +138,6 @@ func (data SQLDataSource) IsNull() bool {
 		return false
 	}
 	if !data.OracleDataSourceType.IsNull() {
-		return false
-	}
-	if !data.OracleObjects.IsNull() {
 		return false
 	}
 	if !data.ConnectTimeout.IsNull() {
@@ -231,9 +226,6 @@ func (data SQLDataSource) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.OracleDataSourceType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`OracleDataSourceType`, data.OracleDataSourceType.ValueString())
-	}
-	if !data.OracleObjects.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`OracleObjects`, tfutils.StringFromBool(data.OracleObjects, false))
 	}
 	if !data.ConnectTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ConnectTimeout`, data.ConnectTimeout.ValueInt64())
@@ -356,11 +348,6 @@ func (data *SQLDataSource) FromBody(ctx context.Context, pathRoot string, res gj
 		data.OracleDataSourceType = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.OracleDataSourceType = types.StringValue("SID")
-	}
-	if value := res.Get(pathRoot + `OracleObjects`); value.Exists() {
-		data.OracleObjects = tfutils.BoolFromString(value.String())
-	} else {
-		data.OracleObjects = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `ConnectTimeout`); value.Exists() {
 		data.ConnectTimeout = types.Int64Value(value.Int())
@@ -504,11 +491,6 @@ func (data *SQLDataSource) UpdateFromBody(ctx context.Context, pathRoot string, 
 		data.OracleDataSourceType = tfutils.ParseStringFromGJSON(value)
 	} else if data.OracleDataSourceType.ValueString() != "SID" {
 		data.OracleDataSourceType = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `OracleObjects`); value.Exists() && !data.OracleObjects.IsNull() {
-		data.OracleObjects = tfutils.BoolFromString(value.String())
-	} else if data.OracleObjects.ValueBool() {
-		data.OracleObjects = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `ConnectTimeout`); value.Exists() && !data.ConnectTimeout.IsNull() {
 		data.ConnectTimeout = types.Int64Value(value.Int())

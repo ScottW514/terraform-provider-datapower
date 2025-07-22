@@ -4,6 +4,7 @@ model_only: bool(required=False) # Generate only model
 list_item: bool(required=False) # This model is a list item
 rest_endpoint: str() # REST endpoint path
 update_only: bool(required=False) # Set to true if this endpoint is update only
+default_domain_only: bool(required=False) # Set to true if this endpoint is valid only in the default domain
 put_create: bool(required=False) # Set to true if the PUT request is used for create
 description: str(required=False) # Define description
 deprecated: bool(required=False) # Set to true if deprecated

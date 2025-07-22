@@ -39,6 +39,8 @@ func TestAccResourceDomain(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_domain.test", "config_dir", "config:///"),
 			resource.TestCheckResourceAttr("datapower_domain.test", "config_mode", "local"),
 			resource.TestCheckResourceAttr("datapower_domain.test", "import_format", "ZIP"),
+			resource.TestCheckResourceAttr("datapower_domain.test", "local_ip_rewrite", "true"),
+			resource.TestCheckResourceAttr("datapower_domain.test", "max_chkpoints", "3"),
 			resource.TestCheckResourceAttr("datapower_domain.test", "config_permissions_mode", "scope-domain"),
 		}...),
 	})

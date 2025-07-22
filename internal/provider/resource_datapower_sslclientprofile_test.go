@@ -36,7 +36,16 @@ func TestAccResourceSSLClientProfile(t *testing.T) {
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.SSLClientProfileTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "validate_server_cert", "true"),
+			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "caching", "true"),
+			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "cache_timeout", "300"),
+			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "cache_size", "100"),
 			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "use_custom_sni_hostname", "no"),
+			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "validate_hostname", "false"),
+			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "hostname_validation_fail_on_error", "false"),
+			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "enable_tls13_compat", "true"),
+			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "disable_renegotiation", "false"),
+			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "require_closure_notification", "true"),
 		}...),
 	})
 

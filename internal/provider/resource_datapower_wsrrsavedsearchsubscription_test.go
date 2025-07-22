@@ -37,6 +37,8 @@ func TestAccResourceWSRRSavedSearchSubscription(t *testing.T) {
 		Config: testconfig.WSRRSavedSearchSubscriptionTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_wsrrsavedsearchsubscription.test", "method", "poll"),
+			resource.TestCheckResourceAttr("datapower_wsrrsavedsearchsubscription.test", "refresh_interval", "86400"),
+			resource.TestCheckResourceAttr("datapower_wsrrsavedsearchsubscription.test", "fetch_policy_attachments", "false"),
 		}...),
 	})
 

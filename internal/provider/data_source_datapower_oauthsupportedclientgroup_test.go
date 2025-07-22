@@ -40,6 +40,7 @@ func TestAccDataSourceOAuthSupportedClientGroup(t *testing.T) {
 				Config: testconfig.OAuthSupportedClientGroupTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclientgroup.test", "result.0.id", "OAuthSupportedClientGroup_name"),
+					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclientgroup.test", "result.0.customized", "false"),
 					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclientgroup.test", "result.0.customized_type", "custom"),
 				}...),
 			},

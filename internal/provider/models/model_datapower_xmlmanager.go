@@ -43,7 +43,6 @@ type XMLManager struct {
 	Sha1Caching                          types.Bool   `tfsdk:"sha1_caching"`
 	StaticDocumentCalls                  types.Bool   `tfsdk:"static_document_calls"`
 	SearchResults                        types.Bool   `tfsdk:"search_results"`
-	SupportTxWarn                        types.Bool   `tfsdk:"support_tx_warn"`
 	VirtualServers                       types.List   `tfsdk:"virtual_servers"`
 	ParserLimitsBytesScanned             types.Int64  `tfsdk:"parser_limits_bytes_scanned"`
 	ParserLimitsElementDepth             types.Int64  `tfsdk:"parser_limits_element_depth"`
@@ -76,7 +75,6 @@ var XMLManagerObjectType = map[string]attr.Type{
 	"sha1_caching":                             types.BoolType,
 	"static_document_calls":                    types.BoolType,
 	"search_results":                           types.BoolType,
-	"support_tx_warn":                          types.BoolType,
 	"virtual_servers":                          types.ListType{ElemType: types.StringType},
 	"parser_limits_bytes_scanned":              types.Int64Type,
 	"parser_limits_element_depth":              types.Int64Type,
@@ -134,9 +132,6 @@ func (data XMLManager) IsNull() bool {
 		return false
 	}
 	if !data.SearchResults.IsNull() {
-		return false
-	}
-	if !data.SupportTxWarn.IsNull() {
 		return false
 	}
 	if !data.VirtualServers.IsNull() {
@@ -230,9 +225,6 @@ func (data XMLManager) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.SearchResults.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SearchResults`, tfutils.StringFromBool(data.SearchResults, false))
-	}
-	if !data.SupportTxWarn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SupportTxWarn`, tfutils.StringFromBool(data.SupportTxWarn, false))
 	}
 	if !data.VirtualServers.IsNull() {
 		var values []string
@@ -358,11 +350,6 @@ func (data *XMLManager) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.SearchResults = tfutils.BoolFromString(value.String())
 	} else {
 		data.SearchResults = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `SupportTxWarn`); value.Exists() {
-		data.SupportTxWarn = tfutils.BoolFromString(value.String())
-	} else {
-		data.SupportTxWarn = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `VirtualServers`); value.Exists() {
 		data.VirtualServers = tfutils.ParseStringListFromGJSON(value)
@@ -551,11 +538,6 @@ func (data *XMLManager) UpdateFromBody(ctx context.Context, pathRoot string, res
 		data.SearchResults = tfutils.BoolFromString(value.String())
 	} else if !data.SearchResults.ValueBool() {
 		data.SearchResults = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `SupportTxWarn`); value.Exists() && !data.SupportTxWarn.IsNull() {
-		data.SupportTxWarn = tfutils.BoolFromString(value.String())
-	} else if data.SupportTxWarn.ValueBool() {
-		data.SupportTxWarn = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `VirtualServers`); value.Exists() && !data.VirtualServers.IsNull() {
 		data.VirtualServers = tfutils.ParseStringListFromGJSON(value)

@@ -40,6 +40,7 @@ func TestAccDataSourceXACMLPDP(t *testing.T) {
 				Config: testconfig.XACMLPDPTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_xacmlpdp.test", "result.0.id", "XACMLPDP_name"),
+					resource.TestCheckResourceAttr("data.datapower_xacmlpdp.test", "result.0.equal_policies", "false"),
 				}...),
 			},
 		},

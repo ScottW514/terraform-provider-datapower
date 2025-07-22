@@ -43,6 +43,8 @@ func TestAccDataSourceStylePolicyRule(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.direction", "rule"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.input_format", "none"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.output_format", "none"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.non_xml_processing", "false"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.unprocessed", "false"),
 				}...),
 			},
 		},

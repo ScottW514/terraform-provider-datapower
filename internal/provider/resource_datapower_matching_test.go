@@ -35,7 +35,10 @@ func TestAccResourceMatching(t *testing.T) {
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.MatchingTestConfig.GetResourceConfig(),
-		Check:  resource.ComposeTestCheckFunc([]resource.TestCheckFunc{}...),
+		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_matching.test", "match_with_pcre", "false"),
+			resource.TestCheckResourceAttr("datapower_matching.test", "combine_with_or", "false"),
+		}...),
 	})
 
 	resource.Test(t, resource.TestCase{

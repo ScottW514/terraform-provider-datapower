@@ -36,7 +36,22 @@ func TestAccResourceXMLManager(t *testing.T) {
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.XMLManagerTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "cache_memory_size", "2147483647"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "cache_size", "256"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "sha1_caching", "true"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "static_document_calls", "true"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "search_results", "true"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_bytes_scanned", "4194304"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_element_depth", "512"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_attribute_count", "128"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_max_node_size", "33554432"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_forbid_external_references", "true"),
 			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_external_references", "forbid"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_max_prefixes", "1024"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_max_namespaces", "1024"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_max_local_names", "60000"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "doc_cache_max_docs", "5000"),
+			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "doc_max_writes", "32768"),
 			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "user_agent", "default"),
 		}...),
 	})

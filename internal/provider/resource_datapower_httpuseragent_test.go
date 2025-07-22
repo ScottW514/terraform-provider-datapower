@@ -35,7 +35,10 @@ func TestAccResourceHTTPUserAgent(t *testing.T) {
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.HTTPUserAgentTestConfig.GetResourceConfig(),
-		Check:  resource.ComposeTestCheckFunc([]resource.TestCheckFunc{}...),
+		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_httpuseragent.test", "max_redirects", "8"),
+			resource.TestCheckResourceAttr("datapower_httpuseragent.test", "timeout", "300"),
+		}...),
 	})
 
 	resource.Test(t, resource.TestCase{

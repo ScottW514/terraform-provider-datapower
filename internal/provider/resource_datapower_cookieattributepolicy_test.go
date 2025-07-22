@@ -37,6 +37,7 @@ func TestAccResourceCookieAttributePolicy(t *testing.T) {
 		Config: testconfig.CookieAttributePolicyTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_cookieattributepolicy.test", "path", "/"),
+			resource.TestCheckResourceAttr("datapower_cookieattributepolicy.test", "interval", "3600"),
 		}...),
 	})
 

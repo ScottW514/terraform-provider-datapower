@@ -377,11 +377,12 @@ attributes:
     default: 33554432
     description: 'XML Maximum Node Size'
     cli_alias: max-node-size
-  - name: ParserLimitsForbidExternalReferences
-    type: Bool
-    default: true
-    description: 'XML Forbid External References'
-    cli_alias: forbid-external-references
+  # DEPRECATED
+  # - name: ParserLimitsForbidExternalReferences
+  #   type: Bool
+  #   default: true
+  #   description: 'XML Forbid External References'
+  #   cli_alias: forbid-external-references
   - name: ParserLimitsExternalReferences
     type: String
     enum:

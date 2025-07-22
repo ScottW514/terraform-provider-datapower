@@ -144,12 +144,6 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				},
 				Default: stringdefault.StaticString("SID"),
 			},
-			"oracle_objects": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable object support - Oracle", "oracle-objects", "").AddDefaultValue("false").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(false),
-			},
 			"connect_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Connection timeout", "connect-timeout", "").AddDefaultValue("15").String,
 				Optional:            true,

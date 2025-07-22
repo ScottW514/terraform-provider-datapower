@@ -70,10 +70,6 @@ func (d *UserDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 							MarkdownDescription: "Comments",
 							Computed:            true,
 						},
-						"suppress_password_change": schema.BoolAttribute{
-							MarkdownDescription: "Suppress initial password change",
-							Computed:            true,
-						},
 						"access_level": schema.StringAttribute{
 							MarkdownDescription: "Access level",
 							Computed:            true,

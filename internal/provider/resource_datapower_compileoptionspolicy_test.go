@@ -37,10 +37,15 @@ func TestAccResourceCompileOptionsPolicy(t *testing.T) {
 		Config: testconfig.CompileOptionsPolicyTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_compileoptionspolicy.test", "xslt_version", "XSLT10"),
+			resource.TestCheckResourceAttr("datapower_compileoptionspolicy.test", "strict", "false"),
+			resource.TestCheckResourceAttr("datapower_compileoptionspolicy.test", "stack_size", "524288"),
 			resource.TestCheckResourceAttr("datapower_compileoptionspolicy.test", "wsi_validation", "ignore"),
 			resource.TestCheckResourceAttr("datapower_compileoptionspolicy.test", "wsdl_validate_body", "strict"),
 			resource.TestCheckResourceAttr("datapower_compileoptionspolicy.test", "wsdl_validate_headers", "lax"),
 			resource.TestCheckResourceAttr("datapower_compileoptionspolicy.test", "wsdl_validate_faults", "strict"),
+			resource.TestCheckResourceAttr("datapower_compileoptionspolicy.test", "wsdl_wrapped_faults", "false"),
+			resource.TestCheckResourceAttr("datapower_compileoptionspolicy.test", "wsdl_strict_soap_version", "false"),
+			resource.TestCheckResourceAttr("datapower_compileoptionspolicy.test", "xacml_debug", "false"),
 		}...),
 	})
 

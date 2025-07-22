@@ -36,8 +36,22 @@ func TestAccResourceTAM(t *testing.T) {
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.TAMTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_tam.test", "ad_use_ad", "false"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "use_local_mode", "false"),
 			resource.TestCheckResourceAttr("datapower_tam.test", "poll_interval", "default"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "listen_mode", "false"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "returning_user_attributes", "false"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "ldap_use_ssl", "false"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "ldapssl_port", "636"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "tam_use_fips", "false"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "tam_use_basic_user", "false"),
 			resource.TestCheckResourceAttr("datapower_tam.test", "user_principal_attribute", "uid"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "user_no_duplicates", "true"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "user_suffix_optimiser", "false"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "auto_retry", "false"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "retry_interval", "180"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "retry_attempts", "3"),
+			resource.TestCheckResourceAttr("datapower_tam.test", "long_retry_interval", "900"),
 		}...),
 	})
 

@@ -37,7 +37,18 @@ func TestAccResourceHTTPSourceProtocolHandler(t *testing.T) {
 		Config: testconfig.HTTPSourceProtocolHandlerTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "local_address", "0.0.0.0"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "local_port", "80"),
 			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "http_version", "HTTP/1.1"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "persistent_connections", "true"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "allow_compression", "false"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "allow_web_socket_upgrade", "false"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "max_url_len", "16384"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "max_total_hdr_len", "128000"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "http2_max_streams", "100"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "http2_max_frame_size", "16384"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "http2_stream_header", "false"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "chunked_encoding", "true"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "header_timeout", "30000"),
 		}...),
 	})
 

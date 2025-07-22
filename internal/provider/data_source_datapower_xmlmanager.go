@@ -107,10 +107,6 @@ func (d *XMLManagerDataSource) Schema(ctx context.Context, req datasource.Schema
 							MarkdownDescription: "XSLT Expression Optimization",
 							Computed:            true,
 						},
-						"support_tx_warn": schema.BoolAttribute{
-							MarkdownDescription: "Support ITX Warnings",
-							Computed:            true,
-						},
 						"virtual_servers": schema.ListAttribute{
 							MarkdownDescription: "Load Balancer Groups",
 							ElementType:         types.StringType,

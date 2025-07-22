@@ -83,12 +83,6 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Default:             booldefault.StaticBool(false),
 				DeprecationMessage:  "This attribute is for INTERNAL PROVIDER USE. Set values are ignored.",
 			},
-			"suppress_password_change": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Suppress initial password change", "suppress-password-change", "").AddDefaultValue("false").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(false),
-			},
 			"access_level": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Access level", "access-level", "").AddStringEnum("none", "privileged", "group-defined", "technician", "expired", "config-sequence").AddDefaultValue("group-defined").String,
 				Optional:            true,

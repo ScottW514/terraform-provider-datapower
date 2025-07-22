@@ -120,12 +120,6 @@ func (r *XMLManagerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
-			"support_tx_warn": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Support ITX Warnings", "tx-warn", "").AddDefaultValue("false").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(false),
-			},
 			"virtual_servers": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Load Balancer Groups", "loadbalancer-group", "loadbalancergroup").String,
 				ElementType:         types.StringType,

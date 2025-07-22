@@ -36,11 +36,18 @@ func TestAccResourceSQLDataSource(t *testing.T) {
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.SQLDataSourceTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "limit_returned_data", "false"),
+			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "limit_returned_data_size", "128"),
+			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "max_connection", "10"),
 			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "oracle_data_source_type", "SID"),
+			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "connect_timeout", "15"),
+			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "idle_timeout", "180"),
+			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "load_balancing", "false"),
 			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "encryption_method_mssql", "NoEncryption"),
 			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "encryption_method_oracle", "NoEncryption"),
 			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "encryption_method_db2", "NoEncryption"),
 			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "validate_server_certificate", "Enabled"),
+			resource.TestCheckResourceAttr("datapower_sqldatasource.test", "validate_host_name", "true"),
 		}...),
 	})
 

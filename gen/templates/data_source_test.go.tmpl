@@ -40,12 +40,12 @@ func TestAccDataSource{{.Name}}(t *testing.T) {
 			{
 				Config: testconfig.{{.Name}}TestConfig.GetDataConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-{{- $name := .Name }}
+{{- $root := . }}
 {{- range .Attributes}}
-	{{- if and .Default (eq .Type "String") (ne .Name "Id")}}
-		resource.TestCheckResourceAttr("data.datapower_{{snakeCase $name}}.test", "result.0.{{.TfName}}", {{quote .Default}}),
+	{{- if and .Default (or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")) (ne .Name "Id")}}
+		resource.TestCheckResourceAttr("data.datapower_{{snakeCase $root.Name}}.test", "{{if not $root.UpdateOnly}}result.0.{{end}}{{.TfName}}", {{if .TestValue}}{{.TestValue}}{{else}}{{quote .Default}}{{end}}),
 	{{- else if eq .Name "Id"}}
-		resource.TestCheckResourceAttr("data.datapower_{{snakeCase $name}}.test", "result.0.id", {{if .TestValue}}{{.TestValue}}{{else}}{{quote .Example}}{{end}}),
+		resource.TestCheckResourceAttr("data.datapower_{{snakeCase $root.Name}}.test", "{{if not $root.UpdateOnly}}result.0.{{end}}id", {{if .TestValue}}{{.TestValue}}{{else}}{{quote .Example}}{{end}}),
 	{{- end}}
 {{- end}}
 		}...),

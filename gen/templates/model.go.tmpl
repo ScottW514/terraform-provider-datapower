@@ -24,6 +24,10 @@ package models
 import (
 	"context"
     "net/url"
+{{- if .UpdateOnly}}
+    "path"
+{{- end}}
+    "path"
     "strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -294,7 +298,7 @@ func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string) string {
     }
 	body := ""
 {{- if and .UpdateOnly (ne .Name "Domain")}}
-		body, _ = sjson.Set(body, "{{.Name}}.name", "default")
+		body, _ = sjson.Set(body, "{{.Name}}.name", path.Base("{{.RestEndpoint}}"))
 {{- else if eq .Name "Domain"}}
 		body, _ = sjson.Set(body, "{{.Name}}.name", data.AppDomain.ValueString())
 {{- end}}

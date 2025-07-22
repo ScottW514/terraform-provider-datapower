@@ -35,7 +35,9 @@ func TestAccResourceCryptoCertificate(t *testing.T) {
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.CryptoCertificateTestConfig.GetResourceConfig(),
-		Check:  resource.ComposeTestCheckFunc([]resource.TestCheckFunc{}...),
+		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_cryptocertificate.test", "ignore_expiration", "false"),
+		}...),
 	})
 
 	resource.Test(t, resource.TestCase{

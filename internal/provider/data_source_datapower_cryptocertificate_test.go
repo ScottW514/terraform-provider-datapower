@@ -40,6 +40,7 @@ func TestAccDataSourceCryptoCertificate(t *testing.T) {
 				Config: testconfig.CryptoCertificateTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_cryptocertificate.test", "result.0.id", "CryptoCertificate_test"),
+					resource.TestCheckResourceAttr("data.datapower_cryptocertificate.test", "result.0.ignore_expiration", "false"),
 				}...),
 			},
 		},

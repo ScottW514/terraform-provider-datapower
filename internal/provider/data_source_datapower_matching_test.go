@@ -40,6 +40,8 @@ func TestAccDataSourceMatching(t *testing.T) {
 				Config: testconfig.MatchingTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_matching.test", "result.0.id", "___Matching_name"),
+					resource.TestCheckResourceAttr("data.datapower_matching.test", "result.0.match_with_pcre", "false"),
+					resource.TestCheckResourceAttr("data.datapower_matching.test", "result.0.combine_with_or", "false"),
 				}...),
 			},
 		},

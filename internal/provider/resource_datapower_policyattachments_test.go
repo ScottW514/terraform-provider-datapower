@@ -37,6 +37,7 @@ func TestAccResourcePolicyAttachments(t *testing.T) {
 		Config: testconfig.PolicyAttachmentsTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_policyattachments.test", "enforcement_mode", "enforce"),
+			resource.TestCheckResourceAttr("datapower_policyattachments.test", "policy_references", "false"),
 			resource.TestCheckResourceAttr("datapower_policyattachments.test", "sla_enforcement_mode", "allow-if-no-sla"),
 		}...),
 	})

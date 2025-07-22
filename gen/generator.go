@@ -95,6 +95,7 @@ type YamlConfig struct {
 	ListItem          bool                  `yaml:"list_item"`
 	RestEndpoint      string                `yaml:"rest_endpoint"`
 	UpdateOnly        bool                  `yaml:"update_only"`
+	DefaultDomainOnly bool                  `yaml:"default_domain_only"`
 	UpdateComputed    bool                  `yaml:"update_computed"`
 	PutCreate         bool                  `yaml:"put_create"`
 	Description       string                `yaml:"description"`

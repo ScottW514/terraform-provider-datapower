@@ -40,6 +40,8 @@ func TestAccDataSourceHTTPUserAgent(t *testing.T) {
 				Config: testconfig.HTTPUserAgentTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_httpuseragent.test", "result.0.id", "___HTTPUserAgent_test"),
+					resource.TestCheckResourceAttr("data.datapower_httpuseragent.test", "result.0.max_redirects", "8"),
+					resource.TestCheckResourceAttr("data.datapower_httpuseragent.test", "result.0.timeout", "300"),
 				}...),
 			},
 		},

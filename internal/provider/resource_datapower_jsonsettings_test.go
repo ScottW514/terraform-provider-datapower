@@ -35,7 +35,13 @@ func TestAccResourceJSONSettings(t *testing.T) {
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.JSONSettingsTestConfig.GetResourceConfig(),
-		Check:  resource.ComposeTestCheckFunc([]resource.TestCheckFunc{}...),
+		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_jsonsettings.test", "json_max_nesting_depth", "64"),
+			resource.TestCheckResourceAttr("datapower_jsonsettings.test", "json_max_label_length", "256"),
+			resource.TestCheckResourceAttr("datapower_jsonsettings.test", "json_max_value_length", "8192"),
+			resource.TestCheckResourceAttr("datapower_jsonsettings.test", "json_max_number_length", "128"),
+			resource.TestCheckResourceAttr("datapower_jsonsettings.test", "json_document_size", "4194304"),
+		}...),
 	})
 
 	resource.Test(t, resource.TestCase{

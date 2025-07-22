@@ -35,7 +35,11 @@ func TestAccResourceLDAPConnectionPool(t *testing.T) {
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.LDAPConnectionPoolTestConfig.GetResourceConfig(),
-		Check:  resource.ComposeTestCheckFunc([]resource.TestCheckFunc{}...),
+		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_ldapconnectionpool.test", "idle_timeout", "120"),
+			resource.TestCheckResourceAttr("datapower_ldapconnectionpool.test", "max_pool_size", "35"),
+			resource.TestCheckResourceAttr("datapower_ldapconnectionpool.test", "reject_on_pool_limit", "false"),
+		}...),
 	})
 
 	resource.Test(t, resource.TestCase{

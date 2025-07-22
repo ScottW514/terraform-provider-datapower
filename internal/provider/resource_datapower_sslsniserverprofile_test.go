@@ -35,7 +35,9 @@ func TestAccResourceSSLSNIServerProfile(t *testing.T) {
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.SSLSNIServerProfileTestConfig.GetResourceConfig(),
-		Check:  resource.ComposeTestCheckFunc([]resource.TestCheckFunc{}...),
+		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_sslsniserverprofile.test", "max_ssl_duration", "3600"),
+		}...),
 	})
 
 	resource.Test(t, resource.TestCase{

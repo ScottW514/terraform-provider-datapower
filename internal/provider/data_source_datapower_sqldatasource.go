@@ -124,10 +124,6 @@ func (d *SQLDataSourceDataSource) Schema(ctx context.Context, req datasource.Sch
 							MarkdownDescription: "Data source type - Oracle",
 							Computed:            true,
 						},
-						"oracle_objects": schema.BoolAttribute{
-							MarkdownDescription: "Enable object support - Oracle",
-							Computed:            true,
-						},
 						"connect_timeout": schema.Int64Attribute{
 							MarkdownDescription: "Connection timeout",
 							Computed:            true,

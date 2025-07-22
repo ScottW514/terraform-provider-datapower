@@ -36,10 +36,20 @@ func TestAccResourceOAuthSupportedClient(t *testing.T) {
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.OAuthSupportedClientTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "customized", "false"),
 			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "client_type", "confidential"),
+			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "check_client_credential", "false"),
+			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "use_validation_url", "false"),
 			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "client_authen_method", "secret"),
+			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "generate_client_secret", "true"),
 			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "caching", "replay"),
+			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "custom_scope_check", "false"),
 			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "local_az_page_url", "store:///OAuth-Generate-HTML.xsl"),
+			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "dp_state_life_time", "300"),
+			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "au_code_life_time", "300"),
+			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "access_token_life_time", "3600"),
+			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "refresh_token_life_time", "5400"),
+			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "custom_resource_owner", "false"),
 			resource.TestCheckResourceAttr("datapower_oauthsupportedclient.test", "validation_urlssl_client_type", "client"),
 		}...),
 	})

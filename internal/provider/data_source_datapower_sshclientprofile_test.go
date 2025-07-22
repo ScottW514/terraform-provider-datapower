@@ -41,6 +41,9 @@ func TestAccDataSourceSSHClientProfile(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_sshclientprofile.test", "result.0.id", "SSHClientProfile_name"),
 					resource.TestCheckResourceAttr("data.datapower_sshclientprofile.test", "result.0.profile_usage", "sftp"),
+					resource.TestCheckResourceAttr("data.datapower_sshclientprofile.test", "result.0.persistent_connections", "true"),
+					resource.TestCheckResourceAttr("data.datapower_sshclientprofile.test", "result.0.persistent_connection_timeout", "120"),
+					resource.TestCheckResourceAttr("data.datapower_sshclientprofile.test", "result.0.strict_host_key_checking", "false"),
 				}...),
 			},
 		},

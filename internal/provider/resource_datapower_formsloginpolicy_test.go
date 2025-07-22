@@ -38,6 +38,9 @@ func TestAccResourceFormsLoginPolicy(t *testing.T) {
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "login_form", "/LoginPage.htm"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "use_cookie_attributes", "no"),
+			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "use_ssl_for_login", "true"),
+			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "enable_migration", "false"),
+			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "ssl_port", "8080"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "error_page", "/ErrorPage.htm"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "logout_page", "/LogoutPage.htm"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "default_url", "/"),
@@ -49,6 +52,8 @@ func TestAccResourceFormsLoginPolicy(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "password_field", "j_password"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "redirect_field", "originalUrl"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "form_processing_url", "/j_security_check"),
+			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "inactivity_timeout", "600"),
+			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "session_lifetime", "10800"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "redirect_url_type", "urlin"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "form_support_type", "static"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "form_support_script", "store:///Form-Generate-HTML.xsl"),

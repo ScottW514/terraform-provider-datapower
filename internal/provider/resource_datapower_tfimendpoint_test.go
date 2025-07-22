@@ -37,6 +37,8 @@ func TestAccResourceTFIMEndpoint(t *testing.T) {
 		Config: testconfig.TFIMEndpointTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_tfimendpoint.test", "m_endpoint_type", "tokenmapping"),
+			resource.TestCheckResourceAttr("datapower_tfimendpoint.test", "m_server_port", "9080"),
+			resource.TestCheckResourceAttr("datapower_tfimendpoint.test", "m_schema_validate", "false"),
 			resource.TestCheckResourceAttr("datapower_tfimendpoint.test", "m_ltpa_value_type_mode", "static"),
 			resource.TestCheckResourceAttr("datapower_tfimendpoint.test", "m_ssl_client_config_type", "client"),
 		}...),

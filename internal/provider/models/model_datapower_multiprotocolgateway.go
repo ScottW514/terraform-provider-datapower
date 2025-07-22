@@ -90,7 +90,6 @@ type MultiProtocolGateway struct {
 	ParserLimitsElementDepth                 types.Int64           `tfsdk:"parser_limits_element_depth"`
 	ParserLimitsAttributeCount               types.Int64           `tfsdk:"parser_limits_attribute_count"`
 	ParserLimitsMaxNodeSize                  types.Int64           `tfsdk:"parser_limits_max_node_size"`
-	ParserLimitsForbidExternalReferences     types.Bool            `tfsdk:"parser_limits_forbid_external_references"`
 	ParserLimitsExternalReferences           types.String          `tfsdk:"parser_limits_external_references"`
 	ParserLimitsMaxPrefixes                  types.Int64           `tfsdk:"parser_limits_max_prefixes"`
 	ParserLimitsMaxNamespaces                types.Int64           `tfsdk:"parser_limits_max_namespaces"`
@@ -216,7 +215,6 @@ var MultiProtocolGatewayObjectType = map[string]attr.Type{
 	"parser_limits_element_depth":                    types.Int64Type,
 	"parser_limits_attribute_count":                  types.Int64Type,
 	"parser_limits_max_node_size":                    types.Int64Type,
-	"parser_limits_forbid_external_references":       types.BoolType,
 	"parser_limits_external_references":              types.StringType,
 	"parser_limits_max_prefixes":                     types.Int64Type,
 	"parser_limits_max_namespaces":                   types.Int64Type,
@@ -461,9 +459,6 @@ func (data MultiProtocolGateway) IsNull() bool {
 		return false
 	}
 	if !data.ParserLimitsMaxNodeSize.IsNull() {
-		return false
-	}
-	if !data.ParserLimitsForbidExternalReferences.IsNull() {
 		return false
 	}
 	if !data.ParserLimitsExternalReferences.IsNull() {
@@ -878,9 +873,6 @@ func (data MultiProtocolGateway) ToBody(ctx context.Context, pathRoot string) st
 	}
 	if !data.ParserLimitsMaxNodeSize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParserLimitsMaxNodeSize`, data.ParserLimitsMaxNodeSize.ValueInt64())
-	}
-	if !data.ParserLimitsForbidExternalReferences.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ParserLimitsForbidExternalReferences`, tfutils.StringFromBool(data.ParserLimitsForbidExternalReferences, false))
 	}
 	if !data.ParserLimitsExternalReferences.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParserLimitsExternalReferences`, data.ParserLimitsExternalReferences.ValueString())
@@ -1453,11 +1445,6 @@ func (data *MultiProtocolGateway) FromBody(ctx context.Context, pathRoot string,
 		data.ParserLimitsMaxNodeSize = types.Int64Value(value.Int())
 	} else {
 		data.ParserLimitsMaxNodeSize = types.Int64Value(33554432)
-	}
-	if value := res.Get(pathRoot + `ParserLimitsForbidExternalReferences`); value.Exists() {
-		data.ParserLimitsForbidExternalReferences = tfutils.BoolFromString(value.String())
-	} else {
-		data.ParserLimitsForbidExternalReferences = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `ParserLimitsExternalReferences`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ParserLimitsExternalReferences = tfutils.ParseStringFromGJSON(value)
@@ -2156,11 +2143,6 @@ func (data *MultiProtocolGateway) UpdateFromBody(ctx context.Context, pathRoot s
 		data.ParserLimitsMaxNodeSize = types.Int64Value(value.Int())
 	} else if data.ParserLimitsMaxNodeSize.ValueInt64() != 33554432 {
 		data.ParserLimitsMaxNodeSize = types.Int64Null()
-	}
-	if value := res.Get(pathRoot + `ParserLimitsForbidExternalReferences`); value.Exists() && !data.ParserLimitsForbidExternalReferences.IsNull() {
-		data.ParserLimitsForbidExternalReferences = tfutils.BoolFromString(value.String())
-	} else if !data.ParserLimitsForbidExternalReferences.ValueBool() {
-		data.ParserLimitsForbidExternalReferences = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `ParserLimitsExternalReferences`); value.Exists() && !data.ParserLimitsExternalReferences.IsNull() {
 		data.ParserLimitsExternalReferences = tfutils.ParseStringFromGJSON(value)

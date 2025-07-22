@@ -32,11 +32,11 @@ attributes:
   #   sensitive: true
   #   cli_alias: password-hashed
   #   computed: true
-  - name: SuppressPasswordChange
-    type: Bool
-    default: false
-    description: 'Suppress initial password change'
-    cli_alias: suppress-password-change
+  # - name: SuppressPasswordChange
+  #   type: Bool
+  #   default: false
+  #   description: 'Suppress initial password change'
+  #   cli_alias: suppress-password-change
   - name: AccessLevel
     type: String
     enum:

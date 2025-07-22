@@ -40,6 +40,7 @@ func TestAccDataSourceSSLSNIServerProfile(t *testing.T) {
 				Config: testconfig.SSLSNIServerProfileTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_sslsniserverprofile.test", "result.0.id", "SSLSNIServerProfile_name"),
+					resource.TestCheckResourceAttr("data.datapower_sslsniserverprofile.test", "result.0.max_ssl_duration", "3600"),
 				}...),
 			},
 		},

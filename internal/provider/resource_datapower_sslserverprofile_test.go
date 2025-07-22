@@ -35,7 +35,24 @@ func TestAccResourceSSLServerProfile(t *testing.T) {
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.SSLServerProfileTestConfig.GetResourceConfig(),
-		Check:  resource.ComposeTestCheckFunc([]resource.TestCheckFunc{}...),
+		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "request_client_auth", "false"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "require_client_auth", "true"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "validate_client_cert", "true"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "send_client_auth_ca_list", "true"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "caching", "true"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "cache_timeout", "300"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "cache_size", "20"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "max_ssl_duration", "60"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "disable_renegotiation", "false"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "number_of_renegotiation_allowed", "0"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "prohibit_resume_on_reneg", "false"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "compression", "false"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "allow_legacy_renegotiation", "false"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "prefer_server_ciphers", "true"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "prioritize_cha_cha", "false"),
+			resource.TestCheckResourceAttr("datapower_sslserverprofile.test", "require_closure_notification", "true"),
+		}...),
 	})
 
 	resource.Test(t, resource.TestCase{

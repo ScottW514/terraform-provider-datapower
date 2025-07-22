@@ -97,11 +97,11 @@ attributes:
     default: 'SID'
     description: 'Data source type - Oracle'
     cli_alias: oracle-datasource-type
-  - name: OracleObjects
-    type: Bool
-    default: false
-    description: 'Enable object support - Oracle'
-    cli_alias: oracle-objects
+  # - name: OracleObjects
+  #   type: Bool
+  #   default: false
+  #   description: 'Enable object support - Oracle'
+  #   cli_alias: oracle-objects
   - name: ConnectTimeout
     type: Int64
     required: true

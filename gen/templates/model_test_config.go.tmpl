@@ -29,13 +29,15 @@ resource "datapower_{{snakeCase .Name}}" "test" {
 {{- else}}
     Model:    `{
 {{- end}}
-{{- $name := .Name}}
+{{- $root := .}}
 {{- range  .Attributes}}
 	{{- if eq .Name "AppDomain"}}
-        {{- if eq $name "Domain"}}
+        {{- if not $root.DefaultDomainOnly}}
+            {{- if eq $root.Name "Domain"}}
   app_domain = "domain_resource_test"
 	         {{- else}}
   app_domain = "acc_test_domain"
+            {{- end}}
         {{- end}}
 	{{- else if or .Required .TestValue}}
         {{- if .TestValue}}
@@ -60,10 +62,12 @@ resource "datapower_{{snakeCase .Name}}" "test" {
     Data:   `
 data "datapower_{{snakeCase .Name}}" "test" {
   depends_on = [ datapower_{{snakeCase .Name}}.test ]
-    {{- $modelName := .Name}}
-    {{- range  .Attributes}}
-        {{- if and (eq .Name "AppDomain") (ne $modelName "Domain")}}
+    {{- if not .DefaultDomainOnly}}
+        {{- $modelName := .Name}}
+        {{- range  .Attributes}}
+            {{- if and (eq .Name "AppDomain") (ne $modelName "Domain")}}
   app_domain = "acc_test_domain"
+            {{- end}}
         {{- end}}
     {{- end}}
 }`,
