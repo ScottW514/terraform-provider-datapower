@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## Unreleased
+## 0.3.0
 
 - Fix model test config generator to properly handle list of reference objects
 - API Additions (Objects)
