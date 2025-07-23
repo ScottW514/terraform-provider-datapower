@@ -1,0 +1,40 @@
+name: AppSecurityPolicy
+description: 'Application Security Policy'
+cli_alias: 'application-security-policy'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/AppSecurityPolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'AppSecurityPolicy_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: RequestMaps
+    type: List
+    element_type: DmWebAppRequestPolicyMap
+    required: true
+    description: 'Request Maps'
+    cli_alias: request-match
+  - name: ResponseMaps
+    type: List
+    element_type: DmWebAppResponsePolicyMap
+    required: true
+    description: 'Response Maps'
+    cli_alias: response-match
+  - name: ErrorMaps
+    type: List
+    element_type: DmPolicyMap
+    description: 'Error Maps'
+    cli_alias: error-match

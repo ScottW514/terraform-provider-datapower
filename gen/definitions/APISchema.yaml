@@ -1,0 +1,69 @@
+name: APISchema
+description: 'API schema'
+cli_alias: 'api-schema'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/APISchema'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'APISchema_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: JSONSchema
+    type: String
+    description: 'JSON schema URL'
+    cli_alias: json-schema
+  - name: GraphQLSchema
+    type: String
+    description: 'GraphQL schema URL'
+    cli_alias: graphql-schema
+  - name: XMLType
+    type: String
+    enum:
+      - 'xml'
+      - 'wsdl'
+    description: 'XML type'
+    cli_alias: xml-type
+  - name: XMLValidationMode
+    type: String
+    enum:
+      - 'xsd'
+      - 'soap-body'
+    description: 'XML validation mode'
+    cli_alias: xml-validation-mode
+  - name: XMLSchemaURL
+    type: String
+    description: 'XML schema URL'
+    cli_alias: xml-schema-url
+  - name: WSDLSchemaURL
+    type: String
+    description: 'WSDL schema URL'
+    cli_alias: wsdl-schema-url
+  - name: WSDLPortQName
+    type: String
+    description: 'WSDL port'
+    cli_alias: wsdl-port
+  - name: WSDLOperationName
+    type: String
+    description: 'WSDL operation'
+    cli_alias: wsdl-operation
+  - name: WSDLMessageDirectionOrName
+    type: String
+    description: 'WSDL direction or name'
+    cli_alias: wsdl-message-direction-or-name
+  - name: WSDLAttachmentPart
+    type: String
+    description: 'WSDL attachment part'
+    cli_alias: wsdl-attachment-part

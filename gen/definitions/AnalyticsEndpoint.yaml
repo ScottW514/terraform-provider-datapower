@@ -1,0 +1,131 @@
+name: AnalyticsEndpoint
+description: 'Analytics endpoint'
+cli_alias: 'analytics-endpoint'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/AnalyticsEndpoint'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'AnalyticsEndpoint_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: AnalyticsServerURL
+    type: String
+    required: true
+    description: 'Analytics server URL'
+    example: 'https://localhost'
+    cli_alias: analytics-server-url
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: RequestTopic
+    type: String
+    description: 'Request topic'
+    cli_alias: request-topic
+  - name: MaxRecords
+    type: Int64
+    minimum: 256
+    maximum: 65536
+    required: true
+    default: 1024
+    description: 'Maximum records'
+    cli_alias: max-records
+  - name: MaxRecordsMemoryKB
+    type: Int64
+    minimum: 4
+    maximum: 1024
+    required: true
+    default: 512
+    description: 'Maximum size for each record'
+    cli_alias: max-record-size
+  - name: MaxDeliveryMemoryMB
+    type: Int64
+    minimum: 1
+    maximum: 1024
+    required: true
+    default: 512
+    description: 'Maximum size for each delivery'
+    cli_alias: max-delivery-size
+  - name: Interval
+    type: Int64
+    minimum: 1
+    maximum: 3600
+    default: 600
+    description: 'Interval'
+    cli_alias: interval
+  - name: DeliveryConnections
+    type: Int64
+    minimum: 1
+    maximum: 100
+    default: 1
+    description: 'Connections per delivery'
+    cli_alias: delivery-connections
+  - name: EnableJWT
+    type: Bool
+    default: false
+    description: 'Enable JWT'
+    cli_alias: enable-jwt
+  - name: ManagementURL
+    type: String
+    description: 'Management platform endpoint'
+    cli_alias: management-url
+  - name: ManagementURL_SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'Management platform TLS client profile'
+    cli_alias: management-ssl-client
+  - name: ClientID
+    type: String
+    description: 'Client ID'
+    cli_alias: clientid
+  - name: ClientSecretAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'Client secret'
+    cli_alias: client-secret-alias
+  - name: GrantType
+    type: String
+    enum:
+      - 'implicit'
+      - 'password'
+      - 'application'
+      - 'accessCode'
+    description: 'Grant type'
+    cli_alias: grant-type
+  - name: Scope
+    type: String
+    description: 'Scope'
+    cli_alias: scope
+  - name: PersistentConnection
+    type: Bool
+    default: true
+    description: 'Negotiate persistent connections'
+    cli_alias: persistent-connection
+  - name: Timeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    default: 90
+    description: 'Timeout'
+    cli_alias: timeout
+  - name: PersistentTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    default: 60
+    description: 'Persistent timeout'
+    cli_alias: persistent-timeout

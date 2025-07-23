@@ -1,0 +1,51 @@
+name: AMQPSourceProtocolHandler
+description: 'AMQP handler'
+cli_alias: 'source-amqp'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/AMQPSourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'AMQPSourceProtocolHandler_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Broker
+    type: String
+    reference_to: AMQPBroker
+    required: true
+    description: 'AMQP broker'
+    cli_alias: broker
+  - name: From
+    type: String
+    required: true
+    description: 'Source terminus'
+    example: 'amqpfrom'
+    cli_alias: from
+  - name: To
+    type: String
+    description: 'Target terminus'
+    cli_alias: to
+  - name: Credit
+    type: Int64
+    minimum: 1
+    default: 100
+    maximum: 3600
+    description: 'Credit'
+    cli_alias: credit
+  - name: IgnoreReplyTo
+    type: Bool
+    default: true
+    description: 'Ignore reply-to'
+    cli_alias: ignore-reply-to

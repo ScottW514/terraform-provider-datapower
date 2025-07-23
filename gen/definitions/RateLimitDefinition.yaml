@@ -1,0 +1,132 @@
+name: RateLimitDefinition
+description: 'Rate limit definition'
+cli_alias: 'rate-limit-definition'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/RateLimitDefinition'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'RateLimitDefinition_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: ShortName
+    type: String
+    description: 'Short name'
+    cli_alias: short-name
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Type
+    type: String
+    enum:
+      - 'rate'
+      - 'burst'
+      - 'count'
+    required: true
+    default: 'rate'
+    description: 'Limit type'
+    cli_alias: type
+  - name: Rate
+    type: Int64
+    required: true
+    minimum: 0
+    maximum: 4294967295
+    example: 1000
+    description: 'Rate'
+    cli_alias: rate
+  - name: Interval
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 1
+    description: 'Interval'
+    cli_alias: interval
+  - name: Unit
+    type: String
+    enum:
+      - 'second'
+      - 'minute'
+      - 'hour'
+      - 'day'
+      - 'week'
+    default: 'minute'
+    description: 'Unit'
+    cli_alias: unit
+  - name: HardLimit
+    type: Bool
+    default: true
+    description: 'Enable hard limit'
+    cli_alias: hard-limit
+  - name: IsClient
+    type: Bool
+    default: true
+    description: 'Is client'
+    cli_alias: is-client
+  - name: UseApiName
+    type: Bool
+    default: false
+    description: 'Use API name'
+    cli_alias: use-api-name
+  - name: UseAppId
+    type: Bool
+    default: false
+    description: 'Use application ID'
+    cli_alias: use-app-id
+  - name: UseClientId
+    type: Bool
+    default: false
+    description: 'Use client ID'
+    cli_alias: use-client-id
+  - name: AutoReplenish
+    type: Bool
+    default: true
+    description: 'Autoreplenish'
+    cli_alias: auto-replenish
+  - name: DynamicValue
+    type: String
+    description: 'Dynamic value'
+    cli_alias: dynamic-value
+  - name: Weight
+    type: String
+    default: 1
+    description: 'Weight expression'
+    cli_alias: weight
+  - name: ResponseHeaders
+    type: Bool
+    default: true
+    description: 'Response headers'
+    cli_alias: response-headers
+  - name: EmulateBurstHeaders
+    type: Bool
+    default: false
+    description: 'Emulate burst headers'
+    cli_alias: emulate-burst-headers
+  - name: UseIntervalOffset
+    type: Bool
+    default: true
+    description: 'Use interval offset'
+    cli_alias: use-interval-offset
+  - name: AllowCacheFallback
+    type: Bool
+    default: true
+    description: 'Allow cache fallback'
+    cli_alias: allow-cache-fallback
+  - name: UseCache
+    type: Bool
+    default: false
+    description: 'Use cache'
+    cli_alias: use-cache
+  - name: Parameters
+    type: List
+    element_type: DmRateLimitDefinitionNameValuePair
+    description: 'Parameters'
+    cli_alias: parameter

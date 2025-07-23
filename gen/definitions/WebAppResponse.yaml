@@ -1,0 +1,96 @@
+name: WebAppResponse
+description: 'Web Response Profile'
+cli_alias: 'webapp-response-profile'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/WebAppResponse'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WebAppResponse_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: PolicyType
+    type: String
+    enum:
+      - 'pre-requisite'
+      - 'admission'
+    required: true
+    default: 'admission'
+    description: 'Style'
+    cli_alias: policy-type
+  - name: OKCodes
+    dm_type: DmHTTPResponseCodes
+    default: '0xAD5D'
+    description: 'Response Codes'
+    cli_alias: response-codes
+  - name: OKVersions
+    dm_type: DmHTTPVersionMask
+    default: '0x03'
+    description: 'Response Versions'
+    cli_alias: response-versions
+  - name: MinBodySize
+    type: Int64
+    description: 'Minimum Size'
+    cli_alias: response-body-min
+  - name: MaxBodySize
+    type: Int64
+    default: 128000000
+    description: 'Maximum Size'
+    cli_alias: response-body-max
+  - name: HeaderGNVC
+    type: String
+    reference_to: NameValueProfile
+    description: 'Header Name-Value Profile'
+    cli_alias: response-header-profile
+  - name: ContentTypes
+    type: List
+    element_type: String
+    list_default:
+      - '.*'
+    description: 'Content-Type List'
+    cli_alias: response-content-type
+  - name: XMLPolicy
+    type: String
+    enum:
+      - 'nothing'
+      - 'xml'
+      - 'soap'
+    default: 'nothing'
+    description: 'XML Processing'
+    cli_alias: response-xml-policy
+  - name: XMLRule
+    type: String
+    reference_to: StylePolicyRule
+    description: 'XML Transformation Rule'
+    cli_alias: response-xml-rule
+  - name: NonXMLPolicy
+    type: String
+    enum:
+      - 'nothing'
+      - 'side'
+      - 'binary'
+    default: 'nothing'
+    description: 'Non-XML Processing'
+    cli_alias: response-nonxml-policy
+  - name: NonXMLRule
+    type: String
+    reference_to: StylePolicyRule
+    description: 'Non-XML Processing Rule'
+    cli_alias: response-nonxml-rule
+  - name: ErrorPolicy
+    type: String
+    reference_to: WebAppErrorHandlingPolicy
+    description: 'Error Policy'
+    cli_alias: error-policy-override

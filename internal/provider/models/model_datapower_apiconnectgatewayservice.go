@@ -22,9 +22,7 @@ package models
 
 import (
 	"context"
-	"net/url"
 	"path"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -34,7 +32,6 @@ import (
 )
 
 type APIConnectGatewayService struct {
-	AppDomain             types.String         `tfsdk:"app_domain"`
 	Enabled               types.Bool           `tfsdk:"enabled"`
 	UserSummary           types.String         `tfsdk:"user_summary"`
 	LocalAddress          types.String         `tfsdk:"local_address"`
@@ -55,7 +52,6 @@ type APIConnectGatewayService struct {
 }
 
 var APIConnectGatewayServiceObjectType = map[string]attr.Type{
-	"app_domain":              types.StringType,
 	"enabled":                 types.BoolType,
 	"user_summary":            types.StringType,
 	"local_address":           types.StringType,
@@ -76,15 +72,11 @@ var APIConnectGatewayServiceObjectType = map[string]attr.Type{
 }
 
 func (data APIConnectGatewayService) GetPath() string {
-	rest_path := "/mgmt/config/{domain}/APIConnectGatewayService/default"
-	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
+	rest_path := "/mgmt/config/default/APIConnectGatewayService/default"
 	return rest_path
 }
 
 func (data APIConnectGatewayService) IsNull() bool {
-	if !data.AppDomain.IsNull() {
-		return false
-	}
 	if !data.Enabled.IsNull() {
 		return false
 	}
@@ -146,7 +138,7 @@ func (data APIConnectGatewayService) ToBody(ctx context.Context, pathRoot string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
-	body, _ = sjson.Set(body, "APIConnectGatewayService.name", path.Base("/mgmt/config/{domain}/APIConnectGatewayService/default"))
+	body, _ = sjson.Set(body, "APIConnectGatewayService.name", path.Base("/mgmt/config/default/APIConnectGatewayService/default"))
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

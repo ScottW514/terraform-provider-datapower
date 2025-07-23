@@ -1,0 +1,53 @@
+name: DmAPIBurstLimit
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    description: 'Name'
+  - name: Burst
+    type: Int64
+    required: true
+    example: 1000
+    description: 'Burst'
+  - name: Interval
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 1
+    description: 'Interval'
+  - name: Unit
+    type: String
+    enum:
+      - 'second'
+      - 'minute'
+    default: 'second'
+    description: 'Unit'
+  - name: CacheOnly
+    type: Bool
+    default: true
+    description: 'Cache only'
+  - name: IsClient
+    type: Bool
+    default: true
+    description: 'Is Client'
+  - name: UseApiName
+    type: Bool
+    default: false
+    description: 'Use API Name'
+  - name: UseAppId
+    type: Bool
+    default: false
+    description: 'Use Application ID'
+  - name: UseClientId
+    type: Bool
+    default: false
+    description: 'Use Client ID'
+  - name: DynamicValue
+    type: String
+    description: 'Dynamic Value'
+  - name: Weight
+    type: String
+    default: 1
+    description: 'Weight expression'

@@ -1,0 +1,16 @@
+name: DmRateLimitDefinitionNameValuePair
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    example: 'name'
+    description: 'Parameter name'
+    cli_alias: name
+  - name: Value
+    type: String
+    required: true
+    example: 'value'
+    description: 'Parameter value'
+    cli_alias: value

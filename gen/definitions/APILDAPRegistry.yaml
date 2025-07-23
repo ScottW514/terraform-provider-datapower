@@ -1,0 +1,115 @@
+name: APILDAPRegistry
+description: 'API LDAP registry'
+cli_alias: 'api-ldap-reg'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/APILDAPRegistry'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'APILDAPRegistry_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LDAPHost
+    type: String
+    required: true
+    example: 'localhost'
+    description: 'Host'
+    cli_alias: ldap-host
+  - name: LDAPPort
+    type: Int64
+    required: true
+    default: 636
+    description: 'Port'
+    cli_alias: ldap-port
+  - name: SSLClientProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: LDAPVersion
+    type: String
+    enum:
+      - 'v2'
+      - 'v3'
+    default: 'v3'
+    description: 'LDAP version'
+    cli_alias: ldap-version
+  - name: LDAPAuthMethod
+    type: String
+    enum:
+      - 'composeDN'
+      - 'composeUPN'
+      - 'searchDN'
+    default: 'searchDN'
+    description: 'LDAP authentication method'
+    cli_alias: ldap-auth-method
+  - name: LDAPBindDN
+    type: String
+    description: 'LDAP bind DN'
+    cli_alias: ldap-bind-dn
+  - name: LDAPBindPasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'LDAP bind password alias'
+    cli_alias: ldap-bind-password-alias
+  - name: LDAPSearchParameters
+    type: String
+    reference_to: LDAPSearchParameters
+    required: true
+    description: 'LDAP search parameters'
+    cli_alias: ldap-search-param
+  - name: LDAPReadTimeout
+    type: Int64
+    maximum: 86400
+    default: 60
+    description: 'LDAP read timeout'
+    cli_alias: ldap-readtimeout
+  - name: LDAPGroupAuthEnabled
+    type: Bool
+    default: false
+    description: 'Enable LDAP group authentication'
+    cli_alias: ldap-group-auth-enabled
+  - name: LDAPGroupAuthType
+    type: String
+    enum:
+      - 'dynamic'
+      - 'static'
+    description: 'LDAP group authentication type'
+    cli_alias: ldap-group-auth-type
+  - name: LDAPGroupScope
+    type: String
+    enum:
+      - 'subtree'
+      - 'one-level'
+      - 'base'
+    default: 'subtree'
+    description: 'LDAP group scope'
+    cli_alias: ldap-group-scope
+  - name: LDAPGroupBaseDN
+    type: String
+    description: 'LDAP static group base DN'
+    cli_alias: ldap-group-base-dn
+  - name: LDAPGroupFilterPrefix
+    type: String
+    description: 'LDAP static group filter prefix'
+    cli_alias: ldap-group-filter-prefix
+  - name: LDAPGroupFilterSuffix
+    type: String
+    description: 'LDAP static group filter suffix'
+    cli_alias: ldap-group-filter-suffix
+  - name: LDAPGroupDynamicFilter
+    type: String
+    description: 'LDAP dynamic filter'
+    cli_alias: ldap-group-dynamic-filter

@@ -1,0 +1,205 @@
+name: WebAppRequest
+description: 'Web Request Profile'
+cli_alias: 'webapp-request-profile'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/WebAppRequest'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WebAppRequest_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: PolicyType
+    type: String
+    enum:
+      - 'pre-requisite'
+      - 'admission'
+    default: 'admission'
+    description: 'Style'
+    cli_alias: policy-type
+  - name: SSLPolicy
+    type: String
+    enum:
+      - 'allow'
+      - 'require'
+      - 'deny'
+    default: 'allow'
+    description: 'Allow SSL'
+    cli_alias: request-ssl-policy
+  - name: AAA
+    type: String
+    reference_to: AAAPolicy
+    description: 'AAA Policy'
+    cli_alias: aaa-policy
+  - name: SSKey
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Shared Secret Key'
+    cli_alias: ss-key
+  - name: RateLimiter
+    type: String
+    reference_to: SimpleCountMonitor
+    description: 'Rate Limiting'
+    cli_alias: ratelimiter-policy
+  - name: ACL
+    type: String
+    reference_to: AccessControlList
+    description: 'Access Control List'
+    cli_alias: acl
+  - name: OKMethods
+    dm_type: DmHTTPRequestMethods
+    default: '0x000B'
+    description: 'Methods'
+    cli_alias: request-methods
+  - name: OKVersions
+    dm_type: DmHTTPVersionMask
+    default: '0x03'
+    description: 'Versions'
+    cli_alias: request-versions
+  - name: MinBodySize
+    type: Int64
+    description: 'Minimum Size'
+    cli_alias: request-body-min
+  - name: MaxBodySize
+    type: Int64
+    default: 128000000
+    description: 'Maximum Size'
+    cli_alias: request-body-max
+  - name: XMLPolicy
+    type: String
+    enum:
+      - 'nothing'
+      - 'xml'
+      - 'soap'
+    default: 'nothing'
+    description: 'XML Processing'
+    cli_alias: request-xml-policy
+  - name: XMLRule
+    type: String
+    reference_to: StylePolicyRule
+    description: 'XML Transformation Rule'
+    cli_alias: request-xml-rule
+  - name: NonXMLPolicy
+    type: String
+    enum:
+      - 'nothing'
+      - 'side'
+      - 'binary'
+    default: 'nothing'
+    description: 'Non-XML Processing'
+    cli_alias: request-nonxml-policy
+  - name: NonXMLRule
+    type: String
+    reference_to: StylePolicyRule
+    description: 'Non-XML Processing Rule'
+    cli_alias: request-nonxml-rule
+  - name: ErrorPolicy
+    type: String
+    reference_to: WebAppErrorHandlingPolicy
+    description: 'Error Policy'
+    cli_alias: error-policy-override
+  - name: SessionManagementProfile
+    type: String
+    reference_to: WebAppSessionPolicy
+    description: 'Session Policy'
+    cli_alias: session-policy
+  - name: HeaderGNVC
+    type: String
+    reference_to: NameValueProfile
+    description: 'Header Name-Value Profile'
+    cli_alias: request-header-profile
+  - name: UrlEncodedGNVC
+    type: String
+    reference_to: NameValueProfile
+    description: 'URL-Encoded Body Name-Value Profile'
+    cli_alias: request-body-profile
+  - name: QueryStringPolicy
+    type: String
+    enum:
+      - 'allow'
+      - 'require'
+      - 'deny'
+    default: 'allow'
+    description: 'Allow Query String'
+    cli_alias: request-qs-policy
+  - name: QueryStringGNVC
+    type: String
+    reference_to: NameValueProfile
+    description: 'QueryString Name-Value Profile'
+    cli_alias: request-qs-profile
+  - name: SQLInjection
+    type: Bool
+    default: false
+    description: 'SQL Injection Filter'
+    cli_alias: request-sql-policy
+  - name: MaxURISize
+    type: Int64
+    default: 1024
+    description: 'Maximum URI Length'
+    cli_alias: request-uri-max
+  - name: URIFilterUnicode
+    type: Bool
+    default: true
+    description: 'Filter Unicode'
+    cli_alias: request-uri-filter-unicode
+  - name: URIFilterDotDot
+    type: Bool
+    default: true
+    description: 'Filter Dot Dot'
+    cli_alias: request-uri-filter-dotdot
+  - name: URIFilterExe
+    type: Bool
+    default: true
+    description: 'Filter .exe'
+    cli_alias: request-uri-filter-exe
+  - name: URIFilterFragment
+    type: String
+    enum:
+      - 'allow'
+      - 'reject'
+      - 'truncate'
+    default: 'truncate'
+    description: 'Fragmented URI Policy'
+    cli_alias: request-uri-filter-fragment
+  - name: ContentTypes
+    type: List
+    element_type: String
+    list_default:
+      - 'application/www-url-encoded'
+    description: 'Content-Type List'
+    cli_alias: request-content-type
+  - name: MultipartFormData
+    dm_type: DmMultipartFormDataProfile
+    description: 'Multipart/Form-Data Profile'
+    cli_alias: multipart-form-data
+  - name: CookieProfile
+    dm_type: DmCookieProfile
+    description: 'Cookie Profile'
+    cli_alias: cookie-policy
+  - name: ProcessAllCookie
+    type: Bool
+    default: true
+    description: 'Sign or Encrypt All Cookies'
+    cli_alias: process-all-cookie
+  - name: CookieNameVector
+    type: List
+    element_type: String
+    description: 'Cookie Names'
+    cli_alias: cookie-namelist
+  - name: SQLInjectionPatternsFile
+    type: String
+    default: 'store:///SQL-Injection-Patterns.xml'
+    description: 'SQL Injection Patterns File'
+    cli_alias: sql-injection-patterns-file

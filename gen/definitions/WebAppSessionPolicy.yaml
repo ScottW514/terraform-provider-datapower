@@ -1,0 +1,46 @@
+name: WebAppSessionPolicy
+description: 'Session Management Policy'
+cli_alias: 'webapp-session-management'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/WebAppSessionPolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WebAppSessionPolicy_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: AutoRenew
+    type: Bool
+    default: true
+    description: 'Auto Renew'
+    cli_alias: auto-renew
+  - name: Timeout
+    type: Int64
+    minimum: 1
+    maximum: 864000
+    default: 3600
+    description: 'Session Lifetime'
+    cli_alias: lifetime
+  - name: AddressAgnosticCookie
+    type: Bool
+    default: false
+    description: 'Address Independent Sessions'
+    cli_alias: allow-cookie-sharing
+  - name: StartMatches
+    type: String
+    reference_to: Matching
+    required: true
+    description: 'Start Pages'
+    cli_alias: matching-policy

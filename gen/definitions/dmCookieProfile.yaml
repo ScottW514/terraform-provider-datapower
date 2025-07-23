@@ -1,0 +1,36 @@
+name: DmCookieProfile
+model_only: true
+attributes:
+  - name: CookiePolicy
+    type: String
+    enum:
+      - 'allow'
+      - 'require'
+      - 'deny'
+    default: 'allow'
+    description: 'Allow Cookies'
+  - name: Type
+    type: String
+    enum:
+      - 'none'
+      - 'sign'
+      - 'encrypt'
+    default: 'none'
+    description: 'Sign or Encrypt Cookies'
+  - name: Key
+    type: String
+    default: 'secret'
+    description: 'Secret Key Passphrase'
+  - name: IPinWatermark
+    type: Bool
+    default: true
+    description: 'IP Address specific Cookies'
+  - name: CookieGNVC
+    type: String
+    reference_to: NameValueProfile
+    description: 'Cookie Content Name-Value Profile'
+    cli_alias: request-cookie-gnvc
+  - name: UseSharedSecretObject
+    type: Bool
+    default: false
+    description: 'Use Shared Secret Key'

@@ -1,0 +1,17 @@
+name: DmDynamicStylePolicyActionBaseReference
+model_only: true
+list_item: true
+attributes:
+  - name: URL
+    type: String
+    description: 'URL reference'
+    cli_alias: url
+  - name: Literal
+    type: String
+    description: 'Literal configuration'
+    cli_alias: literal
+  - name: Default
+    type: String
+    description: 'Object reference'
+    example: 'default-api-route'
+    cli_alias: default

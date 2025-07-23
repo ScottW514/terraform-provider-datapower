@@ -1,0 +1,38 @@
+name: APISecurityRequirement
+description: 'API security requirement'
+cli_alias: 'api-sec-req'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/APISecurityRequirement'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'APISecurityRequirement_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Security
+    type: List
+    element_type: String
+    required: true
+    test_value: '[datapower_apisecurityapikey.test.id]'
+    description: 'Security definition (reference to APISecurityAPIKey, APISecurityBasicAuth, APISecurityHTTPScheme, or APISecurityOAuthReq)'
+    cli_alias: security
+test_prerequisites: |
+  resource "datapower_apisecurityapikey" "test" {
+    id = "APISecurityAPIKey_test"
+    app_domain = "acc_test_domain"
+    where = "header"
+    type = "id"
+    key_name = "keyname"
+  }

@@ -1,0 +1,38 @@
+name: APIRule
+description: 'API rule'
+cli_alias: 'api-rule'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/APIRule'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'APIRule_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: DynamicActionsMode
+    type: Bool
+    default: false
+    description: 'Use dynamic actions'
+    cli_alias: dynamic-actions-mode
+  - name: Actions
+    type: List
+    element_type: String
+    description: 'API actions'
+    cli_alias: action
+  - name: DynamicActions
+    type: List
+    element_type: DmDynamicStylePolicyActionBaseReference
+    description: 'API dynamic actions'
+    cli_alias: dynamic-action
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary

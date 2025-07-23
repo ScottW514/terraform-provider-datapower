@@ -1,0 +1,166 @@
+name: APIGateway
+description: 'API gateway'
+cli_alias: 'apigw'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/APIGateway'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'APIGateway_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: GatewayServiceName
+    type: String
+    description: 'Gateway service name'
+    cli_alias: gateway-service-name
+  - name: FrontProtocol
+    type: List
+    element_type: String
+    test_value: '[datapower_httpsourceprotocolhandler.test.id]'
+    required: true
+    description: 'Protocol handler (reference to HTTP or HTTPS Source Protocol Hander)'
+    cli_alias: front-protocol
+  - name: URLRefreshPolicy
+    type: String
+    reference_to: URLRefreshPolicy
+    description: 'URL refresh policy'
+    cli_alias: xslrefresh
+  - name: CacheMemorySize
+    type: Int64
+    default: 2147483647
+    description: 'Stylesheet cache size'
+    cli_alias: xsl-cache-memorysize
+  - name: CacheSize
+    type: Int64
+    minimum: 5
+    maximum: 250000
+    default: 256
+    description: 'Stylesheet cache count'
+    cli_alias: xsl-cache-size
+  - name: SHA1Caching
+    type: Bool
+    default: true
+    description: 'SHA1 caching'
+    cli_alias: xsl-checksummed-cache
+  - name: StaticDocumentCalls
+    type: Bool
+    default: true
+    description: 'Static document calls'
+    cli_alias: static-document-calls
+  - name: VirtualServers
+    type: List
+    reference_to: LoadBalancerGroup
+    element_type: String
+    description: 'Load balancer groups'
+    cli_alias: loadbalancer-group
+  - name: DocCacheMaxDocs
+    type: Int64
+    minimum: 1
+    maximum: 250000
+    default: 5000
+    description: 'Document cache count'
+    cli_alias: maxdocs
+  - name: DocCacheSize
+    type: Int64
+    description: 'Document cache size'
+    cli_alias: size
+  - name: DocMaxWrites
+    type: Int64
+    minimum: 1
+    maximum: 32768
+    default: 32768
+    description: 'Maximum concurrent writes'
+    cli_alias: max-writes
+  - name: DocCachePolicy
+    type: List
+    element_type: DmDocCachePolicy
+    description: 'Document cache policy'
+    cli_alias: policy
+  - name: ScheduledRule
+    type: List
+    element_type: DmScheduledRule
+    description: 'Scheduled processing rule'
+    cli_alias: schedule-rule
+  - name: APICollection
+    type: List
+    reference_to: APICollection
+    element_type: String
+    description: 'API collection'
+    cli_alias: collection
+  - name: ShareRateLimitCount
+    type: String
+    enum:
+      - 'yes'
+      - 'no'
+    default: 'yes'
+    description: 'Share rate limit count'
+    cli_alias: share-count
+  - name: AssemblyBurstLimit
+    type: List
+    element_type: DmAPIBurstLimit
+    description: 'Assembly burst limits'
+    cli_alias: assembly-burst-limit
+  - name: AssemblyRateLimit
+    type: List
+    element_type: DmAPIRateLimit
+    description: 'Assembly rate limits'
+    cli_alias: assembly-rate-limit
+  - name: AssemblyCountLimit
+    type: List
+    element_type: DmAPICountLimit
+    description: 'Assembly count limits'
+    cli_alias: assembly-count-limit
+  - name: LDAPConnPool
+    type: String
+    reference_to: LDAPConnectionPool
+    description: 'LDAP connection pool'
+    cli_alias: ldap-pool
+  - name: ProxyPolicies
+    type: List
+    element_type: DmAPIProxyPolicy
+    description: 'Proxy policy'
+    cli_alias: proxy
+  - name: FrontTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    required: true
+    default: 120
+    description: 'Front side timeout'
+    cli_alias: front-timeout
+  - name: FrontPersistentTimeout
+    type: Int64
+    maximum: 86400
+    required: true
+    default: 180
+    description: 'Front persistent timeout'
+    cli_alias: front-persistent-timeout
+  - name: OpenTelemetry
+    type: String
+    reference_to: OpenTelemetry
+    description: 'OpenTelemetry instance'
+    cli_alias: otel
+  - name: OpenTelemetryResourceAttribute
+    type: List
+    element_type: DmOpenTelemetryResourceAttribute
+    description: 'OpenTelemetry resource attributes'
+    cli_alias: otel-resource-attribute
+test_prerequisites: |
+  resource "datapower_httpsourceprotocolhandler" "test" {
+    id = "HTTPSourceProtocolHandler_name"
+    app_domain = "acc_test_domain"
+    local_address = "0.0.0.0"
+    local_port = 80
+  }

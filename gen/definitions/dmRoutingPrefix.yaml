@@ -1,0 +1,17 @@
+name: DmRoutingPrefix
+model_only: true
+list_item: true
+attributes:
+  - name: Type
+    type: String
+    enum:
+      - 'uri'
+      - 'host'
+    default: 'uri'
+    example: 'host'
+    required: true
+    description: 'Type'
+  - name: Name
+    type: String
+    description: 'Prefix'
+    example: 'localhost'

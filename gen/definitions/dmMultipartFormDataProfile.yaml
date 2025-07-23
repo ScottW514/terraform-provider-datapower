@@ -1,0 +1,19 @@
+name: DmMultipartFormDataProfile
+model_only: true
+attributes:
+  - name: MaxParts
+    type: Int64
+    default: 4
+    description: 'Maximum Number of Parts'
+  - name: MaxSizePerPart
+    type: Int64
+    default: 5000000
+    description: 'Maximum Size Per Part'
+  - name: MaxSize
+    type: Int64
+    default: 5000000
+    description: 'Maximum Aggregate Size of All Parts'
+  - name: ContentTypeRestricted
+    type: Bool
+    default: false
+    description: 'Restrict Sub-Content Types'

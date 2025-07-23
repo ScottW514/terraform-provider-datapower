@@ -1,0 +1,13 @@
+name: DmAPIResponseSchema
+model_only: true
+list_item: true
+attributes:
+  - name: StatusCode
+    type: String
+    required: true
+    example: '200'
+    description: 'Status code'
+  - name: ResponseSchema
+    type: String
+    reference_to: APISchema
+    description: 'Schema'

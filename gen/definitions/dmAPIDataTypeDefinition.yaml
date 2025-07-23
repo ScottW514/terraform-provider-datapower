@@ -1,0 +1,14 @@
+name: DmAPIDataTypeDefinition
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    description: 'Name'
+    example: 'dtdefname'
+  - name: Schema
+    type: String
+    reference_to: APISchema
+    required: true
+    description: 'Schema'

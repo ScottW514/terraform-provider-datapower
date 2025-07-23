@@ -50,12 +50,8 @@ func (d *APIConnectGatewayServiceDataSource) Metadata(_ context.Context, req dat
 
 func (d *APIConnectGatewayServiceDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API Connect gateway service",
+		MarkdownDescription: "API Connect gateway service (`default` domain only)",
 		Attributes: map[string]schema.Attribute{
-			"app_domain": schema.StringAttribute{
-				MarkdownDescription: "The name of the application domain the object belongs to",
-				Required:            true,
-			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: "Administrative state",
 				Computed:            true,

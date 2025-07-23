@@ -1,0 +1,48 @@
+name: DmAPICountLimit
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    description: 'Name'
+  - name: Count
+    type: Int64
+    example: 1000
+    required: true
+    description: 'Count'
+  - name: HardLimit
+    type: Bool
+    default: true
+    description: 'Enable hard limit'
+  - name: CacheOnly
+    type: Bool
+    default: true
+    description: 'Cache only'
+  - name: IsClient
+    type: Bool
+    default: false
+    description: 'Is Client'
+  - name: UseApiName
+    type: Bool
+    default: false
+    description: 'Use API Name'
+  - name: UseAppId
+    type: Bool
+    default: false
+    description: 'Use Application ID'
+  - name: UseClientId
+    type: Bool
+    default: false
+    description: 'Use Client ID'
+  - name: DynamicValue
+    type: String
+    description: 'Dynamic Value'
+  - name: Weight
+    type: String
+    default: 1
+    description: 'Weight expression'
+  - name: AutoDec
+    type: Bool
+    default: true
+    description: 'Auto decrement'

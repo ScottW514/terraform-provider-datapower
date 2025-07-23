@@ -1,0 +1,254 @@
+name: APIDefinition
+description: 'API definition'
+cli_alias: 'api-definition'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/APIDefinition'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'APIDefinition_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: ApiId
+    path: 'ID'
+    type: String
+    description: 'API ID'
+    cli_alias: id
+  - name: Name
+    type: String
+    description: 'API name'
+    cli_alias: name
+  - name: Version
+    type: String
+    default: '1.0.0'
+    description: 'API version'
+    cli_alias: version
+  - name: BasePath
+    type: String
+    required: true
+    default: '/'
+    description: 'Base path'
+    cli_alias: base-path
+  - name: HtmlPage
+    type: String
+    description: 'HTML page'
+    cli_alias: html-page
+  - name: Type
+    type: String
+    enum:
+      - 'standard'
+      - 'wsdl'
+      - 'graphql'
+    default: 'standard'
+    description: 'Type'
+    cli_alias: type
+  - name: Assembly
+    type: String
+    reference_to: Assembly
+    description: 'Assembly'
+    cli_alias: assembly
+  - name: Path
+    type: List
+    reference_to: APIPath
+    element_type: String
+    required: true
+    description: 'Paths'
+    cli_alias: path
+  - name: Consume
+    type: List
+    element_type: String
+    description: 'Consumes'
+    cli_alias: consume
+  - name: Produce
+    type: List
+    element_type: String
+    description: 'Produces'
+    cli_alias: produce
+  - name: SwaggerLocation
+    type: String
+    description: 'OpenAPI document'
+    cli_alias: swagger-location
+  - name: GraphQLSchema
+    type: String
+    reference_to: APISchema
+    description: 'GraphQL schema location'
+    cli_alias: graphql-schema
+  - name: WsdlAdvertisedSchemaLocation
+    type: String
+    description: 'WSDL advertised schema location'
+    cli_alias: wsdl-advertised-schema-location
+  - name: WsdlValidationSchema
+    type: String
+    reference_to: APISchema
+    description: 'WSDL validation schema location'
+    cli_alias: wsdl-validation-schema
+  - name: SecurityRequirement
+    type: List
+    reference_to: APISecurityRequirement
+    element_type: String
+    description: 'Security requirements'
+    cli_alias: security-req
+  - name: RequireAPIMutualTLS
+    type: Bool
+    default: false
+    description: 'API protection'
+    cli_alias: require-api-mutual-tls
+  - name: APIMutualTLSSource
+    type: List
+    enum:
+      - 'header'
+      - 'tls_cert'
+    element_type: String
+    description: 'API protection sources'
+    cli_alias: api-mutual-tls-source
+  - name: APIMutualTLSHeaderName
+    type: String
+    default: 'X-Client-Certificate'
+    description: 'API protection HTTP header'
+    cli_alias: api-mutual-tls-header-name
+  - name: Properties
+    type: List
+    element_type: DmAPIProperty
+    description: 'Custom properties'
+    cli_alias: property
+  - name: Schemas
+    type: List
+    element_type: DmAPIDataTypeDefinition
+    description: 'Schemas'
+    cli_alias: schema
+  - name: CORSToggle
+    type: Bool
+    default: false
+    description: 'Enable CORS'
+    cli_alias: cors
+  - name: CORSPolicy
+    type: String
+    reference_to: CORSPolicy
+    description: 'CORS policy'
+    cli_alias: cors-policy
+  - name: ActivityLogToggle
+    type: Bool
+    default: false
+    description: 'Enable logging'
+    cli_alias: activity-log
+  - name: Content
+    type: String
+    enum:
+      - 'none'
+      - 'activity'
+      - 'header'
+      - 'payload'
+    required: true
+    default: 'activity'
+    description: 'Content on success'
+    cli_alias: success-content
+  - name: ErrorContent
+    type: String
+    enum:
+      - 'none'
+      - 'activity'
+      - 'header'
+      - 'payload'
+    required: true
+    default: 'payload'
+    description: 'Content on error'
+    cli_alias: error-content
+  - name: PreservedRequestHeader
+    type: List
+    element_type: String
+    description: 'Request headers to preserve'
+    cli_alias: preserved-request-header
+  - name: PreservedResponseHeader
+    type: List
+    element_type: String
+    description: 'Response header to preserve'
+    cli_alias: preserved-response-header
+  - name: MessageBuffering
+    type: Bool
+    default: false
+    description: 'Enable message buffering'
+    cli_alias: message-buffering
+  - name: DeploymentState
+    type: String
+    enum:
+      - 'running'
+      - 'suspended'
+    default: 'running'
+    description: 'Deployment state'
+    cli_alias: deployment-state
+  - name: ShareRateLimitCount
+    type: String
+    enum:
+      - 'unset'
+      - 'yes'
+      - 'no'
+    default: 'unset'
+    description: 'Share rate limit count'
+    cli_alias: share-count
+  - name: ReturnV5Responses
+    type: Bool
+    default: false
+    description: 'Return v5 responses'
+    cli_alias: return-v5-responses
+  - name: CopyIdHeadersToMessage
+    type: Bool
+    default: false
+    description: 'Copy ID headers to message'
+    cli_alias: copy-id-headers-to-message
+  - name: EnforceRequiredParams
+    type: Bool
+    default: true
+    description: 'Enforce required parameters'
+    cli_alias: enforce-required-params
+  - name: AllowChunkedUploads
+    type: Bool
+    default: true
+    description: 'Allow chunked uploads'
+    cli_alias: allow-chunked-uploads
+  - name: SetV5RequestHeaders
+    type: Bool
+    default: false
+    description: 'Set v5 request headers'
+    cli_alias: set-v5-request-headers
+  - name: GetRawBodyValue
+    type: Bool
+    default: false
+    description: 'Get raw body value'
+    cli_alias: get-raw-body-value
+  - name: AllowedAPIProtocols
+    dm_type: DmAPIProtocols
+    default: 'http+https+ws+wss'
+    description: 'Allowed API protocols'
+    cli_alias: allowed-api-protocols
+  - name: AllowTrailingSlash
+    type: Bool
+    default: false
+    description: 'Allow trailing slash'
+    cli_alias: allow-trailing-slash
+  - name: EnforceAllHeadersCaseInsensitive
+    type: Bool
+    default: false
+    description: 'Enforce all headers as case-insensitive'
+    cli_alias: enforce-all-headers-case-insensitive
+  - name: EnforceFormDataParameter
+    type: Bool
+    default: true
+    description: 'Enforce form data parameter'
+    cli_alias: enforce-form-data-parameter
+  - name: ForceHttp500ForSoap11
+    type: Bool
+    default: false
+    description: 'Force HTTP 500 for SOAP 1.1'
+    cli_alias: force-http-500-for-soap11

@@ -1,0 +1,32 @@
+name: DmAPIProxyPolicy
+model_only: true
+list_item: true
+attributes:
+  - name: RegExp
+    type: String
+    required: true
+    example: '*'
+    description: 'URL matching expression'
+  - name: Skip
+    type: Bool
+    required: true
+    default: false
+    description: 'Skip'
+  - name: RemoteAddress
+    type: String
+    example: "localhost"
+    description: 'Remote host'
+  - name: RemotePort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    example: 8888
+    description: 'Remote port'
+  - name: UserName
+    type: String
+    description: 'Username'
+  - name: Password
+    type: String
+    reference_to: PasswordAlias
+    sensitive: true
+    description: 'Password'

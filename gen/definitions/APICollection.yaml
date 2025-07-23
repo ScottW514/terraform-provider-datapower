@@ -1,0 +1,149 @@
+name: APICollection
+description: 'API collection'
+cli_alias: 'api-collection'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/APICollection'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'APICollection_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Sandbox
+    type: Bool
+    default: false
+    description: 'Sandbox'
+    cli_alias: sandbox
+  - name: OrgID
+    type: String
+    required: true
+    example: 'orgid'
+    description: 'Organization ID'
+    cli_alias: organization-id
+  - name: OrgName
+    type: String
+    required: true
+    example: 'orgname'
+    description: 'Organization name'
+    cli_alias: organization-name
+  - name: CatalogID
+    type: String
+    default: 'default-catalog-id'
+    description: 'Catalog ID'
+    cli_alias: catalog-id
+  - name: CatalogName
+    type: String
+    default: 'default'
+    description: 'Catalog name'
+    cli_alias: catalog-name
+  - name: DevPortalEndpoint
+    type: String
+    description: 'Developer Portal endpoint'
+    cli_alias: dev-portal-endpoint
+  - name: CacheCapacity
+    type: Int64
+    minimum: 8
+    maximum: 51200
+    default: 128
+    description: 'Subscriber cache capacity'
+    cli_alias: cache-capacity
+  - name: RoutingPrefix
+    type: List
+    element_type: DmRoutingPrefix
+    required: true
+    description: 'Routing prefixes'
+    cli_alias: routing-prefix
+  - name: UseRateLimitGroup
+    type: Bool
+    default: false
+    description: 'Use rate limit group'
+    cli_alias: use-rate-limit-group
+  - name: DefaultRateLimit
+    type: List
+    element_type: DmAPIRateLimit
+    description: 'Default rate limit'
+    cli_alias: default-rate-limit
+  - name: RateLimitGroup
+    type: String
+    reference_to: RateLimitDefinitionGroup
+    description: 'Rate limit group'
+    cli_alias: rate-limit-group
+  - name: AssemblyBurstLimit
+    type: List
+    element_type: DmAPIBurstLimit
+    description: 'Assembly burst limit'
+    cli_alias: assembly-burst-limit
+  - name: AssemblyRateLimit
+    type: List
+    element_type: DmAPIRateLimit
+    description: 'Assembly rate limit'
+    cli_alias: assembly-rate-limit
+  - name: AssemblyCountLimit
+    type: List
+    element_type: DmAPICountLimit
+    description: 'Assembly count limit'
+    cli_alias: assembly-count-limit
+  - name: EnforcePreAssemblyRateLimits
+    type: Bool
+    default: true
+    description: 'Enforce preassembly rate limits'
+    cli_alias: enforce-pre-assembly-rate-limits
+  - name: APIProcessingRule
+    type: String
+    reference_to: APIRule
+    required: true
+    default: 'default-api-rule'
+    test_value: '"default-api-rule"'
+    description: 'API processing rule'
+    cli_alias: processing-rule
+  - name: APIErrorRule
+    type: String
+    reference_to: APIRule
+    default: 'default-api-error-rule'
+    test_value: '"default-api-error-rule"'
+    description: 'API error rule'
+    cli_alias: error-rule
+  - name: AssemblyPreflow
+    type: String
+    reference_to: Assembly
+    description: 'Assembly preprocessing'
+    cli_alias: assembly-preprocessing
+  - name: AssemblyPostflow
+    type: String
+    reference_to: Assembly
+    description: 'Assembly postprocessing'
+    cli_alias: assembly-postprocessing
+  - name: Plan
+    type: List
+    reference_to: APIPlan
+    element_type: String
+    required: true
+    description: 'Plans'
+    cli_alias: plan
+  - name: AnalyticsEndpoint
+    type: String
+    reference_to: AnalyticsEndpoint
+    description: 'Analytic endpoint'
+    cli_alias: analytics-endpoint
+  - name: ApplicationType
+    type: List
+    reference_to: APIApplicationType
+    element_type: String
+    description: 'Application types'
+    cli_alias: application-type
+  - name: ParseSettingsReference
+    dm_type: DmDynamicParseSettingsReference
+    description: 'Parse settings'
+    cli_alias: parse-settings-reference

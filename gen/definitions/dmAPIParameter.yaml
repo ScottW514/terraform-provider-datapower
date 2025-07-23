@@ -1,0 +1,60 @@
+name: DmAPIParameter
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    description: 'Name'
+  - name: Required
+    type: Bool
+    required: true
+    default: false
+    description: 'Required'
+  - name: Type
+    type: String
+    enum:
+      - 'integer'
+      - 'long'
+      - 'float'
+      - 'double'
+      - 'string'
+      - 'byte'
+      - 'binary'
+      - 'boolean'
+      - 'date'
+      - 'dateTime'
+      - 'password'
+      - 'array'
+      - 'object'
+      - 'file'
+      - 'number'
+    required: true
+    default: 'string'
+    description: 'Type'
+  - name: Where
+    type: String
+    enum:
+      - 'path'
+      - 'query'
+      - 'body'
+      - 'formdata'
+      - 'header'
+    required: true
+    default: 'path'
+    description: 'Where'
+  - name: SchemaOrFormat
+    type: String
+    description: 'Format'
+  - name: Maximum
+    type: String
+    description: 'Maximum'
+  - name: Minimum
+    type: String
+    description: 'Minimum'
+  - name: Pattern
+    type: String
+    description: 'Pattern'
+  - name: Enum
+    type: String
+    description: 'Enum'

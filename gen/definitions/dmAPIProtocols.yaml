@@ -1,0 +1,19 @@
+name: DmAPIProtocols
+model_only: true
+attributes:
+  - name: http
+    type: Bool
+    default: true
+    description: 'http'
+  - name: https
+    type: Bool
+    default: true
+    description: 'https'
+  - name: ws
+    type: Bool
+    default: true
+    description: 'ws'
+  - name: wss
+    type: Bool
+    default: true
+    description: 'wss'

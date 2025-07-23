@@ -7,6 +7,46 @@ description: |-
 
 # Changelog
 
+## Unreleased
+
+- Fix model test config generator to properly handle list of reference objects
+- API Additions (Objects)
+  - AMQPBroker
+  - AMQPSourceProtocolHandler
+  - AnalyticsEndpoint
+  - APIApplicationType
+  - APIAuthURLRegistry
+  - APIClientIdentification
+  - APICollection
+  - APICORS
+  - APIDefinition
+  - APIExecute
+  - APIFinal
+  - APIGateway
+  - APILDAPRegistry
+  - APIOperation
+  - APIPath
+  - APIPlan
+  - APIRateLimit
+  - APIResult
+  - APIRouting
+  - APIRule
+  - APISchema
+  - APISecurity
+  - APISecurityAPIKey
+  - APISecurityBasicAuth
+  - APISecurityHTTPScheme
+  - APISecurityOAuth
+  - APISecurityOAuthReq
+  - APISecurityRequirement
+  - AppSecurityPolicy
+  - NameValueProfile
+  - WebAppErrorHandlingPolicy
+  - WebAppFW
+  - WebAppRequest
+  - WebAppResponse
+  - WebAppSessionPolicy
+
 ## 0.2.0
 
 - Update getting started guide

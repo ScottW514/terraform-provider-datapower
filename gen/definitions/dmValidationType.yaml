@@ -1,0 +1,33 @@
+name: DmValidationType
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    description: 'Name Expression'
+  - name: Value
+    type: String
+    required: true
+    description: 'Value Constraint'
+  - name: Fixup
+    type: String
+    enum:
+      - 'passthrough'
+      - 'strip'
+      - 'error'
+      - 'set'
+    required: true
+    default: 'error'
+    description: 'Failure Policy'
+  - name: MapValue
+    type: String
+    description: 'Map Value'
+  - name: XSS
+    type: Bool
+    default: false
+    description: 'Check XSS'
+  - name: XSSPatternsFile
+    type: String
+    default: 'store:///XSS-Patterns.xml'
+    description: 'XSS (Cross Site Scripting) Protection Patterns File'

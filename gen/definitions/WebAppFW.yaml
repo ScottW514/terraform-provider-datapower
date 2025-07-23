@@ -1,0 +1,257 @@
+name: WebAppFW
+description: 'Web Application Firewall'
+cli_alias: 'web-application-firewall'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/WebAppFW'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WebAppFW_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Priority
+    type: String
+    enum:
+      - 'unknown'
+      - 'high-min'
+      - 'high'
+      - 'high-max'
+      - 'normal-min'
+      - 'normal'
+      - 'normal-max'
+      - 'low-min'
+      - 'low'
+      - 'low-max'
+    default: 'normal'
+    description: 'Service Priority'
+    cli_alias: priority
+  - name: FrontSide
+    type: List
+    element_type: DmFrontSide
+    description: 'Source Addresses'
+    cli_alias: listen-on
+  - name: RemoteAddress
+    type: String
+    required: true
+    example: "10.10.10.10"
+    description: 'Remote Host'
+    cli_alias: remote-address
+  - name: RemotePort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 80
+    description: 'Remote Port'
+    cli_alias: remote-port
+  - name: StylePolicy
+    type: String
+    reference_to: AppSecurityPolicy
+    required: true
+    description: 'Security Policy'
+    cli_alias: security-policy
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    required: true
+    default: 'default'
+    test_value: '"default"'
+    description: 'XML Manager'
+    cli_alias: xml-manager
+  - name: ErrorPolicy
+    type: String
+    reference_to: WebAppErrorHandlingPolicy
+    description: 'Error Policy'
+    cli_alias: error-policy
+  - name: URINormalization
+    type: Bool
+    default: true
+    description: 'Normalize URI'
+    cli_alias: uri-normalization
+  - name: RewriteErrors
+    type: Bool
+    default: true
+    description: 'Rewrite Error Messages'
+    cli_alias: rewrite-errors
+  - name: DelayErrors
+    type: Bool
+    default: true
+    description: 'Delay Error Messages'
+    cli_alias: delay-errors
+  - name: DelayErrorsDuration
+    type: Int64
+    minimum: 250
+    maximum: 300000
+    default: 1000
+    description: 'Duration to Delay Error Messages'
+    cli_alias: delay-errors-duration
+  - name: StreamOutputToBack
+    type: String
+    enum:
+      - 'buffer-until-verification'
+      - 'stream-until-infraction'
+    default: 'buffer-until-verification'
+    description: 'Stream Output to Back'
+    cli_alias: stream-output-to-back
+  - name: StreamOutputToFront
+    type: String
+    enum:
+      - 'buffer-until-verification'
+      - 'stream-until-infraction'
+    default: 'buffer-until-verification'
+    description: 'Stream Output to Front'
+    cli_alias: stream-output-to-front
+  - name: FrontTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    required: true
+    default: 120
+    description: 'Front Side Timeout'
+    cli_alias: front-timeout
+  - name: BackTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    required: true
+    default: 120
+    description: 'Back Side Timeout'
+    cli_alias: back-timeout
+  - name: FrontPersistentTimeout
+    type: Int64
+    maximum: 86400
+    required: true
+    default: 180
+    description: 'Front Persistent Timeout'
+    cli_alias: front-persistent-timeout
+  - name: AllowCacheControlHeader
+    type: Bool
+    default: false
+    description: 'Allow Cache-Control Header'
+    cli_alias: allow-cache-control
+  - name: BackPersistentTimeout
+    type: Int64
+    maximum: 86400
+    required: true
+    default: 180
+    description: 'Back Persistent Timeout'
+    cli_alias: back-persistent-timeout
+  - name: FrontHTTPVersion
+    type: String
+    enum:
+      - 'HTTP/1.0'
+      - 'HTTP/1.1'
+    default: 'HTTP/1.1'
+    description: 'HTTP Response Version'
+    cli_alias: http-front-version
+  - name: BackHTTPVersion
+    type: String
+    enum:
+      - 'HTTP/1.0'
+      - 'HTTP/1.1'
+    default: 'HTTP/1.1'
+    description: 'HTTP Version to Server'
+    cli_alias: http-back-version
+  - name: RequestSideSecurity
+    type: Bool
+    default: true
+    description: 'Request Security'
+    cli_alias: request-security
+  - name: ResponseSideSecurity
+    type: Bool
+    default: true
+    description: 'Response Security'
+    cli_alias: response-security
+  - name: DoChunkedUpload
+    type: Bool
+    default: false
+    description: 'Allow Chunked Uploads'
+    cli_alias: chunked-uploads
+  - name: FollowRedirects
+    type: Bool
+    default: true
+    description: 'Follow Redirects'
+    cli_alias: follow-redirects
+  - name: HTTPClientIPLabel
+    type: String
+    default: 'X-Client-IP'
+    description: 'HTTP Client IP Label'
+    cli_alias: http-client-ip-label
+  - name: HTTPLogCorIDLabel
+    type: String
+    default: 'X-Global-Transaction-ID'
+    description: 'HTTP Global Transaction ID Label'
+    cli_alias: http-global-tranID-label
+  - name: DebugMode
+    type: String
+    enum:
+      - 'on'
+      - 'off'
+      - 'unbounded'
+    default: 'off'
+    description: 'Probe setting'
+    cli_alias: debug-mode
+  - name: DebugHistory
+    type: Int64
+    minimum: 10
+    maximum: 250
+    default: 25
+    description: 'Transaction History'
+    cli_alias: debug-history
+  - name: DebugTrigger
+    type: List
+    element_type: DmMSDebugTriggerType
+    description: 'Probe Triggers'
+    cli_alias: debug-trigger
+  - name: URLRewritePolicy
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'Header and URL Rewrite Policy'
+    cli_alias: urlrewrite-policy
+  - name: DoHostRewriting
+    type: Bool
+    default: true
+    description: 'Rewrite Host Names When Gatewaying'
+    cli_alias: host-rewriting
+  - name: SSLConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'TLS type'
+    cli_alias: ssl-config-type
+  # DEPRACATED
+  # - name: SSLProxyProfile
+  #   type: String
+  #   reference_to: SSLProxyProfile
+  #   description: 'TLS proxy profile (deprecated)'
+  #   deprecated: true
+  #   cli_alias: ssl-profile
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'TLS SNI server profile'
+    cli_alias: ssl-sni-server
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client

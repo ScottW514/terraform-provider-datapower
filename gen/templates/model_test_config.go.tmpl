@@ -43,7 +43,7 @@ resource "datapower_{{snakeCase .Name}}" "test" {
         {{- if .TestValue}}
   {{.TfName}} = {{.TestValue}}
 		{{- else if .ReferenceTo}}
-  {{.TfName}} = datapower_{{snakeCase .ReferenceTo}}.test.id
+  {{.TfName}} = {{if eq .Type "List"}}[{{end}}datapower_{{snakeCase .ReferenceTo}}.test.id{{if eq .Type "List"}}]{{end}}
 		{{- else if or (isObject .) (isObjectList .)}}
   {{.TfName}} = ` + {{if isObjectList .}}{{.ElementType}}{{else}}{{.DmType}}{{end}}TestConfig.GetModel{{if isObjectList .}}List{{end}}Config() + `
         {{- else if and (len .ListDefault) (eq .Type "List")}}

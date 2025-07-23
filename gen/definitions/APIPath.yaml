@@ -1,0 +1,45 @@
+name: APIPath
+description: 'API path'
+cli_alias: 'api-path'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/APIPath'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'APIPath_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Path
+    type: String
+    required: true
+    default: '/'
+    description: 'Path'
+    cli_alias: path
+  - name: Operation
+    type: List
+    reference_to: APIOperation
+    element_type: String
+    description: 'Operation'
+    cli_alias: operation
+  - name: RequestSchema
+    type: String
+    reference_to: APISchema
+    description: 'Request schema'
+    cli_alias: request-schema
+  - name: Parameter
+    type: List
+    element_type: DmAPIParameter
+    description: 'Parameters'
+    cli_alias: parameter

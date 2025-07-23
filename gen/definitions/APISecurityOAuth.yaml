@@ -1,0 +1,52 @@
+name: APISecurityOAuth
+description: 'API security OAuth'
+cli_alias: 'api-sec-oauth'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/APISecurityOAuth'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'APISecurityOAuth_test'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: OAuthProvider
+    type: String
+    reference_to: OAuthProviderSettings
+    description: 'OAuth provider'
+    cli_alias: oauth-provider
+  - name: OAuthFlow
+    type: String
+    enum:
+      - 'implicit'
+      - 'password'
+      - 'application'
+      - 'accessCode'
+    default: 'implicit'
+    required: true
+    description: 'OAuth flow'
+    cli_alias: oauth-flow
+  - name: OAuthScope
+    type: String
+    description: 'OAuth scopes'
+    cli_alias: oauth-scope
+  - name: OAuthAdvScopeURL
+    type: String
+    description: 'OAuth advanced scope URL'
+    cli_alias: oauth-advanced-scope-url
+  - name: OAuthAdvScopeTLSProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'OAuth TLS profile'
+    cli_alias: oauth-advanced-scope-tls-profile

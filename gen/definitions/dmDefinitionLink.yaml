@@ -1,0 +1,16 @@
+name: DmDefinitionLink
+model_only: true
+list_item: true
+attributes:
+  - name: ShortName
+    type: String
+    required: true
+    description: 'Short name'
+    example: 'shortname'
+    cli_alias: name
+  - name: Definition
+    type: String
+    reference_to: RateLimitDefinition
+    required: true
+    description: 'Definition'
+    cli_alias: definition
