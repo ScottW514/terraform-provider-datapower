@@ -1,0 +1,17 @@
+name: DmHTTPClientServerVersion
+model_only: true
+attributes:
+  - name: Front
+    type: String
+    enum:
+      - 'HTTP/1.0'
+      - 'HTTP/1.1'
+    default: 'HTTP/1.1'
+    description: 'HTTP Version to Client'
+  - name: Back
+    type: String
+    enum:
+      - 'HTTP/1.0'
+      - 'HTTP/1.1'
+    default: 'HTTP/1.1'
+    description: 'HTTP Version to Server'

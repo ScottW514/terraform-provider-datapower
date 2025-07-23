@@ -46,6 +46,7 @@ description: |-
   - WebAppRequest
   - WebAppResponse
   - WebAppSessionPolicy
+  - XMLFirewallService
 
 ## 0.2.0
 

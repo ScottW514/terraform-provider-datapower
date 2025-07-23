@@ -178,6 +178,7 @@ var endPoints = map[string]testconfig.ModelTestConfig{
 	"webservicemonitor": testconfig.WebServiceMonitorTestConfig,
 	"webservicesagent": testconfig.WebServicesAgentTestConfig,
 	"xacmlpdp": testconfig.XACMLPDPTestConfig,
+	"xmlfirewallservice": testconfig.XMLFirewallServiceTestConfig,
 	"xmlmanager": testconfig.XMLManagerTestConfig,
 	"zosnssclient": testconfig.ZosNSSClientTestConfig,
 }

@@ -255,6 +255,7 @@ func (p *DatapowerProvider) Resources(ctx context.Context) []func() resource.Res
 		NewWebServiceMonitorResource,
 		NewWebServicesAgentResource,
 		NewXACMLPDPResource,
+		NewXMLFirewallServiceResource,
 		NewXMLManagerResource,
 		NewZosNSSClientResource,
 	}
@@ -412,6 +413,7 @@ func (p *DatapowerProvider) DataSources(ctx context.Context) []func() datasource
 		NewWebServiceMonitorDataSource,
 		NewWebServicesAgentDataSource,
 		NewXACMLPDPDataSource,
+		NewXMLFirewallServiceDataSource,
 		NewXMLManagerDataSource,
 		NewZosNSSClientDataSource,
 	}
