@@ -129,13 +129,13 @@ func (data DmGatewayInOrderMode) ToBody(ctx context.Context, pathRoot string) st
 	}
 	body := ""
 	if !data.Request.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Request`, tfutils.StringFromBool(data.Request, false))
+		body, _ = sjson.Set(body, pathRoot+`Request`, tfutils.StringFromBool(data.Request, ""))
 	}
 	if !data.Backend.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Backend`, tfutils.StringFromBool(data.Backend, false))
+		body, _ = sjson.Set(body, pathRoot+`Backend`, tfutils.StringFromBool(data.Backend, ""))
 	}
 	if !data.Response.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Response`, tfutils.StringFromBool(data.Response, false))
+		body, _ = sjson.Set(body, pathRoot+`Response`, tfutils.StringFromBool(data.Response, ""))
 	}
 	return body
 }

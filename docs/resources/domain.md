@@ -29,8 +29,6 @@ resource "datapower_domain" "test" {
 
 ### Optional
 
-- `config_dir` (String) Configuration directory
-  - Default value: `config:///`
 - `config_mode` (String) Configuration mode
   - CLI Alias: `config-mode`
   - Choices: `local`, `import`
@@ -73,6 +71,10 @@ resource "datapower_domain" "test" {
   - Reference to: `datapower_domain:id`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
+
+### Read-Only
+
+- `config_dir` (String) Configuration directory
 
 <a id="nestedatt--file_map"></a>
 ### Nested Schema for `file_map`

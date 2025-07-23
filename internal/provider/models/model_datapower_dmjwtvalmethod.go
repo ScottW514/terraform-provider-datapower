@@ -129,13 +129,13 @@ func (data DmJWTValMethod) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.Decrypt.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`decrypt`, tfutils.StringFromBool(data.Decrypt, false))
+		body, _ = sjson.Set(body, pathRoot+`decrypt`, tfutils.StringFromBool(data.Decrypt, ""))
 	}
 	if !data.Verify.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`verify`, tfutils.StringFromBool(data.Verify, false))
+		body, _ = sjson.Set(body, pathRoot+`verify`, tfutils.StringFromBool(data.Verify, ""))
 	}
 	if !data.Customized.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`customized`, tfutils.StringFromBool(data.Customized, false))
+		body, _ = sjson.Set(body, pathRoot+`customized`, tfutils.StringFromBool(data.Customized, ""))
 	}
 	return body
 }

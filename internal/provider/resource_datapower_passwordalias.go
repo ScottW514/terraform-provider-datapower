@@ -129,6 +129,12 @@ func (r *PasswordAliasResource) Create(ctx context.Context, req resource.CreateR
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
+	getRes, getErr := r.client.Get(data.GetPath() + "/" + data.Id.ValueString())
+	if getErr != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object after creation (GET), got error: %s", getErr))
+		return
+	}
+	data.UpdateUnknownFromBody(ctx, `PasswordAlias`, getRes)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 

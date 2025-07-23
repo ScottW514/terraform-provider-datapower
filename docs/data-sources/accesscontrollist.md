@@ -14,6 +14,7 @@ Access control list
 
 ```terraform
 data "datapower_accesscontrollist" "test" {
+  depends_on = [datapower_accesscontrollist.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -46,4 +47,3 @@ Read-Only:
 - `access` (String) Access
   - Choices: `allow`, `deny`
 - `address` (String) Address range
-  - Choices: `[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]{1,2}`, `[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+ [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+`, `((([\da-fA-F]{1,4}|:|)(:|)){1,7}([\da-fA-F]{1,4}|:)/([1-9]?\d|1[01]\d|12[0-8]))`, `((([\da-fA-F]{1,4}|:|)(:|)){1,5}([\da-fA-F]{1,4}|):(([1-9]?\d|1\d{2}|2[0-4]\d|25[0-5])\.){3}([1-9]?\d|1\d{2}|2[0-4]\d|25[0-5])/([1-9]?\d|1[01]\d|12[0-8]))`

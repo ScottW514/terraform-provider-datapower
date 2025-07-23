@@ -35,20 +35,17 @@ import (
 type DmBasicAuthPolicy struct {
 	RegExp        types.String `tfsdk:"reg_exp"`
 	UserName      types.String `tfsdk:"user_name"`
-	Password      types.String `tfsdk:"password"`
 	PasswordAlias types.String `tfsdk:"password_alias"`
 }
 
 var DmBasicAuthPolicyObjectType = map[string]attr.Type{
 	"reg_exp":        types.StringType,
 	"user_name":      types.StringType,
-	"password":       types.StringType,
 	"password_alias": types.StringType,
 }
 var DmBasicAuthPolicyObjectDefault = map[string]attr.Value{
 	"reg_exp":        types.StringNull(),
 	"user_name":      types.StringNull(),
-	"password":       types.StringNull(),
 	"password_alias": types.StringNull(),
 }
 var DmBasicAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
@@ -59,10 +56,6 @@ var DmBasicAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		},
 		"user_name": DataSourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Username", "", "").String,
-			Computed:            true,
-		},
-		"password": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password (deprecated)", "", "").String,
 			Computed:            true,
 		},
 		"password_alias": DataSourceSchema.StringAttribute{
@@ -81,10 +74,6 @@ var DmBasicAuthPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 			MarkdownDescription: tfutils.NewAttributeDescription("Username", "", "").String,
 			Required:            true,
 		},
-		"password": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password (deprecated)", "", "").String,
-			Optional:            true,
-		},
 		"password_alias": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "", "passwordalias").String,
 			Optional:            true,
@@ -97,9 +86,6 @@ func (data DmBasicAuthPolicy) IsNull() bool {
 		return false
 	}
 	if !data.UserName.IsNull() {
-		return false
-	}
-	if !data.Password.IsNull() {
 		return false
 	}
 	if !data.PasswordAlias.IsNull() {
@@ -118,9 +104,6 @@ func (data DmBasicAuthPolicy) ToBody(ctx context.Context, pathRoot string) strin
 	}
 	if !data.UserName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserName`, data.UserName.ValueString())
-	}
-	if !data.Password.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Password`, data.Password.ValueString())
 	}
 	if !data.PasswordAlias.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PasswordAlias`, data.PasswordAlias.ValueString())
@@ -142,11 +125,6 @@ func (data *DmBasicAuthPolicy) FromBody(ctx context.Context, pathRoot string, re
 	} else {
 		data.UserName = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `Password`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Password = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Password = types.StringNull()
-	}
 	if value := res.Get(pathRoot + `PasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PasswordAlias = tfutils.ParseStringFromGJSON(value)
 	} else {
@@ -167,11 +145,6 @@ func (data *DmBasicAuthPolicy) UpdateFromBody(ctx context.Context, pathRoot stri
 		data.UserName = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.UserName = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `Password`); value.Exists() && !data.Password.IsNull() {
-		data.Password = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Password = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PasswordAlias`); value.Exists() && !data.PasswordAlias.IsNull() {
 		data.PasswordAlias = tfutils.ParseStringFromGJSON(value)

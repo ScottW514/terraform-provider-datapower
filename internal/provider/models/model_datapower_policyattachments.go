@@ -104,7 +104,7 @@ func (data PolicyAttachments) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`EnforcementMode`, data.EnforcementMode.ValueString())
 	}
 	if !data.PolicyReferences.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PolicyReferences`, tfutils.StringFromBool(data.PolicyReferences, false))
+		body, _ = sjson.Set(body, pathRoot+`PolicyReferences`, tfutils.StringFromBool(data.PolicyReferences, ""))
 	}
 	if !data.IgnoredPolicyAttachmentPoints.IsNull() {
 		var values []DmPolicyAttachmentPoint

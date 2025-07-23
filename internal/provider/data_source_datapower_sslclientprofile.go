@@ -115,7 +115,7 @@ func (d *SSLClientProfileDataSource) Schema(ctx context.Context, req datasource.
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
-						"use_custom_sni_hostname": schema.StringAttribute{
+						"use_custom_sni_hostname": schema.BoolAttribute{
 							MarkdownDescription: "Use custom SNI host name",
 							Computed:            true,
 						},

@@ -193,25 +193,25 @@ func (data DmCookieAttribute) ToBody(ctx context.Context, pathRoot string) strin
 	}
 	body := ""
 	if !data.Domain.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`domain`, tfutils.StringFromBool(data.Domain, false))
+		body, _ = sjson.Set(body, pathRoot+`domain`, tfutils.StringFromBool(data.Domain, ""))
 	}
 	if !data.Path.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`path`, tfutils.StringFromBool(data.Path, false))
+		body, _ = sjson.Set(body, pathRoot+`path`, tfutils.StringFromBool(data.Path, ""))
 	}
 	if !data.Secure.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`secure`, tfutils.StringFromBool(data.Secure, false))
+		body, _ = sjson.Set(body, pathRoot+`secure`, tfutils.StringFromBool(data.Secure, ""))
 	}
 	if !data.Httponly.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`httponly`, tfutils.StringFromBool(data.Httponly, false))
+		body, _ = sjson.Set(body, pathRoot+`httponly`, tfutils.StringFromBool(data.Httponly, ""))
 	}
 	if !data.MaxAge.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`max-age`, tfutils.StringFromBool(data.MaxAge, false))
+		body, _ = sjson.Set(body, pathRoot+`max-age`, tfutils.StringFromBool(data.MaxAge, ""))
 	}
 	if !data.Expires.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`expires`, tfutils.StringFromBool(data.Expires, false))
+		body, _ = sjson.Set(body, pathRoot+`expires`, tfutils.StringFromBool(data.Expires, ""))
 	}
 	if !data.Custom.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`custom`, tfutils.StringFromBool(data.Custom, false))
+		body, _ = sjson.Set(body, pathRoot+`custom`, tfutils.StringFromBool(data.Custom, ""))
 	}
 	return body
 }

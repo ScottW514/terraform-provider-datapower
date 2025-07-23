@@ -184,7 +184,7 @@ func (data Domain) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DeploymentPolicyParameters`, data.DeploymentPolicyParameters.ValueString())
 	}
 	if !data.LocalIpRewrite.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LocalIPRewrite`, tfutils.StringFromBool(data.LocalIpRewrite, false))
+		body, _ = sjson.Set(body, pathRoot+`LocalIPRewrite`, tfutils.StringFromBool(data.LocalIpRewrite, ""))
 	}
 	if !data.MaxChkpoints.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MaxChkpoints`, data.MaxChkpoints.ValueInt64())
@@ -210,7 +210,7 @@ func (data *Domain) FromBody(ctx context.Context, pathRoot string, res gjson.Res
 	if value := res.Get(pathRoot + `ConfigDir`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ConfigDir = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.ConfigDir = types.StringValue("config:///")
+		data.ConfigDir = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `NeighborDomain`); value.Exists() {
 		data.NeighborDomain = tfutils.ParseStringListFromGJSON(value)
@@ -292,7 +292,7 @@ func (data *Domain) UpdateFromBody(ctx context.Context, pathRoot string, res gjs
 	}
 	if value := res.Get(pathRoot + `ConfigDir`); value.Exists() && !data.ConfigDir.IsNull() {
 		data.ConfigDir = tfutils.ParseStringFromGJSON(value)
-	} else if data.ConfigDir.ValueString() != "config:///" {
+	} else {
 		data.ConfigDir = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `NeighborDomain`); value.Exists() && !data.NeighborDomain.IsNull() {
@@ -359,5 +359,119 @@ func (data *Domain) UpdateFromBody(ctx context.Context, pathRoot string, res gjs
 		data.ConfigPermissionsProfile = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.ConfigPermissionsProfile = types.StringNull()
+	}
+}
+func (data *Domain) UpdateUnknownFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
+	if pathRoot != "" {
+		pathRoot = pathRoot + "."
+	}
+	if data.UserSummary.IsUnknown() {
+		if value := res.Get(pathRoot + `UserSummary`); value.Exists() && !data.UserSummary.IsNull() {
+			data.UserSummary = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.UserSummary = types.StringNull()
+		}
+	}
+	if data.ConfigDir.IsUnknown() {
+		if value := res.Get(pathRoot + `ConfigDir`); value.Exists() && !data.ConfigDir.IsNull() {
+			data.ConfigDir = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.ConfigDir = types.StringNull()
+		}
+	}
+	if data.NeighborDomain.IsUnknown() {
+		if value := res.Get(pathRoot + `NeighborDomain`); value.Exists() && !data.NeighborDomain.IsNull() {
+			data.NeighborDomain = tfutils.ParseStringListFromGJSON(value)
+		} else {
+			data.NeighborDomain = types.ListNull(types.StringType)
+		}
+	}
+	if data.DomainUser.IsUnknown() {
+		if value := res.Get(pathRoot + `DomainUser`); value.Exists() && !data.DomainUser.IsNull() {
+			data.DomainUser = tfutils.ParseStringListFromGJSON(value)
+		} else {
+			data.DomainUser = types.ListNull(types.StringType)
+		}
+	}
+	if data.FileMap == nil {
+		if value := res.Get(pathRoot + `FileMap`); value.Exists() {
+			d := DmDomainFileMap{}
+			d.UpdateFromBody(ctx, "", value)
+			if !d.IsNull() {
+				data.FileMap = &d
+			}
+		}
+	}
+	if data.MonitoringMap == nil {
+		if value := res.Get(pathRoot + `MonitoringMap`); value.Exists() {
+			d := DmDomainMonitoringMap{}
+			d.UpdateFromBody(ctx, "", value)
+			if !d.IsNull() {
+				data.MonitoringMap = &d
+			}
+		}
+	}
+	if data.ConfigMode.IsUnknown() {
+		if value := res.Get(pathRoot + `ConfigMode`); value.Exists() && !data.ConfigMode.IsNull() {
+			data.ConfigMode = tfutils.ParseStringFromGJSON(value)
+		} else if data.ConfigMode.ValueString() != "local" {
+			data.ConfigMode = types.StringNull()
+		}
+	}
+	if data.ImportUrl.IsUnknown() {
+		if value := res.Get(pathRoot + `ImportURL`); value.Exists() && !data.ImportUrl.IsNull() {
+			data.ImportUrl = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.ImportUrl = types.StringNull()
+		}
+	}
+	if data.ImportFormat.IsUnknown() {
+		if value := res.Get(pathRoot + `ImportFormat`); value.Exists() && !data.ImportFormat.IsNull() {
+			data.ImportFormat = tfutils.ParseStringFromGJSON(value)
+		} else if data.ImportFormat.ValueString() != "ZIP" {
+			data.ImportFormat = types.StringNull()
+		}
+	}
+	if data.DeploymentPolicy.IsUnknown() {
+		if value := res.Get(pathRoot + `DeploymentPolicy`); value.Exists() && !data.DeploymentPolicy.IsNull() {
+			data.DeploymentPolicy = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.DeploymentPolicy = types.StringNull()
+		}
+	}
+	if data.DeploymentPolicyParameters.IsUnknown() {
+		if value := res.Get(pathRoot + `DeploymentPolicyParameters`); value.Exists() && !data.DeploymentPolicyParameters.IsNull() {
+			data.DeploymentPolicyParameters = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.DeploymentPolicyParameters = types.StringNull()
+		}
+	}
+	if data.LocalIpRewrite.IsUnknown() {
+		if value := res.Get(pathRoot + `LocalIPRewrite`); value.Exists() && !data.LocalIpRewrite.IsNull() {
+			data.LocalIpRewrite = tfutils.BoolFromString(value.String())
+		} else {
+			data.LocalIpRewrite = types.BoolNull()
+		}
+	}
+	if data.MaxChkpoints.IsUnknown() {
+		if value := res.Get(pathRoot + `MaxChkpoints`); value.Exists() && !data.MaxChkpoints.IsNull() {
+			data.MaxChkpoints = types.Int64Value(value.Int())
+		} else if data.MaxChkpoints.ValueInt64() != 3 {
+			data.MaxChkpoints = types.Int64Null()
+		}
+	}
+	if data.ConfigPermissionsMode.IsUnknown() {
+		if value := res.Get(pathRoot + `ConfigPermissionsMode`); value.Exists() && !data.ConfigPermissionsMode.IsNull() {
+			data.ConfigPermissionsMode = tfutils.ParseStringFromGJSON(value)
+		} else if data.ConfigPermissionsMode.ValueString() != "scope-domain" {
+			data.ConfigPermissionsMode = types.StringNull()
+		}
+	}
+	if data.ConfigPermissionsProfile.IsUnknown() {
+		if value := res.Get(pathRoot + `ConfigPermissionsProfile`); value.Exists() && !data.ConfigPermissionsProfile.IsNull() {
+			data.ConfigPermissionsProfile = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.ConfigPermissionsProfile = types.StringNull()
+		}
 	}
 }

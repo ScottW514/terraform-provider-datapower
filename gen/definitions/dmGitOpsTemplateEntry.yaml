@@ -1,0 +1,42 @@
+name: DmGitOpsTemplateEntry
+model_only: true
+list_item: true
+attributes:
+  - name: TemplateType
+    type: String
+    enum:
+      - 'change'
+      - 'add'
+      - 'delete'
+      - 'custom'
+    required: true
+    default: 'change'
+    description: 'Template type'
+    cli_alias: type
+  - name: ClassName
+    type: String
+    required: true
+    description: 'Class'
+    cli_alias: class
+  - name: Name
+    type: String
+    required: true
+    description: 'Name'
+    cli_alias: name
+  - name: Field
+    type: String
+    required: true
+    description: 'Property'
+    cli_alias: field
+  - name: Value
+    type: String
+    description: 'Read value'
+    cli_alias: value
+  - name: ValueInverse
+    type: String
+    description: 'Write value'
+    cli_alias: value-inverse
+  - name: ValueValidate
+    type: String
+    description: 'Value validate'
+    cli_alias: value-validate

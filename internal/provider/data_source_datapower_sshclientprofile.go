@@ -92,10 +92,6 @@ func (d *SSHClientProfileDataSource) Schema(ctx context.Context, req datasource.
 							MarkdownDescription: "User private key",
 							Computed:            true,
 						},
-						"password": schema.StringAttribute{
-							MarkdownDescription: "Password (deprecated)",
-							Computed:            true,
-						},
 						"password_alias": schema.StringAttribute{
 							MarkdownDescription: "Password Alias",
 							Computed:            true,

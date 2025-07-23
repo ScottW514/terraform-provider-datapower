@@ -207,16 +207,16 @@ func (data HTTPSourceProtocolHandler) ToBody(ctx context.Context, pathRoot strin
 		}
 	}
 	if !data.PersistentConnections.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PersistentConnections`, tfutils.StringFromBool(data.PersistentConnections, false))
+		body, _ = sjson.Set(body, pathRoot+`PersistentConnections`, tfutils.StringFromBool(data.PersistentConnections, ""))
 	}
 	if !data.MaxPersistentConnectionsReuse.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MaxPersistentConnectionsReuse`, data.MaxPersistentConnectionsReuse.ValueInt64())
 	}
 	if !data.AllowCompression.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllowCompression`, tfutils.StringFromBool(data.AllowCompression, false))
+		body, _ = sjson.Set(body, pathRoot+`AllowCompression`, tfutils.StringFromBool(data.AllowCompression, ""))
 	}
 	if !data.AllowWebSocketUpgrade.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllowWebSocketUpgrade`, tfutils.StringFromBool(data.AllowWebSocketUpgrade, false))
+		body, _ = sjson.Set(body, pathRoot+`AllowWebSocketUpgrade`, tfutils.StringFromBool(data.AllowWebSocketUpgrade, ""))
 	}
 	if !data.WebSocketIdleTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WebSocketIdleTimeout`, data.WebSocketIdleTimeout.ValueInt64())
@@ -252,10 +252,10 @@ func (data HTTPSourceProtocolHandler) ToBody(ctx context.Context, pathRoot strin
 		body, _ = sjson.Set(body, pathRoot+`HTTP2MaxFrameSize`, data.Http2MaxFrameSize.ValueInt64())
 	}
 	if !data.Http2StreamHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HTTP2StreamHeader`, tfutils.StringFromBool(data.Http2StreamHeader, false))
+		body, _ = sjson.Set(body, pathRoot+`HTTP2StreamHeader`, tfutils.StringFromBool(data.Http2StreamHeader, ""))
 	}
 	if !data.ChunkedEncoding.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ChunkedEncoding`, tfutils.StringFromBool(data.ChunkedEncoding, false))
+		body, _ = sjson.Set(body, pathRoot+`ChunkedEncoding`, tfutils.StringFromBool(data.ChunkedEncoding, ""))
 	}
 	if !data.HeaderTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`HeaderTimeout`, data.HeaderTimeout.ValueInt64())

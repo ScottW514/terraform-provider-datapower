@@ -1,0 +1,13 @@
+name: DmSnmpContext
+model_only: true
+list_item: true
+attributes:
+  - name: Context
+    type: String
+    required: true
+    description: 'Context Name'
+  - name: Domain
+    type: String
+    reference_to: Domain
+    required: true
+    description: 'Application Domain'

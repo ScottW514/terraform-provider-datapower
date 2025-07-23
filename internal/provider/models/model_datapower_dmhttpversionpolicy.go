@@ -117,7 +117,7 @@ func (data DmHTTPVersionPolicy) ToBody(ctx context.Context, pathRoot string) str
 		body, _ = sjson.Set(body, pathRoot+`Version`, data.Version.ValueString())
 	}
 	if !data.Http2Required.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HTTP2Required`, tfutils.StringFromBool(data.Http2Required, false))
+		body, _ = sjson.Set(body, pathRoot+`HTTP2Required`, tfutils.StringFromBool(data.Http2Required, ""))
 	}
 	return body
 }

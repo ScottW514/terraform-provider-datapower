@@ -88,10 +88,6 @@ func (r *WSRRServerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				MarkdownDescription: tfutils.NewAttributeDescription("Username", "username", "").String,
 				Optional:            true,
 			},
-			"password": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password (deprecated)", "password", "").String,
-				Optional:            true,
-			},
 			"password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "passwordalias").String,
 				Optional:            true,

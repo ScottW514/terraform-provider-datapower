@@ -129,7 +129,7 @@ func (data JOSESignatureIdentifier) ToBody(ctx context.Context, pathRoot string)
 		}
 	}
 	if !data.Verify.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Verify`, tfutils.StringFromBool(data.Verify, false))
+		body, _ = sjson.Set(body, pathRoot+`Verify`, tfutils.StringFromBool(data.Verify, ""))
 	}
 	return body
 }

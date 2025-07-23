@@ -113,10 +113,10 @@ func (data DmValidationFeatures) ToBody(ctx context.Context, pathRoot string) st
 	}
 	body := ""
 	if !data.Noauthen.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`noauthen`, tfutils.StringFromBool(data.Noauthen, false))
+		body, _ = sjson.Set(body, pathRoot+`noauthen`, tfutils.StringFromBool(data.Noauthen, ""))
 	}
 	if !data.Introspect.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`introspect`, tfutils.StringFromBool(data.Introspect, false))
+		body, _ = sjson.Set(body, pathRoot+`introspect`, tfutils.StringFromBool(data.Introspect, ""))
 	}
 	return body
 }

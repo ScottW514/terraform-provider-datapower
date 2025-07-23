@@ -16,7 +16,7 @@ Processing Metadata
 
 ```terraform
 resource "datapower_processingmetadata" "test" {
-  id         = "ProcessingMetadata_name"
+  id         = "___ProcessingMetadata_name"
   app_domain = "acc_test_domain"
 }
 ```

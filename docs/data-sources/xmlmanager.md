@@ -14,6 +14,7 @@ XML Manager
 
 ```terraform
 data "datapower_xmlmanager" "test" {
+  depends_on = [datapower_xmlmanager.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -49,7 +50,6 @@ Read-Only:
 - `parser_limits_bytes_scanned` (Number) XML Bytes Scanned
 - `parser_limits_element_depth` (Number) XML Element Depth
 - `parser_limits_external_references` (String) XML External Reference Handling
-- `parser_limits_forbid_external_references` (Boolean) XML Forbid External References
 - `parser_limits_max_local_names` (Number) XML Maximum Distinct Local Names
 - `parser_limits_max_namespaces` (Number) XML Maximum Distinct Namespaces
 - `parser_limits_max_node_size` (Number) XML Maximum Node Size
@@ -59,7 +59,6 @@ Read-Only:
 - `search_results` (Boolean) XSLT Expression Optimization
 - `sha1_caching` (Boolean) SHA1 Caching
 - `static_document_calls` (Boolean) Static Document Call
-- `support_tx_warn` (Boolean) Support ITX Warnings
 - `url_refresh_policy` (String) URL Refresh Policy
 - `user_agent` (String) User Agent Configuration
 - `user_summary` (String) Comments

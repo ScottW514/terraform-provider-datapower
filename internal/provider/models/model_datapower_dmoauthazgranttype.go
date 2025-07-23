@@ -209,28 +209,28 @@ func (data DmOAuthAZGrantType) ToBody(ctx context.Context, pathRoot string) stri
 	}
 	body := ""
 	if !data.Code.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`code`, tfutils.StringFromBool(data.Code, false))
+		body, _ = sjson.Set(body, pathRoot+`code`, tfutils.StringFromBool(data.Code, ""))
 	}
 	if !data.Implicit.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`implicit`, tfutils.StringFromBool(data.Implicit, false))
+		body, _ = sjson.Set(body, pathRoot+`implicit`, tfutils.StringFromBool(data.Implicit, ""))
 	}
 	if !data.Password.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`password`, tfutils.StringFromBool(data.Password, false))
+		body, _ = sjson.Set(body, pathRoot+`password`, tfutils.StringFromBool(data.Password, ""))
 	}
 	if !data.Client.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`client`, tfutils.StringFromBool(data.Client, false))
+		body, _ = sjson.Set(body, pathRoot+`client`, tfutils.StringFromBool(data.Client, ""))
 	}
 	if !data.Jwt.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`jwt`, tfutils.StringFromBool(data.Jwt, false))
+		body, _ = sjson.Set(body, pathRoot+`jwt`, tfutils.StringFromBool(data.Jwt, ""))
 	}
 	if !data.Novalidate.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`novalidate`, tfutils.StringFromBool(data.Novalidate, false))
+		body, _ = sjson.Set(body, pathRoot+`novalidate`, tfutils.StringFromBool(data.Novalidate, ""))
 	}
 	if !data.Oidc.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`oidc`, tfutils.StringFromBool(data.Oidc, false))
+		body, _ = sjson.Set(body, pathRoot+`oidc`, tfutils.StringFromBool(data.Oidc, ""))
 	}
 	if !data.Saml20bearer.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`saml20bearer`, tfutils.StringFromBool(data.Saml20bearer, false))
+		body, _ = sjson.Set(body, pathRoot+`saml20bearer`, tfutils.StringFromBool(data.Saml20bearer, ""))
 	}
 	return body
 }

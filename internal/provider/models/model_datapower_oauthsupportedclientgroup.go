@@ -108,7 +108,7 @@ func (data OAuthSupportedClientGroup) ToBody(ctx context.Context, pathRoot strin
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.Customized.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Customized`, tfutils.StringFromBool(data.Customized, false))
+		body, _ = sjson.Set(body, pathRoot+`Customized`, tfutils.StringFromBool(data.Customized, ""))
 	}
 	if !data.CustomizedType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CustomizedType`, data.CustomizedType.ValueString())

@@ -14,6 +14,7 @@ HTML forms login policy
 
 ```terraform
 data "datapower_formsloginpolicy" "test" {
+  depends_on = [datapower_formsloginpolicy.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -56,7 +57,7 @@ Read-Only:
 - `session_lifetime` (Number) Session lifetime
 - `shared_secret` (String) Shared secret
 - `ssl_port` (Number) TLS port
-- `use_cookie_attributes` (String) Attach cookie attribute policy
+- `use_cookie_attributes` (Boolean) Attach cookie attribute policy
 - `use_ssl_for_login` (Boolean) Use TLS for Login
 - `user_summary` (String) Comments
 - `username_field` (String) Username field name

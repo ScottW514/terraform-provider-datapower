@@ -357,13 +357,13 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`LDAPsuffix`, data.LdaPsuffix.ValueString())
 	}
 	if !data.LogAllowed.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LogAllowed`, tfutils.StringFromBool(data.LogAllowed, false))
+		body, _ = sjson.Set(body, pathRoot+`LogAllowed`, tfutils.StringFromBool(data.LogAllowed, ""))
 	}
 	if !data.LogAllowedLevel.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LogAllowedLevel`, data.LogAllowedLevel.ValueString())
 	}
 	if !data.LogRejected.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LogRejected`, tfutils.StringFromBool(data.LogRejected, false))
+		body, _ = sjson.Set(body, pathRoot+`LogRejected`, tfutils.StringFromBool(data.LogRejected, ""))
 	}
 	if !data.LogRejectedLevel.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LogRejectedLevel`, data.LogRejectedLevel.ValueString())
@@ -375,7 +375,7 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`SAMLSourceIDMappingFile`, data.SamlSourceIdMappingFile.ValueString())
 	}
 	if !data.PingIdentityCompatibility.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PingIdentityCompatibility`, tfutils.StringFromBool(data.PingIdentityCompatibility, false))
+		body, _ = sjson.Set(body, pathRoot+`PingIdentityCompatibility`, tfutils.StringFromBool(data.PingIdentityCompatibility, ""))
 	}
 	if !data.Saml2MetadataFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SAML2MetadataFile`, data.Saml2MetadataFile.ValueString())
@@ -387,7 +387,7 @@ func (data AAAPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`LDAPVersion`, data.LdapVersion.ValueString())
 	}
 	if !data.EnforceSoapActor.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EnforceSOAPActor`, tfutils.StringFromBool(data.EnforceSoapActor, false))
+		body, _ = sjson.Set(body, pathRoot+`EnforceSOAPActor`, tfutils.StringFromBool(data.EnforceSoapActor, ""))
 	}
 	if !data.WsSecActorRoleId.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`WSSecActorRoleID`, data.WsSecActorRoleId.ValueString())

@@ -28,12 +28,10 @@ attributes:
     description: 'Login'
     cli_alias: login-url
   - name: UseCookieAttributes
-    type: String
-    enum:
-      - 'no'
-      - 'yes'
+    type: Bool
+    bool_type: 'flag'
     required: true
-    default: 'no'
+    default: false
     description: 'Attach cookie attribute policy'
     cli_alias: use-cookie-attribute
   - name: CookieAttributes
@@ -114,7 +112,6 @@ attributes:
   - name: PasswordField
     type: String
     required: true
-    sensitive: true
     default: 'j_password'
     description: 'Password field name'
     cli_alias: password-field

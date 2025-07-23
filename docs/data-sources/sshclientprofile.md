@@ -14,6 +14,7 @@ SSH client profile
 
 ```terraform
 data "datapower_sshclientprofile" "test" {
+  depends_on = [datapower_sshclientprofile.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -39,7 +40,6 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `kex_alg` (List of String) Key exchange algorithms
 - `mac_alg` (List of String) Message authentication codes
-- `password` (String) Password (deprecated)
 - `password_alias` (String) Password Alias
 - `persistent_connection_timeout` (Number) Persistent connection idle timeout
 - `persistent_connections` (Boolean) Persistent connections

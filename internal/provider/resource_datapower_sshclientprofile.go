@@ -97,10 +97,6 @@ func (r *SSHClientProfileResource) Schema(ctx context.Context, req resource.Sche
 				MarkdownDescription: tfutils.NewAttributeDescription("User private key", "user-private-key", "cryptokey").String,
 				Optional:            true,
 			},
-			"password": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password (deprecated)", "user-password", "").String,
-				Optional:            true,
-			},
 			"password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Password Alias", "user-password-alias", "passwordalias").String,
 				Optional:            true,

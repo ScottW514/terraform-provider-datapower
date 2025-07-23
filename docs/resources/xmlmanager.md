@@ -16,7 +16,7 @@ XML Manager
 
 ```terraform
 resource "datapower_xmlmanager" "test" {
-  id         = "XMLManager_name"
+  id         = "0_XMLManger_name"
   app_domain = "acc_test_domain"
 }
 ```
@@ -72,9 +72,6 @@ resource "datapower_xmlmanager" "test" {
   - CLI Alias: `external-references`
   - Choices: `forbid`, `ignore`, `allow`
   - Default value: `forbid`
-- `parser_limits_forbid_external_references` (Boolean) XML Forbid External References
-  - CLI Alias: `forbid-external-references`
-  - Default value: `true`
 - `parser_limits_max_local_names` (Number) XML Maximum Distinct Local Names
   - CLI Alias: `max-local-names`
   - Range: `0`-`1048575`
@@ -104,9 +101,6 @@ resource "datapower_xmlmanager" "test" {
 - `static_document_calls` (Boolean) Static Document Call
   - CLI Alias: `static-document-calls`
   - Default value: `true`
-- `support_tx_warn` (Boolean) Support ITX Warnings
-  - CLI Alias: `tx-warn`
-  - Default value: `false`
 - `url_refresh_policy` (String) URL Refresh Policy
   - CLI Alias: `xslrefresh`
   - Reference to: `datapower_urlrefreshpolicy:id`

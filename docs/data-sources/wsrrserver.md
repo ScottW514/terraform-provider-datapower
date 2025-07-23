@@ -14,6 +14,7 @@ WSRR server
 
 ```terraform
 data "datapower_wsrrserver" "test" {
+  depends_on = [datapower_wsrrserver.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -36,7 +37,6 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `password` (String) Password (deprecated)
 - `password_alias` (String) Password alias
 - `server_prefix` (String) WSRR instance prefix
 - `soap_url` (String) SOAP URL

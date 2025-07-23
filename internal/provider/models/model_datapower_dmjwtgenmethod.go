@@ -113,10 +113,10 @@ func (data DmJWTGenMethod) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.Sign.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`sign`, tfutils.StringFromBool(data.Sign, false))
+		body, _ = sjson.Set(body, pathRoot+`sign`, tfutils.StringFromBool(data.Sign, ""))
 	}
 	if !data.Encrypt.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`encrypt`, tfutils.StringFromBool(data.Encrypt, false))
+		body, _ = sjson.Set(body, pathRoot+`encrypt`, tfutils.StringFromBool(data.Encrypt, ""))
 	}
 	return body
 }

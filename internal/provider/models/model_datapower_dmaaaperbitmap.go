@@ -193,25 +193,25 @@ func (data DmAAAPERBitmap) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	body := ""
 	if !data.TargetUrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`target-url`, tfutils.StringFromBool(data.TargetUrl, false))
+		body, _ = sjson.Set(body, pathRoot+`target-url`, tfutils.StringFromBool(data.TargetUrl, ""))
 	}
 	if !data.OriginalUrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`original-url`, tfutils.StringFromBool(data.OriginalUrl, false))
+		body, _ = sjson.Set(body, pathRoot+`original-url`, tfutils.StringFromBool(data.OriginalUrl, ""))
 	}
 	if !data.RequestUri.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`request-uri`, tfutils.StringFromBool(data.RequestUri, false))
+		body, _ = sjson.Set(body, pathRoot+`request-uri`, tfutils.StringFromBool(data.RequestUri, ""))
 	}
 	if !data.RequestOpname.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`request-opname`, tfutils.StringFromBool(data.RequestOpname, false))
+		body, _ = sjson.Set(body, pathRoot+`request-opname`, tfutils.StringFromBool(data.RequestOpname, ""))
 	}
 	if !data.HttpMethod.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`http-method`, tfutils.StringFromBool(data.HttpMethod, false))
+		body, _ = sjson.Set(body, pathRoot+`http-method`, tfutils.StringFromBool(data.HttpMethod, ""))
 	}
 	if !data.XPath.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`XPath`, tfutils.StringFromBool(data.XPath, false))
+		body, _ = sjson.Set(body, pathRoot+`XPath`, tfutils.StringFromBool(data.XPath, ""))
 	}
 	if !data.Metadata.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`metadata`, tfutils.StringFromBool(data.Metadata, false))
+		body, _ = sjson.Set(body, pathRoot+`metadata`, tfutils.StringFromBool(data.Metadata, ""))
 	}
 	return body
 }

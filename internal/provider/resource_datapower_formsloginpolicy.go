@@ -83,14 +83,11 @@ func (r *FormsLoginPolicyResource) Schema(ctx context.Context, req resource.Sche
 				Computed:            true,
 				Default:             stringdefault.StaticString("/LoginPage.htm"),
 			},
-			"use_cookie_attributes": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Attach cookie attribute policy", "use-cookie-attribute", "").AddStringEnum("no", "yes").AddDefaultValue("no").String,
+			"use_cookie_attributes": schema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("Attach cookie attribute policy", "use-cookie-attribute", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("no", "yes"),
-				},
-				Default: stringdefault.StaticString("no"),
+				Default:             booldefault.StaticBool(false),
 			},
 			"cookie_attributes": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Cookie attributes", "cookie-attributes", "cookieattributepolicy").String,

@@ -14,6 +14,7 @@ User account
 
 ```terraform
 data "datapower_user" "test" {
+  depends_on = [datapower_user.test]
 }
 ```
 
@@ -34,7 +35,6 @@ Read-Only:
 - `hashed_snmp_creds` (Attributes List) (see [below for nested schema](#nestedatt--result--hashed_snmp_creds))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `snmp_creds` (Attributes List) SNMP V3 credentials (see [below for nested schema](#nestedatt--result--snmp_creds))
-- `suppress_password_change` (Boolean) Suppress initial password change
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--hashed_snmp_creds"></a>

@@ -46,7 +46,7 @@ type SSLClientProfile struct {
 	CacheSize                     types.Int64                   `tfsdk:"cache_size"`
 	SslClientFeatures             *DmSSLClientFeatures          `tfsdk:"ssl_client_features"`
 	EllipticCurves                types.List                    `tfsdk:"elliptic_curves"`
-	UseCustomSniHostname          types.String                  `tfsdk:"use_custom_sni_hostname"`
+	UseCustomSniHostname          types.Bool                    `tfsdk:"use_custom_sni_hostname"`
 	CustomSniHostname             types.String                  `tfsdk:"custom_sni_hostname"`
 	ValidateHostname              types.Bool                    `tfsdk:"validate_hostname"`
 	HostnameValidationFlags       *DmSSLHostnameValidationFlags `tfsdk:"hostname_validation_flags"`
@@ -71,7 +71,7 @@ var SSLClientProfileObjectType = map[string]attr.Type{
 	"cache_size":                        types.Int64Type,
 	"ssl_client_features":               types.ObjectType{AttrTypes: DmSSLClientFeaturesObjectType},
 	"elliptic_curves":                   types.ListType{ElemType: types.StringType},
-	"use_custom_sni_hostname":           types.StringType,
+	"use_custom_sni_hostname":           types.BoolType,
 	"custom_sni_hostname":               types.StringType,
 	"validate_hostname":                 types.BoolType,
 	"hostname_validation_flags":         types.ObjectType{AttrTypes: DmSSLHostnameValidationFlagsObjectType},
@@ -192,13 +192,13 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`Idcred`, data.Idcred.ValueString())
 	}
 	if !data.ValidateServerCert.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ValidateServerCert`, tfutils.StringFromBool(data.ValidateServerCert, false))
+		body, _ = sjson.Set(body, pathRoot+`ValidateServerCert`, tfutils.StringFromBool(data.ValidateServerCert, ""))
 	}
 	if !data.Valcred.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Valcred`, data.Valcred.ValueString())
 	}
 	if !data.Caching.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Caching`, tfutils.StringFromBool(data.Caching, false))
+		body, _ = sjson.Set(body, pathRoot+`Caching`, tfutils.StringFromBool(data.Caching, ""))
 	}
 	if !data.CacheTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CacheTimeout`, data.CacheTimeout.ValueInt64())
@@ -219,13 +219,13 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		}
 	}
 	if !data.UseCustomSniHostname.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseCustomSNIHostname`, data.UseCustomSniHostname.ValueString())
+		body, _ = sjson.Set(body, pathRoot+`UseCustomSNIHostname`, tfutils.StringFromBool(data.UseCustomSniHostname, "flag"))
 	}
 	if !data.CustomSniHostname.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CustomSNIHostname`, data.CustomSniHostname.ValueString())
 	}
 	if !data.ValidateHostname.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ValidateHostname`, tfutils.StringFromBool(data.ValidateHostname, false))
+		body, _ = sjson.Set(body, pathRoot+`ValidateHostname`, tfutils.StringFromBool(data.ValidateHostname, ""))
 	}
 	if data.HostnameValidationFlags != nil {
 		if !data.HostnameValidationFlags.IsNull() {
@@ -233,13 +233,13 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		}
 	}
 	if !data.HostnameValidationFailOnError.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`HostnameValidationFailOnError`, tfutils.StringFromBool(data.HostnameValidationFailOnError, false))
+		body, _ = sjson.Set(body, pathRoot+`HostnameValidationFailOnError`, tfutils.StringFromBool(data.HostnameValidationFailOnError, ""))
 	}
 	if !data.EnableTls13Compat.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EnableTLS13Compat`, tfutils.StringFromBool(data.EnableTls13Compat, false))
+		body, _ = sjson.Set(body, pathRoot+`EnableTLS13Compat`, tfutils.StringFromBool(data.EnableTls13Compat, ""))
 	}
 	if !data.DisableRenegotiation.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`DisableRenegotiation`, tfutils.StringFromBool(data.DisableRenegotiation, false))
+		body, _ = sjson.Set(body, pathRoot+`DisableRenegotiation`, tfutils.StringFromBool(data.DisableRenegotiation, ""))
 	}
 	if !data.SigAlgs.IsNull() {
 		var values []string
@@ -249,7 +249,7 @@ func (data SSLClientProfile) ToBody(ctx context.Context, pathRoot string) string
 		}
 	}
 	if !data.RequireClosureNotification.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RequireClosureNotification`, tfutils.StringFromBool(data.RequireClosureNotification, false))
+		body, _ = sjson.Set(body, pathRoot+`RequireClosureNotification`, tfutils.StringFromBool(data.RequireClosureNotification, ""))
 	}
 	return body
 }
@@ -320,10 +320,10 @@ func (data *SSLClientProfile) FromBody(ctx context.Context, pathRoot string, res
 	} else {
 		data.EllipticCurves = types.ListNull(types.StringType)
 	}
-	if value := res.Get(pathRoot + `UseCustomSNIHostname`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.UseCustomSniHostname = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `UseCustomSNIHostname`); value.Exists() {
+		data.UseCustomSniHostname = tfutils.BoolFromString(value.String())
 	} else {
-		data.UseCustomSniHostname = types.StringValue("no")
+		data.UseCustomSniHostname = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `CustomSNIHostname`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.CustomSniHostname = tfutils.ParseStringFromGJSON(value)
@@ -433,9 +433,9 @@ func (data *SSLClientProfile) UpdateFromBody(ctx context.Context, pathRoot strin
 		data.EllipticCurves = types.ListNull(types.StringType)
 	}
 	if value := res.Get(pathRoot + `UseCustomSNIHostname`); value.Exists() && !data.UseCustomSniHostname.IsNull() {
-		data.UseCustomSniHostname = tfutils.ParseStringFromGJSON(value)
-	} else if data.UseCustomSniHostname.ValueString() != "no" {
-		data.UseCustomSniHostname = types.StringNull()
+		data.UseCustomSniHostname = tfutils.BoolFromString(value.String())
+	} else if data.UseCustomSniHostname.ValueBool() {
+		data.UseCustomSniHostname = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `CustomSNIHostname`); value.Exists() && !data.CustomSniHostname.IsNull() {
 		data.CustomSniHostname = tfutils.ParseStringFromGJSON(value)
@@ -464,7 +464,7 @@ func (data *SSLClientProfile) UpdateFromBody(ctx context.Context, pathRoot strin
 	}
 	if value := res.Get(pathRoot + `DisableRenegotiation`); value.Exists() && !data.DisableRenegotiation.IsNull() {
 		data.DisableRenegotiation = tfutils.BoolFromString(value.String())
-	} else if data.DisableRenegotiation.ValueBool() {
+	} else if !data.DisableRenegotiation.ValueBool() {
 		data.DisableRenegotiation = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `SigAlgs`); value.Exists() && !data.SigAlgs.IsNull() {

@@ -14,6 +14,7 @@ Multi-Protocol Gateway
 
 ```terraform
 data "datapower_multiprotocolgateway" "test" {
+  depends_on = [datapower_multiprotocolgateway.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -83,7 +84,6 @@ Read-Only:
 - `parser_limits_attribute_count` (Number) XML Attribute Count
 - `parser_limits_element_depth` (Number) XML Element Depth
 - `parser_limits_external_references` (String) XML External Reference Handling
-- `parser_limits_forbid_external_references` (Boolean) XML Forbid External References
 - `parser_limits_max_local_names` (Number) XML Maximum Distinct Local Names
 - `parser_limits_max_namespaces` (Number) XML Maximum Distinct Namespaces
 - `parser_limits_max_node_size` (Number) XML Maximum Node Size

@@ -305,8 +305,8 @@ func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string) string {
 {{- range .Attributes}}
 {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")}}
     {{- if and (ne .Name "AppDomain")}}
-	if {{- if .Computed}} data.{{toGoName .TfName}}.Value{{if eq .Type "Int64"}}Int64() != 0{{else}}String() != ""{{end}} &&{{- end}} !data.{{toGoName .TfName}}.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+{{.Path}}, {{if eq .Type "Bool"}}tfutils.StringFromBool(data.{{toGoName .TfName}}, {{.BoolAdmin}}){{else}}data.{{toGoName .TfName}}.Value{{.Type}}(){{end}})
+	if !data.{{toGoName .TfName}}.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+{{.Path}}, {{if eq .Type "Bool"}}tfutils.StringFromBool(data.{{toGoName .TfName}}, {{quote .BoolType}}){{else}}data.{{toGoName .TfName}}.Value{{.Type}}(){{end}})
 	}
     {{- end}}
 {{- else if isList .}}
@@ -493,7 +493,7 @@ func (data *{{.Name}}) UpdateFromBody(ctx context.Context, pathRoot string, res 
 {{- end}}
 }
 
-{{- if .UpdateComputed}}
+{{- if updateComputed .Attributes}}
 func (data *{{.Name}}) UpdateUnknownFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
     if pathRoot != "" {
         pathRoot = pathRoot + "."
@@ -544,11 +544,13 @@ func (data *{{.Name}}) UpdateUnknownFromBody(ctx context.Context, pathRoot strin
     	}
     }
     {{- else if isObject .}}
-    if data.{{toGoName .TfName}}.IsUnknown() {
+    if data.{{toGoName .TfName}} == nil {
         if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
-            data.{{toGoName .TfName}}.UpdateFromBody(ctx, "", value)
-        } else {
-            data.{{toGoName .TfName}} = nil
+            d := {{.DmType}}{}
+            d.UpdateFromBody(ctx, "", value)
+            if !d.IsNull() {
+                data.{{toGoName .TfName}} = &d
+            }
         }
     }
     {{- end}}

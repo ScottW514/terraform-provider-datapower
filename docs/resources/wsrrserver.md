@@ -32,8 +32,6 @@ resource "datapower_wsrrserver" "test" {
 
 ### Optional
 
-- `password` (String) Password (deprecated)
-  - CLI Alias: `password`
 - `password_alias` (String) Password alias
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`

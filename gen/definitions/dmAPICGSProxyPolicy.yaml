@@ -1,0 +1,20 @@
+name: DmAPICGSProxyPolicy
+model_only: true
+attributes:
+  - name: ProxyPolicyEnable
+    type: Bool
+    required: true
+    default: false
+    description: 'Enable API Manager proxy'
+  - name: RemoteAddress
+    type: String
+    required: true
+    description: 'API Manager host'
+    example: "localhost"
+    test_value: '"localhost"'
+  - name: RemotePort
+    type: Int64
+    required: true
+    description: 'API Manager port'
+    example: 8080
+    test_value: 8080

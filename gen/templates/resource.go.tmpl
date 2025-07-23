@@ -88,9 +88,9 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 				NestedObject:        models.{{.ElementType}}ResourceSchema,
 			{{- end}}
 		{{- end}}
-		{{- if and .Required (not (or (len .Default) (len .ListDefault)))}}
+		{{- if and .Required (not .Computed) (not (or (len .Default) (len .ListDefault)))}}
 				Required:            true,
-		{{- else}}
+		{{- else if not .Computed}}
 				Optional:            true,
 		{{- end}}
 		{{- if or .Computed (and (or (len .Default) (len .ListDefault)) (or (ne .Type "List") (or (eq .ElementType "String"))))}}
@@ -237,7 +237,7 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 	}
 
 {{- end}}
-{{- if .UpdateComputed}}
+{{- if updateComputed .Attributes}}
 
 	{{- if or (eq .Name "Domain") .UpdateOnly}}
 	getRes, getErr := r.client.Get(data.GetPath())

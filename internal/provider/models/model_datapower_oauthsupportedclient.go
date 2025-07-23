@@ -271,7 +271,7 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.Customized.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Customized`, tfutils.StringFromBool(data.Customized, false))
+		body, _ = sjson.Set(body, pathRoot+`Customized`, tfutils.StringFromBool(data.Customized, ""))
 	}
 	if !data.CustomizedProcessUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CustomizedProcessUrl`, data.CustomizedProcessUrl.ValueString())
@@ -290,10 +290,10 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`ClientType`, data.ClientType.ValueString())
 	}
 	if !data.CheckClientCredential.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CheckClientCredential`, tfutils.StringFromBool(data.CheckClientCredential, false))
+		body, _ = sjson.Set(body, pathRoot+`CheckClientCredential`, tfutils.StringFromBool(data.CheckClientCredential, ""))
 	}
 	if !data.UseValidationUrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseValidationUrl`, tfutils.StringFromBool(data.UseValidationUrl, false))
+		body, _ = sjson.Set(body, pathRoot+`UseValidationUrl`, tfutils.StringFromBool(data.UseValidationUrl, ""))
 	}
 	if !data.ClientAuthenMethod.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ClientAuthenMethod`, data.ClientAuthenMethod.ValueString())
@@ -302,7 +302,7 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`ClientValCred`, data.ClientValCred.ValueString())
 	}
 	if !data.GenerateClientSecret.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`GenerateClientSecret`, tfutils.StringFromBool(data.GenerateClientSecret, false))
+		body, _ = sjson.Set(body, pathRoot+`GenerateClientSecret`, tfutils.StringFromBool(data.GenerateClientSecret, ""))
 	}
 	if !data.ClientSecret.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ClientSecret`, data.ClientSecret.ValueString())
@@ -326,7 +326,7 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string) st
 		}
 	}
 	if !data.CustomScopeCheck.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CustomScopeCheck`, tfutils.StringFromBool(data.CustomScopeCheck, false))
+		body, _ = sjson.Set(body, pathRoot+`CustomScopeCheck`, tfutils.StringFromBool(data.CustomScopeCheck, ""))
 	}
 	if !data.Scope.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Scope`, data.Scope.ValueString())
@@ -362,7 +362,7 @@ func (data OAuthSupportedClient) ToBody(ctx context.Context, pathRoot string) st
 		body, _ = sjson.Set(body, pathRoot+`MaxConsentLifeTime`, data.MaxConsentLifeTime.ValueInt64())
 	}
 	if !data.CustomResourceOwner.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CustomResourceOwner`, tfutils.StringFromBool(data.CustomResourceOwner, false))
+		body, _ = sjson.Set(body, pathRoot+`CustomResourceOwner`, tfutils.StringFromBool(data.CustomResourceOwner, ""))
 	}
 	if !data.ResourceOwnerUrl.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ResourceOwnerUrl`, data.ResourceOwnerUrl.ValueString())

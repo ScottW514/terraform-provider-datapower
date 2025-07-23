@@ -1,0 +1,404 @@
+name: RBMSettings
+description: 'RBM settings (`default` domain only)'
+cli_alias: 'rbm'
+cmd_group: 'rbm'
+rest_endpoint: '/mgmt/config/default/RBMSettings/RBM-Settings'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: true
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: AUMethod
+    type: String
+    enum:
+      - 'local'
+      - 'xmlfile'
+      - 'ldap'
+      - 'radius'
+      - 'spnego'
+      - 'zosnss'
+      - 'custom'
+      - 'client-ssl'
+      - 'oidc'
+    required: true
+    default: 'local'
+    description: 'Authentication method'
+    cli_alias: au-method
+  - name: SSHAUMethod
+    dm_type: DmRBMSSHAuthenticateType
+    description: 'SSH authentication method'
+    cli_alias: ssh-au-method
+  - name: CAPubKeyFile
+    type: String
+    description: 'CA user public key file'
+    cli_alias: ssh-ca-pubkey-file
+  - name: RevokedKeys
+    type: List
+    element_type: String
+    description: 'Revoked keys'
+    cli_alias: ssh-revoked-keys
+  - name: AUZOSNSSConfig
+    type: String
+    reference_to: ZosNSSClient
+    description: 'z/OS NSS client'
+    cli_alias: zos-nss-au
+  - name: AUOIDCScope
+    type: String
+    default: 'openid'
+    description: 'Scope'
+    cli_alias: au-oidc-scope
+  - name: AUOIDCClientID
+    type: String
+    description: 'Client ID'
+    cli_alias: au-oidc-client-id
+  - name: AUOIDCClientSecret
+    type: String
+    reference_to: PasswordAlias
+    description: 'Client secret'
+    cli_alias: au-oidc-client-secret
+  - name: AUOIDCIdentityServiceURL
+    type: String
+    description: 'Identity service URL'
+    cli_alias: au-oidc-identity-service-url
+  - name: AUOIDCKeyFetchInterval
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    default: 30
+    description: 'Retrieval interval for public keys.'
+    cli_alias: au-oidc-key-fetch-interval
+  - name: AUOIDCIdentityServiceURLSSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: au-oidc-identity-service-ssl-client
+  - name: AUKerberosKeytab
+    type: String
+    reference_to: CryptoKerberosKeytab
+    description: 'Kerberos keytab'
+    cli_alias: au-kerberos-keytab
+  - name: AUCustomURL
+    type: String
+    description: 'Custom URL'
+    cli_alias: au-custom-url
+  - name: AUInfoURL
+    type: String
+    description: 'XML file URL'
+    cli_alias: au-info-url
+  - name: AUSSLValcred
+    type: String
+    reference_to: CryptoValCred
+    description: 'Validation credentials'
+    cli_alias: au-valcred
+  - name: AUHost
+    type: String
+    description: 'Server host'
+    cli_alias: au-server-host
+  - name: AUPort
+    type: Int64
+    description: 'Server port'
+    cli_alias: au-server-port
+  - name: AULDAPSearchForDN
+    type: Bool
+    default: false
+    description: 'Search LDAP for DN'
+    cli_alias: au-ldap-search
+  - name: AULDAPBindDN
+    type: String
+    description: 'LDAP bind DN'
+    cli_alias: au-ldap-bind-dn
+# DEPRECATED
+#  - name: AULDAPBindPassword
+#    type: String
+#    sensitive: true
+#    description: 'LDAP bind password (deprecated)'
+#    deprecated: true
+#    cli_alias: au-ldap-bind-password
+  - name: AULDAPBindPasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'LDAP bind password alias'
+    cli_alias: au-ldap-bind-password-alias
+  - name: AULDAPSearchParameters
+    type: String
+    reference_to: LDAPSearchParameters
+    description: 'LDAP search parameters'
+    cli_alias: au-ldap-parameters
+  - name: AULDAPPrefix
+    type: String
+    default: 'cn='
+    description: 'LDAP prefix'
+    cli_alias: ldap-prefix
+  - name: AUForceDNLDAPOrder
+    type: Bool
+    default: false
+    description: 'Convert DN to LDAP format'
+    cli_alias: au-force-dn-ldap-order
+  - name: LDAPsuffix
+    type: String
+    description: 'LDAP suffix'
+    cli_alias: ldap-suffix
+# DEPRECATED
+#  - name: LDAPSSLProxyProfile
+#    type: String
+#    reference_to: SSLProxyProfile
+#    description: 'TLS proxy profile (deprecated)'
+#    deprecated: true
+#    cli_alias: ldap-sslproxy
+  - name: AULDAPLoadBalanceGroup
+    type: String
+    reference_to: LoadBalancerGroup
+    description: 'Load balancer group'
+    cli_alias: loadbalancer-group
+  - name: AUCacheAllow
+    type: String
+    enum:
+      - 'absolute'
+      - 'disabled'
+      - 'maximum'
+      - 'minimum'
+    required: true
+    default: 'absolute'
+    description: 'Authentication cache mode'
+    cli_alias: au-cache-mode
+  - name: AUCacheTTL
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    default: 600
+    description: 'Authentication cache lifetime'
+    cli_alias: au-cache-ttl
+  - name: AULDAPReadTimeout
+    type: Int64
+    maximum: 86400
+    default: 60
+    description: 'LDAP read timeout'
+    cli_alias: au-ldap-readtimeout
+  - name: MCMethod
+    type: String
+    enum:
+      - 'local'
+      - 'xmlfile'
+      - 'custom'
+    required: true
+    default: 'local'
+    description: 'Credential-mapping method'
+    cli_alias: mc-method
+  - name: MCCustomURL
+    type: String
+    description: 'Custom URL'
+    cli_alias: mc-custom-url
+  - name: MCLDAPSearchForGroup
+    type: Bool
+    default: false
+    description: 'Search LDAP for group name'
+    cli_alias: mc-ldap-search
+  - name: MCHost
+    type: String
+    description: 'Server host'
+    cli_alias: mc-server-host
+  - name: MCPort
+    type: Int64
+    description: 'Server port'
+    cli_alias: mc-server-port
+# DEPRECATED
+#  - name: MCLDAPSSLProxyProfile
+#    type: String
+#    reference_to: SSLProxyProfile
+#    description: 'TLS proxy profile (deprecated)'
+#    deprecated: true
+#    cli_alias: mc-ldap-sslproxy
+  - name: MCLDAPLoadBalanceGroup
+    type: String
+    reference_to: LoadBalancerGroup
+    description: 'Load balancer group'
+    cli_alias: mc-loadbalancer-group
+  - name: MCLDAPBindDN
+    type: String
+    description: 'LDAP bind DN'
+    cli_alias: mc-ldap-bind-dn
+# DEPRECATED
+#  - name: MCLDAPBindPassword
+#    type: String
+#    sensitive: true
+#    description: 'LDAP bind password (deprecated)'
+#    deprecated: true
+#    cli_alias: mc-ldap-bind-password
+  - name: MCLDAPBindPasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'LDAP bind password alias'
+    cli_alias: mc-ldap-bind-password-alias
+  - name: MCLDAPSearchParameters
+    type: String
+    reference_to: LDAPSearchParameters
+    description: 'LDAP search parameters'
+    cli_alias: mc-ldap-parameters
+  - name: MCInfoURL
+    type: String
+    description: 'XML file URL'
+    cli_alias: mc-info-url
+  - name: MCLDAPReadTimeout
+    type: Int64
+    maximum: 86400
+    default: 60
+    description: 'LDAP read timeout'
+    cli_alias: mc-ldap-readtimeout
+  - name: LDAPVersion
+    type: String
+    enum:
+      - 'v2'
+      - 'v3'
+    description: 'LDAP version'
+    cli_alias: ldap-version
+  - name: FallbackLogin
+    type: String
+    enum:
+      - 'disabled'
+      - 'local'
+      - 'restricted'
+    default: 'disabled'
+    description: 'Local accounts for fallback'
+    cli_alias: fallback-login
+  - name: FallbackUser
+    type: List
+    reference_to: User
+    element_type: String
+    description: 'Fallback users'
+    cli_alias: fallback-user
+  - name: ApplyToCLI
+    type: Bool
+    default: false
+    description: 'Enforce RBM on CLI'
+    cli_alias: apply-cli
+  - name: RestrictAdminToSerialPort
+    type: Bool
+    default: false
+    description: 'Restrict admin to serial'
+    cli_alias: restrict-admin
+  - name: MinPasswordLength
+    type: Int64
+    minimum: 1
+    maximum: 128
+    required: true
+    default: 6
+    description: 'Minimum length'
+    cli_alias: pwd-minimum-length
+  - name: RequireMixedCase
+    type: Bool
+    required: true
+    default: false
+    description: 'Require mixed case'
+    cli_alias: pwd-mixed-case
+  - name: RequireDigit
+    type: Bool
+    required: true
+    default: false
+    description: 'Require number'
+    cli_alias: pwd-digit
+  - name: RequireNonAlphaNumeric
+    type: Bool
+    required: true
+    default: false
+    description: 'Require non-alphanumeric'
+    cli_alias: pwd-nonalphanumeric
+  - name: DisallowUsernameSubstring
+    type: Bool
+    required: true
+    default: false
+    description: 'Disallow username substring'
+    cli_alias: pwd-username
+  - name: DoPasswordAging
+    type: Bool
+    required: true
+    default: false
+    description: 'Enable aging'
+    cli_alias: pwd-aging
+  - name: MaxPasswordAge
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 30
+    description: 'Max age'
+    cli_alias: pwd-max-age
+  - name: DoPasswordHistory
+    type: Bool
+    required: true
+    default: false
+    description: 'Control reuse'
+    cli_alias: pwd-history
+  - name: NumOldPasswords
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 5
+    description: 'Reuse history'
+    cli_alias: pwd-max-history
+  - name: CliTimeout
+    type: Int64
+    maximum: 65535
+    default: 0
+    required: true
+    description: 'CLI idle timeout'
+    cli_alias: cli-timeout
+  - name: MaxFailedLogin
+    type: Int64
+    maximum: 64
+    default: 0
+    required: true
+    description: 'Max failed logins'
+    cli_alias: max-login-failure
+  - name: LockoutPeriod
+    type: Int64
+    maximum: 1000
+    default: 1
+    description: 'Lockout duration'
+    cli_alias: lockout-duration
+  - name: MCForceDNLDAPOrder
+    type: Bool
+    default: false
+    description: 'Convert DN to LDAP format'
+    cli_alias: mc-force-dn-ldap-order
+  - name: PasswordHashAlgorithm
+    type: String
+    enum:
+      - 'md5crypt'
+      - 'sha256crypt'
+    default: 'md5crypt'
+    description: 'Password hash algorithm'
+    cli_alias: password-hash-algorithm
+  - name: LDAPSSLClientConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: LDAPSSLClientProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: MCLDAPSSLClientConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: mc-ssl-client-type
+  - name: MCLDAPSSLClientProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: mc-ssl-client

@@ -135,10 +135,6 @@ func (d *TAMDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 							MarkdownDescription: "Registry Server TLS Key File",
 							Computed:            true,
 						},
-						"ldapssl_key_file_password": schema.StringAttribute{
-							MarkdownDescription: "Registry Server TLS Key File Password (deprecated)",
-							Computed:            true,
-						},
 						"ldapssl_key_file_password_alias": schema.StringAttribute{
 							MarkdownDescription: "Registry Server TLS Key File Password Alias",
 							Computed:            true,

@@ -209,7 +209,7 @@ func (data SQLDataSource) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`DataSourcePort`, data.DataSourcePort.ValueInt64())
 	}
 	if !data.LimitReturnedData.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LimitReturnedData`, tfutils.StringFromBool(data.LimitReturnedData, false))
+		body, _ = sjson.Set(body, pathRoot+`LimitReturnedData`, tfutils.StringFromBool(data.LimitReturnedData, ""))
 	}
 	if !data.LimitReturnedDataSize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LimitReturnedDataSize`, data.LimitReturnedDataSize.ValueInt64())
@@ -237,7 +237,7 @@ func (data SQLDataSource) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`IdleTimeout`, data.IdleTimeout.ValueInt64())
 	}
 	if !data.LoadBalancing.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LoadBalancing`, tfutils.StringFromBool(data.LoadBalancing, false))
+		body, _ = sjson.Set(body, pathRoot+`LoadBalancing`, tfutils.StringFromBool(data.LoadBalancing, ""))
 	}
 	if !data.EncryptionMethodMssql.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EncryptionMethodMSSQL`, data.EncryptionMethodMssql.ValueString())
@@ -258,7 +258,7 @@ func (data SQLDataSource) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`HostNameInCertificate`, data.HostNameInCertificate.ValueString())
 	}
 	if !data.ValidateHostName.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ValidateHostName`, tfutils.StringFromBool(data.ValidateHostName, false))
+		body, _ = sjson.Set(body, pathRoot+`ValidateHostName`, tfutils.StringFromBool(data.ValidateHostName, ""))
 	}
 	if !data.KeystoreRef.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`KeystoreRef`, data.KeystoreRef.ValueString())

@@ -1,0 +1,23 @@
+name: DmQMFileSystemUsage
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    description: 'Queue manager'
+    cli_alias: name
+  - name: WarningThreshold
+    type: Int64
+    maximum: 100
+    required: true
+    default: 75
+    description: 'Warning threshold'
+    cli_alias: warning
+  - name: CriticalThreshold
+    type: Int64
+    maximum: 100
+    required: true
+    default: 90
+    description: 'Critical threshold'
+    cli_alias: critical

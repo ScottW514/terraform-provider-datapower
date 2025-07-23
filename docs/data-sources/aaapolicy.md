@@ -14,6 +14,7 @@ AAA policy
 
 ```terraform
 data "datapower_aaapolicy" "test" {
+  depends_on = [datapower_aaapolicy.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -143,8 +144,6 @@ Read-Only:
   - CLI Alias: `au-ldap-attributes`
 - `auldap_bind_dn` (String) LDAP bind DN
   - CLI Alias: `ldap-bind-dn`
-- `auldap_bind_password` (String) LDAP bind password (deprecated)
-  - CLI Alias: `ldap-bind-password`
 - `auldap_bind_password_alias` (String) LDAP bind password alias
   - CLI Alias: `ldap-bind-password-alias`
   - Reference to: `datapower_passwordalias:id`
@@ -171,8 +170,6 @@ Read-Only:
   - CLI Alias: `ldap-suffix`
 - `aultpa_key_file` (String) LTPA key file
   - CLI Alias: `lpta-key-file`
-- `aultpa_key_file_password` (String) LTPA key file password (deprecated)
-  - CLI Alias: `lpta-key-password`
 - `aultpa_key_file_password_alias` (String) LTPA key file password alias
   - CLI Alias: `ltpa-key-password-alias`
   - Reference to: `datapower_passwordalias:id`
@@ -331,8 +328,6 @@ Read-Only:
   - CLI Alias: `az-ldap-attributes`
 - `azldap_bind_dn` (String) LDAP bind DN
   - CLI Alias: `ldap-bind-dn`
-- `azldap_bind_password` (String) LDAP bind password (deprecated)
-  - CLI Alias: `ldap-bind-password`
 - `azldap_bind_password_alias` (String) LDAP bind password alias
   - CLI Alias: `ldap-bind-password-alias`
   - Reference to: `datapower_passwordalias:id`

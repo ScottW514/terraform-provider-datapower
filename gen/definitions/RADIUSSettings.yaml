@@ -1,0 +1,48 @@
+name: RADIUSSettings
+description: 'RADIUS settings (`default` domain only)'
+cli_alias: 'radius'
+cmd_group: 'radius'
+rest_endpoint: '/mgmt/config/default/RADIUSSettings/RADIUS-Settings'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: false
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: IdgId
+    tf_name: id
+    type: String
+  - name: Timeout
+    type: Int64
+    minimum: 1
+    maximum: 30000
+    default: 1000
+    description: 'Timeout'
+    cli_alias: timeout
+  - name: Retries
+    type: Int64
+    minimum: 1
+    maximum: 10
+    default: 3
+    description: 'Retries'
+    cli_alias: retries
+# DEPRECATED
+#  - name: Servers
+#    type: List
+#    element_type: DmRadiusServer
+#    description: 'CLI (deprecated)'
+#    deprecated: true
+#    cli_alias: server
+  - name: AAAServers
+    type: List
+    element_type: DmRadiusServer
+    description: 'AAA and RBM'
+    cli_alias: aaaserver

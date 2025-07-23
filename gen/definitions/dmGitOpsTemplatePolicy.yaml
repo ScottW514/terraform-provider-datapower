@@ -1,0 +1,7 @@
+name: DmGitOpsTemplatePolicy
+model_only: true
+list_item: true
+attributes:
+  - name: RemotePolicy
+    type: String
+    description: 'Remote policy'

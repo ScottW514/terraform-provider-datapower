@@ -14,6 +14,7 @@ User agent
 
 ```terraform
 data "datapower_httpuseragent" "test" {
+  depends_on = [datapower_httpuseragent.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -80,7 +81,6 @@ Read-Only:
 
 Read-Only:
 
-- `password` (String) Password (deprecated)
 - `password_alias` (String) Password alias
   - Reference to: `datapower_passwordalias:id`
 - `reg_exp` (String) URL matching expression

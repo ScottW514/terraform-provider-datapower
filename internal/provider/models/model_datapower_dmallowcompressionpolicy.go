@@ -92,7 +92,7 @@ func (data DmAllowCompressionPolicy) ToBody(ctx context.Context, pathRoot string
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}
 	if !data.AllowCompression.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AllowCompression`, tfutils.StringFromBool(data.AllowCompression, false))
+		body, _ = sjson.Set(body, pathRoot+`AllowCompression`, tfutils.StringFromBool(data.AllowCompression, ""))
 	}
 	return body
 }

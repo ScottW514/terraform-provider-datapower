@@ -54,7 +54,7 @@ var DmACEDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 			Computed:            true,
 		},
 		"address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Address range", "", "").AddStringEnum("[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]{1,2}", "[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+ [0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+", "((([\\da-fA-F]{1,4}|:|)(:|)){1,7}([\\da-fA-F]{1,4}|:)/([1-9]?\\d|1[01]\\d|12[0-8]))", "((([\\da-fA-F]{1,4}|:|)(:|)){1,5}([\\da-fA-F]{1,4}|):(([1-9]?\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}([1-9]?\\d|1\\d{2}|2[0-4]\\d|25[0-5])/([1-9]?\\d|1[01]\\d|12[0-8]))").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Address range", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -69,11 +69,8 @@ var DmACEResourceSchema = ResourceSchema.NestedAttributeObject{
 			},
 		},
 		"address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Address range", "", "").AddStringEnum("[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]{1,2}", "[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+ [0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+", "((([\\da-fA-F]{1,4}|:|)(:|)){1,7}([\\da-fA-F]{1,4}|:)/([1-9]?\\d|1[01]\\d|12[0-8]))", "((([\\da-fA-F]{1,4}|:|)(:|)){1,5}([\\da-fA-F]{1,4}|):(([1-9]?\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}([1-9]?\\d|1\\d{2}|2[0-4]\\d|25[0-5])/([1-9]?\\d|1[01]\\d|12[0-8]))").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Address range", "", "").String,
 			Required:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]{1,2}", "[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+ [0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+", "((([\\da-fA-F]{1,4}|:|)(:|)){1,7}([\\da-fA-F]{1,4}|:)/([1-9]?\\d|1[01]\\d|12[0-8]))", "((([\\da-fA-F]{1,4}|:|)(:|)){1,5}([\\da-fA-F]{1,4}|):(([1-9]?\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}([1-9]?\\d|1\\d{2}|2[0-4]\\d|25[0-5])/([1-9]?\\d|1[01]\\d|12[0-8]))"),
-			},
 		},
 	},
 }

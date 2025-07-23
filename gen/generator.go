@@ -96,12 +96,11 @@ type YamlConfig struct {
 	RestEndpoint      string                `yaml:"rest_endpoint"`
 	UpdateOnly        bool                  `yaml:"update_only"`
 	DefaultDomainOnly bool                  `yaml:"default_domain_only"`
-	UpdateComputed    bool                  `yaml:"update_computed"`
 	PutCreate         bool                  `yaml:"put_create"`
 	Description       string                `yaml:"description"`
 	Deprecated        string                `yaml:"deprecated"`
 	CliAlias          string                `yaml:"cli_alias"`
-	SkipMinimumTest   bool                  `yaml:"skip_minimum_test"`
+	SkipTest          bool                  `yaml:"skip_test"`
 	TestPrerequisites string                `yaml:"test_prerequisites"`
 	Attributes        []YamlConfigAttribute `yaml:"attributes"`
 	DataResource      []string
@@ -112,7 +111,7 @@ type YamlConfigAttribute struct {
 	Path            string   `yaml:"path"`
 	TfName          string   `yaml:"tf_name"`
 	Type            string   `yaml:"type"`
-	BoolAdmin       bool     `yaml:"bool_admin"`
+	BoolType        string   `yaml:"bool_type"`
 	DmType          string   `yaml:"dm_type"`
 	ElementType     string   `yaml:"element_type"`
 	Required        bool     `yaml:"required"`
@@ -250,6 +249,16 @@ func toGoName(s string) string {
 	return b.String()
 }
 
+// updateComputed returns true if Computed or WriteOnly are set on any attributes.
+func updateComputed(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.Computed || attr.WriteOnly {
+			return true
+		}
+	}
+	return false
+}
+
 // Map of templating functions.
 var functions = template.FuncMap{
 	"camelCase":             camelCase,
@@ -263,6 +272,7 @@ var functions = template.FuncMap{
 	"isStringList":          isStringList,
 	"snakeCase":             snakeCase,
 	"strContains":           strings.Contains,
+	"updateComputed":        updateComputed,
 	"toGoName":              toGoName,
 	"quote":                 strconv.Quote,
 }

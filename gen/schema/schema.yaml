@@ -8,7 +8,7 @@ default_domain_only: bool(required=False) # Set to true if this endpoint is vali
 put_create: bool(required=False) # Set to true if the PUT request is used for create
 description: str(required=False) # Define description
 deprecated: bool(required=False) # Set to true if deprecated
-skip_minimum_test: bool(required=False) # Do not perform a "minimum" (only mandatory attributes) test
+skip_test: bool(required=False) # Do not perform tests
 attributes: list(include('attribute'), required=False) # List of attributes
 test_prerequisites: str(required=False) # HCL code that is included in the acceptance tests to define prerequisites
 update_computed: bool(required=False) # Set to true if model has attributes that need to be updated after a write
@@ -18,7 +18,7 @@ attributes:
   path: str(required=False) # JSON path to the attribute. Defaults to name
   tf_name: str(required=False) # Terraform name for the attribute
   type: enum('String', 'Int64', 'Bool', 'List', required=False) # Type of the attribute
-  bool_admin: bool(required=False) # Set to true if the attribute is an admin state
+  bool_type: enum('admin', 'toggle', 'flag', required=False) # admin: "enabled/disabled", toggle: "on/off", flag: "yes/no"
   dm_type: str(required=False) # Datapower Type
   element_type: enum('String', 'Int64', required=False) # only relevant if type is either 'List' or 'Set'
   required: bool(required=False) # Set to true if the attribute is mandatory
@@ -31,6 +31,7 @@ attributes:
   test_value: str(required=False) # Value used for acceptance test. Overrides example, list_example, default and list_default.
   example: any(str(), int(), bool(), num(), required=False) # Example value for documentation, also used for acceptance test if test_value is not set
   default: any(str(), int(), bool(), required=False) # Default value for the attribute, also used for acceptance test in test_value and example are not set
+  list_default: list(str(), required=False) # Default values for the string list attribute, also used for acceptance test in test_value and example are not set
   enum: list(str(), required=False) # List of enum values, only relevant if type is "String"
   minimum: int(required=False) # Minimum value of an integer, only relevant if type is "Int64"
   maximum: int(required=False) # Maximum value of an integer, only relevant if type is "Int64"

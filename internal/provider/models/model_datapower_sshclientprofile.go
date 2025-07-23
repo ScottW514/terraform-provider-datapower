@@ -40,7 +40,6 @@ type SSHClientProfile struct {
 	ProfileUsage                types.String                    `tfsdk:"profile_usage"`
 	SshUserAuthentication       *DmSSHUserAuthenticationMethods `tfsdk:"ssh_user_authentication"`
 	UserPrivateKey              types.String                    `tfsdk:"user_private_key"`
-	Password                    types.String                    `tfsdk:"password"`
 	PasswordAlias               types.String                    `tfsdk:"password_alias"`
 	PersistentConnections       types.Bool                      `tfsdk:"persistent_connections"`
 	PersistentConnectionTimeout types.Int64                     `tfsdk:"persistent_connection_timeout"`
@@ -58,7 +57,6 @@ var SSHClientProfileObjectType = map[string]attr.Type{
 	"profile_usage":                 types.StringType,
 	"ssh_user_authentication":       types.ObjectType{AttrTypes: DmSSHUserAuthenticationMethodsObjectType},
 	"user_private_key":              types.StringType,
-	"password":                      types.StringType,
 	"password_alias":                types.StringType,
 	"persistent_connections":        types.BoolType,
 	"persistent_connection_timeout": types.Int64Type,
@@ -97,9 +95,6 @@ func (data SSHClientProfile) IsNull() bool {
 		}
 	}
 	if !data.UserPrivateKey.IsNull() {
-		return false
-	}
-	if !data.Password.IsNull() {
 		return false
 	}
 	if !data.PasswordAlias.IsNull() {
@@ -151,20 +146,17 @@ func (data SSHClientProfile) ToBody(ctx context.Context, pathRoot string) string
 	if !data.UserPrivateKey.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserPrivateKey`, data.UserPrivateKey.ValueString())
 	}
-	if !data.Password.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Password`, data.Password.ValueString())
-	}
 	if !data.PasswordAlias.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PasswordAlias`, data.PasswordAlias.ValueString())
 	}
 	if !data.PersistentConnections.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PersistentConnections`, tfutils.StringFromBool(data.PersistentConnections, false))
+		body, _ = sjson.Set(body, pathRoot+`PersistentConnections`, tfutils.StringFromBool(data.PersistentConnections, ""))
 	}
 	if !data.PersistentConnectionTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PersistentConnectionTimeout`, data.PersistentConnectionTimeout.ValueInt64())
 	}
 	if !data.StrictHostKeyChecking.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`StrictHostKeyChecking`, tfutils.StringFromBool(data.StrictHostKeyChecking, false))
+		body, _ = sjson.Set(body, pathRoot+`StrictHostKeyChecking`, tfutils.StringFromBool(data.StrictHostKeyChecking, ""))
 	}
 	if !data.Ciphers.IsNull() {
 		var values []string
@@ -224,11 +216,6 @@ func (data *SSHClientProfile) FromBody(ctx context.Context, pathRoot string, res
 		data.UserPrivateKey = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.UserPrivateKey = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `Password`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Password = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Password = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PasswordAlias = tfutils.ParseStringFromGJSON(value)
@@ -300,11 +287,6 @@ func (data *SSHClientProfile) UpdateFromBody(ctx context.Context, pathRoot strin
 		data.UserPrivateKey = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.UserPrivateKey = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `Password`); value.Exists() && !data.Password.IsNull() {
-		data.Password = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Password = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PasswordAlias`); value.Exists() && !data.PasswordAlias.IsNull() {
 		data.PasswordAlias = tfutils.ParseStringFromGJSON(value)

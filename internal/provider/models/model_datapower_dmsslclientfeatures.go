@@ -129,13 +129,13 @@ func (data DmSSLClientFeatures) ToBody(ctx context.Context, pathRoot string) str
 	}
 	body := ""
 	if !data.UseSni.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`use-sni`, tfutils.StringFromBool(data.UseSni, false))
+		body, _ = sjson.Set(body, pathRoot+`use-sni`, tfutils.StringFromBool(data.UseSni, ""))
 	}
 	if !data.PermitInsecureServers.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`permit-insecure-servers`, tfutils.StringFromBool(data.PermitInsecureServers, false))
+		body, _ = sjson.Set(body, pathRoot+`permit-insecure-servers`, tfutils.StringFromBool(data.PermitInsecureServers, ""))
 	}
 	if !data.Compression.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`compression`, tfutils.StringFromBool(data.Compression, false))
+		body, _ = sjson.Set(body, pathRoot+`compression`, tfutils.StringFromBool(data.Compression, ""))
 	}
 	return body
 }

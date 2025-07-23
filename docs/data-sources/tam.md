@@ -14,6 +14,7 @@ Access Manager Client
 
 ```terraform
 data "datapower_tam" "test" {
+  depends_on = [datapower_tam.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -43,7 +44,6 @@ Read-Only:
 - `ldap_use_ssl` (Boolean) Use TLS with Registry Server
 - `ldapssl_key_file` (String) Registry Server TLS Key File
 - `ldapssl_key_file_label` (String) Registry Server TLS Key File Label
-- `ldapssl_key_file_password` (String) Registry Server TLS Key File Password (deprecated)
 - `ldapssl_key_file_password_alias` (String) Registry Server TLS Key File Password Alias
 - `ldapssl_port` (Number) LDAP TLS Port
 - `listen_mode` (Boolean) Accept Update Notifications

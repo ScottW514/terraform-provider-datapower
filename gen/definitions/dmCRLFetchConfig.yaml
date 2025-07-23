@@ -1,0 +1,92 @@
+name: DmCRLFetchConfig
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    description: 'Policy name'
+  - name: FetchType
+    type: String
+    enum:
+      - 'http'
+      - 'ldap'
+    required: true
+    description: 'Protocol'
+  - name: IssuerValcred
+    type: String
+    reference_to: CryptoValCred
+    required: true
+    description: 'Issuer validation credentials'
+    cli_alias: issuer
+  - name: RefreshInterval
+    type: Int64
+    minimum: 1
+    maximum: 1440
+    required: true
+    default: 240
+    description: 'Refresh interval'
+    cli_alias: refresh
+  # - name: CryptographicProfile
+  #   type: String
+  #   description: 'Cryptographic profile (deprecated)'
+  #   deprecated: true
+  #   cli_alias: ssl-profile
+  - name: URL
+    type: String
+    example: 'http://foo.com/crl'
+    description: 'Fetch URL'
+    cli_alias: fetch-url
+  - name: RemoteAddress
+    type: String
+    description: 'LDAP server'
+    cli_alias: remote-address
+  - name: RemotePort
+    type: Int64
+    default: 389
+    description: 'LDAP port'
+  - name: DN
+    type: String
+    description: 'LDAP read DN'
+    cli_alias: read-dn
+  - name: BindDN
+    type: String
+    description: 'LDAP bind DN'
+    cli_alias: bind-dn
+  # - name: BindPass
+  #   type: String
+  #   description: 'LDAP bind password (deprecated)'
+  #   deprecated: true
+  #   cli_alias: bind-pass
+  - name: BindPassAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'LDAP bind password alias'
+    cli_alias: bind-pass-alias
+  - name: LDAPVersion
+    type: String
+    enum:
+      - 'v2'
+      - 'v3'
+    default: 'v2'
+    description: 'LDAP version'
+    cli_alias: ldap-version
+  - name: LDAPReadTimeout
+    type: Int64
+    maximum: 86400
+    default: 60
+    description: 'LDAP Read Timeout'
+    cli_alias: ldap-readtimeout
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client

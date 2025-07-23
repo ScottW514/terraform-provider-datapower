@@ -50,7 +50,6 @@ type TAM struct {
 	LdapUseSsl                  types.Bool     `tfsdk:"ldap_use_ssl"`
 	LdapsslPort                 types.Int64    `tfsdk:"ldapssl_port"`
 	LdapsslKeyFile              types.String   `tfsdk:"ldapssl_key_file"`
-	LdapsslKeyFilePassword      types.String   `tfsdk:"ldapssl_key_file_password"`
 	LdapsslKeyFilePasswordAlias types.String   `tfsdk:"ldapssl_key_file_password_alias"`
 	LdapsslKeyFileLabel         types.String   `tfsdk:"ldapssl_key_file_label"`
 	TamUseFips                  types.Bool     `tfsdk:"tam_use_fips"`
@@ -87,7 +86,6 @@ var TAMObjectType = map[string]attr.Type{
 	"ldap_use_ssl":                    types.BoolType,
 	"ldapssl_port":                    types.Int64Type,
 	"ldapssl_key_file":                types.StringType,
-	"ldapssl_key_file_password":       types.StringType,
 	"ldapssl_key_file_password_alias": types.StringType,
 	"ldapssl_key_file_label":          types.StringType,
 	"tam_use_fips":                    types.BoolType,
@@ -165,9 +163,6 @@ func (data TAM) IsNull() bool {
 	if !data.LdapsslKeyFile.IsNull() {
 		return false
 	}
-	if !data.LdapsslKeyFilePassword.IsNull() {
-		return false
-	}
 	if !data.LdapsslKeyFilePasswordAlias.IsNull() {
 		return false
 	}
@@ -233,7 +228,7 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.AdUseAd.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ADUseAD`, tfutils.StringFromBool(data.AdUseAd, false))
+		body, _ = sjson.Set(body, pathRoot+`ADUseAD`, tfutils.StringFromBool(data.AdUseAd, ""))
 	}
 	if !data.TamVersion.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TAMVersion`, data.TamVersion.ValueString())
@@ -251,31 +246,28 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`SSLKeyStashFile`, data.SslKeyStashFile.ValueString())
 	}
 	if !data.UseLocalMode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseLocalMode`, tfutils.StringFromBool(data.UseLocalMode, false))
+		body, _ = sjson.Set(body, pathRoot+`UseLocalMode`, tfutils.StringFromBool(data.UseLocalMode, ""))
 	}
 	if !data.PollInterval.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PollInterval`, data.PollInterval.ValueString())
 	}
 	if !data.ListenMode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ListenMode`, tfutils.StringFromBool(data.ListenMode, false))
+		body, _ = sjson.Set(body, pathRoot+`ListenMode`, tfutils.StringFromBool(data.ListenMode, ""))
 	}
 	if !data.ListenPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ListenPort`, data.ListenPort.ValueInt64())
 	}
 	if !data.ReturningUserAttributes.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ReturningUserAttributes`, tfutils.StringFromBool(data.ReturningUserAttributes, false))
+		body, _ = sjson.Set(body, pathRoot+`ReturningUserAttributes`, tfutils.StringFromBool(data.ReturningUserAttributes, ""))
 	}
 	if !data.LdapUseSsl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPUseSSL`, tfutils.StringFromBool(data.LdapUseSsl, false))
+		body, _ = sjson.Set(body, pathRoot+`LDAPUseSSL`, tfutils.StringFromBool(data.LdapUseSsl, ""))
 	}
 	if !data.LdapsslPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LDAPSSLPort`, data.LdapsslPort.ValueInt64())
 	}
 	if !data.LdapsslKeyFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFile`, data.LdapsslKeyFile.ValueString())
-	}
-	if !data.LdapsslKeyFilePassword.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFilePassword`, data.LdapsslKeyFilePassword.ValueString())
 	}
 	if !data.LdapsslKeyFilePasswordAlias.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFilePasswordAlias`, data.LdapsslKeyFilePasswordAlias.ValueString())
@@ -284,19 +276,19 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`LDAPSSLKeyFileLabel`, data.LdapsslKeyFileLabel.ValueString())
 	}
 	if !data.TamUseFips.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TAMUseFIPS`, tfutils.StringFromBool(data.TamUseFips, false))
+		body, _ = sjson.Set(body, pathRoot+`TAMUseFIPS`, tfutils.StringFromBool(data.TamUseFips, ""))
 	}
 	if !data.TamChooseNist.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`TAMChooseNIST`, data.TamChooseNist.ValueString())
 	}
 	if !data.TamUseBasicUser.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`TAMUseBasicUser`, tfutils.StringFromBool(data.TamUseBasicUser, false))
+		body, _ = sjson.Set(body, pathRoot+`TAMUseBasicUser`, tfutils.StringFromBool(data.TamUseBasicUser, ""))
 	}
 	if !data.UserPrincipalAttribute.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserPrincipalAttribute`, data.UserPrincipalAttribute.ValueString())
 	}
 	if !data.UserNoDuplicates.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UserNoDuplicates`, tfutils.StringFromBool(data.UserNoDuplicates, false))
+		body, _ = sjson.Set(body, pathRoot+`UserNoDuplicates`, tfutils.StringFromBool(data.UserNoDuplicates, ""))
 	}
 	if !data.UserSearchSuffixes.IsNull() {
 		var values []string
@@ -306,7 +298,7 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		}
 	}
 	if !data.UserSuffixOptimiser.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UserSuffixOptimiser`, tfutils.StringFromBool(data.UserSuffixOptimiser, false))
+		body, _ = sjson.Set(body, pathRoot+`UserSuffixOptimiser`, tfutils.StringFromBool(data.UserSuffixOptimiser, ""))
 	}
 	if !data.TamFedDirs.IsNull() {
 		var values []DmTAMFedDir
@@ -328,7 +320,7 @@ func (data TAM) ToBody(ctx context.Context, pathRoot string) string {
 		}
 	}
 	if !data.AutoRetry.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AutoRetry`, tfutils.StringFromBool(data.AutoRetry, false))
+		body, _ = sjson.Set(body, pathRoot+`AutoRetry`, tfutils.StringFromBool(data.AutoRetry, ""))
 	}
 	if !data.RetryInterval.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RetryInterval`, data.RetryInterval.ValueInt64())
@@ -425,11 +417,6 @@ func (data *TAM) FromBody(ctx context.Context, pathRoot string, res gjson.Result
 		data.LdapsslKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.LdapsslKeyFile = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `LDAPSSLKeyFilePassword`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.LdapsslKeyFilePassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.LdapsslKeyFilePassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LDAPSSLKeyFilePasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.LdapsslKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)
@@ -625,11 +612,6 @@ func (data *TAM) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.
 		data.LdapsslKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.LdapsslKeyFile = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `LDAPSSLKeyFilePassword`); value.Exists() && !data.LdapsslKeyFilePassword.IsNull() {
-		data.LdapsslKeyFilePassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.LdapsslKeyFilePassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `LDAPSSLKeyFilePasswordAlias`); value.Exists() && !data.LdapsslKeyFilePasswordAlias.IsNull() {
 		data.LdapsslKeyFilePasswordAlias = tfutils.ParseStringFromGJSON(value)

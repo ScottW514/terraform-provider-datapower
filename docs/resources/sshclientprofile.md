@@ -44,8 +44,6 @@ resource "datapower_sshclientprofile" "test" {
 - `mac_alg` (List of String) Message authentication codes
   - CLI Alias: `mac-alg`
   - Choices: `HMAC-SHA1`, `HMAC-SHA2-256`, `HMAC-SHA2-512`, `UMAC-64_AT_OPENSSH.COM`, `UMAC-128_AT_OPENSSH.COM`, `HMAC-SHA1-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-256-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-512-ETM_AT_OPENSSH.COM`, `UMAC-64-ETM_AT_OPENSSH.COM`, `UMAC-128-ETM_AT_OPENSSH.COM`
-- `password` (String) Password (deprecated)
-  - CLI Alias: `user-password`
 - `password_alias` (String) Password Alias
   - CLI Alias: `user-password-alias`
   - Reference to: `datapower_passwordalias:id`

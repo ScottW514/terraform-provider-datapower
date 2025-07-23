@@ -19,7 +19,7 @@ resource "datapower_formsloginpolicy" "test" {
   id                    = "FormsLoginPolicy_test"
   app_domain            = "acc_test_domain"
   login_form            = "/LoginPage.htm"
-  use_cookie_attributes = "no"
+  use_cookie_attributes = false
   enable_migration      = false
   error_page            = "/ErrorPage.htm"
   logout_page           = "/LogoutPage.htm"
@@ -105,10 +105,9 @@ resource "datapower_formsloginpolicy" "test" {
   - CLI Alias: `ssl-port`
   - Range: `1`-`65535`
   - Default value: `8080`
-- `use_cookie_attributes` (String) Attach cookie attribute policy
+- `use_cookie_attributes` (Boolean) Attach cookie attribute policy
   - CLI Alias: `use-cookie-attribute`
-  - Choices: `no`, `yes`
-  - Default value: `no`
+  - Default value: `false`
 - `use_ssl_for_login` (Boolean) Use TLS for Login
   - CLI Alias: `use-ssl`
   - Default value: `true`

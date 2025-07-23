@@ -113,10 +113,10 @@ func (data DmSSHUserAuthenticationMethods) ToBody(ctx context.Context, pathRoot 
 	}
 	body := ""
 	if !data.Publickey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`publickey`, tfutils.StringFromBool(data.Publickey, false))
+		body, _ = sjson.Set(body, pathRoot+`publickey`, tfutils.StringFromBool(data.Publickey, ""))
 	}
 	if !data.Password.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`password`, tfutils.StringFromBool(data.Password, false))
+		body, _ = sjson.Set(body, pathRoot+`password`, tfutils.StringFromBool(data.Password, ""))
 	}
 	return body
 }

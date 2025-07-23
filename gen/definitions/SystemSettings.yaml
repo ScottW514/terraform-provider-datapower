@@ -1,0 +1,118 @@
+name: SystemSettings
+description: 'System settings (`default` domain only)'
+cli_alias: 'system'
+cmd_group: 'system'
+rest_endpoint: '/mgmt/config/default/SystemSettings/System-Settings'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: true
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: ProductOID
+    type: String
+    description: 'Product OID'
+    computed: true
+  - name: Description
+    type: String
+    description: 'Description'
+    computed: true
+  - name: SerialNumber
+    type: String
+    description: 'Serial number'
+    computed: true
+  - name: EntitlementNumber
+    type: String
+    description: 'Entitlement serial number'
+    cli_alias: entitlement
+  - name: ProductID
+    type: String
+    description: 'Product ID'
+    computed: true
+  - name: CapacityMode
+    type: String
+    description: 'Licensed capacity mode'
+    computed: true
+  - name: Contact
+    type: String
+    description: 'Contact'
+    cli_alias: contact
+  - name: SystemName
+    type: String
+    description: 'System name'
+    cli_alias: name
+  - name: Location
+    type: String
+    description: 'Location'
+    cli_alias: location
+  - name: Services
+    type: Int64
+    description: 'Services'
+    computed: true
+  - name: BackupMode
+    type: String
+    enum:
+      - 'normal'
+      - 'secure'
+    description: 'Backup mode'
+    computed: true
+  - name: ProductMode
+    type: String
+    enum:
+      - 'normal'
+      - 'cc'
+    description: 'Product Mode'
+    computed: true
+  - name: CustomUIFile
+    type: String
+    description: 'Custom user interface file'
+    cli_alias: custom-ui-file
+  - name: AuditReserve
+    type: Int64
+    maximum: 10000
+    default: 40
+    description: 'Audit reserve space'
+    cli_alias: audit-reserve
+  - name: DetectIntrusion
+    type: String
+    enum:
+      - 'enable'
+      - 'disable'
+    description: 'Detect intrusion (physical appliances only)'
+    cli_alias: detect-intrusion
+  - name: HardwareXMLAcceleration
+    type: Bool
+    description: 'Enable hardware XML acceleration (physical appliances only)'
+    cli_alias: xml-accelerator
+  - name: Locale
+    type: String
+    enum:
+      - 'de'
+      - 'en'
+      - 'es'
+      - 'fr'
+      - 'it'
+      - 'ja'
+      - 'ko'
+      - 'pt_BR'
+      - 'zh_CN'
+      - 'zh_TW'
+    description: 'System locale'
+    cli_alias: locale
+  - name: SystemLogFixedFormat
+    type: Bool
+    default: false
+    description: 'Enable fixed format'
+    cli_alias: system-log-fixed-format
+  - name: UUID
+    type: String
+    description: 'UUID'
+    computed: true

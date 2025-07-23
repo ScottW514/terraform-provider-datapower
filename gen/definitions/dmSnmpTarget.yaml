@@ -1,0 +1,35 @@
+name: DmSnmpTarget
+model_only: true
+list_item: true
+attributes:
+  - name: Host
+    type: String
+    required: true
+    description: 'Remote Host Address'
+  - name: Port
+    type: Int64
+    default: 162
+    description: 'Remote Port'
+  - name: Community
+    type: String
+    default: 'public'
+    description: 'Community'
+  - name: TrapVersion
+    type: String
+    enum:
+      - '1'
+      - '2c'
+      - '3'
+    default: 1
+    description: 'Version'
+  - name: SecurityName
+    type: String
+    description: 'Security Name'
+  - name: SecurityLevel
+    type: String
+    enum:
+      - 'noAuthNoPriv'
+      - 'authNoPriv'
+      - 'authPriv'
+    default: 'authPriv'
+    description: 'Security Level'

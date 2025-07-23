@@ -106,7 +106,7 @@ func (data XACMLPDP) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())
 	}
 	if !data.EqualPolicies.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EqualPolicies`, tfutils.StringFromBool(data.EqualPolicies, false))
+		body, _ = sjson.Set(body, pathRoot+`EqualPolicies`, tfutils.StringFromBool(data.EqualPolicies, ""))
 	}
 	if !data.GeneralPolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`GeneralPolicy`, data.GeneralPolicy.ValueString())

@@ -1,0 +1,16 @@
+name: DmGatewayPeeringClusterNode
+model_only: true
+list_item: true
+attributes:
+  - name: Address
+    type: String
+    required: true
+    description: 'Address'
+  - name: Port
+    type: Int64
+    required: true
+    description: 'Port'
+  - name: LocalNode
+    type: Bool
+    default: true
+    description: 'Local node'

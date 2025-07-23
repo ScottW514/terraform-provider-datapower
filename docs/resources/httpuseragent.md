@@ -16,7 +16,7 @@ User agent
 
 ```terraform
 resource "datapower_httpuseragent" "test" {
-  id         = "HTTPUserAgent_test"
+  id         = "___HTTPUserAgent_test"
   app_domain = "acc_test_domain"
 }
 ```
@@ -105,7 +105,6 @@ Required:
 
 Optional:
 
-- `password` (String) Password (deprecated)
 - `password_alias` (String) Password alias
   - Reference to: `datapower_passwordalias:id`
 

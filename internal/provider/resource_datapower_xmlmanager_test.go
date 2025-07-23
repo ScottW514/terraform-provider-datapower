@@ -45,7 +45,6 @@ func TestAccResourceXMLManager(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_element_depth", "512"),
 			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_attribute_count", "128"),
 			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_max_node_size", "33554432"),
-			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_forbid_external_references", "true"),
 			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_external_references", "forbid"),
 			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_max_prefixes", "1024"),
 			resource.TestCheckResourceAttr("datapower_xmlmanager.test", "parser_limits_max_namespaces", "1024"),

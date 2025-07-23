@@ -37,7 +37,7 @@ type FormsLoginPolicy struct {
 	AppDomain           types.String `tfsdk:"app_domain"`
 	UserSummary         types.String `tfsdk:"user_summary"`
 	LoginForm           types.String `tfsdk:"login_form"`
-	UseCookieAttributes types.String `tfsdk:"use_cookie_attributes"`
+	UseCookieAttributes types.Bool   `tfsdk:"use_cookie_attributes"`
 	CookieAttributes    types.String `tfsdk:"cookie_attributes"`
 	UseSslForLogin      types.Bool   `tfsdk:"use_ssl_for_login"`
 	EnableMigration     types.Bool   `tfsdk:"enable_migration"`
@@ -66,7 +66,7 @@ var FormsLoginPolicyObjectType = map[string]attr.Type{
 	"app_domain":            types.StringType,
 	"user_summary":          types.StringType,
 	"login_form":            types.StringType,
-	"use_cookie_attributes": types.StringType,
+	"use_cookie_attributes": types.BoolType,
 	"cookie_attributes":     types.StringType,
 	"use_ssl_for_login":     types.BoolType,
 	"enable_migration":      types.BoolType,
@@ -194,16 +194,16 @@ func (data FormsLoginPolicy) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`LoginForm`, data.LoginForm.ValueString())
 	}
 	if !data.UseCookieAttributes.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseCookieAttributes`, data.UseCookieAttributes.ValueString())
+		body, _ = sjson.Set(body, pathRoot+`UseCookieAttributes`, tfutils.StringFromBool(data.UseCookieAttributes, "flag"))
 	}
 	if !data.CookieAttributes.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CookieAttributes`, data.CookieAttributes.ValueString())
 	}
 	if !data.UseSslForLogin.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseSSLForLogin`, tfutils.StringFromBool(data.UseSslForLogin, false))
+		body, _ = sjson.Set(body, pathRoot+`UseSSLForLogin`, tfutils.StringFromBool(data.UseSslForLogin, ""))
 	}
 	if !data.EnableMigration.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EnableMigration`, tfutils.StringFromBool(data.EnableMigration, false))
+		body, _ = sjson.Set(body, pathRoot+`EnableMigration`, tfutils.StringFromBool(data.EnableMigration, ""))
 	}
 	if !data.SslPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLPort`, data.SslPort.ValueInt64())
@@ -281,10 +281,10 @@ func (data *FormsLoginPolicy) FromBody(ctx context.Context, pathRoot string, res
 	} else {
 		data.LoginForm = types.StringValue("/LoginPage.htm")
 	}
-	if value := res.Get(pathRoot + `UseCookieAttributes`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.UseCookieAttributes = tfutils.ParseStringFromGJSON(value)
+	if value := res.Get(pathRoot + `UseCookieAttributes`); value.Exists() {
+		data.UseCookieAttributes = tfutils.BoolFromString(value.String())
 	} else {
-		data.UseCookieAttributes = types.StringValue("no")
+		data.UseCookieAttributes = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `CookieAttributes`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.CookieAttributes = tfutils.ParseStringFromGJSON(value)
@@ -413,9 +413,9 @@ func (data *FormsLoginPolicy) UpdateFromBody(ctx context.Context, pathRoot strin
 		data.LoginForm = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `UseCookieAttributes`); value.Exists() && !data.UseCookieAttributes.IsNull() {
-		data.UseCookieAttributes = tfutils.ParseStringFromGJSON(value)
-	} else if data.UseCookieAttributes.ValueString() != "no" {
-		data.UseCookieAttributes = types.StringNull()
+		data.UseCookieAttributes = tfutils.BoolFromString(value.String())
+	} else if data.UseCookieAttributes.ValueBool() {
+		data.UseCookieAttributes = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `CookieAttributes`); value.Exists() && !data.CookieAttributes.IsNull() {
 		data.CookieAttributes = tfutils.ParseStringFromGJSON(value)

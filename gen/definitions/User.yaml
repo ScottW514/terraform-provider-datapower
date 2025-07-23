@@ -3,7 +3,6 @@ description: 'User account'
 cli_alias: 'user'
 cmd_group: 'usergroup'
 rest_endpoint: '/mgmt/config/default/User'
-update_computed: true
 attributes:
   - name: Id
     tf_name: id

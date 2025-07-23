@@ -136,13 +136,13 @@ func (data WSRRSubscription) ToBody(ctx context.Context, pathRoot string) string
 		body, _ = sjson.Set(body, pathRoot+`RefreshInterval`, data.RefreshInterval.ValueInt64())
 	}
 	if !data.UseVersion.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseVersion`, tfutils.StringFromBool(data.UseVersion, false))
+		body, _ = sjson.Set(body, pathRoot+`UseVersion`, tfutils.StringFromBool(data.UseVersion, ""))
 	}
 	if !data.ObjectVersion.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ObjectVersion`, data.ObjectVersion.ValueString())
 	}
 	if !data.FetchPolicyAttachments.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`FetchPolicyAttachments`, tfutils.StringFromBool(data.FetchPolicyAttachments, false))
+		body, _ = sjson.Set(body, pathRoot+`FetchPolicyAttachments`, tfutils.StringFromBool(data.FetchPolicyAttachments, ""))
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())

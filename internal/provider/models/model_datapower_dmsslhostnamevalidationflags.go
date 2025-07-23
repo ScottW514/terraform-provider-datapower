@@ -161,19 +161,19 @@ func (data DmSSLHostnameValidationFlags) ToBody(ctx context.Context, pathRoot st
 	}
 	body := ""
 	if !data.X509CheckFlagAlwaysCheckSubject.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT`, tfutils.StringFromBool(data.X509CheckFlagAlwaysCheckSubject, false))
+		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT`, tfutils.StringFromBool(data.X509CheckFlagAlwaysCheckSubject, ""))
 	}
 	if !data.X509CheckFlagNoWildcards.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_NO_WILDCARDS`, tfutils.StringFromBool(data.X509CheckFlagNoWildcards, false))
+		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_NO_WILDCARDS`, tfutils.StringFromBool(data.X509CheckFlagNoWildcards, ""))
 	}
 	if !data.X509CheckFlagNoPartialWildcards.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS`, tfutils.StringFromBool(data.X509CheckFlagNoPartialWildcards, false))
+		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS`, tfutils.StringFromBool(data.X509CheckFlagNoPartialWildcards, ""))
 	}
 	if !data.X509CheckFlagMultiLabelWildcards.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS`, tfutils.StringFromBool(data.X509CheckFlagMultiLabelWildcards, false))
+		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS`, tfutils.StringFromBool(data.X509CheckFlagMultiLabelWildcards, ""))
 	}
 	if !data.X509CheckFlagSingleLabelSubdomains.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS`, tfutils.StringFromBool(data.X509CheckFlagSingleLabelSubdomains, false))
+		body, _ = sjson.Set(body, pathRoot+`X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS`, tfutils.StringFromBool(data.X509CheckFlagSingleLabelSubdomains, ""))
 	}
 	return body
 }

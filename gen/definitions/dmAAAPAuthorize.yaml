@@ -118,12 +118,12 @@ attributes:
     type: String
     description: 'LDAP bind DN'
     cli_alias: ldap-bind-dn
-  - name: AZLDAPBindPassword
-    type: String
-    sensitive: true
-    description: 'LDAP bind password (deprecated)'
-    deprecated: true
-    cli_alias: ldap-bind-password
+  # - name: AZLDAPBindPassword
+  #   type: String
+  #   sensitive: true
+  #   description: 'LDAP bind password (deprecated)'
+  #   deprecated: true
+  #   cli_alias: ldap-bind-password
   - name: AZLDAPGroupAttribute
     type: String
     default: 'member'
@@ -331,7 +331,6 @@ attributes:
   - name: AZLDAPBindPasswordAlias
     type: String
     reference_to: PasswordAlias
-    sensitive: true
     description: 'LDAP bind password alias'
     cli_alias: ldap-bind-password-alias
   - name: AZSMRequestType

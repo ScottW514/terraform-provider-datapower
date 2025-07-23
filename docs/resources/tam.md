@@ -57,8 +57,6 @@ resource "datapower_tam" "test" {
   - CLI Alias: `ldap-ssl-key-file`
 - `ldapssl_key_file_label` (String) Registry Server TLS Key File Label
   - CLI Alias: `ldap-ssl-key-file-dn`
-- `ldapssl_key_file_password` (String) Registry Server TLS Key File Password (deprecated)
-  - CLI Alias: `ldap-ssl-key-file-password`
 - `ldapssl_key_file_password_alias` (String) Registry Server TLS Key File Password Alias
   - CLI Alias: `ldap-ssl-key-file-password-alias`
   - Reference to: `datapower_passwordalias:id`

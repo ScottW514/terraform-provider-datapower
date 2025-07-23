@@ -66,11 +66,9 @@ type DmAAAPAuthenticate struct {
 	AuSignerValcred                 types.String        `tfsdk:"au_signer_valcred"`
 	AuSignedXPath                   types.String        `tfsdk:"au_signed_x_path"`
 	AuldapBindDn                    types.String        `tfsdk:"auldap_bind_dn"`
-	AuldapBindPassword              types.String        `tfsdk:"auldap_bind_password"`
 	AuldapSearchAttribute           types.String        `tfsdk:"auldap_search_attribute"`
 	AultpaTokenVersionsBitmap       *DmLTPATokenVersion `tfsdk:"aultpa_token_versions_bitmap"`
 	AultpaKeyFile                   types.String        `tfsdk:"aultpa_key_file"`
-	AultpaKeyFilePassword           types.String        `tfsdk:"aultpa_key_file_password"`
 	AultpaStashFile                 types.String        `tfsdk:"aultpa_stash_file"`
 	AuBinaryTokenX509Valcred        types.String        `tfsdk:"au_binary_token_x509_valcred"`
 	AutamServer                     types.String        `tfsdk:"autam_server"`
@@ -130,11 +128,9 @@ var DmAAAPAuthenticateObjectType = map[string]attr.Type{
 	"au_signer_valcred":                    types.StringType,
 	"au_signed_x_path":                     types.StringType,
 	"auldap_bind_dn":                       types.StringType,
-	"auldap_bind_password":                 types.StringType,
 	"auldap_search_attribute":              types.StringType,
 	"aultpa_token_versions_bitmap":         types.ObjectType{AttrTypes: DmLTPATokenVersionObjectType},
 	"aultpa_key_file":                      types.StringType,
-	"aultpa_key_file_password":             types.StringType,
 	"aultpa_stash_file":                    types.StringType,
 	"au_binary_token_x509_valcred":         types.StringType,
 	"autam_server":                         types.StringType,
@@ -193,11 +189,9 @@ var DmAAAPAuthenticateObjectDefault = map[string]attr.Value{
 	"au_signer_valcred":                    types.StringNull(),
 	"au_signed_x_path":                     types.StringNull(),
 	"auldap_bind_dn":                       types.StringNull(),
-	"auldap_bind_password":                 types.StringNull(),
 	"auldap_search_attribute":              types.StringValue("userPassword"),
 	"aultpa_token_versions_bitmap":         types.ObjectValueMust(DmLTPATokenVersionObjectType, DmLTPATokenVersionObjectDefault),
 	"aultpa_key_file":                      types.StringNull(),
-	"aultpa_key_file_password":             types.StringNull(),
 	"aultpa_stash_file":                    types.StringNull(),
 	"au_binary_token_x509_valcred":         types.StringNull(),
 	"autam_server":                         types.StringNull(),
@@ -336,10 +330,6 @@ var DmAAAPAuthenticateDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind DN", "ldap-bind-dn", "").String,
 			Computed:            true,
 		},
-		"auldap_bind_password": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind password (deprecated)", "ldap-bind-password", "").String,
-			Computed:            true,
-		},
 		"auldap_search_attribute": DataSourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("LDAP search attribute", "ldap-search-attr", "").AddDefaultValue("userPassword").String,
 			Computed:            true,
@@ -347,10 +337,6 @@ var DmAAAPAuthenticateDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 		"aultpa_token_versions_bitmap": GetDmLTPATokenVersionDataSourceSchema("Acceptable LTPA versions", "lpta-version", ""),
 		"aultpa_key_file": DataSourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("LTPA key file", "lpta-key-file", "").String,
-			Computed:            true,
-		},
-		"aultpa_key_file_password": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LTPA key file password (deprecated)", "lpta-key-password", "").String,
 			Computed:            true,
 		},
 		"aultpa_stash_file": DataSourceSchema.StringAttribute{
@@ -606,10 +592,6 @@ var DmAAAPAuthenticateResourceSchema = ResourceSchema.SingleNestedAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind DN", "ldap-bind-dn", "").String,
 			Optional:            true,
 		},
-		"auldap_bind_password": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind password (deprecated)", "ldap-bind-password", "").String,
-			Optional:            true,
-		},
 		"auldap_search_attribute": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("LDAP search attribute", "ldap-search-attr", "").AddDefaultValue("userPassword").String,
 			Computed:            true,
@@ -619,10 +601,6 @@ var DmAAAPAuthenticateResourceSchema = ResourceSchema.SingleNestedAttribute{
 		"aultpa_token_versions_bitmap": GetDmLTPATokenVersionResourceSchema("Acceptable LTPA versions", "lpta-version", "", false),
 		"aultpa_key_file": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("LTPA key file", "lpta-key-file", "").String,
-			Optional:            true,
-		},
-		"aultpa_key_file_password": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LTPA key file password (deprecated)", "lpta-key-password", "").String,
 			Optional:            true,
 		},
 		"aultpa_stash_file": ResourceSchema.StringAttribute{
@@ -872,9 +850,6 @@ func (data DmAAAPAuthenticate) IsNull() bool {
 	if !data.AuldapBindDn.IsNull() {
 		return false
 	}
-	if !data.AuldapBindPassword.IsNull() {
-		return false
-	}
 	if !data.AuldapSearchAttribute.IsNull() {
 		return false
 	}
@@ -884,9 +859,6 @@ func (data DmAAAPAuthenticate) IsNull() bool {
 		}
 	}
 	if !data.AultpaKeyFile.IsNull() {
-		return false
-	}
-	if !data.AultpaKeyFilePassword.IsNull() {
 		return false
 	}
 	if !data.AultpaStashFile.IsNull() {
@@ -1046,7 +1018,7 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`AUSAMLArtifactResponder`, data.AusamlArtifactResponder.ValueString())
 	}
 	if !data.AuKerberosVerifySignature.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUKerberosVerifySignature`, tfutils.StringFromBool(data.AuKerberosVerifySignature, false))
+		body, _ = sjson.Set(body, pathRoot+`AUKerberosVerifySignature`, tfutils.StringFromBool(data.AuKerberosVerifySignature, ""))
 	}
 	if !data.AuNetegrityBaseUri.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUNetegrityBaseURI`, data.AuNetegrityBaseUri.ValueString())
@@ -1084,9 +1056,6 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.AuldapBindDn.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AULDAPBindDN`, data.AuldapBindDn.ValueString())
 	}
-	if !data.AuldapBindPassword.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPBindPassword`, data.AuldapBindPassword.ValueString())
-	}
 	if !data.AuldapSearchAttribute.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchAttribute`, data.AuldapSearchAttribute.ValueString())
 	}
@@ -1098,9 +1067,6 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 	if !data.AultpaKeyFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AULTPAKeyFile`, data.AultpaKeyFile.ValueString())
 	}
-	if !data.AultpaKeyFilePassword.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULTPAKeyFilePassword`, data.AultpaKeyFilePassword.ValueString())
-	}
 	if !data.AultpaStashFile.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AULTPAStashFile`, data.AultpaStashFile.ValueString())
 	}
@@ -1111,7 +1077,7 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`AUTAMServer`, data.AutamServer.ValueString())
 	}
 	if !data.AuAllowRemoteTokenReference.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUAllowRemoteTokenReference`, tfutils.StringFromBool(data.AuAllowRemoteTokenReference, false))
+		body, _ = sjson.Set(body, pathRoot+`AUAllowRemoteTokenReference`, tfutils.StringFromBool(data.AuAllowRemoteTokenReference, ""))
 	}
 	if !data.AuRemoteTokenProcessService.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AURemoteTokenProcessService`, data.AuRemoteTokenProcessService.ValueString())
@@ -1120,28 +1086,28 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`AUWSTrustVersion`, data.AuwsTrustVersion.ValueString())
 	}
 	if !data.AuldapSearchForDn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchForDN`, tfutils.StringFromBool(data.AuldapSearchForDn, false))
+		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchForDN`, tfutils.StringFromBool(data.AuldapSearchForDn, ""))
 	}
 	if !data.AuldapSearchParameters.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AULDAPSearchParameters`, data.AuldapSearchParameters.ValueString())
 	}
 	if !data.AuwsTrustRequireClientEntropy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireClientEntropy`, tfutils.StringFromBool(data.AuwsTrustRequireClientEntropy, false))
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireClientEntropy`, tfutils.StringFromBool(data.AuwsTrustRequireClientEntropy, ""))
 	}
 	if !data.AuwsTrustClientEntropySize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUWSTrustClientEntropySize`, data.AuwsTrustClientEntropySize.ValueInt64())
 	}
 	if !data.AuwsTrustRequireServerEntropy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireServerEntropy`, tfutils.StringFromBool(data.AuwsTrustRequireServerEntropy, false))
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireServerEntropy`, tfutils.StringFromBool(data.AuwsTrustRequireServerEntropy, ""))
 	}
 	if !data.AuwsTrustServerEntropySize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUWSTrustServerEntropySize`, data.AuwsTrustServerEntropySize.ValueInt64())
 	}
 	if !data.AuwsTrustRequireRstc.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireRSTC`, tfutils.StringFromBool(data.AuwsTrustRequireRstc, false))
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireRSTC`, tfutils.StringFromBool(data.AuwsTrustRequireRstc, ""))
 	}
 	if !data.AuwsTrustRequireAppliesToHeader.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireAppliesToHeader`, tfutils.StringFromBool(data.AuwsTrustRequireAppliesToHeader, false))
+		body, _ = sjson.Set(body, pathRoot+`AUWSTrustRequireAppliesToHeader`, tfutils.StringFromBool(data.AuwsTrustRequireAppliesToHeader, ""))
 	}
 	if !data.AuwsTrustAppliesToHeader.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AUWSTrustAppliesToHeader`, data.AuwsTrustAppliesToHeader.ValueString())
@@ -1159,7 +1125,7 @@ func (data DmAAAPAuthenticate) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`AUSkewTime`, data.AuSkewTime.ValueInt64())
 	}
 	if !data.AutampacReturn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AUTAMPACReturn`, tfutils.StringFromBool(data.AutampacReturn, false))
+		body, _ = sjson.Set(body, pathRoot+`AUTAMPACReturn`, tfutils.StringFromBool(data.AutampacReturn, ""))
 	}
 	if !data.AuldapReadTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AULDAPReadTimeout`, data.AuldapReadTimeout.ValueInt64())
@@ -1332,11 +1298,6 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 	} else {
 		data.AuldapBindDn = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPBindPassword`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AuldapBindPassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AuldapBindPassword = types.StringNull()
-	}
 	if value := res.Get(pathRoot + `AULDAPSearchAttribute`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AuldapSearchAttribute = tfutils.ParseStringFromGJSON(value)
 	} else {
@@ -1352,11 +1313,6 @@ func (data *DmAAAPAuthenticate) FromBody(ctx context.Context, pathRoot string, r
 		data.AultpaKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.AultpaKeyFile = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `AULTPAKeyFilePassword`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AultpaKeyFilePassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AultpaKeyFilePassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULTPAStashFile`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AultpaStashFile = tfutils.ParseStringFromGJSON(value)
@@ -1646,11 +1602,6 @@ func (data *DmAAAPAuthenticate) UpdateFromBody(ctx context.Context, pathRoot str
 	} else {
 		data.AuldapBindDn = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `AULDAPBindPassword`); value.Exists() && !data.AuldapBindPassword.IsNull() {
-		data.AuldapBindPassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AuldapBindPassword = types.StringNull()
-	}
 	if value := res.Get(pathRoot + `AULDAPSearchAttribute`); value.Exists() && !data.AuldapSearchAttribute.IsNull() {
 		data.AuldapSearchAttribute = tfutils.ParseStringFromGJSON(value)
 	} else if data.AuldapSearchAttribute.ValueString() != "userPassword" {
@@ -1665,11 +1616,6 @@ func (data *DmAAAPAuthenticate) UpdateFromBody(ctx context.Context, pathRoot str
 		data.AultpaKeyFile = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.AultpaKeyFile = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `AULTPAKeyFilePassword`); value.Exists() && !data.AultpaKeyFilePassword.IsNull() {
-		data.AultpaKeyFilePassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AultpaKeyFilePassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AULTPAStashFile`); value.Exists() && !data.AultpaStashFile.IsNull() {
 		data.AultpaStashFile = tfutils.ParseStringFromGJSON(value)

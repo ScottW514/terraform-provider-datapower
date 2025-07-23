@@ -16,7 +16,7 @@ User account
 
 ```terraform
 resource "datapower_user" "test" {
-  id                = "User_name"
+  id                = "0user"
   password          = "Password$123"
   access_level      = "group-defined"
   group_name        = datapower_usergroup.test.id
@@ -49,9 +49,6 @@ resource "datapower_user" "test" {
 - `password_update` (Boolean, Deprecated) Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.
 - `snmp_creds` (Attributes List) SNMP V3 credentials
   - CLI Alias: `snmp-cred` (see [below for nested schema](#nestedatt--snmp_creds))
-- `suppress_password_change` (Boolean) Suppress initial password change
-  - CLI Alias: `suppress-password-change`
-  - Default value: `false`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

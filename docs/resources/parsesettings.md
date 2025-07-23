@@ -16,7 +16,7 @@ Parse settings
 
 ```terraform
 resource "datapower_parsesettings" "test" {
-  id         = "ParseSettings_name"
+  id         = "___ParseSettings_name"
   app_domain = "acc_test_domain"
 }
 ```

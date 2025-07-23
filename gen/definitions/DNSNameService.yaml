@@ -1,0 +1,66 @@
+name: DNSNameService
+description: 'DNS settings (`default` domain only)'
+cli_alias: 'dns'
+cmd_group: 'network'
+rest_endpoint: '/mgmt/config/default/DNSNameService/Main-Name-Service'
+update_only: true
+default_domain_only: true
+skip_test: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: true
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: SearchDomains
+    type: List
+    element_type: DmSearchDomain
+    description: 'Search domains'
+    cli_alias: search-domain
+  - name: NameServers
+    type: List
+    element_type: DmNameServer
+    description: 'DNS servers'
+    cli_alias: name-server
+  - name: StaticHosts
+    type: List
+    element_type: DmStaticHost
+    description: 'Static hosts'
+    cli_alias: static-host
+  - name: IPPreference
+    type: String
+    enum:
+      - '4'
+      - '6'
+    description: 'IP preference'
+    cli_alias: ip-preference
+  - name: ForceIPPreference
+    type: Bool
+    default: false
+    description: 'Force IP preference'
+    cli_alias: force-ip-preference
+  - name: LoadBalanceAlgorithm
+    type: String
+    enum:
+      - 'round-robin'
+      - 'first-alive'
+    required: true
+    default: 'first-alive'
+    description: 'Load distribution algorithm'
+    cli_alias: load-balance
+  - name: MaxRetries
+    type: Int64
+    default: 2
+    description: 'Attempts'
+    cli_alias: retries
+  - name: Timeout
+    type: Int64
+    default: 5
+    description: 'Timeout'
+    cli_alias: timeout

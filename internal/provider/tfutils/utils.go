@@ -28,7 +28,7 @@ import (
 // BoolFromString returns a types.Bool from a string.
 // It expects a string and converts "on"/"enabled" to true, otherwise false.
 func BoolFromString(value string) types.Bool {
-	if value == "on" || value == "enabled" {
+	if value == "on" || value == "enabled" || value == "yes" {
 		return types.BoolValue(true)
 	}
 	return types.BoolValue(false)
@@ -37,13 +37,19 @@ func BoolFromString(value string) types.Bool {
 // StringFromBool returns a string from types.Bool.
 // If adminState is false, it "on" for true, and "off" for false.
 // If adminState is true, it "enabled" for true, and "disabled" for false.
-func StringFromBool(value types.Bool, adminState bool) string {
-	if adminState {
+func StringFromBool(value types.Bool, boolType string) string {
+	switch boolType {
+	case "admin":
 		if value.ValueBool() {
 			return "enabled"
 		}
 		return "disabled"
-	} else {
+	case "flag":
+		if value.ValueBool() {
+			return "yes"
+		}
+		return "no"
+	default:
 		if value.ValueBool() {
 			return "on"
 		}
@@ -54,7 +60,7 @@ func StringFromBool(value types.Bool, adminState bool) string {
 // ParseBoolFromGJSON parses a bool from a gjson.Result.
 // It expects a string result, and converts "on"/"enabled" to true, otherwise false.
 func ParseBoolFromGJSON(result gjson.Result) types.Bool {
-	if result.String() == "on" || result.String() == "enabled" {
+	if result.String() == "on" || result.String() == "enabled" || result.String() == "yes" {
 		return types.BoolValue(true)
 	}
 	return types.BoolValue(false)

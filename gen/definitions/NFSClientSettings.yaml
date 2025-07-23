@@ -1,0 +1,26 @@
+name: NFSClientSettings
+description: 'NFS client settings (`default` domain only)'
+cli_alias: 'nfs-client'
+cmd_group: 'system'
+rest_endpoint: '/mgmt/config/default/NFSClientSettings/NFS-Client-Settings'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: false
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: MountRefreshTime
+    type: Int64
+    minimum: 1
+    maximum: 1000
+    default: 10
+    description: 'Mount refresh time'
+    cli_alias: mount-refresh-time

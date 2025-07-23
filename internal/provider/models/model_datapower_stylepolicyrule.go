@@ -119,10 +119,10 @@ func (data StylePolicyRule) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`OutputFormat`, data.OutputFormat.ValueString())
 	}
 	if !data.NonXmlProcessing.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`NonXMLProcessing`, tfutils.StringFromBool(data.NonXmlProcessing, false))
+		body, _ = sjson.Set(body, pathRoot+`NonXMLProcessing`, tfutils.StringFromBool(data.NonXmlProcessing, ""))
 	}
 	if !data.Unprocessed.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Unprocessed`, tfutils.StringFromBool(data.Unprocessed, false))
+		body, _ = sjson.Set(body, pathRoot+`Unprocessed`, tfutils.StringFromBool(data.Unprocessed, ""))
 	}
 	if !data.UserSummary.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserSummary`, data.UserSummary.ValueString())

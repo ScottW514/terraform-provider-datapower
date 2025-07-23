@@ -8,6 +8,8 @@ tidy:
 	go mod tidy
 build:
 	go build -o ./.bin/terraform-provider-datapower
+buildwin:
+	GOOS=windows GOARCH=amd64 go build -o ./.bin/terraform-provider-datapower.exe
 execute_templates:
 	go run gen/generator.go
 tfdocs:

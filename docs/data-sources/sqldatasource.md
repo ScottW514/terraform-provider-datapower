@@ -14,6 +14,7 @@ SQL data source
 
 ```terraform
 data "datapower_sqldatasource" "test" {
+  depends_on = [datapower_sqldatasource.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -52,7 +53,6 @@ Read-Only:
 - `load_balancing` (Boolean) Load distribution - Db2 for z/OS
 - `max_connection` (Number) Max connections
 - `oracle_data_source_type` (String) Data source type - Oracle
-- `oracle_objects` (Boolean) Enable object support - Oracle
 - `password_alias` (String) Connection password alias
 - `query_timeout` (Number) Query timeout
 - `sql_data_source_config_nv_pairs` (Attributes List) Advanced configuration parameters (see [below for nested schema](#nestedatt--result--sql_data_source_config_nv_pairs))

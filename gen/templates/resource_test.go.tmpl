@@ -30,6 +30,9 @@ import (
 )
 
 func TestAccResource{{.Name}}(t *testing.T) {
+{{- if .SkipTest}}
+	t.Skip("skipping test - configured in definition")
+{{- end}}
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_{{.Name}}") == "" {
         t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_{{.Name}}")
 	}

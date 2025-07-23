@@ -37,7 +37,7 @@ func TestAccResourceFormsLoginPolicy(t *testing.T) {
 		Config: testconfig.FormsLoginPolicyTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "login_form", "/LoginPage.htm"),
-			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "use_cookie_attributes", "no"),
+			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "use_cookie_attributes", "false"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "use_ssl_for_login", "true"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "enable_migration", "false"),
 			resource.TestCheckResourceAttr("datapower_formsloginpolicy.test", "ssl_port", "8080"),

@@ -120,7 +120,7 @@ func (data DmProxyPolicy) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}
 	if !data.Skip.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Skip`, tfutils.StringFromBool(data.Skip, false))
+		body, _ = sjson.Set(body, pathRoot+`Skip`, tfutils.StringFromBool(data.Skip, ""))
 	}
 	if !data.RemoteAddress.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`RemoteAddress`, data.RemoteAddress.ValueString())

@@ -98,9 +98,6 @@ resource "datapower_sqldatasource" "test" {
   - CLI Alias: `oracle-datasource-type`
   - Choices: `SID`, `ServiceName`
   - Default value: `SID`
-- `oracle_objects` (Boolean) Enable object support - Oracle
-  - CLI Alias: `oracle-objects`
-  - Default value: `false`
 - `sql_data_source_config_nv_pairs` (Attributes List) Advanced configuration parameters
   - CLI Alias: `sql-config-param` (see [below for nested schema](#nestedatt--sql_data_source_config_nv_pairs))
 - `truststore_ref` (String) Truststore

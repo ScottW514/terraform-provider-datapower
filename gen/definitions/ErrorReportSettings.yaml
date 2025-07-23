@@ -1,0 +1,126 @@
+name: ErrorReportSettings
+description: 'Failure Notification (`default` domain only)'
+cli_alias: 'failure-notification'
+cmd_group: 'failure-notification'
+rest_endpoint: '/mgmt/config/default/ErrorReportSettings/Error-Report'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: true
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: UploadReport
+    type: Bool
+    default: false
+    description: 'Upload Error Report'
+    cli_alias: upload-report
+  - name: UseSmtp
+    type: Bool
+    default: false
+    description: 'E-mail Notification'
+    cli_alias: use-smtp
+  - name: InternalState
+    type: Bool
+    default: false
+    description: 'Include Internal State'
+    cli_alias: internal-state
+  - name: FFDCPacketCapture
+    type: Bool
+    default: false
+    description: 'Background Packet Capture'
+    cli_alias: ffdc packet-capture
+  - name: FFDCEventLogCapture
+    type: Bool
+    default: false
+    description: 'Background Log Capture'
+    cli_alias: ffdc event-log
+  - name: FFDCMemoryLeakCapture
+    type: Bool
+    default: false
+    description: 'Background Memory Trace'
+    cli_alias: ffdc memory-trace
+  - name: AlwaysOnStartup
+    type: Bool
+    default: true
+    description: 'Always On Startup'
+    cli_alias: always-on-startup
+  - name: AlwaysOnShutdown
+    type: Bool
+    default: true
+    description: 'Always On Shutdown'
+    cli_alias: always-on-shutdown
+  - name: Protocol
+    type: String
+    enum:
+      - 'ftp'
+      - 'nfs'
+      - 'raid'
+      - 'smtp'
+      - 'temporary'
+      - 'mqdiag'
+    description: 'Report Destination Protocol'
+    cli_alias: protocol
+  - name: LocationIdentifier
+    type: String
+    description: 'Location'
+    cli_alias: location-id
+  - name: SmtpServer
+    type: String
+    example: 'smtp.mycompany.com'
+    description: 'SMTP Server'
+    cli_alias: remote-address
+  - name: EmailAddress
+    type: String
+    description: 'E-mail Address'
+    cli_alias: email-address
+  - name: EmailSenderAddress
+    type: String
+    description: 'E-mail Sender Address'
+    cli_alias: email-sender-address
+  - name: FTPServer
+    type: String
+    example: 'ftp.mycompany.com'
+    description: 'FTP Server'
+    cli_alias: ftp-server
+  - name: FTPPath
+    type: String
+    description: 'FTP Path'
+    cli_alias: ftp-path
+  - name: FTPUserAgent
+    type: String
+    reference_to: HTTPUserAgent
+    description: 'FTP User Agent'
+    cli_alias: ftp-user-agent
+  - name: NFSMount
+    type: String
+    reference_to: NFSStaticMount
+    description: 'NFS Mount'
+    cli_alias: nfs-mount
+  - name: NFSPath
+    type: String
+    description: 'NFS Path'
+    cli_alias: nfs-path
+  - name: RaidVolume
+    type: String
+    reference_to: RaidVolume
+    description: 'RAID Volume'
+    cli_alias: raid-volume
+  - name: RaidPath
+    type: String
+    description: 'RAID Volume Path'
+    cli_alias: raid-path
+  - name: ReportHistoryKept
+    type: Int64
+    minimum: 2
+    maximum: 10
+    default: 5
+    description: 'Report History'
+    cli_alias: report-history

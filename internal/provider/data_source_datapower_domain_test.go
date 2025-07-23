@@ -39,7 +39,6 @@ func TestAccDataSourceDomain(t *testing.T) {
 			{
 				Config: testconfig.DomainTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_domain.test", "result.0.config_dir", "config:///"),
 					resource.TestCheckResourceAttr("data.datapower_domain.test", "result.0.config_mode", "local"),
 					resource.TestCheckResourceAttr("data.datapower_domain.test", "result.0.import_format", "ZIP"),
 					resource.TestCheckResourceAttr("data.datapower_domain.test", "result.0.local_ip_rewrite", "true"),

@@ -1,0 +1,88 @@
+name: WebGUI
+description: 'Web management service (`default` domain only)'
+cli_alias: 'web-mgmt'
+cmd_group: 'device-management'
+rest_endpoint: '/mgmt/config/default/WebGUI/WebGUI-Settings'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: true
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    default: 9090
+    description: 'Port number'
+    cli_alias: port
+# DEPRECATED
+#  - name: SSLProxy
+#    type: String
+#    reference_to: SSLProxyProfile
+#    description: 'Custom TLS proxy profile (deprecated)'
+#    deprecated: true
+#    cli_alias: ssl
+  - name: UserAgent
+    type: String
+    reference_to: HTTPUserAgent
+    description: 'Custom user agent'
+    cli_alias: user-agent
+  - name: SaveConfigOverwrites
+    type: Bool
+    required: true
+    default: true
+    description: 'Save configuration overwrites'
+    cli_alias: save-config-overwrite
+  - name: IdleTimeout
+    type: Int64
+    maximum: 65535
+    required: true
+    default: 600
+    description: 'Idle timeout'
+    cli_alias: idle-timeout
+  - name: ACL
+    type: String
+    reference_to: AccessControlList
+    default: 'web-mgmt'
+    description: 'Access control list'
+    cli_alias: acl
+  - name: SSLServerConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'Custom TLS server type'
+    cli_alias: ssl-config-type
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'Custom TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'Custom TLS SNI server profile'
+    cli_alias: ssl-sni-server
+  - name: EnableSTS
+    type: Bool
+    default: true
+    description: 'Enable HTTP Strict Transport Security'
+    cli_alias: enable-sts
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local address'
+    cli_alias: ip-address

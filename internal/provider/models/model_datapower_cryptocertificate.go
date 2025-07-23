@@ -89,7 +89,7 @@ func (data CryptoCertificate) ToBody(ctx context.Context, pathRoot string) strin
 		body, _ = sjson.Set(body, pathRoot+`Alias`, data.Alias.ValueString())
 	}
 	if !data.IgnoreExpiration.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`IgnoreExpiration`, tfutils.StringFromBool(data.IgnoreExpiration, false))
+		body, _ = sjson.Set(body, pathRoot+`IgnoreExpiration`, tfutils.StringFromBool(data.IgnoreExpiration, ""))
 	}
 	return body
 }

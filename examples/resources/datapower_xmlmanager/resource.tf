@@ -1,5 +1,5 @@
 
 resource "datapower_xmlmanager" "test" {
-  id         = "XMLManager_name"
+  id         = "0_XMLManger_name"
   app_domain = "acc_test_domain"
 }

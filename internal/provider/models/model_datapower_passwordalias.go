@@ -173,3 +173,29 @@ func (data *PasswordAlias) UpdateFromBody(ctx context.Context, pathRoot string, 
 		data.Password = types.StringNull()
 	}
 }
+func (data *PasswordAlias) UpdateUnknownFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
+	if pathRoot != "" {
+		pathRoot = pathRoot + "."
+	}
+	if data.Id.IsUnknown() {
+		if value := res.Get(pathRoot + `name`); value.Exists() && !data.Id.IsNull() {
+			data.Id = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.Id = types.StringNull()
+		}
+	}
+	if data.UserSummary.IsUnknown() {
+		if value := res.Get(pathRoot + `UserSummary`); value.Exists() && !data.UserSummary.IsNull() {
+			data.UserSummary = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.UserSummary = types.StringNull()
+		}
+	}
+	if data.Password.IsUnknown() {
+		if value := res.Get(pathRoot + `Password`); value.Exists() && !data.Password.IsNull() {
+			data.Password = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.Password = types.StringNull()
+		}
+	}
+}

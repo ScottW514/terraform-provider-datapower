@@ -14,7 +14,7 @@ attributes:
   - name: mAdminState
     tf_name: 'enabled'
     type: Bool
-    bool_admin: true
+    bool_type: 'admin'
     default: false
     description: 'Administrative state'
     cli_alias: admin-state

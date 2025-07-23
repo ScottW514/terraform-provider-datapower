@@ -75,18 +75,12 @@ func (r *MessageMatchingResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 			},
 			"ip_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("IP Addresses", "ip", "").AddStringEnum("[0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+/[0-9]{1,2}", "[0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+ [0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+", "((([\\\\da-fA-F]{1,4}|:|)(:|)){1,7}([\\\\da-fA-F]{1,4}|:)/([1-9]?\\\\d|1[01]\\\\d|12[0-8]))", "((([\\\\da-fA-F]{1,4}|:|)(:|)){1,5}([\\\\da-fA-F]{1,4}|):(([1-9]?\\\\d|1\\\\d{2}|2[0-4]\\\\d|25[0-5])\\\\.){3}([1-9]?\\\\d|1\\\\d{2}|2[0-4]\\\\d|25[0-5])/([1-9]?\\\\d|1[01]\\\\d|12[0-8]))").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("IP Addresses", "ip", "").String,
 				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("[0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+/[0-9]{1,2}", "[0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+ [0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+", "((([\\\\da-fA-F]{1,4}|:|)(:|)){1,7}([\\\\da-fA-F]{1,4}|:)/([1-9]?\\\\d|1[01]\\\\d|12[0-8]))", "((([\\\\da-fA-F]{1,4}|:|)(:|)){1,5}([\\\\da-fA-F]{1,4}|):(([1-9]?\\\\d|1\\\\d{2}|2[0-4]\\\\d|25[0-5])\\\\.){3}([1-9]?\\\\d|1\\\\d{2}|2[0-4]\\\\d|25[0-5])/([1-9]?\\\\d|1[01]\\\\d|12[0-8]))"),
-				},
 			},
 			"ip_exclude": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Excluded IP Addresses", "ip-exclude", "").AddStringEnum("[0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+/[0-9]{1,2}", "[0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+ [0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+", "((([\\\\da-fA-F]{1,4}|:|)(:|)){1,7}([\\\\da-fA-F]{1,4}|:)/([1-9]?\\\\d|1[01]\\\\d|12[0-8]))", "((([\\\\da-fA-F]{1,4}|:|)(:|)){1,5}([\\\\da-fA-F]{1,4}|):(([1-9]?\\\\d|1\\\\d{2}|2[0-4]\\\\d|25[0-5])\\\\.){3}([1-9]?\\\\d|1\\\\d{2}|2[0-4]\\\\d|25[0-5])/([1-9]?\\\\d|1[01]\\\\d|12[0-8]))").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Excluded IP Addresses", "ip-exclude", "").String,
 				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("[0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+/[0-9]{1,2}", "[0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+ [0-9]+\\\\.[0-9]+\\\\.[0-9]+\\\\.[0-9]+", "((([\\\\da-fA-F]{1,4}|:|)(:|)){1,7}([\\\\da-fA-F]{1,4}|:)/([1-9]?\\\\d|1[01]\\\\d|12[0-8]))", "((([\\\\da-fA-F]{1,4}|:|)(:|)){1,5}([\\\\da-fA-F]{1,4}|):(([1-9]?\\\\d|1\\\\d{2}|2[0-4]\\\\d|25[0-5])\\\\.){3}([1-9]?\\\\d|1\\\\d{2}|2[0-4]\\\\d|25[0-5])/([1-9]?\\\\d|1[01]\\\\d|12[0-8]))"),
-				},
 			},
 			"http_method": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Method", "method", "").AddStringEnum("any", "OPTIONS", "GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "TRACE", "CONNECT").AddDefaultValue("any").String,

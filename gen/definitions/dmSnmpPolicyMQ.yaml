@@ -1,0 +1,20 @@
+name: DmSnmpPolicyMQ
+model_only: true
+list_item: true
+attributes:
+  - name: Community
+    type: String
+    required: true
+    description: 'Community'
+  - name: Mode
+    type: String
+    enum:
+      - 'none'
+      - 'read-only'
+      - 'read-write'
+    required: true
+    description: 'Mode'
+  - name: Host
+    type: String
+    default: '0.0.0.0/0'
+    description: 'Remote Host Address'

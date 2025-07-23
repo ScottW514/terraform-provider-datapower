@@ -1,0 +1,55 @@
+name: GatewayPeeringManager
+description: 'Gateway-peering manager'
+cli_alias: 'gateway-peering-manager'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/GatewayPeeringManager/default'
+update_only: true
+attributes:
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: false
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: APIConnectGatewayService
+    type: String
+    reference_to: GatewayPeering
+    required: true
+    description: 'API Connect gateway service'
+    cli_alias: apic-gw-service
+  - name: RateLimit
+    type: String
+    reference_to: GatewayPeering
+    required: true
+    description: 'API rate limits'
+    cli_alias: rate-limit
+  - name: Subscription
+    type: String
+    reference_to: GatewayPeering
+    required: true
+    description: 'API subscribers'
+    cli_alias: subscription
+# DEPRECATED
+#  - name: APIProbe
+#    type: String
+#    reference_to: GatewayPeering
+#    description: 'API probe data (deprecated)'
+#    deprecated: true
+#    cli_alias: apiprobe
+  - name: RatelimitModule
+    type: String
+    reference_to: GatewayPeering
+    required: true
+    description: 'GatewayScript ratelimit module keys'
+    cli_alias: ratelimit-module

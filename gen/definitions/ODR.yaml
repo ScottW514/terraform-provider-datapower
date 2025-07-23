@@ -1,0 +1,35 @@
+name: ODR
+description: 'On Demand Router (`default` domain only)'
+cli_alias: 'odr'
+cmd_group: 'network'
+rest_endpoint: '/mgmt/config/default/ODR/ODRInstance'
+update_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: false
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: OdrServerName
+    type: String
+    required: true
+    default: 'dp_set'
+    description: 'ODR routing rules server name'
+    cli_alias: odr-server-name
+  - name: ODRConnectorGroups
+    type: List
+    reference_to: ODRConnectorGroup
+    element_type: String
+    description: 'Connector groups'
+    cli_alias: odr-connector-groups
+  - name: ODRCustomProperties
+    type: List
+    element_type: DmODRProperty
+    description: 'Custom properties'
+    cli_alias: odr-custom-properties

@@ -1,0 +1,114 @@
+name: APIConnectGatewayService
+description: 'API Connect gateway service'
+cli_alias: 'apic-gw-service'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/APIConnectGatewayService/default'
+update_only: true
+attributes:
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: false
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local address'
+    cli_alias: local-address
+  - name: LocalPort
+    type: Int64
+    required: true
+    default: 3000
+    description: 'Local port'
+    cli_alias: local-port
+  # DEPRACATED
+  # - name: SSLClient
+  #   type: String
+  #   reference_to: SSLClientProfile
+  #   description: 'TLS client profile'
+  #   cli_alias: ssl-client
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: APIGatewayAddress
+    type: String
+    default: '0.0.0.0'
+    description: 'API gateway address'
+    cli_alias: api-gw-address
+  - name: APIGatewayPort
+    type: Int64
+    default: 9443
+    description: 'API gateway port'
+    cli_alias: api-gw-port
+  - name: GatewayPeering
+    type: String
+    reference_to: GatewayPeering
+    description: 'Gateway peering'
+    cli_alias: gateway-peering
+  - name: GatewayPeeringManager
+    type: String
+    reference_to: GatewayPeeringManager
+    default: 'default'
+    description: 'Gateway-peering manager'
+    cli_alias: gateway-peering-manager
+  - name: V5CompatibilityMode
+    type: Bool
+    default: true
+    description: 'V5 compatibility mode'
+    cli_alias: v5-compatibility-mode
+  - name: UserDefinedPolicies
+    type: List
+    reference_to: AssemblyFunction
+    element_type: String
+    description: 'User-defined policies'
+    cli_alias: user-defined-policies
+  - name: V5CSlmMode
+    type: String
+    enum:
+      - 'autounicast'
+      - 'unicast'
+      - 'multicast'
+    default: 'autounicast'
+    description: 'SLM peer mode'
+    cli_alias: slm-mode
+  - name: IPMulticast
+    type: String
+    reference_to: IPMulticast
+    description: 'IP multicast'
+    cli_alias: ip-multicast
+  - name: IPUnicast
+    type: String
+    description: 'IP unicast'
+    cli_alias: ip-unicast
+  - name: JWTValidationMode
+    type: String
+    enum:
+      - 'request'
+      - 'require'
+    default: 'request'
+    description: 'JWT validation mode'
+    cli_alias: jwt-validate-mode
+  - name: JWTURL
+    type: String
+    description: 'JWT URL'
+    cli_alias: jwt-url
+  - name: ProxyPolicy
+    dm_type: DmAPICGSProxyPolicy
+    description: 'API Manager proxy'
+    cli_alias: proxy
+    test_value: '{proxy_policy_enable = false, remote_address = "localhost", remote_port = 8080}'

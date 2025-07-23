@@ -1,0 +1,37 @@
+name: DomainSettings
+description: 'Domain settings'
+cli_alias: 'domain-settings'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/DomainSettings/default'
+update_only: true
+attributes:
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: true
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: PasswordTreatment
+    type: String
+    enum:
+      - 'none'
+      - 'masked'
+    required: true
+    default: 'none'
+    description: 'Password treatment'
+    cli_alias: password-treatment
+  - name: Passphrase
+    type: String
+    description: 'Passphrase'
+    cli_alias: passphrase

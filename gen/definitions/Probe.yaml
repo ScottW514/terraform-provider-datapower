@@ -1,0 +1,45 @@
+name: Probe
+description: 'Probe settings'
+cli_alias: 'probe-settings'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/Probe/default'
+update_only: true
+attributes:
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: false
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: MaxRecords
+    type: Int64
+    minimum: 1
+    maximum: 10000
+    required: true
+    default: 1000
+    description: 'Max records'
+    cli_alias: max-records
+  - name: Expiration
+    type: Int64
+    minimum: 60
+    maximum: 86400
+    default: 3600
+    description: 'Expiration'
+    cli_alias: expiration
+  - name: GatewayPeering
+    type: String
+    reference_to: GatewayPeering
+    required: true
+    description: 'Gateway peering'
+    cli_alias: gateway-peering

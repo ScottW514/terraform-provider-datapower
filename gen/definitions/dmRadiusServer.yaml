@@ -1,0 +1,20 @@
+name: DmRadiusServer
+model_only: true
+list_item: true
+attributes:
+  - name: Number
+    type: Int64
+    maximum: 2147483647
+    required: true
+    description: 'Number'
+  - name: Host
+    type: String
+    required: true
+    description: 'Server address'
+  - name: Port
+    type: Int64
+    default: 1812
+    description: 'Server port'
+  - name: Secret
+    type: String
+    description: 'Secret'

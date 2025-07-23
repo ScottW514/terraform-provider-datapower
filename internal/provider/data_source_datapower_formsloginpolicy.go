@@ -83,7 +83,7 @@ func (d *FormsLoginPolicyDataSource) Schema(ctx context.Context, req datasource.
 							MarkdownDescription: "Login",
 							Computed:            true,
 						},
-						"use_cookie_attributes": schema.StringAttribute{
+						"use_cookie_attributes": schema.BoolAttribute{
 							MarkdownDescription: "Attach cookie attribute policy",
 							Computed:            true,
 						},

@@ -1,0 +1,111 @@
+name: GitOps
+description: 'GitOps'
+cli_alias: 'gitops'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/GitOps/default'
+update_only: true
+attributes:
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: false
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: ConnectionType
+    type: String
+    enum:
+      - 'https'
+      - 'ssh'
+    required: true
+    default: 'https'
+    description: 'Connection type'
+    cli_alias: type
+  - name: Mode
+    type: String
+    enum:
+      - 'read-only'
+      - 'read-write'
+    required: true
+    default: 'read-write'
+    description: 'Operation mode'
+    cli_alias: mode
+  - name: CommitIdentifierType
+    type: String
+    enum:
+      - 'branch'
+      - 'tag'
+      - 'commit'
+    required: true
+    default: 'branch'
+    description: 'Commit identifier type'
+    cli_alias: commit-id-type
+  - name: CommitIdentifier
+    type: String
+    required: true
+    example: 'main'
+    description: 'Commit identifier'
+    cli_alias: commit-id
+  - name: RemoteLocation
+    type: String
+    required: true
+    example: 'https://github.com/ScottW514/terraform-provider-datapower'
+    description: 'Remote location'
+    cli_alias: location
+  - name: Interval
+    type: Int64
+    maximum: 1440
+    default: 5
+    description: 'Sync Interval'
+    cli_alias: interval
+  - name: SSHClientProfile
+    type: String
+    reference_to: SSHClientProfile
+    description: 'SSH client profile'
+    cli_alias: ssh-client-profile
+  - name: Username
+    type: String
+    description: 'Username'
+    cli_alias: username
+  - name: Password
+    type: String
+    reference_to: PasswordAlias
+    description: 'Password'
+    cli_alias: password
+  - name: SSHAuthorizedKeysFile
+    type: String
+    description: 'SSH authorized key file'
+    cli_alias: ssh-authorized-keyfile
+  - name: TLSValcred
+    type: String
+    reference_to: CryptoValCred
+    description: 'HTTPS validation credentials'
+    cli_alias: https-valcred
+  - name: GitUser
+    type: String
+    description: 'Git user'
+    cli_alias: name
+  - name: GitEmail
+    type: String
+    description: 'Git email'
+    cli_alias: email
+  - name: JSONParseSettings
+    type: String
+    reference_to: JSONSettings
+    description: 'JSON parse settings'
+    cli_alias: json-settings
+  - name: TemplatePolicies
+    type: List
+    element_type: DmGitOpsTemplatePolicy
+    description: 'Template policies'
+    cli_alias: template-policy

@@ -92,7 +92,7 @@ func (data DmUploadChunkedPolicy) ToBody(ctx context.Context, pathRoot string) s
 		body, _ = sjson.Set(body, pathRoot+`RegExp`, data.RegExp.ValueString())
 	}
 	if !data.UploadChunked.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UploadChunked`, tfutils.StringFromBool(data.UploadChunked, false))
+		body, _ = sjson.Set(body, pathRoot+`UploadChunked`, tfutils.StringFromBool(data.UploadChunked, ""))
 	}
 	return body
 }

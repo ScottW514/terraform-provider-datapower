@@ -178,9 +178,6 @@ resource "datapower_multiprotocolgateway" "test" {
   - CLI Alias: `external-references`
   - Choices: `forbid`, `ignore`, `allow`
   - Default value: `forbid`
-- `parser_limits_forbid_external_references` (Boolean) XML Forbid External References
-  - CLI Alias: `forbid-external-references`
-  - Default value: `true`
 - `parser_limits_max_local_names` (Number) XML Maximum Distinct Local Names
   - CLI Alias: `max-local-names`
   - Default value: `60000`

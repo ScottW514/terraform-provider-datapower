@@ -1,0 +1,96 @@
+name: Throttler
+description: 'Throttle settings (`default` domain only)'
+cli_alias: 'throttle'
+cmd_group: 'system'
+rest_endpoint: '/mgmt/config/default/Throttler/Throttler'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: true
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: ThrottleAt
+    type: Int64
+    maximum: 100
+    required: true
+    default: 20
+    description: 'Memory throttle threshold'
+    cli_alias: memory-throttle
+  - name: TerminateAt
+    type: Int64
+    maximum: 100
+    required: true
+    default: 5
+    description: 'Memory terminate threshold'
+    cli_alias: memory-terminate
+  - name: TempFSThrottleAt
+    type: Int64
+    maximum: 100
+    required: true
+    default: 0
+    description: 'Temporary file space throttle threshold'
+    cli_alias: temp-fs-throttle
+  - name: TempFSTerminateAt
+    type: Int64
+    maximum: 100
+    required: true
+    default: 0
+    description: 'Temporary file space terminate threshold'
+    cli_alias: temp-fs-terminate
+  - name: QnameWarnAt
+    type: Int64
+    minimum: 5
+    maximum: 100
+    required: true
+    default: 10
+    description: 'XML names and JSON keys threshold'
+    cli_alias: qcode-warn
+  - name: Timeout
+    type: Int64
+    required: true
+    default: 30
+    description: 'Timeout'
+    cli_alias: timeout
+  - name: Statistics
+    type: Bool
+    default: false
+    description: 'Status log'
+    cli_alias: status-log
+  - name: LogLevel
+    type: String
+    enum:
+      - 'emerg'
+      - 'alert'
+      - 'critic'
+      - 'error'
+      - 'warn'
+      - 'notice'
+      - 'info'
+      - 'debug'
+    default: 'debug'
+    description: 'Log level'
+    cli_alias: status-loglevel
+  - name: EnvironmentalLog
+    type: Bool
+    default: true
+    description: 'Monitor sensors'
+    cli_alias: sensors-log
+  - name: BacklogSize
+    type: Int64
+    maximum: 500
+    default: 0
+    description: 'Backlog size'
+    cli_alias: backlog-size
+  - name: BacklogTimeout
+    type: Int64
+    default: 30
+    description: 'Backlog timeout'
+    cli_alias: backlog-timeout

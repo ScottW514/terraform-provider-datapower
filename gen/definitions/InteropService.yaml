@@ -1,0 +1,99 @@
+name: InteropService
+description: 'Interoperability test service (`default` domain only)'
+cli_alias: 'iop-mgmt'
+cmd_group: 'device-management'
+rest_endpoint: '/mgmt/config/default/InteropService/IOP-Settings'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: false
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    description: 'XML manager'
+    cli_alias: xml-manager
+  - name: AAAPolicy
+    type: String
+    reference_to: AAAPolicy
+    description: 'AAA policy'
+    cli_alias: aaa-policy
+  - name: HttpService
+    type: Bool
+    default: true
+    description: 'Enable over HTTP'
+    cli_alias: http-service
+  - name: LocalAddress
+    type: String
+    default: '0.0.0.0'
+    description: 'Local IP address'
+    cli_alias: http-ip-address
+  - name: LocalPort
+    type: Int64
+    minimum: 1000
+    maximum: 61000
+    default: 9990
+    description: 'Local port'
+    cli_alias: http-port
+  - name: ACL
+    type: String
+    reference_to: AccessControlList
+    description: 'Access control list'
+    cli_alias: http-acl
+  - name: HttpsService
+    type: Bool
+    default: false
+    description: 'Enable over HTTPS'
+    cli_alias: https-service
+  - name: HttpsLocalAddress
+    type: String
+    default: '0.0.0.0'
+    description: 'Local IP address'
+    cli_alias: https-ip-address
+  - name: HttpsLocalPort
+    type: Int64
+    minimum: 1000
+    maximum: 61000
+    default: 9991
+    description: 'Local port'
+    cli_alias: https-port
+  - name: HttpsACL
+    type: String
+    reference_to: AccessControlList
+    description: 'Access control list'
+    cli_alias: https-acl
+# DEPRECATED
+#  - name: SSLProxy
+#    type: String
+#    reference_to: SSLProxyProfile
+#    description: 'TLS proxy profile (deprecated)'
+#    deprecated: true
+#    cli_alias: ssl
+  - name: SSLServerConfigType
+    type: String
+    enum:
+      - 'proxy'
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'TLS server type'
+    cli_alias: ssl-config-type
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'TLS SNI server profile'
+    cli_alias: ssl-sni-server

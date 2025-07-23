@@ -1,0 +1,81 @@
+name: QuotaEnforcementServer
+description: 'Quota Enforcement Server (`default` domain only)'
+cli_alias: 'quota-enforcement-server'
+cmd_group: 'system'
+rest_endpoint: '/mgmt/config/default/QuotaEnforcementServer/QuotaEnforcementServer'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: true
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: PasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'Password alias'
+    cli_alias: password-alias
+  - name: RaidVolume
+    type: String
+    reference_to: RaidVolume
+    description: 'Data storage location'
+    cli_alias: raid-volume
+  - name: ServerPort
+    type: Int64
+    required: true
+    default: 16379
+    description: 'Server port'
+    cli_alias: server-port
+  - name: MonitorPort
+    type: Int64
+    required: true
+    default: 26379
+    description: 'Monitor port'
+    cli_alias: monitor-port
+  - name: EnablePeerGroup
+    type: Bool
+    default: false
+    description: 'Peer group mode'
+    cli_alias: enable-peer-group
+  - name: EnableSSL
+    type: Bool
+    default: true
+    description: 'Enable TLS'
+    cli_alias: enable-ssl
+  - name: SSLCryptoKey
+    type: String
+    reference_to: CryptoKey
+    description: 'Crypto key'
+    cli_alias: ssl-key
+  - name: SSLCryptoCertificate
+    type: String
+    reference_to: CryptoCertificate
+    description: 'Certificate'
+    cli_alias: ssl-cert
+  - name: IPAddress
+    type: String
+    description: 'IP address'
+    cli_alias: ip-address
+  - name: Peers
+    type: List
+    element_type: String
+    description: 'Peers'
+    cli_alias: peer
+  - name: Priority
+    type: Int64
+    maximum: 255
+    default: 100
+    description: 'Priority'
+    cli_alias: priority
+  - name: StrictMode
+    type: Bool
+    default: true
+    description: 'Strict mode'
+    cli_alias: strict-mode

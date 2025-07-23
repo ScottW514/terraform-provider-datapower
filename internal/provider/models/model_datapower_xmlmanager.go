@@ -33,67 +33,65 @@ import (
 )
 
 type XMLManager struct {
-	Id                                   types.String `tfsdk:"id"`
-	AppDomain                            types.String `tfsdk:"app_domain"`
-	UserSummary                          types.String `tfsdk:"user_summary"`
-	UrlRefreshPolicy                     types.String `tfsdk:"url_refresh_policy"`
-	CompileOptionsPolicy                 types.String `tfsdk:"compile_options_policy"`
-	CacheMemorySize                      types.Int64  `tfsdk:"cache_memory_size"`
-	CacheSize                            types.Int64  `tfsdk:"cache_size"`
-	Sha1Caching                          types.Bool   `tfsdk:"sha1_caching"`
-	StaticDocumentCalls                  types.Bool   `tfsdk:"static_document_calls"`
-	SearchResults                        types.Bool   `tfsdk:"search_results"`
-	VirtualServers                       types.List   `tfsdk:"virtual_servers"`
-	ParserLimitsBytesScanned             types.Int64  `tfsdk:"parser_limits_bytes_scanned"`
-	ParserLimitsElementDepth             types.Int64  `tfsdk:"parser_limits_element_depth"`
-	ParserLimitsAttributeCount           types.Int64  `tfsdk:"parser_limits_attribute_count"`
-	ParserLimitsMaxNodeSize              types.Int64  `tfsdk:"parser_limits_max_node_size"`
-	ParserLimitsForbidExternalReferences types.Bool   `tfsdk:"parser_limits_forbid_external_references"`
-	ParserLimitsExternalReferences       types.String `tfsdk:"parser_limits_external_references"`
-	ParserLimitsMaxPrefixes              types.Int64  `tfsdk:"parser_limits_max_prefixes"`
-	ParserLimitsMaxNamespaces            types.Int64  `tfsdk:"parser_limits_max_namespaces"`
-	ParserLimitsMaxLocalNames            types.Int64  `tfsdk:"parser_limits_max_local_names"`
-	DocCacheMaxDocs                      types.Int64  `tfsdk:"doc_cache_max_docs"`
-	DocCacheSize                         types.Int64  `tfsdk:"doc_cache_size"`
-	DocMaxWrites                         types.Int64  `tfsdk:"doc_max_writes"`
-	DocCachePolicy                       types.List   `tfsdk:"doc_cache_policy"`
-	SchemaValidation                     types.List   `tfsdk:"schema_validation"`
-	ScheduledRule                        types.List   `tfsdk:"scheduled_rule"`
-	UserAgent                            types.String `tfsdk:"user_agent"`
-	JsonParserSettings                   types.String `tfsdk:"json_parser_settings"`
-	LdapConnPool                         types.String `tfsdk:"ldap_conn_pool"`
+	Id                             types.String `tfsdk:"id"`
+	AppDomain                      types.String `tfsdk:"app_domain"`
+	UserSummary                    types.String `tfsdk:"user_summary"`
+	UrlRefreshPolicy               types.String `tfsdk:"url_refresh_policy"`
+	CompileOptionsPolicy           types.String `tfsdk:"compile_options_policy"`
+	CacheMemorySize                types.Int64  `tfsdk:"cache_memory_size"`
+	CacheSize                      types.Int64  `tfsdk:"cache_size"`
+	Sha1Caching                    types.Bool   `tfsdk:"sha1_caching"`
+	StaticDocumentCalls            types.Bool   `tfsdk:"static_document_calls"`
+	SearchResults                  types.Bool   `tfsdk:"search_results"`
+	VirtualServers                 types.List   `tfsdk:"virtual_servers"`
+	ParserLimitsBytesScanned       types.Int64  `tfsdk:"parser_limits_bytes_scanned"`
+	ParserLimitsElementDepth       types.Int64  `tfsdk:"parser_limits_element_depth"`
+	ParserLimitsAttributeCount     types.Int64  `tfsdk:"parser_limits_attribute_count"`
+	ParserLimitsMaxNodeSize        types.Int64  `tfsdk:"parser_limits_max_node_size"`
+	ParserLimitsExternalReferences types.String `tfsdk:"parser_limits_external_references"`
+	ParserLimitsMaxPrefixes        types.Int64  `tfsdk:"parser_limits_max_prefixes"`
+	ParserLimitsMaxNamespaces      types.Int64  `tfsdk:"parser_limits_max_namespaces"`
+	ParserLimitsMaxLocalNames      types.Int64  `tfsdk:"parser_limits_max_local_names"`
+	DocCacheMaxDocs                types.Int64  `tfsdk:"doc_cache_max_docs"`
+	DocCacheSize                   types.Int64  `tfsdk:"doc_cache_size"`
+	DocMaxWrites                   types.Int64  `tfsdk:"doc_max_writes"`
+	DocCachePolicy                 types.List   `tfsdk:"doc_cache_policy"`
+	SchemaValidation               types.List   `tfsdk:"schema_validation"`
+	ScheduledRule                  types.List   `tfsdk:"scheduled_rule"`
+	UserAgent                      types.String `tfsdk:"user_agent"`
+	JsonParserSettings             types.String `tfsdk:"json_parser_settings"`
+	LdapConnPool                   types.String `tfsdk:"ldap_conn_pool"`
 }
 
 var XMLManagerObjectType = map[string]attr.Type{
-	"id":                                       types.StringType,
-	"app_domain":                               types.StringType,
-	"user_summary":                             types.StringType,
-	"url_refresh_policy":                       types.StringType,
-	"compile_options_policy":                   types.StringType,
-	"cache_memory_size":                        types.Int64Type,
-	"cache_size":                               types.Int64Type,
-	"sha1_caching":                             types.BoolType,
-	"static_document_calls":                    types.BoolType,
-	"search_results":                           types.BoolType,
-	"virtual_servers":                          types.ListType{ElemType: types.StringType},
-	"parser_limits_bytes_scanned":              types.Int64Type,
-	"parser_limits_element_depth":              types.Int64Type,
-	"parser_limits_attribute_count":            types.Int64Type,
-	"parser_limits_max_node_size":              types.Int64Type,
-	"parser_limits_forbid_external_references": types.BoolType,
-	"parser_limits_external_references":        types.StringType,
-	"parser_limits_max_prefixes":               types.Int64Type,
-	"parser_limits_max_namespaces":             types.Int64Type,
-	"parser_limits_max_local_names":            types.Int64Type,
-	"doc_cache_max_docs":                       types.Int64Type,
-	"doc_cache_size":                           types.Int64Type,
-	"doc_max_writes":                           types.Int64Type,
-	"doc_cache_policy":                         types.ListType{ElemType: types.ObjectType{AttrTypes: DmDocCachePolicyObjectType}},
-	"schema_validation":                        types.ListType{ElemType: types.ObjectType{AttrTypes: DmSchemaValidationObjectType}},
-	"scheduled_rule":                           types.ListType{ElemType: types.ObjectType{AttrTypes: DmScheduledRuleObjectType}},
-	"user_agent":                               types.StringType,
-	"json_parser_settings":                     types.StringType,
-	"ldap_conn_pool":                           types.StringType,
+	"id":                                types.StringType,
+	"app_domain":                        types.StringType,
+	"user_summary":                      types.StringType,
+	"url_refresh_policy":                types.StringType,
+	"compile_options_policy":            types.StringType,
+	"cache_memory_size":                 types.Int64Type,
+	"cache_size":                        types.Int64Type,
+	"sha1_caching":                      types.BoolType,
+	"static_document_calls":             types.BoolType,
+	"search_results":                    types.BoolType,
+	"virtual_servers":                   types.ListType{ElemType: types.StringType},
+	"parser_limits_bytes_scanned":       types.Int64Type,
+	"parser_limits_element_depth":       types.Int64Type,
+	"parser_limits_attribute_count":     types.Int64Type,
+	"parser_limits_max_node_size":       types.Int64Type,
+	"parser_limits_external_references": types.StringType,
+	"parser_limits_max_prefixes":        types.Int64Type,
+	"parser_limits_max_namespaces":      types.Int64Type,
+	"parser_limits_max_local_names":     types.Int64Type,
+	"doc_cache_max_docs":                types.Int64Type,
+	"doc_cache_size":                    types.Int64Type,
+	"doc_max_writes":                    types.Int64Type,
+	"doc_cache_policy":                  types.ListType{ElemType: types.ObjectType{AttrTypes: DmDocCachePolicyObjectType}},
+	"schema_validation":                 types.ListType{ElemType: types.ObjectType{AttrTypes: DmSchemaValidationObjectType}},
+	"scheduled_rule":                    types.ListType{ElemType: types.ObjectType{AttrTypes: DmScheduledRuleObjectType}},
+	"user_agent":                        types.StringType,
+	"json_parser_settings":              types.StringType,
+	"ldap_conn_pool":                    types.StringType,
 }
 
 func (data XMLManager) GetPath() string {
@@ -147,9 +145,6 @@ func (data XMLManager) IsNull() bool {
 		return false
 	}
 	if !data.ParserLimitsMaxNodeSize.IsNull() {
-		return false
-	}
-	if !data.ParserLimitsForbidExternalReferences.IsNull() {
 		return false
 	}
 	if !data.ParserLimitsExternalReferences.IsNull() {
@@ -218,13 +213,13 @@ func (data XMLManager) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`CacheSize`, data.CacheSize.ValueInt64())
 	}
 	if !data.Sha1Caching.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SHA1Caching`, tfutils.StringFromBool(data.Sha1Caching, false))
+		body, _ = sjson.Set(body, pathRoot+`SHA1Caching`, tfutils.StringFromBool(data.Sha1Caching, ""))
 	}
 	if !data.StaticDocumentCalls.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`StaticDocumentCalls`, tfutils.StringFromBool(data.StaticDocumentCalls, false))
+		body, _ = sjson.Set(body, pathRoot+`StaticDocumentCalls`, tfutils.StringFromBool(data.StaticDocumentCalls, ""))
 	}
 	if !data.SearchResults.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SearchResults`, tfutils.StringFromBool(data.SearchResults, false))
+		body, _ = sjson.Set(body, pathRoot+`SearchResults`, tfutils.StringFromBool(data.SearchResults, ""))
 	}
 	if !data.VirtualServers.IsNull() {
 		var values []string
@@ -244,9 +239,6 @@ func (data XMLManager) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.ParserLimitsMaxNodeSize.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParserLimitsMaxNodeSize`, data.ParserLimitsMaxNodeSize.ValueInt64())
-	}
-	if !data.ParserLimitsForbidExternalReferences.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ParserLimitsForbidExternalReferences`, tfutils.StringFromBool(data.ParserLimitsForbidExternalReferences, false))
 	}
 	if !data.ParserLimitsExternalReferences.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`ParserLimitsExternalReferences`, data.ParserLimitsExternalReferences.ValueString())
@@ -375,11 +367,6 @@ func (data *XMLManager) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.ParserLimitsMaxNodeSize = types.Int64Value(value.Int())
 	} else {
 		data.ParserLimitsMaxNodeSize = types.Int64Value(33554432)
-	}
-	if value := res.Get(pathRoot + `ParserLimitsForbidExternalReferences`); value.Exists() {
-		data.ParserLimitsForbidExternalReferences = tfutils.BoolFromString(value.String())
-	} else {
-		data.ParserLimitsForbidExternalReferences = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `ParserLimitsExternalReferences`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.ParserLimitsExternalReferences = tfutils.ParseStringFromGJSON(value)
@@ -563,11 +550,6 @@ func (data *XMLManager) UpdateFromBody(ctx context.Context, pathRoot string, res
 		data.ParserLimitsMaxNodeSize = types.Int64Value(value.Int())
 	} else if data.ParserLimitsMaxNodeSize.ValueInt64() != 33554432 {
 		data.ParserLimitsMaxNodeSize = types.Int64Null()
-	}
-	if value := res.Get(pathRoot + `ParserLimitsForbidExternalReferences`); value.Exists() && !data.ParserLimitsForbidExternalReferences.IsNull() {
-		data.ParserLimitsForbidExternalReferences = tfutils.BoolFromString(value.String())
-	} else if !data.ParserLimitsForbidExternalReferences.ValueBool() {
-		data.ParserLimitsForbidExternalReferences = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `ParserLimitsExternalReferences`); value.Exists() && !data.ParserLimitsExternalReferences.IsNull() {
 		data.ParserLimitsExternalReferences = tfutils.ParseStringFromGJSON(value)

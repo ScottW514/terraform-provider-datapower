@@ -35,6 +35,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
@@ -73,10 +74,11 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"config_dir": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Configuration directory", "", "").AddDefaultValue("config:///").String,
-				Optional:            true,
+				MarkdownDescription: tfutils.NewAttributeDescription("Configuration directory", "", "").String,
 				Computed:            true,
-				Default:             stringdefault.StaticString("config:///"),
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
 			},
 			"neighbor_domain": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Visible domains", "visible-domain", "domain").String,
@@ -192,6 +194,12 @@ func (r *DomainResource) Create(ctx context.Context, req resource.CreateRequest,
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
+	getRes, getErr := r.client.Get(data.GetPath())
+	if getErr != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object after creation (GET), got error: %s", getErr))
+		return
+	}
+	data.UpdateUnknownFromBody(ctx, `Domain`, getRes)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 

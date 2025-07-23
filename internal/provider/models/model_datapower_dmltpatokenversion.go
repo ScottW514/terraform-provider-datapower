@@ -129,13 +129,13 @@ func (data DmLTPATokenVersion) ToBody(ctx context.Context, pathRoot string) stri
 	}
 	body := ""
 	if !data.Ltpa.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LTPA`, tfutils.StringFromBool(data.Ltpa, false))
+		body, _ = sjson.Set(body, pathRoot+`LTPA`, tfutils.StringFromBool(data.Ltpa, ""))
 	}
 	if !data.Ltpa2.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LTPA2`, tfutils.StringFromBool(data.Ltpa2, false))
+		body, _ = sjson.Set(body, pathRoot+`LTPA2`, tfutils.StringFromBool(data.Ltpa2, ""))
 	}
 	if !data.LtpaDomino.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`LTPADomino`, tfutils.StringFromBool(data.LtpaDomino, false))
+		body, _ = sjson.Set(body, pathRoot+`LTPADomino`, tfutils.StringFromBool(data.LtpaDomino, ""))
 	}
 	return body
 }

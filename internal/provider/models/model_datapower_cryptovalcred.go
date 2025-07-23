@@ -118,10 +118,10 @@ func (data CryptoValCred) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, pathRoot+`CertValidationMode`, data.CertValidationMode.ValueString())
 	}
 	if !data.UseCrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UseCRL`, tfutils.StringFromBool(data.UseCrl, false))
+		body, _ = sjson.Set(body, pathRoot+`UseCRL`, tfutils.StringFromBool(data.UseCrl, ""))
 	}
 	if !data.RequireCrl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RequireCRL`, tfutils.StringFromBool(data.RequireCrl, false))
+		body, _ = sjson.Set(body, pathRoot+`RequireCRL`, tfutils.StringFromBool(data.RequireCrl, ""))
 	}
 	if !data.CrldpHandling.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`CRLDPHandling`, data.CrldpHandling.ValueString())
@@ -134,10 +134,10 @@ func (data CryptoValCred) ToBody(ctx context.Context, pathRoot string) string {
 		}
 	}
 	if !data.ExplicitPolicy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ExplicitPolicy`, tfutils.StringFromBool(data.ExplicitPolicy, false))
+		body, _ = sjson.Set(body, pathRoot+`ExplicitPolicy`, tfutils.StringFromBool(data.ExplicitPolicy, ""))
 	}
 	if !data.CheckDates.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CheckDates`, tfutils.StringFromBool(data.CheckDates, false))
+		body, _ = sjson.Set(body, pathRoot+`CheckDates`, tfutils.StringFromBool(data.CheckDates, ""))
 	}
 	return body
 }

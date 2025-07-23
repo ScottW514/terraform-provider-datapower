@@ -97,7 +97,7 @@ func (data LDAPConnectionPool) ToBody(ctx context.Context, pathRoot string) stri
 		body, _ = sjson.Set(body, pathRoot+`MaxPoolSize`, data.MaxPoolSize.ValueInt64())
 	}
 	if !data.RejectOnPoolLimit.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`RejectOnPoolLimit`, tfutils.StringFromBool(data.RejectOnPoolLimit, false))
+		body, _ = sjson.Set(body, pathRoot+`RejectOnPoolLimit`, tfutils.StringFromBool(data.RejectOnPoolLimit, ""))
 	}
 	return body
 }

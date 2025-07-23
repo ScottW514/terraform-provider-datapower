@@ -1,0 +1,130 @@
+name: SNMPSettings
+description: 'SNMP Settings (`default` domain only)'
+cli_alias: 'snmp'
+cmd_group: 'snmp'
+rest_endpoint: '/mgmt/config/default/SNMPSettings/SNMP-Settings'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: false
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LocalAddress
+    type: String
+    default: '0.0.0.0'
+    description: 'Local IP Address'
+    cli_alias: ip-address
+  - name: LocalPort
+    type: Int64
+    required: true
+    default: 161
+    description: 'Local Port'
+    cli_alias: port
+  - name: Policies
+    type: List
+    element_type: DmSnmpPolicy
+    description: 'SNMPv1/v2c Communities'
+    cli_alias: community
+  - name: PoliciesMQ
+    type: List
+    element_type: DmSnmpPolicyMQ
+    description: 'SNMPv1/v2c Communities'
+    cli_alias: snmp-community
+  - name: Targets
+    type: List
+    element_type: DmSnmpTarget
+    description: 'Trap and Notification Targets'
+    cli_alias: trap-target
+  - name: Users
+    type: List
+    reference_to: User
+    element_type: String
+    description: 'SNMPv3 Users'
+    cli_alias: user
+  - name: Contexts
+    type: List
+    element_type: DmSnmpContext
+    description: 'SNMPv3 Contexts'
+    cli_alias: context
+  - name: SecurityLevel
+    type: String
+    enum:
+      - 'noAuthNoPriv'
+      - 'authNoPriv'
+      - 'authPriv'
+    required: true
+    default: 'authPriv'
+    description: 'SNMPv3 Security Level'
+    cli_alias: security-level
+  - name: AccessLevel
+    type: String
+    enum:
+      - 'none'
+      - 'read-only'
+      - 'read-write'
+    required: true
+    default: 'read-only'
+    description: 'SNMPv3 Access Level'
+    cli_alias: access-level
+  - name: EnableDefaultTrapSubscriptions
+    type: Bool
+    default: true
+    description: 'Enable Default Event Subscriptions'
+    cli_alias: trap-default-subscriptions
+  - name: TrapPriority
+    type: String
+    enum:
+      - 'emerg'
+      - 'alert'
+      - 'critic'
+      - 'error'
+      - 'warn'
+      - 'notice'
+      - 'info'
+      - 'debug'
+    default: 'error'
+    description: 'Minimum Priority'
+    cli_alias: trap-priority
+  - name: TrapEventCode
+    type: List
+    element_type: String
+    description: 'Event Subscriptions'
+    cli_alias: trap-code
+  - name: ConfigMib
+    type: String
+    default: '/drConfigMIB.txt'
+    description: 'Configuration'
+    cli_alias: config-mib
+  - name: ConfigMibMQ
+    type: String
+    default: '/mqConfigMIB.txt'
+    description: 'Configuration'
+    cli_alias: config-mib
+  - name: StatusMib
+    type: String
+    default: '/drStatusMIB.txt'
+    description: 'Status'
+    cli_alias: status-mib
+  - name: StatusMibMQ
+    type: String
+    default: '/mqStatusMIB.txt'
+    description: 'Status'
+    cli_alias: status-mib
+  - name: NotifMib
+    type: String
+    default: '/drNotificationMIB.txt'
+    description: 'Notifications'
+    cli_alias: notification-mib
+  - name: NotifMibMQ
+    type: String
+    default: '/mqNotificationMIB.txt'
+    description: 'Notifications'
+    cli_alias: notification-mib

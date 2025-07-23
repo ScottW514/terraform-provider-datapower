@@ -57,12 +57,10 @@ attributes:
     cli_alias: password-retrieval-method
   - name: EIPasswordRetrievalCustomURL
     type: String
-    sensitive: true
     description: 'Password-retrieval processing URL'
     cli_alias: password-retrieval-custom-url
   - name: EIPasswordRetrievalAAAInfoURL
     type: String
-    sensitive: true
     description: 'AAA information file URL'
     cli_alias: password-retrieval-xmlfile-url
   # DEPRACATED

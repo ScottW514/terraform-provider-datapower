@@ -59,7 +59,6 @@ type DmAAAPAuthorize struct {
 	AzsamlVersion                 types.String `tfsdk:"azsaml_version"`
 	AzldapLoadBalanceGroup        types.String `tfsdk:"azldap_load_balance_group"`
 	AzldapBindDn                  types.String `tfsdk:"azldap_bind_dn"`
-	AzldapBindPassword            types.String `tfsdk:"azldap_bind_password"`
 	AzldapGroupAttribute          types.String `tfsdk:"azldap_group_attribute"`
 	AzldapSearchScope             types.String `tfsdk:"azldap_search_scope"`
 	AzldapSearchFilter            types.String `tfsdk:"azldap_search_filter"`
@@ -118,7 +117,6 @@ var DmAAAPAuthorizeObjectType = map[string]attr.Type{
 	"azsaml_version":                    types.StringType,
 	"azldap_load_balance_group":         types.StringType,
 	"azldap_bind_dn":                    types.StringType,
-	"azldap_bind_password":              types.StringType,
 	"azldap_group_attribute":            types.StringType,
 	"azldap_search_scope":               types.StringType,
 	"azldap_search_filter":              types.StringType,
@@ -176,7 +174,6 @@ var DmAAAPAuthorizeObjectDefault = map[string]attr.Value{
 	"azsaml_version":                    types.StringValue("1.1"),
 	"azldap_load_balance_group":         types.StringNull(),
 	"azldap_bind_dn":                    types.StringNull(),
-	"azldap_bind_password":              types.StringNull(),
 	"azldap_group_attribute":            types.StringValue("member"),
 	"azldap_search_scope":               types.StringValue("subtree"),
 	"azldap_search_filter":              types.StringValue("(objectClass=*)"),
@@ -291,10 +288,6 @@ var DmAAAPAuthorizeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 		},
 		"azldap_bind_dn": DataSourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind DN", "ldap-bind-dn", "").String,
-			Computed:            true,
-		},
-		"azldap_bind_password": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind password (deprecated)", "ldap-bind-password", "").String,
 			Computed:            true,
 		},
 		"azldap_group_attribute": DataSourceSchema.StringAttribute{
@@ -545,10 +538,6 @@ var DmAAAPAuthorizeResourceSchema = ResourceSchema.SingleNestedAttribute{
 		},
 		"azldap_bind_dn": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind DN", "ldap-bind-dn", "").String,
-			Optional:            true,
-		},
-		"azldap_bind_password": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP bind password (deprecated)", "ldap-bind-password", "").String,
 			Optional:            true,
 		},
 		"azldap_group_attribute": ResourceSchema.StringAttribute{
@@ -825,9 +814,6 @@ func (data DmAAAPAuthorize) IsNull() bool {
 	if !data.AzldapBindDn.IsNull() {
 		return false
 	}
-	if !data.AzldapBindPassword.IsNull() {
-		return false
-	}
 	if !data.AzldapGroupAttribute.IsNull() {
 		return false
 	}
@@ -1020,9 +1006,6 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 	if !data.AzldapBindDn.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZLDAPBindDN`, data.AzldapBindDn.ValueString())
 	}
-	if !data.AzldapBindPassword.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZLDAPBindPassword`, data.AzldapBindPassword.ValueString())
-	}
 	if !data.AzldapGroupAttribute.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZLDAPGroupAttribute`, data.AzldapGroupAttribute.ValueString())
 	}
@@ -1039,7 +1022,7 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`AZXACMLPEPType`, data.AzxacmlpepType.ValueString())
 	}
 	if !data.AzxacmlUseOnBoxPdp.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseOnBoxPDP`, tfutils.StringFromBool(data.AzxacmlUseOnBoxPdp, false))
+		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseOnBoxPDP`, tfutils.StringFromBool(data.AzxacmlUseOnBoxPdp, ""))
 	}
 	if !data.Azxacmlpdp.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZXACMLPDP`, data.Azxacmlpdp.ValueString())
@@ -1060,7 +1043,7 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`AZXACMLCustomObligation`, data.AzxacmlCustomObligation.ValueString())
 	}
 	if !data.AzxacmlUseSaml2.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseSAML2`, tfutils.StringFromBool(data.AzxacmlUseSaml2, false))
+		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseSAML2`, tfutils.StringFromBool(data.AzxacmlUseSaml2, ""))
 	}
 	if !data.AztamServer.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZTAMServer`, data.AztamServer.ValueString())
@@ -1072,7 +1055,7 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`AZTAMActionResourceMap`, data.AztamActionResourceMap.ValueString())
 	}
 	if !data.AzxacmlUseSoap.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseSOAP`, tfutils.StringFromBool(data.AzxacmlUseSoap, false))
+		body, _ = sjson.Set(body, pathRoot+`AZXACMLUseSOAP`, tfutils.StringFromBool(data.AzxacmlUseSoap, ""))
 	}
 	if !data.AzzosnssConfig.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZZOSNSSConfig`, data.AzzosnssConfig.ValueString())
@@ -1093,16 +1076,16 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`AZTFIMEndpoint`, data.AztfimEndpoint.ValueString())
 	}
 	if !data.AzoAuthEnforceScope.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZOAuthEnforceScope`, tfutils.StringFromBool(data.AzoAuthEnforceScope, false))
+		body, _ = sjson.Set(body, pathRoot+`AZOAuthEnforceScope`, tfutils.StringFromBool(data.AzoAuthEnforceScope, ""))
 	}
 	if !data.AzoAuthExportHeaders.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZOAuthExportHeaders`, tfutils.StringFromBool(data.AzoAuthExportHeaders, false))
+		body, _ = sjson.Set(body, pathRoot+`AZOAuthExportHeaders`, tfutils.StringFromBool(data.AzoAuthExportHeaders, ""))
 	}
 	if !data.AztampacReturn.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZTAMPACReturn`, tfutils.StringFromBool(data.AztampacReturn, false))
+		body, _ = sjson.Set(body, pathRoot+`AZTAMPACReturn`, tfutils.StringFromBool(data.AztampacReturn, ""))
 	}
 	if !data.AztampacUse.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZTAMPACUse`, tfutils.StringFromBool(data.AztampacUse, false))
+		body, _ = sjson.Set(body, pathRoot+`AZTAMPACUse`, tfutils.StringFromBool(data.AztampacUse, ""))
 	}
 	if !data.AzldapReadTimeout.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZLDAPReadTimeout`, data.AzldapReadTimeout.ValueInt64())
@@ -1236,11 +1219,6 @@ func (data *DmAAAPAuthorize) FromBody(ctx context.Context, pathRoot string, res 
 		data.AzldapBindDn = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.AzldapBindDn = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `AZLDAPBindPassword`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AzldapBindPassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AzldapBindPassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AZLDAPGroupAttribute`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.AzldapGroupAttribute = tfutils.ParseStringFromGJSON(value)
@@ -1524,11 +1502,6 @@ func (data *DmAAAPAuthorize) UpdateFromBody(ctx context.Context, pathRoot string
 		data.AzldapBindDn = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.AzldapBindDn = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `AZLDAPBindPassword`); value.Exists() && !data.AzldapBindPassword.IsNull() {
-		data.AzldapBindPassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AzldapBindPassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AZLDAPGroupAttribute`); value.Exists() && !data.AzldapGroupAttribute.IsNull() {
 		data.AzldapGroupAttribute = tfutils.ParseStringFromGJSON(value)

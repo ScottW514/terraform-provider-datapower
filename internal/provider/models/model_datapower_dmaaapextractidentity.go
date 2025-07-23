@@ -396,13 +396,13 @@ func (data DmAAAPExtractIdentity) ToBody(ctx context.Context, pathRoot string) s
 		body, _ = sjson.Set(body, pathRoot+`EIBasicAuthRealm`, data.EiBasicAuthRealm.ValueString())
 	}
 	if !data.EiUseWsSec.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EIUseWSSec`, tfutils.StringFromBool(data.EiUseWsSec, false))
+		body, _ = sjson.Set(body, pathRoot+`EIUseWSSec`, tfutils.StringFromBool(data.EiUseWsSec, ""))
 	}
 	if !data.EiMetadata.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EIMetadata`, data.EiMetadata.ValueString())
 	}
 	if !data.EiAllowRemoteTokenReference.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EIAllowRemoteTokenReference`, tfutils.StringFromBool(data.EiAllowRemoteTokenReference, false))
+		body, _ = sjson.Set(body, pathRoot+`EIAllowRemoteTokenReference`, tfutils.StringFromBool(data.EiAllowRemoteTokenReference, ""))
 	}
 	if !data.EiRemoteTokenProcessService.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EIRemoteTokenProcessService`, data.EiRemoteTokenProcessService.ValueString())

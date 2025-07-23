@@ -1,0 +1,32 @@
+name: GWSRemoteDebug
+description: 'GatewayScript Remote Debugger'
+cli_alias: 'gatewayscript-remote-debug'
+cmd_group: 'system'
+rest_endpoint: '/mgmt/config/default/GWSRemoteDebug/GWSRemoteDebug'
+update_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: false
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    default: 9229
+    description: 'Local port'
+    cli_alias: port
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local address'
+    cli_alias: ip-address

@@ -1,6 +1,6 @@
 
 resource "datapower_user" "test" {
-  id                = "User_name"
+  id                = "0user"
   password          = "Password$123"
   access_level      = "group-defined"
   group_name        = datapower_usergroup.test.id

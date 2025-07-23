@@ -39,7 +39,6 @@ type WSRRServer struct {
 	SoapUrl             types.String `tfsdk:"soap_url"`
 	ServerPrefix        types.String `tfsdk:"server_prefix"`
 	Username            types.String `tfsdk:"username"`
-	Password            types.String `tfsdk:"password"`
 	PasswordAlias       types.String `tfsdk:"password_alias"`
 	SslClientConfigType types.String `tfsdk:"ssl_client_config_type"`
 	SslClient           types.String `tfsdk:"ssl_client"`
@@ -52,7 +51,6 @@ var WSRRServerObjectType = map[string]attr.Type{
 	"soap_url":               types.StringType,
 	"server_prefix":          types.StringType,
 	"username":               types.StringType,
-	"password":               types.StringType,
 	"password_alias":         types.StringType,
 	"ssl_client_config_type": types.StringType,
 	"ssl_client":             types.StringType,
@@ -82,9 +80,6 @@ func (data WSRRServer) IsNull() bool {
 		return false
 	}
 	if !data.Username.IsNull() {
-		return false
-	}
-	if !data.Password.IsNull() {
 		return false
 	}
 	if !data.PasswordAlias.IsNull() {
@@ -118,9 +113,6 @@ func (data WSRRServer) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.Username.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Username`, data.Username.ValueString())
-	}
-	if !data.Password.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Password`, data.Password.ValueString())
 	}
 	if !data.PasswordAlias.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PasswordAlias`, data.PasswordAlias.ValueString())
@@ -162,11 +154,6 @@ func (data *WSRRServer) FromBody(ctx context.Context, pathRoot string, res gjson
 		data.Username = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.Username = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `Password`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Password = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Password = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PasswordAlias = tfutils.ParseStringFromGJSON(value)
@@ -213,11 +200,6 @@ func (data *WSRRServer) UpdateFromBody(ctx context.Context, pathRoot string, res
 		data.Username = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.Username = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `Password`); value.Exists() && !data.Password.IsNull() {
-		data.Password = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Password = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PasswordAlias`); value.Exists() && !data.PasswordAlias.IsNull() {
 		data.PasswordAlias = tfutils.ParseStringFromGJSON(value)

@@ -114,7 +114,7 @@ func (data DmAAATransactionPriority) ToBody(ctx context.Context, pathRoot string
 		body, _ = sjson.Set(body, pathRoot+`Priority`, data.Priority.ValueString())
 	}
 	if !data.Authorization.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Authorization`, tfutils.StringFromBool(data.Authorization, false))
+		body, _ = sjson.Set(body, pathRoot+`Authorization`, tfutils.StringFromBool(data.Authorization, ""))
 	}
 	return body
 }

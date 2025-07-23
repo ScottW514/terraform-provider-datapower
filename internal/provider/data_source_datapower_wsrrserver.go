@@ -91,10 +91,6 @@ func (d *WSRRServerDataSource) Schema(ctx context.Context, req datasource.Schema
 							MarkdownDescription: "Username",
 							Computed:            true,
 						},
-						"password": schema.StringAttribute{
-							MarkdownDescription: "Password (deprecated)",
-							Computed:            true,
-						},
 						"password_alias": schema.StringAttribute{
 							MarkdownDescription: "Password alias",
 							Computed:            true,

@@ -1,0 +1,15 @@
+name: DmStaticHost
+model_only: true
+list_item: true
+attributes:
+  - name: Hostname
+    type: String
+    required: true
+    description: 'Hostname'
+  - name: IPAddress
+    type: String
+    required: true
+    description: 'IP address'
+  - name: UserSummary
+    type: String
+    description: 'Comments'

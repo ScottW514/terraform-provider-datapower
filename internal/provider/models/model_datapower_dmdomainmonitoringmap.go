@@ -113,10 +113,10 @@ func (data DmDomainMonitoringMap) ToBody(ctx context.Context, pathRoot string) s
 	}
 	body := ""
 	if !data.Audit.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Audit`, tfutils.StringFromBool(data.Audit, false))
+		body, _ = sjson.Set(body, pathRoot+`Audit`, tfutils.StringFromBool(data.Audit, ""))
 	}
 	if !data.Log.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Log`, tfutils.StringFromBool(data.Log, false))
+		body, _ = sjson.Set(body, pathRoot+`Log`, tfutils.StringFromBool(data.Log, ""))
 	}
 	return body
 }

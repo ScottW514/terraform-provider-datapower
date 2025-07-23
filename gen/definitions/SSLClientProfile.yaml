@@ -83,8 +83,28 @@ attributes:
       - 'ECDHE_ECDSA_WITH_AES_256_GCM_SHA384'
     element_type: String
     required: true
-    list_example: 
-      - 'RSA_WITH_AES_128_GCM_SHA256'
+    list_default:
+      - 'AES_256_GCM_SHA384'
+      - 'CHACHA20_POLY1305_SHA256'
+      - 'AES_128_GCM_SHA256'
+      - 'ECDHE_ECDSA_WITH_AES_256_GCM_SHA384'
+      - 'ECDHE_ECDSA_WITH_AES_256_CBC_SHA384'
+      - 'ECDHE_ECDSA_WITH_AES_128_GCM_SHA256'
+      - 'ECDHE_ECDSA_WITH_AES_128_CBC_SHA256'
+      - 'ECDHE_ECDSA_WITH_AES_256_CBC_SHA'
+      - 'ECDHE_ECDSA_WITH_AES_128_CBC_SHA'
+      - 'ECDHE_RSA_WITH_AES_256_GCM_SHA384'
+      - 'ECDHE_RSA_WITH_AES_256_CBC_SHA384'
+      - 'ECDHE_RSA_WITH_AES_128_GCM_SHA256'
+      - 'ECDHE_RSA_WITH_AES_128_CBC_SHA256'
+      - 'ECDHE_RSA_WITH_AES_256_CBC_SHA'
+      - 'ECDHE_RSA_WITH_AES_128_CBC_SHA'
+      - 'DHE_RSA_WITH_AES_256_GCM_SHA384'
+      - 'DHE_RSA_WITH_AES_256_CBC_SHA256'
+      - 'DHE_RSA_WITH_AES_128_GCM_SHA256'
+      - 'DHE_RSA_WITH_AES_128_CBC_SHA256'
+      - 'DHE_RSA_WITH_AES_256_CBC_SHA'
+      - 'DHE_RSA_WITH_AES_128_CBC_SHA'
     description: 'Ciphers'
     cli_alias: ciphers
   - name: Idcred
@@ -157,16 +177,17 @@ attributes:
       - 'brainpoolP384r1'
       - 'brainpoolP512r1'
     element_type: String
-    list_example:
-      - 'sect163k1'
+    list_default:
+      - 'secp521r1'
+      - 'secp384r1'
+      - 'secp256k1'
+      - 'secp256r1'
     description: 'Elliptic curves'
     cli_alias: curves
   - name: UseCustomSNIHostname
-    type: String
-    enum:
-      - 'no'
-      - 'yes'
-    default: 'no'
+    type: Bool
+    bool_type: 'flag'
+    default: false
     description: 'Use custom SNI host name'
     cli_alias: use-custom-sni-hostname
   - name: CustomSNIHostname
@@ -194,7 +215,7 @@ attributes:
     cli_alias: enable-tls13-compat
   - name: DisableRenegotiation
     type: Bool
-    default: false
+    default: true
     description: 'Disable renegotiation'
     cli_alias: disable-renegotiation
   - name: SigAlgs
@@ -224,8 +245,28 @@ attributes:
       - 'dsa_sha224'
       - 'dsa_sha1'
     element_type: String
-    list_example: 
+    list_default:
+      - 'ecdsa_secp256r1_sha256'
+      - 'ecdsa_secp384r1_sha384'
       - 'ecdsa_secp521r1_sha512'
+      - 'ed25519'
+      - 'ed448'
+      - 'rsa_pss_rsae_sha256'
+      - 'rsa_pss_rsae_sha384'
+      - 'rsa_pss_rsae_sha512'
+      - 'rsa_pss_pss_sha256'
+      - 'rsa_pss_pss_sha384'
+      - 'rsa_pss_pss_sha512'
+      - 'rsa_pkcs1_sha256'
+      - 'rsa_pkcs1_sha384'
+      - 'rsa_pkcs1_sha512'
+      - 'ecdsa_sha224'
+      - 'ecdsa_sha1'
+      - 'rsa_pkcs1_sha224'
+      - 'rsa_pkcs1_sha1'
+      - 'dsa_sha256'
+      - 'dsa_sha384'
+      - 'dsa_sha512'
     description: 'Signature algorithms'
     cli_alias: sign-alg
   - name: RequireClosureNotification

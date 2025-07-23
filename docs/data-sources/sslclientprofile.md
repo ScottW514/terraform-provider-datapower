@@ -14,6 +14,7 @@ TLS client profile
 
 ```terraform
 data "datapower_sslclientprofile" "test" {
+  depends_on = [datapower_sslclientprofile.test]
   app_domain = "acc_test_domain"
 }
 ```
@@ -54,7 +55,7 @@ Read-Only:
 - `sig_algs` (List of String) Signature algorithms
 - `ssl_client_features` (Attributes) Features
   - CLI Alias: `ssl-client-features` (see [below for nested schema](#nestedatt--result--ssl_client_features))
-- `use_custom_sni_hostname` (String) Use custom SNI host name
+- `use_custom_sni_hostname` (Boolean) Use custom SNI host name
 - `user_summary` (String) Comments
 - `valcred` (String) Validation credentials
 - `validate_hostname` (Boolean) Validate server hostname

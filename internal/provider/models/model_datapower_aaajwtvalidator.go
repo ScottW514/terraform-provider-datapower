@@ -224,7 +224,7 @@ func (data AAAJWTValidator) ToBody(ctx context.Context, pathRoot string) string 
 		body, _ = sjson.Set(body, pathRoot+`VerifyCertificate`, data.VerifyCertificate.ValueString())
 	}
 	if !data.VerifyCertificateAgainstValCred.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`VerifyCertificateAgainstValCred`, tfutils.StringFromBool(data.VerifyCertificateAgainstValCred, false))
+		body, _ = sjson.Set(body, pathRoot+`VerifyCertificateAgainstValCred`, tfutils.StringFromBool(data.VerifyCertificateAgainstValCred, ""))
 	}
 	if !data.VerifyValCred.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`VerifyValCred`, data.VerifyValCred.ValueString())

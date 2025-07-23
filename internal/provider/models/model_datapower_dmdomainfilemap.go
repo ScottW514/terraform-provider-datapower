@@ -177,22 +177,22 @@ func (data DmDomainFileMap) ToBody(ctx context.Context, pathRoot string) string 
 	}
 	body := ""
 	if !data.CopyFrom.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CopyFrom`, tfutils.StringFromBool(data.CopyFrom, false))
+		body, _ = sjson.Set(body, pathRoot+`CopyFrom`, tfutils.StringFromBool(data.CopyFrom, ""))
 	}
 	if !data.CopyTo.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`CopyTo`, tfutils.StringFromBool(data.CopyTo, false))
+		body, _ = sjson.Set(body, pathRoot+`CopyTo`, tfutils.StringFromBool(data.CopyTo, ""))
 	}
 	if !data.Delete.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Delete`, tfutils.StringFromBool(data.Delete, false))
+		body, _ = sjson.Set(body, pathRoot+`Delete`, tfutils.StringFromBool(data.Delete, ""))
 	}
 	if !data.Display.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Display`, tfutils.StringFromBool(data.Display, false))
+		body, _ = sjson.Set(body, pathRoot+`Display`, tfutils.StringFromBool(data.Display, ""))
 	}
 	if !data.Exec.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Exec`, tfutils.StringFromBool(data.Exec, false))
+		body, _ = sjson.Set(body, pathRoot+`Exec`, tfutils.StringFromBool(data.Exec, ""))
 	}
 	if !data.Subdir.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Subdir`, tfutils.StringFromBool(data.Subdir, false))
+		body, _ = sjson.Set(body, pathRoot+`Subdir`, tfutils.StringFromBool(data.Subdir, ""))
 	}
 	return body
 }

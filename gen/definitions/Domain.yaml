@@ -16,7 +16,7 @@ attributes:
     cli_alias: summary
   - name: ConfigDir
     type: String
-    default: 'config:///'
+    computed: true
     description: 'Configuration directory'
   - name: NeighborDomain
     type: List
