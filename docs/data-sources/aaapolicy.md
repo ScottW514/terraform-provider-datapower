@@ -889,9 +889,6 @@ Read-Only:
 - `pptampac_propagate` (Boolean) Generate an Access Manager PAC token
   - CLI Alias: `propagate-tam-pac`
   - Default value: `false`
-- `pptfim_endpoint` (String) Federated Identity Manager endpoint
-  - CLI Alias: `tfim-endpoint`
-  - Reference to: `datapower_tfimendpoint:id`
 - `ppws_derived_key_username_token` (Boolean) Use Derived-Key variant of WS-Security UsernameToken
   - CLI Alias: `wssec-use-derived-key`
   - Default value: `false`

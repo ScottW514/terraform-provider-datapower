@@ -186,11 +186,8 @@ attributes:
     cli_alias: wssec-actor-role-id
   # DEPRECATED
   # - name: PPTFIMTokenMapping
-  - name: PPTFIMEndpoint
-    type: String
-    reference_to: TFIMEndpoint
-    description: 'Federated Identity Manager endpoint'
-    cli_alias: tfim-endpoint
+  # DEPRECATED
+  # - name: PPTFIMEndpoint
   - name: PPWSDerivedKeyUsernameToken
     type: Bool
     default: false

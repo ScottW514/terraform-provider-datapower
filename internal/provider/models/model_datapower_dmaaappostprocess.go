@@ -73,7 +73,6 @@ type DmAAAPPostProcess struct {
 	PpKerberosClientKeytab                types.String         `tfsdk:"pp_kerberos_client_keytab"`
 	PpUseWsSec                            types.Bool           `tfsdk:"pp_use_ws_sec"`
 	PpActorRoleId                         types.String         `tfsdk:"pp_actor_role_id"`
-	PptfimEndpoint                        types.String         `tfsdk:"pptfim_endpoint"`
 	PpwsDerivedKeyUsernameToken           types.Bool           `tfsdk:"ppws_derived_key_username_token"`
 	PpwsDerivedKeyUsernameTokenIterations types.Int64          `tfsdk:"ppws_derived_key_username_token_iterations"`
 	PpwsUsernameTokenAllowReplacement     types.Bool           `tfsdk:"ppws_username_token_allow_replacement"`
@@ -161,7 +160,6 @@ var DmAAAPPostProcessObjectType = map[string]attr.Type{
 	"pp_kerberos_client_keytab":                  types.StringType,
 	"pp_use_ws_sec":                              types.BoolType,
 	"pp_actor_role_id":                           types.StringType,
-	"pptfim_endpoint":                            types.StringType,
 	"ppws_derived_key_username_token":            types.BoolType,
 	"ppws_derived_key_username_token_iterations": types.Int64Type,
 	"ppws_username_token_allow_replacement":      types.BoolType,
@@ -248,7 +246,6 @@ var DmAAAPPostProcessObjectDefault = map[string]attr.Value{
 	"pp_kerberos_client_keytab":                  types.StringNull(),
 	"pp_use_ws_sec":                              types.BoolValue(false),
 	"pp_actor_role_id":                           types.StringNull(),
-	"pptfim_endpoint":                            types.StringNull(),
 	"ppws_derived_key_username_token":            types.BoolValue(false),
 	"ppws_derived_key_username_token_iterations": types.Int64Value(1000),
 	"ppws_username_token_allow_replacement":      types.BoolValue(false),
@@ -434,10 +431,6 @@ var DmAAAPPostProcessDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 		},
 		"pp_actor_role_id": DataSourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Actor or role identifier", "wssec-actor-role-id", "").String,
-			Computed:            true,
-		},
-		"pptfim_endpoint": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Federated Identity Manager endpoint", "tfim-endpoint", "tfimendpoint").String,
 			Computed:            true,
 		},
 		"ppws_derived_key_username_token": DataSourceSchema.BoolAttribute{
@@ -842,10 +835,6 @@ var DmAAAPPostProcessResourceSchema = ResourceSchema.SingleNestedAttribute{
 		},
 		"pp_actor_role_id": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Actor or role identifier", "wssec-actor-role-id", "").String,
-			Optional:            true,
-		},
-		"pptfim_endpoint": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Federated Identity Manager endpoint", "tfim-endpoint", "tfimendpoint").String,
 			Optional:            true,
 		},
 		"ppws_derived_key_username_token": ResourceSchema.BoolAttribute{
@@ -1255,9 +1244,6 @@ func (data DmAAAPPostProcess) IsNull() bool {
 	if !data.PpActorRoleId.IsNull() {
 		return false
 	}
-	if !data.PptfimEndpoint.IsNull() {
-		return false
-	}
 	if !data.PpwsDerivedKeyUsernameToken.IsNull() {
 		return false
 	}
@@ -1534,9 +1520,6 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	}
 	if !data.PpActorRoleId.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPActorRoleID`, data.PpActorRoleId.ValueString())
-	}
-	if !data.PptfimEndpoint.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPTFIMEndpoint`, data.PptfimEndpoint.ValueString())
 	}
 	if !data.PpwsDerivedKeyUsernameToken.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPWSDerivedKeyUsernameToken`, tfutils.StringFromBool(data.PpwsDerivedKeyUsernameToken, ""))
@@ -1864,11 +1847,6 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpActorRoleId = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.PpActorRoleId = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `PPTFIMEndpoint`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PptfimEndpoint = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.PptfimEndpoint = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPWSDerivedKeyUsernameToken`); value.Exists() {
 		data.PpwsDerivedKeyUsernameToken = tfutils.BoolFromString(value.String())
@@ -2296,11 +2274,6 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 		data.PpActorRoleId = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.PpActorRoleId = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `PPTFIMEndpoint`); value.Exists() && !data.PptfimEndpoint.IsNull() {
-		data.PptfimEndpoint = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.PptfimEndpoint = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPWSDerivedKeyUsernameToken`); value.Exists() && !data.PpwsDerivedKeyUsernameToken.IsNull() {
 		data.PpwsDerivedKeyUsernameToken = tfutils.BoolFromString(value.String())

@@ -1,5 +1,8 @@
 ## Unreleased
 
+- Remove deprecated API's
+  - APIRateLimit
+  - TFIMEndpoint
 - API Additions (Objects)
   - AS1PollerSourceProtocolHandler
   - AS2ProxySourceProtocolHandler
