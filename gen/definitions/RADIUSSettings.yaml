@@ -36,11 +36,6 @@ attributes:
     cli_alias: retries
 # DEPRECATED
 #  - name: Servers
-#    type: List
-#    element_type: DmRadiusServer
-#    description: 'CLI (deprecated)'
-#    deprecated: true
-#    cli_alias: server
   - name: AAAServers
     type: List
     element_type: DmRadiusServer

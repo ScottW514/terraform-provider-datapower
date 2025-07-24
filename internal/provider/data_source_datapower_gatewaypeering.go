@@ -95,54 +95,12 @@ func (d *GatewayPeeringDataSource) Schema(ctx context.Context, req datasource.Sc
 							MarkdownDescription: "Gateway-peering group",
 							Computed:            true,
 						},
-						"primary_count": schema.StringAttribute{
-							MarkdownDescription: "Primary count (deprecated)",
-							Computed:            true,
-						},
 						"monitor_port": schema.Int64Attribute{
 							MarkdownDescription: "Monitor port",
 							Computed:            true,
 						},
-						"cluster_auto_config": schema.BoolAttribute{
-							MarkdownDescription: "Auto manage cluster configuration (deprecated)",
-							Computed:            true,
-						},
 						"enable_peer_group": schema.BoolAttribute{
 							MarkdownDescription: "Use peer group",
-							Computed:            true,
-						},
-						"peers": schema.ListAttribute{
-							MarkdownDescription: "Peers (deprecated)",
-							ElementType:         types.StringType,
-							Computed:            true,
-						},
-						"cluster_nodes": schema.ListNestedAttribute{
-							MarkdownDescription: "Cluster nodes (deprecated)",
-							NestedObject:        models.DmGatewayPeeringClusterNodeDataSourceSchema,
-							Computed:            true,
-						},
-						"priority": schema.Int64Attribute{
-							MarkdownDescription: "Priority (deprecated)",
-							Computed:            true,
-						},
-						"enable_ssl": schema.BoolAttribute{
-							MarkdownDescription: "Enable TLS (deprecated)",
-							Computed:            true,
-						},
-						"idcred": schema.StringAttribute{
-							MarkdownDescription: "Identification credentials (deprecated)",
-							Computed:            true,
-						},
-						"valcred": schema.StringAttribute{
-							MarkdownDescription: "Validation credentials (deprecated)",
-							Computed:            true,
-						},
-						"ssl_crypto_key": schema.StringAttribute{
-							MarkdownDescription: "Key (deprecated)",
-							Computed:            true,
-						},
-						"ssl_crypto_certificate": schema.StringAttribute{
-							MarkdownDescription: "Certificate (deprecated)",
 							Computed:            true,
 						},
 						"persistence_location": schema.StringAttribute{

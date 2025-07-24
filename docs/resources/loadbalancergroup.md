@@ -179,7 +179,7 @@ Optional:
   - Reference to: `datapower_sslclientprofile:id`
 - `ssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
-  - Choices: `proxy`, `client`
+  - Choices: `client`
   - Default value: `client`
 - `tcp_connection_type` (String) TCP Connection Type
   - CLI Alias: `tcp-conn-type`

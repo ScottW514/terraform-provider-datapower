@@ -47,7 +47,7 @@ resource "datapower_mgmtinterface" "test" {
   - Default value: `10`
 - `ssl_config_type` (String) Custom TLS server type
   - CLI Alias: `ssl-config-type`
-  - Choices: `proxy`, `server`, `sni`
+  - Choices: `server`, `sni`
   - Default value: `server`
 - `ssl_server` (String) Custom TLS server profile
   - CLI Alias: `ssl-server`

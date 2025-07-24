@@ -99,7 +99,6 @@ Read-Only:
 - `soap_schema_url` (String) SOAP Schema URL
 - `ssl_client` (String) TLS client profile
 - `ssl_config_type` (String) TLS type
-- `ssl_proxy` (String) TLS proxy profile (deprecated)
 - `ssl_server` (String) TLS server profile
 - `sslsni_server` (String) TLS SNI server profile
 - `style_policy` (String) Processing Policy

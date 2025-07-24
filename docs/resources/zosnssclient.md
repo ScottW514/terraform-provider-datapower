@@ -56,7 +56,7 @@ resource "datapower_zosnssclient" "test" {
   - Reference to: `datapower_sslclientprofile:id`
 - `ssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
-  - Choices: `proxy`, `client`
+  - Choices: `client`
   - Default value: `client`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

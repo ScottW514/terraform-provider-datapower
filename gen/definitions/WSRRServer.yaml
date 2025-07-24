@@ -47,7 +47,6 @@ attributes:
   - name: SSLClientConfigType
     type: String
     enum:
-      - 'proxy'
       - 'client'
     default: 'client'
     description: 'TLS client type'

@@ -218,10 +218,6 @@ func (d *StylePolicyActionDataSource) Schema(ctx context.Context, req datasource
 							MarkdownDescription: "Variable value",
 							Computed:            true,
 						},
-						"ssl_cred": schema.StringAttribute{
-							MarkdownDescription: "TLS proxy profile (deprecated)",
-							Computed:            true,
-						},
 						"ssl_client_config_type": schema.StringAttribute{
 							MarkdownDescription: "TLS client type",
 							Computed:            true,

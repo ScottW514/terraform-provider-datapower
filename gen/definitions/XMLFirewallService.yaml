@@ -40,12 +40,8 @@ attributes:
     reference_to: URLRewritePolicy
     description: 'URL Rewrite Policy'
     cli_alias: urlrewrite-policy
-  - name: SSLProxy
-    type: String
-    reference_to: SSLProxyProfile
-    description: 'TLS proxy profile (deprecated)'
-    deprecated: true
-    cli_alias: ssl
+  # DEPRECATED
+  # - name: SSLProxy
   - name: StylePolicy
     type: String
     reference_to: StylePolicy
@@ -296,10 +292,9 @@ attributes:
   - name: SSLConfigType
     type: String
     enum:
-      - 'proxy'
       - 'server'
       - 'sni'
-    default: 'proxy'
+    default: 'server'
     description: 'TLS type'
     cli_alias: ssl-config-type
   - name: SSLServer

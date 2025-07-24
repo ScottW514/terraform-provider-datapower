@@ -40,7 +40,6 @@ func TestAccDataSourceJOSESignatureIdentifier(t *testing.T) {
 				Config: testconfig.JOSESignatureIdentifierTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_josesignatureidentifier.test", "result.0.id", "JOSESignatureIdentifier_name"),
-					resource.TestCheckResourceAttr("data.datapower_josesignatureidentifier.test", "result.0.verify", "true"),
 				}...),
 			},
 		},

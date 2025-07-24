@@ -35,11 +35,6 @@ attributes:
     example: 1024
   # DEPRECATED
   # - name: SSLProxy
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS Proxy Profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ssl
   - name: UpdateType
     type: String
     enum:
@@ -59,9 +54,7 @@ attributes:
   - name: SSLClientConfigType
     type: String
     enum:
-      - 'proxy'
       - 'client'
-    required: true
     default: 'client'
     description: 'TLS client type'
     cli_alias: ssl-client-type

@@ -37,12 +37,8 @@ func TestAccResourceGatewayPeering(t *testing.T) {
 		Config: testconfig.GatewayPeeringTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "local_port", "16380"),
-			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "primary_count", "1"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "monitor_port", "26380"),
-			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "cluster_auto_config", "true"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "enable_peer_group", "true"),
-			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "priority", "100"),
-			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "enable_ssl", "true"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "persistence_location", "memory"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "local_directory", "local:///"),
 		}...),

@@ -64,7 +64,7 @@ func TestAccResourceXMLFirewallService(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_xmlfirewallservice.test", "parser_limits_attachment_byte_count", "2000000000"),
 			resource.TestCheckResourceAttr("datapower_xmlfirewallservice.test", "parser_limits_external_references", "forbid"),
 			resource.TestCheckResourceAttr("datapower_xmlfirewallservice.test", "credential_charset", "protocol"),
-			resource.TestCheckResourceAttr("datapower_xmlfirewallservice.test", "ssl_config_type", "proxy"),
+			resource.TestCheckResourceAttr("datapower_xmlfirewallservice.test", "ssl_config_type", "server"),
 			resource.TestCheckResourceAttr("datapower_xmlfirewallservice.test", "priority", "normal"),
 			resource.TestCheckResourceAttr("datapower_xmlfirewallservice.test", "http_timeout", "120"),
 			resource.TestCheckResourceAttr("datapower_xmlfirewallservice.test", "http_persist_timeout", "180"),

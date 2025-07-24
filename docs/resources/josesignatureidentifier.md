@@ -23,7 +23,6 @@ resource "datapower_josesignatureidentifier" "test" {
   header_param = [{
     header_value = "VALUE"
   }]
-  verify = true
 }
 ```
 
@@ -53,9 +52,6 @@ resource "datapower_josesignatureidentifier" "test" {
 - `valid_algorithms` (List of String) Valid algorithms
   - CLI Alias: `alg`
   - Choices: `HS256`, `HS384`, `HS512`, `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512`, `PS256`, `PS384`, `PS512`
-- `verify` (Boolean) Verify (deprecated)
-  - CLI Alias: `verify`
-  - Default value: `true`
 
 <a id="nestedatt--header_param"></a>
 ### Nested Schema for `header_param`

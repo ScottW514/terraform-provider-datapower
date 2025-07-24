@@ -42,80 +42,36 @@ attributes:
     reference_to: GatewayPeeringGroup
     description: 'Gateway-peering group'
     cli_alias: peer-group
-  - name: PrimaryCount
-    type: String
-    enum:
-      - '1'
-      - '3'
-    default: 1
-    description: 'Primary count (deprecated)'
-    deprecated: true
-    cli_alias: primary-count
+  # DEPRECATED
+  # - name: PrimaryCount
   - name: MonitorPort
     type: Int64
     default: 26380
     description: 'Monitor port'
     cli_alias: monitor-port
-  - name: ClusterAutoConfig
-    type: Bool
-    default: true
-    description: 'Auto manage cluster configuration (deprecated)'
-    deprecated: true
-    cli_alias: cluster-auto-config
+  # DEPRECATED
+  # - name: ClusterAutoConfig
   - name: EnablePeerGroup
     type: Bool
     default: true
     description: 'Use peer group'
     cli_alias: enable-peer-group
-  - name: Peers
-    type: List
-    element_type: String
-    description: 'Peers (deprecated)'
-    deprecated: true
-    cli_alias: peer
-  - name: ClusterNodes
-    type: List
-    element_type: DmGatewayPeeringClusterNode
-    description: 'Cluster nodes (deprecated)'
-    deprecated: true
-    cli_alias: cluster-node
-  - name: Priority
-    type: Int64
-    maximum: 255
-    default: 100
-    description: 'Priority (deprecated)'
-    deprecated: true
-    cli_alias: priority
-  - name: EnableSSL
-    type: Bool
-    default: true
-    description: 'Enable TLS (deprecated)'
-    deprecated: true
-    cli_alias: enable-ssl
-  - name: Idcred
-    type: String
-    reference_to: CryptoIdentCred
-    description: 'Identification credentials (deprecated)'
-    deprecated: true
-    cli_alias: idcred
-  - name: Valcred
-    type: String
-    reference_to: CryptoValCred
-    description: 'Validation credentials (deprecated)'
-    deprecated: true
-    cli_alias: valcred
-  - name: SSLCryptoKey
-    type: String
-    reference_to: CryptoKey
-    description: 'Key (deprecated)'
-    deprecated: true
-    cli_alias: ssl-key
-  - name: SSLCryptoCertificate
-    type: String
-    reference_to: CryptoCertificate
-    description: 'Certificate (deprecated)'
-    deprecated: true
-    cli_alias: ssl-cert
+  # DEPRECATED
+  # - name: Peers
+  # DEPRECATED
+  # - name: ClusterNodes
+  # DEPRECATED
+  # - name: Priority
+  # DEPRECATED
+  # - name: EnableSSL
+  # DEPRECATED
+  # - name: Idcred
+  # DEPRECATED
+  # - name: Valcred
+  # DEPRECATED
+  # - name: SSLCryptoKey
+  # DEPRECATED
+  # - name: SSLCryptoCertificate
   - name: PersistenceLocation
     type: String
     enum:

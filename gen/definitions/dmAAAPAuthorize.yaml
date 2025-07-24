@@ -266,20 +266,10 @@ attributes:
     default: 0
     description: 'Skew time'
     cli_alias: az-skew-time
-  - name: AZOAuthValidationEndpointType
-    type: String
-    enum:
-      - 'tfim'
-    default: 'tfim'
-    description: 'OAuth endpoint type (deprecated)'
-    deprecated: true
-    cli_alias: az-oauth-endpoint-type
-  - name: AZTFIMEndpoint
-    type: String
-    reference_to: TFIMEndpoint
-    description: 'Federated Identity Manager endpoint (deprecated)'
-    deprecated: true
-    cli_alias: az-tfim-endpoint
+  # DEPRECATED
+  # - name: AZOAuthValidationEndpointType
+  # DEPRECATED
+  # - name: AZTFIMEndpoint
   - name: AZOAuthEnforceScope
     type: Bool
     default: false
@@ -309,7 +299,6 @@ attributes:
   - name: AZSSLClientConfigType
     type: String
     enum:
-      - 'proxy'
       - 'client'
     default: 'client'
     description: 'TLS client type'

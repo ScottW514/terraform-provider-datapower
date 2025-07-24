@@ -46,7 +46,6 @@ type HTTPUserAgent struct {
 	PubkeyAuthPolicies       types.List   `tfsdk:"pubkey_auth_policies"`
 	AllowCompressionPolicies types.List   `tfsdk:"allow_compression_policies"`
 	HeaderRetentionPolicies  types.List   `tfsdk:"header_retention_policies"`
-	Restrict10Policies       types.List   `tfsdk:"restrict10_policies"`
 	HttpVersionPolicies      types.List   `tfsdk:"http_version_policies"`
 	AddHeaderPolicies        types.List   `tfsdk:"add_header_policies"`
 	UploadChunkedPolicies    types.List   `tfsdk:"upload_chunked_policies"`
@@ -69,7 +68,6 @@ var HTTPUserAgentObjectType = map[string]attr.Type{
 	"pubkey_auth_policies":       types.ListType{ElemType: types.ObjectType{AttrTypes: DmPubkeyAuthPolicyObjectType}},
 	"allow_compression_policies": types.ListType{ElemType: types.ObjectType{AttrTypes: DmAllowCompressionPolicyObjectType}},
 	"header_retention_policies":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmHeaderRetentionPolicyObjectType}},
-	"restrict10_policies":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmRestrict10PolicyObjectType}},
 	"http_version_policies":      types.ListType{ElemType: types.ObjectType{AttrTypes: DmHTTPVersionPolicyObjectType}},
 	"add_header_policies":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmAddHeaderPolicyObjectType}},
 	"upload_chunked_policies":    types.ListType{ElemType: types.ObjectType{AttrTypes: DmUploadChunkedPolicyObjectType}},
@@ -123,9 +121,6 @@ func (data HTTPUserAgent) IsNull() bool {
 		return false
 	}
 	if !data.HeaderRetentionPolicies.IsNull() {
-		return false
-	}
-	if !data.Restrict10Policies.IsNull() {
 		return false
 	}
 	if !data.HttpVersionPolicies.IsNull() {
@@ -216,13 +211,6 @@ func (data HTTPUserAgent) ToBody(ctx context.Context, pathRoot string) string {
 		data.HeaderRetentionPolicies.ElementsAs(ctx, &values, false)
 		for _, val := range values {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderRetentionPolicies`+".-1", val.ToBody(ctx, ""))
-		}
-	}
-	if !data.Restrict10Policies.IsNull() {
-		var values []DmRestrict10Policy
-		data.Restrict10Policies.ElementsAs(ctx, &values, false)
-		for _, val := range values {
-			body, _ = sjson.SetRaw(body, pathRoot+`Restrict10Policies`+".-1", val.ToBody(ctx, ""))
 		}
 	}
 	if !data.HttpVersionPolicies.IsNull() {
@@ -431,25 +419,6 @@ func (data *HTTPUserAgent) FromBody(ctx context.Context, pathRoot string, res gj
 		}
 	} else {
 		data.HeaderRetentionPolicies = types.ListNull(types.ObjectType{AttrTypes: DmHeaderRetentionPolicyObjectType})
-	}
-	if value := res.Get(pathRoot + `Restrict10Policies`); value.Exists() {
-		l := []DmRestrict10Policy{}
-		if value := res.Get(`Restrict10Policies`); value.Exists() {
-			for _, v := range value.Array() {
-				item := DmRestrict10Policy{}
-				item.FromBody(ctx, "", v)
-				if !item.IsNull() {
-					l = append(l, item)
-				}
-			}
-		}
-		if len(l) > 0 {
-			data.Restrict10Policies, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmRestrict10PolicyObjectType}, l)
-		} else {
-			data.Restrict10Policies = types.ListNull(types.ObjectType{AttrTypes: DmRestrict10PolicyObjectType})
-		}
-	} else {
-		data.Restrict10Policies = types.ListNull(types.ObjectType{AttrTypes: DmRestrict10PolicyObjectType})
 	}
 	if value := res.Get(pathRoot + `HTTPVersionPolicies`); value.Exists() {
 		l := []DmHTTPVersionPolicy{}
@@ -714,23 +683,6 @@ func (data *HTTPUserAgent) UpdateFromBody(ctx context.Context, pathRoot string, 
 		}
 	} else {
 		data.HeaderRetentionPolicies = types.ListNull(types.ObjectType{AttrTypes: DmHeaderRetentionPolicyObjectType})
-	}
-	if value := res.Get(pathRoot + `Restrict10Policies`); value.Exists() && !data.Restrict10Policies.IsNull() {
-		l := []DmRestrict10Policy{}
-		for _, v := range value.Array() {
-			item := DmRestrict10Policy{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
-			}
-		}
-		if len(l) > 0 {
-			data.Restrict10Policies, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmRestrict10PolicyObjectType}, l)
-		} else {
-			data.Restrict10Policies = types.ListNull(types.ObjectType{AttrTypes: DmRestrict10PolicyObjectType})
-		}
-	} else {
-		data.Restrict10Policies = types.ListNull(types.ObjectType{AttrTypes: DmRestrict10PolicyObjectType})
 	}
 	if value := res.Get(pathRoot + `HTTPVersionPolicies`); value.Exists() && !data.HttpVersionPolicies.IsNull() {
 		l := []DmHTTPVersionPolicy{}

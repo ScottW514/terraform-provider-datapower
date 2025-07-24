@@ -27,11 +27,8 @@ attributes:
     default: 240
     description: 'Refresh interval'
     cli_alias: refresh
+  # DEPRECATED
   # - name: CryptographicProfile
-  #   type: String
-  #   description: 'Cryptographic profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ssl-profile
   - name: URL
     type: String
     example: 'http://foo.com/crl'
@@ -53,11 +50,8 @@ attributes:
     type: String
     description: 'LDAP bind DN'
     cli_alias: bind-dn
+  # DEPRECATED
   # - name: BindPass
-  #   type: String
-  #   description: 'LDAP bind password (deprecated)'
-  #   deprecated: true
-  #   cli_alias: bind-pass
   - name: BindPassAlias
     type: String
     reference_to: PasswordAlias
@@ -80,7 +74,6 @@ attributes:
   - name: SSLClientConfigType
     type: String
     enum:
-      - 'proxy'
       - 'client'
     default: 'client'
     description: 'TLS client type'

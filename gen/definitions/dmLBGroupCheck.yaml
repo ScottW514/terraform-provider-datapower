@@ -69,11 +69,6 @@ attributes:
     cli_alias: filter
   # DEPRECATED
   # - name: SSLProxyProfile
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: sslproxy
   - name: EnforceTimeout
     type: Bool
     default: false
@@ -132,7 +127,6 @@ attributes:
   - name: SSLClientConfigType
     type: String
     enum:
-      - 'proxy'
       - 'client'
     default: 'client'
     description: 'TLS client type'

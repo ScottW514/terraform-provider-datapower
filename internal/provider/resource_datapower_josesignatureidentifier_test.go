@@ -35,9 +35,7 @@ func TestAccResourceJOSESignatureIdentifier(t *testing.T) {
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
 		Config: testconfig.JOSESignatureIdentifierTestConfig.GetResourceConfig(),
-		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-			resource.TestCheckResourceAttr("datapower_josesignatureidentifier.test", "verify", "true"),
-		}...),
+		Check:  resource.ComposeTestCheckFunc([]resource.TestCheckFunc{}...),
 	})
 
 	resource.Test(t, resource.TestCase{

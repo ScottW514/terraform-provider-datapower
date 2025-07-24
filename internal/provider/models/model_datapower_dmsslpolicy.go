@@ -48,7 +48,7 @@ var DmSSLPolicyObjectType = map[string]attr.Type{
 }
 var DmSSLPolicyObjectDefault = map[string]attr.Value{
 	"reg_exp":                types.StringNull(),
-	"ssl_client_config_type": types.StringValue("proxy"),
+	"ssl_client_config_type": types.StringValue("client"),
 	"ssl_client":             types.StringNull(),
 }
 var DmSSLPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
@@ -58,7 +58,7 @@ var DmSSLPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 			Computed:            true,
 		},
 		"ssl_client_config_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "", "").AddStringEnum("client").AddDefaultValue("client").String,
 			Computed:            true,
 		},
 		"ssl_client": DataSourceSchema.StringAttribute{
@@ -74,13 +74,13 @@ var DmSSLPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 			Required:            true,
 		},
 		"ssl_client_config_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "", "").AddStringEnum("client").AddDefaultValue("client").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
-				stringvalidator.OneOf("proxy", "client"),
+				stringvalidator.OneOf("client"),
 			},
-			Default: stringdefault.StaticString("proxy"),
+			Default: stringdefault.StaticString("client"),
 		},
 		"ssl_client": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "", "sslclientprofile").String,
@@ -131,7 +131,7 @@ func (data *DmSSLPolicy) FromBody(ctx context.Context, pathRoot string, res gjso
 	if value := res.Get(pathRoot + `SSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslClientConfigType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslClientConfigType = types.StringValue("proxy")
+		data.SslClientConfigType = types.StringValue("client")
 	}
 	if value := res.Get(pathRoot + `SSLClient`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslClient = tfutils.ParseStringFromGJSON(value)
@@ -151,7 +151,7 @@ func (data *DmSSLPolicy) UpdateFromBody(ctx context.Context, pathRoot string, re
 	}
 	if value := res.Get(pathRoot + `SSLClientConfigType`); value.Exists() && !data.SslClientConfigType.IsNull() {
 		data.SslClientConfigType = tfutils.ParseStringFromGJSON(value)
-	} else if data.SslClientConfigType.ValueString() != "proxy" {
+	} else if data.SslClientConfigType.ValueString() != "client" {
 		data.SslClientConfigType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLClient`); value.Exists() && !data.SslClient.IsNull() {

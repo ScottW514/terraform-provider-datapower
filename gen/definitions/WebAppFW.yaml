@@ -227,7 +227,6 @@ attributes:
   - name: SSLConfigType
     type: String
     enum:
-      - 'proxy'
       - 'server'
       - 'sni'
     default: 'server'
@@ -235,11 +234,6 @@ attributes:
     cli_alias: ssl-config-type
   # DEPRECATED
   # - name: SSLProxyProfile
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ssl-profile
   - name: SSLServer
     type: String
     reference_to: SSLServerProfile

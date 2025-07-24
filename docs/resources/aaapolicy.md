@@ -246,7 +246,7 @@ Optional:
   - Default value: `webagent`
 - `aussl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
-  - Choices: `proxy`, `client`
+  - Choices: `client`
   - Default value: `client`
 - `aussl_client_profile` (String) TLS client profile
   - CLI Alias: `ssl-client`
@@ -403,10 +403,6 @@ Optional:
 - `azo_auth_export_headers` (Boolean) Export response attributes
   - CLI Alias: `az-oauth-export-headers`
   - Default value: `true`
-- `azo_auth_validation_endpoint_type` (String) OAuth endpoint type (deprecated)
-  - CLI Alias: `az-oauth-endpoint-type`
-  - Choices: `tfim`
-  - Default value: `tfim`
 - `azsaf_default_action` (String) Default action
   - CLI Alias: `zos-nss-default-action`
   - Choices: `r`, `u`, `a`, `c`
@@ -438,7 +434,7 @@ Optional:
   - Default value: `webagent`
 - `azssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
-  - Choices: `proxy`, `client`
+  - Choices: `client`
   - Default value: `client`
 - `azssl_client_profile` (String) TLS client profile
   - CLI Alias: `ssl-client`
@@ -458,9 +454,6 @@ Optional:
 - `aztampac_use` (Boolean) Use Privilege Attribute Certificate
   - CLI Alias: `use-tam-pac`
   - Default value: `false`
-- `aztfim_endpoint` (String) Federated Identity Manager endpoint (deprecated)
-  - CLI Alias: `az-tfim-endpoint`
-  - Reference to: `datapower_tfimendpoint:id`
 - `azxacml_binding_method` (String) XACML binding method
   - CLI Alias: `xacml-binding-method`
   - Choices: `dp-pdp`, `custom`
@@ -700,9 +693,6 @@ Optional:
   - CLI Alias: `method`
   - Choices: `none`, `custom`, `xmlfile`, `xpath`, `ws-secureconversation`, `TFIM`
   - Default value: `none`
-- `mctfim_endpoint` (String) Federated Identity Manager endpoint (deprecated)
-  - CLI Alias: `tfim`
-  - Reference to: `datapower_tfimendpoint:id`
 
 
 <a id="nestedatt--map_resource"></a>
@@ -952,17 +942,6 @@ Optional:
 - `pptfim_endpoint` (String) Federated Identity Manager endpoint
   - CLI Alias: `tfim-endpoint`
   - Reference to: `datapower_tfimendpoint:id`
-- `pptfim_replace_method` (String) Replacement method (deprecated)
-  - CLI Alias: `tfim-replace-method`
-  - Choices: `all`, `replace`, `preserve`
-  - Default value: `all`
-- `pptfim_retrieve_mode` (String) Retrieval method (deprecated)
-  - CLI Alias: `tfim-retrieval-method`
-  - Choices: `CallTFIM`, `FromMC`
-  - Default value: `CallTFIM`
-- `pptfim_token_mapping` (Boolean) Request Federated Identity Manager token mapping (deprecated)
-  - CLI Alias: `tfim-token-mapping`
-  - Default value: `false`
 - `ppws_derived_key_username_token` (Boolean) Use Derived-Key variant of WS-Security UsernameToken
   - CLI Alias: `wssec-use-derived-key`
   - Default value: `false`

@@ -184,12 +184,8 @@ attributes:
     type: String
     description: 'Actor or role identifier'
     cli_alias: wssec-actor-role-id
-  - name: PPTFIMTokenMapping
-    type: Bool
-    default: false
-    description: 'Request Federated Identity Manager token mapping (deprecated)'
-    deprecated: true
-    cli_alias: tfim-token-mapping
+  # DEPRECATED
+  # - name: PPTFIMTokenMapping
   - name: PPTFIMEndpoint
     type: String
     reference_to: TFIMEndpoint
@@ -212,25 +208,10 @@ attributes:
     default: false
     description: 'Replace existing UsernameToken'
     cli_alias: wssec-replace-existing
-  - name: PPTFIMReplaceMethod
-    type: String
-    enum:
-      - 'all'
-      - 'replace'
-      - 'preserve'
-    default: 'all'
-    description: 'Replacement method (deprecated)'
-    deprecated: true
-    cli_alias: tfim-replace-method
-  - name: PPTFIMRetrieveMode
-    type: String
-    enum:
-      - 'CallTFIM'
-      - 'FromMC'
-    default: 'CallTFIM'
-    description: 'Retrieval method (deprecated)'
-    deprecated: true
-    cli_alias: tfim-retrieval-method
+  # DEPRECATED
+  # - name: PPTFIMReplaceMethod
+  # DEPRECATED
+  # - name: PPTFIMRetrieveMode
   - name: PPHMACSigningAlg
     type: String
     enum:

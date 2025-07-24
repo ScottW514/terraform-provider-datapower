@@ -136,7 +136,7 @@ resource "datapower_oauthsupportedclient" "test" {
   - Reference to: `datapower_sslclientprofile:id`
 - `validation_urlssl_client_type` (String) Validation TLS client type
   - CLI Alias: `validation-url-ssl-client-type`
-  - Choices: `proxy`, `client`
+  - Choices: `client`
   - Default value: `client`
 
 <a id="nestedatt--az_grant"></a>

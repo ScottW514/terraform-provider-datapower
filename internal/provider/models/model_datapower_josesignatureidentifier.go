@@ -41,7 +41,6 @@ type JOSESignatureIdentifier struct {
 	Certificate     types.String `tfsdk:"certificate"`
 	ValidAlgorithms types.List   `tfsdk:"valid_algorithms"`
 	HeaderParam     types.List   `tfsdk:"header_param"`
-	Verify          types.Bool   `tfsdk:"verify"`
 }
 
 var JOSESignatureIdentifierObjectType = map[string]attr.Type{
@@ -53,7 +52,6 @@ var JOSESignatureIdentifierObjectType = map[string]attr.Type{
 	"certificate":      types.StringType,
 	"valid_algorithms": types.ListType{ElemType: types.StringType},
 	"header_param":     types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
-	"verify":           types.BoolType,
 }
 
 func (data JOSESignatureIdentifier) GetPath() string {
@@ -86,9 +84,6 @@ func (data JOSESignatureIdentifier) IsNull() bool {
 		return false
 	}
 	if !data.HeaderParam.IsNull() {
-		return false
-	}
-	if !data.Verify.IsNull() {
 		return false
 	}
 	return true
@@ -127,9 +122,6 @@ func (data JOSESignatureIdentifier) ToBody(ctx context.Context, pathRoot string)
 		for _, val := range values {
 			body, _ = sjson.SetRaw(body, pathRoot+`HeaderParam`+".-1", val.ToBody(ctx, ""))
 		}
-	}
-	if !data.Verify.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Verify`, tfutils.StringFromBool(data.Verify, ""))
 	}
 	return body
 }
@@ -187,11 +179,6 @@ func (data *JOSESignatureIdentifier) FromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.HeaderParam = types.ListNull(types.ObjectType{AttrTypes: DmJOSEHeaderObjectType})
 	}
-	if value := res.Get(pathRoot + `Verify`); value.Exists() {
-		data.Verify = tfutils.BoolFromString(value.String())
-	} else {
-		data.Verify = types.BoolNull()
-	}
 }
 
 func (data *JOSESignatureIdentifier) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
@@ -244,10 +231,5 @@ func (data *JOSESignatureIdentifier) UpdateFromBody(ctx context.Context, pathRoo
 		}
 	} else {
 		data.HeaderParam = types.ListNull(types.ObjectType{AttrTypes: DmJOSEHeaderObjectType})
-	}
-	if value := res.Get(pathRoot + `Verify`); value.Exists() && !data.Verify.IsNull() {
-		data.Verify = tfutils.BoolFromString(value.String())
-	} else if !data.Verify.ValueBool() {
-		data.Verify = types.BoolNull()
 	}
 }

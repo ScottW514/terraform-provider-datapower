@@ -36,12 +36,8 @@ data "datapower_gatewaypeering" "test" {
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `cluster_auto_config` (Boolean) Auto manage cluster configuration (deprecated)
-- `cluster_nodes` (Attributes List) Cluster nodes (deprecated) (see [below for nested schema](#nestedatt--result--cluster_nodes))
 - `enable_peer_group` (Boolean) Use peer group
-- `enable_ssl` (Boolean) Enable TLS (deprecated)
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `idcred` (String) Identification credentials (deprecated)
 - `local_address` (String) Local address
 - `local_directory` (String) Local directory
 - `local_port` (Number) Local port
@@ -49,21 +45,5 @@ Read-Only:
 - `monitor_port` (Number) Monitor port
 - `password_alias` (String) Password alias
 - `peer_group` (String) Gateway-peering group
-- `peers` (List of String) Peers (deprecated)
 - `persistence_location` (String) Persistence location
-- `primary_count` (String) Primary count (deprecated)
-- `priority` (Number) Priority (deprecated)
-- `ssl_crypto_certificate` (String) Certificate (deprecated)
-- `ssl_crypto_key` (String) Key (deprecated)
 - `user_summary` (String) Comments
-- `valcred` (String) Validation credentials (deprecated)
-
-<a id="nestedatt--result--cluster_nodes"></a>
-### Nested Schema for `result.cluster_nodes`
-
-Read-Only:
-
-- `address` (String) Address
-- `local_node` (Boolean) Local node
-  - Default value: `true`
-- `port` (Number) Port

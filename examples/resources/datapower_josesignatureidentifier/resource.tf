@@ -7,5 +7,4 @@ resource "datapower_josesignatureidentifier" "test" {
   header_param = [{
     header_value = "VALUE"
   }]
-  verify = true
 }

@@ -61,7 +61,7 @@ resource "datapower_interopservice" "test" {
   - Reference to: `datapower_sslserverprofile:id`
 - `ssl_server_config_type` (String) TLS server type
   - CLI Alias: `ssl-config-type`
-  - Choices: `proxy`, `server`, `sni`
+  - Choices: `server`, `sni`
   - Default value: `server`
 - `sslsni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`

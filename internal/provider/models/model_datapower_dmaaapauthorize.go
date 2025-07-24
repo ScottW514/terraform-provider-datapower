@@ -40,176 +40,170 @@ import (
 )
 
 type DmAAAPAuthorize struct {
-	AzMethod                      types.String `tfsdk:"az_method"`
-	AzCustomUrl                   types.String `tfsdk:"az_custom_url"`
-	AzMapUrl                      types.String `tfsdk:"az_map_url"`
-	AzHost                        types.String `tfsdk:"az_host"`
-	AzPort                        types.Int64  `tfsdk:"az_port"`
-	AzldapGroup                   types.String `tfsdk:"azldap_group"`
-	AzValcred                     types.String `tfsdk:"az_valcred"`
-	Azsamlurl                     types.String `tfsdk:"azsamlurl"`
-	AzsamlType                    types.String `tfsdk:"azsaml_type"`
-	AzsamlxPath                   types.String `tfsdk:"azsamlx_path"`
-	AzsamlNameQualifier           types.String `tfsdk:"azsaml_name_qualifier"`
-	AzCacheAllow                  types.String `tfsdk:"az_cache_allow"`
-	AzCacheTtl                    types.Int64  `tfsdk:"az_cache_ttl"`
-	AzNetegrityBaseUri            types.String `tfsdk:"az_netegrity_base_uri"`
-	AzNetegrityOpNameExtension    types.String `tfsdk:"az_netegrity_op_name_extension"`
-	AzClearTrustServerUrl         types.String `tfsdk:"az_clear_trust_server_url"`
-	AzsamlVersion                 types.String `tfsdk:"azsaml_version"`
-	AzldapLoadBalanceGroup        types.String `tfsdk:"azldap_load_balance_group"`
-	AzldapBindDn                  types.String `tfsdk:"azldap_bind_dn"`
-	AzldapGroupAttribute          types.String `tfsdk:"azldap_group_attribute"`
-	AzldapSearchScope             types.String `tfsdk:"azldap_search_scope"`
-	AzldapSearchFilter            types.String `tfsdk:"azldap_search_filter"`
-	AzxacmlVersion                types.String `tfsdk:"azxacml_version"`
-	AzxacmlpepType                types.String `tfsdk:"azxacmlpep_type"`
-	AzxacmlUseOnBoxPdp            types.Bool   `tfsdk:"azxacml_use_on_box_pdp"`
-	Azxacmlpdp                    types.String `tfsdk:"azxacmlpdp"`
-	AzxacmlExternalPdpUrl         types.String `tfsdk:"azxacml_external_pdp_url"`
-	AzxacmlBindingMethod          types.String `tfsdk:"azxacml_binding_method"`
-	AzxacmlBindingObject          types.String `tfsdk:"azxacml_binding_object"`
-	AzxacmlBindingXsl             types.String `tfsdk:"azxacml_binding_xsl"`
-	AzxacmlCustomObligation       types.String `tfsdk:"azxacml_custom_obligation"`
-	AzxacmlUseSaml2               types.Bool   `tfsdk:"azxacml_use_saml2"`
-	AztamServer                   types.String `tfsdk:"aztam_server"`
-	AztamDefaultAction            types.String `tfsdk:"aztam_default_action"`
-	AztamActionResourceMap        types.String `tfsdk:"aztam_action_resource_map"`
-	AzxacmlUseSoap                types.Bool   `tfsdk:"azxacml_use_soap"`
-	AzzosnssConfig                types.String `tfsdk:"azzosnss_config"`
-	AzsafDefaultAction            types.String `tfsdk:"azsaf_default_action"`
-	AzldapAttributes              types.String `tfsdk:"azldap_attributes"`
-	AzSkewTime                    types.Int64  `tfsdk:"az_skew_time"`
-	AzoAuthValidationEndpointType types.String `tfsdk:"azo_auth_validation_endpoint_type"`
-	AztfimEndpoint                types.String `tfsdk:"aztfim_endpoint"`
-	AzoAuthEnforceScope           types.Bool   `tfsdk:"azo_auth_enforce_scope"`
-	AzoAuthExportHeaders          types.Bool   `tfsdk:"azo_auth_export_headers"`
-	AztampacReturn                types.Bool   `tfsdk:"aztampac_return"`
-	AztampacUse                   types.Bool   `tfsdk:"aztampac_use"`
-	AzldapReadTimeout             types.Int64  `tfsdk:"azldap_read_timeout"`
-	AzsslClientConfigType         types.String `tfsdk:"azssl_client_config_type"`
-	AzsslClientProfile            types.String `tfsdk:"azssl_client_profile"`
-	AzldapBindPasswordAlias       types.String `tfsdk:"azldap_bind_password_alias"`
-	AzsmRequestType               types.String `tfsdk:"azsm_request_type"`
-	AzsmCookieFlow                *DmSMFlow    `tfsdk:"azsm_cookie_flow"`
-	AzsmHeaderFlow                *DmSMFlow    `tfsdk:"azsm_header_flow"`
-	AzsmCookieAttributes          types.String `tfsdk:"azsm_cookie_attributes"`
-	AzCacheControl                types.String `tfsdk:"az_cache_control"`
+	AzMethod                   types.String `tfsdk:"az_method"`
+	AzCustomUrl                types.String `tfsdk:"az_custom_url"`
+	AzMapUrl                   types.String `tfsdk:"az_map_url"`
+	AzHost                     types.String `tfsdk:"az_host"`
+	AzPort                     types.Int64  `tfsdk:"az_port"`
+	AzldapGroup                types.String `tfsdk:"azldap_group"`
+	AzValcred                  types.String `tfsdk:"az_valcred"`
+	Azsamlurl                  types.String `tfsdk:"azsamlurl"`
+	AzsamlType                 types.String `tfsdk:"azsaml_type"`
+	AzsamlxPath                types.String `tfsdk:"azsamlx_path"`
+	AzsamlNameQualifier        types.String `tfsdk:"azsaml_name_qualifier"`
+	AzCacheAllow               types.String `tfsdk:"az_cache_allow"`
+	AzCacheTtl                 types.Int64  `tfsdk:"az_cache_ttl"`
+	AzNetegrityBaseUri         types.String `tfsdk:"az_netegrity_base_uri"`
+	AzNetegrityOpNameExtension types.String `tfsdk:"az_netegrity_op_name_extension"`
+	AzClearTrustServerUrl      types.String `tfsdk:"az_clear_trust_server_url"`
+	AzsamlVersion              types.String `tfsdk:"azsaml_version"`
+	AzldapLoadBalanceGroup     types.String `tfsdk:"azldap_load_balance_group"`
+	AzldapBindDn               types.String `tfsdk:"azldap_bind_dn"`
+	AzldapGroupAttribute       types.String `tfsdk:"azldap_group_attribute"`
+	AzldapSearchScope          types.String `tfsdk:"azldap_search_scope"`
+	AzldapSearchFilter         types.String `tfsdk:"azldap_search_filter"`
+	AzxacmlVersion             types.String `tfsdk:"azxacml_version"`
+	AzxacmlpepType             types.String `tfsdk:"azxacmlpep_type"`
+	AzxacmlUseOnBoxPdp         types.Bool   `tfsdk:"azxacml_use_on_box_pdp"`
+	Azxacmlpdp                 types.String `tfsdk:"azxacmlpdp"`
+	AzxacmlExternalPdpUrl      types.String `tfsdk:"azxacml_external_pdp_url"`
+	AzxacmlBindingMethod       types.String `tfsdk:"azxacml_binding_method"`
+	AzxacmlBindingObject       types.String `tfsdk:"azxacml_binding_object"`
+	AzxacmlBindingXsl          types.String `tfsdk:"azxacml_binding_xsl"`
+	AzxacmlCustomObligation    types.String `tfsdk:"azxacml_custom_obligation"`
+	AzxacmlUseSaml2            types.Bool   `tfsdk:"azxacml_use_saml2"`
+	AztamServer                types.String `tfsdk:"aztam_server"`
+	AztamDefaultAction         types.String `tfsdk:"aztam_default_action"`
+	AztamActionResourceMap     types.String `tfsdk:"aztam_action_resource_map"`
+	AzxacmlUseSoap             types.Bool   `tfsdk:"azxacml_use_soap"`
+	AzzosnssConfig             types.String `tfsdk:"azzosnss_config"`
+	AzsafDefaultAction         types.String `tfsdk:"azsaf_default_action"`
+	AzldapAttributes           types.String `tfsdk:"azldap_attributes"`
+	AzSkewTime                 types.Int64  `tfsdk:"az_skew_time"`
+	AzoAuthEnforceScope        types.Bool   `tfsdk:"azo_auth_enforce_scope"`
+	AzoAuthExportHeaders       types.Bool   `tfsdk:"azo_auth_export_headers"`
+	AztampacReturn             types.Bool   `tfsdk:"aztampac_return"`
+	AztampacUse                types.Bool   `tfsdk:"aztampac_use"`
+	AzldapReadTimeout          types.Int64  `tfsdk:"azldap_read_timeout"`
+	AzsslClientConfigType      types.String `tfsdk:"azssl_client_config_type"`
+	AzsslClientProfile         types.String `tfsdk:"azssl_client_profile"`
+	AzldapBindPasswordAlias    types.String `tfsdk:"azldap_bind_password_alias"`
+	AzsmRequestType            types.String `tfsdk:"azsm_request_type"`
+	AzsmCookieFlow             *DmSMFlow    `tfsdk:"azsm_cookie_flow"`
+	AzsmHeaderFlow             *DmSMFlow    `tfsdk:"azsm_header_flow"`
+	AzsmCookieAttributes       types.String `tfsdk:"azsm_cookie_attributes"`
+	AzCacheControl             types.String `tfsdk:"az_cache_control"`
 }
 
 var DmAAAPAuthorizeObjectType = map[string]attr.Type{
-	"az_method":                         types.StringType,
-	"az_custom_url":                     types.StringType,
-	"az_map_url":                        types.StringType,
-	"az_host":                           types.StringType,
-	"az_port":                           types.Int64Type,
-	"azldap_group":                      types.StringType,
-	"az_valcred":                        types.StringType,
-	"azsamlurl":                         types.StringType,
-	"azsaml_type":                       types.StringType,
-	"azsamlx_path":                      types.StringType,
-	"azsaml_name_qualifier":             types.StringType,
-	"az_cache_allow":                    types.StringType,
-	"az_cache_ttl":                      types.Int64Type,
-	"az_netegrity_base_uri":             types.StringType,
-	"az_netegrity_op_name_extension":    types.StringType,
-	"az_clear_trust_server_url":         types.StringType,
-	"azsaml_version":                    types.StringType,
-	"azldap_load_balance_group":         types.StringType,
-	"azldap_bind_dn":                    types.StringType,
-	"azldap_group_attribute":            types.StringType,
-	"azldap_search_scope":               types.StringType,
-	"azldap_search_filter":              types.StringType,
-	"azxacml_version":                   types.StringType,
-	"azxacmlpep_type":                   types.StringType,
-	"azxacml_use_on_box_pdp":            types.BoolType,
-	"azxacmlpdp":                        types.StringType,
-	"azxacml_external_pdp_url":          types.StringType,
-	"azxacml_binding_method":            types.StringType,
-	"azxacml_binding_object":            types.StringType,
-	"azxacml_binding_xsl":               types.StringType,
-	"azxacml_custom_obligation":         types.StringType,
-	"azxacml_use_saml2":                 types.BoolType,
-	"aztam_server":                      types.StringType,
-	"aztam_default_action":              types.StringType,
-	"aztam_action_resource_map":         types.StringType,
-	"azxacml_use_soap":                  types.BoolType,
-	"azzosnss_config":                   types.StringType,
-	"azsaf_default_action":              types.StringType,
-	"azldap_attributes":                 types.StringType,
-	"az_skew_time":                      types.Int64Type,
-	"azo_auth_validation_endpoint_type": types.StringType,
-	"aztfim_endpoint":                   types.StringType,
-	"azo_auth_enforce_scope":            types.BoolType,
-	"azo_auth_export_headers":           types.BoolType,
-	"aztampac_return":                   types.BoolType,
-	"aztampac_use":                      types.BoolType,
-	"azldap_read_timeout":               types.Int64Type,
-	"azssl_client_config_type":          types.StringType,
-	"azssl_client_profile":              types.StringType,
-	"azldap_bind_password_alias":        types.StringType,
-	"azsm_request_type":                 types.StringType,
-	"azsm_cookie_flow":                  types.ObjectType{AttrTypes: DmSMFlowObjectType},
-	"azsm_header_flow":                  types.ObjectType{AttrTypes: DmSMFlowObjectType},
-	"azsm_cookie_attributes":            types.StringType,
-	"az_cache_control":                  types.StringType,
+	"az_method":                      types.StringType,
+	"az_custom_url":                  types.StringType,
+	"az_map_url":                     types.StringType,
+	"az_host":                        types.StringType,
+	"az_port":                        types.Int64Type,
+	"azldap_group":                   types.StringType,
+	"az_valcred":                     types.StringType,
+	"azsamlurl":                      types.StringType,
+	"azsaml_type":                    types.StringType,
+	"azsamlx_path":                   types.StringType,
+	"azsaml_name_qualifier":          types.StringType,
+	"az_cache_allow":                 types.StringType,
+	"az_cache_ttl":                   types.Int64Type,
+	"az_netegrity_base_uri":          types.StringType,
+	"az_netegrity_op_name_extension": types.StringType,
+	"az_clear_trust_server_url":      types.StringType,
+	"azsaml_version":                 types.StringType,
+	"azldap_load_balance_group":      types.StringType,
+	"azldap_bind_dn":                 types.StringType,
+	"azldap_group_attribute":         types.StringType,
+	"azldap_search_scope":            types.StringType,
+	"azldap_search_filter":           types.StringType,
+	"azxacml_version":                types.StringType,
+	"azxacmlpep_type":                types.StringType,
+	"azxacml_use_on_box_pdp":         types.BoolType,
+	"azxacmlpdp":                     types.StringType,
+	"azxacml_external_pdp_url":       types.StringType,
+	"azxacml_binding_method":         types.StringType,
+	"azxacml_binding_object":         types.StringType,
+	"azxacml_binding_xsl":            types.StringType,
+	"azxacml_custom_obligation":      types.StringType,
+	"azxacml_use_saml2":              types.BoolType,
+	"aztam_server":                   types.StringType,
+	"aztam_default_action":           types.StringType,
+	"aztam_action_resource_map":      types.StringType,
+	"azxacml_use_soap":               types.BoolType,
+	"azzosnss_config":                types.StringType,
+	"azsaf_default_action":           types.StringType,
+	"azldap_attributes":              types.StringType,
+	"az_skew_time":                   types.Int64Type,
+	"azo_auth_enforce_scope":         types.BoolType,
+	"azo_auth_export_headers":        types.BoolType,
+	"aztampac_return":                types.BoolType,
+	"aztampac_use":                   types.BoolType,
+	"azldap_read_timeout":            types.Int64Type,
+	"azssl_client_config_type":       types.StringType,
+	"azssl_client_profile":           types.StringType,
+	"azldap_bind_password_alias":     types.StringType,
+	"azsm_request_type":              types.StringType,
+	"azsm_cookie_flow":               types.ObjectType{AttrTypes: DmSMFlowObjectType},
+	"azsm_header_flow":               types.ObjectType{AttrTypes: DmSMFlowObjectType},
+	"azsm_cookie_attributes":         types.StringType,
+	"az_cache_control":               types.StringType,
 }
 var DmAAAPAuthorizeObjectDefault = map[string]attr.Value{
-	"az_method":                         types.StringValue("anyauthenticated"),
-	"az_custom_url":                     types.StringNull(),
-	"az_map_url":                        types.StringNull(),
-	"az_host":                           types.StringNull(),
-	"az_port":                           types.Int64Value(0),
-	"azldap_group":                      types.StringNull(),
-	"az_valcred":                        types.StringNull(),
-	"azsamlurl":                         types.StringNull(),
-	"azsaml_type":                       types.StringValue("any"),
-	"azsamlx_path":                      types.StringNull(),
-	"azsaml_name_qualifier":             types.StringNull(),
-	"az_cache_allow":                    types.StringValue("absolute"),
-	"az_cache_ttl":                      types.Int64Value(3),
-	"az_netegrity_base_uri":             types.StringNull(),
-	"az_netegrity_op_name_extension":    types.StringNull(),
-	"az_clear_trust_server_url":         types.StringNull(),
-	"azsaml_version":                    types.StringValue("1.1"),
-	"azldap_load_balance_group":         types.StringNull(),
-	"azldap_bind_dn":                    types.StringNull(),
-	"azldap_group_attribute":            types.StringValue("member"),
-	"azldap_search_scope":               types.StringValue("subtree"),
-	"azldap_search_filter":              types.StringValue("(objectClass=*)"),
-	"azxacml_version":                   types.StringValue("2"),
-	"azxacmlpep_type":                   types.StringValue("deny-biased"),
-	"azxacml_use_on_box_pdp":            types.BoolValue(true),
-	"azxacmlpdp":                        types.StringNull(),
-	"azxacml_external_pdp_url":          types.StringNull(),
-	"azxacml_binding_method":            types.StringValue("custom"),
-	"azxacml_binding_object":            types.StringNull(),
-	"azxacml_binding_xsl":               types.StringNull(),
-	"azxacml_custom_obligation":         types.StringNull(),
-	"azxacml_use_saml2":                 types.BoolValue(false),
-	"aztam_server":                      types.StringNull(),
-	"aztam_default_action":              types.StringValue("T"),
-	"aztam_action_resource_map":         types.StringNull(),
-	"azxacml_use_soap":                  types.BoolValue(false),
-	"azzosnss_config":                   types.StringNull(),
-	"azsaf_default_action":              types.StringValue("r"),
-	"azldap_attributes":                 types.StringNull(),
-	"az_skew_time":                      types.Int64Value(0),
-	"azo_auth_validation_endpoint_type": types.StringValue("tfim"),
-	"aztfim_endpoint":                   types.StringNull(),
-	"azo_auth_enforce_scope":            types.BoolValue(false),
-	"azo_auth_export_headers":           types.BoolValue(true),
-	"aztampac_return":                   types.BoolValue(false),
-	"aztampac_use":                      types.BoolValue(false),
-	"azldap_read_timeout":               types.Int64Value(60),
-	"azssl_client_config_type":          types.StringValue("client"),
-	"azssl_client_profile":              types.StringNull(),
-	"azldap_bind_password_alias":        types.StringNull(),
-	"azsm_request_type":                 types.StringValue("webagent"),
-	"azsm_cookie_flow":                  types.ObjectValueMust(DmSMFlowObjectType, DmSMFlowObjectDefault),
-	"azsm_header_flow":                  types.ObjectValueMust(DmSMFlowObjectType, DmSMFlowObjectDefault),
-	"azsm_cookie_attributes":            types.StringNull(),
-	"az_cache_control":                  types.StringValue("default"),
+	"az_method":                      types.StringValue("anyauthenticated"),
+	"az_custom_url":                  types.StringNull(),
+	"az_map_url":                     types.StringNull(),
+	"az_host":                        types.StringNull(),
+	"az_port":                        types.Int64Value(0),
+	"azldap_group":                   types.StringNull(),
+	"az_valcred":                     types.StringNull(),
+	"azsamlurl":                      types.StringNull(),
+	"azsaml_type":                    types.StringValue("any"),
+	"azsamlx_path":                   types.StringNull(),
+	"azsaml_name_qualifier":          types.StringNull(),
+	"az_cache_allow":                 types.StringValue("absolute"),
+	"az_cache_ttl":                   types.Int64Value(3),
+	"az_netegrity_base_uri":          types.StringNull(),
+	"az_netegrity_op_name_extension": types.StringNull(),
+	"az_clear_trust_server_url":      types.StringNull(),
+	"azsaml_version":                 types.StringValue("1.1"),
+	"azldap_load_balance_group":      types.StringNull(),
+	"azldap_bind_dn":                 types.StringNull(),
+	"azldap_group_attribute":         types.StringValue("member"),
+	"azldap_search_scope":            types.StringValue("subtree"),
+	"azldap_search_filter":           types.StringValue("(objectClass=*)"),
+	"azxacml_version":                types.StringValue("2"),
+	"azxacmlpep_type":                types.StringValue("deny-biased"),
+	"azxacml_use_on_box_pdp":         types.BoolValue(true),
+	"azxacmlpdp":                     types.StringNull(),
+	"azxacml_external_pdp_url":       types.StringNull(),
+	"azxacml_binding_method":         types.StringValue("custom"),
+	"azxacml_binding_object":         types.StringNull(),
+	"azxacml_binding_xsl":            types.StringNull(),
+	"azxacml_custom_obligation":      types.StringNull(),
+	"azxacml_use_saml2":              types.BoolValue(false),
+	"aztam_server":                   types.StringNull(),
+	"aztam_default_action":           types.StringValue("T"),
+	"aztam_action_resource_map":      types.StringNull(),
+	"azxacml_use_soap":               types.BoolValue(false),
+	"azzosnss_config":                types.StringNull(),
+	"azsaf_default_action":           types.StringValue("r"),
+	"azldap_attributes":              types.StringNull(),
+	"az_skew_time":                   types.Int64Value(0),
+	"azo_auth_enforce_scope":         types.BoolValue(false),
+	"azo_auth_export_headers":        types.BoolValue(true),
+	"aztampac_return":                types.BoolValue(false),
+	"aztampac_use":                   types.BoolValue(false),
+	"azldap_read_timeout":            types.Int64Value(60),
+	"azssl_client_config_type":       types.StringValue("client"),
+	"azssl_client_profile":           types.StringNull(),
+	"azldap_bind_password_alias":     types.StringNull(),
+	"azsm_request_type":              types.StringValue("webagent"),
+	"azsm_cookie_flow":               types.ObjectValueMust(DmSMFlowObjectType, DmSMFlowObjectDefault),
+	"azsm_header_flow":               types.ObjectValueMust(DmSMFlowObjectType, DmSMFlowObjectDefault),
+	"azsm_cookie_attributes":         types.StringNull(),
+	"az_cache_control":               types.StringValue("default"),
 }
 var DmAAAPAuthorizeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 	Computed: true,
@@ -374,14 +368,6 @@ var DmAAAPAuthorizeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Skew time", "az-skew-time", "").AddDefaultValue("0").String,
 			Computed:            true,
 		},
-		"azo_auth_validation_endpoint_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("OAuth endpoint type (deprecated)", "az-oauth-endpoint-type", "").AddStringEnum("tfim").AddDefaultValue("tfim").String,
-			Computed:            true,
-		},
-		"aztfim_endpoint": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Federated Identity Manager endpoint (deprecated)", "az-tfim-endpoint", "tfimendpoint").String,
-			Computed:            true,
-		},
 		"azo_auth_enforce_scope": DataSourceSchema.BoolAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Enforce scope", "az-oauth-enforce-scope", "").AddDefaultValue("false").String,
 			Computed:            true,
@@ -403,7 +389,7 @@ var DmAAAPAuthorizeDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 			Computed:            true,
 		},
 		"azssl_client_config_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("client").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 			Computed:            true,
 		},
 		"azssl_client_profile": DataSourceSchema.StringAttribute{
@@ -666,19 +652,6 @@ var DmAAAPAuthorizeResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Optional:            true,
 			Default:             int64default.StaticInt64(0),
 		},
-		"azo_auth_validation_endpoint_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("OAuth endpoint type (deprecated)", "az-oauth-endpoint-type", "").AddStringEnum("tfim").AddDefaultValue("tfim").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("tfim"),
-			},
-			Default: stringdefault.StaticString("tfim"),
-		},
-		"aztfim_endpoint": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Federated Identity Manager endpoint (deprecated)", "az-tfim-endpoint", "tfimendpoint").String,
-			Optional:            true,
-		},
 		"azo_auth_enforce_scope": ResourceSchema.BoolAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Enforce scope", "az-oauth-enforce-scope", "").AddDefaultValue("false").String,
 			Computed:            true,
@@ -713,11 +686,11 @@ var DmAAAPAuthorizeResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Default: int64default.StaticInt64(60),
 		},
 		"azssl_client_config_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("client").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
-				stringvalidator.OneOf("proxy", "client"),
+				stringvalidator.OneOf("client"),
 			},
 			Default: stringdefault.StaticString("client"),
 		},
@@ -875,12 +848,6 @@ func (data DmAAAPAuthorize) IsNull() bool {
 		return false
 	}
 	if !data.AzSkewTime.IsNull() {
-		return false
-	}
-	if !data.AzoAuthValidationEndpointType.IsNull() {
-		return false
-	}
-	if !data.AztfimEndpoint.IsNull() {
 		return false
 	}
 	if !data.AzoAuthEnforceScope.IsNull() {
@@ -1068,12 +1035,6 @@ func (data DmAAAPAuthorize) ToBody(ctx context.Context, pathRoot string) string 
 	}
 	if !data.AzSkewTime.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZSkewTime`, data.AzSkewTime.ValueInt64())
-	}
-	if !data.AzoAuthValidationEndpointType.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZOAuthValidationEndpointType`, data.AzoAuthValidationEndpointType.ValueString())
-	}
-	if !data.AztfimEndpoint.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`AZTFIMEndpoint`, data.AztfimEndpoint.ValueString())
 	}
 	if !data.AzoAuthEnforceScope.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`AZOAuthEnforceScope`, tfutils.StringFromBool(data.AzoAuthEnforceScope, ""))
@@ -1324,16 +1285,6 @@ func (data *DmAAAPAuthorize) FromBody(ctx context.Context, pathRoot string, res 
 		data.AzSkewTime = types.Int64Value(value.Int())
 	} else {
 		data.AzSkewTime = types.Int64Value(0)
-	}
-	if value := res.Get(pathRoot + `AZOAuthValidationEndpointType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AzoAuthValidationEndpointType = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AzoAuthValidationEndpointType = types.StringValue("tfim")
-	}
-	if value := res.Get(pathRoot + `AZTFIMEndpoint`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.AztfimEndpoint = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AztfimEndpoint = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AZOAuthEnforceScope`); value.Exists() {
 		data.AzoAuthEnforceScope = tfutils.BoolFromString(value.String())
@@ -1607,16 +1558,6 @@ func (data *DmAAAPAuthorize) UpdateFromBody(ctx context.Context, pathRoot string
 		data.AzSkewTime = types.Int64Value(value.Int())
 	} else if data.AzSkewTime.ValueInt64() != 0 {
 		data.AzSkewTime = types.Int64Null()
-	}
-	if value := res.Get(pathRoot + `AZOAuthValidationEndpointType`); value.Exists() && !data.AzoAuthValidationEndpointType.IsNull() {
-		data.AzoAuthValidationEndpointType = tfutils.ParseStringFromGJSON(value)
-	} else if data.AzoAuthValidationEndpointType.ValueString() != "tfim" {
-		data.AzoAuthValidationEndpointType = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `AZTFIMEndpoint`); value.Exists() && !data.AztfimEndpoint.IsNull() {
-		data.AztfimEndpoint = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.AztfimEndpoint = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `AZOAuthEnforceScope`); value.Exists() && !data.AzoAuthEnforceScope.IsNull() {
 		data.AzoAuthEnforceScope = tfutils.BoolFromString(value.String())

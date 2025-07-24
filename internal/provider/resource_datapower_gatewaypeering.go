@@ -35,7 +35,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -96,74 +95,17 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: tfutils.NewAttributeDescription("Gateway-peering group", "peer-group", "gatewaypeeringgroup").String,
 				Optional:            true,
 			},
-			"primary_count": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Primary count (deprecated)", "primary-count", "").AddStringEnum("1", "3").AddDefaultValue("1").String,
-				Optional:            true,
-				Computed:            true,
-				Validators: []validator.String{
-					stringvalidator.OneOf("1", "3"),
-				},
-				Default: stringdefault.StaticString("1"),
-			},
 			"monitor_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Monitor port", "monitor-port", "").AddDefaultValue("26380").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(26380),
 			},
-			"cluster_auto_config": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Auto manage cluster configuration (deprecated)", "cluster-auto-config", "").AddDefaultValue("true").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
-			},
 			"enable_peer_group": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Use peer group", "enable-peer-group", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
-			},
-			"peers": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Peers (deprecated)", "peer", "").String,
-				ElementType:         types.StringType,
-				Optional:            true,
-			},
-			"cluster_nodes": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Cluster nodes (deprecated)", "cluster-node", "").String,
-				NestedObject:        models.DmGatewayPeeringClusterNodeResourceSchema,
-				Optional:            true,
-			},
-			"priority": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Priority (deprecated)", "priority", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,
-				Optional:            true,
-				Computed:            true,
-				Validators: []validator.Int64{
-
-					int64validator.Between(0, 255),
-				},
-				Default: int64default.StaticInt64(100),
-			},
-			"enable_ssl": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS (deprecated)", "enable-ssl", "").AddDefaultValue("true").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
-			},
-			"idcred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Identification credentials (deprecated)", "idcred", "cryptoidentcred").String,
-				Optional:            true,
-			},
-			"valcred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validation credentials (deprecated)", "valcred", "cryptovalcred").String,
-				Optional:            true,
-			},
-			"ssl_crypto_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key (deprecated)", "ssl-key", "cryptokey").String,
-				Optional:            true,
-			},
-			"ssl_crypto_certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Certificate (deprecated)", "ssl-cert", "cryptocertificate").String,
-				Optional:            true,
 			},
 			"persistence_location": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Persistence location", "persistence", "").AddStringEnum("memory", "local", "raid").AddDefaultValue("memory").String,

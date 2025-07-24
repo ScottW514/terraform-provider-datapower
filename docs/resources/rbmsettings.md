@@ -141,7 +141,7 @@ resource "datapower_rbmsettings" "test" {
   - Choices: `v2`, `v3`
 - `ldapssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
-  - Choices: `proxy`, `client`
+  - Choices: `client`
   - Default value: `client`
 - `ldapssl_client_profile` (String) TLS client profile
   - CLI Alias: `ssl-client`
@@ -193,7 +193,7 @@ resource "datapower_rbmsettings" "test" {
   - Reference to: `datapower_ldapsearchparameters:id`
 - `mcldapssl_client_config_type` (String) TLS client type
   - CLI Alias: `mc-ssl-client-type`
-  - Choices: `proxy`, `client`
+  - Choices: `client`
   - Default value: `client`
 - `mcldapssl_client_profile` (String) TLS client profile
   - CLI Alias: `mc-ssl-client`

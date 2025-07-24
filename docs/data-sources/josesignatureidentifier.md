@@ -43,7 +43,6 @@ Read-Only:
 - `type` (String) Key Material Type
 - `user_summary` (String) Comments
 - `valid_algorithms` (List of String) Valid algorithms
-- `verify` (Boolean) Verify (deprecated)
 
 <a id="nestedatt--result--header_param"></a>
 ### Nested Schema for `result.header_param`

@@ -57,12 +57,8 @@ attributes:
     default: 'Keep'
     description: 'HTTP method'
     cli_alias: method
+  # DEPRECATED
   # - name: AllowWebSocketUpgrade
-  #   type: Bool
-  #   default: false
-  #   description: 'Allow WebSocket upgrade (deprecated)'
-  #   deprecated: true
-  #   cli_alias: websocket-upgrade
   - name: BackendType
     type: String
     enum:
@@ -117,12 +113,8 @@ attributes:
     default: false
     description: 'Follow redirects'
     cli_alias: follow-redirects
+  # DEPRECATED
   # - name: UseHTTP10
-  #   type: Bool
-  #   default: false
-  #   description: 'Restrict to HTTP/1.0 (deprecated)'
-  #   deprecated: true
-  #   cli_alias: use-http-10
   - name: HTTPVersion
     type: String
     enum:

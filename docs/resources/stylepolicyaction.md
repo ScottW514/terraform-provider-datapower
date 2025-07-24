@@ -218,13 +218,11 @@ resource "datapower_stylepolicyaction" "test" {
   - CLI Alias: `sql-text`
 - `ssl_client_config_type` (String) TLS client type
   - CLI Alias: `ssl-client-type`
-  - Choices: `proxy`, `client`
+  - Choices: `client`
   - Default value: `client`
 - `ssl_client_cred` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_sslclientprofile:id`
-- `ssl_cred` (String) TLS proxy profile (deprecated)
-  - CLI Alias: `sslcred`
 - `stylesheet_parameters` (Attributes List) Stylesheet parameters
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--stylesheet_parameters))
 - `timeout` (Number) Timeout

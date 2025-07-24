@@ -254,16 +254,12 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 				MarkdownDescription: tfutils.NewAttributeDescription("Variable value", "value", "").String,
 				Optional:            true,
 			},
-			"ssl_cred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS proxy profile (deprecated)", "sslcred", "").String,
-				Optional:            true,
-			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("proxy", "client"),
+					stringvalidator.OneOf("client"),
 				},
 				Default: stringdefault.StaticString("client"),
 			},

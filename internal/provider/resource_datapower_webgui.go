@@ -104,11 +104,11 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default:             stringdefault.StaticString("web-mgmt"),
 			},
 			"ssl_server_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server type", "ssl-config-type", "").AddStringEnum("proxy", "server", "sni").AddDefaultValue("server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("proxy", "server", "sni"),
+					stringvalidator.OneOf("server", "sni"),
 				},
 				Default: stringdefault.StaticString("server"),
 			},

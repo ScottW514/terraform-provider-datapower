@@ -424,7 +424,7 @@ var DmAAAPAuthenticateDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 			Computed:            true,
 		},
 		"aussl_client_config_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("client").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 			Computed:            true,
 		},
 		"aussl_client_profile": DataSourceSchema.StringAttribute{
@@ -724,11 +724,11 @@ var DmAAAPAuthenticateResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Default: int64default.StaticInt64(60),
 		},
 		"aussl_client_config_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("client").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
-				stringvalidator.OneOf("proxy", "client"),
+				stringvalidator.OneOf("client"),
 			},
 			Default: stringdefault.StaticString("client"),
 		},

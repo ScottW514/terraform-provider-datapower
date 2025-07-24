@@ -73,13 +73,10 @@ type DmAAAPPostProcess struct {
 	PpKerberosClientKeytab                types.String         `tfsdk:"pp_kerberos_client_keytab"`
 	PpUseWsSec                            types.Bool           `tfsdk:"pp_use_ws_sec"`
 	PpActorRoleId                         types.String         `tfsdk:"pp_actor_role_id"`
-	PptfimTokenMapping                    types.Bool           `tfsdk:"pptfim_token_mapping"`
 	PptfimEndpoint                        types.String         `tfsdk:"pptfim_endpoint"`
 	PpwsDerivedKeyUsernameToken           types.Bool           `tfsdk:"ppws_derived_key_username_token"`
 	PpwsDerivedKeyUsernameTokenIterations types.Int64          `tfsdk:"ppws_derived_key_username_token_iterations"`
 	PpwsUsernameTokenAllowReplacement     types.Bool           `tfsdk:"ppws_username_token_allow_replacement"`
-	PptfimReplaceMethod                   types.String         `tfsdk:"pptfim_replace_method"`
-	PptfimRetrieveMode                    types.String         `tfsdk:"pptfim_retrieve_mode"`
 	PphmacSigningAlg                      types.String         `tfsdk:"pphmac_signing_alg"`
 	PpSigningHashAlg                      types.String         `tfsdk:"pp_signing_hash_alg"`
 	PpwsTrustHeader                       types.Bool           `tfsdk:"ppws_trust_header"`
@@ -164,13 +161,10 @@ var DmAAAPPostProcessObjectType = map[string]attr.Type{
 	"pp_kerberos_client_keytab":                  types.StringType,
 	"pp_use_ws_sec":                              types.BoolType,
 	"pp_actor_role_id":                           types.StringType,
-	"pptfim_token_mapping":                       types.BoolType,
 	"pptfim_endpoint":                            types.StringType,
 	"ppws_derived_key_username_token":            types.BoolType,
 	"ppws_derived_key_username_token_iterations": types.Int64Type,
 	"ppws_username_token_allow_replacement":      types.BoolType,
-	"pptfim_replace_method":                      types.StringType,
-	"pptfim_retrieve_mode":                       types.StringType,
 	"pphmac_signing_alg":                         types.StringType,
 	"pp_signing_hash_alg":                        types.StringType,
 	"ppws_trust_header":                          types.BoolType,
@@ -254,13 +248,10 @@ var DmAAAPPostProcessObjectDefault = map[string]attr.Value{
 	"pp_kerberos_client_keytab":                  types.StringNull(),
 	"pp_use_ws_sec":                              types.BoolValue(false),
 	"pp_actor_role_id":                           types.StringNull(),
-	"pptfim_token_mapping":                       types.BoolValue(false),
 	"pptfim_endpoint":                            types.StringNull(),
 	"ppws_derived_key_username_token":            types.BoolValue(false),
 	"ppws_derived_key_username_token_iterations": types.Int64Value(1000),
 	"ppws_username_token_allow_replacement":      types.BoolValue(false),
-	"pptfim_replace_method":                      types.StringValue("all"),
-	"pptfim_retrieve_mode":                       types.StringValue("CallTFIM"),
 	"pphmac_signing_alg":                         types.StringValue("hmac-sha1"),
 	"pp_signing_hash_alg":                        types.StringValue("sha1"),
 	"ppws_trust_header":                          types.BoolValue(false),
@@ -445,10 +436,6 @@ var DmAAAPPostProcessDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Actor or role identifier", "wssec-actor-role-id", "").String,
 			Computed:            true,
 		},
-		"pptfim_token_mapping": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Request Federated Identity Manager token mapping (deprecated)", "tfim-token-mapping", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
 		"pptfim_endpoint": DataSourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Federated Identity Manager endpoint", "tfim-endpoint", "tfimendpoint").String,
 			Computed:            true,
@@ -463,14 +450,6 @@ var DmAAAPPostProcessDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 		},
 		"ppws_username_token_allow_replacement": DataSourceSchema.BoolAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Replace existing UsernameToken", "wssec-replace-existing", "").AddDefaultValue("false").String,
-			Computed:            true,
-		},
-		"pptfim_replace_method": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Replacement method (deprecated)", "tfim-replace-method", "").AddStringEnum("all", "replace", "preserve").AddDefaultValue("all").String,
-			Computed:            true,
-		},
-		"pptfim_retrieve_mode": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Retrieval method (deprecated)", "tfim-retrieval-method", "").AddStringEnum("CallTFIM", "FromMC").AddDefaultValue("CallTFIM").String,
 			Computed:            true,
 		},
 		"pphmac_signing_alg": DataSourceSchema.StringAttribute{
@@ -865,12 +844,6 @@ var DmAAAPPostProcessResourceSchema = ResourceSchema.SingleNestedAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Actor or role identifier", "wssec-actor-role-id", "").String,
 			Optional:            true,
 		},
-		"pptfim_token_mapping": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Request Federated Identity Manager token mapping (deprecated)", "tfim-token-mapping", "").AddDefaultValue("false").String,
-			Computed:            true,
-			Optional:            true,
-			Default:             booldefault.StaticBool(false),
-		},
 		"pptfim_endpoint": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Federated Identity Manager endpoint", "tfim-endpoint", "tfimendpoint").String,
 			Optional:            true,
@@ -895,24 +868,6 @@ var DmAAAPPostProcessResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
-		},
-		"pptfim_replace_method": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Replacement method (deprecated)", "tfim-replace-method", "").AddStringEnum("all", "replace", "preserve").AddDefaultValue("all").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("all", "replace", "preserve"),
-			},
-			Default: stringdefault.StaticString("all"),
-		},
-		"pptfim_retrieve_mode": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Retrieval method (deprecated)", "tfim-retrieval-method", "").AddStringEnum("CallTFIM", "FromMC").AddDefaultValue("CallTFIM").String,
-			Computed:            true,
-			Optional:            true,
-			Validators: []validator.String{
-				stringvalidator.OneOf("CallTFIM", "FromMC"),
-			},
-			Default: stringdefault.StaticString("CallTFIM"),
 		},
 		"pphmac_signing_alg": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("HMAC signing algorithm", "hmac-signing-algorithm", "").AddStringEnum("hmac-sha1", "hmac-sha224", "hmac-sha256", "hmac-sha384", "hmac-sha512", "hmac-ripemd160", "hmac-md5").AddDefaultValue("hmac-sha1").String,
@@ -1300,9 +1255,6 @@ func (data DmAAAPPostProcess) IsNull() bool {
 	if !data.PpActorRoleId.IsNull() {
 		return false
 	}
-	if !data.PptfimTokenMapping.IsNull() {
-		return false
-	}
 	if !data.PptfimEndpoint.IsNull() {
 		return false
 	}
@@ -1313,12 +1265,6 @@ func (data DmAAAPPostProcess) IsNull() bool {
 		return false
 	}
 	if !data.PpwsUsernameTokenAllowReplacement.IsNull() {
-		return false
-	}
-	if !data.PptfimReplaceMethod.IsNull() {
-		return false
-	}
-	if !data.PptfimRetrieveMode.IsNull() {
 		return false
 	}
 	if !data.PphmacSigningAlg.IsNull() {
@@ -1589,9 +1535,6 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	if !data.PpActorRoleId.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPActorRoleID`, data.PpActorRoleId.ValueString())
 	}
-	if !data.PptfimTokenMapping.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPTFIMTokenMapping`, tfutils.StringFromBool(data.PptfimTokenMapping, ""))
-	}
 	if !data.PptfimEndpoint.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPTFIMEndpoint`, data.PptfimEndpoint.ValueString())
 	}
@@ -1603,12 +1546,6 @@ func (data DmAAAPPostProcess) ToBody(ctx context.Context, pathRoot string) strin
 	}
 	if !data.PpwsUsernameTokenAllowReplacement.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPWSUsernameTokenAllowReplacement`, tfutils.StringFromBool(data.PpwsUsernameTokenAllowReplacement, ""))
-	}
-	if !data.PptfimReplaceMethod.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPTFIMReplaceMethod`, data.PptfimReplaceMethod.ValueString())
-	}
-	if !data.PptfimRetrieveMode.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PPTFIMRetrieveMode`, data.PptfimRetrieveMode.ValueString())
 	}
 	if !data.PphmacSigningAlg.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PPHMACSigningAlg`, data.PphmacSigningAlg.ValueString())
@@ -1928,11 +1865,6 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 	} else {
 		data.PpActorRoleId = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPTFIMTokenMapping`); value.Exists() {
-		data.PptfimTokenMapping = tfutils.BoolFromString(value.String())
-	} else {
-		data.PptfimTokenMapping = types.BoolNull()
-	}
 	if value := res.Get(pathRoot + `PPTFIMEndpoint`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PptfimEndpoint = tfutils.ParseStringFromGJSON(value)
 	} else {
@@ -1952,16 +1884,6 @@ func (data *DmAAAPPostProcess) FromBody(ctx context.Context, pathRoot string, re
 		data.PpwsUsernameTokenAllowReplacement = tfutils.BoolFromString(value.String())
 	} else {
 		data.PpwsUsernameTokenAllowReplacement = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `PPTFIMReplaceMethod`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PptfimReplaceMethod = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.PptfimReplaceMethod = types.StringValue("all")
-	}
-	if value := res.Get(pathRoot + `PPTFIMRetrieveMode`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PptfimRetrieveMode = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.PptfimRetrieveMode = types.StringValue("CallTFIM")
 	}
 	if value := res.Get(pathRoot + `PPHMACSigningAlg`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PphmacSigningAlg = tfutils.ParseStringFromGJSON(value)
@@ -2375,11 +2297,6 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 	} else {
 		data.PpActorRoleId = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PPTFIMTokenMapping`); value.Exists() && !data.PptfimTokenMapping.IsNull() {
-		data.PptfimTokenMapping = tfutils.BoolFromString(value.String())
-	} else if data.PptfimTokenMapping.ValueBool() {
-		data.PptfimTokenMapping = types.BoolNull()
-	}
 	if value := res.Get(pathRoot + `PPTFIMEndpoint`); value.Exists() && !data.PptfimEndpoint.IsNull() {
 		data.PptfimEndpoint = tfutils.ParseStringFromGJSON(value)
 	} else {
@@ -2399,16 +2316,6 @@ func (data *DmAAAPPostProcess) UpdateFromBody(ctx context.Context, pathRoot stri
 		data.PpwsUsernameTokenAllowReplacement = tfutils.BoolFromString(value.String())
 	} else if data.PpwsUsernameTokenAllowReplacement.ValueBool() {
 		data.PpwsUsernameTokenAllowReplacement = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `PPTFIMReplaceMethod`); value.Exists() && !data.PptfimReplaceMethod.IsNull() {
-		data.PptfimReplaceMethod = tfutils.ParseStringFromGJSON(value)
-	} else if data.PptfimReplaceMethod.ValueString() != "all" {
-		data.PptfimReplaceMethod = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `PPTFIMRetrieveMode`); value.Exists() && !data.PptfimRetrieveMode.IsNull() {
-		data.PptfimRetrieveMode = tfutils.ParseStringFromGJSON(value)
-	} else if data.PptfimRetrieveMode.ValueString() != "CallTFIM" {
-		data.PptfimRetrieveMode = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PPHMACSigningAlg`); value.Exists() && !data.PphmacSigningAlg.IsNull() {
 		data.PphmacSigningAlg = tfutils.ParseStringFromGJSON(value)

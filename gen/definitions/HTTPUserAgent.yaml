@@ -74,12 +74,8 @@ attributes:
     element_type: DmHeaderRetentionPolicy
     description: 'Header retention policy'
     cli_alias: headerretention-policy
-  - name: Restrict10Policies
-    type: List
-    element_type: DmRestrict10Policy
-    description: 'Restrict to HTTP/1.0 policy (deprecated)'
-    deprecated: true
-    cli_alias: restrict-http-policy
+  # DEPRECATED
+  # - name: Restrict10Policies
   - name: HTTPVersionPolicies
     type: List
     element_type: DmHTTPVersionPolicy

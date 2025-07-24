@@ -133,11 +133,6 @@ func (r *HTTPUserAgentResource) Schema(ctx context.Context, req resource.SchemaR
 				NestedObject:        models.DmHeaderRetentionPolicyResourceSchema,
 				Optional:            true,
 			},
-			"restrict10_policies": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Restrict to HTTP/1.0 policy (deprecated)", "restrict-http-policy", "").String,
-				NestedObject:        models.DmRestrict10PolicyResourceSchema,
-				Optional:            true,
-			},
 			"http_version_policies": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("HTTP version policy", "http-version-policy", "").String,
 				NestedObject:        models.DmHTTPVersionPolicyResourceSchema,

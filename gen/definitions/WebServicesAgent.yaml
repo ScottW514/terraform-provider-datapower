@@ -46,15 +46,6 @@ attributes:
     cli_alias: capture-mode
 # DEPRECATED
 #  - name: BufferMode
-#    type: String
-#    enum:
-#      - 'discard'
-#      - 'buffer'
-#    required: true
-#    default: 'discard'
-#    description: 'Buffering mode (deprecated)'
-#    deprecated: true
-#    cli_alias: buffer-mode
   - name: MediationMetrics
     type: Bool
     default: false

@@ -96,11 +96,6 @@ attributes:
     cli_alias: validation-url
   # DEPRECATED
   # - name: ValidationURLSSLProfile
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'Validation TLS Proxy Profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: validation-url-ssl-profile
   - name: ValidationFeatures
     dm_type: DmValidationFeatures
     description: 'Validation Grant Features'
@@ -198,7 +193,6 @@ attributes:
   - name: ValidationURLSSLClientType
     type: String
     enum:
-      - 'proxy'
       - 'client'
     default: 'client'
     description: 'Validation TLS client type'

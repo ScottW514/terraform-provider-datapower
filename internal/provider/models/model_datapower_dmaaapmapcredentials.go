@@ -37,26 +37,23 @@ import (
 )
 
 type DmAAAPMapCredentials struct {
-	McMethod       types.String `tfsdk:"mc_method"`
-	McCustomUrl    types.String `tfsdk:"mc_custom_url"`
-	McMapUrl       types.String `tfsdk:"mc_map_url"`
-	McMapXPath     types.String `tfsdk:"mc_map_x_path"`
-	MctfimEndpoint types.String `tfsdk:"mctfim_endpoint"`
+	McMethod    types.String `tfsdk:"mc_method"`
+	McCustomUrl types.String `tfsdk:"mc_custom_url"`
+	McMapUrl    types.String `tfsdk:"mc_map_url"`
+	McMapXPath  types.String `tfsdk:"mc_map_x_path"`
 }
 
 var DmAAAPMapCredentialsObjectType = map[string]attr.Type{
-	"mc_method":       types.StringType,
-	"mc_custom_url":   types.StringType,
-	"mc_map_url":      types.StringType,
-	"mc_map_x_path":   types.StringType,
-	"mctfim_endpoint": types.StringType,
+	"mc_method":     types.StringType,
+	"mc_custom_url": types.StringType,
+	"mc_map_url":    types.StringType,
+	"mc_map_x_path": types.StringType,
 }
 var DmAAAPMapCredentialsObjectDefault = map[string]attr.Value{
-	"mc_method":       types.StringValue("none"),
-	"mc_custom_url":   types.StringNull(),
-	"mc_map_url":      types.StringNull(),
-	"mc_map_x_path":   types.StringNull(),
-	"mctfim_endpoint": types.StringNull(),
+	"mc_method":     types.StringValue("none"),
+	"mc_custom_url": types.StringNull(),
+	"mc_map_url":    types.StringNull(),
+	"mc_map_x_path": types.StringNull(),
 }
 var DmAAAPMapCredentialsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 	Computed: true,
@@ -75,10 +72,6 @@ var DmAAAPMapCredentialsDataSourceSchema = DataSourceSchema.SingleNestedAttribut
 		},
 		"mc_map_x_path": DataSourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "xpath", "").String,
-			Computed:            true,
-		},
-		"mctfim_endpoint": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Federated Identity Manager endpoint (deprecated)", "tfim", "tfimendpoint").String,
 			Computed:            true,
 		},
 	},
@@ -111,10 +104,6 @@ var DmAAAPMapCredentialsResourceSchema = ResourceSchema.SingleNestedAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "xpath", "").String,
 			Optional:            true,
 		},
-		"mctfim_endpoint": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Federated Identity Manager endpoint (deprecated)", "tfim", "tfimendpoint").String,
-			Optional:            true,
-		},
 	},
 }
 
@@ -129,9 +118,6 @@ func (data DmAAAPMapCredentials) IsNull() bool {
 		return false
 	}
 	if !data.McMapXPath.IsNull() {
-		return false
-	}
-	if !data.MctfimEndpoint.IsNull() {
 		return false
 	}
 	return true
@@ -169,9 +155,6 @@ func (data DmAAAPMapCredentials) ToBody(ctx context.Context, pathRoot string) st
 	if !data.McMapXPath.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MCMapXPath`, data.McMapXPath.ValueString())
 	}
-	if !data.MctfimEndpoint.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`MCTFIMEndpoint`, data.MctfimEndpoint.ValueString())
-	}
 	return body
 }
 
@@ -199,11 +182,6 @@ func (data *DmAAAPMapCredentials) FromBody(ctx context.Context, pathRoot string,
 	} else {
 		data.McMapXPath = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `MCTFIMEndpoint`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.MctfimEndpoint = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.MctfimEndpoint = types.StringNull()
-	}
 }
 
 func (data *DmAAAPMapCredentials) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
@@ -229,10 +207,5 @@ func (data *DmAAAPMapCredentials) UpdateFromBody(ctx context.Context, pathRoot s
 		data.McMapXPath = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.McMapXPath = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `MCTFIMEndpoint`); value.Exists() && !data.MctfimEndpoint.IsNull() {
-		data.MctfimEndpoint = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.MctfimEndpoint = types.StringNull()
 	}
 }

@@ -93,10 +93,6 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				MarkdownDescription: tfutils.NewAttributeDescription("URL Rewrite Policy", "urlrewrite-policy", "urlrewritepolicy").String,
 				Optional:            true,
 			},
-			"ssl_proxy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS proxy profile (deprecated)", "ssl", "sslproxyprofile").String,
-				Optional:            true,
-			},
 			"style_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Processing Policy", "stylesheet-policy", "stylepolicy").AddDefaultValue("default").String,
 				Optional:            true,
@@ -333,13 +329,13 @@ func (r *XMLFirewallServiceResource) Schema(ctx context.Context, req resource.Sc
 				Default: stringdefault.StaticString("protocol"),
 			},
 			"ssl_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS type", "ssl-config-type", "").AddStringEnum("proxy", "server", "sni").AddDefaultValue("proxy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("proxy", "server", "sni"),
+					stringvalidator.OneOf("server", "sni"),
 				},
-				Default: stringdefault.StaticString("proxy"),
+				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "sslserverprofile").String,

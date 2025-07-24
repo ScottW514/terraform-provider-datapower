@@ -126,11 +126,6 @@ func (d *HTTPUserAgentDataSource) Schema(ctx context.Context, req datasource.Sch
 							NestedObject:        models.DmHeaderRetentionPolicyDataSourceSchema,
 							Computed:            true,
 						},
-						"restrict10_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "Restrict to HTTP/1.0 policy (deprecated)",
-							NestedObject:        models.DmRestrict10PolicyDataSourceSchema,
-							Computed:            true,
-						},
 						"http_version_policies": schema.ListNestedAttribute{
 							MarkdownDescription: "HTTP version policy",
 							NestedObject:        models.DmHTTPVersionPolicyDataSourceSchema,

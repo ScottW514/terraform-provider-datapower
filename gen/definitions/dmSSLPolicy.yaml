@@ -9,17 +9,11 @@ attributes:
     description: 'URL matching expression'
   # DEPRECATED
   # - name: SSLProxyProfile
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
   - name: SSLClientConfigType
     type: String
     enum:
-      - 'proxy'
       - 'client'
-    required: true
-    default: 'proxy'
+    default: 'client'
     description: 'TLS client type'
   - name: SSLClient
     type: String

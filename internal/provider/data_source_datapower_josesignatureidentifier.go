@@ -101,10 +101,6 @@ func (d *JOSESignatureIdentifierDataSource) Schema(ctx context.Context, req data
 							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
 							Computed:            true,
 						},
-						"verify": schema.BoolAttribute{
-							MarkdownDescription: "Verify (deprecated)",
-							Computed:            true,
-						},
 					},
 				},
 			},

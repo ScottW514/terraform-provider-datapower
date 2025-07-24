@@ -300,11 +300,11 @@ func (r *WebAppFWResource) Schema(ctx context.Context, req resource.SchemaReques
 				Default:             booldefault.StaticBool(true),
 			},
 			"ssl_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS type", "ssl-config-type", "").AddStringEnum("proxy", "server", "sni").AddDefaultValue("server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("proxy", "server", "sni"),
+					stringvalidator.OneOf("server", "sni"),
 				},
 				Default: stringdefault.StaticString("server"),
 			},

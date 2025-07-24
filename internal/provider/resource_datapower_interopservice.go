@@ -128,11 +128,11 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"ssl_server_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS server type", "ssl-config-type", "").AddStringEnum("proxy", "server", "sni").AddDefaultValue("server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("proxy", "server", "sni"),
+					stringvalidator.OneOf("server", "sni"),
 				},
 				Default: stringdefault.StaticString("server"),
 			},

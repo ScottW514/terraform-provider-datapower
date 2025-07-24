@@ -188,11 +188,6 @@ attributes:
     cli_alias: ssl-client-type
   # DEPRECATED
   # - name: SSLProxy
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ssl
   - name: SSLClient
     type: String
     reference_to: SSLClientProfile

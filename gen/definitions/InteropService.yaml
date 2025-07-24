@@ -73,15 +73,9 @@ attributes:
     cli_alias: https-acl
 # DEPRECATED
 #  - name: SSLProxy
-#    type: String
-#    reference_to: SSLProxyProfile
-#    description: 'TLS proxy profile (deprecated)'
-#    deprecated: true
-#    cli_alias: ssl
   - name: SSLServerConfigType
     type: String
     enum:
-      - 'proxy'
       - 'server'
       - 'sni'
     default: 'server'

@@ -3,7 +3,6 @@ model_only: true
 attributes:
   - name: EIBitmap
     dm_type: DmAAAPEIBitmap
-    # required: true
     description: 'Methods'
     cli_alias: method
   - name: EICustomURL
@@ -65,11 +64,6 @@ attributes:
     cli_alias: password-retrieval-xmlfile-url
   # DEPRECATED
   # - name: EISSLProxyProfile
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ssl
   - name: EIFormsLoginPolicy
     type: String
     reference_to: FormsLoginPolicy

@@ -38,7 +38,6 @@ type XMLFirewallService struct {
 	Type                                   types.String               `tfsdk:"type"`
 	XmlManager                             types.String               `tfsdk:"xml_manager"`
 	UrlRewritePolicy                       types.String               `tfsdk:"url_rewrite_policy"`
-	SslProxy                               types.String               `tfsdk:"ssl_proxy"`
 	StylePolicy                            types.String               `tfsdk:"style_policy"`
 	MaxMessageSize                         types.Int64                `tfsdk:"max_message_size"`
 	RequestType                            types.String               `tfsdk:"request_type"`
@@ -116,7 +115,6 @@ var XMLFirewallServiceObjectType = map[string]attr.Type{
 	"type":                                        types.StringType,
 	"xml_manager":                                 types.StringType,
 	"url_rewrite_policy":                          types.StringType,
-	"ssl_proxy":                                   types.StringType,
 	"style_policy":                                types.StringType,
 	"max_message_size":                            types.Int64Type,
 	"request_type":                                types.StringType,
@@ -209,9 +207,6 @@ func (data XMLFirewallService) IsNull() bool {
 		return false
 	}
 	if !data.UrlRewritePolicy.IsNull() {
-		return false
-	}
-	if !data.SslProxy.IsNull() {
 		return false
 	}
 	if !data.StylePolicy.IsNull() {
@@ -442,9 +437,6 @@ func (data XMLFirewallService) ToBody(ctx context.Context, pathRoot string) stri
 	}
 	if !data.UrlRewritePolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`URLRewritePolicy`, data.UrlRewritePolicy.ValueString())
-	}
-	if !data.SslProxy.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLProxy`, data.SslProxy.ValueString())
 	}
 	if !data.StylePolicy.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`StylePolicy`, data.StylePolicy.ValueString())
@@ -710,11 +702,6 @@ func (data *XMLFirewallService) FromBody(ctx context.Context, pathRoot string, r
 	} else {
 		data.UrlRewritePolicy = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSLProxy`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslProxy = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.SslProxy = types.StringNull()
-	}
 	if value := res.Get(pathRoot + `StylePolicy`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.StylePolicy = tfutils.ParseStringFromGJSON(value)
 	} else {
@@ -868,7 +855,7 @@ func (data *XMLFirewallService) FromBody(ctx context.Context, pathRoot string, r
 	if value := res.Get(pathRoot + `SSLConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslConfigType = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.SslConfigType = types.StringValue("proxy")
+		data.SslConfigType = types.StringValue("server")
 	}
 	if value := res.Get(pathRoot + `SSLServer`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslServer = tfutils.ParseStringFromGJSON(value)
@@ -1143,11 +1130,6 @@ func (data *XMLFirewallService) UpdateFromBody(ctx context.Context, pathRoot str
 	} else {
 		data.UrlRewritePolicy = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `SSLProxy`); value.Exists() && !data.SslProxy.IsNull() {
-		data.SslProxy = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.SslProxy = types.StringNull()
-	}
 	if value := res.Get(pathRoot + `StylePolicy`); value.Exists() && !data.StylePolicy.IsNull() {
 		data.StylePolicy = tfutils.ParseStringFromGJSON(value)
 	} else if data.StylePolicy.ValueString() != "default" {
@@ -1300,7 +1282,7 @@ func (data *XMLFirewallService) UpdateFromBody(ctx context.Context, pathRoot str
 	}
 	if value := res.Get(pathRoot + `SSLConfigType`); value.Exists() && !data.SslConfigType.IsNull() {
 		data.SslConfigType = tfutils.ParseStringFromGJSON(value)
-	} else if data.SslConfigType.ValueString() != "proxy" {
+	} else if data.SslConfigType.ValueString() != "server" {
 		data.SslConfigType = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLServer`); value.Exists() && !data.SslServer.IsNull() {

@@ -1,5 +1,6 @@
 ## Unreleased
 
+- Removed deprecated SSL proxy settings
 - Removed unneccesary `sensitive` markings
 - Updated example names
 - API Additions (Objects)

@@ -234,11 +234,8 @@ resource "datapower_xmlfirewallservice" "test" {
   - Reference to: `datapower_sslclientprofile:id`
 - `ssl_config_type` (String) TLS type
   - CLI Alias: `ssl-config-type`
-  - Choices: `proxy`, `server`, `sni`
-  - Default value: `proxy`
-- `ssl_proxy` (String) TLS proxy profile (deprecated)
-  - CLI Alias: `ssl`
-  - Reference to: `datapower_sslproxyprofile:id`
+  - Choices: `server`, `sni`
+  - Default value: `server`
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_sslserverprofile:id`

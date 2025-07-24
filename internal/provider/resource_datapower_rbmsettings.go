@@ -416,11 +416,11 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: stringdefault.StaticString("md5crypt"),
 			},
 			"ldapssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("proxy", "client"),
+					stringvalidator.OneOf("client"),
 				},
 				Default: stringdefault.StaticString("client"),
 			},
@@ -429,11 +429,11 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"mcldapssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "mc-ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "mc-ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("proxy", "client"),
+					stringvalidator.OneOf("client"),
 				},
 				Default: stringdefault.StaticString("client"),
 			},

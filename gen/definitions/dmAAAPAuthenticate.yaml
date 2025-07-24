@@ -281,7 +281,6 @@ attributes:
   - name: AUSSLClientConfigType
     type: String
     enum:
-      - 'proxy'
       - 'client'
     default: 'client'
     description: 'TLS client type'

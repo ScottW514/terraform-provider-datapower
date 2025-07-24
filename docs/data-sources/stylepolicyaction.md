@@ -106,7 +106,6 @@ Read-Only:
 - `sql_text` (String) SQL text
 - `ssl_client_config_type` (String) TLS client type
 - `ssl_client_cred` (String) TLS client profile
-- `ssl_cred` (String) TLS proxy profile (deprecated)
 - `stylesheet_parameters` (Attributes List) Stylesheet parameters (see [below for nested schema](#nestedatt--result--stylesheet_parameters))
 - `timeout` (Number) Timeout
 - `transactional` (Boolean) Transactional

@@ -42,11 +42,6 @@ attributes:
     cli_alias: subscription
 # DEPRECATED
 #  - name: APIProbe
-#    type: String
-#    reference_to: GatewayPeering
-#    description: 'API probe data (deprecated)'
-#    deprecated: true
-#    cli_alias: apiprobe
   - name: RatelimitModule
     type: String
     reference_to: GatewayPeering

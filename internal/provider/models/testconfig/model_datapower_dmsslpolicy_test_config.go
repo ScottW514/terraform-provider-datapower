@@ -24,7 +24,6 @@ var DmSSLPolicyTestConfig = ModelTestConfig{
 	Name: "DmSSLPolicy",
 	Model: `{
   reg_exp = "*"
-  ssl_client_config_type = "proxy"
 }`,
 	ModelOnly:    true,
 	Dependencies: map[string]*ModelTestConfig{},

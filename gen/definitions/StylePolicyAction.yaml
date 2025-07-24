@@ -246,15 +246,11 @@ attributes:
     type: String
     description: 'Variable value'
     cli_alias: value
-  - name: SSLCred
-    type: String
-    description: 'TLS proxy profile (deprecated)'
-    deprecated: true
-    cli_alias: sslcred
+  # DEPRECATED
+  # - name: SSLCred
   - name: SSLClientConfigType
     type: String
     enum:
-      - 'proxy'
       - 'client'
     default: 'client'
     description: 'TLS client type'

@@ -50,7 +50,7 @@ resource "datapower_webb2bviewer" "test" {
   - Reference to: `datapower_sslserverprofile:id`
 - `ssl_server_config_type` (String) Custom TLS server type
   - CLI Alias: `ssl-config-type`
-  - Choices: `proxy`, `server`, `sni`
+  - Choices: `server`, `sni`
   - Default value: `server`
 - `sslsni_server` (String) Custom TLS SNI server profile
   - CLI Alias: `ssl-sni-server`

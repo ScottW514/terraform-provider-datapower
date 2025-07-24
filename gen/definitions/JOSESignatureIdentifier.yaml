@@ -64,10 +64,5 @@ attributes:
     required: true
     description: 'Header Parameters'
     cli_alias: header-param
-  - name: Verify
-    type: Bool
-    default: true
-    required: true
-    description: 'Verify (deprecated)'
-    deprecated: true
-    cli_alias: verify
+  # DEPRECATED
+  # - name: Verify

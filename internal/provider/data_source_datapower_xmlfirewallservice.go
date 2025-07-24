@@ -87,10 +87,6 @@ func (d *XMLFirewallServiceDataSource) Schema(ctx context.Context, req datasourc
 							MarkdownDescription: "URL Rewrite Policy",
 							Computed:            true,
 						},
-						"ssl_proxy": schema.StringAttribute{
-							MarkdownDescription: "TLS proxy profile (deprecated)",
-							Computed:            true,
-						},
 						"style_policy": schema.StringAttribute{
 							MarkdownDescription: "Processing Policy",
 							Computed:            true,

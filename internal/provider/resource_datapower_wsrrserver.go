@@ -93,11 +93,11 @@ func (r *WSRRServerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("proxy", "client"),
+					stringvalidator.OneOf("client"),
 				},
 				Default: stringdefault.StaticString("client"),
 			},

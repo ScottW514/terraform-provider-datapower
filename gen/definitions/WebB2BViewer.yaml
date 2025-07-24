@@ -27,11 +27,6 @@ attributes:
     cli_alias: port
 # DEPRECATED
 #  - name: SSLProxy
-#    type: String
-#    reference_to: SSLProxyProfile
-#    description: 'Custom TLS proxy profile (deprecated)'
-#    deprecated: true
-#    cli_alias: ssl
   - name: UserAgent
     type: String
     reference_to: HTTPUserAgent
@@ -53,7 +48,6 @@ attributes:
   - name: SSLServerConfigType
     type: String
     enum:
-      - 'proxy'
       - 'server'
       - 'sni'
     default: 'server'

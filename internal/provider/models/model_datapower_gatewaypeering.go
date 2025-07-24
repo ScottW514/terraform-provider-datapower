@@ -33,53 +33,33 @@ import (
 )
 
 type GatewayPeering struct {
-	Id                   types.String `tfsdk:"id"`
-	AppDomain            types.String `tfsdk:"app_domain"`
-	UserSummary          types.String `tfsdk:"user_summary"`
-	PasswordAlias        types.String `tfsdk:"password_alias"`
-	LocalAddress         types.String `tfsdk:"local_address"`
-	LocalPort            types.Int64  `tfsdk:"local_port"`
-	PeerGroup            types.String `tfsdk:"peer_group"`
-	PrimaryCount         types.String `tfsdk:"primary_count"`
-	MonitorPort          types.Int64  `tfsdk:"monitor_port"`
-	ClusterAutoConfig    types.Bool   `tfsdk:"cluster_auto_config"`
-	EnablePeerGroup      types.Bool   `tfsdk:"enable_peer_group"`
-	Peers                types.List   `tfsdk:"peers"`
-	ClusterNodes         types.List   `tfsdk:"cluster_nodes"`
-	Priority             types.Int64  `tfsdk:"priority"`
-	EnableSsl            types.Bool   `tfsdk:"enable_ssl"`
-	Idcred               types.String `tfsdk:"idcred"`
-	Valcred              types.String `tfsdk:"valcred"`
-	SslCryptoKey         types.String `tfsdk:"ssl_crypto_key"`
-	SslCryptoCertificate types.String `tfsdk:"ssl_crypto_certificate"`
-	PersistenceLocation  types.String `tfsdk:"persistence_location"`
-	LocalDirectory       types.String `tfsdk:"local_directory"`
-	MaxMemory            types.Int64  `tfsdk:"max_memory"`
+	Id                  types.String `tfsdk:"id"`
+	AppDomain           types.String `tfsdk:"app_domain"`
+	UserSummary         types.String `tfsdk:"user_summary"`
+	PasswordAlias       types.String `tfsdk:"password_alias"`
+	LocalAddress        types.String `tfsdk:"local_address"`
+	LocalPort           types.Int64  `tfsdk:"local_port"`
+	PeerGroup           types.String `tfsdk:"peer_group"`
+	MonitorPort         types.Int64  `tfsdk:"monitor_port"`
+	EnablePeerGroup     types.Bool   `tfsdk:"enable_peer_group"`
+	PersistenceLocation types.String `tfsdk:"persistence_location"`
+	LocalDirectory      types.String `tfsdk:"local_directory"`
+	MaxMemory           types.Int64  `tfsdk:"max_memory"`
 }
 
 var GatewayPeeringObjectType = map[string]attr.Type{
-	"id":                     types.StringType,
-	"app_domain":             types.StringType,
-	"user_summary":           types.StringType,
-	"password_alias":         types.StringType,
-	"local_address":          types.StringType,
-	"local_port":             types.Int64Type,
-	"peer_group":             types.StringType,
-	"primary_count":          types.StringType,
-	"monitor_port":           types.Int64Type,
-	"cluster_auto_config":    types.BoolType,
-	"enable_peer_group":      types.BoolType,
-	"peers":                  types.ListType{ElemType: types.StringType},
-	"cluster_nodes":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmGatewayPeeringClusterNodeObjectType}},
-	"priority":               types.Int64Type,
-	"enable_ssl":             types.BoolType,
-	"idcred":                 types.StringType,
-	"valcred":                types.StringType,
-	"ssl_crypto_key":         types.StringType,
-	"ssl_crypto_certificate": types.StringType,
-	"persistence_location":   types.StringType,
-	"local_directory":        types.StringType,
-	"max_memory":             types.Int64Type,
+	"id":                   types.StringType,
+	"app_domain":           types.StringType,
+	"user_summary":         types.StringType,
+	"password_alias":       types.StringType,
+	"local_address":        types.StringType,
+	"local_port":           types.Int64Type,
+	"peer_group":           types.StringType,
+	"monitor_port":         types.Int64Type,
+	"enable_peer_group":    types.BoolType,
+	"persistence_location": types.StringType,
+	"local_directory":      types.StringType,
+	"max_memory":           types.Int64Type,
 }
 
 func (data GatewayPeering) GetPath() string {
@@ -111,40 +91,10 @@ func (data GatewayPeering) IsNull() bool {
 	if !data.PeerGroup.IsNull() {
 		return false
 	}
-	if !data.PrimaryCount.IsNull() {
-		return false
-	}
 	if !data.MonitorPort.IsNull() {
 		return false
 	}
-	if !data.ClusterAutoConfig.IsNull() {
-		return false
-	}
 	if !data.EnablePeerGroup.IsNull() {
-		return false
-	}
-	if !data.Peers.IsNull() {
-		return false
-	}
-	if !data.ClusterNodes.IsNull() {
-		return false
-	}
-	if !data.Priority.IsNull() {
-		return false
-	}
-	if !data.EnableSsl.IsNull() {
-		return false
-	}
-	if !data.Idcred.IsNull() {
-		return false
-	}
-	if !data.Valcred.IsNull() {
-		return false
-	}
-	if !data.SslCryptoKey.IsNull() {
-		return false
-	}
-	if !data.SslCryptoCertificate.IsNull() {
 		return false
 	}
 	if !data.PersistenceLocation.IsNull() {
@@ -182,49 +132,11 @@ func (data GatewayPeering) ToBody(ctx context.Context, pathRoot string) string {
 	if !data.PeerGroup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PeerGroup`, data.PeerGroup.ValueString())
 	}
-	if !data.PrimaryCount.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`PrimaryCount`, data.PrimaryCount.ValueString())
-	}
 	if !data.MonitorPort.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`MonitorPort`, data.MonitorPort.ValueInt64())
 	}
-	if !data.ClusterAutoConfig.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`ClusterAutoConfig`, tfutils.StringFromBool(data.ClusterAutoConfig, ""))
-	}
 	if !data.EnablePeerGroup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EnablePeerGroup`, tfutils.StringFromBool(data.EnablePeerGroup, ""))
-	}
-	if !data.Peers.IsNull() {
-		var values []string
-		data.Peers.ElementsAs(ctx, &values, false)
-		for _, val := range values {
-			body, _ = sjson.Set(body, pathRoot+`Peers`+".-1", map[string]string{"value": val})
-		}
-	}
-	if !data.ClusterNodes.IsNull() {
-		var values []DmGatewayPeeringClusterNode
-		data.ClusterNodes.ElementsAs(ctx, &values, false)
-		for _, val := range values {
-			body, _ = sjson.SetRaw(body, pathRoot+`ClusterNodes`+".-1", val.ToBody(ctx, ""))
-		}
-	}
-	if !data.Priority.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Priority`, data.Priority.ValueInt64())
-	}
-	if !data.EnableSsl.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`EnableSSL`, tfutils.StringFromBool(data.EnableSsl, ""))
-	}
-	if !data.Idcred.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Idcred`, data.Idcred.ValueString())
-	}
-	if !data.Valcred.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Valcred`, data.Valcred.ValueString())
-	}
-	if !data.SslCryptoKey.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLCryptoKey`, data.SslCryptoKey.ValueString())
-	}
-	if !data.SslCryptoCertificate.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLCryptoCertificate`, data.SslCryptoCertificate.ValueString())
 	}
 	if !data.PersistenceLocation.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PersistenceLocation`, data.PersistenceLocation.ValueString())
@@ -272,79 +184,15 @@ func (data *GatewayPeering) FromBody(ctx context.Context, pathRoot string, res g
 	} else {
 		data.PeerGroup = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PrimaryCount`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.PrimaryCount = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.PrimaryCount = types.StringValue("1")
-	}
 	if value := res.Get(pathRoot + `MonitorPort`); value.Exists() {
 		data.MonitorPort = types.Int64Value(value.Int())
 	} else {
 		data.MonitorPort = types.Int64Value(26380)
 	}
-	if value := res.Get(pathRoot + `ClusterAutoConfig`); value.Exists() {
-		data.ClusterAutoConfig = tfutils.BoolFromString(value.String())
-	} else {
-		data.ClusterAutoConfig = types.BoolNull()
-	}
 	if value := res.Get(pathRoot + `EnablePeerGroup`); value.Exists() {
 		data.EnablePeerGroup = tfutils.BoolFromString(value.String())
 	} else {
 		data.EnablePeerGroup = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `Peers`); value.Exists() {
-		data.Peers = tfutils.ParseStringListFromGJSON(value)
-	} else {
-		data.Peers = types.ListNull(types.StringType)
-	}
-	if value := res.Get(pathRoot + `ClusterNodes`); value.Exists() {
-		l := []DmGatewayPeeringClusterNode{}
-		if value := res.Get(`ClusterNodes`); value.Exists() {
-			for _, v := range value.Array() {
-				item := DmGatewayPeeringClusterNode{}
-				item.FromBody(ctx, "", v)
-				if !item.IsNull() {
-					l = append(l, item)
-				}
-			}
-		}
-		if len(l) > 0 {
-			data.ClusterNodes, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmGatewayPeeringClusterNodeObjectType}, l)
-		} else {
-			data.ClusterNodes = types.ListNull(types.ObjectType{AttrTypes: DmGatewayPeeringClusterNodeObjectType})
-		}
-	} else {
-		data.ClusterNodes = types.ListNull(types.ObjectType{AttrTypes: DmGatewayPeeringClusterNodeObjectType})
-	}
-	if value := res.Get(pathRoot + `Priority`); value.Exists() {
-		data.Priority = types.Int64Value(value.Int())
-	} else {
-		data.Priority = types.Int64Value(100)
-	}
-	if value := res.Get(pathRoot + `EnableSSL`); value.Exists() {
-		data.EnableSsl = tfutils.BoolFromString(value.String())
-	} else {
-		data.EnableSsl = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `Idcred`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Idcred = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Idcred = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `Valcred`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Valcred = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Valcred = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `SSLCryptoKey`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslCryptoKey = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.SslCryptoKey = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `SSLCryptoCertificate`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslCryptoCertificate = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.SslCryptoCertificate = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PersistenceLocation`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PersistenceLocation = tfutils.ParseStringFromGJSON(value)
@@ -397,77 +245,15 @@ func (data *GatewayPeering) UpdateFromBody(ctx context.Context, pathRoot string,
 	} else {
 		data.PeerGroup = types.StringNull()
 	}
-	if value := res.Get(pathRoot + `PrimaryCount`); value.Exists() && !data.PrimaryCount.IsNull() {
-		data.PrimaryCount = tfutils.ParseStringFromGJSON(value)
-	} else if data.PrimaryCount.ValueString() != "1" {
-		data.PrimaryCount = types.StringNull()
-	}
 	if value := res.Get(pathRoot + `MonitorPort`); value.Exists() && !data.MonitorPort.IsNull() {
 		data.MonitorPort = types.Int64Value(value.Int())
 	} else if data.MonitorPort.ValueInt64() != 26380 {
 		data.MonitorPort = types.Int64Null()
 	}
-	if value := res.Get(pathRoot + `ClusterAutoConfig`); value.Exists() && !data.ClusterAutoConfig.IsNull() {
-		data.ClusterAutoConfig = tfutils.BoolFromString(value.String())
-	} else if !data.ClusterAutoConfig.ValueBool() {
-		data.ClusterAutoConfig = types.BoolNull()
-	}
 	if value := res.Get(pathRoot + `EnablePeerGroup`); value.Exists() && !data.EnablePeerGroup.IsNull() {
 		data.EnablePeerGroup = tfutils.BoolFromString(value.String())
 	} else if !data.EnablePeerGroup.ValueBool() {
 		data.EnablePeerGroup = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `Peers`); value.Exists() && !data.Peers.IsNull() {
-		data.Peers = tfutils.ParseStringListFromGJSON(value)
-	} else {
-		data.Peers = types.ListNull(types.StringType)
-	}
-	if value := res.Get(pathRoot + `ClusterNodes`); value.Exists() && !data.ClusterNodes.IsNull() {
-		l := []DmGatewayPeeringClusterNode{}
-		for _, v := range value.Array() {
-			item := DmGatewayPeeringClusterNode{}
-			item.FromBody(ctx, "", v)
-			if !item.IsNull() {
-				l = append(l, item)
-			}
-		}
-		if len(l) > 0 {
-			data.ClusterNodes, _ = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: DmGatewayPeeringClusterNodeObjectType}, l)
-		} else {
-			data.ClusterNodes = types.ListNull(types.ObjectType{AttrTypes: DmGatewayPeeringClusterNodeObjectType})
-		}
-	} else {
-		data.ClusterNodes = types.ListNull(types.ObjectType{AttrTypes: DmGatewayPeeringClusterNodeObjectType})
-	}
-	if value := res.Get(pathRoot + `Priority`); value.Exists() && !data.Priority.IsNull() {
-		data.Priority = types.Int64Value(value.Int())
-	} else if data.Priority.ValueInt64() != 100 {
-		data.Priority = types.Int64Null()
-	}
-	if value := res.Get(pathRoot + `EnableSSL`); value.Exists() && !data.EnableSsl.IsNull() {
-		data.EnableSsl = tfutils.BoolFromString(value.String())
-	} else if !data.EnableSsl.ValueBool() {
-		data.EnableSsl = types.BoolNull()
-	}
-	if value := res.Get(pathRoot + `Idcred`); value.Exists() && !data.Idcred.IsNull() {
-		data.Idcred = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Idcred = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `Valcred`); value.Exists() && !data.Valcred.IsNull() {
-		data.Valcred = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Valcred = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `SSLCryptoKey`); value.Exists() && !data.SslCryptoKey.IsNull() {
-		data.SslCryptoKey = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.SslCryptoKey = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `SSLCryptoCertificate`); value.Exists() && !data.SslCryptoCertificate.IsNull() {
-		data.SslCryptoCertificate = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.SslCryptoCertificate = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PersistenceLocation`); value.Exists() && !data.PersistenceLocation.IsNull() {
 		data.PersistenceLocation = tfutils.ParseStringFromGJSON(value)

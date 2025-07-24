@@ -47,7 +47,6 @@ Read-Only:
 - `max_redirects` (Number) Max redirects
 - `proxy_policies` (Attributes List) Proxy policy (see [below for nested schema](#nestedatt--result--proxy_policies))
 - `pubkey_auth_policies` (Attributes List) Public key authentication policy (see [below for nested schema](#nestedatt--result--pubkey_auth_policies))
-- `restrict10_policies` (Attributes List) Restrict to HTTP/1.0 policy (deprecated) (see [below for nested schema](#nestedatt--result--restrict10_policies))
 - `sftp_policies` (Attributes List) SFTP client policy (see [below for nested schema](#nestedatt--result--sftp_policies))
 - `smtp_policies` (Attributes List) SMTP client policy (see [below for nested schema](#nestedatt--result--smtp_policies))
 - `soap_action_policies` (Attributes List) SOAPAction policy (see [below for nested schema](#nestedatt--result--soap_action_policies))
@@ -177,16 +176,6 @@ Read-Only:
 - `reg_exp` (String) URL matching expression
 
 
-<a id="nestedatt--result--restrict10_policies"></a>
-### Nested Schema for `result.restrict10_policies`
-
-Read-Only:
-
-- `reg_exp` (String) URL matching expression
-- `restrict10` (Boolean) Restrict to HTTP/1.0
-  - Default value: `false`
-
-
 <a id="nestedatt--result--sftp_policies"></a>
 ### Nested Schema for `result.sftp_policies`
 
@@ -244,8 +233,8 @@ Read-Only:
 - `ssl_client` (String) TLS client profile
   - Reference to: `datapower_sslclientprofile:id`
 - `ssl_client_config_type` (String) TLS client type
-  - Choices: `proxy`, `client`
-  - Default value: `proxy`
+  - Choices: `client`
+  - Default value: `client`
 
 
 <a id="nestedatt--result--upload_chunked_policies"></a>

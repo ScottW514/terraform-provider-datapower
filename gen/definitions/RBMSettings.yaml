@@ -359,7 +359,6 @@ attributes:
   - name: LDAPSSLClientConfigType
     type: String
     enum:
-      - 'proxy'
       - 'client'
     default: 'client'
     description: 'TLS client type'
@@ -372,7 +371,6 @@ attributes:
   - name: MCLDAPSSLClientConfigType
     type: String
     enum:
-      - 'proxy'
       - 'client'
     default: 'client'
     description: 'TLS client type'

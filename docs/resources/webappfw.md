@@ -129,7 +129,7 @@ resource "datapower_webappfw" "test" {
   - Reference to: `datapower_sslclientprofile:id`
 - `ssl_config_type` (String) TLS type
   - CLI Alias: `ssl-config-type`
-  - Choices: `proxy`, `server`, `sni`
+  - Choices: `server`, `sni`
   - Default value: `server`
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`

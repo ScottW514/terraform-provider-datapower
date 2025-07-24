@@ -53,8 +53,6 @@ resource "datapower_httpuseragent" "test" {
   - CLI Alias: `proxy` (see [below for nested schema](#nestedatt--proxy_policies))
 - `pubkey_auth_policies` (Attributes List) Public key authentication policy
   - CLI Alias: `pubkeyauth` (see [below for nested schema](#nestedatt--pubkey_auth_policies))
-- `restrict10_policies` (Attributes List) Restrict to HTTP/1.0 policy (deprecated)
-  - CLI Alias: `restrict-http-policy` (see [below for nested schema](#nestedatt--restrict10_policies))
 - `sftp_policies` (Attributes List) SFTP client policy
   - CLI Alias: `sftp-policy` (see [below for nested schema](#nestedatt--sftp_policies))
 - `smtp_policies` (Attributes List) SMTP client policy
@@ -211,19 +209,6 @@ Required:
 - `reg_exp` (String) URL matching expression
 
 
-<a id="nestedatt--restrict10_policies"></a>
-### Nested Schema for `restrict10_policies`
-
-Required:
-
-- `reg_exp` (String) URL matching expression
-
-Optional:
-
-- `restrict10` (Boolean) Restrict to HTTP/1.0
-  - Default value: `false`
-
-
 <a id="nestedatt--sftp_policies"></a>
 ### Nested Schema for `sftp_policies`
 
@@ -287,8 +272,8 @@ Optional:
 - `ssl_client` (String) TLS client profile
   - Reference to: `datapower_sslclientprofile:id`
 - `ssl_client_config_type` (String) TLS client type
-  - Choices: `proxy`, `client`
-  - Default value: `proxy`
+  - Choices: `client`
+  - Default value: `client`
 
 
 <a id="nestedatt--upload_chunked_policies"></a>

@@ -29,7 +29,6 @@ resource "datapower_josesignatureidentifier" "test" {
   type = "certificate"
   certificate = datapower_cryptocertificate.test.id
   header_param = ` + DmJOSEHeaderTestConfig.GetModelListConfig() + `
-  verify = true
 }`,
 	Data: `
 data "datapower_josesignatureidentifier" "test" {

@@ -27,11 +27,6 @@ attributes:
     cli_alias: port
 # DEPRECATED
 #  - name: SSLProxy
-#    type: String
-#    reference_to: SSLProxyProfile
-#    description: 'Custom TLS proxy profile (deprecated)'
-#    deprecated: true
-#    cli_alias: ssl
   - name: UserAgent
     type: String
     reference_to: HTTPUserAgent
@@ -43,11 +38,8 @@ attributes:
     default: 'xml-mgmt'
     description: 'Access control list'
     cli_alias: acl
+  # DEPRECATED
   # - name: WSManagement
-  #   type: Bool
-  #   default: false
-  #   description: 'NONTRANSLATABLE'
-  #   cli_alias: ws-management
   - name: SLMPeering
     type: Int64
     default: 10
@@ -60,7 +52,6 @@ attributes:
   - name: SSLConfigType
     type: String
     enum:
-      - 'proxy'
       - 'server'
       - 'sni'
     default: 'server'

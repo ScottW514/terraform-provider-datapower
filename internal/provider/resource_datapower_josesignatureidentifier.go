@@ -29,7 +29,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -103,12 +102,6 @@ func (r *JOSESignatureIdentifierResource) Schema(ctx context.Context, req resour
 				MarkdownDescription: tfutils.NewAttributeDescription("Header Parameters", "header-param", "").String,
 				NestedObject:        models.DmJOSEHeaderResourceSchema,
 				Required:            true,
-			},
-			"verify": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Verify (deprecated)", "verify", "").AddDefaultValue("true").String,
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
 			},
 		},
 	}

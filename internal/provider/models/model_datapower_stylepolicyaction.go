@@ -71,7 +71,6 @@ type StylePolicyAction struct {
 	XPath                      types.String                     `tfsdk:"x_path"`
 	Variable                   types.String                     `tfsdk:"variable"`
 	Value                      types.String                     `tfsdk:"value"`
-	SslCred                    types.String                     `tfsdk:"ssl_cred"`
 	SslClientConfigType        types.String                     `tfsdk:"ssl_client_config_type"`
 	SslClientCred              types.String                     `tfsdk:"ssl_client_cred"`
 	AttachmentUri              types.String                     `tfsdk:"attachment_uri"`
@@ -164,7 +163,6 @@ var StylePolicyActionObjectType = map[string]attr.Type{
 	"x_path":                         types.StringType,
 	"variable":                       types.StringType,
 	"value":                          types.StringType,
-	"ssl_cred":                       types.StringType,
 	"ssl_client_config_type":         types.StringType,
 	"ssl_client_cred":                types.StringType,
 	"attachment_uri":                 types.StringType,
@@ -340,9 +338,6 @@ func (data StylePolicyAction) IsNull() bool {
 		return false
 	}
 	if !data.Value.IsNull() {
-		return false
-	}
-	if !data.SslCred.IsNull() {
 		return false
 	}
 	if !data.SslClientConfigType.IsNull() {
@@ -626,9 +621,6 @@ func (data StylePolicyAction) ToBody(ctx context.Context, pathRoot string) strin
 	}
 	if !data.Value.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`Value`, data.Value.ValueString())
-	}
-	if !data.SslCred.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`SSLCred`, data.SslCred.ValueString())
 	}
 	if !data.SslClientConfigType.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`SSLClientConfigType`, data.SslClientConfigType.ValueString())
@@ -1023,11 +1015,6 @@ func (data *StylePolicyAction) FromBody(ctx context.Context, pathRoot string, re
 		data.Value = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.Value = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `SSLCred`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.SslCred = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.SslCred = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLClientConfigType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.SslClientConfigType = tfutils.ParseStringFromGJSON(value)
@@ -1526,11 +1513,6 @@ func (data *StylePolicyAction) UpdateFromBody(ctx context.Context, pathRoot stri
 		data.Value = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.Value = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `SSLCred`); value.Exists() && !data.SslCred.IsNull() {
-		data.SslCred = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.SslCred = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `SSLClientConfigType`); value.Exists() && !data.SslClientConfigType.IsNull() {
 		data.SslClientConfigType = tfutils.ParseStringFromGJSON(value)
