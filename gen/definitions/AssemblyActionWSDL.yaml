@@ -1,0 +1,45 @@
+name: AssemblyActionWSDL
+description: 'WSDL assembly action'
+cli_alias: 'assembly-wsdl'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionWSDL'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Description
+    type: String
+    description: 'Description'
+    cli_alias: description
+  - name: Output
+    type: String
+    default: 'message'
+    description: 'Output'
+    cli_alias: output
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

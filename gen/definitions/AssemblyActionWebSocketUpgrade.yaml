@@ -1,0 +1,107 @@
+name: AssemblyActionWebSocketUpgrade
+description: 'WebSocket upgrade assembly action'
+cli_alias: 'assembly-websocket-upgrade'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionWebSocketUpgrade'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Url
+    type: String
+    required: true
+    example: 'https://localhost'
+    description: 'URL'
+    cli_alias: url
+  - name: SSLClient
+    type: String
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: Timeout
+    type: Int64
+    default: 60
+    description: 'Timeout'
+    cli_alias: timeout
+  - name: UserName
+    type: String
+    description: 'User name'
+    cli_alias: username
+  - name: Password
+    type: String
+    reference_to: PasswordAlias
+    description: 'Password alias'
+    cli_alias: password
+  - name: FollowRedirects
+    type: Bool
+    default: false
+    description: 'Follow redirects'
+    cli_alias: follow-redirects
+  - name: DecodeRequestParams
+    type: Bool
+    default: false
+    description: 'Decode request parameters'
+    cli_alias: decode-request-params
+  - name: EncodePlusChar
+    type: Bool
+    default: false
+    description: 'Encode + characters in query'
+    cli_alias: encode-plus-char
+  - name: InjectUserAgentHeader
+    type: Bool
+    default: true
+    description: 'Inject User-Agent header'
+    cli_alias: inject-user-agent
+  - name: InjectProxyHeaders
+    type: Bool
+    default: false
+    description: 'Inject proxy headers'
+    cli_alias: inject-proxy-headers
+  - name: HeaderControlList
+    type: String
+    reference_to: ControlList
+    default: 'default-accept-all'
+    description: 'Header control list'
+    cli_alias: header-control-list
+  - name: ParameterControlList
+    type: String
+    reference_to: ControlList
+    default: 'default-reject-all'
+    description: 'Parameter control list'
+    cli_alias: parameter-control-list
+  - name: APIRequestProcessingAssembly
+    type: String
+    reference_to: Assembly
+    description: 'API request processing assembly'
+    cli_alias: request-processing-assembly
+  - name: APIResponseProcessingAssembly
+    type: String
+    reference_to: Assembly
+    description: 'API response processing assembly'
+    cli_alias: response-processing-assembly
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

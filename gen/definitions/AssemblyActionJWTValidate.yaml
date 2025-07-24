@@ -1,0 +1,72 @@
+name: AssemblyActionJWTValidate
+description: 'JWT validate assembly action'
+cli_alias: 'assembly-jwt-validate'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionJWTValidate'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: JWT
+    type: String
+    required: true
+    default: 'request.headers.authorization'
+    description: 'JWT location'
+    cli_alias: jwt
+  - name: OutputClaims
+    type: String
+    required: true
+    default: 'decoded.claims'
+    description: 'Output claims'
+    cli_alias: output-claims
+  - name: IssuerClaim
+    type: String
+    description: 'Issuer claim'
+    cli_alias: iss-claim
+  - name: AudienceClaim
+    type: String
+    description: 'Audience claim'
+    cli_alias: aud-claim
+  - name: DecryptCrypto
+    type: String
+    description: 'Crypto object for JWT decryption'
+    cli_alias: jwe-crypto
+  - name: DecryptJWK
+    type: String
+    description: 'JWK for JWT decryption'
+    cli_alias: jwe-jwk
+  - name: VerifyCrypto
+    type: String
+    description: 'Crypto object for JWT verification'
+    cli_alias: jws-crypto
+  - name: VerifyJWK
+    type: String
+    description: 'JWK for JWT verification'
+    cli_alias: jws-jwk
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

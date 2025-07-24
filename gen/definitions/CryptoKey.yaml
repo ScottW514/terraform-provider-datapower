@@ -25,18 +25,8 @@ attributes:
     example: 'cert:///acc-test-server.key'
   # DEPRECATED
   # - name: Password
-  #   type: String
-  #   sensitive: true
-  #   description: 'Password (deprecated)'
-  #   deprecated: true
-  #   cli_alias: password
   # DEPRECATED
   # - name: PasswordAlias
-  #   type: String
-  #   type: Bool
-  #   default: false
-  #   description: 'Password alias toggle (deprecated)'
-  #   deprecated: true
   - name: Alias
     type: String
     reference_to: PasswordAlias

@@ -1,0 +1,12 @@
+name: DmTableEntry
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    example: 'tableentryname'
+    description: 'Name'
+  - name: Description
+    type: String
+    description: 'Description'

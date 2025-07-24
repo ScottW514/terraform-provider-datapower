@@ -1,7 +1,39 @@
 ## Unreleased
 
+- Removed unneccesary `sensitive` markings
 - Updated example names
-
+- API Additions (Objects)
+  - Assembly
+  - AssemblyActionClientSecurity
+  - AssemblyActionExtract
+  - AssemblyActionFunctionCall
+  - AssemblyActionGatewayScript
+  - AssemblyActionGraphQLCostAnalysis
+  - AssemblyActionGraphQLExecute
+  - AssemblyActionGraphQLIntrospect
+  - AssemblyActionHtmlPage
+  - AssemblyActionInvoke
+  - AssemblyActionJson2Xml
+  - AssemblyActionJWTGenerate
+  - AssemblyActionJWTValidate
+  - AssemblyActionLog
+  - AssemblyActionMap
+  - AssemblyActionOAuth
+  - AssemblyActionParse
+  - AssemblyActionRateLimit
+  - AssemblyActionRateLimitInfo
+  - AssemblyActionRedact
+  - AssemblyActionSetVar
+  - AssemblyActionThrow
+  - AssemblyActionUserSecurity
+  - AssemblyActionValidate
+  - AssemblyActionWebSocketUpgrade
+  - AssemblyActionWSDL
+  - AssemblyActionXml2Json
+  - AssemblyActionXSLT
+  - AssemblyFunction
+  - AssemblyLogicOperationSwitch
+  - AssemblyLogicSwitch
 
 ## 0.3.0
 

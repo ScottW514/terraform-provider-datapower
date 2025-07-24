@@ -33,21 +33,12 @@ attributes:
     cli_alias: server-prefix
   # DEPRECATED
   # - name: SSLProxy
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ssl
   - name: Username
     type: String
     description: 'Username'
     cli_alias: username
+  # DEPRECATED
   # - name: Password
-  #   type: String
-  #   sensitive: true
-  #   description: 'Password (deprecated)'
-  #   deprecated: true
-  #   cli_alias: password
   - name: PasswordAlias
     type: String
     reference_to: PasswordAlias

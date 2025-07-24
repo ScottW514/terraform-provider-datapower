@@ -1,0 +1,16 @@
+name: DmTargetMapRule
+model_only: true
+list_item: true
+attributes:
+  - name: Target
+    type: String
+    required: true
+    example: 'target'
+    description: 'Target'
+    cli_alias: target
+  - name: Execute
+    type: String
+    reference_to: AssemblyActionFunctionCall
+    required: true
+    description: 'Function call'
+    cli_alias: execute

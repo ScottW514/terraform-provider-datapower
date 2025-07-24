@@ -1,0 +1,217 @@
+name: AssemblyActionInvoke
+description: 'Invoke assembly action'
+cli_alias: 'assembly-invoke'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionInvoke'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Url
+    type: String
+    required: true
+    example: 'https://localhost'
+    description: 'URL'
+    cli_alias: url
+  - name: SSLClient
+    type: String
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: Timeout
+    type: Int64
+    default: 60
+    description: 'Timeout'
+    cli_alias: timeout
+  - name: UserName
+    type: String
+    description: 'Username'
+    cli_alias: username
+  - name: Password
+    type: String
+    reference_to: PasswordAlias
+    description: 'Password'
+    cli_alias: password
+  - name: Method
+    type: String
+    enum:
+      - 'Keep'
+      - 'GET'
+      - 'POST'
+      - 'PUT'
+      - 'DELETE'
+      - 'PATCH'
+      - 'HEAD'
+      - 'OPTIONS'
+      - 'TRACE'
+    required: true
+    default: 'Keep'
+    description: 'HTTP method'
+    cli_alias: method
+  # - name: AllowWebSocketUpgrade
+  #   type: Bool
+  #   default: false
+  #   description: 'Allow WebSocket upgrade (deprecated)'
+  #   deprecated: true
+  #   cli_alias: websocket-upgrade
+  - name: BackendType
+    type: String
+    enum:
+      - 'detect'
+      - 'xml'
+      - 'json'
+      - 'binary'
+      - 'graphql'
+    required: true
+    default: 'detect'
+    description: 'Backend type'
+    cli_alias: backend-type
+  - name: GraphQLSendType
+    type: String
+    enum:
+      - 'detect'
+      - 'graphql'
+      - 'json'
+    description: 'GraphQL send type'
+    cli_alias: graphql-send-type
+  - name: Compression
+    type: Bool
+    default: false
+    description: 'Enable compression'
+    cli_alias: compression
+  - name: CacheType
+    type: String
+    enum:
+      - 'Protocol'
+      - 'NoCache'
+      - 'TimeToLive'
+    required: true
+    default: 'Protocol'
+    description: 'Cache type'
+    cli_alias: cache-type
+  - name: TimeToLive
+    type: Int64
+    default: 900
+    description: 'Time to live'
+    cli_alias: ttl
+  - name: CacheUnsafeResponse
+    type: Bool
+    default: false
+    description: 'Cache response to POST and PUT requests'
+    cli_alias: cache-unsafe-response
+  - name: CacheKey
+    type: String
+    description: 'Cache key'
+    cli_alias: cache-key
+  - name: FollowRedirects
+    type: Bool
+    default: false
+    description: 'Follow redirects'
+    cli_alias: follow-redirects
+  # - name: UseHTTP10
+  #   type: Bool
+  #   default: false
+  #   description: 'Restrict to HTTP/1.0 (deprecated)'
+  #   deprecated: true
+  #   cli_alias: use-http-10
+  - name: HTTPVersion
+    type: String
+    enum:
+      - 'HTTP/1.0'
+      - 'HTTP/1.1'
+      - 'HTTP/2'
+    default: 'HTTP/1.1'
+    description: 'HTTP version to server'
+    cli_alias: http-version
+  - name: HTTP2Required
+    type: Bool
+    default: false
+    description: 'HTTP/2 required'
+    cli_alias: http2-required
+  - name: DoChunkedUpload
+    type: Bool
+    default: true
+    description: 'Allow chunked uploads'
+    cli_alias: chunked-uploads
+  - name: PersistentConnection
+    type: Bool
+    default: true
+    description: 'Persistent connection'
+    cli_alias: persistent-connection
+  - name: StopOnError
+    type: Bool
+    default: false
+    description: 'Stop on error'
+    cli_alias: stop-on-error
+  - name: ErrorTypes
+    dm_type: DmInvokeErrorType
+    description: 'Error types'
+    cli_alias: error-types
+  - name: Output
+    type: String
+    default: 'message'
+    description: 'Output'
+    cli_alias: output
+  - name: DecodeRequestParams
+    type: Bool
+    default: false
+    description: 'Decode request parameters'
+    cli_alias: decode-request-params
+  - name: EncodePlusChar
+    type: Bool
+    default: false
+    description: 'Encode + characters in query'
+    cli_alias: encode-plus-char
+  - name: KeepPayload
+    type: Bool
+    default: false
+    description: 'Keep payload'
+    cli_alias: keep-payload
+  - name: InjectUserAgentHeader
+    type: Bool
+    default: true
+    description: 'Inject User-Agent header'
+    cli_alias: inject-user-agent
+  - name: InjectProxyHeaders
+    type: Bool
+    default: false
+    description: 'Inject proxy headers'
+    cli_alias: inject-proxy-headers
+  - name: HeaderControlList
+    type: String
+    reference_to: ControlList
+    default: 'default-accept-all'
+    description: 'Header control list'
+    cli_alias: header-control-list
+  - name: ParameterControlList
+    type: String
+    reference_to: ControlList
+    default: 'default-reject-all'
+    description: 'Parameter control list'
+    cli_alias: parameter-control-list
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

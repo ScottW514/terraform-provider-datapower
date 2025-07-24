@@ -79,8 +79,6 @@ resource "datapower_tfimendpoint" "test" {
   - CLI Alias: `ssl-client-type`
   - Choices: `proxy`, `client`
   - Default value: `client`
-- `m_sts_password` (String) Password (deprecated)
-  - CLI Alias: `tfim-password`
 - `m_sts_password_alias` (String) Password alias
   - CLI Alias: `tfim-password-alias`
   - Reference to: `datapower_passwordalias:id`

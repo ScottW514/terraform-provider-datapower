@@ -1,0 +1,28 @@
+name: DmAssemblyLogicOperationSwitchCase
+model_only: true
+list_item: true
+attributes:
+  - name: Execute
+    type: String
+    required: true
+    example: 'default-api-rule'
+    description: 'Execute'
+  - name: OperationId
+    type: String
+    description: 'Operation ID'
+  - name: Path
+    type: String
+    description: 'API path'
+  - name: Method
+    type: String
+    enum:
+      - 'GET'
+      - 'POST'
+      - 'PUT'
+      - 'DELETE'
+      - 'HEAD'
+      - 'PATCH'
+      - 'OPTIONS'
+      - 'TRACE'
+    default: 'GET'
+    description: 'HTTP method'

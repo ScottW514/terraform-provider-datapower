@@ -1,0 +1,108 @@
+name: AssemblyActionJWTGenerate
+description: 'JWT generate assembly action'
+cli_alias: 'assembly-jwt-generate'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionJWTGenerate'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: JWT
+    type: String
+    default: 'generated.jwt'
+    description: 'JWT output location'
+    cli_alias: jwt
+  - name: JWTIDClaims
+    type: Bool
+    default: false
+    description: 'JWT ID claims'
+    cli_alias: jti-claim
+  - name: IssuerClaim
+    type: String
+    required: true
+    default: 'iss.claim'
+    description: 'Issuer claim'
+    cli_alias: iss-claim
+  - name: SubjectClaim
+    type: String
+    description: 'Subject claim'
+    cli_alias: sub-claim
+  - name: AudienceClaim
+    type: String
+    description: 'Audience claim'
+    cli_alias: aud-claim
+  - name: ValidityPeriod
+    type: Int64
+    minimum: 1
+    maximum: 31622400
+    required: true
+    default: 3600
+    description: 'Validity period'
+    cli_alias: exp-claim
+  - name: PrivateClaim
+    type: String
+    description: 'Private claim'
+    cli_alias: private-claims
+  - name: SignJWK
+    type: String
+    description: 'JWK for JWT signature'
+    cli_alias: jws-jwk
+  - name: CryptoAlgorithm
+    type: String
+    description: 'Crypto algorithm for JWT signature'
+    cli_alias: jws-alg
+  - name: SignCrypto
+    type: String
+    description: 'Crypto object for JWT signature'
+    cli_alias: jws-crypto
+  - name: CustomKIDValueJWS
+    type: String
+    description: 'Key ID value for JWS'
+    cli_alias: custom-kid-value-jws
+  - name: EncryptAlgorithm
+    type: String
+    description: 'Encrypt algorithm for JWT encryption'
+    cli_alias: jwe-enc
+  - name: EncryptJWK
+    type: String
+    description: 'JWK for JWT encryption'
+    cli_alias: jwe-jwk
+  - name: KeyEncryptAlgorithm
+    type: String
+    description: 'Key encrypt algorithm for JWT encryption'
+    cli_alias: jwe-alg
+  - name: EncryptCrypto
+    type: String
+    description: 'Crypto object for JWT encryption'
+    cli_alias: jwe-crypto
+  - name: CustomKIDValueJWE
+    type: String
+    description: 'Key ID value for JWE'
+    cli_alias: custom-kid-value-jwe
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

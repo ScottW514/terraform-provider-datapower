@@ -28,7 +28,7 @@ attributes:
     default: 3000
     description: 'Local port'
     cli_alias: local-port
-  # DEPRACATED
+  # DEPRECATED
   # - name: SSLClient
   #   type: String
   #   reference_to: SSLClientProfile

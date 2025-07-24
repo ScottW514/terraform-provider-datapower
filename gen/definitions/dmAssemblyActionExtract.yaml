@@ -1,0 +1,14 @@
+name: DmAssemblyActionExtract
+model_only: true
+list_item: true
+attributes:
+  - name: Capture
+    type: String
+    required: true
+    example: 'capture'
+    description: 'Capture'
+    cli_alias: capture
+  - name: Transform
+    type: String
+    description: 'Transform'
+    cli_alias: transform

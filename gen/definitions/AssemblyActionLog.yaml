@@ -1,0 +1,56 @@
+name: AssemblyActionLog
+description: 'Log assembly action'
+cli_alias: 'assembly-log'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionLog'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Mode
+    type: String
+    enum:
+      - 'gather-only'
+      - 'send-only'
+      - 'gather-and-send'
+    required: true
+    default: 'gather-only'
+    description: 'Mode'
+    cli_alias: mode
+  - name: LogLevel
+    type: String
+    default: 'default'
+    description: 'Log level'
+    cli_alias: log-level
+  - name: RecountBytesSent
+    type: Bool
+    default: false
+    description: 'Enable recounting'
+    cli_alias: recount-bytes
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

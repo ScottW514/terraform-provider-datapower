@@ -142,11 +142,6 @@ attributes:
     cli_alias: signed-xpath
   # DEPRECATED
   # - name: AUSSLProxyProfile
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ssl
   # TODO: Missing API Endpoint
   # - name: AUNetegrityConfig
   #   type: String
@@ -155,12 +150,8 @@ attributes:
     type: String
     description: 'LDAP bind DN'
     cli_alias: ldap-bind-dn
+  # DEPRECATED
   # - name: AULDAPBindPassword
-  #   type: String
-  #   sensitive: true
-  #   description: 'LDAP bind password (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ldap-bind-password
   - name: AULDAPSearchAttribute
     type: String
     default: 'userPassword'
@@ -175,12 +166,8 @@ attributes:
     type: String
     description: 'LTPA key file'
     cli_alias: lpta-key-file
+  # DEPRECATED
   # - name: AULTPAKeyFilePassword
-  #   type: String
-  #   sensitive: true
-  #   description: 'LTPA key file password (deprecated)'
-  #   deprecated: true
-  #   cli_alias: lpta-key-password
   - name: AULTPAStashFile
     type: String
     description: 'LTPA stash file'

@@ -1,0 +1,57 @@
+name: AssemblyActionXSLT
+description: 'XSLT assembly action'
+cli_alias: 'assembly-xslt'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionXSLT'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UsePayload
+    type: Bool
+    default: false
+    description: 'Use current payload as input'
+    cli_alias: payload
+  - name: Stylesheet
+    type: String
+    required: true
+    example: 'local:///stylesheet'
+    description: 'Stylesheet'
+    cli_alias: stylesheet
+  - name: SerializeOutput
+    type: Bool
+    default: false
+    description: 'Serialize output'
+    cli_alias: serialize-output
+  - name: CompileSettings
+    type: String
+    reference_to: CompileSettings
+    description: 'Compile settings'
+    cli_alias: compile-settings-xslt
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

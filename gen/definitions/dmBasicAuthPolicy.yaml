@@ -12,11 +12,8 @@ attributes:
     required: true
     example: "someuser"
     description: 'Username'
+  # DEPRECATED
   # - name: Password
-  #   type: String
-  #   sensitive: true
-  #   description: 'Password (deprecated)'
-  #   deprecated: true
   - name: PasswordAlias
     type: String
     reference_to: PasswordAlias

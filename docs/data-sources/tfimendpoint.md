@@ -53,7 +53,6 @@ Read-Only:
 - `m_server_url` (String) Server
 - `m_ssl_client` (String) TLS client profile
 - `m_ssl_client_config_type` (String) TLS client type
-- `m_sts_password` (String) Password (deprecated)
 - `m_sts_password_alias` (String) Password alias
 - `m_sts_username` (String) Username
 - `user_summary` (String) Comments

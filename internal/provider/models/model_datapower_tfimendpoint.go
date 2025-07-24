@@ -51,7 +51,6 @@ type TFIMEndpoint struct {
 	MSchemaValidate      types.Bool   `tfsdk:"m_schema_validate"`
 	MLtpaValueTypeMode   types.String `tfsdk:"m_ltpa_value_type_mode"`
 	MStsUsername         types.String `tfsdk:"m_sts_username"`
-	MStsPassword         types.String `tfsdk:"m_sts_password"`
 	MStsPasswordAlias    types.String `tfsdk:"m_sts_password_alias"`
 	MSslClientConfigType types.String `tfsdk:"m_ssl_client_config_type"`
 	MSslClient           types.String `tfsdk:"m_ssl_client"`
@@ -76,7 +75,6 @@ var TFIMEndpointObjectType = map[string]attr.Type{
 	"m_schema_validate":        types.BoolType,
 	"m_ltpa_value_type_mode":   types.StringType,
 	"m_sts_username":           types.StringType,
-	"m_sts_password":           types.StringType,
 	"m_sts_password_alias":     types.StringType,
 	"m_ssl_client_config_type": types.StringType,
 	"m_ssl_client":             types.StringType,
@@ -142,9 +140,6 @@ func (data TFIMEndpoint) IsNull() bool {
 		return false
 	}
 	if !data.MStsUsername.IsNull() {
-		return false
-	}
-	if !data.MStsPassword.IsNull() {
 		return false
 	}
 	if !data.MStsPasswordAlias.IsNull() {
@@ -214,9 +209,6 @@ func (data TFIMEndpoint) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.MStsUsername.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mSTSUsername`, data.MStsUsername.ValueString())
-	}
-	if !data.MStsPassword.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`mSTSPassword`, data.MStsPassword.ValueString())
 	}
 	if !data.MStsPasswordAlias.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mSTSPasswordAlias`, data.MStsPasswordAlias.ValueString())
@@ -318,11 +310,6 @@ func (data *TFIMEndpoint) FromBody(ctx context.Context, pathRoot string, res gjs
 		data.MStsUsername = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.MStsUsername = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `mSTSPassword`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.MStsPassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.MStsPassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `mSTSPasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.MStsPasswordAlias = tfutils.ParseStringFromGJSON(value)
@@ -429,11 +416,6 @@ func (data *TFIMEndpoint) UpdateFromBody(ctx context.Context, pathRoot string, r
 		data.MStsUsername = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.MStsUsername = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `mSTSPassword`); value.Exists() && !data.MStsPassword.IsNull() {
-		data.MStsPassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.MStsPassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `mSTSPasswordAlias`); value.Exists() && !data.MStsPasswordAlias.IsNull() {
 		data.MStsPasswordAlias = tfutils.ParseStringFromGJSON(value)

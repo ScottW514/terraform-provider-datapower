@@ -1,0 +1,34 @@
+name: DmAssemblyActionSetVar
+model_only: true
+list_item: true
+attributes:
+  - name: Action
+    type: String
+    enum:
+      - 'set'
+      - 'add'
+      - 'clear'
+    default: 'set'
+    description: 'Action'
+    cli_alias: action
+  - name: Name
+    type: String
+    required: true
+    example: 'varname'
+    description: 'Name'
+    cli_alias: name
+  - name: Type
+    type: String
+    enum:
+      - 'any'
+      - 'string'
+      - 'number'
+      - 'boolean'
+    default: 'any'
+    description: 'Type'
+    cli_alias: type
+  - name: Value
+    type: String
+    description: 'Value'
+    example: 'value'
+    cli_alias: value

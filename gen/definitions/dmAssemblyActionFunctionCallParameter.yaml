@@ -1,0 +1,14 @@
+name: DmAssemblyActionFunctionCallParameter
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    example: 'assemblyactionfunctioncallparametername'
+    description: 'Name'
+    cli_alias: name
+  - name: Value
+    type: String
+    description: 'Value'
+    cli_alias: value

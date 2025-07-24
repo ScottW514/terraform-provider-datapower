@@ -139,10 +139,6 @@ func (d *TFIMEndpointDataSource) Schema(ctx context.Context, req datasource.Sche
 							MarkdownDescription: "Username",
 							Computed:            true,
 						},
-						"m_sts_password": schema.StringAttribute{
-							MarkdownDescription: "Password (deprecated)",
-							Computed:            true,
-						},
 						"m_sts_password_alias": schema.StringAttribute{
 							MarkdownDescription: "Password alias",
 							Computed:            true,

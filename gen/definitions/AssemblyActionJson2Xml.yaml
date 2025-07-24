@@ -1,0 +1,68 @@
+name: AssemblyActionJson2Xml
+description: 'JSON to XML assembly action'
+cli_alias: 'assembly-json-to-xml'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionJson2Xml'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: ConversionFormat
+    type: String
+    enum:
+      - 'badgerfish'
+      - 'relaxed-badgerfish'
+    default: 'badgerfish'
+    description: 'Conversion type'
+    cli_alias: conversion-format
+  - name: Input
+    type: String
+    default: 'message'
+    description: 'Input message'
+    cli_alias: input
+  - name: Output
+    type: String
+    description: 'Output message'
+    cli_alias: output
+  - name: RootElementName
+    type: String
+    default: 'json'
+    description: 'Root element name'
+    cli_alias: root-element
+  - name: AlwaysOutputRootElement
+    type: Bool
+    default: false
+    description: 'Always output root element'
+    cli_alias: output-root
+  - name: UnnamedElementName
+    type: String
+    default: 'element'
+    description: 'Unnamed element name'
+    cli_alias: unnamed-element
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

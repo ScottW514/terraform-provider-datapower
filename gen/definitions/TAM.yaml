@@ -98,12 +98,8 @@ attributes:
     type: String
     description: 'Registry Server TLS Key File'
     cli_alias: ldap-ssl-key-file
+  # DEPRECATED
   # - name: LDAPSSLKeyFilePassword
-  #   type: String
-  #   sensitive: true
-  #   description: 'Registry Server TLS Key File Password (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ldap-ssl-key-file-password
   - name: LDAPSSLKeyFilePasswordAlias
     type: String
     reference_to: PasswordAlias

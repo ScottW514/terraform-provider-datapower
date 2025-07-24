@@ -1,0 +1,196 @@
+name: AssemblyActionUserSecurity
+description: 'User security assembly action'
+cli_alias: 'assembly-user-security'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionUserSecurity'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: FactorID
+    type: String
+    required: true
+    default: 'default'
+    description: 'Factor identifier'
+    cli_alias: factor-id
+  - name: ExtractIdentityMethod
+    type: String
+    enum:
+      - 'disabled'
+      - 'basic'
+      - 'context-var'
+      - 'html-form'
+      - 'redirect'
+    required: true
+    default: 'basic'
+    description: 'Identity extraction method'
+    cli_alias: extract-identity-method
+  - name: EIStopOnError
+    type: Bool
+    default: true
+    description: 'Stop on error'
+    cli_alias: ei-stop-on-error
+  - name: UserContextVariable
+    type: String
+    description: 'Username context variable'
+    cli_alias: user-context-var
+  - name: PassContextVariable
+    type: String
+    description: 'Password context variable'
+    cli_alias: pass-context-var
+  - name: RedirectURL
+    type: String
+    description: 'Redirect URL'
+    cli_alias: redirect-url
+  - name: RedirectTimeLimit
+    type: Int64
+    minimum: 10
+    maximum: 6000
+    default: 300
+    description: 'Redirect time limit'
+    cli_alias: redirect-time-limit
+  - name: QueryParameters
+    type: String
+    description: 'Query parameters'
+    cli_alias: query-parameters
+  - name: EIDefaultForm
+    type: Bool
+    default: true
+    description: 'Use default form?'
+    cli_alias: ei-default-form
+  - name: EICustomForm
+    type: String
+    description: 'Custom form location'
+    cli_alias: ei-custom-form
+  - name: EICustomFormClientProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'Custom form TLS client profile'
+    cli_alias: ei-custom-form-tls-client-profile
+  - name: EICustomFormContentSecurityPolicy
+    type: String
+    default: "default-src 'self'"
+    description: 'Custom form CSP header value'
+    cli_alias: ei-custom-form-csp
+  - name: EIFormTimeLimit
+    type: Int64
+    minimum: 10
+    maximum: 600
+    default: 300
+    description: 'HTML form time limit'
+    cli_alias: ei-form-time-limit
+  - name: UserAuthMethod
+    type: String
+    enum:
+      - 'disabled'
+      - 'user-registry'
+    required: true
+    default: 'user-registry'
+    description: 'Authentication method'
+    cli_alias: user-auth-method
+  - name: AUStopOnError
+    type: Bool
+    default: true
+    description: 'Stop on error'
+    cli_alias: au-stop-on-error
+  - name: UserRegistry
+    type: String
+    description: 'User registry'
+    cli_alias: user-registry
+  - name: AuthResponseHeadersPattern
+    type: String
+    default: '(?i)x-api*'
+    description: 'Authentication response headers pattern'
+    cli_alias: auth-response-headers-pattern
+  - name: AuthResponseCredentialHeader
+    type: String
+    default: 'X-API-Authenticated-Credential'
+    description: 'Authenticated credential header'
+    cli_alias: auth-response-header-credential
+  - name: UserAZMethod
+    type: String
+    enum:
+      - 'disabled'
+      - 'authenticated'
+      - 'html-form'
+    required: true
+    default: 'authenticated'
+    description: 'Authorization method'
+    cli_alias: user-az-method
+  - name: AZStopOnError
+    type: Bool
+    default: true
+    description: 'Stop on error'
+    cli_alias: az-stop-on-error
+  - name: AZDefaultForm
+    type: Bool
+    default: true
+    description: 'Use default form?'
+    cli_alias: az-default-form
+  - name: AZCustomForm
+    type: String
+    description: 'Custom form location'
+    cli_alias: az-custom-form
+  - name: AZCustomFormClientProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'Custom form TLS client profile'
+    cli_alias: az-custom-form-tls-client-profile
+  - name: AZCustomFormContentSecurityPolicy
+    type: String
+    default: "default-src 'self'"
+    description: 'Custom form CSP header value'
+    cli_alias: az-custom-form-csp
+  - name: AZFormTimeLimit
+    type: Int64
+    minimum: 10
+    maximum: 600
+    default: 300
+    description: 'HTML form time limit'
+    cli_alias: az-form-time-limit
+  - name: AZTableDisplayCheckboxes
+    type: Bool
+    default: false
+    description: 'Display table check boxes'
+    cli_alias: az-table-display-checkboxes
+  - name: AZTableDynamicEntries
+    type: String
+    default: 'user.default.az.dynamic_entries'
+    description: 'Dynamic table entries'
+    cli_alias: az-table-dynamic-entries
+  - name: AZTableDefaultEntry
+    type: List
+    element_type: DmTableEntry
+    description: 'Default table entry'
+    cli_alias: az-table-default-entry
+  - name: Hostname
+    type: String
+    description: 'Hostname'
+    cli_alias: hostname
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

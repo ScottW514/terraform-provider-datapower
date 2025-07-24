@@ -118,24 +118,15 @@ attributes:
     type: String
     description: 'LDAP bind DN'
     cli_alias: ldap-bind-dn
+  # DEPRECATED
   # - name: AZLDAPBindPassword
-  #   type: String
-  #   sensitive: true
-  #   description: 'LDAP bind password (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ldap-bind-password
   - name: AZLDAPGroupAttribute
     type: String
     default: 'member'
     description: 'LDAP group attribute'
     cli_alias: ldap-group-attr
-  # DEPRACATED
+  # DEPRECATED
   # - name: AZSSLProxyProfile
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ssl
   # TODO: Missing API Endpoint
   # - name: AZNetegrityConfig
   #   type: String

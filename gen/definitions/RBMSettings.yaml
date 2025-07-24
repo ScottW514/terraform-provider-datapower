@@ -118,11 +118,6 @@ attributes:
     cli_alias: au-ldap-bind-dn
 # DEPRECATED
 #  - name: AULDAPBindPassword
-#    type: String
-#    sensitive: true
-#    description: 'LDAP bind password (deprecated)'
-#    deprecated: true
-#    cli_alias: au-ldap-bind-password
   - name: AULDAPBindPasswordAlias
     type: String
     reference_to: PasswordAlias
@@ -149,11 +144,6 @@ attributes:
     cli_alias: ldap-suffix
 # DEPRECATED
 #  - name: LDAPSSLProxyProfile
-#    type: String
-#    reference_to: SSLProxyProfile
-#    description: 'TLS proxy profile (deprecated)'
-#    deprecated: true
-#    cli_alias: ldap-sslproxy
   - name: AULDAPLoadBalanceGroup
     type: String
     reference_to: LoadBalancerGroup
@@ -212,11 +202,6 @@ attributes:
     cli_alias: mc-server-port
 # DEPRECATED
 #  - name: MCLDAPSSLProxyProfile
-#    type: String
-#    reference_to: SSLProxyProfile
-#    description: 'TLS proxy profile (deprecated)'
-#    deprecated: true
-#    cli_alias: mc-ldap-sslproxy
   - name: MCLDAPLoadBalanceGroup
     type: String
     reference_to: LoadBalancerGroup
@@ -228,11 +213,6 @@ attributes:
     cli_alias: mc-ldap-bind-dn
 # DEPRECATED
 #  - name: MCLDAPBindPassword
-#    type: String
-#    sensitive: true
-#    description: 'LDAP bind password (deprecated)'
-#    deprecated: true
-#    cli_alias: mc-ldap-bind-password
   - name: MCLDAPBindPasswordAlias
     type: String
     reference_to: PasswordAlias

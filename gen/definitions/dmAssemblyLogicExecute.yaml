@@ -1,0 +1,14 @@
+name: DmAssemblyLogicExecute
+model_only: true
+list_item: true
+attributes:
+  - name: Condition
+    type: String
+    example: 'condition'
+    required: true
+    description: 'Condition'
+  - name: Execute
+    type: String
+    example: 'default-api-rule'
+    required: true
+    description: 'Execute'

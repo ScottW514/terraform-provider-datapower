@@ -1,0 +1,16 @@
+name: DmDynamicOAuthProviderSettingsReference
+model_only: true
+attributes:
+  - name: URL
+    type: String
+    description: 'URL reference'
+    cli_alias: url
+  - name: Literal
+    type: String
+    description: 'Literal configuration'
+    cli_alias: literal
+  - name: Default
+    type: String
+    reference_to: OAuthProviderSettings
+    description: 'Object reference'
+    cli_alias: default

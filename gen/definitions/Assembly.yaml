@@ -1,0 +1,44 @@
+name: Assembly
+description: 'Assembly'
+cli_alias: 'assembly'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/Assembly'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Rule
+    type: String
+    reference_to: APIRule
+    required: true
+    description: 'Rule'
+    cli_alias: rule
+  - name: Catch
+    type: List
+    element_type: DmAssemblyCatch
+    description: 'Catch'
+    cli_alias: catch
+  - name: DefaultCatch
+    type: String
+    reference_to: APIRule
+    description: 'Default catch'
+    cli_alias: default-catch
+  - name: Finally
+    type: String
+    reference_to: APIRule
+    description: 'Finally'
+    cli_alias: finally

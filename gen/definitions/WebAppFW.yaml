@@ -233,7 +233,7 @@ attributes:
     default: 'server'
     description: 'TLS type'
     cli_alias: ssl-config-type
-  # DEPRACATED
+  # DEPRECATED
   # - name: SSLProxyProfile
   #   type: String
   #   reference_to: SSLProxyProfile

@@ -109,13 +109,8 @@ attributes:
     type: String
     description: 'Operation'
     cli_alias: tfim-operation
-  # DEPRACATED
+  # DEPRECATED
   # - name: mSSLProxy
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: tfim-sslproxy
   - name: mSchemaValidate
     type: Bool
     default: false
@@ -133,16 +128,11 @@ attributes:
     type: String
     description: 'Username'
     cli_alias: tfim-username
-  - name: mSTSPassword
-    type: String
-    sensitive: true
-    description: 'Password (deprecated)'
-    deprecated: true
-    cli_alias: tfim-password
+  # DEPRECATED
+  # - name: mSTSPassword
   - name: mSTSPasswordAlias
     type: String
     reference_to: PasswordAlias
-    sensitive: true
     description: 'Password alias'
     cli_alias: tfim-password-alias
   - name: mSSLClientConfigType

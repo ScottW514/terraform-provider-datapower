@@ -1,0 +1,80 @@
+name: AssemblyActionValidate
+description: 'Validate assembly action'
+cli_alias: 'assembly-validate'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionValidate'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: ValidateAgainst
+    type: String
+    enum:
+      - 'url'
+      - 'wsdl'
+      - 'body-param'
+      - 'response-param'
+      - 'definition'
+      - 'graphql'
+    default: 'url'
+    description: 'Validate against'
+    cli_alias: validate-against
+  - name: ErrorPolicy
+    type: String
+    enum:
+      - 'none'
+      - 'ignore'
+      - 'all'
+    default: 'all'
+    description: 'GraphQL error policy'
+    cli_alias: error-policy
+  - name: Schema
+    type: String
+    reference_to: APISchema
+    description: 'Schema'
+    cli_alias: schema
+  - name: Input
+    type: String
+    default: 'message'
+    description: 'Input message'
+    cli_alias: input
+  - name: Output
+    type: String
+    description: 'Output message'
+    cli_alias: output
+  - name: Definition
+    type: String
+    description: 'Definition'
+    cli_alias: definition
+  - name: CompileSettings
+    type: String
+    reference_to: CompileSettings
+    description: 'Compile settings'
+    cli_alias: compile-settings-validate
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

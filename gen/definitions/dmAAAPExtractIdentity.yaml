@@ -63,7 +63,7 @@ attributes:
     type: String
     description: 'AAA information file URL'
     cli_alias: password-retrieval-xmlfile-url
-  # DEPRACATED
+  # DEPRECATED
   # - name: EISSLProxyProfile
   #   type: String
   #   reference_to: SSLProxyProfile

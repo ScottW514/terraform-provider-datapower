@@ -1,0 +1,39 @@
+name: DmOAuthComponents
+model_only: true
+attributes:
+  - name: none
+    type: Bool
+    default: false
+  - name: OAuthValidateRequest
+    type: Bool
+    default: false
+    example: true
+    description: 'Validate request'
+  - name: OAuthGenerateAZCode
+    type: Bool
+    default: false
+    description: 'Generate authorization code'
+  - name: OAuthVerifyAZCode
+    type: Bool
+    default: false
+    description: 'Verify authorization code'
+  - name: OAuthVerifyRefreshToken
+    type: Bool
+    default: false
+    description: 'Verify refresh token'
+  - name: OAuthCollectMetadata
+    type: Bool
+    default: false
+    description: 'Collect Metadata'
+  - name: OAuthGenerateAccessToken
+    type: Bool
+    default: false
+    description: 'Generate access token'
+  - name: OAuthIntrospectToken
+    type: Bool
+    default: false
+    description: 'Introspect token'
+  - name: OAuthRevokeToken
+    type: Bool
+    default: false
+    description: 'Revoke token'

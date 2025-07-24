@@ -1,0 +1,82 @@
+name: AssemblyActionRateLimit
+description: 'Rate limit assembly action'
+cli_alias: 'assembly-rate-limit'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionRateLimit'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Source
+    type: String
+    enum:
+      - 'plan-default'
+      - 'collection-named'
+      - 'plan-named'
+      - 'gateway-named'
+      - 'domain-named'
+      - 'group'
+    required: true
+    default: 'plan-default'
+    description: 'Source'
+    cli_alias: source
+  - name: BurstLimit
+    type: List
+    element_type: String
+    description: 'Burst limits'
+    cli_alias: burst-limit
+  - name: RateLimit
+    type: List
+    element_type: DmRateLimitInfo
+    description: 'Rate limits'
+    cli_alias: rate-limit
+  - name: CountLimit
+    type: List
+    element_type: DmCountLimitInfo
+    description: 'Count limits'
+    cli_alias: count-limit
+  - name: RateLimitDefinition
+    type: List
+    element_type: DmRateLimitInfoDomainNamed
+    description: 'Rate limit definitions'
+    cli_alias: rate-limit-definition
+  - name: RateLimitGroup
+    type: String
+    reference_to: RateLimitDefinitionGroup
+    description: 'Rate limit group'
+    cli_alias: rate-limit-group
+  - name: GroupAction
+    type: String
+    enum:
+      - 'consume'
+      - 'replenish'
+    default: 'consume'
+    description: 'Group action'
+    cli_alias: group-action
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

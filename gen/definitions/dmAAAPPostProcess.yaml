@@ -79,13 +79,8 @@ attributes:
     type: String
     description: 'SAML SLO service URL'
     cli_alias: saml-slo-endpoint
-  # DEPRACATED
+  # DEPRECATED
   # - name: PPSSLProxyProfile
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ssl
   - name: PPWSUsernameToken
     type: Bool
     default: false

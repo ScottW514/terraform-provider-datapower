@@ -28,5 +28,4 @@ attributes:
   - name: Password
     type: String
     reference_to: PasswordAlias
-    sensitive: true
     description: 'Password'

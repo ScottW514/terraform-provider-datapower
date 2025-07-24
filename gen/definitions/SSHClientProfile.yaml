@@ -46,12 +46,8 @@ attributes:
     reference_to: CryptoKey
     description: 'User private key'
     cli_alias: user-private-key
+  # DEPRECATED
   # - name: Password
-  #   type: String
-  #   sensitive: true
-  #   description: 'Password (deprecated)'
-  #   deprecated: true
-  #   cli_alias: user-password
   - name: PasswordAlias
     type: String
     reference_to: PasswordAlias

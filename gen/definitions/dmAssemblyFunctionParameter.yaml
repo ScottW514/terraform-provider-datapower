@@ -1,0 +1,41 @@
+name: DmAssemblyFunctionParameter
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    required: true
+    example: 'assemblyfunctionparametername'
+    description: 'Name'
+    cli_alias: name
+  - name: Label
+    type: String
+    description: 'Label'
+    cli_alias: label
+  - name: Description
+    type: String
+    description: 'Description'
+    cli_alias: description
+  - name: Schema
+    type: String
+    reference_to: APISchema
+    description: 'API schema'
+    cli_alias: schema
+  - name: Value
+    type: String
+    description: 'Value'
+    cli_alias: value
+  - name: ValueType
+    type: String
+    enum:
+      - 'string'
+      - 'payload'
+      - 'message'
+    default: 'string'
+    description: 'Value type'
+    cli_alias: value-type
+  - name: Required
+    type: Bool
+    default: true
+    description: 'Required'
+    cli_alias: required

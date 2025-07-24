@@ -1,0 +1,86 @@
+name: AssemblyActionClientSecurity
+description: 'Client security assembly action'
+cli_alias: 'assembly-client-security'
+cmd_group: 'assembly'
+rest_endpoint: '/mgmt/config/{domain}/AssemblyActionClientSecurity'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: StopOnError
+    type: Bool
+    default: true
+    description: 'Stop on error'
+    cli_alias: stop-on-error
+  - name: SecretRequired
+    type: Bool
+    default: true
+    description: 'Secret required'
+    cli_alias: secret-required
+  - name: ExtractCredentialMethod
+    type: String
+    enum:
+      - 'header'
+      - 'query'
+      - 'form'
+      - 'cookie'
+      - 'http'
+      - 'context-var'
+    default: 'header'
+    description: 'Credentials extraction method'
+    cli_alias: extract-credential-method
+  - name: IdName
+    type: String
+    description: 'ID name'
+    cli_alias: id-name
+  - name: SecretName
+    type: String
+    description: 'Secret name'
+    cli_alias: secret-name
+  - name: HTTPType
+    type: String
+    enum:
+      - 'basic'
+    default: 'basic'
+    description: 'HTTP type'
+    cli_alias: http-type
+  - name: AuthenticateClientMethod
+    type: String
+    enum:
+      - 'native'
+      - 'third-party'
+    required: true
+    default: 'native'
+    description: 'Authenticate client method'
+    cli_alias: client-auth-method
+  - name: UserRegistry
+    type: String
+    description: 'User registry'
+    cli_alias: user-registry
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: CorrelationPath
+    type: String
+    description: 'Correlation path'
+    cli_alias: correlation-path
+  - name: ActionDebug
+    type: Bool
+    default: false
+    description: 'Enable debugging'
+    cli_alias: debug

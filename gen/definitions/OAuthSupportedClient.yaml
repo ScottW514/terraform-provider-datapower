@@ -94,7 +94,7 @@ attributes:
     example: 'https://example.com/validate-token'
     description: 'Validation URL'
     cli_alias: validation-url
-  # DEPRACATED
+  # DEPRECATED
   # - name: ValidationURLSSLProfile
   #   type: String
   #   reference_to: SSLProxyProfile

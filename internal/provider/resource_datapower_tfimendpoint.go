@@ -162,10 +162,6 @@ func (r *TFIMEndpointResource) Schema(ctx context.Context, req resource.SchemaRe
 				MarkdownDescription: tfutils.NewAttributeDescription("Username", "tfim-username", "").String,
 				Optional:            true,
 			},
-			"m_sts_password": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password (deprecated)", "tfim-password", "").String,
-				Optional:            true,
-			},
 			"m_sts_password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "tfim-password-alias", "passwordalias").String,
 				Optional:            true,

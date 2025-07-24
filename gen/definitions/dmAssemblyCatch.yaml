@@ -1,0 +1,14 @@
+name: DmAssemblyCatch
+model_only: true
+list_item: true
+attributes:
+  - name: Error
+    type: String
+    required: true
+    example: 'errorname'
+    description: 'Error name'
+  - name: Handler
+    type: String
+    reference_to: APIRule
+    required: true
+    description: 'Error handler'

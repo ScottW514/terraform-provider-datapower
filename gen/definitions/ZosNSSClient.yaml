@@ -33,13 +33,8 @@ attributes:
     example: 443
     description: 'Remote Port'
     cli_alias: port
-  # DEPRACATED
+  # DEPRECATED
   # - name: ssl
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS proxy profile (deprecated)'
-  #   deprecated: true
-  #   cli_alias: ssl
   - name: ClientID
     type: String
     required: true
