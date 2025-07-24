@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## Unreleased
+## v0.4.0
 
 - Removed deprecated SSL proxy settings
 - Removed unneccesary `sensitive` markings
