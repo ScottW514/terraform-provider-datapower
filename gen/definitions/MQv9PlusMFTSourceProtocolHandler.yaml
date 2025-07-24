@@ -1,0 +1,79 @@
+name: MQv9PlusMFTSourceProtocolHandler
+description: 'IBM MQ v9+ MFT handler'
+cli_alias: 'source-idg-mqmft'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/MQv9PlusMFTSourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'MQv9PlusMFTSourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: QueueManager
+    type: String
+    required: true
+    description: 'Queue manager (reference to MQManger or MQManagerGroup)'
+    test_value: 'datapower_mqmanager.test.id'
+    cli_alias: queue-manager
+  - name: GetQueue
+    type: String
+    required: true
+    example: 'queue'
+    description: 'Get queue'
+    cli_alias: get-queue
+  - name: GetMessageOptions
+    type: Int64
+    minimum: 0
+    maximum: 4294967295
+    default: 32769
+    description: 'Get message options'
+    cli_alias: get-message-options
+  - name: ConcurrentConnections
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 1
+    description: 'Concurrent conversations'
+    cli_alias: concurrent-connections
+  - name: PollingInterval
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 30
+    description: 'Polling interval'
+    cli_alias: polling-interval
+  - name: RetrieveBackoutSettings
+    type: Bool
+    default: false
+    description: 'Retrieve backout settings'
+    cli_alias: retrieve-backout-settings
+  - name: IgnoreBackoutErrors
+    type: Bool
+    default: false
+    description: 'Ignore backout errors'
+    cli_alias: ignore-backout-errors
+  - name: UseQMNameInURL
+    type: Bool
+    default: false
+    description: 'Use queue manager in URL'
+    cli_alias: use-qm-in-url
+test_prerequisites: |
+  resource "datapower_mqmanager" "test" {
+    id = "MQManager_name"
+    app_domain = "acc_test_domain"
+    host_name = "localhost"
+    cache_timeout = 60
+    xml_manager = "default"
+  }

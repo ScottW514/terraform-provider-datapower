@@ -1,0 +1,282 @@
+name: MQManager
+description: 'IBM MQ v9+ queue manager'
+cli_alias: 'idg-mq-qm'
+cmd_group: 'mq-qm'
+rest_endpoint: '/mgmt/config/{domain}/MQManager'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'MQManager_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: HostName
+    type: String
+    required: true
+    example: 'localhost'
+    description: 'Host'
+    cli_alias: hostname
+  - name: QMname
+    type: String
+    description: 'Queue manager name'
+    cli_alias: queue-manager
+  - name: CCSID
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 819
+    description: 'Coded character set ID'
+    cli_alias: ccsid
+  - name: ChannelName
+    type: String
+    default: 'SYSTEM.DEF.SVRCONN'
+    description: 'Channel name'
+    cli_alias: channel-name
+  - name: CSPUserId
+    type: String
+    description: 'MQCSP user ID'
+    cli_alias: mqcsp-userid
+  # DEPRECATED
+  # - name: CSPPassword
+  - name: CSPPasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'MQCSP password alias'
+    cli_alias: mqcsp-password-alias
+  - name: Heartbeat
+    type: Int64
+    minimum: 0
+    maximum: 999999
+    default: 300
+    description: 'Channel heartbeat'
+    cli_alias: heartbeat
+  - name: MaximumMessageSize
+    type: Int64
+    minimum: 1024
+    maximum: 104857600
+    default: 1048576
+    description: 'Max message size'
+    cli_alias: maximum-message-size
+  - name: CacheTimeout
+    type: Int64
+    required: true
+    minimum: 0
+    maximum: 65535
+    default: 60
+    description: 'Cache timeout'
+    cli_alias: cache-timeout
+  - name: FFSTSize
+    type: Int64
+    minimum: 100
+    maximum: 50000
+    default: 500
+    description: 'FFST file size'
+    cli_alias: ffst-size
+  - name: FFSTRotate
+    type: Int64
+    minimum: 3
+    maximum: 5
+    default: 3
+    description: 'Number of FFST file rotations'
+    cli_alias: ffst-rotate
+  - name: UnitsOfWork
+    type: Int64
+    minimum: 0
+    maximum: 1
+    default: 0
+    description: 'Units-of-work'
+    cli_alias: units-of-work
+  - name: AutomaticBackout
+    type: Bool
+    default: false
+    description: 'Automatic backout'
+    cli_alias: automatic-backout
+  - name: BackoutThreshold
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    description: 'Backout threshold'
+    cli_alias: backout-threshold
+  - name: BackoutQueueName
+    type: String
+    description: 'Backout queue'
+    cli_alias: backout-queue
+  - name: TotalConnectionLimit
+    type: Int64
+    minimum: 1
+    maximum: 10000
+    default: 250
+    description: 'Total connection limit'
+    cli_alias: total-connection-limit
+  - name: InitialConnections
+    type: Int64
+    minimum: 0
+    maximum: 10000
+    default: 1
+    description: 'Initial connections'
+    cli_alias: initial-connections
+  - name: SharingConversations
+    type: Int64
+    minimum: 1
+    maximum: 5000
+    default: 1
+    description: 'Sharing conversations'
+    cli_alias: sharing-conversations
+  - name: SSLkey
+    type: String
+    description: 'TLS key repository'
+    cli_alias: ssl-key
+  - name: PermitInsecureServers
+    type: Bool
+    default: false
+    description: 'Permit insecure connections'
+    cli_alias: permit-insecure-servers
+  - name: SSLcipher
+    type: String
+    enum:
+      - 'none'
+      - 'NULL_MD5'
+      - 'NULL_SHA'
+      - 'RC4_MD5_EXPORT'
+      - 'RC4_MD5_US'
+      - 'RC4_SHA_US'
+      - 'RC2_MD5_EXPORT'
+      - 'DES_SHA_EXPORT'
+      - 'RC4_56_SHA_EXPORT1024'
+      - 'DES_SHA_EXPORT1024'
+      - 'TRIPLE_DES_SHA_US'
+      - 'TLS_RSA_WITH_AES_128_CBC_SHA'
+      - 'TLS_RSA_WITH_AES_256_CBC_SHA'
+      - 'AES_SHA_US'
+      - 'TLS_RSA_WITH_NULL_SHA256'
+      - 'TLS_RSA_WITH_AES_128_CBC_SHA256'
+      - 'TLS_RSA_WITH_AES_256_CBC_SHA256'
+      - 'ECDHE_ECDSA_AES_128_CBC_SHA256'
+      - 'ECDHE_RSA_AES_128_CBC_SHA256'
+      - 'TLS_RSA_WITH_AES_128_GCM_SHA256'
+      - 'TLS_RSA_WITH_AES_256_GCM_SHA384'
+      - 'ECDHE_ECDSA_AES_256_CBC_SHA384'
+      - 'ECDHE_ECDSA_AES_128_GCM_SHA256'
+      - 'ECDHE_ECDSA_AES_256_GCM_SHA384'
+      - 'ECDHE_RSA_AES_256_CBC_SHA384'
+      - 'ECDHE_RSA_AES_128_GCM_SHA256'
+      - 'ECDHE_RSA_AES_256_GCM_SHA384'
+      - 'TLS_AES_128_GCM_SHA256'
+      - 'TLS_AES_256_GCM_SHA384'
+      - 'TLS_CHACHA20_POLY1305_SHA256'
+      - 'TLS_AES_128_CCM_SHA256'
+      - 'TLS_AES_128_CCM_8_SHA256'
+    default: 'none'
+    description: 'TLS cipher specification'
+    cli_alias: ssl-cipher
+  - name: SSLCertLabel
+    type: String
+    description: 'TLS certificate label'
+    cli_alias: ssl-cert-label
+  - name: ConvertInput
+    type: Bool
+    default: true
+    description: 'Convert input'
+    cli_alias: convert
+  - name: AutoRetry
+    type: Bool
+    default: true
+    description: 'Automatic retry'
+    cli_alias: auto-retry
+  - name: RetryInterval
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 10
+    description: 'Retry interval'
+    cli_alias: retry-interval
+  - name: RetryAttempts
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 6
+    description: 'Retry attempts'
+    cli_alias: retry-attempts
+  - name: LongRetryInterval
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 600
+    description: 'Long retry interval'
+    cli_alias: long-retry-interval
+  - name: ReportingInterval
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 10
+    description: 'Reporting interval'
+    cli_alias: reporting-interval
+  - name: AlternateUser
+    type: Bool
+    default: true
+    description: 'Alternate user'
+    cli_alias: alternate-user
+  - name: LocalAddress
+    type: String
+    description: 'Local address'
+    cli_alias: local-address
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    required: true
+    default: 'default'
+    test_value: '"default"'
+    description: 'XML manager'
+    cli_alias: xml-manager
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: OutboundSNI
+    type: String
+    enum:
+      - 'Channel'
+      - 'Hostname'
+    default: 'Channel'
+    description: 'Outbound SNI'
+    cli_alias: outbound-sni
+  - name: OCSPCheckExtensions
+    type: Bool
+    default: true
+    description: 'Check OCSP extensions'
+    cli_alias: ocsp-check-extensions
+  - name: OCSPAuthentication
+    type: String
+    enum:
+      - 'REQUIRED'
+      - 'OPTIONAL'
+      - 'WARN'
+    default: 'REQUIRED'
+    description: 'OCSP authentication'
+    cli_alias: ocsp-authentication
+  - name: CDPCheckExtensions
+    type: Bool
+    default: false
+    description: 'Check CDP extensions'
+    cli_alias: cdp-check-extensions
+  - name: ClientRevocationChecks
+    type: String
+    enum:
+      - 'REQUIRED'
+      - 'OPTIONAL'
+      - 'DISABLED'
+    default: 'REQUIRED'
+    description: 'Client revocation checking'
+    cli_alias: client-revocation-checks

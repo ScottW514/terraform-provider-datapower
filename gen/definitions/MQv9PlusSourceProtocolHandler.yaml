@@ -1,0 +1,134 @@
+name: MQv9PlusSourceProtocolHandler
+description: 'IBM MQ v9+ handler'
+cli_alias: 'source-idg-mq'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/MQv9PlusSourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'MQv9PlusSourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: QueueManager
+    type: String
+    required: true
+    description: 'Queue manager (reference to MQManger or MQManagerGroup)'
+    test_value: 'datapower_mqmanager.test.id'
+    cli_alias: queue-manager
+  - name: GetQueue
+    type: String
+    example: 'queue'
+    description: 'Get queue'
+    cli_alias: get-queue
+  - name: SubscribeTopicString
+    type: String
+    description: 'Subscribe topic string'
+    cli_alias: subscribe-topic-string
+  - name: SubscriptionName
+    type: String
+    description: 'Subscription name'
+    cli_alias: sub-name
+  - name: PutQueue
+    type: String
+    description: 'Put queue'
+    cli_alias: put-queue
+  - name: PublishTopicString
+    type: String
+    description: 'Publish topic string'
+    cli_alias: publish-topic-string
+  - name: CodePage
+    type: Int64
+    minimum: 0
+    maximum: 4294967295
+    default: 0
+    description: 'CCSI'
+    cli_alias: ccsi
+  - name: GetMessageOptions
+    type: Int64
+    minimum: 0
+    maximum: 4294967295
+    default: 1
+    description: 'Get message options'
+    cli_alias: get-message-options
+  - name: MessageSelector
+    type: String
+    description: 'Selector'
+    cli_alias: selector
+  - name: ParseProperties
+    type: Bool
+    default: false
+    description: 'Parse properties'
+    cli_alias: parse-properties
+  - name: AsyncPut
+    type: Bool
+    default: false
+    description: 'Async put'
+    cli_alias: async-put
+  - name: ExcludeHeaders
+    dm_type: DmMQHeaders
+    description: 'Exclude message headers'
+    cli_alias: exclude-headers
+  - name: ConcurrentConnections
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 1
+    description: 'Concurrent conversations'
+    cli_alias: concurrent-connections
+  - name: PollingInterval
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 30
+    description: 'Polling interval'
+    cli_alias: polling-interval
+  - name: BatchSize
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 0
+    description: 'Batch size'
+    cli_alias: batch-size
+  - name: ContentTypeHeader
+    type: String
+    enum:
+      - 'None'
+      - 'MQRFH'
+      - 'MQRFH2'
+    default: 'None'
+    description: 'Header to extract Content-Type'
+    cli_alias: content-type-header
+  - name: ContentTypeXPath
+    type: String
+    description: 'XPath expression to extract Content-Type from IBM MQ header'
+    cli_alias: content-type-xpath
+  - name: RetrieveBackoutSettings
+    type: Bool
+    default: false
+    description: 'Retrieve backout settings'
+    cli_alias: retrieve-backout-settings
+  - name: UseQMNameInURL
+    type: Bool
+    default: false
+    description: 'Use queue manager in URL'
+    cli_alias: use-qm-in-url
+test_prerequisites: |
+  resource "datapower_mqmanager" "test" {
+    id = "MQManager_name"
+    app_domain = "acc_test_domain"
+    host_name = "localhost"
+    cache_timeout = 60
+    xml_manager = "default"
+  }

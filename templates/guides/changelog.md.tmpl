@@ -22,6 +22,10 @@ description: |-
   - B2BProfile
   - B2BProfileGroupmake
   - B2BXPathRoutingPolicy
+  - MQManager
+  - MQManagerGroup
+  - MQv9PlusMFTSourceProtocolHandler
+  - MQv9PlusSourceProtocolHandler
 
 ## v0.4.0
 
