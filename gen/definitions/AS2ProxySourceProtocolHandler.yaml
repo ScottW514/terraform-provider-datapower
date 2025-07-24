@@ -1,0 +1,230 @@
+name: AS2ProxySourceProtocolHandler
+description: 'MEIG AS2 proxy handler'
+cli_alias: 'source-as2-proxy'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/AS2ProxySourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'AS2ProxySourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local address'
+    cli_alias: local-address
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    default: 80
+    description: 'Port'
+    cli_alias: port
+  - name: HTTPVersion
+    type: String
+    enum:
+      - 'HTTP/1.0'
+      - 'HTTP/1.1'
+    default: 'HTTP/1.1'
+    description: 'HTTP version to client'
+    cli_alias: http-client-version
+  - name: AllowedFeatures
+    dm_type: DmSourceAS2FeatureType
+    description: 'Allowed methods and versions'
+    cli_alias: allowed-features
+  - name: PersistentConnections
+    type: Bool
+    default: true
+    description: 'Negotiate persistent connections'
+    cli_alias: persistent-connections
+  - name: MaxPersistentConnectionsReuse
+    type: Int64
+    description: 'Max persistent reuse'
+    cli_alias: max-persistent-reuse
+  - name: AllowCompression
+    type: Bool
+    default: false
+    description: 'Enable compression'
+    cli_alias: compression
+  - name: MaxURLLen
+    type: Int64
+    minimum: 1
+    maximum: 128000
+    default: 16384
+    description: 'Max URL length'
+    cli_alias: max-url-len
+  - name: MaxTotalHdrLen
+    type: Int64
+    minimum: 5
+    maximum: 128000
+    default: 128000
+    description: 'Max total header length'
+    cli_alias: max-total-header-len
+  - name: MaxHdrCount
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 0
+    description: 'Max number of headers'
+    cli_alias: max-header-count
+  - name: MaxNameHdrLen
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 0
+    description: 'Max header name length'
+    cli_alias: max-header-name-len
+  - name: MaxValueHdrLen
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 0
+    description: 'Max header value length'
+    cli_alias: max-header-value-len
+  - name: ACL
+    type: String
+    reference_to: AccessControlList
+    description: 'Access control list'
+    cli_alias: acl
+  - name: CredentialCharset
+    type: String
+    enum:
+      - 'protocol'
+      - 'ascii'
+      - 'utf8'
+      - 'big5'
+      - 'cp1250'
+      - 'cp1251'
+      - 'cp1252'
+      - 'cp1253'
+      - 'cp1254'
+      - 'cp1255'
+      - 'cp1256'
+      - 'cp1257'
+      - 'cp1258'
+      - 'euc_jp'
+      - 'euc_kr'
+      - 'gb18030'
+      - 'gb2312'
+      - 'iso2022_jp'
+      - 'iso2022_kr'
+      - 'iso8859_1'
+      - 'iso8859_2'
+      - 'iso8859_4'
+      - 'iso8859_5'
+      - 'iso8859_6'
+      - 'iso8859_7'
+      - 'iso8859_8'
+      - 'iso8859_9'
+      - 'iso8859_15'
+      - 'sjis'
+      - 'tis620'
+      - 'unicode_le'
+    default: 'protocol'
+    description: 'Credential character set'
+    cli_alias: credential-charset
+  # DEPRECATED
+  # - name: SSLProxy
+  - name: RemoteAddress
+    type: String
+    required: true
+    example: '10.10.10.10'
+    description: 'Host'
+    cli_alias: remote-hostname
+  - name: RemotePort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    example: 8888
+    required: true
+    description: 'Port'
+    cli_alias: remote-port
+  # DEPRECATED
+  # - name: RemoteSSLProxy
+  - name: RemoteConnectionTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    required: true
+    default: 60
+    description: 'Connection timeout'
+    cli_alias: remote-connect-timeout
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    required: true
+    default: 'default'
+    test_value: '"default"'
+    description: 'XML manager'
+    cli_alias: xml-manager
+  - name: EnablePassthrough
+    type: Bool
+    default: true
+    description: 'Enable passthrough'
+    cli_alias: enable-passthrough
+  - name: EnableVisibilityEvent
+    type: Bool
+    default: true
+    description: 'Send visibility event'
+    cli_alias: enable-visibility-event
+  - name: VisibilityEventEndpoint
+    type: String
+    description: 'Visibility event endpoint'
+    cli_alias: visibility-event-endpoint
+  - name: EnableHmacAuthentication
+    type: Bool
+    default: true
+    description: 'Enable HMAC authentication'
+    cli_alias: enable-hmac-authentication
+  # DEPRECATED
+  # - name: HmacPassphrase
+  - name: HmacPassphraseAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'HMAC passphrase alias'
+    cli_alias: hmac-passphrase-alias
+  - name: SSLServerConfigType
+    type: String
+    enum:
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'TLS server type'
+    cli_alias: ssl-config-type
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'TLS SNI server profile'
+    cli_alias: ssl-sni-server
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client

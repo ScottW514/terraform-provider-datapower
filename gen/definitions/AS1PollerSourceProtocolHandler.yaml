@@ -1,0 +1,98 @@
+name: AS1PollerSourceProtocolHandler
+description: 'AS1 poller handler'
+cli_alias: 'source-as1-poller'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/AS1PollerSourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'AS1PollerSourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: MailServer
+    type: String
+    required: true
+    example: 'smtp.host'
+    description: 'Mail server'
+    cli_alias: mail-server
+  - name: Port
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    example: 25
+    required: true
+    description: 'Port'
+    cli_alias: port
+  - name: ConnSecurity
+    type: String
+    enum:
+      - 'none'
+      - 'stls'
+      - 'ssl'
+    required: true
+    default: 'none'
+    description: 'Connection security'
+    cli_alias: connection-security
+  # DEPRECATED
+  # - name: SSLProxy
+  - name: AuthMethod
+    type: String
+    enum:
+      - 'basic'
+      - 'apop'
+    default: 'basic'
+    description: 'Authentication method'
+    cli_alias: auth-method
+  - name: Account
+    type: String
+    required: true
+    example: 'account'
+    description: 'Account name'
+    cli_alias: account
+  # DEPRECATED
+  # - name: Password
+  - name: PasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'Password alias'
+    cli_alias: password-alias
+  - name: DelayBetweenPolls
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    default: 300
+    description: 'Delay between polls'
+    cli_alias: delay-time
+  - name: MaxMessagesPerPoll
+    type: Int64
+    minimum: 1
+    maximum: 100
+    required: true
+    default: 5
+    description: 'Max messages per poll'
+    cli_alias: max-messages-per-poll
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client

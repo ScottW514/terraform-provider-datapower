@@ -1,0 +1,257 @@
+name: AS3SourceProtocolHandler
+description: 'AS3 handler'
+cli_alias: 'source-as3'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/AS3SourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'AS3SourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local IP address'
+    cli_alias: address
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    default: 21
+    description: 'Local port'
+    cli_alias: port
+  - name: FilesystemType
+    type: String
+    enum:
+      - 'virtual-ephemeral'
+      - 'virtual-persistent'
+      - 'transparent'
+    default: 'virtual-ephemeral'
+    description: 'File system type'
+    cli_alias: filesystem
+  - name: PersistentFilesystemTimeout
+    type: Int64
+    minimum: 1
+    maximum: 43200
+    default: 600
+    description: 'Persistent timeout'
+    cli_alias: persistent-filesystem-timeout
+  - name: VirtualDirectories
+    type: List
+    element_type: DmFTPServerVirtualDirectory
+    description: 'Virtual directories'
+    cli_alias: virtual-directory
+  - name: DefaultDirectory
+    type: String
+    default: '/'
+    description: 'Default directory'
+    cli_alias: default-directory
+  - name: MaxFilenameLength
+    type: Int64
+    minimum: 1
+    maximum: 4000
+    default: 256
+    description: 'Max file name length'
+    cli_alias: max-filename-len
+  - name: ACL
+    type: String
+    reference_to: AccessControlList
+    description: 'Access control list'
+    cli_alias: acl
+  - name: RequireTLS
+    type: String
+    enum:
+      - 'off'
+      - 'explicit'
+      - 'implicit'
+    default: 'off'
+    description: 'Require TLS'
+    cli_alias: require-tls
+  # DEPRECATED
+  # - name: SSLProxy
+  - name: PasswordAAAPolicy
+    type: String
+    reference_to: AAAPolicy
+    description: 'Username-password AAA policy'
+    cli_alias: password-aaa-policy
+  - name: CertificateAAAPolicy
+    type: String
+    reference_to: AAAPolicy
+    description: 'Password-required AAA policy'
+    cli_alias: certificate-aaa-policy
+  - name: AllowCCC
+    type: Bool
+    default: true
+    description: 'Allow CCC command'
+    cli_alias: allow-ccc
+  - name: Passive
+    type: String
+    enum:
+      - 'allow'
+      - 'disallow'
+      - 'require'
+    default: 'allow'
+    description: 'Passive (PASV) command'
+    cli_alias: passive
+  - name: UsePasvPortRange
+    type: Bool
+    default: false
+    description: 'Limit port range for passive connections'
+    cli_alias: passive-port-range
+  - name: PasvMinPort
+    type: Int64
+    minimum: 1024
+    maximum: 65534
+    default: 1024
+    description: 'Min passive port'
+    cli_alias: passive-port-min
+  - name: PasvMaxPort
+    type: Int64
+    minimum: 1024
+    maximum: 65534
+    default: 1050
+    description: 'Max passive port'
+    cli_alias: passive-port-max
+  - name: PasvIdleTimeOut
+    type: Int64
+    minimum: 5
+    maximum: 300
+    default: 60
+    description: 'Passive data connection idle timeout'
+    cli_alias: passive-idle-timeout
+  - name: DisablePASVIPCheck
+    type: Bool
+    default: false
+    description: 'Disable passive data connection (PASV) IP security check'
+    cli_alias: passive-promiscuous
+  - name: DisablePORTIPCheck
+    type: Bool
+    default: false
+    description: 'Disable active data connection (PORT) IP security check'
+    cli_alias: port-promiscuous
+  - name: UseAlternatePASVAddr
+    type: Bool
+    default: false
+    description: 'Use alternate PASV IP address'
+    cli_alias: allow-passive-addr
+  - name: AlternatePASVAddr
+    type: String
+    description: 'Alternate PASV IP address'
+    cli_alias: passive-addr
+  - name: AllowLISTCmd
+    type: Bool
+    default: false
+    description: 'Enable LIST command support'
+    cli_alias: list-cmd
+  - name: AllowDELECmd
+    type: Bool
+    default: false
+    description: 'Enable DELE command support'
+    cli_alias: dele-cmd
+  - name: DataEncryption
+    type: String
+    enum:
+      - 'disallow'
+      - 'allow'
+      - 'require'
+    default: 'allow'
+    description: 'File transfer data encryption'
+    cli_alias: data-encryption
+  - name: AllowCompression
+    type: Bool
+    default: true
+    description: 'Allow compression'
+    cli_alias: allow-compression
+  - name: AllowSTOU
+    type: Bool
+    default: false
+    description: 'Allow unique file name (STOU)'
+    cli_alias: allow-unique-filename
+  - name: UniqueFilenamePrefix
+    type: String
+    description: 'Unique file name prefix'
+    cli_alias: unique-filename-prefix
+  - name: AllowREST
+    type: Bool
+    default: false
+    description: 'Allow restart (REST)'
+    cli_alias: allow-restart
+  - name: RestartTimeout
+    type: Int64
+    default: 240
+    description: 'Restart timeout'
+    cli_alias: restart-timeout
+  - name: IdleTimeout
+    type: Int64
+    maximum: 65535
+    description: 'Idle timeout'
+    cli_alias: idle-timeout
+  - name: ResponseType
+    type: String
+    enum:
+      - 'none'
+      - 'virtual-filesystem'
+    default: 'none'
+    description: 'Response type'
+    cli_alias: response-type
+  - name: ResponseStorage
+    type: String
+    enum:
+      - 'temporary'
+      - 'nfs'
+    default: 'temporary'
+    description: 'Response storage'
+    cli_alias: response-storage
+  - name: TemporaryStorageSize
+    type: Int64
+    minimum: 1
+    maximum: 2048
+    default: 32
+    description: 'Temporary storage size'
+    cli_alias: filesystem-size
+  - name: ResponseNFSMount
+    type: String
+    reference_to: NFSStaticMount
+    description: 'Response NFS mount'
+    cli_alias: response-nfs-mount
+  - name: ResponseSuffix
+    type: String
+    description: 'Response suffix'
+    cli_alias: response-suffix
+  - name: ResponseURL
+    type: String
+    description: 'Response URL'
+    cli_alias: response-url
+  - name: SSLServerConfigType
+    type: String
+    enum:
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'TLS server type'
+    cli_alias: ssl-config-type
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'TLS SNI server profile'
+    cli_alias: ssl-sni-server

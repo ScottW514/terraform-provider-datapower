@@ -1,0 +1,12 @@
+name: DmFTPServerVirtualDirectory
+model_only: true
+list_item: true
+attributes:
+  - name: VirtualPath
+    type: String
+    required: true
+    example: 'virtualpath'
+    description: 'Virtual directory'
+  - name: ResponseDirectory
+    type: String
+    description: 'Response directory'

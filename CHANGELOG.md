@@ -1,3 +1,11 @@
+## Unreleased
+
+- API Additions (Objects)
+  - AS1PollerSourceProtocolHandler
+  - AS2ProxySourceProtocolHandler
+  - AS2SourceProtocolHandler
+  - AS3SourceProtocolHandler
+
 ## v0.4.0
 
 - Removed deprecated SSL proxy settings
