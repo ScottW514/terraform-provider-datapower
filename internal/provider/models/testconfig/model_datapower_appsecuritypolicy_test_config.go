@@ -24,7 +24,7 @@ var AppSecurityPolicyTestConfig = ModelTestConfig{
 	Name: "AppSecurityPolicy",
 	Resource: `
 resource "datapower_appsecuritypolicy" "test" {
-  id = "AppSecurityPolicy_test"
+  id = "AppSecurityPolicy_name"
   app_domain = "acc_test_domain"
   request_maps = ` + DmWebAppRequestPolicyMapTestConfig.GetModelListConfig() + `
   response_maps = ` + DmWebAppResponsePolicyMapTestConfig.GetModelListConfig() + `

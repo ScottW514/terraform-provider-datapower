@@ -24,7 +24,7 @@ var APISecurityHTTPSchemeTestConfig = ModelTestConfig{
 	Name: "APISecurityHTTPScheme",
 	Resource: `
 resource "datapower_apisecurityhttpscheme" "test" {
-  id = "APISecurityHTTPScheme_test"
+  id = "APISecurityHTTPScheme_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `

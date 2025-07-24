@@ -39,7 +39,7 @@ func TestAccDataSourceCryptoKey(t *testing.T) {
 			{
 				Config: testconfig.CryptoKeyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_cryptokey.test", "result.0.id", "CryptoKey_test"),
+					resource.TestCheckResourceAttr("data.datapower_cryptokey.test", "result.0.id", "CryptoKey_name"),
 				}...),
 			},
 		},

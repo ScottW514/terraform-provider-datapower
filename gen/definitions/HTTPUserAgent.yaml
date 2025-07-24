@@ -9,7 +9,7 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'HTTPUserAgent_test'
+    example: 'HTTPUserAgent_name'
     test_value: '"___HTTPUserAgent_test"'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: AppDomain

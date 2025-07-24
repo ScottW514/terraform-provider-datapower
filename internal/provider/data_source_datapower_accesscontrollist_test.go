@@ -39,7 +39,7 @@ func TestAccDataSourceAccessControlList(t *testing.T) {
 			{
 				Config: testconfig.AccessControlListTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_accesscontrollist.test", "result.0.id", "test_name"),
+					resource.TestCheckResourceAttr("data.datapower_accesscontrollist.test", "result.0.id", "AccessControlList_name"),
 				}...),
 			},
 		},

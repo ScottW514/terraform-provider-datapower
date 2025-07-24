@@ -39,7 +39,7 @@ func TestAccDataSourceAPISecurityOAuthReq(t *testing.T) {
 			{
 				Config: testconfig.APISecurityOAuthReqTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apisecurityoauthreq.test", "result.0.id", "APISecurityOAuthReq_test"),
+					resource.TestCheckResourceAttr("data.datapower_apisecurityoauthreq.test", "result.0.id", "APISecurityOAuthReq_name"),
 				}...),
 			},
 		},

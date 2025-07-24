@@ -24,7 +24,7 @@ var WebAppRequestTestConfig = ModelTestConfig{
 	Name: "WebAppRequest",
 	Resource: `
 resource "datapower_webapprequest" "test" {
-  id = "WebAppRequest_test"
+  id = "WebAppRequest_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `

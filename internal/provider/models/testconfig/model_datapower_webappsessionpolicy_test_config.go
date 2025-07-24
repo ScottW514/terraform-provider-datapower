@@ -24,7 +24,7 @@ var WebAppSessionPolicyTestConfig = ModelTestConfig{
 	Name: "WebAppSessionPolicy",
 	Resource: `
 resource "datapower_webappsessionpolicy" "test" {
-  id = "WebAppSessionPolicy_test"
+  id = "WebAppSessionPolicy_name"
   app_domain = "acc_test_domain"
   start_matches = datapower_matching.test.id
 }`,

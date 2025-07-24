@@ -9,7 +9,7 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'StylePolicyAction_test'
+    example: 'StylePolicyAction_name'
     test_value: '"___StylePolicyAction_test"'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: AppDomain

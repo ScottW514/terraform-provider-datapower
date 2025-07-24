@@ -39,7 +39,7 @@ func TestAccDataSourceFilterAction(t *testing.T) {
 			{
 				Config: testconfig.FilterActionTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_filteraction.test", "result.0.id", "FilterAction_test"),
+					resource.TestCheckResourceAttr("data.datapower_filteraction.test", "result.0.id", "FilterAction_name"),
 					resource.TestCheckResourceAttr("data.datapower_filteraction.test", "result.0.type", "notify"),
 					resource.TestCheckResourceAttr("data.datapower_filteraction.test", "result.0.log_level", "debug"),
 				}...),

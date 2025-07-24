@@ -24,7 +24,7 @@ var CryptoValCredTestConfig = ModelTestConfig{
 	Name: "CryptoValCred",
 	Resource: `
 resource "datapower_cryptovalcred" "test" {
-  id = "CryptoValCred_test"
+  id = "CryptoValCred_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `

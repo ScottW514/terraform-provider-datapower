@@ -39,7 +39,7 @@ func TestAccDataSourceURLRefreshPolicy(t *testing.T) {
 			{
 				Config: testconfig.URLRefreshPolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_urlrefreshpolicy.test", "result.0.id", "URLRefreshPolicy_test"),
+					resource.TestCheckResourceAttr("data.datapower_urlrefreshpolicy.test", "result.0.id", "URLRefreshPolicy_name"),
 				}...),
 			},
 		},

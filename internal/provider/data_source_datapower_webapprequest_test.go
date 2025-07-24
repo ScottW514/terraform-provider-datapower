@@ -39,7 +39,7 @@ func TestAccDataSourceWebAppRequest(t *testing.T) {
 			{
 				Config: testconfig.WebAppRequestTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_webapprequest.test", "result.0.id", "WebAppRequest_test"),
+					resource.TestCheckResourceAttr("data.datapower_webapprequest.test", "result.0.id", "WebAppRequest_name"),
 					resource.TestCheckResourceAttr("data.datapower_webapprequest.test", "result.0.policy_type", "admission"),
 					resource.TestCheckResourceAttr("data.datapower_webapprequest.test", "result.0.ssl_policy", "allow"),
 					resource.TestCheckResourceAttr("data.datapower_webapprequest.test", "result.0.max_body_size", "128000000"),

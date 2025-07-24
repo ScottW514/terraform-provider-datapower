@@ -39,7 +39,7 @@ func TestAccDataSourceJWERecipient(t *testing.T) {
 			{
 				Config: testconfig.JWERecipientTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_jwerecipient.test", "result.0.id", "JWERecipient_test"),
+					resource.TestCheckResourceAttr("data.datapower_jwerecipient.test", "result.0.id", "JWERecipient_name"),
 					resource.TestCheckResourceAttr("data.datapower_jwerecipient.test", "result.0.algorithm", "RSA1_5"),
 				}...),
 			},

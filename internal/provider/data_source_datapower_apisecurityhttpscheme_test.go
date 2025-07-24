@@ -39,7 +39,7 @@ func TestAccDataSourceAPISecurityHTTPScheme(t *testing.T) {
 			{
 				Config: testconfig.APISecurityHTTPSchemeTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apisecurityhttpscheme.test", "result.0.id", "APISecurityHTTPScheme_test"),
+					resource.TestCheckResourceAttr("data.datapower_apisecurityhttpscheme.test", "result.0.id", "APISecurityHTTPScheme_name"),
 				}...),
 			},
 		},

@@ -39,7 +39,7 @@ func TestAccDataSourceRateLimitDefinition(t *testing.T) {
 			{
 				Config: testconfig.RateLimitDefinitionTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_ratelimitdefinition.test", "result.0.id", "RateLimitDefinition_test"),
+					resource.TestCheckResourceAttr("data.datapower_ratelimitdefinition.test", "result.0.id", "RateLimitDefinition_name"),
 					resource.TestCheckResourceAttr("data.datapower_ratelimitdefinition.test", "result.0.type", "rate"),
 					resource.TestCheckResourceAttr("data.datapower_ratelimitdefinition.test", "result.0.interval", "1"),
 					resource.TestCheckResourceAttr("data.datapower_ratelimitdefinition.test", "result.0.unit", "minute"),

@@ -39,7 +39,7 @@ func TestAccDataSourceAPIRouting(t *testing.T) {
 			{
 				Config: testconfig.APIRoutingTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apirouting.test", "result.0.id", "APIRouting_test"),
+					resource.TestCheckResourceAttr("data.datapower_apirouting.test", "result.0.id", "APIRouting_name"),
 				}...),
 			},
 		},

@@ -39,7 +39,7 @@ func TestAccDataSourceJWSSignature(t *testing.T) {
 			{
 				Config: testconfig.JWSSignatureTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_jwssignature.test", "result.0.id", "JWSSignature_test"),
+					resource.TestCheckResourceAttr("data.datapower_jwssignature.test", "result.0.id", "JWSSignature_name"),
 					resource.TestCheckResourceAttr("data.datapower_jwssignature.test", "result.0.algorithm", "RS256"),
 				}...),
 			},

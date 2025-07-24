@@ -9,7 +9,7 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'AAAJWTGenerator_test'
+    example: 'AAAJWTGenerator_name'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: AppDomain
     tf_name: app_domain

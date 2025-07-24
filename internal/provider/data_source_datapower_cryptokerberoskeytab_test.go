@@ -39,7 +39,7 @@ func TestAccDataSourceCryptoKerberosKeytab(t *testing.T) {
 			{
 				Config: testconfig.CryptoKerberosKeytabTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_cryptokerberoskeytab.test", "result.0.id", "CryptoKerberosKeytab_test"),
+					resource.TestCheckResourceAttr("data.datapower_cryptokerberoskeytab.test", "result.0.id", "CryptoKerberosKeytab_name"),
 					resource.TestCheckResourceAttr("data.datapower_cryptokerberoskeytab.test", "result.0.use_replay_cache", "true"),
 					resource.TestCheckResourceAttr("data.datapower_cryptokerberoskeytab.test", "result.0.generate_gss_checksum", "false"),
 				}...),

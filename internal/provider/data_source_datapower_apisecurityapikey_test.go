@@ -39,7 +39,7 @@ func TestAccDataSourceAPISecurityAPIKey(t *testing.T) {
 			{
 				Config: testconfig.APISecurityAPIKeyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apisecurityapikey.test", "result.0.id", "APISecurityAPIKey_test"),
+					resource.TestCheckResourceAttr("data.datapower_apisecurityapikey.test", "result.0.id", "APISecurityAPIKey_name"),
 					resource.TestCheckResourceAttr("data.datapower_apisecurityapikey.test", "result.0.where", "header"),
 					resource.TestCheckResourceAttr("data.datapower_apisecurityapikey.test", "result.0.type", "id"),
 				}...),

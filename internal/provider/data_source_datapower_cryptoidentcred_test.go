@@ -39,7 +39,7 @@ func TestAccDataSourceCryptoIdentCred(t *testing.T) {
 			{
 				Config: testconfig.CryptoIdentCredTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_cryptoidentcred.test", "result.0.id", "CookieAttributePolicy_test"),
+					resource.TestCheckResourceAttr("data.datapower_cryptoidentcred.test", "result.0.id", "CookieAttributePolicy_name"),
 				}...),
 			},
 		},

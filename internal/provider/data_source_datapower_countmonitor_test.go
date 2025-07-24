@@ -39,7 +39,7 @@ func TestAccDataSourceCountMonitor(t *testing.T) {
 			{
 				Config: testconfig.CountMonitorTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_countmonitor.test", "result.0.id", "CookieAttributePolicy_test"),
+					resource.TestCheckResourceAttr("data.datapower_countmonitor.test", "result.0.id", "CookieAttributePolicy_name"),
 					resource.TestCheckResourceAttr("data.datapower_countmonitor.test", "result.0.measure", "requests"),
 					resource.TestCheckResourceAttr("data.datapower_countmonitor.test", "result.0.source", "all"),
 					resource.TestCheckResourceAttr("data.datapower_countmonitor.test", "result.0.header", "X-Client-IP"),

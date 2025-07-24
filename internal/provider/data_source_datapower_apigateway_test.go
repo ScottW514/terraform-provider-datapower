@@ -39,7 +39,7 @@ func TestAccDataSourceAPIGateway(t *testing.T) {
 			{
 				Config: testconfig.APIGatewayTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apigateway.test", "result.0.id", "APIGateway_test"),
+					resource.TestCheckResourceAttr("data.datapower_apigateway.test", "result.0.id", "APIGateway_name"),
 					resource.TestCheckResourceAttr("data.datapower_apigateway.test", "result.0.cache_memory_size", "2147483647"),
 					resource.TestCheckResourceAttr("data.datapower_apigateway.test", "result.0.cache_size", "256"),
 					resource.TestCheckResourceAttr("data.datapower_apigateway.test", "result.0.sha1_caching", "true"),

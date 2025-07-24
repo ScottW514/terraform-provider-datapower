@@ -24,7 +24,7 @@ var FTPQuoteCommandsTestConfig = ModelTestConfig{
 	Name: "FTPQuoteCommands",
 	Resource: `
 resource "datapower_ftpquotecommands" "test" {
-  id = "FTPQuoteCommands_test"
+  id = "FTPQuoteCommands_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `

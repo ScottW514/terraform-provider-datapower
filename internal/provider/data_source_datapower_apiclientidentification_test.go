@@ -39,7 +39,7 @@ func TestAccDataSourceAPIClientIdentification(t *testing.T) {
 			{
 				Config: testconfig.APIClientIdentificationTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apiclientidentification.test", "result.0.id", "APIClientIdentification_test"),
+					resource.TestCheckResourceAttr("data.datapower_apiclientidentification.test", "result.0.id", "APIClientIdentification_name"),
 				}...),
 			},
 		},

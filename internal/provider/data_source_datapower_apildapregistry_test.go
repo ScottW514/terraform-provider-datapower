@@ -39,7 +39,7 @@ func TestAccDataSourceAPILDAPRegistry(t *testing.T) {
 			{
 				Config: testconfig.APILDAPRegistryTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apildapregistry.test", "result.0.id", "APILDAPRegistry_test"),
+					resource.TestCheckResourceAttr("data.datapower_apildapregistry.test", "result.0.id", "APILDAPRegistry_name"),
 					resource.TestCheckResourceAttr("data.datapower_apildapregistry.test", "result.0.ldap_port", "636"),
 					resource.TestCheckResourceAttr("data.datapower_apildapregistry.test", "result.0.ldap_version", "v3"),
 					resource.TestCheckResourceAttr("data.datapower_apildapregistry.test", "result.0.ldap_auth_method", "searchDN"),

@@ -39,7 +39,7 @@ func TestAccDataSourceAPICORS(t *testing.T) {
 			{
 				Config: testconfig.APICORSTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apicors.test", "result.0.id", "APICORS_test"),
+					resource.TestCheckResourceAttr("data.datapower_apicors.test", "result.0.id", "APICORS_name"),
 				}...),
 			},
 		},

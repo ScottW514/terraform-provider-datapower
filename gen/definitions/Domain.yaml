@@ -8,7 +8,7 @@ attributes:
     tf_name: app_domain
     type: String
     required: true
-    example: 'Domain_test'
+    example: 'Domain_name'
     description: 'The name of the application domain the object belongs to'
   - name: UserSummary
     type: String

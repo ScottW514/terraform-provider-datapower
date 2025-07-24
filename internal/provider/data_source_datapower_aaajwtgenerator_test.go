@@ -39,7 +39,7 @@ func TestAccDataSourceAAAJWTGenerator(t *testing.T) {
 			{
 				Config: testconfig.AAAJWTGeneratorTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.id", "AAAJWTGenerator_test"),
+					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.id", "AAAJWTGenerator_name"),
 					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.issuer", "idg"),
 					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.duration", "3600"),
 					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.sign_algorithm", "RS256"),

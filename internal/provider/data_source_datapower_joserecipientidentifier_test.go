@@ -39,7 +39,7 @@ func TestAccDataSourceJOSERecipientIdentifier(t *testing.T) {
 			{
 				Config: testconfig.JOSERecipientIdentifierTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_joserecipientidentifier.test", "result.0.id", "JOSERecipientIdentifier_test"),
+					resource.TestCheckResourceAttr("data.datapower_joserecipientidentifier.test", "result.0.id", "JOSERecipientIdentifier_name"),
 				}...),
 			},
 		},

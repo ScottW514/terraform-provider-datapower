@@ -16,7 +16,7 @@ API security API key
 
 ```terraform
 resource "datapower_apisecurityapikey" "test" {
-  id         = "APISecurityAPIKey_test"
+  id         = "APISecurityAPIKey_name"
   app_domain = "acc_test_domain"
   where      = "header"
   type       = "id"

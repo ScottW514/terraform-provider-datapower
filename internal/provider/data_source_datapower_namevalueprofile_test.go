@@ -39,7 +39,7 @@ func TestAccDataSourceNameValueProfile(t *testing.T) {
 			{
 				Config: testconfig.NameValueProfileTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_namevalueprofile.test", "result.0.id", "NameValueProfile_test"),
+					resource.TestCheckResourceAttr("data.datapower_namevalueprofile.test", "result.0.id", "NameValueProfile_name"),
 					resource.TestCheckResourceAttr("data.datapower_namevalueprofile.test", "result.0.max_attributes", "256"),
 					resource.TestCheckResourceAttr("data.datapower_namevalueprofile.test", "result.0.max_aggregate_size", "128000"),
 					resource.TestCheckResourceAttr("data.datapower_namevalueprofile.test", "result.0.max_name_size", "512"),

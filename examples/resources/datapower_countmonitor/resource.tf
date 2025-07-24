@@ -1,6 +1,6 @@
 
 resource "datapower_countmonitor" "test" {
-  id           = "CookieAttributePolicy_test"
+  id           = "CookieAttributePolicy_name"
   app_domain   = "acc_test_domain"
   measure      = "requests"
   source       = "all"

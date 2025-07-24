@@ -39,7 +39,7 @@ func TestAccDataSourceCompileOptionsPolicy(t *testing.T) {
 			{
 				Config: testconfig.CompileOptionsPolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_compileoptionspolicy.test", "result.0.id", "CompileOptionsPolicy_test"),
+					resource.TestCheckResourceAttr("data.datapower_compileoptionspolicy.test", "result.0.id", "CompileOptionsPolicy_name"),
 					resource.TestCheckResourceAttr("data.datapower_compileoptionspolicy.test", "result.0.xslt_version", "XSLT10"),
 					resource.TestCheckResourceAttr("data.datapower_compileoptionspolicy.test", "result.0.strict", "false"),
 					resource.TestCheckResourceAttr("data.datapower_compileoptionspolicy.test", "result.0.stack_size", "524288"),

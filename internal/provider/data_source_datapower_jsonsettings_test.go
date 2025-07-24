@@ -39,7 +39,7 @@ func TestAccDataSourceJSONSettings(t *testing.T) {
 			{
 				Config: testconfig.JSONSettingsTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_jsonsettings.test", "result.0.id", "JSONSettings_test"),
+					resource.TestCheckResourceAttr("data.datapower_jsonsettings.test", "result.0.id", "JSONSettings_name"),
 					resource.TestCheckResourceAttr("data.datapower_jsonsettings.test", "result.0.json_max_nesting_depth", "64"),
 					resource.TestCheckResourceAttr("data.datapower_jsonsettings.test", "result.0.json_max_label_length", "256"),
 					resource.TestCheckResourceAttr("data.datapower_jsonsettings.test", "result.0.json_max_value_length", "8192"),

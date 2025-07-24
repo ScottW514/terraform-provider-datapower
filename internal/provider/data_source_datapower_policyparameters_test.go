@@ -39,7 +39,7 @@ func TestAccDataSourcePolicyParameters(t *testing.T) {
 			{
 				Config: testconfig.PolicyParametersTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_policyparameters.test", "result.0.id", "test_name"),
+					resource.TestCheckResourceAttr("data.datapower_policyparameters.test", "result.0.id", "PolicyParameters_name"),
 				}...),
 			},
 		},

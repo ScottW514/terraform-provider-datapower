@@ -24,7 +24,7 @@ var APIGatewayTestConfig = ModelTestConfig{
 	Name: "APIGateway",
 	Resource: `
 resource "datapower_apigateway" "test" {
-  id = "APIGateway_test"
+  id = "APIGateway_name"
   app_domain = "acc_test_domain"
   front_protocol = [datapower_httpsourceprotocolhandler.test.id]
   front_timeout = 120

@@ -1,6 +1,6 @@
 
 resource "datapower_webappfw" "test" {
-  id                       = "WebAppFW_test"
+  id                       = "WebAppFW_name"
   app_domain               = "acc_test_domain"
   remote_address           = "10.10.10.10"
   style_policy             = datapower_appsecuritypolicy.test.id

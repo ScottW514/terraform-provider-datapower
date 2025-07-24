@@ -39,7 +39,7 @@ func TestAccDataSourceAPIRateLimit(t *testing.T) {
 			{
 				Config: testconfig.APIRateLimitTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apiratelimit.test", "result.0.id", "APIRateLimit_test"),
+					resource.TestCheckResourceAttr("data.datapower_apiratelimit.test", "result.0.id", "APIRateLimit_name"),
 				}...),
 			},
 		},

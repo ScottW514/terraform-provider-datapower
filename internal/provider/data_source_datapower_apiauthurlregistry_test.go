@@ -39,7 +39,7 @@ func TestAccDataSourceAPIAuthURLRegistry(t *testing.T) {
 			{
 				Config: testconfig.APIAuthURLRegistryTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apiauthurlregistry.test", "result.0.id", "APIAuthURLRegistry_test"),
+					resource.TestCheckResourceAttr("data.datapower_apiauthurlregistry.test", "result.0.id", "APIAuthURLRegistry_name"),
 				}...),
 			},
 		},

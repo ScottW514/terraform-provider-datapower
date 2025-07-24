@@ -39,7 +39,7 @@ func TestAccDataSourceAPIOperation(t *testing.T) {
 			{
 				Config: testconfig.APIOperationTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apioperation.test", "result.0.id", "APIOperation_test"),
+					resource.TestCheckResourceAttr("data.datapower_apioperation.test", "result.0.id", "APIOperation_name"),
 					resource.TestCheckResourceAttr("data.datapower_apioperation.test", "result.0.method", "GET"),
 					resource.TestCheckResourceAttr("data.datapower_apioperation.test", "result.0.remove_consume", "false"),
 					resource.TestCheckResourceAttr("data.datapower_apioperation.test", "result.0.remove_security", "false"),

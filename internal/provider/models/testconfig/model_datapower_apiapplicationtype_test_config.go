@@ -24,7 +24,7 @@ var APIApplicationTypeTestConfig = ModelTestConfig{
 	Name: "APIApplicationType",
 	Resource: `
 resource "datapower_apiapplicationtype" "test" {
-  id = "APIApplicationType_test"
+  id = "APIApplicationType_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `

@@ -39,7 +39,7 @@ func TestAccDataSourceAnalyticsEndpoint(t *testing.T) {
 			{
 				Config: testconfig.AnalyticsEndpointTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.id", "AnalyticsEndpoint_test"),
+					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.id", "AnalyticsEndpoint_name"),
 					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.max_records", "1024"),
 					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.max_records_memory_kb", "512"),
 					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.max_delivery_memory_mb", "512"),

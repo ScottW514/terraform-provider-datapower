@@ -39,7 +39,7 @@ func TestAccDataSourceAPICollection(t *testing.T) {
 			{
 				Config: testconfig.APICollectionTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apicollection.test", "result.0.id", "APICollection_test"),
+					resource.TestCheckResourceAttr("data.datapower_apicollection.test", "result.0.id", "APICollection_name"),
 					resource.TestCheckResourceAttr("data.datapower_apicollection.test", "result.0.sandbox", "false"),
 					resource.TestCheckResourceAttr("data.datapower_apicollection.test", "result.0.catalog_id", "default-catalog-id"),
 					resource.TestCheckResourceAttr("data.datapower_apicollection.test", "result.0.catalog_name", "default"),

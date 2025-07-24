@@ -39,7 +39,7 @@ func TestAccDataSourceJWEHeader(t *testing.T) {
 			{
 				Config: testconfig.JWEHeaderTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_jweheader.test", "result.0.id", "JWEHeader_test"),
+					resource.TestCheckResourceAttr("data.datapower_jweheader.test", "result.0.id", "JWEHeader_name"),
 				}...),
 			},
 		},

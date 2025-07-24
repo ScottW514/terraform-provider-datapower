@@ -24,7 +24,7 @@ var AccessControlListTestConfig = ModelTestConfig{
 	Name: "AccessControlList",
 	Resource: `
 resource "datapower_accesscontrollist" "test" {
-  id = "test_name"
+  id = "AccessControlList_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `

@@ -39,7 +39,7 @@ func TestAccDataSourceAPIPath(t *testing.T) {
 			{
 				Config: testconfig.APIPathTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apipath.test", "result.0.id", "APIPath_test"),
+					resource.TestCheckResourceAttr("data.datapower_apipath.test", "result.0.id", "APIPath_name"),
 					resource.TestCheckResourceAttr("data.datapower_apipath.test", "result.0.path", "/"),
 				}...),
 			},

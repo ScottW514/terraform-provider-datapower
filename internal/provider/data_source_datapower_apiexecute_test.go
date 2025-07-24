@@ -39,7 +39,7 @@ func TestAccDataSourceAPIExecute(t *testing.T) {
 			{
 				Config: testconfig.APIExecuteTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apiexecute.test", "result.0.id", "APIExecute_test"),
+					resource.TestCheckResourceAttr("data.datapower_apiexecute.test", "result.0.id", "APIExecute_name"),
 				}...),
 			},
 		},

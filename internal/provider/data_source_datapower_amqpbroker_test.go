@@ -39,7 +39,7 @@ func TestAccDataSourceAMQPBroker(t *testing.T) {
 			{
 				Config: testconfig.AMQPBrokerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_amqpbroker.test", "result.0.id", "AMQPBroker_test"),
+					resource.TestCheckResourceAttr("data.datapower_amqpbroker.test", "result.0.id", "AMQPBroker_name"),
 					resource.TestCheckResourceAttr("data.datapower_amqpbroker.test", "result.0.port", "5672"),
 					resource.TestCheckResourceAttr("data.datapower_amqpbroker.test", "result.0.xml_manager", "default"),
 					resource.TestCheckResourceAttr("data.datapower_amqpbroker.test", "result.0.authorization", "none"),

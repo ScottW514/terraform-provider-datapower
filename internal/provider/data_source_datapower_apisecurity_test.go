@@ -39,7 +39,7 @@ func TestAccDataSourceAPISecurity(t *testing.T) {
 			{
 				Config: testconfig.APISecurityTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apisecurity.test", "result.0.id", "APISecurity_test"),
+					resource.TestCheckResourceAttr("data.datapower_apisecurity.test", "result.0.id", "APISecurity_name"),
 				}...),
 			},
 		},

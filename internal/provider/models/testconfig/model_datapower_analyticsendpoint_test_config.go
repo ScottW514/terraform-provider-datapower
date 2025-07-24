@@ -24,7 +24,7 @@ var AnalyticsEndpointTestConfig = ModelTestConfig{
 	Name: "AnalyticsEndpoint",
 	Resource: `
 resource "datapower_analyticsendpoint" "test" {
-  id = "AnalyticsEndpoint_test"
+  id = "AnalyticsEndpoint_name"
   app_domain = "acc_test_domain"
   analytics_server_url = "https://localhost"
   max_records = 1024

@@ -39,7 +39,7 @@ func TestAccDataSourceAPIDefinition(t *testing.T) {
 			{
 				Config: testconfig.APIDefinitionTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apidefinition.test", "result.0.id", "APIDefinition_test"),
+					resource.TestCheckResourceAttr("data.datapower_apidefinition.test", "result.0.id", "APIDefinition_name"),
 					resource.TestCheckResourceAttr("data.datapower_apidefinition.test", "result.0.version", "1.0.0"),
 					resource.TestCheckResourceAttr("data.datapower_apidefinition.test", "result.0.base_path", "/"),
 					resource.TestCheckResourceAttr("data.datapower_apidefinition.test", "result.0.type", "standard"),

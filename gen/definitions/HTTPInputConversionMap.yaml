@@ -9,14 +9,14 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'HTTPInputConversionMap_test'
+    example: 'HTTPInputConversionMap_name'
     test_value: '"___HTTPInputConversionMap_name"'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: AppDomain
     tf_name: app_domain
     type: String
     required: true
-    example: 'HTTPInputConversionMap_test'
+    example: 'test_domain'
     description: 'The name of the application domain the object belongs to'
   - name: UserSummary
     type: String

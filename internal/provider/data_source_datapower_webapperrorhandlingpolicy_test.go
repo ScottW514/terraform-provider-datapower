@@ -39,7 +39,7 @@ func TestAccDataSourceWebAppErrorHandlingPolicy(t *testing.T) {
 			{
 				Config: testconfig.WebAppErrorHandlingPolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_webapperrorhandlingpolicy.test", "result.0.id", "WebAppErrorHandlingPolicy_test"),
+					resource.TestCheckResourceAttr("data.datapower_webapperrorhandlingpolicy.test", "result.0.id", "WebAppErrorHandlingPolicy_name"),
 					resource.TestCheckResourceAttr("data.datapower_webapperrorhandlingpolicy.test", "result.0.type", "standard"),
 				}...),
 			},

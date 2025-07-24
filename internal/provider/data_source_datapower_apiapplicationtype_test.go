@@ -39,7 +39,7 @@ func TestAccDataSourceAPIApplicationType(t *testing.T) {
 			{
 				Config: testconfig.APIApplicationTypeTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apiapplicationtype.test", "result.0.id", "APIApplicationType_test"),
+					resource.TestCheckResourceAttr("data.datapower_apiapplicationtype.test", "result.0.id", "APIApplicationType_name"),
 				}...),
 			},
 		},

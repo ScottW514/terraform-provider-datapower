@@ -16,7 +16,7 @@ Policy Parameters
 
 ```terraform
 resource "datapower_policyparameters" "test" {
-  id         = "test_name"
+  id         = "PolicyParameters_name"
   app_domain = "acc_test_domain"
 }
 ```

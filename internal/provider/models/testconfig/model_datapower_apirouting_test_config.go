@@ -24,7 +24,7 @@ var APIRoutingTestConfig = ModelTestConfig{
 	Name: "APIRouting",
 	Resource: `
 resource "datapower_apirouting" "test" {
-  id = "APIRouting_test"
+  id = "APIRouting_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `

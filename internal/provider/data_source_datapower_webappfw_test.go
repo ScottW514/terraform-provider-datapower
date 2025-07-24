@@ -39,7 +39,7 @@ func TestAccDataSourceWebAppFW(t *testing.T) {
 			{
 				Config: testconfig.WebAppFWTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.id", "WebAppFW_test"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.id", "WebAppFW_name"),
 					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.priority", "normal"),
 					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.remote_port", "80"),
 					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.xml_manager", "default"),

@@ -39,7 +39,7 @@ func TestAccDataSourceAAAJWTValidator(t *testing.T) {
 			{
 				Config: testconfig.AAAJWTValidatorTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.id", "AAAJWTValidator_test"),
+					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.id", "AAAJWTValidator_name"),
 					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.decrypt_fetch_cred_url", "http://example.com/v3/key"),
 					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.verify_certificate_against_val_cred", "false"),
 					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.verify_fetch_cred_url", "http://example.com/v3/certs"),

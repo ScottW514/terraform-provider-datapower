@@ -39,7 +39,7 @@ func TestAccDataSourceAppSecurityPolicy(t *testing.T) {
 			{
 				Config: testconfig.AppSecurityPolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_appsecuritypolicy.test", "result.0.id", "AppSecurityPolicy_test"),
+					resource.TestCheckResourceAttr("data.datapower_appsecuritypolicy.test", "result.0.id", "AppSecurityPolicy_name"),
 				}...),
 			},
 		},

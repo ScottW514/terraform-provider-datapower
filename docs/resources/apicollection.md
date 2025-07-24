@@ -16,7 +16,7 @@ API collection
 
 ```terraform
 resource "datapower_apicollection" "test" {
-  id         = "APICollection_test"
+  id         = "APICollection_name"
   app_domain = "acc_test_domain"
   org_id     = "orgid"
   org_name   = "orgname"

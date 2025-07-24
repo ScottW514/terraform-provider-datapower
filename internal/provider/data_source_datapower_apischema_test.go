@@ -39,7 +39,7 @@ func TestAccDataSourceAPISchema(t *testing.T) {
 			{
 				Config: testconfig.APISchemaTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apischema.test", "result.0.id", "APISchema_test"),
+					resource.TestCheckResourceAttr("data.datapower_apischema.test", "result.0.id", "APISchema_name"),
 				}...),
 			},
 		},

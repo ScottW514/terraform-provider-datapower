@@ -24,7 +24,7 @@ var APISchemaTestConfig = ModelTestConfig{
 	Name: "APISchema",
 	Resource: `
 resource "datapower_apischema" "test" {
-  id = "APISchema_test"
+  id = "APISchema_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `

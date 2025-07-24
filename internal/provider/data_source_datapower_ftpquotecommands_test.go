@@ -39,7 +39,7 @@ func TestAccDataSourceFTPQuoteCommands(t *testing.T) {
 			{
 				Config: testconfig.FTPQuoteCommandsTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_ftpquotecommands.test", "result.0.id", "FTPQuoteCommands_test"),
+					resource.TestCheckResourceAttr("data.datapower_ftpquotecommands.test", "result.0.id", "FTPQuoteCommands_name"),
 				}...),
 			},
 		},

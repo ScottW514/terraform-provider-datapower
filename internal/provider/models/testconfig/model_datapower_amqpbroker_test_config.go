@@ -24,7 +24,7 @@ var AMQPBrokerTestConfig = ModelTestConfig{
 	Name: "AMQPBroker",
 	Resource: `
 resource "datapower_amqpbroker" "test" {
-  id = "AMQPBroker_test"
+  id = "AMQPBroker_name"
   app_domain = "acc_test_domain"
   host_name = "host.name"
   port = 5672
