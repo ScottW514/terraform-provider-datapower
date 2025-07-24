@@ -1,0 +1,28 @@
+name: DmB2BCPAEntry
+model_only: true
+list_item: true
+attributes:
+  - name: CPA
+    type: String
+    reference_to: B2BCPA
+    required: true
+    description: 'CPA'
+    cli_alias: cpa
+  - name: Collaboration
+    type: String
+    reference_to: B2BCPACollaboration
+    required: true
+    description: 'Service'
+    cli_alias: collaboration
+  - name: InternalPartner
+    type: String
+    reference_to: B2BProfile
+    required: true
+    description: 'Internal partner'
+    cli_alias: internal-partner
+  - name: ExternalPartner
+    type: String
+    reference_to: B2BProfile
+    required: true
+    description: 'External partner'
+    cli_alias: external-partner

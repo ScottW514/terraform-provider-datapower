@@ -1,0 +1,19 @@
+name: DmB2BEnabledDocType
+model_only: true
+attributes:
+  - name: EnableXML
+    type: Bool
+    default: true
+    description: 'XML'
+  - name: EnableX12
+    type: Bool
+    default: true
+    description: 'X12'
+  - name: EnableEDIFACT
+    type: Bool
+    default: true
+    description: 'EDIFACT'
+  - name: EnableBinary
+    type: Bool
+    default: true
+    description: 'Binary'

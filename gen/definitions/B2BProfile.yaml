@@ -1,0 +1,470 @@
+name: B2BProfile
+description: 'B2B partner profile'
+cli_alias: 'b2b-profile'
+cmd_group: 'b2b'
+rest_endpoint: '/mgmt/config/{domain}/B2BProfile'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'B2BProfile_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: ProfileType
+    type: String
+    enum:
+      - 'internal'
+      - 'external'
+    default: 'internal'
+    description: 'Profile type'
+    cli_alias: profile-type
+  - name: BusinessIDs
+    type: List
+    element_type: String
+    description: 'Partner business IDs'
+    cli_alias: business-id
+  - name: BusinessIDsDUNS
+    type: List
+    element_type: String
+    description: 'Partner business IDs (DUNS)'
+    cli_alias: business-id-duns
+  - name: BusinessIDsDUNSPlus4
+    type: List
+    element_type: String
+    description: 'Partner business IDs (DUNS+4)'
+    cli_alias: business-id-duns4
+  - name: CustomStylePolicy
+    type: String
+    reference_to: StylePolicy
+    description: 'Processing policy'
+    cli_alias: stylepolicy
+  - name: ResponseType
+    type: String
+    enum:
+      - 'soap'
+      - 'xml'
+      - 'unprocessed'
+      - 'preprocessed'
+    default: 'preprocessed'
+    description: 'Response traffic type'
+    cli_alias: response-type
+  - name: EmailAddresses
+    type: List
+    element_type: String
+    description: 'Partner email addresses'
+    cli_alias: email-address
+  - name: Destinations
+    type: List
+    element_type: DmB2BDestination
+    required: true
+    description: 'Destinations'
+    cli_alias: destination
+  - name: InboundVerifyValCred
+    type: String
+    reference_to: CryptoValCred
+    description: 'Inbound signature validation credentials'
+    cli_alias: verify-valcred
+  - name: InboundRequireSigned
+    type: Bool
+    default: false
+    description: 'Require signature'
+    cli_alias: require-signed
+  - name: InboundRequireEncrypted
+    type: Bool
+    default: false
+    description: 'Require encryption'
+    cli_alias: require-encrypted
+  - name: InboundDecryptIdCred
+    type: String
+    reference_to: CryptoIdentCred
+    description: 'Inbound decryption identification credentials'
+    cli_alias: decrypt-idcred
+  # DEPRECATED
+  # - name: MDNSSLProxy
+  - name: OutboundSign
+    type: Bool
+    default: false
+    description: 'Sign outbound messages'
+    cli_alias: sign
+  - name: OutboundSignIdCred
+    type: String
+    reference_to: CryptoIdentCred
+    description: 'Signing identification credentials'
+    cli_alias: sign-idcred
+  - name: OutboundSignDigestAlg
+    type: String
+    enum:
+      - 'sha1'
+      - 'md5'
+      - 'sha256'
+      - 'sha384'
+      - 'sha512'
+    default: 'sha1'
+    description: 'Signing digest algorithm'
+    cli_alias: sign-digest-alg
+  - name: OutboundSignMICAlgVersion
+    type: String
+    enum:
+      - 'SMIME3.1'
+      - 'SMIME3.2'
+    description: 'Signing S/MIME version'
+    cli_alias: sign-micalg-version
+  - name: Contacts
+    type: List
+    element_type: DmB2BContact
+    description: 'Contacts'
+    cli_alias: contact
+  - name: OverrideASID
+    type: String
+    description: 'Override AS identifier'
+    cli_alias: override-as-identifier
+  - name: ASAllowDuplicateMessage
+    type: String
+    enum:
+      - 'never'
+      - 'always'
+      - 'on-error'
+    default: 'never'
+    description: 'Allow duplicate AS inbound message'
+    cli_alias: as-allow-dup-msg
+  - name: PreserveFilename
+    type: Bool
+    default: false
+    description: 'Preserve file name'
+    cli_alias: preserve-filename
+  - name: EBMSRole
+    type: String
+    description: 'Role'
+    cli_alias: ebms-role
+  - name: EBMSPersistDuration
+    type: Int64
+    maximum: 6000000
+    description: 'Persist duration'
+    cli_alias: ebms-persist-duration
+  - name: EBMSAckURL
+    type: String
+    description: 'Acknowledgment URL'
+    cli_alias: ebms-ack-url
+  - name: EBMSErrorURL
+    type: String
+    description: 'Error URL'
+    cli_alias: ebms-error-url
+  - name: EBMSInboundSendReceipt
+    type: Bool
+    default: false
+    description: 'Reply with receipt'
+    cli_alias: ebms-inbound-send-receipt
+  - name: EBMSInboundSendSignedReceipt
+    type: Bool
+    default: false
+    description: 'Reply with signed receipt'
+    cli_alias: ebms-inbound-send-signed-receipt
+  - name: EBMSInboundReceiptReplyPattern
+    type: String
+    enum:
+      - 'Response'
+      - 'Callback'
+    default: 'Response'
+    description: 'Receipt reply pattern'
+    cli_alias: ebms-inbound-receipt-reply-pattern
+  - name: EBMSReceiptURL
+    type: String
+    description: 'Receipt URL'
+    cli_alias: ebms-receipt-url
+  - name: EBMSInboundErrorURL
+    type: String
+    description: 'Error URL'
+    cli_alias: ebms-inbound-error-url
+  - name: EBMSInboundVerifyValCred
+    type: String
+    reference_to: CryptoValCred
+    description: 'Inbound signature validation credentials'
+    cli_alias: ebms-verify-valcred
+  - name: EBMSDefaultSignerCert
+    type: String
+    reference_to: CryptoCertificate
+    description: 'Default inbound signature validation certificate'
+    cli_alias: ebms-default-signer-cert
+  # DEPRECATED
+  # - name: EBMSAckSSLProxy
+  - name: EBMSInboundRequireSigned
+    type: Bool
+    default: false
+    description: 'Require signature'
+    cli_alias: ebms-require-signed
+  - name: EBMSInboundRequireEncrypted
+    type: Bool
+    default: false
+    description: 'Require encryption'
+    cli_alias: ebms-require-encrypted
+  - name: EBMSInboundDecryptIdCred
+    type: String
+    reference_to: CryptoIdentCred
+    description: 'Inbound decryption identification credentials'
+    cli_alias: ebms-decrypt-idcred
+  - name: EBMSOutboundSign
+    type: Bool
+    default: false
+    description: 'Sign outbound messages'
+    cli_alias: ebms-sign
+  - name: EBMSOutboundSignIdCred
+    type: String
+    reference_to: CryptoIdentCred
+    description: 'Signing identification credentials'
+    cli_alias: ebms-sign-idcred
+  - name: EBMSOutboundSignatureAlg
+    type: String
+    enum:
+      - 'dsa-sha1'
+      - 'rsa-sha1'
+      - 'rsa-sha256'
+      - 'rsa-sha384'
+      - 'rsa-sha512'
+      - 'rsa-ripemd160'
+      - 'rsa-ripemd160-2010'
+      - 'sha256-rsa-MGF1'
+      - 'rsa-md5'
+      - 'ecdsa-sha1'
+      - 'ecdsa-sha224'
+      - 'ecdsa-sha256'
+      - 'ecdsa-sha384'
+      - 'ecdsa-sha512'
+    default: 'dsa-sha1'
+    description: 'Signature algorithm'
+    cli_alias: ebms-signature-alg
+  - name: EBMSOutboundSignatureC14NAlg
+    type: String
+    enum:
+      - 'c14n'
+      - 'exc-c14n'
+      - 'c14n-comments'
+      - 'exc-c14n-comments'
+      - 'c14n11'
+      - 'c14n11-comments'
+    default: 'c14n'
+    description: 'Signature canonicalization method'
+    cli_alias: ebms-signature-c14n-alg
+  - name: EBMSOutboundSignDigestAlg
+    type: String
+    enum:
+      - 'sha1'
+      - 'sha256'
+      - 'sha512'
+      - 'ripemd160'
+      - 'sha224'
+      - 'sha384'
+      - 'md5'
+    default: 'sha1'
+    description: 'Signing digest algorithm'
+    cli_alias: ebms-sign-digest-alg
+  - name: EBMSEnableCPABinding
+    type: Bool
+    default: false
+    description: 'Enable CPA bindings'
+    cli_alias: ebms-enable-cpa-bindings
+  - name: EBMSProfileCPABindings
+    type: List
+    element_type: DmProfileCPABinding
+    description: 'CPA bindings'
+    cli_alias: profile-cpa-binding
+  - name: EBMSCpaId
+    type: String
+    description: 'Default CPA ID'
+    cli_alias: ebms-cpa-id
+  - name: EBMSService
+    type: String
+    description: 'Default service'
+    cli_alias: ebms-service
+  - name: EBMSAction
+    type: String
+    description: 'Default action'
+    cli_alias: ebms-action
+  - name: EBMSStartParameter
+    type: Bool
+    default: false
+    description: 'Generate start parameter'
+    cli_alias: ebms-start-parameter
+  - name: EBMSAllowDuplicateMessage
+    type: String
+    enum:
+      - 'never'
+      - 'always'
+      - 'on-error'
+    default: 'never'
+    description: 'Allow duplicate ebMS2 inbound message'
+    cli_alias: ebms-allow-dup-msg
+  - name: MDNSSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'MDN TLS client type'
+    cli_alias: mdn-ssl-client-type
+  - name: MDNSSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'MDN TLS client profile'
+    cli_alias: mdn-ssl-client
+  - name: EBMSAckSSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'Acknowledgment/Error TLS client type'
+    cli_alias: ebmsack-ssl-client-type
+  - name: EBMSAckSSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'Acknowledgment/Error TLS client profile'
+    cli_alias: ebmsack-ssl-client
+  - name: EBMS3OutboundSign
+    type: Bool
+    default: false
+    description: 'Sign outbound messages'
+    cli_alias: ebms3-sign
+  - name: EBMS3OutboundSignIdCred
+    type: String
+    reference_to: CryptoIdentCred
+    description: 'Signing identification credentials'
+    cli_alias: ebms3-sign-idcred
+  - name: EBMS3OutboundSignDigestAlg
+    type: String
+    enum:
+      - 'sha1'
+      - 'sha256'
+      - 'sha512'
+      - 'ripemd160'
+      - 'sha224'
+      - 'sha384'
+      - 'md5'
+    default: 'sha1'
+    description: 'Signing digest algorithm'
+    cli_alias: ebms3-sign-digest-alg
+  - name: EBMS3OutboundSignatureAlg
+    type: String
+    enum:
+      - 'dsa-sha1'
+      - 'rsa-sha1'
+      - 'rsa-sha256'
+      - 'rsa-sha384'
+      - 'rsa-sha512'
+      - 'rsa-ripemd160'
+      - 'rsa-ripemd160-2010'
+      - 'sha256-rsa-MGF1'
+      - 'rsa-md5'
+      - 'ecdsa-sha1'
+      - 'ecdsa-sha224'
+      - 'ecdsa-sha256'
+      - 'ecdsa-sha384'
+      - 'ecdsa-sha512'
+    default: 'rsa-sha1'
+    description: 'Signature algorithm'
+    cli_alias: ebms3-signature-alg
+  - name: EBMS3OutboundSignatureC14NAlg
+    type: String
+    enum:
+      - 'c14n'
+      - 'exc-c14n'
+      - 'c14n-comments'
+      - 'exc-c14n-comments'
+      - 'c14n11'
+      - 'c14n11-comments'
+    description: 'Signature canonicalization method'
+    cli_alias: ebms3-signature-c14n-alg
+  - name: EBMS3InboundVerifyValCred
+    type: String
+    reference_to: CryptoValCred
+    description: 'Inbound signature validation credentials'
+    cli_alias: ebms3-verify-valcred
+  - name: EBMS3DefaultSignerCert
+    type: String
+    reference_to: CryptoCertificate
+    description: 'Default inbound signature validation certificate'
+    cli_alias: ebms3-default-signer-cert
+  # DEPRECATED
+  # - name: EBMS3ReceiptSSLProxy
+  - name: EBMS3InboundRequireSigned
+    type: Bool
+    default: false
+    description: 'Require signature'
+    cli_alias: ebms3-require-signed
+  - name: EBMS3InboundRequireEncrypted
+    type: Bool
+    default: false
+    description: 'Require encryption'
+    cli_alias: ebms3-require-encrypted
+  - name: EBMS3InboundDecryptIdCred
+    type: String
+    reference_to: CryptoIdentCred
+    description: 'Inbound decryption identification credentials'
+    cli_alias: ebms3-decrypt-idcred
+  - name: EBMS3InboundRequireCompressed
+    type: Bool
+    default: false
+    description: 'Require compression'
+    cli_alias: ebms3-require-compressed
+  - name: EBMS3ReceiptSSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'Receipt/Error TLS client type'
+    cli_alias: ebms3-receipt-ssl-client-type
+  - name: EBMS3ReceiptSSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'Receipt/Error TLS client profile'
+    cli_alias: ebms3-receipt-ssl-client
+  - name: EBMSNotification
+    type: Bool
+    default: false
+    description: 'Enable notification'
+    cli_alias: ebms-notification
+  - name: EBMSNotificationURL
+    type: String
+    description: 'Notification URL'
+    cli_alias: ebms-notification-url
+  - name: EBMSNotificationSSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'Notification TLS client type'
+    cli_alias: ebms-notification-ssl-client-type
+  # DEPRECATED
+  # - name: EBMSNotificationSSLProxy
+  - name: EBMSNotificationSSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'Notification TLS client profile'
+    cli_alias: ebms-notification-ssl-client
+  - name: EBMS3AllowDuplicateMessage
+    type: String
+    enum:
+      - 'never'
+      - 'always'
+      - 'on-error'
+    default: 'never'
+    description: 'Allow duplicate ebMS3 inbound message'
+    cli_alias: ebms3-allow-dup-msg
+  - name: EBMS3DuplicateDetectionNotification
+    type: Bool
+    default: false
+    description: 'Duplicate detection notification'
+    cli_alias: ebms3-duplicate-detection-notification
+  - name: EBMSMessageProperties
+    type: List
+    element_type: DmB2BMessageProperties
+    description: 'ebMS3 message properties'
+    cli_alias: ebms-messageproperties

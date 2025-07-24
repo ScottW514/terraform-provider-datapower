@@ -1,0 +1,92 @@
+name: B2BCPAReceiverSetting
+description: 'CPA receiver setting'
+cli_alias: 'cpa-receiver-setting'
+cmd_group: 'b2b'
+rest_endpoint: '/mgmt/config/{domain}/B2BCPAReceiverSetting'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LocalEndpointURI
+    type: String
+    description: 'Local URI'
+    cli_alias: local-uri
+  - name: SyncReplyMode
+    type: String
+    enum:
+      - 'mshSignalsOnly'
+      - 'none'
+    default: 'none'
+    description: 'Sync reply mode'
+    cli_alias: syncreply-mode
+  - name: AckRequested
+    type: String
+    enum:
+      - 'never'
+      - 'always'
+      - 'perMessage'
+    default: 'perMessage'
+    description: 'Expect acknowledgment requests'
+    cli_alias: ack-requested
+  - name: AckSignatureRequested
+    type: String
+    enum:
+      - 'never'
+      - 'always'
+      - 'perMessage'
+    default: 'perMessage'
+    description: 'Expect signed acknowledgment requests'
+    cli_alias: ack-signature-requested
+  - name: AllowDuplicateMessage
+    type: String
+    enum:
+      - 'never'
+      - 'always'
+      - 'on-error'
+    default: 'never'
+    description: 'Allow duplicate messages'
+    cli_alias: allow-dup-msg
+  - name: PersistDuration
+    type: Int64
+    maximum: 6000000
+    description: 'Persistence duration'
+    cli_alias: persist-duration
+  - name: EncryptionRequired
+    type: Bool
+    default: false
+    description: 'Require encryption'
+    cli_alias: encrypt-required
+  - name: DecryptIdCred
+    type: String
+    reference_to: CryptoIdentCred
+    description: 'Decryption identification credentials'
+    cli_alias: decrypt-idcred
+  - name: SignatureRequired
+    type: Bool
+    default: false
+    description: 'Require signature'
+    cli_alias: sign-required
+  - name: VerifyValCred
+    type: String
+    reference_to: CryptoValCred
+    description: 'Signature validation credentials'
+    cli_alias: verify-valcred
+  - name: DefaultSignerCert
+    type: String
+    reference_to: CryptoCertificate
+    description: 'Default signature certificate'
+    cli_alias: default-signer-cert

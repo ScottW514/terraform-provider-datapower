@@ -14,6 +14,14 @@ description: |-
   - AS2ProxySourceProtocolHandler
   - AS2SourceProtocolHandler
   - AS3SourceProtocolHandler
+  - B2BCPA
+  - B2BCPACollaboration
+  - B2BCPAReceiverSetting
+  - B2BCPASenderSetting
+  - B2BGateway
+  - B2BProfile
+  - B2BProfileGroupmake
+  - B2BXPathRoutingPolicy
 
 ## v0.4.0
 

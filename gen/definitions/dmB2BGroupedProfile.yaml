@@ -1,0 +1,14 @@
+name: DmB2BGroupedProfile
+model_only: true
+list_item: true
+attributes:
+  - name: PartnerProfile
+    type: String
+    reference_to: B2BProfile
+    required: true
+    description: 'Partner profile'
+    cli_alias: profile
+  - name: ProfileDest
+    type: String
+    description: 'Profile destination'
+    cli_alias: destination

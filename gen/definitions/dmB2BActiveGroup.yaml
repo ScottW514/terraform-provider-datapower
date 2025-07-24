@@ -1,0 +1,14 @@
+name: DmB2BActiveGroup
+model_only: true
+list_item: true
+attributes:
+  - name: ProfileGroup
+    type: String
+    reference_to: B2BProfileGroup
+    description: 'Profile group'
+    cli_alias: group
+  - name: GroupEnabled
+    type: Bool
+    default: true
+    description: 'Enable group'
+    cli_alias: enabled

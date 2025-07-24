@@ -1,0 +1,19 @@
+name: DmB2BActiveProfile
+model_only: true
+list_item: true
+attributes:
+  - name: PartnerProfile
+    type: String
+    reference_to: B2BProfile
+    required: true
+    description: 'Partner profile'
+    cli_alias: profile
+  - name: ProfileEnabled
+    type: Bool
+    default: true
+    description: 'Enable profile'
+    cli_alias: enabled
+  - name: ProfileDest
+    type: String
+    description: 'Profile destination'
+    cli_alias: destination

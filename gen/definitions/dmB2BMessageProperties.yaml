@@ -1,0 +1,17 @@
+name: DmB2BMessageProperties
+model_only: true
+list_item: true
+attributes:
+  - name: Name
+    type: String
+    example: 'b2bmessagepropertyname'
+    required: true
+    description: 'Name'
+  - name: Value
+    type: String
+    example: 'value'
+    required: true
+    description: 'Value'
+  - name: Type
+    type: String
+    description: 'Type'

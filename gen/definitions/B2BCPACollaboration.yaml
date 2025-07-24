@@ -1,0 +1,60 @@
+name: B2BCPACollaboration
+description: 'B2B CPA collaboration'
+cli_alias: 'b2b-cpa-collaboration'
+cmd_group: 'b2b'
+rest_endpoint: '/mgmt/config/{domain}/B2BCPACollaboration'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'B2BCPACollaboration_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: InternalRole
+    type: String
+    description: 'Internal role'
+    cli_alias: internal-role
+  - name: ExternalRole
+    type: String
+    description: 'External role'
+    cli_alias: external-role
+  - name: ProcessSpecification
+    type: String
+    description: 'Process Specification'
+    cli_alias: process-spec
+  - name: Service
+    type: String
+    required: true
+    example: 'service'
+    description: 'Service'
+    cli_alias: service
+  - name: ServiceType
+    type: String
+    description: 'Service Type'
+    cli_alias: service-type
+  - name: SenderMshSetting
+    type: String
+    reference_to: B2BCPASenderSetting
+    description: 'Default MSH signal sender'
+    cli_alias: sender-msh-setting
+  - name: ReceiverMshSetting
+    type: String
+    reference_to: B2BCPAReceiverSetting
+    description: 'Default MSH signal receiver'
+    cli_alias: receiver-msh-setting
+  - name: Actions
+    type: List
+    element_type: DmCPACollaborationAction
+    description: 'Actions'
+    cli_alias: action

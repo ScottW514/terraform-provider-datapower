@@ -1,0 +1,208 @@
+name: B2BGateway
+description: 'B2B gateway'
+cli_alias: 'b2bgw'
+cmd_group: 'b2b'
+rest_endpoint: '/mgmt/config/{domain}/B2BGateway'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'B2BGateway_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Priority
+    type: String
+    enum:
+      - 'unknown'
+      - 'high-min'
+      - 'high'
+      - 'high-max'
+      - 'normal-min'
+      - 'normal'
+      - 'normal-max'
+      - 'low-min'
+      - 'low'
+      - 'low-max'
+    default: 'normal'
+    description: 'Service priority'
+    cli_alias: priority
+  - name: DocStoreLocation
+    type: String
+    default: '(default)'
+    description: 'Document storage location'
+    cli_alias: doc-location
+  - name: ASFrontProtocol
+    type: List
+    element_type: DmASFrontProtocol
+    description: 'Protocol handlers'
+    cli_alias: as-fsph
+  - name: AS1MDNEmail
+    type: String
+    description: 'Default AS1 MDN return email'
+    cli_alias: as1-mdn-email
+  - name: AS1MDNSMTPServerConnection
+    type: String
+    reference_to: SMTPServerConnection
+    description: 'AS1 MDN SMTP server connection'
+    cli_alias: as1-mdn-smtp-server-connection
+  - name: AS2MDNURL
+    type: String
+    description: 'Default AS2 MDN Return URL'
+    cli_alias: as2-mdn-url
+  - name: AS3MDNURL
+    type: String
+    description: 'Default AS3 MDN return URL'
+    cli_alias: as3-mdn-url
+  - name: B2BProfiles
+    type: List
+    element_type: DmB2BActiveProfile
+    description: 'Active partner profiles'
+    cli_alias: b2b-profile
+  - name: B2BGroups
+    type: List
+    element_type: DmB2BActiveGroup
+    description: 'Active profile groups'
+    cli_alias: b2b-group
+  - name: DocumentRoutingPreprocessorType
+    type: String
+    enum:
+      - 'stylesheet'
+      - 'gatewayscript'
+    default: 'stylesheet'
+    description: 'Processor type'
+    cli_alias: document-routing-preprocessor-type
+  - name: DocumentRoutingPreprocessor
+    type: String
+    required: true
+    default: 'store:///b2b-routing.xsl'
+    description: 'File location'
+    cli_alias: document-routing-preprocessor
+  - name: DocumentRoutingPreprocessorDebug
+    type: Bool
+    default: false
+    description: 'Enable GatewayScript debugger'
+    cli_alias: document-routing-preprocessor-debug
+  - name: ArchiveMode
+    type: String
+    enum:
+      - 'archpurge'
+      - 'purgeonly'
+    required: true
+    default: 'archpurge'
+    description: 'Purge mode'
+    cli_alias: arch-mode
+  - name: ArchiveLocation
+    type: String
+    description: 'Archive location'
+    cli_alias: arch-dir
+  - name: ArchiveFileName
+    type: String
+    description: 'Archive file base name'
+    cli_alias: arch-file
+  - name: ArchiveMinimumSize
+    type: Int64
+    default: 1024
+    description: 'Min size'
+    cli_alias: arch-minimum-size
+  - name: ArchiveDocumentAge
+    type: Int64
+    minimum: 1
+    maximum: 3650
+    default: 90
+    description: 'Document age'
+    cli_alias: arch-document-age
+  - name: ArchiveMinimumDocuments
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 100
+    description: 'Min documents'
+    cli_alias: arch-minimum-documents
+  - name: DiskUseCheckInterval
+    type: Int64
+    minimum: 1
+    maximum: 1440
+    default: 60
+    description: 'Check interval'
+    cli_alias: diskuse-check-interval
+  - name: MaxDocumentDiskUse
+    type: Int64
+    minimum: 1
+    maximum: 4294967295
+    default: 25165824
+    description: 'Max document storage'
+    cli_alias: max-diskuse
+  - name: ArchiveMonitor
+    type: Bool
+    default: true
+    description: 'Monitor during archival'
+    cli_alias: arch-monitor
+  - name: ShapingThreshold
+    type: Int64
+    minimum: 10
+    maximum: 10000
+    default: 200
+    description: 'Monitor threshold'
+    cli_alias: arch-shaping-threshold
+  - name: ArchiveBackupDocuments
+    dm_type: DmB2BBackupMsgType
+    description: 'Document types to archive'
+    cli_alias: arch-backup-documents
+  - name: XPathRoutingPolicies
+    type: List
+    reference_to: B2BXPathRoutingPolicy
+    element_type: String
+    description: 'XPath routing policies'
+    cli_alias: xpath-routing
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    required: true
+    default: 'default'
+    test_value: '"default"'
+    description: 'XML manager'
+    cli_alias: xml-manager
+  - name: DebugMode
+    type: String
+    enum:
+      - 'on'
+      - 'off'
+      - 'unbounded'
+    default: 'off'
+    description: 'Probe setting'
+    cli_alias: debug-mode
+  - name: DebugHistory
+    type: Int64
+    minimum: 10
+    maximum: 250
+    default: 25
+    description: 'Transaction history'
+    cli_alias: debug-history
+  - name: CPAEntries
+    type: List
+    element_type: DmB2BCPAEntry
+    description: 'CPA'
+    cli_alias: cpa-entry
+  - name: SQLDataSource
+    type: String
+    reference_to: SQLDataSource
+    description: 'SQL data source'
+    cli_alias: sql-source
+  - name: FrontSideTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    default: 120
+    description: 'Front timeout'
+    cli_alias: front-side-timeout

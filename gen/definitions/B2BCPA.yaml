@@ -1,0 +1,29 @@
+name: B2BCPA
+description: 'B2B CPA'
+cli_alias: 'b2b-cpa'
+cmd_group: 'b2b'
+rest_endpoint: '/mgmt/config/{domain}/B2BCPA'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'B2BCPA_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: CPAId
+    type: String
+    required: true
+    example: 'cpaid'
+    description: 'CPA ID'
+    cli_alias: cpa-id

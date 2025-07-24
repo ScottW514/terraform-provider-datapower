@@ -1,0 +1,29 @@
+name: B2BProfileGroup
+description: 'B2B partner profile group'
+cli_alias: 'b2b-profile-group'
+cmd_group: 'b2b'
+rest_endpoint: '/mgmt/config/{domain}/B2BProfileGroup'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'B2BProfileGroup_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: B2BProfiles
+    type: List
+    element_type: DmB2BGroupedProfile
+    required: true
+    description: 'Partner profiles'
+    cli_alias: b2b-profiles

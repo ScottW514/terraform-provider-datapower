@@ -1,0 +1,24 @@
+name: DmB2BContact
+model_only: true
+list_item: true
+attributes:
+  - name: FamilyName
+    type: String
+    description: 'Family name'
+    cli_alias: family-name
+  - name: GivenName
+    type: String
+    description: 'Given name'
+    cli_alias: given-name
+  - name: Title
+    type: String
+    description: 'Title'
+    cli_alias: title
+  - name: Phone
+    type: String
+    description: 'Phone'
+    cli_alias: phone
+  - name: Email
+    type: String
+    description: 'Email'
+    cli_alias: email
