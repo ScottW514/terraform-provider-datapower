@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## Unreleased
+## v0.5.0
 
 - Remove deprecated API's
   - APIRateLimit
