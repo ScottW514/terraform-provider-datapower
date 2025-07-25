@@ -68,8 +68,3 @@ attributes:
     test_value: 'null'
   # DEPRECATED
   # - name: UserDomain
-  #   type: List
-  #   reference_to: Domain
-  #   element_type: String
-  #   description: 'OBSOLETE'
-  #   cli_alias: domain

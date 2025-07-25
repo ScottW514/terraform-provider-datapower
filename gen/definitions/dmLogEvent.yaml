@@ -1,0 +1,21 @@
+name: DmLogEvent
+model_only: true
+list_item: true
+attributes:
+  - name: Class
+    type: String
+    reference_to: LogLabel
+    description: 'Event category'
+  - name: Priority
+    type: String
+    enum:
+      - 'emerg'
+      - 'alert'
+      - 'critic'
+      - 'error'
+      - 'warn'
+      - 'notice'
+      - 'info'
+      - 'debug'
+    default: 'notice'
+    description: 'Minimum event priority'

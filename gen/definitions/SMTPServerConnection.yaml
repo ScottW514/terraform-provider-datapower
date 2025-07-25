@@ -1,0 +1,72 @@
+name: SMTPServerConnection
+description: 'SMTP Server Connection'
+cli_alias: 'smtp-server-connection'
+cmd_group: 'config-management'
+rest_endpoint: '/mgmt/config/{domain}/SMTPServerConnection'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '___SMTPServerConnection_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: MailServerHost
+    type: String
+    required: true
+    example: 'localhost'
+    description: 'Outgoing Mail Server (SMTP) Host'
+    cli_alias: server-host
+  - name: MailServerPort
+    type: Int64
+    required: true
+    default: 25
+    description: 'Mail Server Port'
+    cli_alias: server-port
+  # DEPRECATED
+  # - name: SSLProxy
+  - name: Options
+    dm_type: DmSMTPOptions
+    description: 'Options'
+    cli_alias: options
+  - name: Auth
+    type: String
+    enum:
+      - 'plain'
+      - 'login'
+    default: 'plain'
+    description: 'Authentication Method'
+    cli_alias: auth
+  - name: AccountName
+    type: String
+    description: 'Account Name'
+    cli_alias: username
+  # DEPRECATED
+  # - name: AccountPassword
+  - name: AccountPasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'Account Password Alias'
+    cli_alias: password-alias
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client

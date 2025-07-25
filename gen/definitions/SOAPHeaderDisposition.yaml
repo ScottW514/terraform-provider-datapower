@@ -1,0 +1,29 @@
+name: SOAPHeaderDisposition
+description: 'SOAP Header Disposition Table'
+cli_alias: 'soap-disposition'
+cmd_group: 'stylesheetaction'
+rest_endpoint: '/mgmt/config/{domain}/SOAPHeaderDisposition'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'SOAPHeaderDisposition_name'
+    description: 'Identifier'
+    cli_alias: id
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Refine
+    type: List
+    element_type: DmSOAPHeaderDispositionItem
+    description: 'SOAP Header Refine Instruction'
+    cli_alias: refine

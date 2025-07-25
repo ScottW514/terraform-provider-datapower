@@ -1,0 +1,23 @@
+name: HostAlias
+description: 'Host alias (`default` domain only)'
+cli_alias: 'host-alias'
+cmd_group: 'network'
+rest_endpoint: '/mgmt/config/default/HostAlias'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_HostAlias_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: IPAddress
+    type: String
+    required: true
+    example: '10.10.10.10'
+    description: 'IP address'
+    cli_alias: ip-address

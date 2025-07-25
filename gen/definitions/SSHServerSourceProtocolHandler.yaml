@@ -1,0 +1,121 @@
+name: SSHServerSourceProtocolHandler
+description: 'SFTP server handler'
+cli_alias: 'source-ssh-server'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/SSHServerSourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'SSHServerSourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local IP address'
+    cli_alias: address
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65534
+    required: true
+    default: 22
+    description: 'Port'
+    cli_alias: port
+  - name: ACL
+    type: String
+    reference_to: AccessControlList
+    description: 'Access control list'
+    cli_alias: acl
+  - name: HostPrivateKeys
+    type: List
+    reference_to: CryptoKey
+    element_type: String
+    description: 'Host private keys'
+    cli_alias: host-private-key
+  - name: SSHUserAuthentication
+    dm_type: DmSSHUserAuthenticationMethods
+    description: 'User authentication'
+    cli_alias: user-auth
+  - name: AllowBackendListings
+    type: Bool
+    default: true
+    description: 'Allow back-end listings'
+    cli_alias: allow-backend-listings
+  - name: AllowBackendDelete
+    type: Bool
+    default: false
+    description: 'Allow file deletes'
+    cli_alias: allow-backend-delete
+  - name: AllowBackendStat
+    type: Bool
+    default: false
+    description: 'Allow stat operations'
+    cli_alias: allow-backend-stat
+  - name: AllowBackendMkdir
+    type: Bool
+    default: false
+    description: 'Allow directory creates'
+    cli_alias: allow-backend-mkdir
+  - name: AllowBackendRmdir
+    type: Bool
+    default: false
+    description: 'Allow directory deletes'
+    cli_alias: allow-backend-rmdir
+  - name: AllowBackendRename
+    type: Bool
+    default: false
+    description: 'Allow file/directory renames'
+    cli_alias: allow-backend-rename
+  - name: AAAPolicy
+    type: String
+    reference_to: AAAPolicy
+    description: 'AAA policy'
+    cli_alias: aaa-policy
+  - name: FilesystemType
+    type: String
+    enum:
+      - 'transparent'
+      - 'virtual-ephemeral'
+      - 'virtual-persistent'
+    default: 'transparent'
+    description: 'File system type'
+    cli_alias: filesystem
+  - name: DefaultDirectory
+    type: String
+    required: true
+    default: '/'
+    description: 'Default directory'
+    cli_alias: default-directory
+  - name: IdleTimeout
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 0
+    description: 'Idle timeout'
+    cli_alias: idle-timeout
+  - name: PersistentFilesystemTimeout
+    type: Int64
+    minimum: 1
+    maximum: 43200
+    default: 600
+    description: 'Persistent file system timeout'
+    cli_alias: persistent-filesystem-timeout
+  - name: VirtualDirectories
+    type: List
+    element_type: DmSFTPServerVirtualDirectory
+    description: 'Virtual directories'
+    cli_alias: virtual-directory

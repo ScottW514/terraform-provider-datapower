@@ -1,0 +1,24 @@
+name: DmXPathRoutingRule
+model_only: true
+list_item: true
+attributes:
+  - name: XPath
+    type: String
+    required: true
+    example: '*'
+    description: 'XPath Expression'
+  - name: Host
+    type: String
+    example: 'localhost'
+    required: true
+    description: 'Remote Host'
+  - name: Port
+    type: Int64
+    example: 8888
+    required: true
+    description: 'Remote Port'
+  - name: SSL
+    type: Bool
+    required: true
+    default: false
+    description: 'TLS'

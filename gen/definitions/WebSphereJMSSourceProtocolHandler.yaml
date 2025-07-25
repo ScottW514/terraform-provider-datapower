@@ -1,0 +1,61 @@
+name: WebSphereJMSSourceProtocolHandler
+description: 'WebSphere JMS handler'
+cli_alias: 'source-wasjms'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/WebSphereJMSSourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WebSphereJMSSourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Server
+    type: String
+    reference_to: WebSphereJMSServer
+    required: true
+    description: 'WebSphere JMS server'
+    cli_alias: server
+  - name: RequestTopicSpace
+    type: String
+    description: 'Topic space for request'
+    cli_alias: request-topic-space
+  - name: ReplyTopicSpace
+    type: String
+    description: 'Topic space for reply'
+    cli_alias: reply-topic-space
+  - name: StrictMessageOrder
+    type: Bool
+    default: false
+    description: 'Strict message ordering'
+    cli_alias: strict-message-order
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: GetQueue
+    type: String
+    required: true
+    example: 'getqueue'
+    description: 'Get queue'
+    cli_alias: get-queue
+  - name: PutQueue
+    type: String
+    description: 'Put queue'
+    cli_alias: put-queue
+  - name: Selector
+    type: String
+    description: 'Selector'
+    cli_alias: selector
+  - name: AsyncMessageProcessing
+    type: Bool
+    default: false
+    description: 'Asynchronous message processing'
+    cli_alias: async-message-processing

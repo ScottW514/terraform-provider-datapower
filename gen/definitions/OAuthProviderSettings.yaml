@@ -1,0 +1,397 @@
+name: OAuthProviderSettings
+description: 'OAuth provider settings'
+cli_alias: 'oauth-provider-settings'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/OAuthProviderSettings'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'OAuthProviderSettings_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: EnableDebugMode
+    type: Bool
+    default: false
+    description: 'Enable debug headers'
+    cli_alias: enable-debug-mode
+  - name: ProviderType
+    type: String
+    enum:
+      - 'native'
+      - 'third_party'
+    default: 'native'
+    required: true
+    description: 'Provider type'
+    cli_alias: provider-type
+  - name: ScopesAllowed
+    type: String
+    description: 'Allowed scopes'
+    cli_alias: scopes-allowed
+  - name: DefaultScopes
+    type: String
+    description: 'Default scopes'
+    cli_alias: default-scopes
+  - name: SupportedGrantTypes
+    dm_type: DmOAuthProviderGrantType
+    description: 'Supported grant types'
+    cli_alias: supported-grant-types
+  - name: SupportedClientTypes
+    dm_type: DmAllowedClientType
+    description: 'Supported client types'
+    cli_alias: supported-client-types
+  - name: APICProviderBasePath
+    type: String
+    default: '/'
+    description: 'Provider base path'
+    cli_alias: apic-provider-base-path
+  - name: APICAuthorizeEndpoint
+    type: String
+    default: '/oauth2/authorize'
+    description: 'Authorization endpoint'
+    cli_alias: apic-authorize-endpoint
+  - name: APICTokenEndpoint
+    type: String
+    default: '/oauth2/token'
+    description: 'Token endpoint'
+    cli_alias: apic-token-endpoint
+  - name: APICEnableIntrospection
+    type: Bool
+    default: false
+    description: 'Enable token introspection'
+    cli_alias: apic-enable-introspection
+  - name: APICIntrospectEndpoint
+    type: String
+    default: '/oauth2/introspect'
+    description: 'Introspection endpoint'
+    cli_alias: apic-introspect-endpoint
+  - name: APICTokenSecret
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Token secret'
+    cli_alias: apic-token-secret
+  - name: APICOneTimeUseAccesstoken
+    type: Bool
+    default: false
+    description: 'One-time use access token'
+    cli_alias: apic-enable-one-time-use-access-token
+  - name: APICAccessTokenTTL
+    type: Int64
+    minimum: 1
+    maximum: 63244800
+    default: 3600
+    description: 'Access token TTL'
+    cli_alias: apic-access-token-ttl
+  - name: APICAuthCodeTTL
+    type: Int64
+    minimum: 1
+    maximum: 600
+    default: 300
+    description: 'Authorization code TTL'
+    cli_alias: apic-auth-code-ttl
+  - name: APICEnableRefreshToken
+    type: Bool
+    default: false
+    description: 'Enable refresh tokens'
+    cli_alias: apic-enable-refresh-token
+  - name: APICOneTimeUseRefreshtoken
+    type: Bool
+    default: true
+    description: 'One-time use refresh token'
+    cli_alias: apic-enable-one-time-use-refresh-token
+  - name: APICRefreshTokenLimit
+    type: Int64
+    minimum: 1
+    maximum: 4096
+    default: 10
+    description: 'APIC refresh token count'
+    cli_alias: apic-refresh-token-limit
+  - name: APICRefreshTokenTTL
+    type: Int64
+    minimum: 2
+    maximum: 252979200
+    default: 5400
+    description: 'Refresh token TTL'
+    cli_alias: apic-refresh-token-ttl
+  - name: APICMaximumConsentTTL
+    type: Int64
+    minimum: 0
+    maximum: 2529792000
+    default: 0
+    description: 'Consent TTL'
+    cli_alias: apic-maximum-consent-ttl
+  - name: AdvScopeValidationEnabled
+    type: Bool
+    default: false
+    description: 'Enable advanced scope validation'
+    cli_alias: advanced-scope-validation-enabled
+  - name: AdvancedScopeURLOverride
+    type: Bool
+    default: false
+    description: 'Use URL from API Security Definition'
+    cli_alias: advanced-scope-url-from-security
+  - name: AdvancedScopeURL
+    type: String
+    description: 'Advanced scope URL'
+    cli_alias: advanced-scope-url
+  - name: AdvScopeTLSProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS profile to access advanced scope URL'
+    cli_alias: advanced-scope-tls-profile
+  - name: AdvScopeURLSecurityEnabled
+    type: Bool
+    default: false
+    description: 'Enable advanced scope endpoint security'
+    cli_alias: advanced-scope-url-security-enabled
+  - name: AdvScopeURLSecurity
+    dm_type: DmSecurityType
+    default: 'basic-auth'
+    description: 'Advanced scope endpoint security'
+    cli_alias: advanced-scope-url-security
+  - name: AdvScopeBasicAuthUserName
+    type: String
+    description: 'Basic authentication username'
+    cli_alias: advanced-scope-basic-auth-username
+  - name: AdvScopeBasicAuthPassword
+    type: String
+    reference_to: PasswordAlias
+    description: 'Basic authentication password'
+    cli_alias: advanced-scope-basic-auth-password-alias
+  - name: AdvScopeBasicAuthHeaderName
+    type: String
+    description: 'Basic authentication header name'
+    cli_alias: advanced-scope-basic-auth-headername
+  - name: AdvancedScopeCustomHeaders
+    type: String
+    description: 'Request headers'
+    cli_alias: advanced-scope-request-headers
+  - name: AdvancedScopeCustomContexts
+    type: String
+    description: 'Response context variables'
+    cli_alias: advanced-scope-response-contexts
+  - name: APICEnableOIDC
+    type: Bool
+    default: true
+    description: 'Enable OIDC'
+    cli_alias: apic-enable-oidc
+  - name: APICOIDCHybridResponseTypes
+    dm_type: DmOIDCHybridResponseType
+    description: 'OIDC Hybrid Flow Response Types'
+    cli_alias: apic-oidc-hybrid-response-types
+  - name: APICSupportPKCE
+    type: Bool
+    default: true
+    description: 'Support PKCE'
+    cli_alias: apic-support-pkce
+  - name: APICRequirePKCE
+    type: Bool
+    default: false
+    description: 'Require PKCE'
+    cli_alias: apic-require-pkce
+  - name: APICSupportPKCEPlain
+    type: Bool
+    default: false
+    description: "Support PKCE 'plain' challenge method"
+    cli_alias: apic-support-pkce-plain
+  - name: APICTokenTypeToGenerate
+    type: String
+    enum:
+      - 'Bearer'
+      - 'jwt'
+    default: 'Bearer'
+    description: 'Type of token to generate'
+    cli_alias: apic-token-type-to-generate
+  - name: MetadataFrom
+    dm_type: DmMetadataFromType
+    description: 'Obtain metadata from'
+    cli_alias: metadata-from
+  - name: MetadataURL
+    type: String
+    description: 'External metadata URL'
+    cli_alias: metadata-url
+  - name: MetadataSSLProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS profile to access metadata URL'
+    cli_alias: metadata-ssl-profile
+  - name: MetadataHeaderForAccessToken
+    type: String
+    default: 'X-API-OAuth-Metadata-For-AccessToken'
+    description: 'Response header for access token'
+    cli_alias: mdheader-for-accesstoken
+  - name: MetadataHeaderForPayload
+    type: String
+    default: 'X-API-OAuth-Metadata-For-Payload'
+    description: 'Response header for payload'
+    cli_alias: mdheader-for-payload
+  - name: ExternalRevocationURL
+    type: String
+    description: 'External management URL'
+    cli_alias: external-revocation-url
+  - name: ExternalRevocationSSLProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'External management TLS client profile'
+    cli_alias: external-revocation-ssl-profile
+  - name: ExternalRevocationURLSecurity
+    dm_type: DmSecurityType
+    default: 'basic-auth'
+    description: 'External management security'
+    cli_alias: external-revocation-url-security
+  - name: ExternalRevocationBasicAuthUserName
+    type: String
+    description: 'Basic authentication username'
+    cli_alias: external-revocation-basic-auth-username
+  - name: ExternalRevocationBasicAuthPassword
+    type: String
+    reference_to: PasswordAlias
+    description: 'Basic authentication password'
+    cli_alias: external-revocation-basic-auth-password-alias
+  - name: ExternalRevocationBasicAuthHeaderName
+    type: String
+    description: 'Basic authentication header name'
+    cli_alias: external-revocation-basic-auth-headername
+  - name: ExternalRevocationCustomHeaderFormat
+    type: String
+    description: 'Custom header pattern'
+    cli_alias: external-revocation-custom-headername-format
+  - name: ExternalRevocationCacheType
+    type: String
+    enum:
+      - 'Protocol'
+      - 'NoCache'
+      - 'TimeToLive'
+    default: 'NoCache'
+    description: 'Cache type'
+    cli_alias: external-revocation-cache-type
+  - name: ExternalRevocationCacheTimeToLive
+    type: Int64
+    minimum: 0
+    maximum: 4294967295
+    default: 900
+    description: 'Time to live'
+    cli_alias: external-revocation-cache-ttl
+  - name: ExternalRevocationFailOnError
+    type: Bool
+    default: true
+    description: 'Fail on error'
+    cli_alias: external-revocation-fail-on-error
+  - name: EnableTokenManagement
+    type: Bool
+    default: true
+    description: 'Enable token management'
+    cli_alias: enable-token-management
+  - name: TokenManagerType
+    type: String
+    enum:
+      - 'native'
+      - 'external'
+    default: 'native'
+    description: 'Token manager type'
+    cli_alias: token-manager-type
+  - name: APISecurityTokenManager
+    type: String
+    reference_to: APISecurityTokenManager
+    default: 'default'
+    description: 'API security token manager'
+    cli_alias: api-security-token-manager
+  - name: EnableApplicationRevocation
+    type: Bool
+    default: false
+    description: 'Application revocation'
+    cli_alias: apic-app-revoke-enable
+  - name: ApplicationRevocationEndpoint
+    type: String
+    default: '/oauth2/revoke'
+    description: 'Application revocation endpoint'
+    cli_alias: apic-app-revoke-endpoint
+  - name: EnableOwnerRevocation
+    type: Bool
+    default: false
+    description: 'Resource owner revocation'
+    cli_alias: apic-owner-revoke-enable
+  - name: OwnerRevocationEndpoint
+    type: String
+    default: '/oauth2/issued'
+    description: 'Resource owner revocation endpoint'
+    cli_alias: apic-owner-revoke-endpoint
+  - name: TokenValidationReq
+    type: String
+    enum:
+      - 'connected'
+      - 'active'
+      - 'custom'
+    description: 'Token validation requirement'
+    cli_alias: token-validation-requirement
+  - name: ThirdPartyAZURL
+    type: String
+    description: 'Authorization endpoint'
+    cli_alias: third-party-az-url
+  - name: ThirdPartyTokenURL
+    type: String
+    description: 'Token endpoint'
+    cli_alias: third-party-token-url
+  - name: ThirdPartyIntrospectURL
+    type: String
+    description: 'Introspection endpoint'
+    cli_alias: third-party-introspect-url
+  - name: ThirdPartyIntrospectCacheType
+    type: String
+    enum:
+      - 'Protocol'
+      - 'NoCache'
+      - 'TimeToLive'
+    default: 'NoCache'
+    description: 'Cache type'
+    cli_alias: third-party-introspect-cache-type
+  - name: ThirdPartyIntrospectCacheTimeToLive
+    type: Int64
+    minimum: 0
+    maximum: 4294967295
+    default: 900
+    description: 'Time to live'
+    cli_alias: third-party-introspect-cache-ttl
+  - name: ThirdPartyAuthorizationHeaderPassThru
+    type: Bool
+    default: false
+    description: 'Retain Authorization header'
+    cli_alias: third-party-authorization-header-pass-thru
+  - name: ThirdPartyIntrospectURLSecurity
+    dm_type: DmSecurityType
+    default: 'basic-auth'
+    description: 'Introspection endpoint security'
+    cli_alias: third-party-introspect-url-security
+  - name: ThirdPartyIntrospectBasicAuthUserName
+    type: String
+    description: 'Basic authentication username'
+    cli_alias: third-party-introspect-basic-auth-username
+  - name: ThirdPartyIntrospectBasicAuthPassword
+    type: String
+    reference_to: PasswordAlias
+    description: 'Basic authentication password'
+    cli_alias: third-party-introspect-basic-auth-password-alias
+  - name: ThirdPartyBasicAuthHeaderName
+    type: String
+    description: 'Basic authentication header name'
+    cli_alias: third-party-introspect-basic-auth-headername
+  - name: ThirdPartyCustomHeaderNameFormat
+    type: String
+    description: 'Custom header pattern'
+    cli_alias: third-party-introspect-custom-headername-format
+  - name: ThirdPartyIntrospectSSLProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: third-party-introspect-ssl-profile

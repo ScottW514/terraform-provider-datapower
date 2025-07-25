@@ -1,0 +1,319 @@
+name: XSLProxyService
+description: 'XSL Proxy'
+cli_alias: 'xslproxy'
+cmd_group: 'xslproxy'
+rest_endpoint: '/mgmt/config/{domain}/XSLProxyService'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'XSLProxyService_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Type
+    type: String
+    enum:
+      - 'static-backend'
+      - 'loopback-proxy'
+      - 'strict-proxy'
+      - 'dynamic-backend'
+    required: true
+    default: 'static-backend'
+    description: 'Type'
+    cli_alias: type
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    required: true
+    default: 'default'
+    test_value: '"default"'
+    description: 'XML Manager'
+    cli_alias: xml-manager
+  - name: URLRewritePolicy
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'URL Rewrite Policy'
+    cli_alias: urlrewrite-policy
+  # DEPRECATED
+  # - name: SSLProxy
+  - name: StylePolicy
+    type: String
+    reference_to: StylePolicy
+    default: 'default'
+    description: 'Processing Policy'
+    cli_alias: stylesheet-policy
+  - name: CredentialCharset
+    type: String
+    enum:
+      - 'protocol'
+      - 'ascii'
+      - 'utf8'
+      - 'big5'
+      - 'cp1250'
+      - 'cp1251'
+      - 'cp1252'
+      - 'cp1253'
+      - 'cp1254'
+      - 'cp1255'
+      - 'cp1256'
+      - 'cp1257'
+      - 'cp1258'
+      - 'euc_jp'
+      - 'euc_kr'
+      - 'gb18030'
+      - 'gb2312'
+      - 'iso2022_jp'
+      - 'iso2022_kr'
+      - 'iso8859_1'
+      - 'iso8859_2'
+      - 'iso8859_4'
+      - 'iso8859_5'
+      - 'iso8859_6'
+      - 'iso8859_7'
+      - 'iso8859_8'
+      - 'iso8859_9'
+      - 'iso8859_15'
+      - 'sjis'
+      - 'tis620'
+      - 'unicode_le'
+    default: 'protocol'
+    description: 'Credential Character Set'
+    cli_alias: credential-charset
+  - name: SSLConfigType
+    type: String
+    enum:
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'TLS type'
+    cli_alias: ssl-config-type
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'TLS SNI server profile'
+    cli_alias: ssl-sni-server
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Priority
+    type: String
+    enum:
+      - 'unknown'
+      - 'high-min'
+      - 'high'
+      - 'high-max'
+      - 'normal-min'
+      - 'normal'
+      - 'normal-max'
+      - 'low-min'
+      - 'low'
+      - 'low-max'
+    default: 'normal'
+    description: 'Service Priority'
+    cli_alias: priority
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    example: 8899
+    description: 'Port Number'
+    cli_alias: port
+  - name: RemoteAddress
+    type: String
+    description: 'Remote Host'
+    required: true
+    example: '10.10.10.10'
+    cli_alias: remote-ip-address
+  - name: RemotePort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    example: 9999
+    description: 'Remote Port'
+    cli_alias: remote-port
+  - name: ACL
+    type: String
+    reference_to: AccessControlList
+    description: 'Access Control List'
+    cli_alias: acl
+  - name: HTTPTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    default: 120
+    description: 'HTTP Timeout'
+    cli_alias: http-timeout
+  - name: HTTPPersistTimeout
+    type: Int64
+    minimum: 0
+    maximum: 7200
+    default: 180
+    description: 'HTTP Persistent Timeout'
+    cli_alias: persistent-timeout
+  - name: DoHostRewrite
+    type: Bool
+    default: true
+    description: 'Host Rewrite'
+    cli_alias: host-rewriting
+  - name: SuppressHTTPWarnings
+    type: Bool
+    default: false
+    description: 'HTTP Warning Suppression'
+    cli_alias: silence-warning
+  - name: HTTPCompression
+    type: Bool
+    default: false
+    description: 'HTTP Compression'
+    cli_alias: compression
+  - name: HTTPIncludeResponseTypeEncoding
+    type: Bool
+    default: false
+    description: 'HTTP Include charset in response-type'
+    cli_alias: include-response-type-encoding
+  - name: AlwaysShowErrors
+    type: Bool
+    default: false
+    description: 'Always provide full errors'
+    cli_alias: always-show-errors
+  - name: DisallowGet
+    type: Bool
+    default: false
+    description: 'Disallow GET (and HEAD)'
+    cli_alias: disallow-get
+  - name: DisallowEmptyResponse
+    type: Bool
+    default: false
+    description: "Don't allow empty response bodies"
+    cli_alias: disallow-empty-reply
+  - name: HTTPPersistentConnections
+    type: Bool
+    default: true
+    description: 'HTTP Persistent Connections'
+    cli_alias: persistent-connections
+  - name: HTTPClientIPLabel
+    type: String
+    default: 'X-Client-IP'
+    description: 'HTTP Client IP Label'
+    cli_alias: client-address
+  - name: HTTPLogCorIDLabel
+    type: String
+    default: 'X-Global-Transaction-ID'
+    description: 'HTTP Global Transaction ID Label'
+    cli_alias: http-global-tranID-label
+  - name: HTTPProxyHost
+    type: String
+    description: 'Proxy Host'
+    cli_alias: httpproxy-address
+  - name: HTTPProxyPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 800
+    description: 'Proxy Port'
+    cli_alias: httpproxy-port
+  - name: HTTPVersion
+    dm_type: DmHTTPClientServerVersion
+    description: 'HTTP Version'
+    cli_alias: version
+  - name: DoChunkedUpload
+    type: Bool
+    default: false
+    description: 'Allow Chunked Uploads'
+    cli_alias: chunked-uploads
+  - name: HeaderInjection
+    type: List
+    element_type: DmHeaderInjection
+    description: 'HTTP Header Injection'
+    cli_alias: inject
+  - name: HeaderSuppression
+    type: List
+    element_type: DmHeaderSuppression
+    description: 'HTTP Header Suppression'
+    cli_alias: suppress
+  - name: StylesheetParameters
+    type: List
+    element_type: DmStylesheetParameter
+    description: 'Stylesheet Parameter'
+    cli_alias: parameter
+  - name: DefaultParamNamespace
+    type: String
+    default: 'http://www.datapower.com/param/config'
+    description: 'Default parameter namespace'
+    cli_alias: default-param-namespace
+  - name: QueryParamNamespace
+    type: String
+    default: 'http://www.datapower.com/param/query'
+    description: 'Query parameter namespace'
+    cli_alias: query-param-namespace
+  - name: ForcePolicyExec
+    type: Bool
+    default: false
+    description: 'Process Messages Whose Body Is Empty'
+    cli_alias: force-policy-exec
+  - name: CountMonitors
+    type: List
+    reference_to: CountMonitor
+    element_type: String
+    description: 'Count Monitors'
+    cli_alias: monitor-count
+  - name: DurationMonitors
+    type: List
+    reference_to: DurationMonitor
+    element_type: String
+    description: 'Duration Monitors'
+    cli_alias: monitor-duration
+  - name: MonitorProcessingPolicy
+    type: String
+    enum:
+      - 'terminate-at-first-throttle'
+      - 'terminate-at-first-match'
+    default: 'terminate-at-first-throttle'
+    description: 'Monitors evaluation method'
+    cli_alias: monitor-processing-policy
+  - name: DebugMode
+    type: String
+    enum:
+      - 'on'
+      - 'off'
+      - 'unbounded'
+    default: 'off'
+    description: 'Probe setting'
+    cli_alias: debug-mode
+  - name: DebugHistory
+    type: Int64
+    minimum: 10
+    maximum: 250
+    default: 25
+    description: 'Transaction History'
+    cli_alias: debug-history
+  - name: DebugTrigger
+    type: List
+    element_type: DmMSDebugTriggerType
+    description: 'Probe Triggers'
+    cli_alias: debug-trigger
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local address'
+    cli_alias: ip-address

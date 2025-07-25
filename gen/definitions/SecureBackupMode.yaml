@@ -1,0 +1,28 @@
+name: SecureBackupMode
+description: 'Backup Mode (`default` domain only)'
+cli_alias: 'secure-mode'
+cmd_group: 'device-management'
+rest_endpoint: '/mgmt/config/default/SecureBackupMode/SecureBackupModeInstance'
+update_only: true
+default_domain_only: true
+skip_test: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: true
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: mode
+    type: String
+    enum:
+      - 'normal'
+      - 'secure'
+    default: 'normal'
+    description: 'Backup mode'
+    cli_alias: mode

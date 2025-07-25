@@ -1,0 +1,23 @@
+name: DmLogTrigger
+model_only: true
+list_item: true
+attributes:
+  - name: MessageID
+    tf_name: 'message_id'
+    path: 'ID'
+    type: String
+    description: 'Message ID'
+  - name: Expression
+    type: String
+    description: 'Regular expression'
+  - name: OnlyOnce
+    type: Bool
+    default: true
+    description: 'Only one time'
+  - name: StopProcessing
+    type: Bool
+    default: true
+    description: 'Only this trigger'
+  - name: Command
+    type: String
+    description: 'Command'

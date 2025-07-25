@@ -1,0 +1,36 @@
+name: DmWSMPolicyMap
+model_only: true
+list_item: true
+attributes:
+  - name: WSDLComponentType
+    type: String
+    enum:
+      - 'all'
+      - 'subscription'
+      - 'wsdl'
+      - 'service'
+      - 'port'
+      - 'operation'
+      - 'fragmentid'
+    required: true
+    default: 'all'
+    description: 'WSDL Component Type'
+  - name: WSDLComponentValue
+    type: String
+    description: 'WSDL Component Value'
+  - name: Match
+    type: String
+    reference_to: Matching
+    required: true
+    description: 'Match Rule'
+  - name: Rule
+    type: String
+    reference_to: WSStylePolicyRule
+    required: true
+    description: 'Stylepolicy Rule'
+  - name: Subscription
+    type: String
+    description: 'Subscription'
+  - name: WSDLFragmentID
+    type: String
+    description: 'Fragment Identifier'

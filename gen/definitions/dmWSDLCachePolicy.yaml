@@ -1,0 +1,13 @@
+name: DmWSDLCachePolicy
+model_only: true
+list_item: true
+attributes:
+  - name: Match
+    type: String
+    description: 'URL Match expression'
+  - name: TTL
+    type: Int64
+    minimum: 5
+    maximum: 86400
+    default: 900
+    description: 'TTL'

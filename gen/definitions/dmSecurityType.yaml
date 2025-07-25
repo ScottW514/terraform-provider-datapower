@@ -1,0 +1,7 @@
+name: DmSecurityType
+model_only: true
+attributes:
+  - name: basic-auth
+    type: Bool
+    default: true
+    description: 'Basic authentication header'

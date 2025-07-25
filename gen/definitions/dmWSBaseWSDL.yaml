@@ -1,0 +1,16 @@
+name: DmWSBaseWSDL
+model_only: true
+list_item: true
+attributes:
+  - name: WSDLSourceLocation
+    type: String
+    required: true
+    description: 'WSDL Source Location'
+  - name: WSDLName
+    type: String
+    required: true
+    description: 'Local Name'
+  - name: PolicyAttachments
+    type: String
+    reference_to: PolicyAttachments
+    description: 'Policy Attachments'

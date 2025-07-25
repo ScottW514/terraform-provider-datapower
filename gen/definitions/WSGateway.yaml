@@ -1,0 +1,847 @@
+name: WSGateway
+description: 'Web Service Proxy'
+cli_alias: 'wsgw'
+cmd_group: 'webservice'
+rest_endpoint: '/mgmt/config/{domain}/WSGateway'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WSGateway_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: BackHTTPVersion
+    type: String
+    enum:
+      - 'HTTP/1.0'
+      - 'HTTP/1.1'
+    default: 'HTTP/1.1'
+    description: 'HTTP Version to Server'
+    cli_alias: http-server-version
+  - name: RequestType
+    type: String
+    enum:
+      - 'soap'
+      - 'xml'
+      - 'unprocessed'
+      - 'preprocessed'
+    default: 'soap'
+    description: 'Request Type'
+    cli_alias: request-type
+  - name: ResponseType
+    type: String
+    enum:
+      - 'soap'
+      - 'xml'
+      - 'unprocessed'
+      - 'preprocessed'
+    default: 'soap'
+    description: 'Response Type'
+    cli_alias: response-type
+  - name: FollowRedirects
+    type: Bool
+    default: true
+    description: 'Follow Redirects'
+    cli_alias: follow-redirects
+  - name: AllowCompression
+    type: Bool
+    default: false
+    description: 'Compression'
+    cli_alias: compression
+  - name: EnableCompressedPayloadPassthrough
+    type: Bool
+    default: false
+    description: 'Enable passthrough of compressed payload'
+    cli_alias: enable-compressed-payload-passthrough
+  - name: Type
+    type: String
+    enum:
+      - 'static-backend'
+      - 'dynamic-backend'
+      - 'static-from-wsdl'
+    required: true
+    default: 'static-from-wsdl'
+    description: 'Type'
+    cli_alias: type
+  - name: AutoCreateSources
+    type: Bool
+    default: false
+    description: 'Auto-create Source Protocols'
+    cli_alias: autocreate-sources
+  - name: SSLServerConfigType
+    type: String
+    enum:
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'TLS server type'
+    cli_alias: ssl-config-type
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'TLS SNI server profile'
+    cli_alias: ssl-sni-server
+  - name: EndpointRewritePolicy
+    type: String
+    reference_to: WSEndpointRewritePolicy
+    description: 'Endpoint Rewrite Policy'
+    cli_alias: endpoint-rewrite-policy
+  - name: LocalEndpointRewrite
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'Local endpoint rewrite'
+    cli_alias: frontside-port-rewrite
+  - name: RemoteEndpointRewrite
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'Remote endpoint rewrite'
+    cli_alias: backside-port-rewrite
+  - name: AAAPolicy
+    type: String
+    reference_to: AAAPolicy
+    description: 'Authorization AAA Policy'
+    cli_alias: aaa-policy
+  - name: StylePolicy
+    type: String
+    reference_to: WSStylePolicy
+    required: true
+    default: 'default'
+    test_value: '"default"'
+    description: 'Processing Policy'
+    cli_alias: stylepolicy
+  - name: RemoteFetchRetry
+    dm_type: DmNetworkRetry
+    description: 'Remote Fetch Retry'
+    cli_alias: remote-retry
+  - name: WSDLCachePolicy
+    type: List
+    element_type: DmWSDLCachePolicy
+    description: 'WSDL Cache Policy'
+    cli_alias: wsdl-cache-policy
+  - name: BaseWSDL
+    type: List
+    element_type: DmWSBaseWSDL
+    description: 'WSDL File'
+    cli_alias: wsdl
+  - name: UserToggles
+    type: List
+    element_type: DmWSUserToggles
+    description: 'User policy'
+    cli_alias: user-policy
+  - name: ClientPrincipal
+    type: String
+    description: 'Kerberos Encryptor Principal'
+    cli_alias: client-principal
+  - name: ServerPrincipal
+    type: String
+    description: 'Kerberos Decryptor Principal'
+    cli_alias: server-principal
+  - name: KerberosKeytab
+    type: String
+    reference_to: CryptoKerberosKeytab
+    description: 'Kerberos Keytab'
+    cli_alias: kerberos-keytab
+  - name: DecryptKey
+    type: String
+    reference_to: CryptoKey
+    description: 'Decrypt Key'
+    cli_alias: decrypt-key
+  - name: EncryptedKeySHA1CacheLifeTime
+    type: Int64
+    maximum: 604800
+    description: 'EncryptedKeySHA1 Cache Lifetime'
+    cli_alias: wssec11-enckey-cache
+  - name: PreserveKeyChain
+    type: Bool
+    default: false
+    description: 'Preserve EncryptedKey Chain'
+    cli_alias: preserve-key-chain
+  - name: DecryptWithKeyFromED
+    type: Bool
+    default: false
+    description: 'Decrypt with Key from EncryptedData'
+    cli_alias: decrypt-with-key-from-ed
+  - name: SOAPActionPolicy
+    type: String
+    enum:
+      - 'lax'
+      - 'strict'
+      - 'off'
+    default: 'lax'
+    description: 'SOAPAction Policy'
+    cli_alias: soap-action-policy
+  # DEPRECATED
+  # - name: UDDISubscriptions
+  - name: WSRRSubscriptions
+    type: List
+    element_type: DmWSRRWSDLSource
+    description: 'WSRR Subscriptions'
+    cli_alias: wsrr-subscription
+  - name: WSRRSavedSearchSubscriptions
+    type: List
+    element_type: DmWSRRSavedSearchWSDLSource
+    description: 'WSRR Saved Search Subscriptions'
+    cli_alias: wsrr-saved-search-subscription
+  - name: OperationPriority
+    type: List
+    element_type: DmWSOperationSchedulerPriority
+    description: 'Operation Priority'
+    cli_alias: operation-priority
+  - name: OperationConformancePolicy
+    type: List
+    element_type: DmWSOperationConformancePolicy
+    description: 'Operation Conformance Policy'
+    cli_alias: operation-conformance
+  - name: OperationPolicySubjectOptOut
+    type: List
+    element_type: DmWSOperationPolicySubjectOptOut
+    description: 'Operation Policy Subject Opt Out'
+    cli_alias: operation-policy-opt-out
+  - name: PolicyParameter
+    type: List
+    element_type: DmWSPolicyParameters
+    description: 'Policy Parameters'
+    cli_alias: policy-parameters
+  - name: ReliableMessaging
+    type: List
+    element_type: DmWSOperationReliableMessaging
+    description: 'Reliable Messaging'
+    cli_alias: reliable-messaging
+  - name: WSMAgentMonitor
+    type: Bool
+    default: true
+    description: 'Monitor with Web Services Management Agent'
+    cli_alias: wsmagent-monitor
+  - name: WSMAgentMonitorPCM
+    type: String
+    enum:
+      - 'none'
+      - 'all-messages'
+      - 'on-error'
+    default: 'all-messages'
+    description: 'Message capture with Web Services Management Agent'
+    cli_alias: wsmagent-monitor-capture-mode
+  - name: ProcessRespRulesOnOneWayMEP
+    type: Bool
+    default: false
+    description: 'Enable response rule processing for one-way WSDLs.'
+    cli_alias: process-response-rule-for-oneway-wsdls
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Priority
+    type: String
+    enum:
+      - 'unknown'
+      - 'high-min'
+      - 'high'
+      - 'high-max'
+      - 'normal-min'
+      - 'normal'
+      - 'normal-max'
+      - 'low-min'
+      - 'low'
+      - 'low-max'
+    default: 'normal'
+    description: 'Service Priority'
+    cli_alias: priority
+  - name: FrontProtocol
+    type: List
+    element_type: String
+    description: 'Front Side Protocol'
+    cli_alias: front-protocol
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    required: true
+    default: 'default'
+    test_value: '"default"'
+    description: 'XML Manager'
+    cli_alias: xml-manager
+  - name: URLRewritePolicy
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'URL Rewrite Policy'
+    cli_alias: urlrewrite-policy
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  # DEPRECATED
+  # - name: SSLProxy
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: FWCred
+    type: String
+    reference_to: CryptoFWCred
+    description: 'Crypto Credentials'
+    cli_alias: fwcred
+  - name: HeaderInjection
+    type: List
+    element_type: DmHeaderInjection
+    description: 'HTTP Header Injection'
+    cli_alias: inject
+  - name: HeaderSuppression
+    type: List
+    element_type: DmHeaderSuppression
+    description: 'HTTP Header Suppression'
+    cli_alias: suppress
+  - name: StylesheetParameters
+    type: List
+    element_type: DmStylesheetParameter
+    description: 'Stylesheet Parameter'
+    cli_alias: parameter
+  - name: DefaultParamNamespace
+    type: String
+    default: 'http://www.datapower.com/param/config'
+    description: 'Default parameter namespace'
+    cli_alias: default-param-namespace
+  - name: QueryParamNamespace
+    type: String
+    default: 'http://www.datapower.com/param/query'
+    description: 'Query parameter namespace'
+    cli_alias: query-param-namespace
+  - name: BackendUrl
+    type: String
+    description: 'Backend URL'
+    cli_alias: backend-url
+  - name: PropagateURI
+    type: Bool
+    default: true
+    description: 'Propagate URI'
+    cli_alias: propagate-uri
+  - name: ServiceMonitors
+    type: List
+    reference_to: WebServiceMonitor
+    element_type: String
+    description: 'Service Monitors'
+    cli_alias: monitor-service
+  - name: CountMonitors
+    type: List
+    reference_to: CountMonitor
+    element_type: String
+    description: 'Count Monitors'
+    cli_alias: monitor-count
+  - name: DurationMonitors
+    type: List
+    reference_to: DurationMonitor
+    element_type: String
+    description: 'Duration Monitors'
+    cli_alias: monitor-duration
+  - name: MonitorProcessingPolicy
+    type: String
+    enum:
+      - 'terminate-at-first-throttle'
+      - 'terminate-at-first-match'
+    default: 'terminate-at-first-throttle'
+    description: 'Monitors evaluation method'
+    cli_alias: monitor-processing-policy
+  - name: RequestAttachments
+    type: String
+    enum:
+      - 'strip'
+      - 'reject'
+      - 'allow'
+      - 'streaming'
+      - 'unprocessed'
+    default: 'strip'
+    description: 'Request attachment processing mode'
+    cli_alias: request-attachments
+  - name: ResponseAttachments
+    type: String
+    enum:
+      - 'strip'
+      - 'reject'
+      - 'allow'
+      - 'streaming'
+      - 'unprocessed'
+    default: 'strip'
+    description: 'Response attachment processing mode'
+    cli_alias: response-attachments
+  - name: RequestAttachmentsFlowControl
+    type: Bool
+    default: false
+    description: 'Request attachment flow control mode'
+    cli_alias: request-attachments-flow-control
+  - name: ResponseAttachmentsFlowControl
+    type: Bool
+    default: false
+    description: 'Response attachment flow control mode'
+    cli_alias: response-attachments-flow-control
+  - name: RootPartNotFirstAction
+    type: String
+    enum:
+      - 'process-in-order'
+      - 'buffer'
+      - 'abort'
+    default: 'process-in-order'
+    description: 'Action when required root part is not first'
+    cli_alias: root-part-not-first-action
+  - name: FrontAttachmentFormat
+    type: String
+    enum:
+      - 'dynamic'
+      - 'mime'
+      - 'dime'
+      - 'detect'
+    default: 'dynamic'
+    description: 'Front attachment processing format'
+    cli_alias: front-attachment-format
+  - name: BackAttachmentFormat
+    type: String
+    enum:
+      - 'dynamic'
+      - 'mime'
+      - 'dime'
+      - 'detect'
+    default: 'dynamic'
+    description: 'Back attachment processing format'
+    cli_alias: back-attachment-format
+  - name: MIMEFrontHeaders
+    type: Bool
+    default: true
+    description: 'Front Side MIME Header Processing'
+    cli_alias: mime-front-headers
+  - name: MIMEBackHeaders
+    type: Bool
+    default: true
+    description: 'Back Side MIME Header Processing'
+    cli_alias: mime-back-headers
+  - name: StreamOutputToBack
+    type: String
+    enum:
+      - 'buffer-until-verification'
+      - 'stream-until-infraction'
+    default: 'buffer-until-verification'
+    description: 'Stream Output to Back'
+    cli_alias: stream-output-to-back
+  - name: StreamOutputToFront
+    type: String
+    enum:
+      - 'buffer-until-verification'
+      - 'stream-until-infraction'
+    default: 'buffer-until-verification'
+    description: 'Stream Output to Front'
+    cli_alias: stream-output-to-front
+  - name: MaxMessageSize
+    type: Int64
+    maximum: 2097151
+    description: 'Maximum Message Size'
+    cli_alias: max-message-size
+  - name: GatewayParserLimits
+    type: Bool
+    default: false
+    description: 'Parser limits'
+    cli_alias: gateway-parser-limits
+  - name: ParserLimitsElementDepth
+    type: Int64
+    default: 512
+    description: 'XML Element Depth'
+    cli_alias: element-depth
+  - name: ParserLimitsAttributeCount
+    type: Int64
+    default: 128
+    description: 'XML Attribute Count'
+    cli_alias: attribute-count
+  - name: ParserLimitsMaxNodeSize
+    type: Int64
+    minimum: 1024
+    maximum: 4294967295
+    default: 33554432
+    description: 'XML Maximum Node Size'
+    cli_alias: max-node-size
+  # DEPRECATED
+  # - name: ParserLimitsForbidExternalReferences
+  - name: ParserLimitsExternalReferences
+    type: String
+    enum:
+      - 'forbid'
+      - 'ignore'
+      - 'allow'
+    default: 'forbid'
+    description: 'XML External Reference Handling'
+    cli_alias: external-references
+  - name: ParserLimitsMaxPrefixes
+    type: Int64
+    default: 1024
+    description: 'XML Maximum Distinct Prefixes'
+    cli_alias: max-prefixes
+  - name: ParserLimitsMaxNamespaces
+    type: Int64
+    default: 1024
+    description: 'XML Maximum Distinct Namespaces'
+    cli_alias: max-namespaces
+  - name: ParserLimitsMaxLocalNames
+    type: Int64
+    default: 60000
+    description: 'XML Maximum Distinct Local Names'
+    cli_alias: max-local-names
+  - name: ParserLimitsAttachmentByteCount
+    type: Int64
+    default: 2000000000
+    description: 'Attachment Byte Count Limit'
+    cli_alias: attachment-byte-count
+  - name: ParserLimitsAttachmentPackageByteCount
+    type: Int64
+    description: 'Attachment Package Byte Count Limit'
+    cli_alias: attachment-package-byte-count
+  - name: DebugMode
+    type: String
+    enum:
+      - 'on'
+      - 'off'
+      - 'unbounded'
+    default: 'off'
+    description: 'Probe setting'
+    cli_alias: debug-mode
+  - name: DebugHistory
+    type: Int64
+    minimum: 10
+    maximum: 250
+    default: 25
+    description: 'Transaction History'
+    cli_alias: debug-history
+  - name: DebugTrigger
+    type: List
+    element_type: DmMSDebugTriggerType
+    description: 'Probe Triggers'
+    cli_alias: debug-trigger
+  - name: FlowControl
+    type: Bool
+    default: false
+    description: 'Flow Control'
+    cli_alias: flowcontrol
+  - name: SOAPSchemaURL
+    type: String
+    default: 'store:///schemas/soap-envelope.xsd'
+    description: 'SOAP Schema URL'
+    cli_alias: soap-schema-url
+  - name: FrontTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    required: true
+    default: 120
+    description: 'Front Side Timeout'
+    cli_alias: front-timeout
+  - name: BackTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    required: true
+    default: 120
+    description: 'Back Side Timeout'
+    cli_alias: back-timeout
+  - name: FrontPersistentTimeout
+    type: Int64
+    minimum: 0
+    maximum: 86400
+    required: true
+    default: 180
+    description: 'Front Persistent Timeout'
+    cli_alias: front-persistent-timeout
+  - name: BackPersistentTimeout
+    type: Int64
+    minimum: 0
+    maximum: 86400
+    required: true
+    default: 180
+    description: 'Back Persistent Timeout'
+    cli_alias: back-persistent-timeout
+  - name: IncludeResponseTypeEncoding
+    type: Bool
+    default: false
+    description: 'Include charset in response-type'
+    cli_alias: include-content-type-encoding
+  - name: PersistentConnections
+    type: Bool
+    default: true
+    description: 'Persistent Connections'
+    cli_alias: persistent-connections
+  - name: LoopDetection
+    type: Bool
+    default: false
+    description: 'Loop Detection'
+    cli_alias: loop-detection
+  - name: DoHostRewriting
+    type: Bool
+    default: true
+    description: 'Rewrite Host Names when Redirecting'
+    cli_alias: host-rewriting
+  - name: DoChunkedUpload
+    type: Bool
+    default: false
+    description: 'Allow Chunked Uploads'
+    cli_alias: chunked-uploads
+  - name: ProcessHTTPErrors
+    type: Bool
+    default: true
+    description: 'Process Backend Errors'
+    cli_alias: process-http-errors
+  - name: HTTPClientIPLabel
+    type: String
+    default: 'X-Client-IP'
+    description: 'HTTP Client IP Label'
+    cli_alias: http-client-ip-label
+  - name: HTTPLogCorIDLabel
+    type: String
+    default: 'X-Global-Transaction-ID'
+    description: 'HTTP Global Transaction ID Label'
+    cli_alias: http-global-tranID-label
+  - name: LoadBalancerHashHeader
+    type: String
+    description: 'Load Balancer Hash Header'
+    cli_alias: load-balancer-hash-header
+  - name: InOrderMode
+    dm_type: DmGatewayInOrderMode
+    description: 'Message Processing Modes'
+    cli_alias: inorder-mode
+  - name: WSAMode
+    type: String
+    enum:
+      - 'wsa2sync'
+      - 'sync2wsa'
+      - 'wsa2wsa'
+      - 'sync2sync'
+    default: 'sync2sync'
+    description: 'WS-Addressing Mode'
+    cli_alias: wsa-mode
+  - name: WSARequireAAA
+    type: Bool
+    default: true
+    description: 'Require AAA for WS-Addressing trust'
+    cli_alias: wsa-require-aaa
+  - name: WSARewriteReplyTo
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'Rewrite WS Addressing Reply To Header'
+    cli_alias: wsa-replyto-rewrite
+  - name: WSARewriteFaultTo
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'Rewrite WS Addressing Fault To Header'
+    cli_alias: wsa-faultto-rewrite
+  - name: WSARewriteTo
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'Rewrite WS Addressing To Header'
+    cli_alias: wsa-to-rewrite
+  - name: WSAStrip
+    type: Bool
+    default: true
+    description: 'Strip WS-Addressing Headers'
+    cli_alias: wsa-strip-headers
+  - name: WSADefaultReplyTo
+    type: String
+    default: 'http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous'
+    description: 'Default WS-Addressing Reply-To'
+    cli_alias: wsa-default-replyto
+  - name: WSADefaultFaultTo
+    type: String
+    default: 'http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous'
+    description: 'Default WS-Addressing Fault-To'
+    cli_alias: wsa-default-faultto
+  - name: WSAForce
+    type: Bool
+    default: false
+    description: 'Force Insertion of WS-Addressing Headers'
+    cli_alias: wsa-force
+  - name: WSAGenStyle
+    type: String
+    enum:
+      - 'sync'
+      - 'async'
+      - 'oob'
+    default: 'sync'
+    description: 'WS-Addressing Message Generation Pattern'
+    cli_alias: wsa-genstyle
+  - name: WSAHTTPAsyncResponseCode
+    type: Int64
+    minimum: 200
+    maximum: 599
+    default: 204
+    description: 'Asynchronous HTTP ResponseCode'
+    cli_alias: wsa-http-async-response-code
+  - name: WSABackProtocol
+    type: String
+    description: 'WS-Addressing Reply Point'
+    cli_alias: wsa-back-protocol
+  - name: WSATimeout
+    type: Int64
+    minimum: 1
+    maximum: 4000000
+    default: 120
+    description: 'WS-Addressing Asynchronous Reply Timeout'
+    cli_alias: wsa-timeout
+  - name: WSRMEnabled
+    type: Bool
+    default: false
+    description: 'WS-ReliableMessaging'
+    cli_alias: wsrm
+  - name: WSRMSequenceExpiration
+    type: Int64
+    minimum: 10
+    maximum: 86400
+    default: 3600
+    description: 'Target Sequence Expiration Interval'
+    cli_alias: wsrm-sequence-expiration
+  - name: WSRMAAAPolicy
+    type: String
+    reference_to: AAAPolicy
+    description: 'WS-RM AAA Policy'
+    cli_alias: wsrm-aaa-policy
+  - name: WSRMDestinationAcceptCreateSequence
+    type: Bool
+    default: true
+    description: 'Destination Accept Incoming CreateSequence'
+    cli_alias: wsrm-destination-accept-create-sequence
+  - name: WSRMDestinationMaximumSequences
+    type: Int64
+    minimum: 1
+    maximum: 2048
+    default: 400
+    description: 'Destination Maximum Simultaneous Sequences'
+    cli_alias: wsrm-destination-maximum-sequences
+  - name: WSRMDestinationInOrder
+    type: Bool
+    default: false
+    description: 'Destination InOrder Delivery Assurance'
+    cli_alias: wsrm-destination-inorder
+  - name: WSRMDestinationMaximumInOrderQueueLength
+    type: Int64
+    minimum: 1
+    maximum: 256
+    default: 10
+    description: 'Destination Maximum InOrder Queue Length'
+    cli_alias: wsrm-destination-maximum-inorder-queue-length
+  - name: WSRMDestinationAcceptOffers
+    type: Bool
+    default: false
+    description: 'Destination Accept Two-Way Offers'
+    cli_alias: wsrm-destination-accept-offers
+  - name: WSRMFrontForce
+    type: Bool
+    default: false
+    description: 'WS-RM Required on Request'
+    cli_alias: wsrm-request-force
+  - name: WSRMBackForce
+    type: Bool
+    default: false
+    description: 'WS-RM Required on Response'
+    cli_alias: wsrm-response-force
+  - name: WSRMBackCreateSequence
+    type: Bool
+    default: false
+    description: 'Source Create Sequence on Request'
+    cli_alias: wsrm-source-request-create-sequence
+  - name: WSRMFrontCreateSequence
+    type: Bool
+    default: false
+    description: 'Source Create Sequence on Response'
+    cli_alias: wsrm-source-response-create-sequence
+  - name: WSRMSourceMakeOffer
+    type: Bool
+    default: false
+    description: 'Source Make Two-Way Offer'
+    cli_alias: wsrm-source-make-offer
+  - name: WSRMUsesSequenceSSL
+    type: Bool
+    default: false
+    description: 'Source use SSL/TLS Session Binding'
+    cli_alias: wsrm-source-sequence-ssl
+  - name: WSRMFrontAcksTo
+    type: String
+    description: 'Source Front Reply Point'
+    cli_alias: wsrm-source-front-acks-to
+  - name: WSRMBackAcksTo
+    type: String
+    description: 'Source Back AcksTo Reply Point'
+    cli_alias: wsrm-source-back-acks-to
+  - name: WSRMSourceMaximumSequences
+    type: Int64
+    minimum: 1
+    maximum: 2048
+    default: 400
+    description: 'Source Maximum Simultaneous Sequences'
+    cli_alias: wsrm-source-maximum-sequences
+  - name: WSRMSourceRetransmissionInterval
+    type: Int64
+    minimum: 2
+    maximum: 600
+    default: 10
+    description: 'Source Retransmission Interval'
+    cli_alias: wsrm-source-retransmission-interval
+  - name: WSRMSourceExponentialBackoff
+    type: Bool
+    default: true
+    description: 'Source Exponential Backoff'
+    cli_alias: wsrm-source-exponential-backoff
+  - name: WSRMSourceMaximumRetransmissions
+    type: Int64
+    minimum: 1
+    maximum: 256
+    default: 4
+    description: 'Source Maximum Retransmissions'
+    cli_alias: wsrm-source-retransmit-count
+  - name: WSRMSourceMaximumQueueLength
+    type: Int64
+    minimum: 1
+    maximum: 256
+    default: 30
+    description: 'Source Maximum Queue Length'
+    cli_alias: wsrm-source-maximum-queue-length
+  - name: WSRMSourceRequestAckCount
+    type: Int64
+    minimum: 1
+    maximum: 256
+    default: 1
+    description: 'Source Request Ack Count'
+    cli_alias: wsrm-source-request-ack-count
+  - name: WSRMSourceInactivityClose
+    type: Int64
+    minimum: 10
+    maximum: 3600
+    default: 360
+    description: 'Source Inactivity Close Interval'
+    cli_alias: wsrm-source-inactivity-close-interval
+  - name: ForcePolicyExec
+    type: Bool
+    default: false
+    description: 'Process Messages Whose Body Is Empty'
+    cli_alias: force-policy-exec
+  - name: RewriteErrors
+    type: Bool
+    default: true
+    description: 'Rewrite Error Messages'
+    cli_alias: rewrite-errors
+  - name: DelayErrors
+    type: Bool
+    default: true
+    description: 'Delay Error Messages'
+    cli_alias: delay-errors
+  - name: DelayErrorsDuration
+    type: Int64
+    minimum: 250
+    maximum: 300000
+    default: 1000
+    description: 'Duration to Delay Error Messages'
+    cli_alias: delay-errors-duration

@@ -1,0 +1,75 @@
+name: ImportPackage
+description: 'Import configuration file'
+cli_alias: 'import-package'
+cmd_group: 'config-management'
+rest_endpoint: '/mgmt/config/{domain}/ImportPackage'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'ImportPackage_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: URL
+    type: String
+    required: true
+    example: 'http://localhost/config.zip'
+    description: 'URL'
+    cli_alias: source-url
+  - name: ImportFormat
+    type: String
+    enum:
+      - 'ZIP'
+      - 'XML'
+    required: true
+    default: 'ZIP'
+    description: 'Format'
+    cli_alias: import-format
+  - name: OverwriteFiles
+    type: Bool
+    required: true
+    default: true
+    description: 'Overwrite files'
+    cli_alias: overwrite-files
+  - name: OverwriteObjects
+    type: Bool
+    required: true
+    default: true
+    description: 'Overwrite objects'
+    cli_alias: overwrite-objects
+  - name: DestinationDomain
+    type: String
+    reference_to: Domain
+    description: 'Destination domain'
+    cli_alias: destination-domain
+  - name: DeploymentPolicy
+    type: String
+    reference_to: ConfigDeploymentPolicy
+    description: 'Deployment policy'
+    cli_alias: deployment-policy
+  - name: DeploymentPolicyParameters
+    type: String
+    reference_to: DeploymentPolicyParametersBinding
+    description: 'Deployment policy variables'
+    cli_alias: deployment-policy-variables
+  - name: LocalIPRewrite
+    type: Bool
+    default: true
+    description: 'Local IP rewrite'
+    cli_alias: local-ip-rewrite
+  - name: OnStartup
+    type: Bool
+    default: true
+    description: 'Import on startup'
+    cli_alias: auto-execute

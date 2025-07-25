@@ -1,0 +1,24 @@
+name: DmWebSphereJMSEndpoint
+model_only: true
+list_item: true
+attributes:
+  - name: Host
+    type: String
+    required: true
+    example: 'localhost'
+    description: 'Host'
+  - name: Port
+    type: Int64
+    required: true
+    example: 8888
+    description: 'Port'
+  - name: Transport
+    type: String
+    enum:
+      - 'TCP'
+      - 'SSL'
+      - 'HTTP'
+      - 'HTTPS'
+    default: 'TCP'
+    required: true
+    description: 'Transport chain'

@@ -1,0 +1,16 @@
+name: DmGatewayPeeringGroupPeerNode
+model_only: true
+list_item: true
+attributes:
+  - name: Host
+    type: String
+    required: true
+    example: 'localhost'
+    description: 'Address'
+  - name: Priority
+    type: Int64
+    minimum: 0
+    maximum: 255
+    required: true
+    default: 100
+    description: 'Priority'

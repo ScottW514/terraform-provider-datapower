@@ -1,0 +1,16 @@
+name: DmODRConnProperty
+model_only: true
+list_item: true
+attributes:
+  - name: ConnGroupPropName
+    type: String
+    required: true
+    example: 'propname'
+    description: 'Name'
+    cli_alias: odr-conn-prop-name
+  - name: ConnGroupPropValue
+    type: String
+    required: true
+    example: 'value'
+    description: 'Value'
+    cli_alias: odr-conn-prop-value

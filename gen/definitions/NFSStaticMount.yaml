@@ -1,0 +1,90 @@
+name: NFSStaticMount
+description: 'NFS static mounts'
+cli_alias: 'nfs-static-mount'
+cmd_group: 'file-management'
+rest_endpoint: '/mgmt/config/{domain}/NFSStaticMount'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'NFSStaticMount_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: remote
+    type: String
+    required: true
+    example: 'url://test'
+    description: 'Remote NFS export'
+    cli_alias: remote
+  - name: LocalFilesystemAccess
+    type: Bool
+    default: false
+    description: 'Local file system access'
+    cli_alias: local-filesystem-access
+  - name: Version
+    type: Int64
+    minimum: 2
+    maximum: 4
+    default: 3
+    description: 'NFS version'
+    cli_alias: version
+  - name: Transport
+    type: String
+    enum:
+      - 'tcp'
+      - 'udp'
+    default: 'tcp'
+    description: 'Transport protocol'
+    cli_alias: transport
+  - name: MountType
+    type: String
+    enum:
+      - 'hard'
+      - 'soft'
+    default: 'hard'
+    description: 'Mount type'
+    cli_alias: mount-type
+  - name: ReadOnly
+    type: Bool
+    default: false
+    description: 'Read-Only'
+    cli_alias: read-only
+  - name: ReadSize
+    type: Int64
+    minimum: 1024
+    maximum: 32768
+    default: 4096
+    description: 'Read size'
+    cli_alias: rsize
+  - name: WriteSize
+    type: Int64
+    minimum: 1024
+    maximum: 32768
+    default: 4096
+    description: 'Write size'
+    cli_alias: wsize
+  - name: Timeout
+    type: Int64
+    minimum: 1
+    maximum: 600
+    default: 7
+    description: 'Retransmission timeout'
+    cli_alias: timeo
+  - name: Retransmissions
+    type: Int64
+    minimum: 1
+    maximum: 60
+    default: 3
+    description: 'Max retransmissions'
+    cli_alias: retrans

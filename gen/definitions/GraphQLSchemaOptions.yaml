@@ -1,0 +1,30 @@
+name: GraphQLSchemaOptions
+description: 'GraphQL schema options'
+cli_alias: 'graphql-schema-options'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/GraphQLSchemaOptions'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'GraphQLSchemaOptions_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: VisibilityList
+    type: String
+    reference_to: VisibilityList
+    description: 'Visibility list'
+    cli_alias: visibility-list
+  - name: API
+    type: String
+    reference_to: APIDefinition
+    required: true
+    description: 'API'
+    cli_alias: api

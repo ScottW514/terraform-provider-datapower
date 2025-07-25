@@ -1,0 +1,40 @@
+name: OpenTelemetry
+description: 'OpenTelemetry'
+cli_alias: 'otel'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/OpenTelemetry'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'OpenTelemetry_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Exporter
+    type: String
+    reference_to: OpenTelemetryExporter
+    required: true
+    description: 'Exporter'
+    cli_alias: exporter
+  - name: Sampler
+    type: String
+    reference_to: OpenTelemetrySampler
+    required: true
+    description: 'Sampler'
+    cli_alias: sampler
+  - name: ResourceAttribute
+    type: List
+    element_type: DmOpenTelemetryResourceAttribute
+    description: 'Resource attributes'
+    cli_alias: resource-attribute

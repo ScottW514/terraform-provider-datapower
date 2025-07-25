@@ -1,0 +1,40 @@
+name: ControlList
+description: 'Control List'
+cli_alias: 'control-list'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/ControlList'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'ControlList_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Type
+    type: String
+    enum:
+      - 'blocklist'
+      - 'allowlist'
+    description: 'Type'
+    cli_alias: type
+  - name: Value
+    type: List
+    element_type: String
+    description: 'Value'
+    cli_alias: value
+  - name: CaseInsensitive
+    type: Bool
+    default: false
+    description: 'Case-insensitive'
+    cli_alias: case-insensitive

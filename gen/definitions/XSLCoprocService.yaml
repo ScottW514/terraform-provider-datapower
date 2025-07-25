@@ -1,0 +1,146 @@
+name: XSLCoprocService
+description: 'XSL Coprocessor'
+cli_alias: 'xslcoproc'
+cmd_group: 'xslcoproc'
+rest_endpoint: '/mgmt/config/{domain}/XSLCoprocService'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Priority
+    type: String
+    enum:
+      - 'unknown'
+      - 'high-min'
+      - 'high'
+      - 'high-max'
+      - 'normal-min'
+      - 'normal'
+      - 'normal-max'
+      - 'low-min'
+      - 'low'
+      - 'low-max'
+    default: 'normal'
+    description: 'Service Priority'
+    cli_alias: priority
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    example: 8888
+    description: 'Port Number'
+    cli_alias: port
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    required: true
+    default: 'default'
+    test_value: '"default"'
+    description: 'XML Manager'
+    cli_alias: xml-manager
+  - name: URLRewritePolicy
+    type: String
+    reference_to: URLRewritePolicy
+    description: 'URL Rewrite Policy'
+    cli_alias: urlrewrite-policy
+  - name: StylePolicyRule
+    type: String
+    reference_to: StylePolicyRule
+    description: 'Processing Rule'
+    cli_alias: stylesheet-rule
+  - name: ConnectionTimeout
+    type: Int64
+    minimum: 3
+    maximum: 7200
+    default: 60
+    description: 'Connection Timeout'
+    cli_alias: connection-timeout
+  - name: IntermediateResultTimeout
+    type: Int64
+    minimum: 1
+    maximum: 600
+    default: 20
+    description: 'Intermediate Result Timeout'
+    cli_alias: intermediate-result-timeout
+  - name: CacheRelativeURL
+    type: Bool
+    default: false
+    description: 'Cache Relative URL'
+    cli_alias: cache-relative-url
+  - name: UseClientURIResolver
+    type: Bool
+    default: true
+    description: 'Use URI Resolver'
+    cli_alias: use-client-resolver
+  - name: CryptoExtensions
+    type: Bool
+    default: false
+    description: 'Crypto Extensions'
+    cli_alias: crypto-extensions
+  - name: DefaultParamNamespace
+    type: String
+    default: 'http://www.datapower.com/param/config'
+    description: 'Default parameter namespace'
+    cli_alias: default-param-namespace
+  # DEPRECATED
+  # - name: SSLProxy
+  - name: DebugMode
+    type: String
+    enum:
+      - 'on'
+      - 'off'
+      - 'unbounded'
+    default: 'off'
+    description: 'Probe setting'
+    cli_alias: debug-mode
+  - name: DebugHistory
+    type: Int64
+    minimum: 10
+    maximum: 250
+    default: 25
+    description: 'Transaction History'
+    cli_alias: debug-history
+  - name: DebugTrigger
+    type: List
+    element_type: DmMSDebugTriggerType
+    description: 'Probe Triggers'
+    cli_alias: debug-trigger
+  - name: SSLServerConfigType
+    type: String
+    enum:
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'TLS type'
+    cli_alias: ssl-config-type
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'TLS SNI server profile'
+    cli_alias: ssl-sni-server
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local address'
+    cli_alias: ip-address

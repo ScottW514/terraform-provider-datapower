@@ -1,0 +1,7 @@
+name: DmSFTPServerVirtualDirectory
+model_only: true
+list_item: true
+attributes:
+  - name: VirtualPath
+    type: String
+    description: 'Virtual directory'

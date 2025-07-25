@@ -1,0 +1,7 @@
+name: DmLogIPFilter
+model_only: true
+list_item: true
+attributes:
+  - name: IPAddress
+    type: String
+    description: 'IP address'

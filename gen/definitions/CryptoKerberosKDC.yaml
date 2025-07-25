@@ -1,0 +1,73 @@
+name: CryptoKerberosKDC
+description: 'Kerberos KDC Server'
+cli_alias: 'kerberos-kdc'
+cmd_group: 'crypto'
+rest_endpoint: '/mgmt/config/{domain}/CryptoKerberosKDC'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CryptoKerberosKDC_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Realm
+    type: String
+    required: true
+    example: 'realm'
+    description: 'Kerberos realm name'
+    cli_alias: realm
+  - name: Server
+    type: String
+    required: true
+    example: 'localhost'
+    description: 'Kerberos KDC Server'
+    cli_alias: server
+  - name: UseTCP
+    type: Bool
+    default: false
+    description: 'Use TCP'
+    cli_alias: tcp
+  - name: ServerPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 88
+    description: 'Server Port Number'
+    cli_alias: port
+  - name: UDPTimeout
+    type: Int64
+    minimum: 1
+    maximum: 60
+    default: 5
+    description: 'UDP Timeout'
+    cli_alias: udp-timeout
+  - name: CacheTickets
+    type: Bool
+    default: true
+    description: 'Cache Service Tickets'
+    cli_alias: cache-tickets
+  - name: MaxCachedTickets
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 32
+    description: 'Maximum Number of Cached Service Tickets'
+    cli_alias: max-cached-tickets
+  - name: MinCachedTicketValidity
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 60
+    description: 'Minimum Cached Ticket Validity'
+    cli_alias: min-cached-ticket-validity

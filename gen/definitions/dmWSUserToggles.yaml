@@ -1,0 +1,42 @@
+name: DmWSUserToggles
+model_only: true
+list_item: true
+attributes:
+  - name: WSDLName
+    type: String
+    required: true
+    description: 'WSDL file'
+  - name: ServiceName
+    type: String
+    required: true
+    description: 'Service'
+  - name: ServicePortName
+    type: String
+    required: true
+    description: 'Port'
+  - name: PortTypeName
+    type: String
+    required: true
+    description: 'PortType'
+  - name: BindingName
+    type: String
+    required: true
+    description: 'Binding'
+  - name: OperationName
+    type: String
+    required: true
+    description: 'Operation'
+  - name: Toggles
+    dm_type: DmWSDLUserPolicyToggles
+    description: 'Policy Toggles'
+  - name: Subscription
+    type: String
+    description: 'Subscription'
+  - name: UseFragmentID
+    type: Bool
+    default: false
+    description: 'Use Fragment ID'
+    cli_alias: use-fragid
+  - name: FragmentID
+    type: String
+    description: 'Fragment Identifier'

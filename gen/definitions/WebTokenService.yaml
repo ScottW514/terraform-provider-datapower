@@ -1,0 +1,138 @@
+name: WebTokenService
+description: 'Web Token Service'
+cli_alias: 'web-token-service'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/WebTokenService'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WebTokenService_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Priority
+    type: String
+    enum:
+      - 'unknown'
+      - 'high-min'
+      - 'high'
+      - 'high-max'
+      - 'normal-min'
+      - 'normal'
+      - 'normal-max'
+      - 'low-min'
+      - 'low'
+      - 'low-max'
+    default: 'normal'
+    description: 'Service priority'
+    cli_alias: priority
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    required: true
+    test_value: '"default"'
+    default: 'default'
+    description: 'XML manager'
+    cli_alias: xml-manager
+  - name: RequestType
+    type: String
+    enum:
+      - 'soap'
+      - 'xml'
+      - 'unprocessed'
+      - 'preprocessed'
+      - 'json'
+    default: 'preprocessed'
+    description: 'Request type'
+    cli_alias: request-type
+  - name: FrontSide
+    type: List
+    element_type: DmSSLFrontSide
+    description: 'Source addresses'
+    cli_alias: listen-on
+  - name: StylePolicy
+    type: String
+    reference_to: StylePolicy
+    required: true
+    default: 'default'
+    test_value: '"default"'
+    description: 'Processing policy'
+    cli_alias: stylepolicy
+  - name: RewriteErrors
+    type: Bool
+    default: true
+    description: 'Rewrite error messages'
+    cli_alias: rewrite-errors
+  - name: DelayErrors
+    type: Bool
+    default: true
+    description: 'Delay error messages'
+    cli_alias: delay-errors
+  - name: DelayErrorsDuration
+    type: Int64
+    minimum: 250
+    maximum: 300000
+    default: 1000
+    description: 'Duration to delay error messages'
+    cli_alias: delay-errors-duration
+  - name: FrontTimeout
+    type: Int64
+    minimum: 1
+    maximum: 86400
+    required: true
+    default: 120
+    description: 'Front side timeout'
+    cli_alias: front-timeout
+  - name: FrontPersistentTimeout
+    type: Int64
+    minimum: 0
+    maximum: 86400
+    required: true
+    default: 180
+    description: 'Front persistent timeout'
+    cli_alias: front-persistent-timeout
+  - name: FrontHTTPVersion
+    type: String
+    enum:
+      - 'HTTP/1.0'
+      - 'HTTP/1.1'
+    default: 'HTTP/1.1'
+    description: 'HTTP version to client'
+    cli_alias: http-front-version
+  - name: HTTPClientIPLabel
+    type: String
+    default: 'X-Client-IP'
+    description: 'HTTP client IP label'
+    cli_alias: http-client-ip-label
+  - name: HTTPLogCorIDLabel
+    type: String
+    default: 'X-Global-Transaction-ID'
+    description: 'HTTP global transaction ID label'
+    cli_alias: http-global-tranID-label
+  - name: DebugMode
+    type: String
+    enum:
+      - 'on'
+      - 'off'
+      - 'unbounded'
+    default: 'off'
+    description: 'Probe setting'
+    cli_alias: debug-mode
+  - name: DebugHistory
+    type: Int64
+    minimum: 10
+    maximum: 250
+    default: 25
+    description: 'Transaction history'
+    cli_alias: debug-history

@@ -7,11 +7,70 @@ description: |-
 
 # Changelog
 
+## Unreleased
+
+- Fix test generator handling of test_value for non-string types
+- API Additions (Domain Settings):
+SecureBackupMode
+- API Additions (Objects)
+CompileSettings
+ConfigSequence
+ConformancePolicy
+ControlList
+CryptoKerberosKDC
+DocumentCryptoMap
+FTPFilePollerSourceProtocolHandler
+FTPServerSourceProtocolHandler
+GatewayPeeringGroup
+GitOpsTemplate
+GraphQLSchemaOptions
+HostAlias
+ImportPackage
+IncludeConfig
+KafkaCluster
+KafkaSourceProtocolHandler
+LogTarget
+MTOMPolicy
+NFSFilePollerSourceProtocolHandler
+NFSStaticMount
+OAuthProviderSettings
+ODRConnectorGroup
+OpenTelemetry
+OpenTelemetryExporter
+OpenTelemetrySampler
+OperationRateLimit
+PeerGroup
+POPPollerSourceProtocolHandler
+RateLimitDefinitionGroup
+SchemaExceptionMap
+SFTPFilePollerSourceProtocolHandler
+SMTPServerConnection
+SOAPHeaderDisposition
+SSHServerSourceProtocolHandler
+SSLProxyService
+StatelessTCPSourceProtocolHandler
+TCPProxyService
+VisibilityList
+WebSphereJMSServer
+WebSphereJMSSourceProtocolHandler
+WebTokenService
+WSEndpointRewritePolicy
+WSGateway
+WSStylePolicy
+WSStylePolicyRule
+WXSGrid
+XPathRoutingMap
+XSLCoprocService
+XSLProxyService
+XTCProtocolHandler
+
 ## v0.5.0
 
 - Remove deprecated API's
   - APIRateLimit
   - TFIMEndpoint
+- API Additions (Domain Settings):
+  - LunaHASettings
 - API Additions (Objects)
   - AS1PollerSourceProtocolHandler
   - AS2ProxySourceProtocolHandler
@@ -25,28 +84,27 @@ description: |-
   - B2BProfile
   - B2BProfileGroupmake
   - B2BXPathRoutingPolicy
-  - MQManager
-  - MQManagerGroup
-  - MQv9PlusMFTSourceProtocolHandler
-  - MQv9PlusSourceProtocolHandler
-  - MCFCustomRule
-  - MCFHttpHeader
-  - MCFHttpMethod
-  - MCFHttpURL
-  - MCFXPath
-  - SLMAction
-  - SLMCredClass
-  - SLMPolicy
-  - SLMRsrcClass
-  - SLMSchedule
   - CORSPolicy
   - CORSRule
   - EBMS2SourceProtocolHandler
   - EBMS3SourceProtocolHandler
   - Luna
   - LunaHAGroup
-  - LunaHASettings
   - LunaPartition
+  - MCFCustomRule
+  - MCFHttpHeader
+  - MCFHttpMethod
+  - MCFHttpURL
+  - MCFXPath
+  - MQManager
+  - MQManagerGroup
+  - MQv9PlusMFTSourceProtocolHandler
+  - MQv9PlusSourceProtocolHandler
+  - SLMAction
+  - SLMCredClass
+  - SLMPolicy
+  - SLMRsrcClass
+  - SLMSchedule
 
 ## v0.4.0
 

@@ -1,0 +1,14 @@
+name: DmKafkaEndpoint
+model_only: true
+list_item: true
+attributes:
+  - name: Host
+    type: String
+    required: true
+    example: 'localhost'
+    description: 'Host'
+  - name: Port
+    type: Int64
+    required: true
+    example: 8888
+    description: 'Port'

@@ -1,0 +1,15 @@
+name: DmOIDCHybridResponseType
+model_only: true
+attributes:
+  - name: code_id_token
+    type: Bool
+    default: true
+    description: 'code id_token'
+  - name: code_access_token
+    type: Bool
+    default: false
+    description: 'code token'
+  - name: code_id_token_access_token
+    type: Bool
+    default: false
+    description: 'code id_token token'

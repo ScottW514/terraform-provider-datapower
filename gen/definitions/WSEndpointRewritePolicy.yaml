@@ -1,0 +1,53 @@
+name: WSEndpointRewritePolicy
+description: 'WS-Proxy Endpoint Rewrite'
+cli_alias: 'wsm-endpointrewrite'
+cmd_group: 'webservice'
+rest_endpoint: '/mgmt/config/{domain}/WSEndpointRewritePolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WSEndpointRewritePolicy_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: WSEndpointLocalRewriteRule
+    type: List
+    element_type: DmWSEndpointLocalRewriteRule
+    description: 'Local Rewrite Rules'
+    cli_alias: listener-rule
+  - name: WSEndpointRemoteRewriteRule
+    type: List
+    element_type: DmWSEndpointRemoteRewriteRule
+    description: 'Remote Rewrite Rules'
+    cli_alias: backend-rule
+  - name: WSEndpointPublishRewriteRule
+    type: List
+    element_type: DmWSEndpointPublishRewriteRule
+    description: 'Publish Rewrite Rules'
+    cli_alias: publisher-rule
+  - name: WSEndpointSubscriptionLocalRule
+    type: List
+    element_type: DmWSEndpointSubscriptionLocalRule
+    description: 'Subscription Local Rewrite Rule'
+    cli_alias: subscription-listener-rule
+  - name: WSEndpointSubscriptionRemoteRule
+    type: List
+    element_type: DmWSEndpointSubscriptionRemoteRule
+    description: 'Subscription Remote Rewrite Rule'
+    cli_alias: subscription-backend-rule
+  - name: WSEndpointSubscriptionPublishRule
+    type: List
+    element_type: DmWSEndpointSubscriptionPublishRule
+    description: 'Subscription Publish Rewrite Rule'
+    cli_alias: subscription-publisher-rule

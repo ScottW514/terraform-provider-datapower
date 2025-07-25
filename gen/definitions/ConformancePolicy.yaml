@@ -1,0 +1,108 @@
+name: ConformancePolicy
+description: 'Conformance Policy'
+cli_alias: 'conformancepolicy'
+cmd_group: 'logging'
+rest_endpoint: '/mgmt/config/{domain}/ConformancePolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'ConformancePolicy_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Profiles
+    dm_type: DmConformanceProfiles
+    description: 'Profiles'
+    cli_alias: profiles
+  - name: IgnoredRequirements
+    type: List
+    element_type: String
+    description: 'Ignored Requirements'
+    cli_alias: ignored-requirements
+  - name: FixupStylesheets
+    type: List
+    element_type: String
+    description: 'Corrective Stylesheets'
+    cli_alias: fixup-stylesheets
+  - name: AssertBP10Conformance
+    type: Bool
+    default: false
+    description: 'BP1.0 Conformance Claim Assertion'
+    cli_alias: assert-bp10-conformance
+  - name: ReportLevel
+    type: String
+    enum:
+      - 'never'
+      - 'failure'
+      - 'warning'
+      - 'always'
+    default: 'never'
+    description: 'Record Report'
+    cli_alias: report-level
+  - name: LogTarget
+    type: String
+    description: 'Destination'
+    cli_alias: report-target
+  - name: RejectLevel
+    type: String
+    enum:
+      - 'never'
+      - 'failure'
+      - 'warning'
+    default: 'never'
+    description: 'Reject non-conforming messages'
+    cli_alias: reject-level
+  - name: RejectIncludeSummary
+    type: Bool
+    default: false
+    description: 'Include error summary'
+    cli_alias: reject-include-summary
+  - name: ResultIsConformanceReport
+    type: Bool
+    default: false
+    description: 'Use analysis as result'
+    cli_alias: result-is-conformance-report
+  - name: ResponsePropertiesEnabled
+    type: Bool
+    default: false
+    description: 'Distinct response behavior'
+    cli_alias: response-properties-enabled
+  - name: ResponseReportLevel
+    type: String
+    enum:
+      - 'never'
+      - 'failure'
+      - 'warning'
+      - 'always'
+    default: 'never'
+    description: 'Record Report (response direction)'
+    cli_alias: response-report-level
+  - name: ResponseLogTarget
+    type: String
+    description: 'Destination'
+    cli_alias: response-report-target
+  - name: ResponseRejectLevel
+    type: String
+    enum:
+      - 'never'
+      - 'failure'
+      - 'warning'
+    default: 'never'
+    description: 'Reject non-conforming response messages'
+    cli_alias: response-reject-level
+  - name: ResponseRejectIncludeSummary
+    type: Bool
+    default: false
+    description: 'Include response error summary'
+    cli_alias: response-reject-include-summary

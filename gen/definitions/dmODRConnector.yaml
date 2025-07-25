@@ -1,0 +1,16 @@
+name: DmODRConnector
+model_only: true
+list_item: true
+attributes:
+  - name: DmgrHostname
+    type: String
+    required: true
+    example: 'localhost'
+    description: 'Connector host'
+    cli_alias: dmgr-host
+  - name: DmgrPort
+    type: Int64
+    required: true
+    example: 8888
+    description: 'Connector port'
+    cli_alias: dmgr-port

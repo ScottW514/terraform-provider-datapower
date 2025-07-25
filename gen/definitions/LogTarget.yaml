@@ -1,0 +1,344 @@
+name: LogTarget
+description: 'Log Target'
+cli_alias: 'logging target'
+cmd_group: 'logging'
+rest_endpoint: '/mgmt/config/{domain}/LogTarget'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '___LogTarget_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Backup
+    type: String
+    reference_to: LogTarget
+    description: 'Backup log'
+    cli_alias: backup
+  - name: LogEvents
+    type: List
+    element_type: DmLogEvent
+    description: 'Event subscriptions'
+    cli_alias: event
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Type
+    type: String
+    enum:
+      - 'console'
+      - 'cache'
+      - 'syslog'
+      - 'syslog-tcp'
+      - 'smtp'
+      - 'file'
+      - 'soap'
+      - 'snmp'
+      - 'nfs'
+    default: 'file'
+    required: true
+    description: 'Target type'
+    cli_alias: type
+  - name: Priority
+    type: String
+    enum:
+      - 'unknown'
+      - 'high-min'
+      - 'high'
+      - 'high-max'
+      - 'normal-min'
+      - 'normal'
+      - 'normal-max'
+      - 'low-min'
+      - 'low'
+      - 'low-max'
+    default: 'normal'
+    description: 'Logging priority'
+    cli_alias: priority
+  - name: SoapVersion
+    type: String
+    enum:
+      - 'soap11'
+      - 'soap12'
+    default: 'soap11'
+    description: 'SOAP version'
+    cli_alias: soap-version
+  - name: Format
+    type: String
+    enum:
+      - 'text'
+      - 'raw'
+      - 'xml'
+      - 'json-icp'
+      - 'cbe'
+      - 'csv'
+      - 'audit'
+      - 'diag'
+    default: 'xml'
+    description: 'Log format'
+    cli_alias: format
+  - name: TimestampFormat
+    type: String
+    enum:
+      - 'syslog'
+      - 'numeric'
+      - 'zulu'
+    default: 'zulu'
+    description: 'Timestamp format'
+    cli_alias: timestamp
+  - name: FixedFormat
+    type: Bool
+    default: false
+    description: 'Fixed format'
+    cli_alias: fixed-format
+  - name: LocalIdentifier
+    type: String
+    description: 'Local identifier'
+    cli_alias: local-ident
+  - name: EmailAddress
+    type: String
+    description: 'Recipient email address'
+    cli_alias: email-address
+  - name: SenderAddress
+    type: String
+    description: 'Sender email address'
+    cli_alias: sender-address
+  - name: SMTPDomain
+    type: String
+    description: 'SMTP client domain'
+    cli_alias: smtp-domain
+  - name: Size
+    type: Int64
+    minimum: 100
+    maximum: 50000
+    default: 500
+    description: 'Log size'
+    cli_alias: size
+  - name: URL
+    type: String
+    description: 'URL'
+    cli_alias: url
+  - name: NFSMount
+    type: String
+    reference_to: NFSStaticMount
+    description: 'NFS static mount'
+    cli_alias: nfs-static-mount
+  # DEPRECATED
+  # - name: SSLProxyProfile
+  - name: LocalFile
+    type: String
+    example: 'logtemp:///filename.log'
+    description: 'File name'
+    cli_alias: local-file
+  - name: NFSFile
+    type: String
+    example: 'dp-log/filename.log'
+    description: 'NFS file path'
+    cli_alias: nfs-file
+  - name: ArchiveMode
+    type: String
+    enum:
+      - 'rotate'
+      - 'upload'
+    default: 'rotate'
+    description: 'Archive mode'
+    cli_alias: archive-mode
+  - name: UploadMethod
+    type: String
+    enum:
+      - 'ftp'
+      - 'scp'
+      - 'sftp'
+      - 'smtp'
+    default: 'ftp'
+    description: 'Upload protocol'
+    cli_alias: upload-method
+  - name: Rotate
+    type: Int64
+    minimum: 1
+    maximum: 100
+    default: 3
+    description: 'Number of rotations'
+    cli_alias: rotate
+  - name: UseANSIColor
+    type: Bool
+    default: false
+    description: 'Use ANSI color scheme'
+    cli_alias: ansi-color
+  - name: RemoteAddress
+    type: String
+    description: 'Remote address'
+    cli_alias: remote-address
+  - name: RemotePort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    description: 'Remote port'
+    cli_alias: remote-port
+  - name: RemoteLogin
+    type: String
+    description: 'Remote login'
+    cli_alias: remote-login
+  - name: RemotePassword
+    type: String
+    sensitive: true
+    description: 'Remote password'
+  - name: RemoteDirectory
+    type: String
+    description: 'Remote directory'
+    cli_alias: remote-directory
+  - name: LocalAddress
+    type: String
+    description: 'Local address'
+    cli_alias: local-address
+  - name: SyslogFacility
+    type: String
+    enum:
+      - 'user'
+      - 'security'
+      - 'authpriv'
+      - 'local0'
+      - 'local1'
+      - 'local2'
+      - 'local3'
+      - 'local4'
+      - 'local5'
+      - 'local6'
+      - 'local7'
+    default: 'user'
+    description: 'syslog facility'
+    cli_alias: facility
+  - name: RateLimit
+    type: Int64
+    minimum: 0
+    maximum: 1000
+    default: 100
+    description: 'Rate limit'
+    cli_alias: rate-limit
+  - name: MaxConnections
+    type: Int64
+    minimum: 1
+    maximum: 100
+    default: 1
+    description: 'Maximum connections'
+    cli_alias: maximum-connections
+  - name: ConnectTimeout
+    type: Int64
+    minimum: 1
+    maximum: 90
+    default: 60
+    description: 'Connect timeout'
+    cli_alias: connect-timeout
+  - name: IdleTimeout
+    type: Int64
+    minimum: 1
+    maximum: 600
+    default: 15
+    description: 'Idle timeout'
+    cli_alias: idle-timeout
+  - name: ActiveTimeout
+    type: Int64
+    minimum: 0
+    maximum: 60
+    default: 0
+    description: 'Active timeout'
+    cli_alias: active-timeout
+  - name: FeedbackDetection
+    type: Bool
+    default: false
+    description: 'Feedback detection'
+    cli_alias: feedback-detection
+  # DEPRECATED
+  # - name: IdenticalEventSuppression
+  # DEPRECATED
+  # - name: IdenticalEventPeriod
+  - name: LogEventCode
+    type: List
+    element_type: String
+    description: 'Event subscription filter'
+    cli_alias: event-code
+  - name: LogEventFilter
+    type: List
+    element_type: String
+    description: 'Event suppression filter'
+    cli_alias: event-filter
+  - name: LogObjects
+    type: List
+    element_type: DmLogObject
+    description: 'Object filters'
+    cli_alias: object
+  - name: LogIPFilter
+    type: List
+    element_type: DmLogIPFilter
+    description: 'IP address filters'
+    cli_alias: ip-filter
+  - name: LogTriggers
+    type: List
+    element_type: DmLogTrigger
+    description: 'Event triggers'
+    cli_alias: trigger
+  - name: SSLClientProfile
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: RetryInterval
+    type: Int64
+    minimum: 1
+    maximum: 600
+    default: 1
+    description: 'Retry interval'
+    cli_alias: retry-interval
+  - name: RetryAttempts
+    type: Int64
+    minimum: 1
+    maximum: 100
+    default: 1
+    description: 'Retry attempts'
+    cli_alias: retry-attempts
+  - name: LongRetryInterval
+    type: Int64
+    minimum: 1
+    maximum: 600
+    default: 20
+    description: 'Long retry interval'
+    cli_alias: long-retry-interval
+  - name: LogPrecision
+    type: String
+    enum:
+      - 'second'
+      - 'microsecond'
+    default: 'second'
+    description: 'Log timestamp precision'
+    cli_alias: precision
+  - name: EventBufferSize
+    type: String
+    enum:
+      - '2048'
+      - '16384'
+      - '65536'
+      - '131072'
+      - '262144'
+      - '524288'
+      - '1048576'
+      - '2097152'
+      - '4194304'
+      - '8388608'
+    default: '2048'
+    description: 'Buffer size'
+    cli_alias: buffer-size

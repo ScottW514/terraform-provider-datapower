@@ -1,0 +1,14 @@
+name: DmConfigSequenceLocation
+model_only: true
+list_item: true
+attributes:
+  - name: Directory
+    type: String
+    default: 'local:///'
+    description: 'Location'
+    cli_alias: directory
+  - name: AccessProfileName
+    type: String
+    reference_to: AccessProfile
+    description: 'Access profile'
+    cli_alias: access-profile

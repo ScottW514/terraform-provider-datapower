@@ -1,0 +1,35 @@
+name: DmWSOperationReliableMessaging
+model_only: true
+list_item: true
+attributes:
+  - name: Options
+    dm_type: DmWSRMPolicyBitmap
+    description: 'Reliable Messaging Options'
+  - name: DeliveryAssuranceType
+    type: String
+    enum:
+      - 'exactly-once'
+    default: 'exactly-once'
+    description: 'Reliable Messaging Delivery Assurance Type'
+  - name: ReliableMessagingWSDLComponentType
+    type: String
+    enum:
+      - 'all'
+      - 'subscription'
+      - 'wsdl'
+      - 'service'
+      - 'port'
+      - 'operation'
+      - 'fragmentid'
+    required: true
+    default: 'all'
+    description: 'WSDL Component Type'
+  - name: ReliableMessagingWSDLComponentValue
+    type: String
+    description: 'WSDL Component Value'
+  - name: ReliableMessagingSubscription
+    type: String
+    description: 'Subscription'
+  - name: ReliableMessagingFragmentID
+    type: String
+    description: 'Fragment Identifier'

@@ -1,0 +1,67 @@
+name: StatelessTCPSourceProtocolHandler
+description: 'Stateless raw XML handler'
+cli_alias: 'source-raw'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/StatelessTCPSourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'StatelessTCPSourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local IP address'
+    cli_alias: local-address
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    default: 4000
+    description: 'Port'
+    cli_alias: port
+  - name: PersistentConnections
+    type: Bool
+    default: true
+    description: 'Persistent connections'
+    cli_alias: persistent-connections
+  # DEPRECATED
+  # - name: SSLProxy
+  - name: ACL
+    type: String
+    reference_to: AccessControlList
+    description: 'Access control list'
+    cli_alias: acl
+  - name: SSLServerConfigType
+    type: String
+    enum:
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'TLS server type'
+    cli_alias: ssl-config-type
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'TLS SNI server profile'
+    cli_alias: ssl-sni-server

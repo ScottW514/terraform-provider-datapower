@@ -1,0 +1,74 @@
+name: ConfigSequence
+description: 'Configuration sequence'
+cli_alias: 'config-sequence'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/ConfigSequence'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'ConfigSequence_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Locations
+    type: List
+    element_type: DmConfigSequenceLocation
+    description: 'Location profiles'
+    cli_alias: location
+  - name: MatchPattern
+    type: String
+    default: '(.*)\\.cfg$'
+    description: 'Matching pattern'
+    cli_alias: match-pattern
+  - name: ResultNamePattern
+    type: String
+    default: '$1.log'
+    description: 'Result file-naming pattern'
+    cli_alias: result-name-pattern
+  - name: StatusNamePattern
+    type: String
+    default: '$1.status'
+    description: 'Status file-naming pattern'
+    cli_alias: status-name-pattern
+  - name: Watch
+    type: Bool
+    default: true
+    description: 'Watch'
+    cli_alias: watch
+  - name: UseOutputLocation
+    type: Bool
+    default: false
+    description: 'Use output location'
+    cli_alias: use-output-location
+  - name: OutputLocation
+    type: String
+    default: 'logtemp:///'
+    description: 'Output file location'
+    cli_alias: output-location
+  - name: DeleteUnused
+    type: Bool
+    default: true
+    description: 'Delete unused'
+    cli_alias: delete-unused
+  - name: RunSequenceInterval
+    type: Int64
+    minimum: 100
+    maximum: 60000
+    default: 100
+    description: 'Run interval'
+    cli_alias: run-sequence-interval
+  - name: Capabilities
+    dm_type: DmConfigSequenceCapabilities
+    description: 'Capabilities'
+    computed: true

@@ -1,0 +1,51 @@
+name: DmWSEndpointSubscriptionLocalRule
+model_only: true
+list_item: true
+attributes:
+  - name: Subscription
+    type: String
+    description: 'Subscription'
+    cli_alias: subscription
+  - name: LocalEndpointProtocol
+    type: String
+    enum:
+      - 'default'
+      - 'http'
+      - 'https'
+    default: 'default'
+    description: 'Local Endpoint Protocol'
+    cli_alias: local-endpoint-protocol
+  - name: LocalEndpointHostname
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local Endpoint Host'
+    cli_alias: local-endpoint-hostname
+  - name: LocalEndpointPort
+    type: Int64
+    description: 'Local Endpoint Port'
+    cli_alias: local-endpoint-port
+  - name: LocalEndpointURI
+    type: String
+    description: 'Local Endpoint URI'
+    cli_alias: local-endpoint-uri
+  - name: FrontProtocol
+    type: String
+    description: 'Local Endpoint Handler'
+  - name: UseFrontProtocol
+    type: Bool
+    default: false
+    description: 'Use Local Endpoint Handler'
+  - name: WSDLBindingProtocol
+    type: String
+    enum:
+      - 'default'
+      - 'soap-11'
+      - 'soap-12'
+      - 'http-get'
+      - 'http-post'
+    default: 'default'
+    description: 'Local Endpoint WSDL Binding Protocol'
+  - name: FrontsidePortSuffix
+    type: String
+    description: 'Local Endpoint WSDL Port Name Suffix'

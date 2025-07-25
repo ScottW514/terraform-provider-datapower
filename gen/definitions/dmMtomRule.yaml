@@ -1,0 +1,17 @@
+name: DmMtomRule
+model_only: true
+list_item: true
+attributes:
+  - name: XPath
+    type: String
+    required: true
+    description: 'XPath Expression'
+    cli_alias: select
+  - name: ContentType
+    type: String
+    description: 'Content Type'
+    cli_alias: content-type
+  - name: ContentID
+    type: String
+    description: 'Content ID'
+    cli_alias: content-id

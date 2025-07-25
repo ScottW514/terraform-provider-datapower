@@ -1,0 +1,12 @@
+name: DmGatewayPeeringGroupClusterNode
+model_only: true
+list_item: true
+attributes:
+  - name: Host
+    type: String
+    required: true
+    example: 'localhost'
+    description: 'Address'
+  - name: LocalNodes
+    type: String
+    description: 'Local nodes'

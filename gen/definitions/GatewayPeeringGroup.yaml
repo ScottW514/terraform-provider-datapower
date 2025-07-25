@@ -1,0 +1,70 @@
+name: GatewayPeeringGroup
+description: 'Gateway-peering group'
+cli_alias: 'gateway-peering-group'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/GatewayPeeringGroup'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'GatewayPeeringGroup_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Mode
+    type: String
+    enum:
+      - 'peer'
+      - 'cluster'
+    required: true
+    default: 'peer'
+    description: 'Mode'
+    cli_alias: mode
+  - name: PeerNodes
+    type: List
+    element_type: DmGatewayPeeringGroupPeerNode
+    description: 'Peers'
+    cli_alias: peer-node
+  - name: ClusterPrimaryCount
+    type: String
+    enum:
+      - '3'
+    default: '3'
+    description: 'Primary count'
+    cli_alias: cluster-primary-count
+  - name: ClusterNodes
+    type: List
+    element_type: DmGatewayPeeringGroupClusterNode
+    description: 'Cluster nodes'
+    cli_alias: cluster-node
+  - name: ClusterAutoConfig
+    type: Bool
+    default: true
+    description: 'Auto manage cluster configuration'
+    cli_alias: cluster-auto-config
+  - name: EnableSSL
+    type: Bool
+    required: true
+    default: true
+    description: 'Enable TLS'
+    cli_alias: enable-ssl
+  - name: Idcred
+    type: String
+    reference_to: CryptoIdentCred
+    description: 'Identification credentials'
+    cli_alias: idcred
+  - name: Valcred
+    type: String
+    reference_to: CryptoValCred
+    description: 'Validation credentials'
+    cli_alias: valcred

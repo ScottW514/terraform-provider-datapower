@@ -1,0 +1,52 @@
+name: KafkaSourceProtocolHandler
+description: 'Kafka handler'
+cli_alias: 'source-kafka'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/KafkaSourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'KafkaSourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Cluster
+    type: String
+    reference_to: KafkaCluster
+    required: true
+    description: 'Kafka cluster'
+    cli_alias: cluster
+  - name: RequestTopic
+    type: String
+    required: true
+    example: 'topic'
+    description: 'Request topic'
+    cli_alias: request-topic
+  - name: ResponseTopic
+    type: String
+    description: 'Response topic'
+    cli_alias: response-topic
+  - name: ConsumerGroup
+    type: String
+    required: true
+    example: 'consumer'
+    description: 'Consumer group'
+    cli_alias: consumer-group
+  - name: BatchSize
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 1
+    description: 'Batch size'
+    cli_alias: batch-size

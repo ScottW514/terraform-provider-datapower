@@ -1,0 +1,109 @@
+name: SFTPFilePollerSourceProtocolHandler
+description: 'SFTP poller handler'
+cli_alias: 'source-sftp-poller'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/SFTPFilePollerSourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'SFTPFilePollerSourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: SSHClientConnection
+    type: String
+    reference_to: SSHClientProfile
+    required: true
+    description: 'SSH client connection'
+    cli_alias: ssh-client-connection
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: TargetDirectory
+    type: String
+    required: true
+    example: '/'
+    description: 'Target directory'
+    cli_alias: target-dir
+  - name: DelayBetweenPolls
+    type: Int64
+    minimum: 25
+    maximum: 100000000
+    required: true
+    default: 60000
+    description: 'Delay between polls'
+    cli_alias: delay-time
+  - name: InputFileMatchPattern
+    type: String
+    required: true
+    example: '.*'
+    description: 'Input file match pattern'
+    cli_alias: match-pattern
+  - name: ProcessingRenamePattern
+    type: String
+    description: 'Processing file renaming pattern'
+    cli_alias: processing-rename-pattern
+  - name: DeleteOnSuccess
+    type: Bool
+    default: false
+    description: 'Delete input file on success'
+    cli_alias: success-delete
+  - name: SuccessRenamePattern
+    type: String
+    default: '$1.processed.ok'
+    description: 'Success file renaming pattern'
+    cli_alias: success-rename-pattern
+  - name: DeleteOnError
+    type: Bool
+    default: false
+    description: 'Delete file on processing error'
+    cli_alias: error-delete
+  - name: ErrorRenamePattern
+    type: String
+    default: '$0.processed.error'
+    description: 'Error file renaming pattern'
+    cli_alias: error-rename-pattern
+  - name: GenerateResultFile
+    type: Bool
+    default: true
+    description: 'Generate result file'
+    cli_alias: result
+  - name: ResultNamePattern
+    type: String
+    description: 'Result file name pattern'
+    cli_alias: result-name-pattern
+  - name: ProcessingSeizeTimeout
+    type: Int64
+    minimum: 0
+    maximum: 1000
+    default: 0
+    required: true
+    description: 'Processing seize timeout'
+    cli_alias: processing-seize-timeout
+  - name: ProcessingSeizePattern
+    type: String
+    description: 'Processing seize pattern'
+    cli_alias: processing-seize-pattern
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    required: true
+    test_value: '"default"'
+    default: 'default'
+    description: 'XML manager'
+    cli_alias: xml-manager
+  - name: MaxTransfersPerPoll
+    type: Int64
+    minimum: 0
+    maximum: 100
+    default: 0
+    description: 'Maximum file transfers per poll cycle'
+    cli_alias: max-transfers-per-poll

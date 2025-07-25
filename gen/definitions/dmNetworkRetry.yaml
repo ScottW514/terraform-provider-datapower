@@ -1,0 +1,29 @@
+name: DmNetworkRetry
+model_only: true
+attributes:
+  - name: AutomaticRetry
+    type: Bool
+    default: false
+    description: 'Automatic Retry'
+    cli_alias: auto-retry
+  - name: RetryInterval
+    type: Int64
+    minimum: 1
+    maximum: 4294967295
+    default: 1
+    description: 'Retry Interval'
+    cli_alias: retry-interval
+  - name: ReportingInterval
+    type: Int64
+    minimum: 1
+    maximum: 4294967295
+    default: 1
+    description: 'Reporting Interval'
+    cli_alias: reporting-interval
+  - name: TotalRetries
+    type: Int64
+    minimum: 1
+    maximum: 4294967295
+    default: 1
+    description: 'Total Retries'
+    cli_alias: total-retries

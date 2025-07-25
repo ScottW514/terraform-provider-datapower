@@ -1,0 +1,30 @@
+name: DmWSOperationPolicySubjectOptOut
+model_only: true
+list_item: true
+attributes:
+  - name: IgnoredSubjects
+    dm_type: DmPolicySubjectBitmap
+    default: '0x0'
+    description: 'Ignored Subjects'
+  - name: PolicySubjectOptOutWSDLComponentType
+    type: String
+    enum:
+      - 'all'
+      - 'subscription'
+      - 'wsdl'
+      - 'service'
+      - 'port'
+      - 'operation'
+      - 'fragmentid'
+    required: true
+    default: 'all'
+    description: 'WSDL Component Type'
+  - name: PolicySubjectOptOutWSDLComponentValue
+    type: String
+    description: 'WSDL Component Value'
+  - name: PolicySubjectOptOutSubscription
+    type: String
+    description: 'Subscription'
+  - name: PolicySubjectOptOutFragmentID
+    type: String
+    description: 'Fragment Identifier'

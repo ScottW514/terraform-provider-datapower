@@ -1,0 +1,17 @@
+name: DmSchemaExceptionRule
+model_only: true
+list_item: true
+attributes:
+  - name: XPath
+    type: String
+    required: true
+    example: '*'
+    description: 'XPath Expression'
+  - name: ExceptionType
+    type: String
+    enum:
+      - 'AllowEncrypted'
+      - 'RequireEncrypted'
+    required: true
+    default: 'AllowEncrypted'
+    description: 'Type'

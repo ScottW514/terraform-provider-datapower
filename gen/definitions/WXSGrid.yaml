@@ -1,0 +1,101 @@
+name: WXSGrid
+description: 'eXtreme Scale Grid'
+cli_alias: 'wxs-grid'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/WXSGrid'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Collective
+    type: String
+    reference_to: LoadBalancerGroup
+    required: true
+    description: 'Collective'
+    cli_alias: collective
+  - name: Grid
+    type: String
+    required: true
+    example: "gridname"
+    description: 'Grid Name'
+    cli_alias: grid
+  - name: UserName
+    type: String
+    required: true
+    example: 'username'
+    description: 'User'
+    cli_alias: username
+  - name: PasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    required: true
+    description: 'Password Alias'
+    cli_alias: password-alias
+  - name: Timeout
+    type: Int64
+    minimum: 10
+    maximum: 86400000
+    required: true
+    default: 1000
+    description: 'Timeout'
+    cli_alias: timeout
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client
+  - name: Encrypt
+    type: Bool
+    default: false
+    description: 'Encrypted Data'
+    cli_alias: encrypt
+  - name: EncryptSSKey
+    type: String
+    reference_to: CryptoSSKey
+    description: 'Shared Secret Key for Encryption and Decryption'
+    cli_alias: encrypt-sskey
+  - name: EncryptAlg
+    type: String
+    enum:
+      - 'tripledes-cbc'
+      - 'aes128-cbc'
+      - 'aes192-cbc'
+      - 'aes256-cbc'
+      - 'rc2-40-cbc'
+      - 'rc2-64-cbc'
+      - 'rc2-cbc'
+    default: 'tripledes-cbc'
+    description: 'PKCS #7 algorithm for encryption and decryption'
+    cli_alias: encrypt-alg
+  - name: KeyObfuscation
+    type: Bool
+    default: false
+    description: 'Hash Key Obfuscation'
+    cli_alias: key-obfuscation
+  - name: KeyObfuscationAlg
+    type: String
+    enum:
+      - 'sha1'
+      - 'sha256'
+      - 'sha512'
+      - 'ripemd160'
+      - 'sha224'
+      - 'sha384'
+      - 'md5'
+    default: 'sha256'
+    description: 'Hash Algorithm for Key Obfuscation'
+    cli_alias: key-obfuscation-alg

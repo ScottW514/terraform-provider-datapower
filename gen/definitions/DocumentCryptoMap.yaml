@@ -1,0 +1,47 @@
+name: DocumentCryptoMap
+description: 'Document Crypto Map'
+cli_alias: 'document-crypto-map'
+cmd_group: 'document-crypto-map'
+rest_endpoint: '/mgmt/config/{domain}/DocumentCryptoMap'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'DocumentCryptoMap_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Operation
+    type: String
+    enum:
+      - 'encrypt'
+      - 'encrypt-wssec'
+      - 'decrypt'
+      - 'sign-wssec'
+    required: true
+    default: 'encrypt'
+    description: 'Operation'
+    cli_alias: operation
+  - name: XPath
+    type: List
+    element_type: String
+    required: true
+    list_example:
+      - '*'
+    description: 'XPath Expression'
+    cli_alias: select
+  - name: NameSpaceMappings
+    type: List
+    element_type: DmNamespaceMapping
+    description: 'Namespace Mappings'
+    cli_alias: namespace-mapping
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary

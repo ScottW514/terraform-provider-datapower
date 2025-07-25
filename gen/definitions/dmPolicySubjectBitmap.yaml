@@ -1,0 +1,23 @@
+name: DmPolicySubjectBitmap
+model_only: true
+attributes:
+  - name: Service
+    type: Bool
+    default: false
+    description: 'Service Subject'
+  - name: Endpoint
+    type: Bool
+    default: false
+    description: 'Endpoint Subject'
+  - name: Operation
+    type: Bool
+    default: false
+    description: 'Operation Subject'
+  - name: MessageIn
+    type: Bool
+    default: false
+    description: 'Message Input Subject'
+  - name: MessageOut
+    type: Bool
+    default: false
+    description: 'Message Output Subject'

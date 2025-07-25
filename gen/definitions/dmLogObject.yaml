@@ -1,0 +1,15 @@
+name: DmLogObject
+model_only: true
+list_item: true
+attributes:
+  - name: Class
+    type: String
+    example: 'AAA Policy'
+    description: 'Object type'
+  - name: Object
+    type: String
+    description: 'Object name'
+  - name: FollowReferences
+    type: Bool
+    default: false
+    description: 'Add referenced objects'

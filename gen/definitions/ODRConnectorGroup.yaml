@@ -1,0 +1,56 @@
+name: ODRConnectorGroup
+description: 'ODR Connector Group (`default` domain only)'
+cli_alias: 'odr-connector-group'
+cmd_group: 'network'
+rest_endpoint: '/mgmt/config/default/ODRConnectorGroup'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'ODRConnectorGroup_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: ODRGroupConnectors
+    type: List
+    element_type: DmODRConnector
+    description: 'ODR connectors'
+    cli_alias: odr-connector
+  # DEPRECATED
+  # - name: SSLProxy
+  - name: MaxRetryInterval
+    type: Int64
+    minimum: 1
+    maximum: 120
+    default: 60
+    description: 'Maximum retry interval'
+    cli_alias: max-retry-interval
+  - name: XMLManager
+    type: String
+    reference_to: XMLManager
+    required: true
+    default: 'default'
+    test_value: '"default"'
+    description: 'XML manager'
+    cli_alias: xml-manager
+  - name: ODRConnGroupProperties
+    type: List
+    element_type: DmODRConnProperty
+    description: 'Custom properties'
+    cli_alias: odr-conn-group-properties
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client

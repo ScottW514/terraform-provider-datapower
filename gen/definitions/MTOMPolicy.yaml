@@ -1,0 +1,41 @@
+name: MTOMPolicy
+description: 'MTOM Policy'
+cli_alias: 'mtom'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/MTOMPolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'MTOMPolicy_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Mode
+    type: String
+    enum:
+      - 'encode'
+      - 'decode'
+    default: 'encode'
+    description: 'MTOM Mode'
+    cli_alias: mode
+  - name: IncludeContentType
+    type: Bool
+    default: true
+    description: 'Include Content Type'
+    cli_alias: include-content-type
+  - name: Rule
+    type: List
+    element_type: DmMtomRule
+    description: 'MTOM Rules'
+    cli_alias: rule

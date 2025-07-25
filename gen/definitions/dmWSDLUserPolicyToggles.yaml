@@ -1,0 +1,43 @@
+name: DmWSDLUserPolicyToggles
+model_only: true
+attributes:
+  - name: Enable
+    type: Bool
+    default: true
+    description: 'Enable this component'
+  - name: Publish
+    type: Bool
+    default: true
+    description: 'Publish in WSDL'
+  - name: VerifyFaults
+    type: Bool
+    default: true
+    description: 'Schema validate faults messages'
+  - name: VerifyHeaders
+    type: Bool
+    default: false
+    description: 'Schema validate SOAP headers'
+  - name: NoRequestValidation
+    type: Bool
+    default: false
+    description: 'No Request Validation'
+  - name: NoResponseValidation
+    type: Bool
+    default: false
+    description: 'No Response Validation'
+  - name: SuppressFaultsElementsForRPCWrappers
+    type: Bool
+    default: false
+    description: 'Strict Fault Document Style'
+  - name: NoWSA
+    type: Bool
+    default: false
+    description: 'Opt out of WS-Addressing'
+  - name: NoWSRM
+    type: Bool
+    default: false
+    description: 'Opt out of WS-ReliableMessaging'
+  - name: AllowXOPInclude
+    type: Bool
+    default: true
+    description: 'Accept MTOM/XOP Optimized Messages'

@@ -1,0 +1,30 @@
+name: DmWSEndpointPublishRewriteRule
+model_only: true
+list_item: true
+attributes:
+  - name: ServicePortMatchRegexp
+    type: String
+    default: '.*'
+    description: 'Service Port Match Expression'
+    cli_alias: service-port-match
+  - name: PublishedEndpointProtocol
+    type: String
+    enum:
+      - 'default'
+      - 'http'
+      - 'https'
+    default: 'default'
+    description: 'Published Endpoint Protocol'
+    cli_alias: published-endpoint-protocol
+  - name: PublishedEndpointHostname
+    type: String
+    description: 'Published Endpoint Host'
+    cli_alias: published-endpoint-hostname
+  - name: PublishedEndpointPort
+    type: Int64
+    description: 'Published Endpoint Port'
+    cli_alias: published-endpoint-port
+  - name: PublishedEndpointURI
+    type: String
+    description: 'Published Endpoint URI'
+    cli_alias: published-endpoint-path

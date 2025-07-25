@@ -1,0 +1,141 @@
+name: CompileSettings
+description: 'Compile Settings'
+cli_alias: 'compile-settings'
+cmd_group: 'compile-options'
+rest_endpoint: '/mgmt/config/{domain}/CompileSettings'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CompileSettings_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: XSLTVersion
+    type: String
+    enum:
+      - 'XSLT10'
+      - 'XSLT10_IT23272'
+      - 'XSLT20'
+      - 'StylesheetSpecified'
+    default: 'XSLT10'
+    description: 'XSLT version'
+    cli_alias: xslt-version
+  - name: Strict
+    type: Bool
+    default: true
+    description: 'Strict'
+    cli_alias: strict
+  - name: Profile
+    type: Bool
+    default: false
+    description: 'Profile rule'
+    cli_alias: profile
+  - name: Debug
+    type: Bool
+    default: false
+    description: 'Debug rule'
+    cli_alias: debug
+  - name: Stream
+    type: Bool
+    default: false
+    description: 'Streaming rule'
+    cli_alias: stream
+  - name: TryStream
+    type: Bool
+    default: false
+    description: 'Attempt streaming rule'
+    cli_alias: try-stream
+  - name: MinimumEscaping
+    type: Bool
+    default: false
+    description: 'Minimum output escaping rule'
+    cli_alias: minesc
+  - name: StackSize
+    type: Int64
+    minimum: 10240
+    maximum: 104857600
+    default: 1048576
+    description: 'Maximum stack size'
+    cli_alias: stack-size
+  - name: WSIValidation
+    type: String
+    enum:
+      - 'ignore'
+      - 'warn'
+      - 'fail'
+    default: 'warn'
+    description: 'WS-I Basic Profile validation'
+    cli_alias: wsi-validate
+  - name: WSDLValidateBody
+    type: String
+    enum:
+      - 'strict'
+      - 'lax'
+      - 'skip'
+    default: 'strict'
+    description: 'Validate message body'
+    cli_alias: wsdl-validate-body
+  - name: WSDLValidateHeaders
+    type: String
+    enum:
+      - 'strict'
+      - 'lax'
+      - 'skip'
+    default: 'lax'
+    description: 'Validate message headers'
+    cli_alias: wsdl-validate-headers
+  - name: WSDLValidateFaults
+    type: String
+    enum:
+      - 'strict'
+      - 'lax'
+      - 'skip'
+    default: 'strict'
+    description: 'Validate message fault details'
+    cli_alias: wsdl-validate-faults
+  - name: WSDLWrappedFaults
+    type: Bool
+    default: false
+    description: 'Require wrappers on fault details specified by type'
+    cli_alias: wsdl-wrapped-faults
+  - name: AllowSoapEncArray
+    type: Bool
+    default: false
+    description: "Specifically allow xsi:type='SOAP-ENC:Array' rule"
+    cli_alias: allow-soap-enc-array
+  - name: ValidateSoapEncArray
+    type: Bool
+    default: false
+    description: 'Validate SOAP 1.1 encoding rule'
+    cli_alias: validate-soap-enc-array
+  - name: WildcardsIgnoreXsiType
+    type: Bool
+    default: false
+    description: 'Wildcards ignore xsi:type rule'
+    cli_alias: wildcards-ignore-xsi-type
+  - name: WSDLStrictSOAPVersion
+    type: Bool
+    default: false
+    description: 'Strict SOAP envelope version'
+    cli_alias: wsdl-strict-soap-version
+  - name: XACMLDebug
+    type: Bool
+    default: false
+    description: 'Debug XACML policy'
+    cli_alias: xacml-debug
+  - name: AllowXOPInclude
+    type: Bool
+    default: false
+    description: 'Accept MTOM/XOP optimized messages'
+    cli_alias: allow-xop-include

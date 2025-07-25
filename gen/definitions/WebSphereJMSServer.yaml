@@ -1,0 +1,152 @@
+name: WebSphereJMSServer
+description: 'WebSphere JMS Server'
+cli_alias: 'wasjms-server'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/WebSphereJMSServer'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'WebSphereJMSServer_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Endpoint
+    type: List
+    element_type: DmWebSphereJMSEndpoint
+    required: true
+    description: 'Endpoints'
+    cli_alias: endpoint
+  - name: TargetTransportChain
+    type: String
+    default: 'InboundBasicMessaging'
+    description: 'Target transport chain'
+    cli_alias: target-transport-chain
+  - name: MessagingBus
+    type: String
+    required: true
+    example: 'bus'
+    description: 'Messaging bus'
+    cli_alias: messaging-bus
+  - name: SSLCipher
+    type: String
+    enum:
+      - 'SSL_RSA_WITH_NULL_MD5'
+      - 'SSL_RSA_EXPORT_WITH_RC2_CBC_40_MD5'
+      - 'SSL_RSA_EXPORT_WITH_RC4_40_MD5'
+      - 'SSL_RSA_WITH_RC4_128_MD5'
+      - 'SSL_RSA_WITH_NULL_SHA'
+      - 'SSL_RSA_EXPORT1024_WITH_RC4_56_SHA'
+      - 'SSL_RSA_WITH_RC4_128_SHA'
+      - 'SSL_RSA_WITH_DES_CBC_SHA'
+      - 'SSL_RSA_EXPORT1024_WITH_DES_CBC_SHA'
+      - 'SSL_RSA_FIPS_WITH_DES_CBC_SHA'
+      - 'SSL_RSA_WITH_3DES_EDE_CBC_SHA'
+      - 'SSL_RSA_FIPS_WITH_3DES_EDE_CBC_SHA'
+      - 'TLS_RSA_WITH_DES_CBC_SHA'
+      - 'TLS_RSA_WITH_3DES_EDE_CBC_SHA'
+      - 'TLS_RSA_WITH_AES_128_CBC_SHA'
+      - 'TLS_RSA_WITH_AES_256_CBC_SHA'
+      - 'TLS_RSA_WITH_AES_128_CBC_SHA256'
+      - 'TLS_RSA_WITH_AES_256_CBC_SHA256'
+      - 'TLS_RSA_WITH_NULL_SHA256'
+    description: 'TLS ciphers'
+    cli_alias: ssl-cipher
+  - name: FIPS
+    type: Bool
+    default: false
+    description: 'FIPS compliant ciphers suite'
+    cli_alias: ssl-fips
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: UserName
+    type: String
+    description: 'Username'
+    cli_alias: username
+  # DEPRECATED
+  # - name: Password
+  - name: PasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    description: 'Password alias'
+    cli_alias: password-alias
+  - name: Transactional
+    type: Bool
+    default: false
+    description: 'Transactional'
+    cli_alias: transactional
+  - name: MemoryThreshold
+    type: Int64
+    minimum: 10485760
+    maximum: 1073741824
+    default: 268435456
+    description: 'Memory threshold'
+    cli_alias: memory-threshold
+  - name: MaximumMessageSize
+    type: Int64
+    minimum: 0
+    maximum: 1073741824
+    default: 1048576
+    description: 'Max message size'
+    cli_alias: maximum-message-size
+  - name: DefaultMessageType
+    type: String
+    enum:
+      - 'byte'
+      - 'text'
+    default: 'byte'
+    description: 'Default message type'
+    cli_alias: default-message-type
+  - name: TotalConnectionLimit
+    type: Int64
+    minimum: 1
+    default: 64
+    maximum: 65535
+    description: 'Total connection limit'
+    cli_alias: total-connection-limit
+  - name: SessionsPerConnection
+    type: Int64
+    minimum: 1
+    default: 100
+    maximum: 65535
+    description: 'Max number of sessions per connection'
+    cli_alias: sessions-per-connection
+  - name: AutoRetry
+    type: Bool
+    default: true
+    description: 'Automatic retry'
+    cli_alias: auto-retry
+  - name: RetryInterval
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    default: 1
+    description: 'Retry interval'
+    cli_alias: retry-interval
+  # DEPRECATED
+  # - name: SSLProfile
+  - name: EnableLogging
+    type: Bool
+    default: false
+    description: 'Enable JMS-specific logging'
+    cli_alias: enable-logging
+  - name: SSLClientConfigType
+    type: String
+    enum:
+      - 'client'
+    default: 'client'
+    description: 'TLS client type'
+    cli_alias: ssl-client-type
+  - name: SSLClient
+    type: String
+    reference_to: SSLClientProfile
+    description: 'TLS client profile'
+    cli_alias: ssl-client

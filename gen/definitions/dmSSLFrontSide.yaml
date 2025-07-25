@@ -1,0 +1,80 @@
+name: DmSSLFrontSide
+model_only: true
+list_item: true
+attributes:
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local address'
+    cli_alias: address
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    example: 8888
+    required: true
+    description: 'Port'
+    cli_alias: port
+  - name: UseSSL
+    type: Bool
+    default: false
+    description: 'TLS'
+    cli_alias: use-ssl
+  # DEPRECATED
+  # - name: SSLProxyProfile
+  - name: CredentialCharset
+    type: String
+    enum:
+      - 'protocol'
+      - 'ascii'
+      - 'utf8'
+      - 'big5'
+      - 'cp1250'
+      - 'cp1251'
+      - 'cp1252'
+      - 'cp1253'
+      - 'cp1254'
+      - 'cp1255'
+      - 'cp1256'
+      - 'cp1257'
+      - 'cp1258'
+      - 'euc_jp'
+      - 'euc_kr'
+      - 'gb18030'
+      - 'gb2312'
+      - 'iso2022_jp'
+      - 'iso2022_kr'
+      - 'iso8859_1'
+      - 'iso8859_2'
+      - 'iso8859_4'
+      - 'iso8859_5'
+      - 'iso8859_6'
+      - 'iso8859_7'
+      - 'iso8859_8'
+      - 'iso8859_9'
+      - 'iso8859_15'
+      - 'sjis'
+      - 'tis620'
+      - 'unicode_le'
+    description: 'Credential character set'
+    default: 'protocol'
+    cli_alias: credential-charset
+  - name: SSLServerConfigType
+    type: String
+    enum:
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'TLS server type'
+    cli_alias: ssl-config-type
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'TLS SNI server profile'
+    cli_alias: ssl-sni-server

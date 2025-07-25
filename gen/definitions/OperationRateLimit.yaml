@@ -1,0 +1,44 @@
+name: OperationRateLimit
+description: 'API operation rate limit'
+cli_alias: 'api-operation-rate-limit'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/OperationRateLimit'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'OperationRateLimit_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Operation
+    type: String
+    reference_to: APIOperation
+    required: true
+    description: 'API operation'
+    cli_alias: operation
+  - name: UseRateLimitGroup
+    type: Bool
+    default: false
+    description: 'Use rate limit group'
+    cli_alias: use-rate-limit-group
+  - name: RateLimit
+    type: List
+    element_type: DmAPIRateLimit
+    description: 'Rate limit'
+    cli_alias: rate-limit
+  - name: RateLimitGroup
+    type: String
+    reference_to: RateLimitDefinitionGroup
+    description: 'Rate limit group'
+    cli_alias: rate-limit-group

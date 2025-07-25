@@ -1,0 +1,39 @@
+name: IncludeConfig
+description: 'Include configuration file'
+cli_alias: 'include-config'
+cmd_group: 'config-management'
+rest_endpoint: '/mgmt/config/{domain}/IncludeConfig'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'IncludeConfig_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: URL
+    type: String
+    required: true
+    example: 'http://localhost/config.zip'
+    description: 'URL'
+    cli_alias: config-url
+  - name: OnStartup
+    type: Bool
+    default: true
+    description: 'Import on startup'
+    cli_alias: auto-execute
+  - name: InterfaceDetection
+    type: Bool
+    default: false
+    description: 'Interface detection'
+    cli_alias: interface-detection

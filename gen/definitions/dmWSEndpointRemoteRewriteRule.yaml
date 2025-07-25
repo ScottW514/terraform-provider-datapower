@@ -1,0 +1,54 @@
+name: DmWSEndpointRemoteRewriteRule
+model_only: true
+list_item: true
+attributes:
+  - name: ServicePortMatchRegexp
+    type: String
+    default: '.*'
+    description: 'Service Port Match Expression'
+    cli_alias: service-port-match
+  - name: RemoteEndpointProtocol
+    type: String
+    enum:
+      - 'default'
+      - 'http'
+      - 'https'
+      - 'dpmq'
+      - 'mq'
+      - 'idgmq'
+      - 'dptibems'
+      - 'tibems'
+      - 'dpwasjms'
+    default: 'default'
+    description: 'Remote Endpoint Protocol'
+    cli_alias: remote-endpoint-protocol
+  - name: RemoteEndpointHostname
+    type: String
+    description: 'Remote Endpoint Host'
+    cli_alias: remote-endpoint-hostname
+  - name: RemoteEndpointPort
+    type: Int64
+    description: 'Remote Endpoint Port'
+    cli_alias: remote-endpoint-port
+  - name: RemoteEndpointURI
+    type: String
+    description: 'Remote Endpoint URI'
+    cli_alias: remote-endpoint-uri
+  - name: RemoteMQQM
+    type: String
+    description: 'IBM MQ'
+    cli_alias: remote-mq-qm
+  - name: RemoteMQManager
+    type: String
+    description: 'IBM MQ v9+'
+    cli_alias: remote-idg-mq-qm
+  - name: RemoteTibcoEMS
+    type: String
+    reference_to: TibcoEMSServer
+    description: 'TIBCO EMS'
+    cli_alias: remote-tibems-server
+  - name: RemoteWebSphereJMS
+    type: String
+    reference_to: WebSphereJMSServer
+    description: 'WebSphere JMS'
+    cli_alias: remote-wasjms-server

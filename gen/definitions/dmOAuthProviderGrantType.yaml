@@ -1,0 +1,26 @@
+name: DmOAuthProviderGrantType
+model_only: true
+attributes:
+  - name: none
+    type: Bool
+    default: false
+  - name: implicit
+    type: Bool
+    default: false
+    description: 'Implicit'
+  - name: password
+    type: Bool
+    default: false
+    description: 'Resource owner - Password'
+  - name: jwt
+    type: Bool
+    default: false
+    description: 'Resource owner - JSON Web Token'
+  - name: application
+    type: Bool
+    default: false
+    description: 'Client credentials'
+  - name: access_code
+    type: Bool
+    default: true
+    description: 'Authorization code'

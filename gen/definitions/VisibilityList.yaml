@@ -1,0 +1,31 @@
+name: VisibilityList
+description: 'Visibility list'
+cli_alias: 'visibility-list'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/VisibilityList'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'VisibilityList_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: Type
+    type: String
+    enum:
+      - 'remove'
+    default: 'remove'
+    description: 'Type'
+    cli_alias: type
+  - name: Value
+    type: List
+    element_type: String
+    description: 'Value'
+    cli_alias: value

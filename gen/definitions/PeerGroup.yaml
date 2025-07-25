@@ -1,0 +1,49 @@
+name: PeerGroup
+description: 'Peer group'
+cli_alias: 'peer-group'
+cmd_group: 'config-management'
+rest_endpoint: '/mgmt/config/{domain}/PeerGroup'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'PeerGroup_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Type
+    type: String
+    enum:
+      - 'slm'
+      - 'slm-multicast'
+    required: true
+    default: 'slm'
+    description: 'Type'
+    cli_alias: type
+  - name: URL
+    type: List
+    element_type: String
+    description: 'URL'
+    cli_alias: url
+  - name: IPMulticast
+    type: String
+    reference_to: IPMulticast
+    description: 'IP multicast'
+    cli_alias: ip-multicast
+  - name: UpdateInterval
+    type: Int64
+    minimum: 1
+    maximum: 10000
+    default: 10
+    description: 'Update interval'
+    cli_alias: update-interval

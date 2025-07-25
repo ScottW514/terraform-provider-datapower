@@ -1,0 +1,24 @@
+name: DmSOAPHeaderDispositionItem
+model_only: true
+list_item: true
+attributes:
+  - name: Namespace
+    type: String
+    description: 'Namespace URI'
+  - name: LocalName
+    type: String
+    description: 'Header Local Name'
+  - name: ChildLocalName
+    type: String
+    description: 'Child Element Local Name'
+  - name: Action
+    type: String
+    enum:
+      - 'processed'
+      - 'unprocessed'
+      - 'keep'
+      - 'remove'
+      - 'fault'
+    default: 'processed'
+    required: true
+    description: 'Refine Action'

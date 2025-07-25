@@ -1,0 +1,31 @@
+name: DmWSOperationConformancePolicy
+model_only: true
+list_item: true
+attributes:
+  - name: ConformancePolicy
+    type: String
+    reference_to: ConformancePolicy
+    required: true
+    description: 'Conformance Policy'
+  - name: ConformancePolicyWSDLComponentType
+    type: String
+    enum:
+      - 'all'
+      - 'subscription'
+      - 'wsdl'
+      - 'service'
+      - 'port'
+      - 'operation'
+      - 'fragmentid'
+    required: true
+    default: 'all'
+    description: 'WSDL Component Type'
+  - name: ConformancePolicyWSDLComponentValue
+    type: String
+    description: 'WSDL Component Value'
+  - name: ConformancePolicySubscription
+    type: String
+    description: 'Subscription'
+  - name: ConformancePolicyFragmentID
+    type: String
+    description: 'Fragment Identifier'

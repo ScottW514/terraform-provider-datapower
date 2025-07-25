@@ -1,0 +1,69 @@
+name: TCPProxyService
+description: 'TCP Proxy Service'
+cli_alias: 'tcpproxy'
+cmd_group: 'tcpproxy'
+rest_endpoint: '/mgmt/config/{domain}/TCPProxyService'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'TCPProxyService_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Priority
+    type: String
+    enum:
+      - 'unknown'
+      - 'high-min'
+      - 'high'
+      - 'high-max'
+      - 'normal-min'
+      - 'normal'
+      - 'normal-max'
+      - 'low-min'
+      - 'low'
+      - 'low-max'
+    default: 'normal'
+    description: 'Service Priority'
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    example: 8888
+    required: true
+    description: 'Port Number'
+  - name: RemoteAddress
+    type: String
+    required: true
+    example: '10.10.10.10'
+    description: 'Remote Host'
+  - name: RemotePort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    example: 9999
+    required: true
+    description: 'Remote Port'
+  - name: Timeout
+    type: Int64
+    minimum: 0
+    maximum: 86400
+    default: 360
+    description: 'Idle timeout'
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local address'
+    cli_alias: ip-address
