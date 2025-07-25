@@ -1,4 +1,4 @@
-## Unreleased
+## v0.6.0
 
 - Fix test generator handling of test_value for non-string types
 - API Additions (Domain Settings):
