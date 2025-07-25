@@ -1,0 +1,30 @@
+name: CORSPolicy
+description: 'CORS policy'
+cli_alias: 'cors-policy'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/CORSPolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'CORSPolicy_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: Rule
+    type: List
+    reference_to: CORSRule
+    element_type: String
+    required: true
+    description: 'CORS rules'
+    cli_alias: rule

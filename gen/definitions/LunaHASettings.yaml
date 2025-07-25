@@ -1,0 +1,37 @@
+name: LunaHASettings
+description: 'SafeNet Luna HSM HA settings (`default` domain only)'
+cli_alias: 'luna-ha-settings'
+cmd_group: 'system'
+rest_endpoint: '/mgmt/config/default/LunaHASettings/LunaHASettings'
+update_only: true
+default_domain_only: true
+attributes:
+  - name: mAdminState
+    tf_name: 'enabled'
+    type: Bool
+    bool_type: 'admin'
+    default: true
+    description: 'Administrative state'
+    cli_alias: admin-state
+  - name: Mode
+    type: String
+    enum:
+      - 'activeBasic'
+      - 'activeEnhanced'
+    default: 'activeBasic'
+    description: 'Recovery mode'
+    cli_alias: recovery-mode
+  - name: Count
+    tf_name: recovery_count
+    type: Int64
+    minimum: -1
+    maximum: 500
+    description: 'Recovery count'
+    cli_alias: recovery-count
+  - name: Interval
+    type: Int64
+    minimum: 60
+    maximum: 1200
+    default: 60
+    description: 'Recovery interval'
+    cli_alias: recovery-interval

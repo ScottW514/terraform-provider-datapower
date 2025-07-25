@@ -1,0 +1,36 @@
+name: MCFHttpMethod
+description: 'HTTP Method Message Content Filter'
+cli_alias: 'mcf-httpmethod'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/MCFHttpMethod'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'MCFHttpMethod_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: HttpMethod
+    type: String
+    enum:
+      - 'POST'
+      - 'GET'
+      - 'PUT'
+      - 'PATCH'
+      - 'DELETE'
+      - 'HEAD'
+    default: 'GET'
+    required: true
+    description: 'HTTP Method'
+    cli_alias: value
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary

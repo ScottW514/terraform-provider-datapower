@@ -1,0 +1,42 @@
+name: LunaHAGroup
+description: 'SafeNet Luna HSM HA group'
+cli_alias: 'luna-ha-group'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/LunaHAGroup'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'LunaHAGroup_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: GroupName
+    type: String
+    required: true
+    example: 'groupname'
+    description: 'Label'
+    cli_alias: group
+  - name: Member
+    type: List
+    reference_to: LunaPartition
+    element_type: String
+    required: true
+    description: 'Members'
+    cli_alias: member
+  - name: Standby
+    type: List
+    reference_to: LunaPartition
+    element_type: String
+    description: 'Standby members'
+    cli_alias: standby

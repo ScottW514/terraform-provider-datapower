@@ -1,0 +1,164 @@
+name: EBMS2SourceProtocolHandler
+description: 'ebMS2 handler'
+cli_alias: 'source-ebms2'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/EBMS2SourceProtocolHandler'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'EBMS2SourceProtocolHandler_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: LocalAddress
+    type: String
+    required: true
+    default: '0.0.0.0'
+    description: 'Local IP address'
+    cli_alias: local-address
+  - name: LocalPort
+    type: Int64
+    minimum: 1
+    maximum: 65535
+    required: true
+    default: 80
+    description: 'Local port'
+    cli_alias: port
+  - name: HTTPVersion
+    type: String
+    enum:
+      - 'HTTP/1.0'
+      - 'HTTP/1.1'
+    default: 'HTTP/1.1'
+    description: 'HTTP version to client'
+    cli_alias: http-client-version
+  - name: PersistentConnections
+    type: Bool
+    default: true
+    description: 'Persistent connections'
+    cli_alias: persistent-connections
+  - name: AllowCompression
+    type: Bool
+    default: false
+    description: 'Compression'
+    cli_alias: compression
+  - name: MaxURLLen
+    type: Int64
+    minimum: 1
+    maximum: 128000
+    default: 16384
+    description: 'Max URL length'
+    cli_alias: max-url-len
+  - name: MaxTotalHdrLen
+    type: Int64
+    minimum: 5
+    maximum: 128000
+    default: 128000
+    description: 'Max total header length'
+    cli_alias: max-total-header-len
+  - name: MaxHdrCount
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 0
+    description: 'Max request headers'
+    cli_alias: max-header-count
+  - name: MaxNameHdrLen
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 0
+    description: 'Max length of header name'
+    cli_alias: max-header-name-len
+  - name: MaxValueHdrLen
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 0
+    description: 'Max length of header value'
+    cli_alias: max-header-value-len
+  - name: MaxQueryStringLen
+    type: Int64
+    minimum: 0
+    maximum: 65535
+    default: 0
+    description: 'Max length of query string'
+    cli_alias: max-querystring-len
+  # DEPRECATED
+  # - name: SSLProxy
+  - name: ACL
+    type: String
+    reference_to: AccessControlList
+    description: 'Access control list'
+    cli_alias: acl
+  - name: AAAPolicy
+    type: String
+    reference_to: AAAPolicy
+    description: 'AAA policy'
+    cli_alias: aaa-policy
+  - name: CredentialCharset
+    type: String
+    enum:
+      - 'protocol'
+      - 'ascii'
+      - 'utf8'
+      - 'big5'
+      - 'cp1250'
+      - 'cp1251'
+      - 'cp1252'
+      - 'cp1253'
+      - 'cp1254'
+      - 'cp1255'
+      - 'cp1256'
+      - 'cp1257'
+      - 'cp1258'
+      - 'euc_jp'
+      - 'euc_kr'
+      - 'gb18030'
+      - 'gb2312'
+      - 'iso2022_jp'
+      - 'iso2022_kr'
+      - 'iso8859_1'
+      - 'iso8859_2'
+      - 'iso8859_4'
+      - 'iso8859_5'
+      - 'iso8859_6'
+      - 'iso8859_7'
+      - 'iso8859_8'
+      - 'iso8859_9'
+      - 'iso8859_15'
+      - 'sjis'
+      - 'tis620'
+      - 'unicode_le'
+    default: 'protocol'
+    description: 'Credential character set'
+    cli_alias: credential-charset
+  - name: SSLServerConfigType
+    type: String
+    enum:
+      - 'server'
+      - 'sni'
+    default: 'server'
+    description: 'TLS server type'
+    cli_alias: ssl-config-type
+  - name: SSLServer
+    type: String
+    reference_to: SSLServerProfile
+    description: 'TLS server profile'
+    cli_alias: ssl-server
+  - name: SSLSNIServer
+    type: String
+    reference_to: SSLSNIServerProfile
+    description: 'TLS SNI server profile'
+    cli_alias: ssl-sni-server

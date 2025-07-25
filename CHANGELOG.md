@@ -20,6 +20,24 @@
   - MQManagerGroup
   - MQv9PlusMFTSourceProtocolHandler
   - MQv9PlusSourceProtocolHandler
+  - MCFCustomRule
+  - MCFHttpHeader
+  - MCFHttpMethod
+  - MCFHttpURL
+  - MCFXPath
+  - SLMAction
+  - SLMCredClass
+  - SLMPolicy
+  - SLMRsrcClass
+  - SLMSchedule
+  - CORSPolicy
+  - CORSRule
+  - EBMS2SourceProtocolHandler
+  - EBMS3SourceProtocolHandler
+  - Luna
+  - LunaHAGroup
+  - LunaHASettings
+  - LunaPartition
 
 ## v0.4.0
 

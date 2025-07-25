@@ -1,0 +1,19 @@
+name: DmCORSRuleExposeHeaders
+model_only: true
+attributes:
+  - name: Predefined
+    type: Bool
+    required: true
+    default: true
+    description: 'Predefined'
+    cli_alias: predefined
+  - name: Backend
+    type: Bool
+    required: true
+    default: false
+    description: 'From response'
+    cli_alias: backend
+  - name: Custom
+    type: String
+    description: 'Custom'
+    cli_alias: custom

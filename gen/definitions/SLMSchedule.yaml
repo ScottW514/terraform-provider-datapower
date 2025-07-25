@@ -1,0 +1,84 @@
+name: SLMSchedule
+description: 'SLM schedule'
+cli_alias: 'slm-sched'
+cmd_group: 'webservice'
+rest_endpoint: '/mgmt/config/{domain}/SLMSchedule'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'SLMSchedule_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: DaysOfWeek
+    dm_type: DmWeekdayBitmap
+    description: 'Week Days'
+    cli_alias: days
+  - name: StartTime
+    type: String
+    required: true
+    example: '12:34:00'
+    description: 'Start Time'
+    cli_alias: start
+  - name: Duration
+    type: Int64
+    minimum: 1
+    maximum: 1440
+    required: true
+    default: 1440
+    description: 'Duration'
+    cli_alias: duration
+  - name: StartDate
+    type: String
+    example: '2011-08-24'
+    description: 'Start date'
+    cli_alias: start-date
+  - name: StopDate
+    type: String
+    example: '2011-08-27'
+    description: 'Stop date'
+    cli_alias: stop-date
+  - name: TimeZone
+    type: String
+    enum:
+      - 'LOCAL'
+      - 'Pacific/Honolulu'
+      - 'America/Anchorage'
+      - 'America/Los_Angeles'
+      - 'America/Denver'
+      - 'America/Chicago'
+      - 'America/New_York'
+      - 'America/Halifax'
+      - 'America/Sao_Paulo'
+      - 'America/Noronha'
+      - 'Atlantic/Azores'
+      - 'Europe/London'
+      - 'Europe/Paris'
+      - 'Europe/Athens'
+      - 'Asia/Riyadh'
+      - 'Europe/Moscow'
+      - 'Asia/Karachi'
+      - 'Asia/Kolkata'
+      - 'Asia/Dhaka'
+      - 'Asia/Novosibirsk'
+      - 'Asia/Shanghai'
+      - 'Australia/Perth'
+      - 'Asia/Tokyo'
+      - 'Australia/Adelaide'
+      - 'Australia/Sydney'
+      - 'Asia/Vladivostok'
+      - 'Pacific/Auckland'
+    default: 'LOCAL'
+    description: 'Time zone'
+    cli_alias: timezone

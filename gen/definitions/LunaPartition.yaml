@@ -1,0 +1,51 @@
+name: LunaPartition
+description: 'SafeNet Luna HSM partition'
+cli_alias: 'luna-partition'
+cmd_group: 'configuration'
+rest_endpoint: '/mgmt/config/{domain}/LunaPartition'
+skip_test: true
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'LunaPartition_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: PartitionName
+    type: String
+    required: true
+    example: 'partitionname'
+    description: 'Partition name'
+    cli_alias: partition
+  - name: PartitionSerial
+    type: String
+    required: true
+    example: 'serial'
+    description: 'Partition serial'
+    cli_alias: serial
+  - name: PasswordAlias
+    type: String
+    reference_to: PasswordAlias
+    required: true
+    description: 'Password alias'
+    cli_alias: password-alias
+  - name: LoginRole
+    type: String
+    enum:
+      - 'co'
+      - 'cu'
+    required: true
+    default: 'co'
+    description: 'Login role'
+    cli_alias: login-role

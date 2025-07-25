@@ -76,16 +76,11 @@ attributes:
     type: String
     description: 'Username token'
     cli_alias: username-token
-  - name: UserNameTokenPassword
-    type: String
-    sensitive: true
-    description: 'Username token password (deprecated)'
-    deprecated: true
-    cli_alias: username-token-password
+  # DEPRECATED
+  # - name: UserNameTokenPassword
   - name: UserNameTokenPasswordAlias
     type: String
     reference_to: PasswordAlias
-    sensitive: true
     description: 'Username token password alias'
     cli_alias: username-token-password-alias
   - name: EBMSMPCVerifyValCred

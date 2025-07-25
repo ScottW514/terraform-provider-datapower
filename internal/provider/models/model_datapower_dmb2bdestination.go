@@ -52,7 +52,6 @@ type DmB2BDestination struct {
 	PasswordAlias                              types.String         `tfsdk:"password_alias"`
 	EbmsmpcAuthMethod                          types.String         `tfsdk:"ebmsmpc_auth_method"`
 	UserNameToken                              types.String         `tfsdk:"user_name_token"`
-	UserNameTokenPassword                      types.String         `tfsdk:"user_name_token_password"`
 	UserNameTokenPasswordAlias                 types.String         `tfsdk:"user_name_token_password_alias"`
 	EbmsmpcVerifyValCred                       types.String         `tfsdk:"ebmsmpc_verify_val_cred"`
 	Passive                                    types.String         `tfsdk:"passive"`
@@ -126,7 +125,6 @@ var DmB2BDestinationObjectType = map[string]attr.Type{
 	"password_alias":                       types.StringType,
 	"ebmsmpc_auth_method":                  types.StringType,
 	"user_name_token":                      types.StringType,
-	"user_name_token_password":             types.StringType,
 	"user_name_token_password_alias":       types.StringType,
 	"ebmsmpc_verify_val_cred":              types.StringType,
 	"passive":                              types.StringType,
@@ -199,7 +197,6 @@ var DmB2BDestinationObjectDefault = map[string]attr.Value{
 	"password_alias":                       types.StringNull(),
 	"ebmsmpc_auth_method":                  types.StringValue("username-token"),
 	"user_name_token":                      types.StringNull(),
-	"user_name_token_password":             types.StringNull(),
 	"user_name_token_password_alias":       types.StringNull(),
 	"ebmsmpc_verify_val_cred":              types.StringNull(),
 	"passive":                              types.StringValue("pasv-req"),
@@ -307,10 +304,6 @@ var DmB2BDestinationDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 		},
 		"user_name_token": DataSourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Username token", "username-token", "").String,
-			Computed:            true,
-		},
-		"user_name_token_password": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Username token password (deprecated)", "username-token-password", "").String,
 			Computed:            true,
 		},
 		"user_name_token_password_alias": DataSourceSchema.StringAttribute{
@@ -608,10 +601,6 @@ var DmB2BDestinationResourceSchema = ResourceSchema.NestedAttributeObject{
 		},
 		"user_name_token": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Username token", "username-token", "").String,
-			Optional:            true,
-		},
-		"user_name_token_password": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Username token password (deprecated)", "username-token-password", "").String,
 			Optional:            true,
 		},
 		"user_name_token_password_alias": ResourceSchema.StringAttribute{
@@ -1029,9 +1018,6 @@ func (data DmB2BDestination) IsNull() bool {
 	if !data.UserNameToken.IsNull() {
 		return false
 	}
-	if !data.UserNameTokenPassword.IsNull() {
-		return false
-	}
 	if !data.UserNameTokenPasswordAlias.IsNull() {
 		return false
 	}
@@ -1251,9 +1237,6 @@ func (data DmB2BDestination) ToBody(ctx context.Context, pathRoot string) string
 	}
 	if !data.UserNameToken.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserNameToken`, data.UserNameToken.ValueString())
-	}
-	if !data.UserNameTokenPassword.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`UserNameTokenPassword`, data.UserNameTokenPassword.ValueString())
 	}
 	if !data.UserNameTokenPasswordAlias.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserNameTokenPasswordAlias`, data.UserNameTokenPasswordAlias.ValueString())
@@ -1498,11 +1481,6 @@ func (data *DmB2BDestination) FromBody(ctx context.Context, pathRoot string, res
 		data.UserNameToken = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.UserNameToken = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `UserNameTokenPassword`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.UserNameTokenPassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.UserNameTokenPassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `UserNameTokenPasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.UserNameTokenPasswordAlias = tfutils.ParseStringFromGJSON(value)
@@ -1859,11 +1837,6 @@ func (data *DmB2BDestination) UpdateFromBody(ctx context.Context, pathRoot strin
 		data.UserNameToken = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.UserNameToken = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `UserNameTokenPassword`); value.Exists() && !data.UserNameTokenPassword.IsNull() {
-		data.UserNameTokenPassword = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.UserNameTokenPassword = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `UserNameTokenPasswordAlias`); value.Exists() && !data.UserNameTokenPasswordAlias.IsNull() {
 		data.UserNameTokenPasswordAlias = tfutils.ParseStringFromGJSON(value)

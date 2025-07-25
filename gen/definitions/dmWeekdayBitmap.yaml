@@ -1,0 +1,31 @@
+name: DmWeekdayBitmap
+model_only: true
+attributes:
+  - name: Sunday
+    type: Bool
+    default: false
+    description: 'Sunday'
+  - name: Monday
+    type: Bool
+    default: false
+    description: 'Monday'
+  - name: Tuesday
+    type: Bool
+    default: false
+    description: 'Tuesday'
+  - name: Wednesday
+    type: Bool
+    default: false
+    description: 'Wednesday'
+  - name: Thursday
+    type: Bool
+    default: false
+    description: 'Thursday'
+  - name: Friday
+    type: Bool
+    default: false
+    description: 'Friday'
+  - name: Saturday
+    type: Bool
+    default: false
+    description: 'Saturday'

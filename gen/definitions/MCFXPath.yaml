@@ -1,0 +1,35 @@
+name: MCFXPath
+description: 'XPath Message Content Filter'
+cli_alias: 'mcf-xpath'
+cmd_group: 'mpgw'
+rest_endpoint: '/mgmt/config/{domain}/MCFXPath'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: '_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: XPathExpression
+    type: String
+    required: true
+    example: '*'
+    description: 'XPath Expression'
+    cli_alias: location
+  - name: XPathValue
+    type: String
+    required: true
+    example: 'value'
+    description: 'XPath Value'
+    cli_alias: value
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary

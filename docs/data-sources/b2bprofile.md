@@ -345,8 +345,6 @@ Read-Only:
   - CLI Alias: `username`
 - `user_name_token` (String) Username token
   - CLI Alias: `username-token`
-- `user_name_token_password` (String) Username token password (deprecated)
-  - CLI Alias: `username-token-password`
 - `user_name_token_password_alias` (String) Username token password alias
   - CLI Alias: `username-token-password-alias`
   - Reference to: `datapower_passwordalias:id`

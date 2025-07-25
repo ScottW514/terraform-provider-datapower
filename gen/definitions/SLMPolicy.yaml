@@ -1,0 +1,44 @@
+name: SLMPolicy
+description: 'SLM policy'
+cli_alias: 'slm-policy'
+cmd_group: 'webservice'
+rest_endpoint: '/mgmt/config/{domain}/SLMPolicy'
+attributes:
+  - name: Id
+    tf_name: id
+    path: name
+    type: String
+    required: true
+    example: 'SLMPolicy_name'
+    description: 'Name of the object. Must be unique among object types in application domain.'
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+  - name: UserSummary
+    type: String
+    description: 'Comments'
+    cli_alias: summary
+  - name: ExecutionPolicy
+    type: String
+    enum:
+      - 'terminate-at-first-reject'
+      - 'terminate-at-first-action'
+      - 'execute-all-statements'
+    default: 'execute-all-statements'
+    description: 'Evaluation method'
+    cli_alias: eval-method
+  - name: Statement
+    type: List
+    element_type: DmSLMStatement
+    description: 'Statement'
+    cli_alias: statement
+  - name: PeerGroup
+    type: String
+    reference_to: PeerGroup
+    description: 'Peer group'
+    cli_alias: peer-group
+  - name: APIMgmt
+    type: Bool
