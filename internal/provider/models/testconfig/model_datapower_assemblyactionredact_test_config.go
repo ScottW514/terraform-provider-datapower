@@ -24,7 +24,7 @@ var AssemblyActionRedactTestConfig = ModelTestConfig{
 	Name: "AssemblyActionRedact",
 	Resource: `
 resource "datapower_assemblyactionredact" "test" {
-  id = "_name"
+  id = "AssemblyActionRedact_name"
   app_domain = "acc_test_domain"
   redact = ` + DmAssemblyActionRedactTestConfig.GetModelListConfig() + `
 }`,
@@ -37,7 +37,6 @@ data "datapower_assemblyactionredact" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmAssemblyActionRedact": &DmAssemblyActionRedactTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

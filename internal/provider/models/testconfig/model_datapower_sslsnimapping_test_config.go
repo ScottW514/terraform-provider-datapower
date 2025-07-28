@@ -37,7 +37,6 @@ data "datapower_sslsnimapping" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmHostToSSLServerProfile": &DmHostToSSLServerProfileTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

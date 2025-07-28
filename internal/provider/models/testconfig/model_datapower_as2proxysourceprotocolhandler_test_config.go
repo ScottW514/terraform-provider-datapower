@@ -42,9 +42,6 @@ data "datapower_as2proxysourceprotocolhandler" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"XMLManager": &XMLManagerTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{
-		"XMLManager": &XMLManagerTestConfig,
-	},
 	TestPre: `
 `,
 }

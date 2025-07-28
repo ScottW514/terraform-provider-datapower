@@ -23,13 +23,10 @@ package testconfig
 var DmB2BGroupedProfileTestConfig = ModelTestConfig{
 	Name: "DmB2BGroupedProfile",
 	Model: `{
-  partner_profile = datapower_b2bprofile.test.id
+  partner_profile = "TestAccB2BProfile"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"B2BProfile": &B2BProfileTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"B2BProfile": &B2BProfileTestConfig,
 	},
 	TestPre: `

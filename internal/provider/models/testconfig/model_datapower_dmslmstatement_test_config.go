@@ -23,15 +23,12 @@ package testconfig
 var DmSLMStatementTestConfig = ModelTestConfig{
 	Name: "DmSLMStatement",
 	Model: `{
-  action = datapower_slmaction.test.id
+  action = "notify"
   maximum_total_reporting_records = 5000
   maximum_resources_and_credentials_for_threshold = 5000
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"SLMAction": &SLMActionTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"SLMAction": &SLMActionTestConfig,
 	},
 	TestPre: `

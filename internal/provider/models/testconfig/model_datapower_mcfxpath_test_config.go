@@ -24,7 +24,7 @@ var MCFXPathTestConfig = ModelTestConfig{
 	Name: "MCFXPath",
 	Resource: `
 resource "datapower_mcfxpath" "test" {
-  id = "_name"
+  id = "MCFXPath_name"
   app_domain = "acc_test_domain"
   x_path_expression = "*"
   x_path_value = "value"
@@ -36,7 +36,6 @@ data "datapower_mcfxpath" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

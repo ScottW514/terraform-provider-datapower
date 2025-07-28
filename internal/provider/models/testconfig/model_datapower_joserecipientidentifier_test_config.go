@@ -27,7 +27,6 @@ resource "datapower_joserecipientidentifier" "test" {
   id = "JOSERecipientIdentifier_name"
   app_domain = "acc_test_domain"
   type = "key"
-  key = datapower_cryptokey.test.id
   header_param = ` + DmJOSEHeaderTestConfig.GetModelListConfig() + `
 }`,
 	Data: `
@@ -37,11 +36,7 @@ data "datapower_joserecipientidentifier" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"CryptoKey":    &CryptoKeyTestConfig,
 		"DmJOSEHeader": &DmJOSEHeaderTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
-		"CryptoKey": &CryptoKeyTestConfig,
 	},
 	TestPre: `
 `,

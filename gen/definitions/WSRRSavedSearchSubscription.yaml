@@ -21,6 +21,7 @@ attributes:
     type: String
     reference_to: WSRRServer
     required: true
+    test_value: '"TestAccWSRRServer"'
     description: 'WSRR server'
     cli_alias: server
   - name: SavedSearchName

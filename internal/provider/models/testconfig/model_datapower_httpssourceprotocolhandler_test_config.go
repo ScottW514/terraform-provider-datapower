@@ -27,20 +27,14 @@ resource "datapower_httpssourceprotocolhandler" "test" {
   id = "HTTPSSourceProtocolHandler_name"
   app_domain = "acc_test_domain"
   ssl_server_config_type = "server"
-  ssl_server = datapower_sslserverprofile.test.id
 }`,
 	Data: `
 data "datapower_httpssourceprotocolhandler" "test" {
   depends_on = [ datapower_httpssourceprotocolhandler.test ]
   app_domain = "acc_test_domain"
 }`,
-	ModelOnly: false,
-	Dependencies: map[string]*ModelTestConfig{
-		"SSLServerProfile": &SSLServerProfileTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
-		"SSLServerProfile": &SSLServerProfileTestConfig,
-	},
+	ModelOnly:    false,
+	Dependencies: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

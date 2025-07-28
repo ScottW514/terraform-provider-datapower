@@ -6,6 +6,7 @@ attributes:
     type: String
     reference_to: RateLimitDefinition
     required: true
+    test_value: '"TestAccRateLimitDefinition"'
     description: 'Name'
     cli_alias: name
   - name: Action

@@ -24,7 +24,7 @@ var AssemblyActionParseTestConfig = ModelTestConfig{
 	Name: "AssemblyActionParse",
 	Resource: `
 resource "datapower_assemblyactionparse" "test" {
-  id = "_name"
+  id = "AssemblyActionParse_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
@@ -34,7 +34,6 @@ data "datapower_assemblyactionparse" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

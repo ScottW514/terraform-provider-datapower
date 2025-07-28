@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionXSLT(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionXSLTTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionxslt.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionxslt.test", "result.0.id", "AssemblyActionXSLT_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionxslt.test", "result.0.use_payload", "false"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionxslt.test", "result.0.serialize_output", "false"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionxslt.test", "result.0.action_debug", "false"),

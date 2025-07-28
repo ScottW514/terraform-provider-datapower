@@ -24,7 +24,7 @@ var AssemblyActionHtmlPageTestConfig = ModelTestConfig{
 	Name: "AssemblyActionHtmlPage",
 	Resource: `
 resource "datapower_assemblyactionhtmlpage" "test" {
-  id = "_name"
+  id = "AssemblyActionHtmlPage_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
@@ -34,7 +34,6 @@ data "datapower_assemblyactionhtmlpage" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

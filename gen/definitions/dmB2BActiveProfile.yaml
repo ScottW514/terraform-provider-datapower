@@ -6,6 +6,7 @@ attributes:
     type: String
     reference_to: B2BProfile
     required: true
+    test_value: '"TestAccB2BProfile"'
     description: 'Partner profile'
     cli_alias: profile
   - name: ProfileEnabled

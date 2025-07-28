@@ -35,7 +35,6 @@ data "datapower_b2bcpacollaboration" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

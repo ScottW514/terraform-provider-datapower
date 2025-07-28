@@ -24,7 +24,7 @@ var AssemblyActionWSDLTestConfig = ModelTestConfig{
 	Name: "AssemblyActionWSDL",
 	Resource: `
 resource "datapower_assemblyactionwsdl" "test" {
-  id = "_name"
+  id = "AssemblyActionWSDL_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
@@ -34,7 +34,6 @@ data "datapower_assemblyactionwsdl" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

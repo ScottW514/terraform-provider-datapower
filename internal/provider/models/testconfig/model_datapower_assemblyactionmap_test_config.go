@@ -24,7 +24,7 @@ var AssemblyActionMapTestConfig = ModelTestConfig{
 	Name: "AssemblyActionMap",
 	Resource: `
 resource "datapower_assemblyactionmap" "test" {
-  id = "_name"
+  id = "AssemblyActionMap_name"
   app_domain = "acc_test_domain"
   location = "local:///file"
 }`,
@@ -35,7 +35,6 @@ data "datapower_assemblyactionmap" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

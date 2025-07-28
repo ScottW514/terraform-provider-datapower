@@ -28,5 +28,4 @@ resource "datapower_file" "test" {
 `,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 }

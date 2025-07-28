@@ -16,4 +16,5 @@ attributes:
     type: String
     reference_to: FilterAction
     required: true
+    test_value: '"TestAccFilterAction"'
     description: 'Action'

@@ -25,13 +25,10 @@ var DmDurationMonitorFilterTestConfig = ModelTestConfig{
 	Model: `{
   name = "DmDurationMonitorFilter_name"
   value = 1
-  action = datapower_filteraction.test.id
+  action = "TestAccFilterAction"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"FilterAction": &FilterActionTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"FilterAction": &FilterActionTestConfig,
 	},
 	TestPre: `

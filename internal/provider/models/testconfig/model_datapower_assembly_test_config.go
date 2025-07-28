@@ -24,9 +24,9 @@ var AssemblyTestConfig = ModelTestConfig{
 	Name: "Assembly",
 	Resource: `
 resource "datapower_assembly" "test" {
-  id = "_name"
+  id = "Assembly_name"
   app_domain = "acc_test_domain"
-  rule = datapower_apirule.test.id
+  rule = "default-empty-rule"
 }`,
 	Data: `
 data "datapower_assembly" "test" {
@@ -35,9 +35,6 @@ data "datapower_assembly" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"APIRule": &APIRuleTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"APIRule": &APIRuleTestConfig,
 	},
 	TestPre: `

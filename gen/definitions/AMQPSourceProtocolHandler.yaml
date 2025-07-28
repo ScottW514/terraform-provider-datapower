@@ -25,6 +25,7 @@ attributes:
     type: String
     reference_to: AMQPBroker
     required: true
+    test_value: '"TestAccAMQPBroker"'
     description: 'AMQP broker'
     cli_alias: broker
   - name: From

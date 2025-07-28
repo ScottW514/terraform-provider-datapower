@@ -41,5 +41,6 @@ attributes:
     type: String
     reference_to: MessageType
     required: true
+    test_value: '"TestAccMessageType"'
     description: 'Message Type'
     cli_alias: message-type

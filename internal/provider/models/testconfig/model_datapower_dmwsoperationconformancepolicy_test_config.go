@@ -23,14 +23,11 @@ package testconfig
 var DmWSOperationConformancePolicyTestConfig = ModelTestConfig{
 	Name: "DmWSOperationConformancePolicy",
 	Model: `{
-  conformance_policy = datapower_conformancepolicy.test.id
+  conformance_policy = "TestAccConformancePolicy"
   conformance_policy_wsdl_component_type = "all"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"ConformancePolicy": &ConformancePolicyTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"ConformancePolicy": &ConformancePolicyTestConfig,
 	},
 	TestPre: `

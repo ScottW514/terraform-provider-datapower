@@ -6,6 +6,7 @@ attributes:
     type: String
     reference_to: URLMap
     required: true
+    test_value: '"default-attempt-stream-all"'
     description: 'URL Map'
     cli_alias: urlmap
   - name: URLRefreshPolicy

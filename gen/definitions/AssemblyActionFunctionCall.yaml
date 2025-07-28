@@ -9,7 +9,7 @@ attributes:
     path: name
     type: String
     required: true
-    example: '_name'
+    example: 'AssemblyActionFunctionCall_name'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: AppDomain
     tf_name: app_domain
@@ -21,6 +21,7 @@ attributes:
     type: String
     reference_to: AssemblyFunction
     required: true
+    test_value: '"default-func-global"'
     description: 'Called action'
     cli_alias: function
   - name: Parameter

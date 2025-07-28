@@ -37,7 +37,6 @@ data "datapower_apigateway" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `resource "datapower_httpsourceprotocolhandler" "test" {
   id = "HTTPSourceProtocolHandler_name"
   app_domain = "acc_test_domain"

@@ -23,15 +23,11 @@ package testconfig
 var DmWebGWErrorPolicyMapTestConfig = ModelTestConfig{
 	Name: "DmWebGWErrorPolicyMap",
 	Model: `{
-  match = datapower_matching.test.id
-  action = datapower_mpgwerroraction.test.id
+  match = "__default-accept-service-providers__"
+  action = "TestAccMPGWErrorAction"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"Matching":        &MatchingTestConfig,
-		"MPGWErrorAction": &MPGWErrorActionTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"Matching":        &MatchingTestConfig,
 		"MPGWErrorAction": &MPGWErrorActionTestConfig,
 	},

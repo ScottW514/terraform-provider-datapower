@@ -26,5 +26,6 @@ attributes:
     type: String
     reference_to: GatewayPeering
     required: true
+    test_value: '"default-gateway-peering"'
     description: 'Gateway peering'
     cli_alias: gateway-peering

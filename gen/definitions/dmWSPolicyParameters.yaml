@@ -6,6 +6,7 @@ attributes:
     type: String
     reference_to: PolicyParameters
     required: true
+    test_value: '"TestAccPolicyParameters"'
     description: 'Parameters'
   - name: PolicyParamWSDLComponentType
     type: String

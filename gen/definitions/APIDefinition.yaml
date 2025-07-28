@@ -64,6 +64,7 @@ attributes:
     reference_to: APIPath
     element_type: String
     required: true
+    test_value: '["TestAccAPIPath"]'
     description: 'Paths'
     cli_alias: path
   - name: Consume

@@ -22,11 +22,13 @@ attributes:
     type: String
     reference_to: Matching
     required: true
+    test_value: '"__default-accept-service-providers__"'
     description: 'Match Rule'
   - name: Rule
     type: String
     reference_to: WSStylePolicyRule
     required: true
+    test_value: '"TestAccWSStylePolicyRule"'
     description: 'Stylepolicy Rule'
   - name: Subscription
     type: String

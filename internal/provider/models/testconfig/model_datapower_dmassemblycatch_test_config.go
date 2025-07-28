@@ -24,13 +24,10 @@ var DmAssemblyCatchTestConfig = ModelTestConfig{
 	Name: "DmAssemblyCatch",
 	Model: `{
   error = "errorname"
-  handler = datapower_apirule.test.id
+  handler = "default-api-rule"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"APIRule": &APIRuleTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"APIRule": &APIRuleTestConfig,
 	},
 	TestPre: `

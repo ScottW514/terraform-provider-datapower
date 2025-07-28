@@ -24,13 +24,10 @@ var DmHostToSSLServerProfileTestConfig = ModelTestConfig{
 	Name: "DmHostToSSLServerProfile",
 	Model: `{
   host_name_wildmat = "hostname_wildmat"
-  ssl_server = datapower_sslserverprofile.test.id
+  ssl_server = "TestAccSSLServerProfile"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"SSLServerProfile": &SSLServerProfileTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"SSLServerProfile": &SSLServerProfileTestConfig,
 	},
 	TestPre: `

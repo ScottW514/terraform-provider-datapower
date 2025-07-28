@@ -24,7 +24,7 @@ var AssemblyActionWebSocketUpgradeTestConfig = ModelTestConfig{
 	Name: "AssemblyActionWebSocketUpgrade",
 	Resource: `
 resource "datapower_assemblyactionwebsocketupgrade" "test" {
-  id = "_name"
+  id = "AssemblyActionWebSocketUpgrade_name"
   app_domain = "acc_test_domain"
   url = "https://localhost"
 }`,
@@ -35,7 +35,6 @@ data "datapower_assemblyactionwebsocketupgrade" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

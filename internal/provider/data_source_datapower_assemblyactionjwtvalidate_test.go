@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionJWTValidate(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionJWTValidateTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtvalidate.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtvalidate.test", "result.0.id", "AssemblyActionJWTValidate_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtvalidate.test", "result.0.jwt", "request.headers.authorization"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtvalidate.test", "result.0.output_claims", "decoded.claims"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtvalidate.test", "result.0.action_debug", "false"),

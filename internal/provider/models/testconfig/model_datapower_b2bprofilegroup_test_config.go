@@ -37,7 +37,6 @@ data "datapower_b2bprofilegroup" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmB2BGroupedProfile": &DmB2BGroupedProfileTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

@@ -27,7 +27,7 @@ resource "datapower_webappfw" "test" {
   id = "WebAppFW_name"
   app_domain = "acc_test_domain"
   remote_address = "10.10.10.10"
-  style_policy = datapower_appsecuritypolicy.test.id
+  style_policy = "TestAccAppSecurityPolicy"
   xml_manager = "default"
   front_timeout = 120
   back_timeout = 120
@@ -41,10 +41,6 @@ data "datapower_webappfw" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"AppSecurityPolicy": &AppSecurityPolicyTestConfig,
-		"XMLManager":        &XMLManagerTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"AppSecurityPolicy": &AppSecurityPolicyTestConfig,
 		"XMLManager":        &XMLManagerTestConfig,
 	},

@@ -26,7 +26,7 @@ var WSRRSavedSearchSubscriptionTestConfig = ModelTestConfig{
 resource "datapower_wsrrsavedsearchsubscription" "test" {
   id = "WSRRSavedSearchSubscription_name"
   app_domain = "acc_test_domain"
-  server = datapower_wsrrserver.test.id
+  server = "TestAccWSRRServer"
   saved_search_name = "saved_search_name"
 }`,
 	Data: `
@@ -36,9 +36,6 @@ data "datapower_wsrrsavedsearchsubscription" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"WSRRServer": &WSRRServerTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"WSRRServer": &WSRRServerTestConfig,
 	},
 	TestPre: `

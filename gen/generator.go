@@ -146,23 +146,6 @@ func camelCase(s string) string {
 	return b.String()
 }
 
-// getTestReferencesTo collects unique references for testing.
-func getTestReferencesTo(config YamlConfig) []string {
-	seen := make(map[string]bool)
-	unique := []string{}
-	seen[config.Name] = true
-	for _, v := range config.Attributes {
-		if (v.Required || v.TestValue != "") && v.ReferenceTo != "" && !seen[v.ReferenceTo] {
-			seen[v.ReferenceTo] = true
-			unique = append(unique, v.ReferenceTo)
-		} else if (v.Required || v.TestValue != "") && v.Type == "List" && v.ElementType != "String" && v.ElementType != "Int64" && v.ElementType != "Bool" && v.ElementType[:2] != "Dm" && !seen[v.ElementType] {
-			seen[v.ElementType] = true
-			unique = append(unique, v.ElementType)
-		}
-	}
-	return unique
-}
-
 // getTestDependencies collects unique dependencies for testing.
 func getTestDependencies(config YamlConfig) []string {
 	seen := make(map[string]bool)
@@ -263,7 +246,6 @@ func updateComputed(attributes []YamlConfigAttribute) bool {
 var functions = template.FuncMap{
 	"camelCase":             camelCase,
 	"getTestDependencies":   getTestDependencies,
-	"getTestReferencesTo":   getTestReferencesTo,
 	"hasDomainAttribute":    hasDomainAttribute,
 	"hasWriteOnlyAttribute": hasWriteOnlyAttribute,
 	"isList":                isList,

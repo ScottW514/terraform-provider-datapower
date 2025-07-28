@@ -25,6 +25,7 @@ attributes:
     type: String
     reference_to: MQManager
     required: true
+    test_value: '"TestAccMQManager"'
     description: 'Primary queue manager'
     cli_alias: primary
   - name: BackupQueueManagers

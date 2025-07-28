@@ -28,14 +28,11 @@ var DmTAMFedDirTestConfig = ModelTestConfig{
   host = "ldap.host"
   port = 389
   bind_dn = "dn"
-  bind_pw = datapower_passwordalias.test.id
+  bind_pw = "TestAccPasswordAlias"
   use_ssl = false
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"PasswordAlias": &PasswordAliasTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"PasswordAlias": &PasswordAliasTestConfig,
 	},
 	TestPre: `

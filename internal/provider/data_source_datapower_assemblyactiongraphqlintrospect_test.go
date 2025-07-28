@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionGraphQLIntrospect(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionGraphQLIntrospectTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactiongraphqlintrospect.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactiongraphqlintrospect.test", "result.0.id", "AssemblyActionGraphQLIntrospect_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactiongraphqlintrospect.test", "result.0.input", "message"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactiongraphqlintrospect.test", "result.0.action_debug", "false"),
 				}...),

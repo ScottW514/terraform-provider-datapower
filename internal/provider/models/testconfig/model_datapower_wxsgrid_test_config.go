@@ -24,12 +24,12 @@ var WXSGridTestConfig = ModelTestConfig{
 	Name: "WXSGrid",
 	Resource: `
 resource "datapower_wxsgrid" "test" {
-  id = "_name"
+  id = "WXSGrid_name"
   app_domain = "acc_test_domain"
-  collective = datapower_loadbalancergroup.test.id
+  collective = "TestAccLoadBalancerGroup"
   grid = "gridname"
   user_name = "username"
-  password_alias = datapower_passwordalias.test.id
+  password_alias = "TestAccPasswordAlias"
   timeout = 1000
 }`,
 	Data: `
@@ -39,10 +39,6 @@ data "datapower_wxsgrid" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"LoadBalancerGroup": &LoadBalancerGroupTestConfig,
-		"PasswordAlias":     &PasswordAliasTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"LoadBalancerGroup": &LoadBalancerGroupTestConfig,
 		"PasswordAlias":     &PasswordAliasTestConfig,
 	},

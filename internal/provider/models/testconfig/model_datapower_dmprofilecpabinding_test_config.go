@@ -23,17 +23,12 @@ package testconfig
 var DmProfileCPABindingTestConfig = ModelTestConfig{
 	Name: "DmProfileCPABinding",
 	Model: `{
-  internal_partner = datapower_b2bprofile.test.id
-  cpa = datapower_b2bcpa.test.id
-  collaboration = datapower_b2bcpacollaboration.test.id
+  internal_partner = "TestAccB2BProfile"
+  cpa = "TestAccB2BCPA"
+  collaboration = "TestAccB2BCPACollaboration"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"B2BProfile":          &B2BProfileTestConfig,
-		"B2BCPA":              &B2BCPATestConfig,
-		"B2BCPACollaboration": &B2BCPACollaborationTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"B2BProfile":          &B2BProfileTestConfig,
 		"B2BCPA":              &B2BCPATestConfig,
 		"B2BCPACollaboration": &B2BCPACollaborationTestConfig,

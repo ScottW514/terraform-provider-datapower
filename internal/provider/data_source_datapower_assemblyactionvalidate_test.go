@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionValidate(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionValidateTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionvalidate.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionvalidate.test", "result.0.id", "AssemblyActionValidate_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionvalidate.test", "result.0.validate_against", "url"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionvalidate.test", "result.0.error_policy", "all"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionvalidate.test", "result.0.input", "message"),

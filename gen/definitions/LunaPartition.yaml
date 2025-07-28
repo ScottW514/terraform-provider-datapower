@@ -38,6 +38,7 @@ attributes:
     type: String
     reference_to: PasswordAlias
     required: true
+    test_value: '"TestAccPasswordAlias"'
     description: 'Password alias'
     cli_alias: password-alias
   - name: LoginRole

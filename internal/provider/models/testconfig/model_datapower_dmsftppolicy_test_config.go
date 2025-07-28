@@ -24,14 +24,11 @@ var DmSFTPPolicyTestConfig = ModelTestConfig{
 	Name: "DmSFTPPolicy",
 	Model: `{
   reg_exp = "*"
-  ssh_client_profile = datapower_sshclientprofile.test.id
+  ssh_client_profile = "TestAccSSHClientProfile"
   use_unique_filenames = false
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"SSHClientProfile": &SSHClientProfileTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"SSHClientProfile": &SSHClientProfileTestConfig,
 	},
 	TestPre: `

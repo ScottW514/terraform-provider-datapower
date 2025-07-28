@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionJWTGenerate(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionJWTGenerateTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtgenerate.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtgenerate.test", "result.0.id", "AssemblyActionJWTGenerate_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtgenerate.test", "result.0.jwt", "generated.jwt"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtgenerate.test", "result.0.jwtid_claims", "false"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtgenerate.test", "result.0.issuer_claim", "iss.claim"),

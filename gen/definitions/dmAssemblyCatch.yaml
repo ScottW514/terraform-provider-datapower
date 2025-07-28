@@ -11,4 +11,5 @@ attributes:
     type: String
     reference_to: APIRule
     required: true
+    test_value: '"default-api-rule"'
     description: 'Error handler'

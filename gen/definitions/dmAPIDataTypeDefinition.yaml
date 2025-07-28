@@ -10,5 +10,6 @@ attributes:
   - name: Schema
     type: String
     reference_to: APISchema
+    test_value: '"TestAccAPISchema"'
     required: true
     description: 'Schema'

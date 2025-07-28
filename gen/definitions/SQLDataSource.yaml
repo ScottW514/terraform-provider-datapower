@@ -44,6 +44,7 @@ attributes:
     type: String
     required: true
     reference_to: PasswordAlias
+    test_value: '"TestAccPasswordAlias"'
     description: 'Connection password alias'
     cli_alias: password-alias
   - name: DataSourceID

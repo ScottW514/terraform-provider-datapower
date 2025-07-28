@@ -27,13 +27,10 @@ var DmCountMonitorFilterTestConfig = ModelTestConfig{
   interval = 1000
   rate_limit = 50
   burst_limit = 100
-  action = datapower_filteraction.test.id
+  action = "TestAccFilterAction"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"FilterAction": &FilterActionTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"FilterAction": &FilterActionTestConfig,
 	},
 	TestPre: `

@@ -24,15 +24,11 @@ var DmWSMPolicyMapTestConfig = ModelTestConfig{
 	Name: "DmWSMPolicyMap",
 	Model: `{
   wsdl_component_type = "all"
-  match = datapower_matching.test.id
-  rule = datapower_wsstylepolicyrule.test.id
+  match = "__default-accept-service-providers__"
+  rule = "TestAccWSStylePolicyRule"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"Matching":          &MatchingTestConfig,
-		"WSStylePolicyRule": &WSStylePolicyRuleTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"Matching":          &MatchingTestConfig,
 		"WSStylePolicyRule": &WSStylePolicyRuleTestConfig,
 	},

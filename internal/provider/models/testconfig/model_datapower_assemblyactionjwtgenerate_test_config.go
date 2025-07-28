@@ -24,7 +24,7 @@ var AssemblyActionJWTGenerateTestConfig = ModelTestConfig{
 	Name: "AssemblyActionJWTGenerate",
 	Resource: `
 resource "datapower_assemblyactionjwtgenerate" "test" {
-  id = "_name"
+  id = "AssemblyActionJWTGenerate_name"
   app_domain = "acc_test_domain"
   issuer_claim = "iss.claim"
   validity_period = 3600
@@ -36,7 +36,6 @@ data "datapower_assemblyactionjwtgenerate" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

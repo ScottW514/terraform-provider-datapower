@@ -21,6 +21,7 @@ attributes:
     type: String
     reference_to: StylePolicyRule
     required: true
+    test_value: '"__dp-policy-begin__"'
     description: 'Rule'
     cli_alias: rulename
   - name: CustomRuleValue

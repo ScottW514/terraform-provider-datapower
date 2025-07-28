@@ -35,5 +35,6 @@ attributes:
     type: String
     reference_to: JWERecipient
     required: true
+    test_value: '"TestAccJWERecipient"'
     description: 'Recipient'
     cli_alias: recipient

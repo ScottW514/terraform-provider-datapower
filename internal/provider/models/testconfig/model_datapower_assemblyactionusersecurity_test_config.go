@@ -24,7 +24,7 @@ var AssemblyActionUserSecurityTestConfig = ModelTestConfig{
 	Name: "AssemblyActionUserSecurity",
 	Resource: `
 resource "datapower_assemblyactionusersecurity" "test" {
-  id = "_name"
+  id = "AssemblyActionUserSecurity_name"
   app_domain = "acc_test_domain"
   factor_id = "default"
   extract_identity_method = "basic"
@@ -38,7 +38,6 @@ data "datapower_assemblyactionusersecurity" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

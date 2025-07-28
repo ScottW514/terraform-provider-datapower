@@ -23,13 +23,10 @@ package testconfig
 var DmURLRefreshRuleTestConfig = ModelTestConfig{
 	Name: "DmURLRefreshRule",
 	Model: `{
-  url_map = datapower_urlmap.test.id
+  url_map = "default-attempt-stream-all"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"URLMap": &URLMapTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"URLMap": &URLMapTestConfig,
 	},
 	TestPre: `

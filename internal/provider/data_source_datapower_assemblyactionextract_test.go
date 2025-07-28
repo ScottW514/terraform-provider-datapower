@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionExtract(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionExtractTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionextract.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionextract.test", "result.0.id", "AssemblyActionExtract_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionextract.test", "result.0.root", "message.body"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionextract.test", "result.0.action_debug", "false"),
 				}...),

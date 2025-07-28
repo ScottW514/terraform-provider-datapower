@@ -26,7 +26,7 @@ var APIPlanTestConfig = ModelTestConfig{
 resource "datapower_apiplan" "test" {
   id = "APIPlan_name"
   app_domain = "acc_test_domain"
-  api = [datapower_apidefinition.test.id]
+  api = ["TestAccAPIDefinition"]
   rate_limit_scope = "per-application"
 }`,
 	Data: `
@@ -36,9 +36,6 @@ data "datapower_apiplan" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"APIDefinition": &APIDefinitionTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"APIDefinition": &APIDefinitionTestConfig,
 	},
 	TestPre: `

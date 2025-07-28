@@ -11,6 +11,7 @@ attributes:
     type: String
     reference_to: SSHClientProfile
     required: true
+    test_value: '"TestAccSSHClientProfile"'
     description: 'SSH client profile'
   - name: UseUniqueFilenames
     type: Bool

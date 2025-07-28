@@ -39,7 +39,7 @@ func TestAccDataSourceWXSGrid(t *testing.T) {
 			{
 				Config: testconfig.WXSGridTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_wxsgrid.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_wxsgrid.test", "result.0.id", "WXSGrid_name"),
 					resource.TestCheckResourceAttr("data.datapower_wxsgrid.test", "result.0.timeout", "1000"),
 					resource.TestCheckResourceAttr("data.datapower_wxsgrid.test", "result.0.encrypt", "false"),
 					resource.TestCheckResourceAttr("data.datapower_wxsgrid.test", "result.0.encrypt_alg", "tripledes-cbc"),

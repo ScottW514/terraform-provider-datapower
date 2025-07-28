@@ -26,7 +26,7 @@ var MQManagerGroupTestConfig = ModelTestConfig{
 resource "datapower_mqmanagergroup" "test" {
   id = "MQManagerGroup_name"
   app_domain = "acc_test_domain"
-  primary_queue_manager = datapower_mqmanager.test.id
+  primary_queue_manager = "TestAccMQManager"
 }`,
 	Data: `
 data "datapower_mqmanagergroup" "test" {
@@ -35,9 +35,6 @@ data "datapower_mqmanagergroup" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"MQManager": &MQManagerTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"MQManager": &MQManagerTestConfig,
 	},
 	TestPre: `

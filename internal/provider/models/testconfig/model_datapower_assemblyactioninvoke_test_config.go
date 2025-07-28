@@ -24,7 +24,7 @@ var AssemblyActionInvokeTestConfig = ModelTestConfig{
 	Name: "AssemblyActionInvoke",
 	Resource: `
 resource "datapower_assemblyactioninvoke" "test" {
-  id = "_name"
+  id = "AssemblyActionInvoke_name"
   app_domain = "acc_test_domain"
   url = "https://localhost"
   method = "Keep"
@@ -38,7 +38,6 @@ data "datapower_assemblyactioninvoke" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

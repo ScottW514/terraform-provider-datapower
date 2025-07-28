@@ -24,13 +24,10 @@ var DmPubkeyAuthPolicyTestConfig = ModelTestConfig{
 	Name: "DmPubkeyAuthPolicy",
 	Model: `{
   reg_exp = "*"
-  crypto_key = datapower_cryptokey.test.id
+  crypto_key = "TestAccCryptoKey"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"CryptoKey": &CryptoKeyTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"CryptoKey": &CryptoKeyTestConfig,
 	},
 	TestPre: `

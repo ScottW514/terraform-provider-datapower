@@ -26,7 +26,7 @@ var SFTPFilePollerSourceProtocolHandlerTestConfig = ModelTestConfig{
 resource "datapower_sftpfilepollersourceprotocolhandler" "test" {
   id = "SFTPFilePollerSourceProtocolHandler_name"
   app_domain = "acc_test_domain"
-  ssh_client_connection = datapower_sshclientprofile.test.id
+  ssh_client_connection = "TestAccSSHClientProfile"
   target_directory = "/"
   delay_between_polls = 60000
   input_file_match_pattern = ".*"
@@ -40,10 +40,6 @@ data "datapower_sftpfilepollersourceprotocolhandler" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"SSHClientProfile": &SSHClientProfileTestConfig,
-		"XMLManager":       &XMLManagerTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"SSHClientProfile": &SSHClientProfileTestConfig,
 		"XMLManager":       &XMLManagerTestConfig,
 	},

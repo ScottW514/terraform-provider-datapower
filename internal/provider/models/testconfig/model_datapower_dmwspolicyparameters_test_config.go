@@ -23,14 +23,11 @@ package testconfig
 var DmWSPolicyParametersTestConfig = ModelTestConfig{
 	Name: "DmWSPolicyParameters",
 	Model: `{
-  policy_param_parameters = datapower_policyparameters.test.id
+  policy_param_parameters = "TestAccPolicyParameters"
   policy_param_wsdl_component_type = "all"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"PolicyParameters": &PolicyParametersTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"PolicyParameters": &PolicyParametersTestConfig,
 	},
 	TestPre: `

@@ -6,6 +6,7 @@ attributes:
     type: String
     reference_to: Matching
     required: true
+    test_value: '"__default-accept-service-providers__"'
     description: 'URL Match'
   - name: ValidationMode
     type: String

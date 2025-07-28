@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionWebSocketUpgrade(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionWebSocketUpgradeTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionwebsocketupgrade.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionwebsocketupgrade.test", "result.0.id", "AssemblyActionWebSocketUpgrade_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionwebsocketupgrade.test", "result.0.timeout", "60"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionwebsocketupgrade.test", "result.0.follow_redirects", "false"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionwebsocketupgrade.test", "result.0.decode_request_params", "false"),

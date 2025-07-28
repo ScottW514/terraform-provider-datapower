@@ -27,7 +27,6 @@ resource "datapower_josesignatureidentifier" "test" {
   id = "JOSESignatureIdentifier_name"
   app_domain = "acc_test_domain"
   type = "certificate"
-  certificate = datapower_cryptocertificate.test.id
   header_param = ` + DmJOSEHeaderTestConfig.GetModelListConfig() + `
 }`,
 	Data: `
@@ -37,11 +36,7 @@ data "datapower_josesignatureidentifier" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"CryptoCertificate": &CryptoCertificateTestConfig,
-		"DmJOSEHeader":      &DmJOSEHeaderTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
-		"CryptoCertificate": &CryptoCertificateTestConfig,
+		"DmJOSEHeader": &DmJOSEHeaderTestConfig,
 	},
 	TestPre: `
 `,

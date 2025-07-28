@@ -35,7 +35,6 @@ data "datapower_apisecurityrequirement" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `resource "datapower_apisecurityapikey" "test" {
   id = "APISecurityAPIKey_test"
   app_domain = "acc_test_domain"

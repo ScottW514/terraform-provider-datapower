@@ -36,6 +36,7 @@ attributes:
     type: String
     reference_to: PasswordAlias
     required: true
+    test_value: '"TestAccPasswordAlias"'
     description: 'LDAP administrator password alias'
     cli_alias: bind-pw
   - name: UseSSL

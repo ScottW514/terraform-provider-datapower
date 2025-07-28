@@ -21,7 +21,7 @@ attributes:
     type: List
     reference_to: CryptoKey
     element_type: String
-    test_value: '[datapower_cryptokey.test.id]'
+    test_value: '["TestAccCryptoKey"]'
     description: 'Private key'
     cli_alias: key
   - name: SharedSecretKey

@@ -9,7 +9,7 @@ attributes:
     path: name
     type: String
     required: true
-    example: '_name'
+    example: 'WXSGrid_name'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: AppDomain
     tf_name: app_domain
@@ -24,6 +24,7 @@ attributes:
   - name: Collective
     type: String
     reference_to: LoadBalancerGroup
+    test_value: '"TestAccLoadBalancerGroup"'
     required: true
     description: 'Collective'
     cli_alias: collective
@@ -43,6 +44,7 @@ attributes:
     type: String
     reference_to: PasswordAlias
     required: true
+    test_value: '"TestAccPasswordAlias"'
     description: 'Password Alias'
     cli_alias: password-alias
   - name: Timeout

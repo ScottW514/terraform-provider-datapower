@@ -26,7 +26,7 @@ var SSLSNIServerProfileTestConfig = ModelTestConfig{
 resource "datapower_sslsniserverprofile" "test" {
   id = "SSLSNIServerProfile_name"
   app_domain = "acc_test_domain"
-  sni_server_mapping = datapower_sslsnimapping.test.id
+  sni_server_mapping = "TestAccSSLSNIMappingHostnameMap"
 }`,
 	Data: `
 data "datapower_sslsniserverprofile" "test" {
@@ -35,9 +35,6 @@ data "datapower_sslsniserverprofile" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"SSLSNIMapping": &SSLSNIMappingTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"SSLSNIMapping": &SSLSNIMappingTestConfig,
 	},
 	TestPre: `

@@ -23,14 +23,11 @@ package testconfig
 var DmSchemaValidationTestConfig = ModelTestConfig{
 	Name: "DmSchemaValidation",
 	Model: `{
-  matching = datapower_matching.test.id
+  matching = "__default-accept-service-providers__"
   validation_mode = "default"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"Matching": &MatchingTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"Matching": &MatchingTestConfig,
 	},
 	TestPre: `

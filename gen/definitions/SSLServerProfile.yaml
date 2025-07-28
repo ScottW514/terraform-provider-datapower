@@ -110,6 +110,7 @@ attributes:
     type: String
     reference_to: CryptoIdentCred
     required: true
+    test_value: '"TestAccCryptoIdentCred"'
     description: 'Identification credentials'
     cli_alias: idcred
   - name: RequestClientAuth

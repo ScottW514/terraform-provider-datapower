@@ -24,7 +24,7 @@ var AssemblyActionGraphQLExecuteTestConfig = ModelTestConfig{
 	Name: "AssemblyActionGraphQLExecute",
 	Resource: `
 resource "datapower_assemblyactiongraphqlexecute" "test" {
-  id = "_name"
+  id = "AssemblyActionGraphQLExecute_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
@@ -34,7 +34,6 @@ data "datapower_assemblyactiongraphqlexecute" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

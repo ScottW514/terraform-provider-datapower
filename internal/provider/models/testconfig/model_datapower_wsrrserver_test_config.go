@@ -24,7 +24,7 @@ var WSRRServerTestConfig = ModelTestConfig{
 	Name: "WSRRServer",
 	Resource: `
 resource "datapower_wsrrserver" "test" {
-  id = "WSRRServer_name"
+  id = "_WSRRServer_name"
   app_domain = "acc_test_domain"
   soap_url = "https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort"
 }`,
@@ -35,7 +35,6 @@ data "datapower_wsrrserver" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

@@ -27,20 +27,14 @@ resource "datapower_jwerecipient" "test" {
   id = "JWERecipient_name"
   app_domain = "acc_test_domain"
   algorithm = "RSA1_5"
-  certificate = datapower_cryptocertificate.test.id
 }`,
 	Data: `
 data "datapower_jwerecipient" "test" {
   depends_on = [ datapower_jwerecipient.test ]
   app_domain = "acc_test_domain"
 }`,
-	ModelOnly: false,
-	Dependencies: map[string]*ModelTestConfig{
-		"CryptoCertificate": &CryptoCertificateTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
-		"CryptoCertificate": &CryptoCertificateTestConfig,
-	},
+	ModelOnly:    false,
+	Dependencies: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

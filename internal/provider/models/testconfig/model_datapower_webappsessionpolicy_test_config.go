@@ -26,7 +26,7 @@ var WebAppSessionPolicyTestConfig = ModelTestConfig{
 resource "datapower_webappsessionpolicy" "test" {
   id = "WebAppSessionPolicy_name"
   app_domain = "acc_test_domain"
-  start_matches = datapower_matching.test.id
+  start_matches = "__default-accept-service-providers__"
 }`,
 	Data: `
 data "datapower_webappsessionpolicy" "test" {
@@ -35,9 +35,6 @@ data "datapower_webappsessionpolicy" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"Matching": &MatchingTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"Matching": &MatchingTestConfig,
 	},
 	TestPre: `

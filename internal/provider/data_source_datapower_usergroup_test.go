@@ -39,7 +39,7 @@ func TestAccDataSourceUserGroup(t *testing.T) {
 			{
 				Config: testconfig.UserGroupTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_usergroup.test", "result.0.id", "UserGroup_name"),
+					resource.TestCheckResourceAttr("data.datapower_usergroup.test", "result.0.id", "_UserGroup_name"),
 				}...),
 			},
 		},

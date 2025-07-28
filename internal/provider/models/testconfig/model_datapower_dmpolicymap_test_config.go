@@ -23,15 +23,11 @@ package testconfig
 var DmPolicyMapTestConfig = ModelTestConfig{
 	Name: "DmPolicyMap",
 	Model: `{
-  match = datapower_matching.test.id
-  rule = datapower_stylepolicyrule.test.id
+  match = "__default-accept-service-providers__"
+  rule = "__dp-policy-begin__"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"Matching":        &MatchingTestConfig,
-		"StylePolicyRule": &StylePolicyRuleTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"Matching":        &MatchingTestConfig,
 		"StylePolicyRule": &StylePolicyRuleTestConfig,
 	},

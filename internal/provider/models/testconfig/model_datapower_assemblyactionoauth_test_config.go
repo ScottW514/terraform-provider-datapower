@@ -24,7 +24,7 @@ var AssemblyActionOAuthTestConfig = ModelTestConfig{
 	Name: "AssemblyActionOAuth",
 	Resource: `
 resource "datapower_assemblyactionoauth" "test" {
-  id = "_name"
+  id = "AssemblyActionOAuth_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
@@ -34,7 +34,6 @@ data "datapower_assemblyactionoauth" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

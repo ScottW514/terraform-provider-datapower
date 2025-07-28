@@ -42,8 +42,6 @@ resource "datapower_{{snakeCase .Name}}" "test" {
 	{{- else if or .Required .TestValue}}
         {{- if .TestValue}}
   {{.TfName}} = {{.TestValue}}
-		{{- else if .ReferenceTo}}
-  {{.TfName}} = {{if eq .Type "List"}}[{{end}}datapower_{{snakeCase .ReferenceTo}}.test.id{{if eq .Type "List"}}]{{end}}
 		{{- else if or (isObject .) (isObjectList .)}}
   {{.TfName}} = ` + {{if isObjectList .}}{{.ElementType}}{{else}}{{.DmType}}{{end}}TestConfig.GetModel{{if isObjectList .}}List{{end}}Config() + `
         {{- else if and (len .ListDefault) (eq .Type "List")}}
@@ -75,11 +73,6 @@ data "datapower_{{snakeCase .Name}}" "test" {
     ModelOnly:    {{if .ModelOnly}}true{{else}}false{{end}},
     Dependencies: map[string]*ModelTestConfig{
 {{- range (getTestDependencies .)}}
-        "{{.}}": &{{.}}TestConfig,
-{{- end}}
-    },
-    ReferencesTo: map[string]*ModelTestConfig{
-{{- range (getTestReferencesTo .)}}
         "{{.}}": &{{.}}TestConfig,
 {{- end}}
     },

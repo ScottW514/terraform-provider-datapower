@@ -24,7 +24,7 @@ var AssemblyActionValidateTestConfig = ModelTestConfig{
 	Name: "AssemblyActionValidate",
 	Resource: `
 resource "datapower_assemblyactionvalidate" "test" {
-  id = "_name"
+  id = "AssemblyActionValidate_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
@@ -34,7 +34,6 @@ data "datapower_assemblyactionvalidate" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

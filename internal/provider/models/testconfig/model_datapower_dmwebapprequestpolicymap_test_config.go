@@ -23,15 +23,11 @@ package testconfig
 var DmWebAppRequestPolicyMapTestConfig = ModelTestConfig{
 	Name: "DmWebAppRequestPolicyMap",
 	Model: `{
-  match = datapower_matching.test.id
-  rule = datapower_webapprequest.test.id
+  match = "__default-accept-service-providers__"
+  rule = "TestAccRequestProfile"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"Matching":      &MatchingTestConfig,
-		"WebAppRequest": &WebAppRequestTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"Matching":      &MatchingTestConfig,
 		"WebAppRequest": &WebAppRequestTestConfig,
 	},

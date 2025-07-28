@@ -26,7 +26,7 @@ var AMQPSourceProtocolHandlerTestConfig = ModelTestConfig{
 resource "datapower_amqpsourceprotocolhandler" "test" {
   id = "AMQPSourceProtocolHandler_name"
   app_domain = "acc_test_domain"
-  broker = datapower_amqpbroker.test.id
+  broker = "TestAccAMQPBroker"
   from = "amqpfrom"
 }`,
 	Data: `
@@ -36,9 +36,6 @@ data "datapower_amqpsourceprotocolhandler" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"AMQPBroker": &AMQPBrokerTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"AMQPBroker": &AMQPBrokerTestConfig,
 	},
 	TestPre: `

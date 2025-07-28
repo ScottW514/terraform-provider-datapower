@@ -37,7 +37,6 @@ data "datapower_b2bprofile" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmB2BDestination": &DmB2BDestinationTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

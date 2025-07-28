@@ -26,7 +26,7 @@ var ProbeTestConfig = ModelTestConfig{
 resource "datapower_probe" "test" {
   app_domain = "acc_test_domain"
   max_records = 1000
-  gateway_peering = datapower_gatewaypeering.test.id
+  gateway_peering = "default-gateway-peering"
 }`,
 	Data: `
 data "datapower_probe" "test" {
@@ -35,9 +35,6 @@ data "datapower_probe" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"GatewayPeering": &GatewayPeeringTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"GatewayPeering": &GatewayPeeringTestConfig,
 	},
 	TestPre: `

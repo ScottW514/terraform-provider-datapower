@@ -6,23 +6,27 @@ attributes:
     type: String
     reference_to: B2BCPA
     required: true
+    test_value: '"TestAccB2BCPA"'
     description: 'CPA'
     cli_alias: cpa
   - name: Collaboration
     type: String
     reference_to: B2BCPACollaboration
     required: true
+    test_value: '"TestAccB2BCPACollaboration"'
     description: 'Service'
     cli_alias: collaboration
   - name: InternalPartner
     type: String
     reference_to: B2BProfile
     required: true
+    test_value: '"TestAccB2BProfile"'
     description: 'Internal partner'
     cli_alias: internal-partner
   - name: ExternalPartner
     type: String
     reference_to: B2BProfile
     required: true
+    test_value: '"TestAccB2BProfile"'
     description: 'External partner'
     cli_alias: external-partner

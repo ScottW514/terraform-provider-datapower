@@ -27,7 +27,6 @@ var DmWSOperationSchedulerPriorityTestConfig = ModelTestConfig{
 }`,
 	ModelOnly:    true,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

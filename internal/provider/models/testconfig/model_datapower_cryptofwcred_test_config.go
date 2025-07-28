@@ -26,7 +26,7 @@ var CryptoFWCredTestConfig = ModelTestConfig{
 resource "datapower_cryptofwcred" "test" {
   id = "CryptoFWCred_name"
   app_domain = "acc_test_domain"
-  private_key = [datapower_cryptokey.test.id]
+  private_key = ["TestAccCryptoKey"]
 }`,
 	Data: `
 data "datapower_cryptofwcred" "test" {
@@ -35,9 +35,6 @@ data "datapower_cryptofwcred" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"CryptoKey": &CryptoKeyTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"CryptoKey": &CryptoKeyTestConfig,
 	},
 	TestPre: `

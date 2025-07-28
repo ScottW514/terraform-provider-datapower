@@ -24,7 +24,7 @@ var AssemblyActionThrowTestConfig = ModelTestConfig{
 	Name: "AssemblyActionThrow",
 	Resource: `
 resource "datapower_assemblyactionthrow" "test" {
-  id = "_name"
+  id = "AssemblyActionThrow_name"
   app_domain = "acc_test_domain"
   error_id = "errorid"
 }`,
@@ -35,7 +35,6 @@ data "datapower_assemblyactionthrow" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

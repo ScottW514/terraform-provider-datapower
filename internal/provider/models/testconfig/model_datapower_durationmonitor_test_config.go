@@ -27,7 +27,7 @@ resource "datapower_durationmonitor" "test" {
   id = "DurationMonitor_name"
   app_domain = "acc_test_domain"
   measure = "messages"
-  message_type = datapower_messagetype.test.id
+  message_type = "TestAccMessageType"
 }`,
 	Data: `
 data "datapower_durationmonitor" "test" {
@@ -36,9 +36,6 @@ data "datapower_durationmonitor" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"MessageType": &MessageTypeTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"MessageType": &MessageTypeTestConfig,
 	},
 	TestPre: `

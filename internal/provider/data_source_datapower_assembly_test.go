@@ -39,7 +39,7 @@ func TestAccDataSourceAssembly(t *testing.T) {
 			{
 				Config: testconfig.AssemblyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assembly.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assembly.test", "result.0.id", "Assembly_name"),
 				}...),
 			},
 		},

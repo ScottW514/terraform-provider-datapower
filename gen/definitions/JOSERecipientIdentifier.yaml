@@ -32,7 +32,6 @@ attributes:
   - name: Key
     type: String
     reference_to: CryptoKey
-    test_value: 'datapower_cryptokey.test.id'
     description: 'Key Material'
     cli_alias: key
   - name: SSKey

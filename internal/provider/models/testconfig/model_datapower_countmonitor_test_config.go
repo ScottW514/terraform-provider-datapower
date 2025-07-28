@@ -29,7 +29,7 @@ resource "datapower_countmonitor" "test" {
   measure = "requests"
   source = "all"
   max_sources = 10000
-  message_type = datapower_messagetype.test.id
+  message_type = "TestAccMessageType"
 }`,
 	Data: `
 data "datapower_countmonitor" "test" {
@@ -38,9 +38,6 @@ data "datapower_countmonitor" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"MessageType": &MessageTypeTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"MessageType": &MessageTypeTestConfig,
 	},
 	TestPre: `

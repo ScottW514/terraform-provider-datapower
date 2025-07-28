@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionFunctionCall(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionFunctionCallTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionfunctioncall.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionfunctioncall.test", "result.0.id", "AssemblyActionFunctionCall_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionfunctioncall.test", "result.0.action_debug", "false"),
 				}...),
 			},

@@ -24,7 +24,7 @@ var UserGroupTestConfig = ModelTestConfig{
 	Name: "UserGroup",
 	Resource: `
 resource "datapower_usergroup" "test" {
-  id = "UserGroup_name"
+  id = "_UserGroup_name"
   access_policies = ["*/*/*?Access=r"]
 }`,
 	Data: `
@@ -33,7 +33,6 @@ data "datapower_usergroup" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

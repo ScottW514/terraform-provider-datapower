@@ -54,7 +54,7 @@ attributes:
     reference_to: UserGroup
     description: 'User group'
     cli_alias: group
-    test_value: 'datapower_usergroup.test.id'
+    test_value: '"TestAccUserGroup"'
   - name: SnmpCreds
     type: List
     element_type: DmSnmpCred

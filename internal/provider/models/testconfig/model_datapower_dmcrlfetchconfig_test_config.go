@@ -23,14 +23,11 @@ package testconfig
 var DmCRLFetchConfigTestConfig = ModelTestConfig{
 	Name: "DmCRLFetchConfig",
 	Model: `{
-  issuer_valcred = datapower_cryptovalcred.test.id
+  issuer_valcred = "TestAccCryptoValCred"
   refresh_interval = 240
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"CryptoValCred": &CryptoValCredTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"CryptoValCred": &CryptoValCredTestConfig,
 	},
 	TestPre: `

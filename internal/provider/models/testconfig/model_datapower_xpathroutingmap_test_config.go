@@ -37,7 +37,6 @@ data "datapower_xpathroutingmap" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmXPathRoutingRule": &DmXPathRoutingRuleTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

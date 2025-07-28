@@ -25,12 +25,14 @@ attributes:
     type: String
     reference_to: OpenTelemetryExporter
     required: true
+    test_value: '"TestAccOpenTelemetryExporter"'
     description: 'Exporter'
     cli_alias: exporter
   - name: Sampler
     type: String
     reference_to: OpenTelemetrySampler
     required: true
+    test_value: '"TestAccOpenTelemetrySampler"'
     description: 'Sampler'
     cli_alias: sampler
   - name: ResourceAttribute

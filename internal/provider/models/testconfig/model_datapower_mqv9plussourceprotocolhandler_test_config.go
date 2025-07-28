@@ -35,7 +35,6 @@ data "datapower_mqv9plussourceprotocolhandler" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `resource "datapower_mqmanager" "test" {
   id = "MQManager_name"
   app_domain = "acc_test_domain"

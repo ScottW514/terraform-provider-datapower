@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionInvoke(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionInvokeTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactioninvoke.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactioninvoke.test", "result.0.id", "AssemblyActionInvoke_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactioninvoke.test", "result.0.timeout", "60"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactioninvoke.test", "result.0.method", "Keep"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactioninvoke.test", "result.0.backend_type", "detect"),

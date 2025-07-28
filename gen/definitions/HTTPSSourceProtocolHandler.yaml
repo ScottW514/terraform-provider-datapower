@@ -155,7 +155,6 @@ attributes:
   - name: SSLServer
     type: String
     reference_to: SSLServerProfile
-    test_value: 'datapower_sslserverprofile.test.id'
     description: 'TLS server profile'
     cli_alias: ssl-server
   - name: SSLSNIServer

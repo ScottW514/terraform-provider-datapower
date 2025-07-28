@@ -25,18 +25,21 @@ attributes:
   - name: APIConnectGatewayService
     type: String
     reference_to: GatewayPeering
+    test_value: '"default-gateway-peering"'
     required: true
     description: 'API Connect gateway service'
     cli_alias: apic-gw-service
   - name: RateLimit
     type: String
     reference_to: GatewayPeering
+    test_value: '"default-gateway-peering"'
     required: true
     description: 'API rate limits'
     cli_alias: rate-limit
   - name: Subscription
     type: String
     reference_to: GatewayPeering
+    test_value: '"default-gateway-peering"'
     required: true
     description: 'API subscribers'
     cli_alias: subscription
@@ -45,6 +48,7 @@ attributes:
   - name: RatelimitModule
     type: String
     reference_to: GatewayPeering
+    test_value: '"default-gateway-peering"'
     required: true
     description: 'GatewayScript ratelimit module keys'
     cli_alias: ratelimit-module

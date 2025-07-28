@@ -37,7 +37,6 @@ data "datapower_mpgwerrorhandlingpolicy" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmWebGWErrorPolicyMap": &DmWebGWErrorPolicyMapTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

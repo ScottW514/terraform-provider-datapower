@@ -25,6 +25,7 @@ attributes:
     type: String
     reference_to: SLMAction
     required: true
+    test_value: '"notify"'
     description: 'Action'
   - name: ThreshIntervalLength
     type: Int64

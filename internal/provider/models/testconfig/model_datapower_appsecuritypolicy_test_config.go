@@ -39,7 +39,6 @@ data "datapower_appsecuritypolicy" "test" {
 		"DmWebAppRequestPolicyMap":  &DmWebAppRequestPolicyMapTestConfig,
 		"DmWebAppResponsePolicyMap": &DmWebAppResponsePolicyMapTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

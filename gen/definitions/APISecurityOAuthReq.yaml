@@ -25,6 +25,7 @@ attributes:
     type: String
     reference_to: APISecurityOAuth
     required: true
+    test_value: '"TestAccAPISecurityOAuth"'
     description: 'OAuth security definition'
     cli_alias: oauth-definition
   - name: OAuthAllowedScope

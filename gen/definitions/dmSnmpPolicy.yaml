@@ -10,6 +10,7 @@ attributes:
     type: String
     reference_to: Domain
     required: true
+    test_value: '"acc_test_domain"'
     description: 'Associated Domain'
   - name: Mode
     type: String

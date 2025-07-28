@@ -27,6 +27,7 @@ resource "datapower_multiprotocolgateway" "test" {
   id = "MultiProtocolGateway_name"
   app_domain = "acc_test_domain"
   type = "static-backend"
+  xml_manager = "default"
   front_timeout = 120
   back_timeout = 120
   front_persistent_timeout = 180
@@ -37,9 +38,10 @@ data "datapower_multiprotocolgateway" "test" {
   depends_on = [ datapower_multiprotocolgateway.test ]
   app_domain = "acc_test_domain"
 }`,
-	ModelOnly:    false,
-	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
+	ModelOnly: false,
+	Dependencies: map[string]*ModelTestConfig{
+		"XMLManager": &XMLManagerTestConfig,
+	},
 	TestPre: `
 `,
 }

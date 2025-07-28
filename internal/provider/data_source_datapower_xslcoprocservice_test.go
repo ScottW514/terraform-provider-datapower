@@ -39,7 +39,7 @@ func TestAccDataSourceXSLCoprocService(t *testing.T) {
 			{
 				Config: testconfig.XSLCoprocServiceTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_xslcoprocservice.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_xslcoprocservice.test", "result.0.id", "XSLCoprocService_name"),
 					resource.TestCheckResourceAttr("data.datapower_xslcoprocservice.test", "result.0.priority", "normal"),
 					resource.TestCheckResourceAttr("data.datapower_xslcoprocservice.test", "result.0.xml_manager", "default"),
 					resource.TestCheckResourceAttr("data.datapower_xslcoprocservice.test", "result.0.connection_timeout", "60"),

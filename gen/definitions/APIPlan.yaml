@@ -110,6 +110,7 @@ attributes:
     reference_to: APIDefinition
     element_type: String
     required: true
+    test_value: '["TestAccAPIDefinition"]'
     description: 'API'
     cli_alias: api
   - name: ExcludeOperation

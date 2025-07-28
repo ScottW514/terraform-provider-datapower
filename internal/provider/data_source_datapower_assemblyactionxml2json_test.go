@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionXml2Json(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionXml2JsonTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionxml2json.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionxml2json.test", "result.0.id", "AssemblyActionXml2Json_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionxml2json.test", "result.0.conversion_format", "badgerfish"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionxml2json.test", "result.0.input", "message"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionxml2json.test", "result.0.action_debug", "false"),

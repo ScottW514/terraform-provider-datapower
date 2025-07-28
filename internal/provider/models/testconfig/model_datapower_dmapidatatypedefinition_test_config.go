@@ -24,13 +24,10 @@ var DmAPIDataTypeDefinitionTestConfig = ModelTestConfig{
 	Name: "DmAPIDataTypeDefinition",
 	Model: `{
   name = "dtdefname"
-  schema = datapower_apischema.test.id
+  schema = "TestAccAPISchema"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"APISchema": &APISchemaTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"APISchema": &APISchemaTestConfig,
 	},
 	TestPre: `

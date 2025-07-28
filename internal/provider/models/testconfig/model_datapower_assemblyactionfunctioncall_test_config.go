@@ -24,9 +24,9 @@ var AssemblyActionFunctionCallTestConfig = ModelTestConfig{
 	Name: "AssemblyActionFunctionCall",
 	Resource: `
 resource "datapower_assemblyactionfunctioncall" "test" {
-  id = "_name"
+  id = "AssemblyActionFunctionCall_name"
   app_domain = "acc_test_domain"
-  function_call = datapower_assemblyfunction.test.id
+  function_call = "default-func-global"
 }`,
 	Data: `
 data "datapower_assemblyactionfunctioncall" "test" {
@@ -35,9 +35,6 @@ data "datapower_assemblyactionfunctioncall" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"AssemblyFunction": &AssemblyFunctionTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"AssemblyFunction": &AssemblyFunctionTestConfig,
 	},
 	TestPre: `

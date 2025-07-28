@@ -39,7 +39,7 @@ func TestAccDataSourceWSRRServer(t *testing.T) {
 			{
 				Config: testconfig.WSRRServerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.id", "WSRRServer_name"),
+					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.id", "_WSRRServer_name"),
 					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.soap_url", "https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort"),
 					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.ssl_client_config_type", "client"),
 				}...),

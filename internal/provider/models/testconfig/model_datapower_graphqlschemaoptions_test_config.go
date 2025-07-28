@@ -26,7 +26,7 @@ var GraphQLSchemaOptionsTestConfig = ModelTestConfig{
 resource "datapower_graphqlschemaoptions" "test" {
   id = "GraphQLSchemaOptions_name"
   app_domain = "acc_test_domain"
-  api = datapower_apidefinition.test.id
+  api = "TestAccAPIDefinition"
 }`,
 	Data: `
 data "datapower_graphqlschemaoptions" "test" {
@@ -35,9 +35,6 @@ data "datapower_graphqlschemaoptions" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"APIDefinition": &APIDefinitionTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"APIDefinition": &APIDefinitionTestConfig,
 	},
 	TestPre: `

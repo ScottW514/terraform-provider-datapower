@@ -26,7 +26,7 @@ var APISecurityOAuthReqTestConfig = ModelTestConfig{
 resource "datapower_apisecurityoauthreq" "test" {
   id = "APISecurityOAuthReq_name"
   app_domain = "acc_test_domain"
-  api_security_o_auth_def = datapower_apisecurityoauth.test.id
+  api_security_o_auth_def = "TestAccAPISecurityOAuth"
 }`,
 	Data: `
 data "datapower_apisecurityoauthreq" "test" {
@@ -35,9 +35,6 @@ data "datapower_apisecurityoauthreq" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"APISecurityOAuth": &APISecurityOAuthTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"APISecurityOAuth": &APISecurityOAuthTestConfig,
 	},
 	TestPre: `

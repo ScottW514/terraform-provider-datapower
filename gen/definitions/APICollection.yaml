@@ -130,6 +130,7 @@ attributes:
     reference_to: APIPlan
     element_type: String
     required: true
+    test_value: '["TestAccAPIPlan"]'
     description: 'Plans'
     cli_alias: plan
   - name: AnalyticsEndpoint

@@ -24,7 +24,7 @@ var AssemblyActionJWTValidateTestConfig = ModelTestConfig{
 	Name: "AssemblyActionJWTValidate",
 	Resource: `
 resource "datapower_assemblyactionjwtvalidate" "test" {
-  id = "_name"
+  id = "AssemblyActionJWTValidate_name"
   app_domain = "acc_test_domain"
   jwt = "request.headers.authorization"
   output_claims = "decoded.claims"
@@ -36,7 +36,6 @@ data "datapower_assemblyactionjwtvalidate" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

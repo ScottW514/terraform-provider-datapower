@@ -61,6 +61,7 @@ attributes:
     type: String
     reference_to: SSLClientProfile
     required: true
+    test_value: '"TestAccSSLClientProfile"'
     description: 'TLS client profile'
     cli_alias: client-ssl
   - name: Provider

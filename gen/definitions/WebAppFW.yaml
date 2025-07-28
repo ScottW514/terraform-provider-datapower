@@ -59,6 +59,7 @@ attributes:
     type: String
     reference_to: AppSecurityPolicy
     required: true
+    test_value: '"TestAccAppSecurityPolicy"'
     description: 'Security Policy'
     cli_alias: security-policy
   - name: XMLManager

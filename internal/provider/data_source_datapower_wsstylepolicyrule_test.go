@@ -39,7 +39,7 @@ func TestAccDataSourceWSStylePolicyRule(t *testing.T) {
 			{
 				Config: testconfig.WSStylePolicyRuleTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_wsstylepolicyrule.test", "result.0.id", "WSStylePolicyRule_name"),
+					resource.TestCheckResourceAttr("data.datapower_wsstylepolicyrule.test", "result.0.id", "_WSStylePolicyRule_name"),
 					resource.TestCheckResourceAttr("data.datapower_wsstylepolicyrule.test", "result.0.direction", "rule"),
 					resource.TestCheckResourceAttr("data.datapower_wsstylepolicyrule.test", "result.0.input_format", "none"),
 					resource.TestCheckResourceAttr("data.datapower_wsstylepolicyrule.test", "result.0.output_format", "none"),

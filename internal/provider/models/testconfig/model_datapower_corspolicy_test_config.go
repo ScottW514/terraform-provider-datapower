@@ -26,7 +26,7 @@ var CORSPolicyTestConfig = ModelTestConfig{
 resource "datapower_corspolicy" "test" {
   id = "CORSPolicy_name"
   app_domain = "acc_test_domain"
-  rule = [datapower_corsrule.test.id]
+  rule = ["TestAccCORSRule"]
 }`,
 	Data: `
 data "datapower_corspolicy" "test" {
@@ -35,9 +35,6 @@ data "datapower_corspolicy" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"CORSRule": &CORSRuleTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"CORSRule": &CORSRuleTestConfig,
 	},
 	TestPre: `

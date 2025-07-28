@@ -24,7 +24,6 @@ type ModelTestConfig struct {
 	Data         string
 	ModelOnly    bool
 	Dependencies map[string]*ModelTestConfig
-	ReferencesTo map[string]*ModelTestConfig
 	TestPre      string
 }
 
@@ -54,7 +53,6 @@ func (c ModelTestConfig) GetResourceConfig() string {
 
 func (c *ModelTestConfig) getPrequisites() string {
 	referencesTo := make(map[string]*ModelTestConfig)
-	c.getReferencesTo(referencesTo)
 	preReqs := c.TestPre
 	for _, v := range referencesTo {
 		if !v.ModelOnly {
@@ -62,19 +60,4 @@ func (c *ModelTestConfig) getPrequisites() string {
 		}
 	}
 	return preReqs
-}
-
-func (c *ModelTestConfig) getReferencesTo(reference_to map[string]*ModelTestConfig) {
-	populateReferences := func(c *ModelTestConfig) {
-		for k, v := range c.ReferencesTo {
-			if _, exists := reference_to[k]; !exists {
-				reference_to[k] = v
-				v.getReferencesTo(reference_to)
-			}
-		}
-	}
-	populateReferences(c)
-	for _, d := range c.Dependencies {
-		populateReferences(d)
-	}
 }

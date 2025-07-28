@@ -24,7 +24,7 @@ var AssemblyActionRateLimitTestConfig = ModelTestConfig{
 	Name: "AssemblyActionRateLimit",
 	Resource: `
 resource "datapower_assemblyactionratelimit" "test" {
-  id = "_name"
+  id = "AssemblyActionRateLimit_name"
   app_domain = "acc_test_domain"
   source = "plan-default"
 }`,
@@ -35,7 +35,6 @@ data "datapower_assemblyactionratelimit" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

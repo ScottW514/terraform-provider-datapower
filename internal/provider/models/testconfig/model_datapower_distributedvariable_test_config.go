@@ -25,7 +25,7 @@ var DistributedVariableTestConfig = ModelTestConfig{
 	Resource: `
 resource "datapower_distributedvariable" "test" {
   app_domain = "acc_test_domain"
-  gateway_peering = datapower_gatewaypeering.test.id
+  gateway_peering = "default-gateway-peering"
 }`,
 	Data: `
 data "datapower_distributedvariable" "test" {
@@ -34,9 +34,6 @@ data "datapower_distributedvariable" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"GatewayPeering": &GatewayPeeringTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"GatewayPeering": &GatewayPeeringTestConfig,
 	},
 	TestPre: `

@@ -25,6 +25,7 @@ attributes:
     type: String
     reference_to: APIOperation
     required: true
+    test_value: '"TestAccAPIOperation"'
     description: 'API operation'
     cli_alias: operation
   - name: UseRateLimitGroup

@@ -11,4 +11,5 @@ attributes:
     type: String
     reference_to: CryptoKey
     required: true
+    test_value: '"TestAccCryptoKey"'
     description: 'Private Key'

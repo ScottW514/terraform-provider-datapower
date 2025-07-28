@@ -11,4 +11,5 @@ attributes:
     type: String
     reference_to: SSLServerProfile
     required: true
+    test_value: '"TestAccSSLServerProfile"'
     description: 'Server profile'

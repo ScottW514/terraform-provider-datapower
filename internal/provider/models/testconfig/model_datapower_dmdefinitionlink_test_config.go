@@ -24,13 +24,10 @@ var DmDefinitionLinkTestConfig = ModelTestConfig{
 	Name: "DmDefinitionLink",
 	Model: `{
   short_name = "shortname"
-  definition = datapower_ratelimitdefinition.test.id
+  definition = "TestAccRateLimitDefinition"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"RateLimitDefinition": &RateLimitDefinitionTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"RateLimitDefinition": &RateLimitDefinitionTestConfig,
 	},
 	TestPre: `

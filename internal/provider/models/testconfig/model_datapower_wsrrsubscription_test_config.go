@@ -26,7 +26,7 @@ var WSRRSubscriptionTestConfig = ModelTestConfig{
 resource "datapower_wsrrsubscription" "test" {
   id = "WSRRSubscription_name"
   app_domain = "acc_test_domain"
-  server = datapower_wsrrserver.test.id
+  server = "TestAccWSRRServer"
   object_type = "wsdl"
   object_name = "object_name"
 }`,
@@ -37,9 +37,6 @@ data "datapower_wsrrsubscription" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"WSRRServer": &WSRRServerTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"WSRRServer": &WSRRServerTestConfig,
 	},
 	TestPre: `

@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionClientSecurity(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionClientSecurityTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionclientsecurity.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionclientsecurity.test", "result.0.id", "AssemblyActionClientSecurity_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionclientsecurity.test", "result.0.stop_on_error", "true"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionclientsecurity.test", "result.0.secret_required", "true"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionclientsecurity.test", "result.0.extract_credential_method", "header"),

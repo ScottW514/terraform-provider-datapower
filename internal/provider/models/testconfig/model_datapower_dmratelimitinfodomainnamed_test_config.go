@@ -23,13 +23,10 @@ package testconfig
 var DmRateLimitInfoDomainNamedTestConfig = ModelTestConfig{
 	Name: "DmRateLimitInfoDomainNamed",
 	Model: `{
-  name = datapower_ratelimitdefinition.test.id
+  name = "TestAccRateLimitDefinition"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"RateLimitDefinition": &RateLimitDefinitionTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"RateLimitDefinition": &RateLimitDefinitionTestConfig,
 	},
 	TestPre: `

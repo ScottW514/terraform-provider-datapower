@@ -9,7 +9,7 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'UserGroup_name'
+    example: '_UserGroup_name'
     description: 'Name of the object. Must be unique among object types in application domain.'
   - name: UserSummary
     type: String

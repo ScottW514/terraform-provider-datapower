@@ -37,7 +37,6 @@ data "datapower_urlrefreshpolicy" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmURLRefreshRule": &DmURLRefreshRuleTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

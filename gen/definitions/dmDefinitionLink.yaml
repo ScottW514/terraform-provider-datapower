@@ -12,5 +12,6 @@ attributes:
     type: String
     reference_to: RateLimitDefinition
     required: true
+    test_value: '"TestAccRateLimitDefinition"'
     description: 'Definition'
     cli_alias: definition

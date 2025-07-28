@@ -32,6 +32,7 @@ attributes:
     reference_to: LunaPartition
     element_type: String
     required: true
+    test_value: '["TestAccLunaPartition"]'
     description: 'Members'
     cli_alias: member
   - name: Standby

@@ -23,13 +23,10 @@ package testconfig
 var DmSnmpContextTestConfig = ModelTestConfig{
 	Name: "DmSnmpContext",
 	Model: `{
-  domain = datapower_domain.test.id
+  domain = "acc_test_domain"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"Domain": &DomainTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"Domain": &DomainTestConfig,
 	},
 	TestPre: `

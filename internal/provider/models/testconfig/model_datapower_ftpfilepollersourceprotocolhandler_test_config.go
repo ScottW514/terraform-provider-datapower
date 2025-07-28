@@ -41,9 +41,6 @@ data "datapower_ftpfilepollersourceprotocolhandler" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"XMLManager": &XMLManagerTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{
-		"XMLManager": &XMLManagerTestConfig,
-	},
 	TestPre: `
 `,
 }

@@ -43,7 +43,6 @@ attributes:
   - name: Certificate
     type: String
     reference_to: CryptoCertificate
-    test_value: 'datapower_cryptocertificate.test.id'
     description: 'Certificate'
     cli_alias: cert
   - name: UnprotectedHeader

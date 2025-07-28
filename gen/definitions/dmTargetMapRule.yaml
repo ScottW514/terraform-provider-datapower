@@ -11,6 +11,7 @@ attributes:
   - name: Execute
     type: String
     reference_to: AssemblyActionFunctionCall
+    test_value: '"default-func-call-global"'
     required: true
     description: 'Function call'
     cli_alias: execute

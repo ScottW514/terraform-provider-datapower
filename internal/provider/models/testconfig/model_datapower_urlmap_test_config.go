@@ -37,7 +37,6 @@ data "datapower_urlmap" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmURLMapRule": &DmURLMapRuleTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

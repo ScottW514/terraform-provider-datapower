@@ -24,7 +24,7 @@ var AssemblyLogicOperationSwitchTestConfig = ModelTestConfig{
 	Name: "AssemblyLogicOperationSwitch",
 	Resource: `
 resource "datapower_assemblylogicoperationswitch" "test" {
-  id = "_name"
+  id = "AssemblyLogicOperationSwitch_name"
   app_domain = "acc_test_domain"
   case = ` + DmAssemblyLogicOperationSwitchCaseTestConfig.GetModelListConfig() + `
 }`,
@@ -37,7 +37,6 @@ data "datapower_assemblylogicoperationswitch" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmAssemblyLogicOperationSwitchCase": &DmAssemblyLogicOperationSwitchCaseTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

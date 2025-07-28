@@ -5,10 +5,12 @@ attributes:
   - name: Match
     type: String
     reference_to: Matching
+    test_value: '"__default-accept-service-providers__"'
     required: true
     description: 'Matching Rule'
   - name: Rule
     type: String
     reference_to: WebAppResponse
     required: true
+    test_value: '"TestAccResponseProfile"'
     description: 'Response Profile'

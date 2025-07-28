@@ -23,13 +23,10 @@ package testconfig
 var DmScheduledRuleTestConfig = ModelTestConfig{
 	Name: "DmScheduledRule",
 	Model: `{
-  rule = datapower_stylepolicyrule.test.id
+  rule = "__dp-policy-begin__"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"StylePolicyRule": &StylePolicyRuleTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"StylePolicyRule": &StylePolicyRuleTestConfig,
 	},
 	TestPre: `

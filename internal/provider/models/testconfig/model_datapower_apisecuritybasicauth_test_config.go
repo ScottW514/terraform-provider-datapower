@@ -35,7 +35,6 @@ data "datapower_apisecuritybasicauth" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `resource "datapower_apiauthurlregistry" "test" {
   id = "APIAuthURLRegistry_test"
   app_domain = "acc_test_domain"

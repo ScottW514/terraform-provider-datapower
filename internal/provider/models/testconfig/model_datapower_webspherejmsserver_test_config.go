@@ -24,7 +24,7 @@ var WebSphereJMSServerTestConfig = ModelTestConfig{
 	Name: "WebSphereJMSServer",
 	Resource: `
 resource "datapower_webspherejmsserver" "test" {
-  id = "WebSphereJMSServer_name"
+  id = "_WebSphereJMSServer_name"
   app_domain = "acc_test_domain"
   endpoint = ` + DmWebSphereJMSEndpointTestConfig.GetModelListConfig() + `
   messaging_bus = "bus"
@@ -38,7 +38,6 @@ data "datapower_webspherejmsserver" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmWebSphereJMSEndpoint": &DmWebSphereJMSEndpointTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

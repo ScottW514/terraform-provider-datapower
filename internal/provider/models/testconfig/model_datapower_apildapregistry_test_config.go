@@ -28,7 +28,7 @@ resource "datapower_apildapregistry" "test" {
   app_domain = "acc_test_domain"
   ldap_host = "localhost"
   ldap_port = 636
-  ldap_search_parameters = datapower_ldapsearchparameters.test.id
+  ldap_search_parameters = "TestAccLDAPSearchParameters"
 }`,
 	Data: `
 data "datapower_apildapregistry" "test" {
@@ -37,9 +37,6 @@ data "datapower_apildapregistry" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"LDAPSearchParameters": &LDAPSearchParametersTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"LDAPSearchParameters": &LDAPSearchParametersTestConfig,
 	},
 	TestPre: `

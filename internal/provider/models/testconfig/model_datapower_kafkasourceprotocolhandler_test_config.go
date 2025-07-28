@@ -26,7 +26,7 @@ var KafkaSourceProtocolHandlerTestConfig = ModelTestConfig{
 resource "datapower_kafkasourceprotocolhandler" "test" {
   id = "KafkaSourceProtocolHandler_name"
   app_domain = "acc_test_domain"
-  cluster = datapower_kafkacluster.test.id
+  cluster = "TestAccKafkaCluster"
   request_topic = "topic"
   consumer_group = "consumer"
 }`,
@@ -37,9 +37,6 @@ data "datapower_kafkasourceprotocolhandler" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"KafkaCluster": &KafkaClusterTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"KafkaCluster": &KafkaClusterTestConfig,
 	},
 	TestPre: `

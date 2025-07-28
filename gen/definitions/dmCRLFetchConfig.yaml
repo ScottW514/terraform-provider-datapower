@@ -17,6 +17,7 @@ attributes:
     type: String
     reference_to: CryptoValCred
     required: true
+    test_value: '"TestAccCryptoValCred"'
     description: 'Issuer validation credentials'
     cli_alias: issuer
   - name: RefreshInterval

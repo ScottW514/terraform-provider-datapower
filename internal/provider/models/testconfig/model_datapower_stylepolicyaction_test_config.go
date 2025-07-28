@@ -39,7 +39,6 @@ data "datapower_stylepolicyaction" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmNamedInOut": &DmNamedInOutTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

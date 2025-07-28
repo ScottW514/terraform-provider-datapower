@@ -171,6 +171,7 @@ attributes:
     type: String
     reference_to: XMLManager
     default: 'default'
+    test_value: '"default"'
     description: 'XML Manager'
     cli_alias: xml-manager
   - name: URLRewritePolicy

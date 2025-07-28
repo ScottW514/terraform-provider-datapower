@@ -24,7 +24,7 @@ var WSStylePolicyRuleTestConfig = ModelTestConfig{
 	Name: "WSStylePolicyRule",
 	Resource: `
 resource "datapower_wsstylepolicyrule" "test" {
-  id = "WSStylePolicyRule_name"
+  id = "_WSStylePolicyRule_name"
   app_domain = "acc_test_domain"
   direction = "rule"
   input_format = "none"
@@ -37,7 +37,6 @@ data "datapower_wsstylepolicyrule" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

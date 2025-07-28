@@ -27,7 +27,7 @@ resource "datapower_apidefinition" "test" {
   id = "APIDefinition_name"
   app_domain = "acc_test_domain"
   base_path = "/"
-  path = [datapower_apipath.test.id]
+  path = ["TestAccAPIPath"]
   content = "activity"
   error_content = "payload"
 }`,
@@ -38,9 +38,6 @@ data "datapower_apidefinition" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"APIPath": &APIPathTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"APIPath": &APIPathTestConfig,
 	},
 	TestPre: `

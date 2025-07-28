@@ -26,8 +26,8 @@ var OpenTelemetryTestConfig = ModelTestConfig{
 resource "datapower_opentelemetry" "test" {
   id = "OpenTelemetry_name"
   app_domain = "acc_test_domain"
-  exporter = datapower_opentelemetryexporter.test.id
-  sampler = datapower_opentelemetrysampler.test.id
+  exporter = "TestAccOpenTelemetryExporter"
+  sampler = "TestAccOpenTelemetrySampler"
 }`,
 	Data: `
 data "datapower_opentelemetry" "test" {
@@ -36,10 +36,6 @@ data "datapower_opentelemetry" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"OpenTelemetryExporter": &OpenTelemetryExporterTestConfig,
-		"OpenTelemetrySampler":  &OpenTelemetrySamplerTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"OpenTelemetryExporter": &OpenTelemetryExporterTestConfig,
 		"OpenTelemetrySampler":  &OpenTelemetrySamplerTestConfig,
 	},

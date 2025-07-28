@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionRateLimit(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionRateLimitTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionratelimit.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionratelimit.test", "result.0.id", "AssemblyActionRateLimit_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionratelimit.test", "result.0.source", "plan-default"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionratelimit.test", "result.0.group_action", "consume"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionratelimit.test", "result.0.action_debug", "false"),

@@ -24,7 +24,7 @@ var WebAppRequestTestConfig = ModelTestConfig{
 	Name: "WebAppRequest",
 	Resource: `
 resource "datapower_webapprequest" "test" {
-  id = "WebAppRequest_name"
+  id = "_WebAppRequest_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
@@ -34,7 +34,6 @@ data "datapower_webapprequest" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

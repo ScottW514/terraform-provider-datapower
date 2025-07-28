@@ -24,7 +24,7 @@ var AssemblyFunctionTestConfig = ModelTestConfig{
 	Name: "AssemblyFunction",
 	Resource: `
 resource "datapower_assemblyfunction" "test" {
-  id = "_name"
+  id = "AssemblyFunction_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
@@ -34,7 +34,6 @@ data "datapower_assemblyfunction" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

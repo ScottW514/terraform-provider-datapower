@@ -21,6 +21,7 @@ attributes:
     type: String
     reference_to: WebSphereJMSServer
     required: true
+    test_value: '"TestAccWebSphereJMSServer"'
     description: 'WebSphere JMS server'
     cli_alias: server
   - name: RequestTopicSpace

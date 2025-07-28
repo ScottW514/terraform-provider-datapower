@@ -44,10 +44,6 @@ data "datapower_wsgateway" "test" {
 		"WSStylePolicy": &WSStylePolicyTestConfig,
 		"XMLManager":    &XMLManagerTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{
-		"WSStylePolicy": &WSStylePolicyTestConfig,
-		"XMLManager":    &XMLManagerTestConfig,
-	},
 	TestPre: `
 `,
 }

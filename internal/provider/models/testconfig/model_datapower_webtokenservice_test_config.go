@@ -41,10 +41,6 @@ data "datapower_webtokenservice" "test" {
 		"XMLManager":  &XMLManagerTestConfig,
 		"StylePolicy": &StylePolicyTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{
-		"XMLManager":  &XMLManagerTestConfig,
-		"StylePolicy": &StylePolicyTestConfig,
-	},
 	TestPre: `
 `,
 }

@@ -24,7 +24,7 @@ var AssemblyActionXSLTTestConfig = ModelTestConfig{
 	Name: "AssemblyActionXSLT",
 	Resource: `
 resource "datapower_assemblyactionxslt" "test" {
-  id = "_name"
+  id = "AssemblyActionXSLT_name"
   app_domain = "acc_test_domain"
   stylesheet = "local:///stylesheet"
 }`,
@@ -35,7 +35,6 @@ data "datapower_assemblyactionxslt" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

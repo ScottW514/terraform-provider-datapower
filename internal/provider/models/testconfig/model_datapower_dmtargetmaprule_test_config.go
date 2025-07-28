@@ -24,13 +24,10 @@ var DmTargetMapRuleTestConfig = ModelTestConfig{
 	Name: "DmTargetMapRule",
 	Model: `{
   target = "target"
-  execute = datapower_assemblyactionfunctioncall.test.id
+  execute = "default-func-call-global"
 }`,
 	ModelOnly: true,
 	Dependencies: map[string]*ModelTestConfig{
-		"AssemblyActionFunctionCall": &AssemblyActionFunctionCallTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"AssemblyActionFunctionCall": &AssemblyActionFunctionCallTestConfig,
 	},
 	TestPre: `

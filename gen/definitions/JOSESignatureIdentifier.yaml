@@ -37,7 +37,6 @@ attributes:
   - name: Certificate
     type: String
     reference_to: CryptoCertificate
-    test_value: 'datapower_cryptocertificate.test.id'
     description: 'Key Material'
     cli_alias: cert
   - name: ValidAlgorithms

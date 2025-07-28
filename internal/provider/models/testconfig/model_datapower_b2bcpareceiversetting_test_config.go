@@ -24,7 +24,7 @@ var B2BCPAReceiverSettingTestConfig = ModelTestConfig{
 	Name: "B2BCPAReceiverSetting",
 	Resource: `
 resource "datapower_b2bcpareceiversetting" "test" {
-  id = "_name"
+  id = "B2BCPAReceiverSetting_name"
   app_domain = "acc_test_domain"
 }`,
 	Data: `
@@ -34,7 +34,6 @@ data "datapower_b2bcpareceiversetting" "test" {
 }`,
 	ModelOnly:    false,
 	Dependencies: map[string]*ModelTestConfig{},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

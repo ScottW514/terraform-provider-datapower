@@ -6,6 +6,7 @@ attributes:
     type: String
     reference_to: ConformancePolicy
     required: true
+    test_value: '"TestAccConformancePolicy"'
     description: 'Conformance Policy'
   - name: ConformancePolicyWSDLComponentType
     type: String

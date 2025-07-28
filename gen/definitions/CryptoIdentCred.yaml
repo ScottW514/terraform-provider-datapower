@@ -21,11 +21,13 @@ attributes:
     type: String
     reference_to: CryptoKey
     required: true
+    test_value: '"TestAccCryptoKey"'
     description: 'Key'
     cli_alias: key
   - name: Certificate
     type: String
     reference_to: CryptoCertificate
+    test_value: '"TestAccCryptoCertificate"'
     required: true
     description: 'Certificate'
     cli_alias: certificate

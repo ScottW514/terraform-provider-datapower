@@ -26,5 +26,6 @@ attributes:
     reference_to: CORSRule
     element_type: String
     required: true
+    test_value: '["TestAccCORSRule"]'
     description: 'CORS rules'
     cli_alias: rule

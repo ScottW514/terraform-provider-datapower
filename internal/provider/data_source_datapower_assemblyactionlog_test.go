@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionLog(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionLogTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionlog.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionlog.test", "result.0.id", "AssemblyActionLog_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionlog.test", "result.0.mode", "gather-only"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionlog.test", "result.0.log_level", "default"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionlog.test", "result.0.recount_bytes_sent", "false"),

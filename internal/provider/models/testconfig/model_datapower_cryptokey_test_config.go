@@ -27,7 +27,7 @@ resource "datapower_cryptokey" "test" {
   id = "CryptoKey_name"
   app_domain = "acc_test_domain"
   filename = "cert:///acc-test-server.key"
-  alias = datapower_passwordalias.test.id
+  alias = "TestAccPasswordAlias"
 }`,
 	Data: `
 data "datapower_cryptokey" "test" {
@@ -36,9 +36,6 @@ data "datapower_cryptokey" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"PasswordAlias": &PasswordAliasTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"PasswordAlias": &PasswordAliasTestConfig,
 	},
 	TestPre: `

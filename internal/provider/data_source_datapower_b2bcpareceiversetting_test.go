@@ -39,7 +39,7 @@ func TestAccDataSourceB2BCPAReceiverSetting(t *testing.T) {
 			{
 				Config: testconfig.B2BCPAReceiverSettingTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_b2bcpareceiversetting.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_b2bcpareceiversetting.test", "result.0.id", "B2BCPAReceiverSetting_name"),
 					resource.TestCheckResourceAttr("data.datapower_b2bcpareceiversetting.test", "result.0.sync_reply_mode", "none"),
 					resource.TestCheckResourceAttr("data.datapower_b2bcpareceiversetting.test", "result.0.ack_requested", "perMessage"),
 					resource.TestCheckResourceAttr("data.datapower_b2bcpareceiversetting.test", "result.0.ack_signature_requested", "perMessage"),

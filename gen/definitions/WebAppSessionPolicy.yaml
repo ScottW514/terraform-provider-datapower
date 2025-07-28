@@ -41,6 +41,7 @@ attributes:
   - name: StartMatches
     type: String
     reference_to: Matching
+    test_value: '"__default-accept-service-providers__"'
     required: true
     description: 'Start Pages'
     cli_alias: matching-policy

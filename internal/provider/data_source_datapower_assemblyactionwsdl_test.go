@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionWSDL(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionWSDLTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionwsdl.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionwsdl.test", "result.0.id", "AssemblyActionWSDL_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionwsdl.test", "result.0.output", "message"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionwsdl.test", "result.0.action_debug", "false"),
 				}...),

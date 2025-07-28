@@ -21,6 +21,7 @@ attributes:
     type: String
     reference_to: SSHClientProfile
     required: true
+    test_value: '"TestAccSSHClientProfile"'
     description: 'SSH client connection'
     cli_alias: ssh-client-connection
   - name: UserSummary

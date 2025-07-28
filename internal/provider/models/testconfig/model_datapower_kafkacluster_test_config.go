@@ -38,7 +38,6 @@ data "datapower_kafkacluster" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmKafkaEndpoint": &DmKafkaEndpointTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

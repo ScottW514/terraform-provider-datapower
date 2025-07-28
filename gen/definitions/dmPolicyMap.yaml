@@ -6,9 +6,11 @@ attributes:
     type: String
     reference_to: Matching
     required: true
+    test_value: '"__default-accept-service-providers__"'
     description: 'Matching Rule'
   - name: Rule
     type: String
     reference_to: StylePolicyRule
     required: true
+    test_value: '"__dp-policy-begin__"'
     description: 'Processing Rule'

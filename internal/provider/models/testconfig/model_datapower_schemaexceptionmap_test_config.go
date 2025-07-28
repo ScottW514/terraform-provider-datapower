@@ -38,7 +38,6 @@ data "datapower_schemaexceptionmap" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmSchemaExceptionRule": &DmSchemaExceptionRuleTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

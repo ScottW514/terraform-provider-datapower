@@ -26,7 +26,7 @@ var MCFCustomRuleTestConfig = ModelTestConfig{
 resource "datapower_mcfcustomrule" "test" {
   id = "MCFCustomRule_name"
   app_domain = "acc_test_domain"
-  custom_rule_name = datapower_stylepolicyrule.test.id
+  custom_rule_name = "__dp-policy-begin__"
   custom_rule_value = "rulevalue"
 }`,
 	Data: `
@@ -36,9 +36,6 @@ data "datapower_mcfcustomrule" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"StylePolicyRule": &StylePolicyRuleTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"StylePolicyRule": &StylePolicyRuleTestConfig,
 	},
 	TestPre: `

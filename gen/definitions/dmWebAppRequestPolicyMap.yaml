@@ -6,9 +6,11 @@ attributes:
     type: String
     reference_to: Matching
     required: true
+    test_value: '"__default-accept-service-providers__"'
     description: 'Matching Rule'
   - name: Rule
     type: String
     reference_to: WebAppRequest
     required: true
+    test_value: '"TestAccRequestProfile"'
     description: 'Request Profile'

@@ -31,7 +31,7 @@ resource "datapower_apicollection" "test" {
   routing_prefix = ` + DmRoutingPrefixTestConfig.GetModelListConfig() + `
   api_processing_rule = "default-api-rule"
   api_error_rule = "default-api-error-rule"
-  plan = [datapower_apiplan.test.id]
+  plan = ["TestAccAPIPlan"]
 }`,
 	Data: `
 data "datapower_apicollection" "test" {
@@ -43,10 +43,6 @@ data "datapower_apicollection" "test" {
 		"DmRoutingPrefix": &DmRoutingPrefixTestConfig,
 		"APIRule":         &APIRuleTestConfig,
 		"APIPlan":         &APIPlanTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
-		"APIRule": &APIRuleTestConfig,
-		"APIPlan": &APIPlanTestConfig,
 	},
 	TestPre: `
 `,

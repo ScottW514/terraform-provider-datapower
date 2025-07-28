@@ -26,7 +26,7 @@ var JWEHeaderTestConfig = ModelTestConfig{
 resource "datapower_jweheader" "test" {
   id = "JWEHeader_name"
   app_domain = "acc_test_domain"
-  recipient = datapower_jwerecipient.test.id
+  recipient = "TestAccJWERecipient"
 }`,
 	Data: `
 data "datapower_jweheader" "test" {
@@ -35,9 +35,6 @@ data "datapower_jweheader" "test" {
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{
-		"JWERecipient": &JWERecipientTestConfig,
-	},
-	ReferencesTo: map[string]*ModelTestConfig{
 		"JWERecipient": &JWERecipientTestConfig,
 	},
 	TestPre: `

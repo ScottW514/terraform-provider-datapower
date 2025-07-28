@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyLogicSwitch(t *testing.T) {
 			{
 				Config: testconfig.AssemblyLogicSwitchTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblylogicswitch.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblylogicswitch.test", "result.0.id", "AssemblyLogicSwitch_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblylogicswitch.test", "result.0.action_debug", "false"),
 				}...),
 			},

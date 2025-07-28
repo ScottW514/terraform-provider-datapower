@@ -30,6 +30,6 @@ attributes:
   - name: Alias
     type: String
     reference_to: PasswordAlias
-    test_value: 'datapower_passwordalias.test.id'
+    test_value: '"TestAccPasswordAlias"'
     description: 'Password alias'
     cli_alias: password-alias

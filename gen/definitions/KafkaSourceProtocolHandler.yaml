@@ -25,6 +25,7 @@ attributes:
     type: String
     reference_to: KafkaCluster
     required: true
+    test_value: '"TestAccKafkaCluster"'
     description: 'Kafka cluster'
     cli_alias: cluster
   - name: RequestTopic

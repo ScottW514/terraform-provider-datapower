@@ -68,6 +68,7 @@ attributes:
     type: String
     reference_to: LDAPSearchParameters
     required: true
+    test_value: '"TestAccLDAPSearchParameters"'
     description: 'LDAP search parameters'
     cli_alias: ldap-search-param
   - name: LDAPReadTimeout

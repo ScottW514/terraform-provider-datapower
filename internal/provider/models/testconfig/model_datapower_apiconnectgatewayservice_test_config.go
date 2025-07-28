@@ -36,7 +36,6 @@ data "datapower_apiconnectgatewayservice" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmAPICGSProxyPolicy": &DmAPICGSProxyPolicyTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }

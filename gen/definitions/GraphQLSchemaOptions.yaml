@@ -26,5 +26,6 @@ attributes:
     type: String
     reference_to: APIDefinition
     required: true
+    test_value: '"TestAccAPIDefinition"'
     description: 'API'
     cli_alias: api

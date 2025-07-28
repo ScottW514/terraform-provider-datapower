@@ -39,7 +39,7 @@ func TestAccDataSourceAssemblyActionParse(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionParseTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionparse.test", "result.0.id", "_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionparse.test", "result.0.id", "AssemblyActionParse_name"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionparse.test", "result.0.input", "message"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionparse.test", "result.0.warn_on_empty_input", "false"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionparse.test", "result.0.use_content_type", "false"),

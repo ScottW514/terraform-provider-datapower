@@ -36,9 +36,6 @@ data "datapower_b2bpersistence" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"RaidVolume": &RaidVolumeTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{
-		"RaidVolume": &RaidVolumeTestConfig,
-	},
 	TestPre: `
 `,
 }

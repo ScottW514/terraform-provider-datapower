@@ -24,7 +24,7 @@ var AssemblyActionSetVarTestConfig = ModelTestConfig{
 	Name: "AssemblyActionSetVar",
 	Resource: `
 resource "datapower_assemblyactionsetvar" "test" {
-  id = "_name"
+  id = "AssemblyActionSetVar_name"
   app_domain = "acc_test_domain"
   variable = ` + DmAssemblyActionSetVarTestConfig.GetModelListConfig() + `
 }`,
@@ -37,7 +37,6 @@ data "datapower_assemblyactionsetvar" "test" {
 	Dependencies: map[string]*ModelTestConfig{
 		"DmAssemblyActionSetVar": &DmAssemblyActionSetVarTestConfig,
 	},
-	ReferencesTo: map[string]*ModelTestConfig{},
 	TestPre: `
 `,
 }
