@@ -16,7 +16,7 @@ WSDL assembly action
 
 ```terraform
 resource "datapower_assemblyactionwsdl" "test" {
-  id         = "_name"
+  id         = "AssemblyActionWSDL_name"
   app_domain = "acc_test_domain"
 }
 ```

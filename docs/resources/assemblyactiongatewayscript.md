@@ -16,7 +16,7 @@ GatewayScript assembly action
 
 ```terraform
 resource "datapower_assemblyactiongatewayscript" "test" {
-  id         = "_name"
+  id         = "AssemblyActionGatewayScript_name"
   app_domain = "acc_test_domain"
   source     = "gsfile"
 }

@@ -1,6 +1,6 @@
 
 resource "datapower_assemblyactionthrow" "test" {
-  id         = "_name"
+  id         = "AssemblyActionThrow_name"
   app_domain = "acc_test_domain"
   error_id   = "errorid"
 }

@@ -16,7 +16,7 @@ User group
 
 ```terraform
 resource "datapower_usergroup" "test" {
-  id              = "UserGroup_name"
+  id              = "_UserGroup_name"
   access_policies = ["*/*/*?Access=r"]
 }
 ```

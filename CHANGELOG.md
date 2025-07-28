@@ -1,4 +1,4 @@
-## Unreleased
+## v0.6.1
 - Update test fixtures for efficiency
 
 ## v0.6.0

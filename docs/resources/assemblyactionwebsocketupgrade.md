@@ -16,7 +16,7 @@ WebSocket upgrade assembly action
 
 ```terraform
 resource "datapower_assemblyactionwebsocketupgrade" "test" {
-  id         = "_name"
+  id         = "AssemblyActionWebSocketUpgrade_name"
   app_domain = "acc_test_domain"
   url        = "https://localhost"
 }

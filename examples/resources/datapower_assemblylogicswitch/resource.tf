@@ -1,6 +1,6 @@
 
 resource "datapower_assemblylogicswitch" "test" {
-  id         = "_name"
+  id         = "AssemblyLogicSwitch_name"
   app_domain = "acc_test_domain"
   case = [{
     condition = "condition"

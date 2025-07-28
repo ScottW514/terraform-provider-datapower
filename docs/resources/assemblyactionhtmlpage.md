@@ -16,7 +16,7 @@ HTML assembly action
 
 ```terraform
 resource "datapower_assemblyactionhtmlpage" "test" {
-  id         = "_name"
+  id         = "AssemblyActionHtmlPage_name"
   app_domain = "acc_test_domain"
 }
 ```

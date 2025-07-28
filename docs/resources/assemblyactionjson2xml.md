@@ -16,7 +16,7 @@ JSON to XML assembly action
 
 ```terraform
 resource "datapower_assemblyactionjson2xml" "test" {
-  id         = "_name"
+  id         = "AssemblyActionJson2Xml_name"
   app_domain = "acc_test_domain"
 }
 ```

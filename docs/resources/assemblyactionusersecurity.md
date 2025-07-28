@@ -16,7 +16,7 @@ User security assembly action
 
 ```terraform
 resource "datapower_assemblyactionusersecurity" "test" {
-  id                      = "_name"
+  id                      = "AssemblyActionUserSecurity_name"
   app_domain              = "acc_test_domain"
   factor_id               = "default"
   extract_identity_method = "basic"

@@ -1,5 +1,5 @@
 
 resource "datapower_assemblyactionoauth" "test" {
-  id         = "_name"
+  id         = "AssemblyActionOAuth_name"
   app_domain = "acc_test_domain"
 }

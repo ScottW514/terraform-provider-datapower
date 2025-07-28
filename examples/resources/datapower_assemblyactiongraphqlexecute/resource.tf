@@ -1,5 +1,5 @@
 
 resource "datapower_assemblyactiongraphqlexecute" "test" {
-  id         = "_name"
+  id         = "AssemblyActionGraphQLExecute_name"
   app_domain = "acc_test_domain"
 }

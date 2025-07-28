@@ -1,6 +1,6 @@
 
 resource "datapower_assembly" "test" {
-  id         = "_name"
+  id         = "Assembly_name"
   app_domain = "acc_test_domain"
-  rule       = datapower_apirule.test.id
+  rule       = "default-empty-rule"
 }

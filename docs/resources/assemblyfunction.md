@@ -16,7 +16,7 @@ Assembly function
 
 ```terraform
 resource "datapower_assemblyfunction" "test" {
-  id         = "_name"
+  id         = "AssemblyFunction_name"
   app_domain = "acc_test_domain"
 }
 ```

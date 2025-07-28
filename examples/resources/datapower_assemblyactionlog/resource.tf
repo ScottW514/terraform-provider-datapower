@@ -1,6 +1,6 @@
 
 resource "datapower_assemblyactionlog" "test" {
-  id         = "_name"
+  id         = "AssemblyActionLog_name"
   app_domain = "acc_test_domain"
   mode       = "gather-only"
 }

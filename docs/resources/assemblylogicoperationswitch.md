@@ -16,7 +16,7 @@ Operation switch assembly action
 
 ```terraform
 resource "datapower_assemblylogicoperationswitch" "test" {
-  id         = "_name"
+  id         = "AssemblyLogicOperationSwitch_name"
   app_domain = "acc_test_domain"
   case = [{
     execute = "default-api-rule"

@@ -1,5 +1,5 @@
 
 resource "datapower_assemblyactionxml2json" "test" {
-  id         = "_name"
+  id         = "AssemblyActionXml2Json_name"
   app_domain = "acc_test_domain"
 }

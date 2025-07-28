@@ -20,7 +20,7 @@ resource "datapower_sslsnimapping" "test" {
   app_domain = "acc_test_domain"
   sni_mapping = [{
     host_name_wildmat = "hostname_wildmat"
-    ssl_server        = datapower_sslserverprofile.test.id
+    ssl_server        = "TestAccSSLServerProfile"
   }]
 }
 ```

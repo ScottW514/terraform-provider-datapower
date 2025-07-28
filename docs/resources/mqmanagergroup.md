@@ -18,7 +18,7 @@ IBM MQ v9+ queue manager group
 resource "datapower_mqmanagergroup" "test" {
   id                    = "MQManagerGroup_name"
   app_domain            = "acc_test_domain"
-  primary_queue_manager = datapower_mqmanager.test.id
+  primary_queue_manager = "TestAccMQManager"
 }
 ```
 

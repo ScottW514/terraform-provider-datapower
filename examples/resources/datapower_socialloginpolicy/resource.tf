@@ -4,7 +4,7 @@ resource "datapower_socialloginpolicy" "test" {
   app_domain              = "acc_test_domain"
   client_id               = "client_id"
   client_secret           = "client_secret"
-  client_ssl_profile      = datapower_sslclientprofile.test.id
+  client_ssl_profile      = "TestAccSSLClientProfile"
   social_provider         = "google"
   provider_az_endpoint    = "https://example.com/auth"
   provider_token_endpoint = "https://example.com/token"

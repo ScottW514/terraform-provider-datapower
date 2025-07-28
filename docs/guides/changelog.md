@@ -7,62 +7,65 @@ description: |-
 
 # Changelog
 
+## v0.6.1
+- Update test fixtures for efficiency
+
 ## v0.6.0
 
 - Fix test generator handling of test_value for non-string types
 - API Additions (Domain Settings):
-SecureBackupMode
+  - SecureBackupMode
 - API Additions (Objects)
-CompileSettings
-ConfigSequence
-ConformancePolicy
-ControlList
-CryptoKerberosKDC
-DocumentCryptoMap
-FTPFilePollerSourceProtocolHandler
-FTPServerSourceProtocolHandler
-GatewayPeeringGroup
-GitOpsTemplate
-GraphQLSchemaOptions
-HostAlias
-ImportPackage
-IncludeConfig
-KafkaCluster
-KafkaSourceProtocolHandler
-LogTarget
-MTOMPolicy
-NFSFilePollerSourceProtocolHandler
-NFSStaticMount
-OAuthProviderSettings
-ODRConnectorGroup
-OpenTelemetry
-OpenTelemetryExporter
-OpenTelemetrySampler
-OperationRateLimit
-PeerGroup
-POPPollerSourceProtocolHandler
-RateLimitDefinitionGroup
-SchemaExceptionMap
-SFTPFilePollerSourceProtocolHandler
-SMTPServerConnection
-SOAPHeaderDisposition
-SSHServerSourceProtocolHandler
-SSLProxyService
-StatelessTCPSourceProtocolHandler
-TCPProxyService
-VisibilityList
-WebSphereJMSServer
-WebSphereJMSSourceProtocolHandler
-WebTokenService
-WSEndpointRewritePolicy
-WSGateway
-WSStylePolicy
-WSStylePolicyRule
-WXSGrid
-XPathRoutingMap
-XSLCoprocService
-XSLProxyService
-XTCProtocolHandler
+  - CompileSettings
+  - ConfigSequence
+  - ConformancePolicy
+  - ControlList
+  - CryptoKerberosKDC
+  - DocumentCryptoMap
+  - FTPFilePollerSourceProtocolHandler
+  - FTPServerSourceProtocolHandler
+  - GatewayPeeringGroup
+  - GitOpsTemplate
+  - GraphQLSchemaOptions
+  - HostAlias
+  - ImportPackage
+  - IncludeConfig
+  - KafkaCluster
+  - KafkaSourceProtocolHandler
+  - LogTarget
+  - MTOMPolicy
+  - NFSFilePollerSourceProtocolHandler
+  - NFSStaticMount
+  - OAuthProviderSettings
+  - ODRConnectorGroup
+  - OpenTelemetry
+  - OpenTelemetryExporter
+  - OpenTelemetrySampler
+  - OperationRateLimit
+  - PeerGroup
+  - POPPollerSourceProtocolHandler
+  - RateLimitDefinitionGroup
+  - SchemaExceptionMap
+  - SFTPFilePollerSourceProtocolHandler
+  - SMTPServerConnection
+  - SOAPHeaderDisposition
+  - SSHServerSourceProtocolHandler
+  - SSLProxyService
+  - StatelessTCPSourceProtocolHandler
+  - TCPProxyService
+  - VisibilityList
+  - WebSphereJMSServer
+  - WebSphereJMSSourceProtocolHandler
+  - WebTokenService
+  - WSEndpointRewritePolicy
+  - WSGateway
+  - WSStylePolicy
+  - WSStylePolicyRule
+  - WXSGrid
+  - XPathRoutingMap
+  - XSLCoprocService
+  - XSLProxyService
+  - XTCProtocolHandler
 
 ## v0.5.0
 

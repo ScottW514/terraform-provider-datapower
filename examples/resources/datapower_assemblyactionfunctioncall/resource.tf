@@ -1,6 +1,6 @@
 
 resource "datapower_assemblyactionfunctioncall" "test" {
-  id            = "_name"
+  id            = "AssemblyActionFunctionCall_name"
   app_domain    = "acc_test_domain"
-  function_call = datapower_assemblyfunction.test.id
+  function_call = "default-func-global"
 }

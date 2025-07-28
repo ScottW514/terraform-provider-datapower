@@ -4,7 +4,7 @@ resource "datapower_sqldatasource" "test" {
   app_domain       = "acc_test_domain"
   database         = "Oracle"
   username         = "username"
-  password_alias   = datapower_passwordalias.test.id
+  password_alias   = "TestAccPasswordAlias"
   data_source_id   = "datasource_id"
   data_source_host = "datasource.host"
   data_source_port = 1488

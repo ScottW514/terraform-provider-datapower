@@ -1,6 +1,6 @@
 
 resource "datapower_xslcoprocservice" "test" {
-  id            = "_name"
+  id            = "XSLCoprocService_name"
   app_domain    = "acc_test_domain"
   local_port    = 8888
   xml_manager   = "default"

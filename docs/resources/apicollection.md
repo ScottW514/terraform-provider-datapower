@@ -25,7 +25,7 @@ resource "datapower_apicollection" "test" {
   }]
   api_processing_rule = "default-api-rule"
   api_error_rule      = "default-api-error-rule"
-  plan                = [datapower_apiplan.test.id]
+  plan                = ["TestAccAPIPlan"]
 }
 ```
 
