@@ -3,12 +3,12 @@
 page_title: "datapower_domainavailability Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Domain availability
+  Domain availability (updates restart domain)
 ---
 
 # datapower_domainavailability (Data Source)
 
-Domain availability
+Domain availability (updates restart domain)
 
 ## Example Usage
 

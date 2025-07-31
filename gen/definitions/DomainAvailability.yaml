@@ -1,9 +1,10 @@
 name: DomainAvailability
-description: 'Domain availability'
+description: 'Domain availability (updates restart domain)'
 cli_alias: 'domain-availability'
 cmd_group: 'configuration'
 rest_endpoint: '/mgmt/config/{domain}/DomainAvailability/default'
 update_only: true
+restart_domain_on_update: true
 attributes:
   - name: AppDomain
     tf_name: app_domain

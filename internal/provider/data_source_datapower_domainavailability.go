@@ -49,7 +49,7 @@ func (d *DomainAvailabilityDataSource) Metadata(_ context.Context, req datasourc
 
 func (d *DomainAvailabilityDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Domain availability",
+		MarkdownDescription: "Domain availability (updates restart domain)",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

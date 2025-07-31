@@ -34,15 +34,17 @@ import (
 )
 
 type DomainAvailability struct {
-	AppDomain   types.String `tfsdk:"app_domain"`
-	Enabled     types.Bool   `tfsdk:"enabled"`
-	UserSummary types.String `tfsdk:"user_summary"`
+	AppDomain             types.String `tfsdk:"app_domain"`
+	Enabled               types.Bool   `tfsdk:"enabled"`
+	UserSummary           types.String `tfsdk:"user_summary"`
+	RestartDomainOnUpdate types.Bool   `tfsdk:"restart_domain_on_update"`
 }
 
 var DomainAvailabilityObjectType = map[string]attr.Type{
-	"app_domain":   types.StringType,
-	"enabled":      types.BoolType,
-	"user_summary": types.StringType,
+	"app_domain":               types.StringType,
+	"enabled":                  types.BoolType,
+	"user_summary":             types.StringType,
+	"restart_domain_on_update": types.BoolType,
 }
 
 func (data DomainAvailability) GetPath() string {

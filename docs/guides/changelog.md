@@ -7,6 +7,11 @@ description: |-
 
 # Changelog
 
+## Unreleased
+- Added internal use only attribute flag
+- Added domain restart on change model flag
+- Added domain restart flag to DomainAvailability
+
 ## v0.6.1
 - Update test fixtures for efficiency
 

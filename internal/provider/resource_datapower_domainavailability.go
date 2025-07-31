@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
@@ -50,7 +51,7 @@ func (r *DomainAvailabilityResource) Metadata(ctx context.Context, req resource.
 
 func (r *DomainAvailabilityResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Domain availability", "domain-availability", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Domain availability (updates restart domain)", "domain-availability", "").String,
 
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
@@ -69,6 +70,15 @@ func (r *DomainAvailabilityResource) Schema(ctx context.Context, req resource.Sc
 			"user_summary": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
 				Optional:            true,
+			},
+			"restart_domain_on_update": schema.BoolAttribute{
+				MarkdownDescription: "Set to true to restart the domain when changes are made to this resource.",
+				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(true),
+				PlanModifiers: []planmodifier.Bool{
+					boolplanmodifier.UseStateForUnknown(),
+				},
 			},
 		},
 	}
@@ -102,6 +112,13 @@ func (r *DomainAvailabilityResource) Create(ctx context.Context, req resource.Cr
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
+	}
+	if data.RestartDomainOnUpdate.ValueBool() {
+		rErr := tfutils.RestartDomain(r.client, data.AppDomain.ValueString())
+		if rErr != nil {
+			resp.Diagnostics.AddError("Client Error", rErr.Error())
+			return
+		}
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -149,6 +166,13 @@ func (r *DomainAvailabilityResource) Update(ctx context.Context, req resource.Up
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
+	}
+	if data.RestartDomainOnUpdate.ValueBool() {
+		rErr := tfutils.RestartDomain(r.client, data.AppDomain.ValueString())
+		if rErr != nil {
+			resp.Diagnostics.AddError("Client Error", rErr.Error())
+			return
+		}
 	}
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
