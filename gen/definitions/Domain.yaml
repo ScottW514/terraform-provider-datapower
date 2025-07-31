@@ -10,6 +10,10 @@ attributes:
     required: true
     example: 'Domain_name'
     description: 'The name of the application domain the object belongs to'
+    string_patterns:
+      - '^[a-zA-Z0-9_-]+$'
+    string_min_length: 1
+    string_max_length: 128
   - name: UserSummary
     type: String
     description: 'Comments'

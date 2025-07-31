@@ -1,9 +1,12 @@
-## Unreleased
+## v0.6.2
+
 - Added internal use only attribute flag
 - Added domain restart on change model flag
 - Added domain restart flag to DomainAvailability
+- Added string validations to Id and AppDomain attributes for all models
 
 ## v0.6.1
+
 - Update test fixtures for efficiency
 
 ## v0.6.0

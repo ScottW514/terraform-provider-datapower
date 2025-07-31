@@ -27,14 +27,17 @@ resource "datapower_jwssignature" "test" {
   id = "JWSSignature_name"
   app_domain = "acc_test_domain"
   algorithm = "RS256"
+  key = "TestAccCryptoKey"
 }`,
 	Data: `
 data "datapower_jwssignature" "test" {
   depends_on = [ datapower_jwssignature.test ]
   app_domain = "acc_test_domain"
 }`,
-	ModelOnly:    false,
-	Dependencies: map[string]*ModelTestConfig{},
+	ModelOnly: false,
+	Dependencies: map[string]*ModelTestConfig{
+		"CryptoKey": &CryptoKeyTestConfig,
+	},
 	TestPre: `
 `,
 }

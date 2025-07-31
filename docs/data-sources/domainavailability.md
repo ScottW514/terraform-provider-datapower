@@ -29,4 +29,5 @@ data "datapower_domainavailability" "test" {
 ### Read-Only
 
 - `enabled` (Boolean) Administrative state
+- `restart_domain_on_update` (Boolean) Set to true to restart the domain when changes are made to this resource.
 - `user_summary` (String) Comments

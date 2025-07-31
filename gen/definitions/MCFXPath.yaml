@@ -11,12 +11,20 @@ attributes:
     required: true
     example: 'MCFXPath_name'
     description: 'Name of the object. Must be unique among object types in application domain.'
+    string_patterns:
+      - '^[a-zA-Z0-9_-]+$'
+    string_min_length: 1
+    string_max_length: 128
   - name: AppDomain
     tf_name: app_domain
     type: String
     required: true
     example: 'test_domain'
     description: 'The name of the application domain the object belongs to'
+    string_patterns:
+      - '^[a-zA-Z0-9_-]+$'
+    string_min_length: 1
+    string_max_length: 128
   - name: XPathExpression
     type: String
     required: true

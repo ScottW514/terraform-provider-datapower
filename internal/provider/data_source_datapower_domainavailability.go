@@ -63,6 +63,10 @@ func (d *DomainAvailabilityDataSource) Schema(ctx context.Context, req datasourc
 				MarkdownDescription: "Comments",
 				Computed:            true,
 			},
+			"restart_domain_on_update": schema.BoolAttribute{
+				MarkdownDescription: "Set to true to restart the domain when changes are made to this resource.",
+				Computed:            true,
+			},
 		},
 	}
 }
