@@ -1,5 +1,6 @@
 ## Unreleased
 - Cleaned up formatting in resource template
+- Added string validation for remote file in file resource
 
 ## v0.6.2
 

@@ -24,15 +24,18 @@ import (
 	"hash/crc32"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -65,6 +68,10 @@ func (r *FileResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+				},
 				PlanModifiers: []planmodifier.String{
 					ImmutableAfterSet(),
 				},
@@ -72,6 +79,10 @@ func (r *FileResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			"remote_path": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("File remote path", "", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile(`^((shared|pub)?cert|chkpoints|config|image|local|policyframework|tasktemplates|temporary):///[a-zA-Z0-9_.-/]+[a-zA-Z0-9_-]$`), ""),
+				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
