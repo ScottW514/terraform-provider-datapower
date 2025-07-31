@@ -58,6 +58,9 @@ type {{.Name}} struct {
 	{{toGoName .TfName}} *{{.DmType}} `tfsdk:"{{.TfName}}"`
     {{- end}}
 {{- end}}
+{{- if .RestartDomainOnUpdate}}
+	RestartDomainOnUpdate types.Bool `tfsdk:"restart_domain_on_update"`
+{{- end}}
 }
 
 {{- if hasWriteOnlyAttribute .Attributes}}
@@ -69,6 +72,9 @@ type {{.Name}}WO struct {
 	{{toGoName .TfName}} *{{.DmType}} `tfsdk:"{{.TfName}}"`
         {{- end}}
     {{- end}}
+{{- if .RestartDomainOnUpdate}}
+	RestartDomainOnUpdate types.Bool `tfsdk:"restart_domain_on_update"`
+{{- end}}
 }
 {{- end}}
 
@@ -87,6 +93,9 @@ var {{.Name}}ObjectType = map[string]attr.Type{
 	"{{.TfName}}_update": types.BoolType,
     {{- end}}
 {{- end}}
+{{- if .RestartDomainOnUpdate}}
+	"restart_domain_on_update": types.BoolType,
+{{- end}}
 }
 
 {{- if hasWriteOnlyAttribute .Attributes}}
@@ -103,6 +112,9 @@ var {{.Name}}ObjectTypeWO = map[string]attr.Type{
     "{{.TfName}}": types.ObjectType{ AttrTypes: {{.DmType}}ObjectType },
             {{- end}}
         {{- end}}
+    {{- end}}
+    {{- if .RestartDomainOnUpdate}}
+	"restart_domain_on_update": types.BoolType,
     {{- end}}
 }
 {{- end}}

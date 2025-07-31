@@ -90,20 +90,21 @@ var providerTemplates = []templateInfo{
 }
 
 type YamlConfig struct {
-	Name              string                `yaml:"name"`
-	ModelOnly         bool                  `yaml:"model_only"`
-	ListItem          bool                  `yaml:"list_item"`
-	RestEndpoint      string                `yaml:"rest_endpoint"`
-	UpdateOnly        bool                  `yaml:"update_only"`
-	DefaultDomainOnly bool                  `yaml:"default_domain_only"`
-	PutCreate         bool                  `yaml:"put_create"`
-	Description       string                `yaml:"description"`
-	Deprecated        string                `yaml:"deprecated"`
-	CliAlias          string                `yaml:"cli_alias"`
-	SkipTest          bool                  `yaml:"skip_test"`
-	TestPrerequisites string                `yaml:"test_prerequisites"`
-	Attributes        []YamlConfigAttribute `yaml:"attributes"`
-	DataResource      []string
+	Name                  string                `yaml:"name"`
+	ModelOnly             bool                  `yaml:"model_only"`
+	ListItem              bool                  `yaml:"list_item"`
+	RestEndpoint          string                `yaml:"rest_endpoint"`
+	UpdateOnly            bool                  `yaml:"update_only"`
+	DefaultDomainOnly     bool                  `yaml:"default_domain_only"`
+	PutCreate             bool                  `yaml:"put_create"`
+	Description           string                `yaml:"description"`
+	Deprecated            string                `yaml:"deprecated"`
+	CliAlias              string                `yaml:"cli_alias"`
+	SkipTest              bool                  `yaml:"skip_test"`
+	TestPrerequisites     string                `yaml:"test_prerequisites"`
+	RestartDomainOnUpdate bool                  `yaml:"restart_domain_on_update"`
+	Attributes            []YamlConfigAttribute `yaml:"attributes"`
+	DataResource          []string
 }
 
 type YamlConfigAttribute struct {

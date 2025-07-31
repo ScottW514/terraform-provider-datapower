@@ -1,5 +1,6 @@
 ## Unreleased
 - Added internal use only attribute flag
+- Added domain restart on change model flag
 
 ## v0.6.1
 - Update test fixtures for efficiency

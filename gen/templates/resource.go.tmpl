@@ -175,6 +175,17 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 			},
 	{{- end}}
 {{- end}}
+{{- if .RestartDomainOnUpdate}}
+			"restart_domain_on_update": schema.BoolAttribute{
+				MarkdownDescription: "Set to true to restart the domain when changes are made to this resource.",
+				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(true),
+				PlanModifiers: []planmodifier.Bool{
+					boolplanmodifier.UseStateForUnknown(),
+				},
+			},
+{{- end}}
 		},
 	}
 }
@@ -253,6 +264,15 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 	}
 	data.UpdateUnknownFromBody(ctx, `{{.Name}}`, getRes)
 
+{{- end}}
+{{- if .RestartDomainOnUpdate}}
+	if data.RestartDomainOnUpdate.ValueBool() {
+		rErr := tfutils.RestartDomain(r.client, data.AppDomain.ValueString())
+		if rErr != nil {
+			resp.Diagnostics.AddError("Client Error", rErr.Error())
+			return
+		}
+	}
 {{- end}}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -342,6 +362,15 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 
+{{- end}}
+{{- if .RestartDomainOnUpdate}}
+	if data.RestartDomainOnUpdate.ValueBool() {
+		rErr := tfutils.RestartDomain(r.client, data.AppDomain.ValueString())
+		if rErr != nil {
+			resp.Diagnostics.AddError("Client Error", rErr.Error())
+			return
+		}
+	}
 {{- end}}
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
