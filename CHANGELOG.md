@@ -1,3 +1,6 @@
+## Unreleased
+- Cleaned up formatting in resource template
+
 ## v0.6.2
 
 - Added internal use only attribute flag

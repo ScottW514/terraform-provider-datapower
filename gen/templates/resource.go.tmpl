@@ -113,18 +113,18 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 		{{- else if or (len .StringPatterns) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
 				Validators: []validator.{{.Type}}{
-			{{if eq .Type "List"}}
+			{{- if eq .Type "List"}}
 					listvalidator.ValueStringsAre(
-			{{end}}
+			{{- end}}
 			{{- if or (ne .StringMinLength 0) (ne .StringMaxLength 0)}}
 						stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
 			{{- end}}
 			{{- range .StringPatterns}}
 						stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
 			{{- end}}
-			{{if eq .Type "List"}}
+			{{- if eq .Type "List"}}
 					),
-			{{end}}
+			{{- end}}
 				},
 		{{- else if or (ne .Minimum 0) (ne .Maximum 0)}}
 				Validators: []validator.{{.Type}}{
