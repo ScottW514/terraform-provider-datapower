@@ -1,3 +1,6 @@
+## Unreleased
+- Added internal use only attribute flag
+
 ## v0.6.1
 - Update test fixtures for efficiency
 

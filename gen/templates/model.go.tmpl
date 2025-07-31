@@ -191,7 +191,7 @@ var {{$root.Name}}{{$dataResource}}Schema = {{$dataResource}}Schema.{{if $root.L
             Default:             stringdefault.StaticString({{quote .Default}}),
                     {{- end}}
                 {{- end}}
-                {{- if .Computed}}
+                {{- if or .Computed .Internal}}
             PlanModifiers: []planmodifier.{{.Type}}{
                 {{snakeCase .Type}}planmodifier.UseStateForUnknown(),
             },
@@ -303,13 +303,14 @@ func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string) string {
 		body, _ = sjson.Set(body, "{{.Name}}.name", data.AppDomain.ValueString())
 {{- end}}
 {{- range .Attributes}}
-{{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")}}
-    {{- if and (ne .Name "AppDomain")}}
+    {{- if not .Internal}}
+        {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")}}
+            {{- if and (ne .Name "AppDomain")}}
 	if !data.{{toGoName .TfName}}.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+{{.Path}}, {{if eq .Type "Bool"}}tfutils.StringFromBool(data.{{toGoName .TfName}}, {{quote .BoolType}}){{else}}data.{{toGoName .TfName}}.Value{{.Type}}(){{end}})
 	}
-    {{- end}}
-{{- else if isList .}}
+        {{- end}}
+        {{- else if isList .}}
 	if !data.{{toGoName .TfName}}.IsNull() {
 		var values []{{if isStringList .}}string{{else}}{{.ElementType}}{{end}}
 		data.{{toGoName .TfName}}.ElementsAs(ctx, &values, false)
@@ -317,13 +318,14 @@ func (data {{.Name}}) ToBody(ctx context.Context, pathRoot string) string {
 			body, _ = sjson.Set{{if ne .ElementType "String"}}Raw{{end}}(body, pathRoot+{{.Path}}+".-1", {{if eq .ElementType "String"}}map[string]string{"value": val}{{else}}val.ToBody(ctx, ""){{end}})
 		}
 	}
-{{- else if isObject .}}
+        {{- else if isObject .}}
 	if data.{{toGoName .TfName}} != nil {
         if !data.{{toGoName .TfName}}.IsNull() {
     		body, _ = sjson.SetRaw(body, pathRoot+{{.Path}}, data.{{toGoName .TfName}}.ToBody(ctx, ""))
         }
 	}
-{{- end}}
+        {{- end}}
+    {{- end}}
 {{- end}}
 	return body
 }
@@ -332,7 +334,8 @@ func (data *{{.Name}}) FromBody(ctx context.Context, pathRoot string, res gjson.
     if pathRoot != "" {
         pathRoot = pathRoot + "."
     }
-    {{- range .Attributes}}
+{{- range .Attributes}}
+    {{- if not .Internal}}
         {{- if or (eq .Type "String") (eq .Type "Int64")}}
             {{- if ne .Name "AppDomain"}}
 	if value := res.Get(pathRoot+{{.Path}}); value.Exists(){{if eq .Type "String"}} && tfutils.ParseStringFromGJSON(value).ValueString() != ""{{end}} {
@@ -384,38 +387,40 @@ func (data *{{.Name}}) FromBody(ctx context.Context, pathRoot string, res gjson.
 	}
         {{- end}}
     {{- end}}
+{{- end}}
 }
 
-    {{- if hasWriteOnlyAttribute .Attributes}}
+{{- if hasWriteOnlyAttribute .Attributes}}
 func (data *{{.Name}}WO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
     if pathRoot != "" {
         pathRoot = pathRoot + "."
     }
     {{- range .Attributes}}
-    {{- if not .WriteOnly}}
-        {{- if or (eq .Type "String") (eq .Type "Int64")}}
-            {{- if ne .Name "AppDomain"}}
+        {{- if not .Internal}}
+            {{- if not .WriteOnly}}
+                {{- if or (eq .Type "String") (eq .Type "Int64")}}
+                    {{- if ne .Name "AppDomain"}}
 	if value := res.Get(pathRoot+{{.Path}}); value.Exists(){{if eq .Type "String"}} && tfutils.ParseStringFromGJSON(value).ValueString() != ""{{end}} {
 		data.{{toGoName .TfName}} = {{if eq .Type "String"}}tfutils.ParseStringFromGJSON(value){{else}}types.{{.Type}}Value(value.{{if eq .Type "Int64"}}Int{{else}}{{.Type}}{{end}}()){{end}}
 	} else {
-		        {{- if .Default}}
+		                {{- if .Default}}
 		data.{{toGoName .TfName}} = types.{{.Type}}Value({{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}})
-		        {{- else}}
+		                {{- else}}
 		data.{{toGoName .TfName}} = types.{{.Type}}Null()
-		        {{- end}}
+		                {{- end}}
 	}
-            {{- end}}
-        {{- else if eq .Type "Bool"}}
+                    {{- end}}
+                {{- else if eq .Type "Bool"}}
 	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
 		data.{{toGoName .TfName}} = tfutils.BoolFromString(value.String())
 	} else {
 		data.{{toGoName .TfName}} = types.BoolNull()
 	}
-        {{- else if isList .}}
+                {{- else if isList .}}
 	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
-            {{- if eq .ElementType "String"}}
+                    {{- if eq .ElementType "String"}}
 		data.{{toGoName .TfName}} = tfutils.ParseStringListFromGJSON(value)
-            {{- else}}
+                    {{- else}}
         l := []{{.ElementType}}{}
         if value := res.Get(`{{.Name}}`); value.Exists() {
             for _, v := range value.Array() {
@@ -431,41 +436,43 @@ func (data *{{.Name}}WO) FromBody(ctx context.Context, pathRoot string, res gjso
         } else {
             data.{{toGoName .TfName}} = types.ListNull(types.ObjectType{AttrTypes: {{.ElementType}}ObjectType})
         }
-            {{- end}}
+                    {{- end}}
 	} else {
 		data.{{toGoName .TfName}} = types.{{.Type}}Null({{- if or (eq .ElementType "String") (eq .ElementType "Int64")}}types.{{.ElementType}}Type{{- else}}types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType }{{- end}})
 	}
-        {{- else if isObject .}}
+                {{- else if isObject .}}
 	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
         data.{{toGoName .TfName}} = &{{.DmType}}{}
     	data.{{toGoName .TfName}}.FromBody(ctx, "", value)
 	} else {
     	data.{{toGoName .TfName}} = nil
 	}
+                {{- end}}
+            {{- end}}
         {{- end}}
     {{- end}}
-    {{- end}}
 }
-    {{- end}}
+{{- end}}
 
 func (data *{{.Name}}) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
     if pathRoot != "" {
         pathRoot = pathRoot + "."
     }
 {{- range .Attributes}}
-    {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")}}
-        {{- if ne .Name "AppDomain"}}
+    {{- if not .Internal}}
+        {{- if or (eq .Type "String") (eq .Type "Int64") (eq .Type "Bool")}}
+            {{- if ne .Name "AppDomain"}}
 	if value := res.Get(pathRoot+{{.Path}}); value.Exists() && !data.{{toGoName .TfName}}.IsNull() {
 		data.{{toGoName .TfName}} = {{if eq .Type "String"}}tfutils.ParseStringFromGJSON(value){{else if eq .Type "Bool"}}tfutils.BoolFromString(value.String()){{else}}types.{{.Type}}Value(value.{{if eq .Type "Int64"}}Int{{else}}{{.Type}}{{end}}()){{end}}
 	} else {{if .Default}}if {{if and (eq .Type "Bool") (eq .Default "true")}}!{{end}}data.{{toGoName .TfName}}.Value{{.Type}}() {{if ne .Type "Bool"}}!= {{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}}{{end}}{{end}} {
 		data.{{toGoName .TfName}} = types.{{.Type}}Null()
 	}
-        {{- end}}
-    {{- else if isList .}}
+            {{- end}}
+        {{- else if isList .}}
 	if value := res.Get(pathRoot+{{.Path}}); value.Exists() && !data.{{toGoName .TfName}}.IsNull() {
-        {{- if eq .ElementType "String"}}
+            {{- if eq .ElementType "String"}}
 		data.{{toGoName .TfName}} = tfutils.ParseStringListFromGJSON(value)
-        {{- else}}
+            {{- else}}
         l := []{{.ElementType}}{}
         for _, v := range value.Array() {
             item := {{.ElementType}}{}
@@ -479,16 +486,17 @@ func (data *{{.Name}}) UpdateFromBody(ctx context.Context, pathRoot string, res 
         } else {
             data.{{toGoName .TfName}} = types.ListNull(types.ObjectType{AttrTypes: {{.ElementType}}ObjectType})
         }
-        {{- end}}
+            {{- end}}
 	} else {
 		data.{{toGoName .TfName}} = types.{{.Type}}Null({{- if eq .ElementType "String"}}types.StringType{{- else}}types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType }{{- end}})
 	}
-    {{- else if isObject .}}
+        {{- else if isObject .}}
 	if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
 		data.{{toGoName .TfName}}.UpdateFromBody(ctx, "", value)
 	} else {
 		data.{{toGoName .TfName}} = nil
 	}
+        {{- end}}
     {{- end}}
 {{- end}}
 }
@@ -499,8 +507,9 @@ func (data *{{.Name}}) UpdateUnknownFromBody(ctx context.Context, pathRoot strin
         pathRoot = pathRoot + "."
     }
 {{- range .Attributes}}
-    {{- if or (eq .Type "String") (eq .Type "Int64")}}
-        {{- if ne .Name "AppDomain"}}
+    {{- if not .Internal}}
+        {{- if or (eq .Type "String") (eq .Type "Int64")}}
+            {{- if ne .Name "AppDomain"}}
     if data.{{toGoName .TfName}}.IsUnknown() {
         if value := res.Get(pathRoot+{{.Path}}); value.Exists() && !data.{{toGoName .TfName}}.IsNull() {
             data.{{toGoName .TfName}} = {{if eq .Type "String"}}tfutils.ParseStringFromGJSON(value){{else}}types.{{.Type}}Value(value.{{if eq .Type "Int64"}}Int{{else}}{{.Type}}{{end}}()){{end}}
@@ -508,8 +517,8 @@ func (data *{{.Name}}) UpdateUnknownFromBody(ctx context.Context, pathRoot strin
             data.{{toGoName .TfName}} = types.{{.Type}}Null()
         }
     }
-        {{- end}}
-    {{- else if eq .Type "Bool"}}
+            {{- end}}
+        {{- else if eq .Type "Bool"}}
     if data.{{toGoName .TfName}}.IsUnknown() {
         if value := res.Get(pathRoot+{{.Path}}); value.Exists() && !data.{{toGoName .TfName}}.IsNull() {
             data.{{toGoName .TfName}} = tfutils.BoolFromString(value.String())
@@ -517,12 +526,12 @@ func (data *{{.Name}}) UpdateUnknownFromBody(ctx context.Context, pathRoot strin
             data.{{toGoName .TfName}} = types.BoolNull()
         }
     }
-    {{- else if isList .}}
+        {{- else if isList .}}
     if data.{{toGoName .TfName}}.IsUnknown() {
     	if value := res.Get(pathRoot+{{.Path}}); value.Exists() && !data.{{toGoName .TfName}}.IsNull() {
-        {{- if eq .ElementType "String"}}
+            {{- if eq .ElementType "String"}}
 	    	data.{{toGoName .TfName}} = tfutils.ParseStringListFromGJSON(value)
-        {{- else}}
+            {{- else}}
             l := []{{.ElementType}}{}
             if value := res.Get(`{{.Name}}`); value.Exists() {
                 for _, v := range value.Array() {
@@ -538,12 +547,12 @@ func (data *{{.Name}}) UpdateUnknownFromBody(ctx context.Context, pathRoot strin
             } else {
                 data.{{toGoName .TfName}} = types.ListNull(types.ObjectType{AttrTypes: {{.ElementType}}ObjectType})
             }
-        {{- end}}
+            {{- end}}
     	} else {
 		data.{{toGoName .TfName}} = types.{{.Type}}Null({{if eq .ElementType "String"}}types.StringType{{- else}}types.ObjectType{ AttrTypes: {{.ElementType}}ObjectType }{{- end}})
     	}
     }
-    {{- else if isObject .}}
+        {{- else if isObject .}}
     if data.{{toGoName .TfName}} == nil {
         if value := res.Get(pathRoot+{{.Path}}); value.Exists() {
             d := {{.DmType}}{}
@@ -553,6 +562,7 @@ func (data *{{.Name}}) UpdateUnknownFromBody(ctx context.Context, pathRoot strin
             }
         }
     }
+        {{- end}}
     {{- end}}
 {{- end}}
 }

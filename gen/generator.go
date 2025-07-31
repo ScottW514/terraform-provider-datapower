@@ -114,6 +114,7 @@ type YamlConfigAttribute struct {
 	BoolType        string   `yaml:"bool_type"`
 	DmType          string   `yaml:"dm_type"`
 	ElementType     string   `yaml:"element_type"`
+	Internal        bool     `yaml:"internal"`
 	Required        bool     `yaml:"required"`
 	Computed        bool     `yaml:"computed"`
 	WriteOnly       bool     `yaml:"write_only"`
