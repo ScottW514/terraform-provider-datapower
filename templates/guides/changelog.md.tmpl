@@ -7,7 +7,7 @@ description: |-
 
 # Changelog
 
-## Unreleased
+## v0.6.2
 
 - Added internal use only attribute flag
 - Added domain restart on change model flag
