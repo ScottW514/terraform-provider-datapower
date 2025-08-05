@@ -1,0 +1,54 @@
+// Copyright © 2025 Scott Wiederhold <s.e.wiederhold@gmail.com>
+// All rights reserved.
+//
+// Licensed under the Mozilla Public License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://mozilla.org/MPL/2.0/
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// SPDX-License-Identifier: MPL-2.0
+
+package modifiers
+
+import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+)
+
+func ImmutableAfterSet() planmodifier.String {
+	return immutableAfterSetStringModifier{}
+}
+
+type immutableAfterSetStringModifier struct{}
+
+func (m immutableAfterSetStringModifier) Description(ctx context.Context) string {
+	return "Once set, the value of this attribute cannot be changed."
+}
+
+func (m immutableAfterSetStringModifier) MarkdownDescription(ctx context.Context) string {
+	return "Once set, the value of this attribute cannot be changed."
+}
+
+func (m immutableAfterSetStringModifier) PlanModifyString(ctx context.Context, req planmodifier.StringRequest, resp *planmodifier.StringResponse) {
+	// If the attribute isn't set in state yet (e.g., during create), allow it.
+	if req.StateValue.IsNull() || req.StateValue.IsUnknown() {
+		return
+	}
+
+	// If plan value differs from state, add an error.
+	if req.PlanValue != req.StateValue {
+		resp.Diagnostics.AddAttributeError(
+			req.Path,
+			"Immutable Attribute",
+			"The value of this attribute cannot be changed after the resource is created.",
+		)
+	}
+}

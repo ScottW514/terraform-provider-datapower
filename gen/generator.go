@@ -69,22 +69,22 @@ var providerTemplates = []templateInfo{
 	},
 	{
 		path:   "./gen/templates/data_source.go.tmpl",
-		prefix: "./internal/provider/data_source_datapower_",
+		prefix: "./internal/provider/datasources/data_source_datapower_",
 		suffix: ".go",
 	},
 	{
 		path:   "./gen/templates/data_source_test.go.tmpl",
-		prefix: "./internal/provider/data_source_datapower_",
+		prefix: "./internal/provider/datasources/data_source_datapower_",
 		suffix: "_test.go",
 	},
 	{
 		path:   "./gen/templates/resource.go.tmpl",
-		prefix: "./internal/provider/resource_datapower_",
+		prefix: "./internal/provider/resources/resource_datapower_",
 		suffix: ".go",
 	},
 	{
 		path:   "./gen/templates/resource_test.go.tmpl",
-		prefix: "./internal/provider/resource_datapower_",
+		prefix: "./internal/provider/resources/resource_datapower_",
 		suffix: "_test.go",
 	},
 }

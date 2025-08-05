@@ -19,7 +19,7 @@
 // This file is generated "gen/generator.go"
 // !!CHANGES TO THIS FILE WILL BE OVERWRITTEN!!
 
-package provider
+package resources
 
 import (
 	"context"
@@ -47,6 +47,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 
@@ -155,7 +156,7 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 		{{- if or .Computed (eq .Name "AppDomain") (eq .Name "Id")}}
 				PlanModifiers: []planmodifier.{{.Type}}{
 			{{- if eq .Name "AppDomain"}}
-					ImmutableAfterSet(),
+					modifiers.ImmutableAfterSet(),
 			{{- else if eq .Name "Id"}}
 					stringplanmodifier.RequiresReplace(),
 			{{- else if .Computed}}

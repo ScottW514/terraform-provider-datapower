@@ -19,7 +19,7 @@
 // This file is generated "gen/generator.go"
 // !!CHANGES TO THIS FILE WILL BE OVERWRITTEN!!
 
-package provider
+package datasources_test
 
 import (
 	"os"
@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models/testconfig"
+	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
 func TestAccDataSource{{.Name}}(t *testing.T) {
@@ -37,8 +38,8 @@ func TestAccDataSource{{.Name}}(t *testing.T) {
         t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_{{.Name}}")
 	}
 	resource.Test(t, resource.TestCase{
-		PreCheck:                 func() { testAccPreCheck(t) },
-		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		PreCheck:                 func() { testutils.TestAccPreCheck(t) },
+		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testconfig.{{.Name}}TestConfig.GetDataConfig(),

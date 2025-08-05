@@ -7,6 +7,11 @@ description: |-
 
 # Changelog
 
+## Unreleased
+- Cleaned up formatting in resource template
+- Added string validation for remote file in file resource
+- Refactored resource and datasource directory structure
+
 ## v0.6.2
 
 - Added internal use only attribute flag

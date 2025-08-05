@@ -32,6 +32,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/resources"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/datasources"
 )
 
 type DatapowerProvider struct {
@@ -105,10 +107,10 @@ func (p *DatapowerProvider) Configure(ctx context.Context, req provider.Configur
 
 func (p *DatapowerProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewFileResource,
+		resources.NewFileResource,
 		{{- range .}}
 		{{- if not .ModelOnly}}
-		New{{.Name}}Resource,
+		resources.New{{.Name}}Resource,
 		{{- end}}
 		{{- end}}
 	}
@@ -118,7 +120,7 @@ func (p *DatapowerProvider) DataSources(ctx context.Context) []func() datasource
 	return []func() datasource.DataSource{
 		{{- range .}}
 		{{- if not .ModelOnly}}
-		New{{.Name}}DataSource,
+		datasources.New{{.Name}}DataSource,
 		{{- end}}
 		{{- end}}
 	}

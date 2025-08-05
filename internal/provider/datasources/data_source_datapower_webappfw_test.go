@@ -1,0 +1,74 @@
+// Copyright © 2025 Scott Wiederhold <s.e.wiederhold@gmail.com>
+// All rights reserved.
+//
+// Licensed under the Mozilla Public License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://mozilla.org/MPL/2.0/
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// SPDX-License-Identifier: MPL-2.0
+
+// This file is generated "gen/generator.go"
+// !!CHANGES TO THIS FILE WILL BE OVERWRITTEN!!
+
+package datasources_test
+
+import (
+	"os"
+	"testing"
+
+	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/models/testconfig"
+	"github.com/scottw514/terraform-provider-datapower/testutils"
+)
+
+func TestAccDataSourceWebAppFW(t *testing.T) {
+	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_WebAppFW") == "" {
+		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_WebAppFW")
+	}
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testutils.TestAccPreCheck(t) },
+		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testconfig.WebAppFWTestConfig.GetDataConfig(),
+				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.id", "WebAppFW_name"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.priority", "normal"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.remote_port", "80"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.xml_manager", "default"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.uri_normalization", "true"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.rewrite_errors", "true"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.delay_errors", "true"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.delay_errors_duration", "1000"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.stream_output_to_back", "buffer-until-verification"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.stream_output_to_front", "buffer-until-verification"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.front_timeout", "120"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.back_timeout", "120"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.front_persistent_timeout", "180"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.allow_cache_control_header", "false"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.back_persistent_timeout", "180"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.front_http_version", "HTTP/1.1"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.back_http_version", "HTTP/1.1"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.request_side_security", "true"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.response_side_security", "true"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.do_chunked_upload", "false"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.follow_redirects", "true"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.http_client_ip_label", "X-Client-IP"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.http_log_cor_id_label", "X-Global-Transaction-ID"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.debug_mode", "off"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.debug_history", "25"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.do_host_rewriting", "true"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.ssl_config_type", "server"),
+				}...),
+			},
+		},
+	})
+}
