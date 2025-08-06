@@ -28,16 +28,18 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type DistributedVariable struct {
-	AppDomain      types.String `tfsdk:"app_domain"`
-	Enabled        types.Bool   `tfsdk:"enabled"`
-	UserSummary    types.String `tfsdk:"user_summary"`
-	GatewayPeering types.String `tfsdk:"gateway_peering"`
+	AppDomain      types.String      `tfsdk:"app_domain"`
+	Enabled        types.Bool        `tfsdk:"enabled"`
+	UserSummary    types.String      `tfsdk:"user_summary"`
+	GatewayPeering types.String      `tfsdk:"gateway_peering"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var DistributedVariableObjectType = map[string]attr.Type{
@@ -45,6 +47,7 @@ var DistributedVariableObjectType = map[string]attr.Type{
 	"enabled":         types.BoolType,
 	"user_summary":    types.StringType,
 	"gateway_peering": types.StringType,
+	"object_actions":  actions.ActionsListType,
 }
 
 func (data DistributedVariable) GetPath() string {

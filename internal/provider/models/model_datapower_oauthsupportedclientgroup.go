@@ -27,21 +27,23 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type OAuthSupportedClientGroup struct {
-	Id                 types.String `tfsdk:"id"`
-	AppDomain          types.String `tfsdk:"app_domain"`
-	UserSummary        types.String `tfsdk:"user_summary"`
-	Customized         types.Bool   `tfsdk:"customized"`
-	CustomizedType     types.String `tfsdk:"customized_type"`
-	OAuthRole          *DmOAuthRole `tfsdk:"o_auth_role"`
-	Client             types.List   `tfsdk:"client"`
-	TemplateProcessUrl types.String `tfsdk:"template_process_url"`
-	ClientTemplate     types.String `tfsdk:"client_template"`
+	Id                 types.String      `tfsdk:"id"`
+	AppDomain          types.String      `tfsdk:"app_domain"`
+	UserSummary        types.String      `tfsdk:"user_summary"`
+	Customized         types.Bool        `tfsdk:"customized"`
+	CustomizedType     types.String      `tfsdk:"customized_type"`
+	OAuthRole          *DmOAuthRole      `tfsdk:"o_auth_role"`
+	Client             types.List        `tfsdk:"client"`
+	TemplateProcessUrl types.String      `tfsdk:"template_process_url"`
+	ClientTemplate     types.String      `tfsdk:"client_template"`
+	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
 }
 
 var OAuthSupportedClientGroupObjectType = map[string]attr.Type{
@@ -54,6 +56,7 @@ var OAuthSupportedClientGroupObjectType = map[string]attr.Type{
 	"client":               types.ListType{ElemType: types.StringType},
 	"template_process_url": types.StringType,
 	"client_template":      types.StringType,
+	"object_actions":       actions.ActionsListType,
 }
 
 func (data OAuthSupportedClientGroup) GetPath() string {

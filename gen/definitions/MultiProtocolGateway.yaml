@@ -3,6 +3,10 @@ description: 'Multi-Protocol Gateway'
 cli_alias: 'mpgw'
 cmd_group: 'mpgw'
 rest_endpoint: '/mgmt/config/{domain}/MultiProtocolGateway'
+actions:
+  - name: quiesce
+    pre_body: '{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}'
+    post_body: '{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}'
 attributes:
   - name: Id
     tf_name: id

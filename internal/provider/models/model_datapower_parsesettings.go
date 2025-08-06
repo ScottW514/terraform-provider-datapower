@@ -27,26 +27,28 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type ParseSettings struct {
-	Id                 types.String `tfsdk:"id"`
-	AppDomain          types.String `tfsdk:"app_domain"`
-	UserSummary        types.String `tfsdk:"user_summary"`
-	DocumentType       types.String `tfsdk:"document_type"`
-	DocumentSize       types.Int64  `tfsdk:"document_size"`
-	NestingDepth       types.Int64  `tfsdk:"nesting_depth"`
-	Width              types.Int64  `tfsdk:"width"`
-	NameLength         types.Int64  `tfsdk:"name_length"`
-	ValueLength        types.Int64  `tfsdk:"value_length"`
-	UniquePrefixes     types.Int64  `tfsdk:"unique_prefixes"`
-	UniqueNamespaces   types.Int64  `tfsdk:"unique_namespaces"`
-	UniqueNames        types.Int64  `tfsdk:"unique_names"`
-	NumberLength       types.Int64  `tfsdk:"number_length"`
-	StrictUtf8Encoding types.Bool   `tfsdk:"strict_utf8_encoding"`
+	Id                 types.String      `tfsdk:"id"`
+	AppDomain          types.String      `tfsdk:"app_domain"`
+	UserSummary        types.String      `tfsdk:"user_summary"`
+	DocumentType       types.String      `tfsdk:"document_type"`
+	DocumentSize       types.Int64       `tfsdk:"document_size"`
+	NestingDepth       types.Int64       `tfsdk:"nesting_depth"`
+	Width              types.Int64       `tfsdk:"width"`
+	NameLength         types.Int64       `tfsdk:"name_length"`
+	ValueLength        types.Int64       `tfsdk:"value_length"`
+	UniquePrefixes     types.Int64       `tfsdk:"unique_prefixes"`
+	UniqueNamespaces   types.Int64       `tfsdk:"unique_namespaces"`
+	UniqueNames        types.Int64       `tfsdk:"unique_names"`
+	NumberLength       types.Int64       `tfsdk:"number_length"`
+	StrictUtf8Encoding types.Bool        `tfsdk:"strict_utf8_encoding"`
+	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
 }
 
 var ParseSettingsObjectType = map[string]attr.Type{
@@ -64,6 +66,7 @@ var ParseSettingsObjectType = map[string]attr.Type{
 	"unique_names":         types.Int64Type,
 	"number_length":        types.Int64Type,
 	"strict_utf8_encoding": types.BoolType,
+	"object_actions":       actions.ActionsListType,
 }
 
 func (data ParseSettings) GetPath() string {

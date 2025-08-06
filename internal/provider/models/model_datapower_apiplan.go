@@ -27,38 +27,40 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type APIPlan struct {
-	Id                           types.String `tfsdk:"id"`
-	AppDomain                    types.String `tfsdk:"app_domain"`
-	UserSummary                  types.String `tfsdk:"user_summary"`
-	Name                         types.String `tfsdk:"name"`
-	ProductId                    types.String `tfsdk:"product_id"`
-	ProductName                  types.String `tfsdk:"product_name"`
-	ProductVersion               types.String `tfsdk:"product_version"`
-	ProductTitle                 types.String `tfsdk:"product_title"`
-	UseRateLimitGroup            types.Bool   `tfsdk:"use_rate_limit_group"`
-	RateLimit                    types.List   `tfsdk:"rate_limit"`
-	BurstLimit                   types.List   `tfsdk:"burst_limit"`
-	RateLimitGroup               types.String `tfsdk:"rate_limit_group"`
-	UseLimitDefinitions          types.Bool   `tfsdk:"use_limit_definitions"`
-	AssemblyBurstLimit           types.List   `tfsdk:"assembly_burst_limit"`
-	AssemblyBurstLimitDefinition types.List   `tfsdk:"assembly_burst_limit_definition"`
-	AssemblyRateLimit            types.List   `tfsdk:"assembly_rate_limit"`
-	AssemblyRateLimitDefinition  types.List   `tfsdk:"assembly_rate_limit_definition"`
-	AssemblyCountLimit           types.List   `tfsdk:"assembly_count_limit"`
-	AssemblyCountLimitDefinition types.List   `tfsdk:"assembly_count_limit_definition"`
-	SpaceId                      types.String `tfsdk:"space_id"`
-	SpaceName                    types.String `tfsdk:"space_name"`
-	Api                          types.List   `tfsdk:"api"`
-	ExcludeOperation             types.List   `tfsdk:"exclude_operation"`
-	Override                     types.List   `tfsdk:"override"`
-	RateLimitScope               types.String `tfsdk:"rate_limit_scope"`
-	GraphQlSchemaOptions         types.List   `tfsdk:"graph_ql_schema_options"`
+	Id                           types.String      `tfsdk:"id"`
+	AppDomain                    types.String      `tfsdk:"app_domain"`
+	UserSummary                  types.String      `tfsdk:"user_summary"`
+	Name                         types.String      `tfsdk:"name"`
+	ProductId                    types.String      `tfsdk:"product_id"`
+	ProductName                  types.String      `tfsdk:"product_name"`
+	ProductVersion               types.String      `tfsdk:"product_version"`
+	ProductTitle                 types.String      `tfsdk:"product_title"`
+	UseRateLimitGroup            types.Bool        `tfsdk:"use_rate_limit_group"`
+	RateLimit                    types.List        `tfsdk:"rate_limit"`
+	BurstLimit                   types.List        `tfsdk:"burst_limit"`
+	RateLimitGroup               types.String      `tfsdk:"rate_limit_group"`
+	UseLimitDefinitions          types.Bool        `tfsdk:"use_limit_definitions"`
+	AssemblyBurstLimit           types.List        `tfsdk:"assembly_burst_limit"`
+	AssemblyBurstLimitDefinition types.List        `tfsdk:"assembly_burst_limit_definition"`
+	AssemblyRateLimit            types.List        `tfsdk:"assembly_rate_limit"`
+	AssemblyRateLimitDefinition  types.List        `tfsdk:"assembly_rate_limit_definition"`
+	AssemblyCountLimit           types.List        `tfsdk:"assembly_count_limit"`
+	AssemblyCountLimitDefinition types.List        `tfsdk:"assembly_count_limit_definition"`
+	SpaceId                      types.String      `tfsdk:"space_id"`
+	SpaceName                    types.String      `tfsdk:"space_name"`
+	Api                          types.List        `tfsdk:"api"`
+	ExcludeOperation             types.List        `tfsdk:"exclude_operation"`
+	Override                     types.List        `tfsdk:"override"`
+	RateLimitScope               types.String      `tfsdk:"rate_limit_scope"`
+	GraphQlSchemaOptions         types.List        `tfsdk:"graph_ql_schema_options"`
+	ObjectActions                []*actions.Action `tfsdk:"object_actions"`
 }
 
 var APIPlanObjectType = map[string]attr.Type{
@@ -88,6 +90,7 @@ var APIPlanObjectType = map[string]attr.Type{
 	"override":                        types.ListType{ElemType: types.StringType},
 	"rate_limit_scope":                types.StringType,
 	"graph_ql_schema_options":         types.ListType{ElemType: types.StringType},
+	"object_actions":                  actions.ActionsListType,
 }
 
 func (data APIPlan) GetPath() string {

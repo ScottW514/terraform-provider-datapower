@@ -27,21 +27,23 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type XACMLPDP struct {
-	Id              types.String `tfsdk:"id"`
-	AppDomain       types.String `tfsdk:"app_domain"`
-	UserSummary     types.String `tfsdk:"user_summary"`
-	EqualPolicies   types.Bool   `tfsdk:"equal_policies"`
-	GeneralPolicy   types.String `tfsdk:"general_policy"`
-	CombiningAlg    types.String `tfsdk:"combining_alg"`
-	DependentPolicy types.List   `tfsdk:"dependent_policy"`
-	Directory       types.List   `tfsdk:"directory"`
-	CacheTtl        types.Int64  `tfsdk:"cache_ttl"`
+	Id              types.String      `tfsdk:"id"`
+	AppDomain       types.String      `tfsdk:"app_domain"`
+	UserSummary     types.String      `tfsdk:"user_summary"`
+	EqualPolicies   types.Bool        `tfsdk:"equal_policies"`
+	GeneralPolicy   types.String      `tfsdk:"general_policy"`
+	CombiningAlg    types.String      `tfsdk:"combining_alg"`
+	DependentPolicy types.List        `tfsdk:"dependent_policy"`
+	Directory       types.List        `tfsdk:"directory"`
+	CacheTtl        types.Int64       `tfsdk:"cache_ttl"`
+	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
 }
 
 var XACMLPDPObjectType = map[string]attr.Type{
@@ -54,6 +56,7 @@ var XACMLPDPObjectType = map[string]attr.Type{
 	"dependent_policy": types.ListType{ElemType: types.StringType},
 	"directory":        types.ListType{ElemType: types.StringType},
 	"cache_ttl":        types.Int64Type,
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data XACMLPDP) GetPath() string {

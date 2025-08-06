@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -68,6 +69,7 @@ type WebAppRequest struct {
 	ProcessAllCookie         types.Bool                  `tfsdk:"process_all_cookie"`
 	CookieNameVector         types.List                  `tfsdk:"cookie_name_vector"`
 	SqlInjectionPatternsFile types.String                `tfsdk:"sql_injection_patterns_file"`
+	ObjectActions            []*actions.Action           `tfsdk:"object_actions"`
 }
 
 var WebAppRequestObjectType = map[string]attr.Type{
@@ -106,6 +108,7 @@ var WebAppRequestObjectType = map[string]attr.Type{
 	"process_all_cookie":          types.BoolType,
 	"cookie_name_vector":          types.ListType{ElemType: types.StringType},
 	"sql_injection_patterns_file": types.StringType,
+	"object_actions":              actions.ActionsListType,
 }
 
 func (data WebAppRequest) GetPath() string {

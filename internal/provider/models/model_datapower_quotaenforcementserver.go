@@ -26,26 +26,28 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type QuotaEnforcementServer struct {
-	Enabled              types.Bool   `tfsdk:"enabled"`
-	UserSummary          types.String `tfsdk:"user_summary"`
-	PasswordAlias        types.String `tfsdk:"password_alias"`
-	RaidVolume           types.String `tfsdk:"raid_volume"`
-	ServerPort           types.Int64  `tfsdk:"server_port"`
-	MonitorPort          types.Int64  `tfsdk:"monitor_port"`
-	EnablePeerGroup      types.Bool   `tfsdk:"enable_peer_group"`
-	EnableSsl            types.Bool   `tfsdk:"enable_ssl"`
-	SslCryptoKey         types.String `tfsdk:"ssl_crypto_key"`
-	SslCryptoCertificate types.String `tfsdk:"ssl_crypto_certificate"`
-	IpAddress            types.String `tfsdk:"ip_address"`
-	Peers                types.List   `tfsdk:"peers"`
-	Priority             types.Int64  `tfsdk:"priority"`
-	StrictMode           types.Bool   `tfsdk:"strict_mode"`
+	Enabled              types.Bool        `tfsdk:"enabled"`
+	UserSummary          types.String      `tfsdk:"user_summary"`
+	PasswordAlias        types.String      `tfsdk:"password_alias"`
+	RaidVolume           types.String      `tfsdk:"raid_volume"`
+	ServerPort           types.Int64       `tfsdk:"server_port"`
+	MonitorPort          types.Int64       `tfsdk:"monitor_port"`
+	EnablePeerGroup      types.Bool        `tfsdk:"enable_peer_group"`
+	EnableSsl            types.Bool        `tfsdk:"enable_ssl"`
+	SslCryptoKey         types.String      `tfsdk:"ssl_crypto_key"`
+	SslCryptoCertificate types.String      `tfsdk:"ssl_crypto_certificate"`
+	IpAddress            types.String      `tfsdk:"ip_address"`
+	Peers                types.List        `tfsdk:"peers"`
+	Priority             types.Int64       `tfsdk:"priority"`
+	StrictMode           types.Bool        `tfsdk:"strict_mode"`
+	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
 }
 
 var QuotaEnforcementServerObjectType = map[string]attr.Type{
@@ -63,6 +65,7 @@ var QuotaEnforcementServerObjectType = map[string]attr.Type{
 	"peers":                  types.ListType{ElemType: types.StringType},
 	"priority":               types.Int64Type,
 	"strict_mode":            types.BoolType,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data QuotaEnforcementServer) GetPath() string {

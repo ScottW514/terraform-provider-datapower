@@ -27,16 +27,18 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AccessProfile struct {
-	Id             types.String `tfsdk:"id"`
-	AppDomain      types.String `tfsdk:"app_domain"`
-	UserSummary    types.String `tfsdk:"user_summary"`
-	AccessPolicies types.List   `tfsdk:"access_policies"`
+	Id             types.String      `tfsdk:"id"`
+	AppDomain      types.String      `tfsdk:"app_domain"`
+	UserSummary    types.String      `tfsdk:"user_summary"`
+	AccessPolicies types.List        `tfsdk:"access_policies"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AccessProfileObjectType = map[string]attr.Type{
@@ -44,6 +46,7 @@ var AccessProfileObjectType = map[string]attr.Type{
 	"app_domain":      types.StringType,
 	"user_summary":    types.StringType,
 	"access_policies": types.ListType{ElemType: types.StringType},
+	"object_actions":  actions.ActionsListType,
 }
 
 func (data AccessProfile) GetPath() string {

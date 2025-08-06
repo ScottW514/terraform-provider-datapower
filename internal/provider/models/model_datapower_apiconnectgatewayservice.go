@@ -26,6 +26,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -49,6 +50,7 @@ type APIConnectGatewayService struct {
 	JwtValidationMode     types.String         `tfsdk:"jwt_validation_mode"`
 	Jwturl                types.String         `tfsdk:"jwturl"`
 	ProxyPolicy           *DmAPICGSProxyPolicy `tfsdk:"proxy_policy"`
+	ObjectActions         []*actions.Action    `tfsdk:"object_actions"`
 }
 
 var APIConnectGatewayServiceObjectType = map[string]attr.Type{
@@ -69,6 +71,7 @@ var APIConnectGatewayServiceObjectType = map[string]attr.Type{
 	"jwt_validation_mode":     types.StringType,
 	"jwturl":                  types.StringType,
 	"proxy_policy":            types.ObjectType{AttrTypes: DmAPICGSProxyPolicyObjectType},
+	"object_actions":          actions.ActionsListType,
 }
 
 func (data APIConnectGatewayService) GetPath() string {

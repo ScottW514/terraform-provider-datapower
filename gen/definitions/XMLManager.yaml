@@ -3,6 +3,13 @@ description: 'XML Manager'
 cli_alias: 'xmlmgr'
 cmd_group: 'xmlmgr'
 rest_endpoint: '/mgmt/config/{domain}/XMLManager'
+actions:
+  - name: flush_stylesheet_cache
+    post_body: '{"FlushStylesheetCache": {"XMLManager": "{name}"}}'
+  - name: flush_document_cache
+    post_body: '{"FlushDocumentCache": {"XMLManager": "{name}"}}'
+  - name: flush_ldap_pool_cache
+    post_body: '{"FlushLDAPPoolCache": {"XMLManager": "{name}"}}'
 attributes:
   - name: Id
     tf_name: id

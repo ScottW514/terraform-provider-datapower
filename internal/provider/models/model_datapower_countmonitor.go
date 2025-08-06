@@ -27,33 +27,36 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type CountMonitor struct {
-	Id          types.String `tfsdk:"id"`
-	AppDomain   types.String `tfsdk:"app_domain"`
-	Measure     types.String `tfsdk:"measure"`
-	Source      types.String `tfsdk:"source"`
-	Header      types.String `tfsdk:"header"`
-	Filter      types.List   `tfsdk:"filter"`
-	MaxSources  types.Int64  `tfsdk:"max_sources"`
-	UserSummary types.String `tfsdk:"user_summary"`
-	MessageType types.String `tfsdk:"message_type"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	Measure       types.String      `tfsdk:"measure"`
+	Source        types.String      `tfsdk:"source"`
+	Header        types.String      `tfsdk:"header"`
+	Filter        types.List        `tfsdk:"filter"`
+	MaxSources    types.Int64       `tfsdk:"max_sources"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	MessageType   types.String      `tfsdk:"message_type"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var CountMonitorObjectType = map[string]attr.Type{
-	"id":           types.StringType,
-	"app_domain":   types.StringType,
-	"measure":      types.StringType,
-	"source":       types.StringType,
-	"header":       types.StringType,
-	"filter":       types.ListType{ElemType: types.ObjectType{AttrTypes: DmCountMonitorFilterObjectType}},
-	"max_sources":  types.Int64Type,
-	"user_summary": types.StringType,
-	"message_type": types.StringType,
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"measure":        types.StringType,
+	"source":         types.StringType,
+	"header":         types.StringType,
+	"filter":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmCountMonitorFilterObjectType}},
+	"max_sources":    types.Int64Type,
+	"user_summary":   types.StringType,
+	"message_type":   types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data CountMonitor) GetPath() string {

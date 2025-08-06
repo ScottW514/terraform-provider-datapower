@@ -26,21 +26,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SecureBackupMode struct {
-	Enabled     types.Bool   `tfsdk:"enabled"`
-	UserSummary types.String `tfsdk:"user_summary"`
-	Mode        types.String `tfsdk:"mode"`
+	Enabled       types.Bool        `tfsdk:"enabled"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	Mode          types.String      `tfsdk:"mode"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var SecureBackupModeObjectType = map[string]attr.Type{
-	"enabled":      types.BoolType,
-	"user_summary": types.StringType,
-	"mode":         types.StringType,
+	"enabled":        types.BoolType,
+	"user_summary":   types.StringType,
+	"mode":           types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data SecureBackupMode) GetPath() string {

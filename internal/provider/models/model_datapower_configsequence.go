@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -46,6 +47,7 @@ type ConfigSequence struct {
 	DeleteUnused        types.Bool                    `tfsdk:"delete_unused"`
 	RunSequenceInterval types.Int64                   `tfsdk:"run_sequence_interval"`
 	Capabilities        *DmConfigSequenceCapabilities `tfsdk:"capabilities"`
+	ObjectActions       []*actions.Action             `tfsdk:"object_actions"`
 }
 
 var ConfigSequenceObjectType = map[string]attr.Type{
@@ -62,6 +64,7 @@ var ConfigSequenceObjectType = map[string]attr.Type{
 	"delete_unused":         types.BoolType,
 	"run_sequence_interval": types.Int64Type,
 	"capabilities":          types.ObjectType{AttrTypes: DmConfigSequenceCapabilitiesObjectType},
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data ConfigSequence) GetPath() string {

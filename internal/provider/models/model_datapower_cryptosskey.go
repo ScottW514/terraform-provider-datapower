@@ -27,21 +27,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type CryptoSSKey struct {
-	Id        types.String `tfsdk:"id"`
-	AppDomain types.String `tfsdk:"app_domain"`
-	Filename  types.String `tfsdk:"filename"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	Filename      types.String      `tfsdk:"filename"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var CryptoSSKeyObjectType = map[string]attr.Type{
-	"id":         types.StringType,
-	"app_domain": types.StringType,
-	"filename":   types.StringType,
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"filename":       types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data CryptoSSKey) GetPath() string {

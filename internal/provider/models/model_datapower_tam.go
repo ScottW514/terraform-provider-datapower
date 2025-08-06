@@ -27,45 +27,47 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type TAM struct {
-	Id                          types.String   `tfsdk:"id"`
-	AppDomain                   types.String   `tfsdk:"app_domain"`
-	UserSummary                 types.String   `tfsdk:"user_summary"`
-	AdUseAd                     types.Bool     `tfsdk:"ad_use_ad"`
-	TamVersion                  types.String   `tfsdk:"tam_version"`
-	ConfigurationFile           types.String   `tfsdk:"configuration_file"`
-	AdConfigurationFile         types.String   `tfsdk:"ad_configuration_file"`
-	SslKeyFile                  types.String   `tfsdk:"ssl_key_file"`
-	SslKeyStashFile             types.String   `tfsdk:"ssl_key_stash_file"`
-	UseLocalMode                types.Bool     `tfsdk:"use_local_mode"`
-	PollInterval                types.String   `tfsdk:"poll_interval"`
-	ListenMode                  types.Bool     `tfsdk:"listen_mode"`
-	ListenPort                  types.Int64    `tfsdk:"listen_port"`
-	ReturningUserAttributes     types.Bool     `tfsdk:"returning_user_attributes"`
-	LdapUseSsl                  types.Bool     `tfsdk:"ldap_use_ssl"`
-	LdapsslPort                 types.Int64    `tfsdk:"ldapssl_port"`
-	LdapsslKeyFile              types.String   `tfsdk:"ldapssl_key_file"`
-	LdapsslKeyFilePasswordAlias types.String   `tfsdk:"ldapssl_key_file_password_alias"`
-	LdapsslKeyFileLabel         types.String   `tfsdk:"ldapssl_key_file_label"`
-	TamUseFips                  types.Bool     `tfsdk:"tam_use_fips"`
-	TamChooseNist               types.String   `tfsdk:"tam_choose_nist"`
-	TamUseBasicUser             types.Bool     `tfsdk:"tam_use_basic_user"`
-	UserPrincipalAttribute      types.String   `tfsdk:"user_principal_attribute"`
-	UserNoDuplicates            types.Bool     `tfsdk:"user_no_duplicates"`
-	UserSearchSuffixes          types.List     `tfsdk:"user_search_suffixes"`
-	UserSuffixOptimiser         types.Bool     `tfsdk:"user_suffix_optimiser"`
-	TamFedDirs                  types.List     `tfsdk:"tam_fed_dirs"`
-	TamazReplicas               types.List     `tfsdk:"tamaz_replicas"`
-	TamrasTrace                 *DmTAMRASTrace `tfsdk:"tamras_trace"`
-	AutoRetry                   types.Bool     `tfsdk:"auto_retry"`
-	RetryInterval               types.Int64    `tfsdk:"retry_interval"`
-	RetryAttempts               types.Int64    `tfsdk:"retry_attempts"`
-	LongRetryInterval           types.Int64    `tfsdk:"long_retry_interval"`
+	Id                          types.String      `tfsdk:"id"`
+	AppDomain                   types.String      `tfsdk:"app_domain"`
+	UserSummary                 types.String      `tfsdk:"user_summary"`
+	AdUseAd                     types.Bool        `tfsdk:"ad_use_ad"`
+	TamVersion                  types.String      `tfsdk:"tam_version"`
+	ConfigurationFile           types.String      `tfsdk:"configuration_file"`
+	AdConfigurationFile         types.String      `tfsdk:"ad_configuration_file"`
+	SslKeyFile                  types.String      `tfsdk:"ssl_key_file"`
+	SslKeyStashFile             types.String      `tfsdk:"ssl_key_stash_file"`
+	UseLocalMode                types.Bool        `tfsdk:"use_local_mode"`
+	PollInterval                types.String      `tfsdk:"poll_interval"`
+	ListenMode                  types.Bool        `tfsdk:"listen_mode"`
+	ListenPort                  types.Int64       `tfsdk:"listen_port"`
+	ReturningUserAttributes     types.Bool        `tfsdk:"returning_user_attributes"`
+	LdapUseSsl                  types.Bool        `tfsdk:"ldap_use_ssl"`
+	LdapsslPort                 types.Int64       `tfsdk:"ldapssl_port"`
+	LdapsslKeyFile              types.String      `tfsdk:"ldapssl_key_file"`
+	LdapsslKeyFilePasswordAlias types.String      `tfsdk:"ldapssl_key_file_password_alias"`
+	LdapsslKeyFileLabel         types.String      `tfsdk:"ldapssl_key_file_label"`
+	TamUseFips                  types.Bool        `tfsdk:"tam_use_fips"`
+	TamChooseNist               types.String      `tfsdk:"tam_choose_nist"`
+	TamUseBasicUser             types.Bool        `tfsdk:"tam_use_basic_user"`
+	UserPrincipalAttribute      types.String      `tfsdk:"user_principal_attribute"`
+	UserNoDuplicates            types.Bool        `tfsdk:"user_no_duplicates"`
+	UserSearchSuffixes          types.List        `tfsdk:"user_search_suffixes"`
+	UserSuffixOptimiser         types.Bool        `tfsdk:"user_suffix_optimiser"`
+	TamFedDirs                  types.List        `tfsdk:"tam_fed_dirs"`
+	TamazReplicas               types.List        `tfsdk:"tamaz_replicas"`
+	TamrasTrace                 *DmTAMRASTrace    `tfsdk:"tamras_trace"`
+	AutoRetry                   types.Bool        `tfsdk:"auto_retry"`
+	RetryInterval               types.Int64       `tfsdk:"retry_interval"`
+	RetryAttempts               types.Int64       `tfsdk:"retry_attempts"`
+	LongRetryInterval           types.Int64       `tfsdk:"long_retry_interval"`
+	ObjectActions               []*actions.Action `tfsdk:"object_actions"`
 }
 
 var TAMObjectType = map[string]attr.Type{
@@ -102,6 +104,7 @@ var TAMObjectType = map[string]attr.Type{
 	"retry_interval":                  types.Int64Type,
 	"retry_attempts":                  types.Int64Type,
 	"long_retry_interval":             types.Int64Type,
+	"object_actions":                  actions.ActionsListType,
 }
 
 func (data TAM) GetPath() string {

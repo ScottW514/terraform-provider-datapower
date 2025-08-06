@@ -27,22 +27,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type StatelessTCPSourceProtocolHandler struct {
-	Id                    types.String `tfsdk:"id"`
-	AppDomain             types.String `tfsdk:"app_domain"`
-	UserSummary           types.String `tfsdk:"user_summary"`
-	LocalAddress          types.String `tfsdk:"local_address"`
-	LocalPort             types.Int64  `tfsdk:"local_port"`
-	PersistentConnections types.Bool   `tfsdk:"persistent_connections"`
-	Acl                   types.String `tfsdk:"acl"`
-	SslServerConfigType   types.String `tfsdk:"ssl_server_config_type"`
-	SslServer             types.String `tfsdk:"ssl_server"`
-	SslsniServer          types.String `tfsdk:"sslsni_server"`
+	Id                    types.String      `tfsdk:"id"`
+	AppDomain             types.String      `tfsdk:"app_domain"`
+	UserSummary           types.String      `tfsdk:"user_summary"`
+	LocalAddress          types.String      `tfsdk:"local_address"`
+	LocalPort             types.Int64       `tfsdk:"local_port"`
+	PersistentConnections types.Bool        `tfsdk:"persistent_connections"`
+	Acl                   types.String      `tfsdk:"acl"`
+	SslServerConfigType   types.String      `tfsdk:"ssl_server_config_type"`
+	SslServer             types.String      `tfsdk:"ssl_server"`
+	SslsniServer          types.String      `tfsdk:"sslsni_server"`
+	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
 }
 
 var StatelessTCPSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -56,6 +58,7 @@ var StatelessTCPSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"ssl_server_config_type": types.StringType,
 	"ssl_server":             types.StringType,
 	"sslsni_server":          types.StringType,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data StatelessTCPSourceProtocolHandler) GetPath() string {

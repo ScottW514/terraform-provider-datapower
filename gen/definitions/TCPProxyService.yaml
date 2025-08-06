@@ -3,6 +3,10 @@ description: 'TCP Proxy Service'
 cli_alias: 'tcpproxy'
 cmd_group: 'tcpproxy'
 rest_endpoint: '/mgmt/config/{domain}/TCPProxyService'
+actions:
+  - name: quiesce
+    pre_body: '{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}'
+    post_body: '{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}'
 attributes:
   - name: Id
     tf_name: id

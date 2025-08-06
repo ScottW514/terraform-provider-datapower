@@ -27,23 +27,25 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type CryptoKerberosKDC struct {
-	Id                      types.String `tfsdk:"id"`
-	AppDomain               types.String `tfsdk:"app_domain"`
-	UserSummary             types.String `tfsdk:"user_summary"`
-	Realm                   types.String `tfsdk:"realm"`
-	Server                  types.String `tfsdk:"server"`
-	UseTcp                  types.Bool   `tfsdk:"use_tcp"`
-	ServerPort              types.Int64  `tfsdk:"server_port"`
-	UdpTimeout              types.Int64  `tfsdk:"udp_timeout"`
-	CacheTickets            types.Bool   `tfsdk:"cache_tickets"`
-	MaxCachedTickets        types.Int64  `tfsdk:"max_cached_tickets"`
-	MinCachedTicketValidity types.Int64  `tfsdk:"min_cached_ticket_validity"`
+	Id                      types.String      `tfsdk:"id"`
+	AppDomain               types.String      `tfsdk:"app_domain"`
+	UserSummary             types.String      `tfsdk:"user_summary"`
+	Realm                   types.String      `tfsdk:"realm"`
+	Server                  types.String      `tfsdk:"server"`
+	UseTcp                  types.Bool        `tfsdk:"use_tcp"`
+	ServerPort              types.Int64       `tfsdk:"server_port"`
+	UdpTimeout              types.Int64       `tfsdk:"udp_timeout"`
+	CacheTickets            types.Bool        `tfsdk:"cache_tickets"`
+	MaxCachedTickets        types.Int64       `tfsdk:"max_cached_tickets"`
+	MinCachedTicketValidity types.Int64       `tfsdk:"min_cached_ticket_validity"`
+	ObjectActions           []*actions.Action `tfsdk:"object_actions"`
 }
 
 var CryptoKerberosKDCObjectType = map[string]attr.Type{
@@ -58,6 +60,7 @@ var CryptoKerberosKDCObjectType = map[string]attr.Type{
 	"cache_tickets":              types.BoolType,
 	"max_cached_tickets":         types.Int64Type,
 	"min_cached_ticket_validity": types.Int64Type,
+	"object_actions":             actions.ActionsListType,
 }
 
 func (data CryptoKerberosKDC) GetPath() string {

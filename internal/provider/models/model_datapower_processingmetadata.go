@@ -27,23 +27,26 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type ProcessingMetadata struct {
-	Id          types.String `tfsdk:"id"`
-	AppDomain   types.String `tfsdk:"app_domain"`
-	UserSummary types.String `tfsdk:"user_summary"`
-	MetaItem    types.List   `tfsdk:"meta_item"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	MetaItem      types.List        `tfsdk:"meta_item"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var ProcessingMetadataObjectType = map[string]attr.Type{
-	"id":           types.StringType,
-	"app_domain":   types.StringType,
-	"user_summary": types.StringType,
-	"meta_item":    types.ListType{ElemType: types.ObjectType{AttrTypes: DmMetaItemObjectType}},
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"user_summary":   types.StringType,
+	"meta_item":      types.ListType{ElemType: types.ObjectType{AttrTypes: DmMetaItemObjectType}},
+	"object_actions": actions.ActionsListType,
 }
 
 func (data ProcessingMetadata) GetPath() string {

@@ -26,22 +26,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WebB2BViewer struct {
-	Enabled             types.Bool   `tfsdk:"enabled"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	LocalPort           types.Int64  `tfsdk:"local_port"`
-	UserAgent           types.String `tfsdk:"user_agent"`
-	IdleTimeout         types.Int64  `tfsdk:"idle_timeout"`
-	Acl                 types.String `tfsdk:"acl"`
-	SslServerConfigType types.String `tfsdk:"ssl_server_config_type"`
-	SslServer           types.String `tfsdk:"ssl_server"`
-	SslsniServer        types.String `tfsdk:"sslsni_server"`
-	LocalAddress        types.String `tfsdk:"local_address"`
+	Enabled             types.Bool        `tfsdk:"enabled"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	LocalPort           types.Int64       `tfsdk:"local_port"`
+	UserAgent           types.String      `tfsdk:"user_agent"`
+	IdleTimeout         types.Int64       `tfsdk:"idle_timeout"`
+	Acl                 types.String      `tfsdk:"acl"`
+	SslServerConfigType types.String      `tfsdk:"ssl_server_config_type"`
+	SslServer           types.String      `tfsdk:"ssl_server"`
+	SslsniServer        types.String      `tfsdk:"sslsni_server"`
+	LocalAddress        types.String      `tfsdk:"local_address"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WebB2BViewerObjectType = map[string]attr.Type{
@@ -55,6 +57,7 @@ var WebB2BViewerObjectType = map[string]attr.Type{
 	"ssl_server":             types.StringType,
 	"sslsni_server":          types.StringType,
 	"local_address":          types.StringType,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data WebB2BViewer) GetPath() string {

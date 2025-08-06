@@ -26,25 +26,27 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type Throttler struct {
-	Enabled           types.Bool   `tfsdk:"enabled"`
-	UserSummary       types.String `tfsdk:"user_summary"`
-	ThrottleAt        types.Int64  `tfsdk:"throttle_at"`
-	TerminateAt       types.Int64  `tfsdk:"terminate_at"`
-	TempFsThrottleAt  types.Int64  `tfsdk:"temp_fs_throttle_at"`
-	TempFsTerminateAt types.Int64  `tfsdk:"temp_fs_terminate_at"`
-	QnameWarnAt       types.Int64  `tfsdk:"qname_warn_at"`
-	Timeout           types.Int64  `tfsdk:"timeout"`
-	Statistics        types.Bool   `tfsdk:"statistics"`
-	LogLevel          types.String `tfsdk:"log_level"`
-	EnvironmentalLog  types.Bool   `tfsdk:"environmental_log"`
-	BacklogSize       types.Int64  `tfsdk:"backlog_size"`
-	BacklogTimeout    types.Int64  `tfsdk:"backlog_timeout"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	ThrottleAt        types.Int64       `tfsdk:"throttle_at"`
+	TerminateAt       types.Int64       `tfsdk:"terminate_at"`
+	TempFsThrottleAt  types.Int64       `tfsdk:"temp_fs_throttle_at"`
+	TempFsTerminateAt types.Int64       `tfsdk:"temp_fs_terminate_at"`
+	QnameWarnAt       types.Int64       `tfsdk:"qname_warn_at"`
+	Timeout           types.Int64       `tfsdk:"timeout"`
+	Statistics        types.Bool        `tfsdk:"statistics"`
+	LogLevel          types.String      `tfsdk:"log_level"`
+	EnvironmentalLog  types.Bool        `tfsdk:"environmental_log"`
+	BacklogSize       types.Int64       `tfsdk:"backlog_size"`
+	BacklogTimeout    types.Int64       `tfsdk:"backlog_timeout"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var ThrottlerObjectType = map[string]attr.Type{
@@ -61,6 +63,7 @@ var ThrottlerObjectType = map[string]attr.Type{
 	"environmental_log":    types.BoolType,
 	"backlog_size":         types.Int64Type,
 	"backlog_timeout":      types.Int64Type,
+	"object_actions":       actions.ActionsListType,
 }
 
 func (data Throttler) GetPath() string {

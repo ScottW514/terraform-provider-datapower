@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -72,6 +73,7 @@ type AAAPolicy struct {
 	DynConfig                     types.String           `tfsdk:"dyn_config"`
 	ExternalAaaTemplate           types.String           `tfsdk:"external_aaa_template"`
 	DynConfigCustomUrl            types.String           `tfsdk:"dyn_config_custom_url"`
+	ObjectActions                 []*actions.Action      `tfsdk:"object_actions"`
 }
 
 var AAAPolicyObjectType = map[string]attr.Type{
@@ -114,6 +116,7 @@ var AAAPolicyObjectType = map[string]attr.Type{
 	"dyn_config":                        types.StringType,
 	"external_aaa_template":             types.StringType,
 	"dyn_config_custom_url":             types.StringType,
+	"object_actions":                    actions.ActionsListType,
 }
 
 func (data AAAPolicy) GetPath() string {

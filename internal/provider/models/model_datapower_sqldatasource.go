@@ -27,38 +27,40 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SQLDataSource struct {
-	Id                         types.String `tfsdk:"id"`
-	AppDomain                  types.String `tfsdk:"app_domain"`
-	UserSummary                types.String `tfsdk:"user_summary"`
-	Database                   types.String `tfsdk:"database"`
-	Username                   types.String `tfsdk:"username"`
-	PasswordAlias              types.String `tfsdk:"password_alias"`
-	DataSourceId               types.String `tfsdk:"data_source_id"`
-	DataSourceHost             types.String `tfsdk:"data_source_host"`
-	DataSourcePort             types.Int64  `tfsdk:"data_source_port"`
-	LimitReturnedData          types.Bool   `tfsdk:"limit_returned_data"`
-	LimitReturnedDataSize      types.Int64  `tfsdk:"limit_returned_data_size"`
-	SqlDataSourceConfigNvPairs types.List   `tfsdk:"sql_data_source_config_nv_pairs"`
-	MaxConnection              types.Int64  `tfsdk:"max_connection"`
-	OracleDataSourceType       types.String `tfsdk:"oracle_data_source_type"`
-	ConnectTimeout             types.Int64  `tfsdk:"connect_timeout"`
-	QueryTimeout               types.Int64  `tfsdk:"query_timeout"`
-	IdleTimeout                types.Int64  `tfsdk:"idle_timeout"`
-	LoadBalancing              types.Bool   `tfsdk:"load_balancing"`
-	EncryptionMethodMssql      types.String `tfsdk:"encryption_method_mssql"`
-	EncryptionMethodOracle     types.String `tfsdk:"encryption_method_oracle"`
-	EncryptionMethodDb2        types.String `tfsdk:"encryption_method_db2"`
-	TruststoreRef              types.String `tfsdk:"truststore_ref"`
-	ValidateServerCertificate  types.String `tfsdk:"validate_server_certificate"`
-	HostNameInCertificate      types.String `tfsdk:"host_name_in_certificate"`
-	ValidateHostName           types.Bool   `tfsdk:"validate_host_name"`
-	KeystoreRef                types.String `tfsdk:"keystore_ref"`
+	Id                         types.String      `tfsdk:"id"`
+	AppDomain                  types.String      `tfsdk:"app_domain"`
+	UserSummary                types.String      `tfsdk:"user_summary"`
+	Database                   types.String      `tfsdk:"database"`
+	Username                   types.String      `tfsdk:"username"`
+	PasswordAlias              types.String      `tfsdk:"password_alias"`
+	DataSourceId               types.String      `tfsdk:"data_source_id"`
+	DataSourceHost             types.String      `tfsdk:"data_source_host"`
+	DataSourcePort             types.Int64       `tfsdk:"data_source_port"`
+	LimitReturnedData          types.Bool        `tfsdk:"limit_returned_data"`
+	LimitReturnedDataSize      types.Int64       `tfsdk:"limit_returned_data_size"`
+	SqlDataSourceConfigNvPairs types.List        `tfsdk:"sql_data_source_config_nv_pairs"`
+	MaxConnection              types.Int64       `tfsdk:"max_connection"`
+	OracleDataSourceType       types.String      `tfsdk:"oracle_data_source_type"`
+	ConnectTimeout             types.Int64       `tfsdk:"connect_timeout"`
+	QueryTimeout               types.Int64       `tfsdk:"query_timeout"`
+	IdleTimeout                types.Int64       `tfsdk:"idle_timeout"`
+	LoadBalancing              types.Bool        `tfsdk:"load_balancing"`
+	EncryptionMethodMssql      types.String      `tfsdk:"encryption_method_mssql"`
+	EncryptionMethodOracle     types.String      `tfsdk:"encryption_method_oracle"`
+	EncryptionMethodDb2        types.String      `tfsdk:"encryption_method_db2"`
+	TruststoreRef              types.String      `tfsdk:"truststore_ref"`
+	ValidateServerCertificate  types.String      `tfsdk:"validate_server_certificate"`
+	HostNameInCertificate      types.String      `tfsdk:"host_name_in_certificate"`
+	ValidateHostName           types.Bool        `tfsdk:"validate_host_name"`
+	KeystoreRef                types.String      `tfsdk:"keystore_ref"`
+	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
 }
 
 var SQLDataSourceObjectType = map[string]attr.Type{
@@ -88,6 +90,7 @@ var SQLDataSourceObjectType = map[string]attr.Type{
 	"host_name_in_certificate":        types.StringType,
 	"validate_host_name":              types.BoolType,
 	"keystore_ref":                    types.StringType,
+	"object_actions":                  actions.ActionsListType,
 }
 
 func (data SQLDataSource) GetPath() string {

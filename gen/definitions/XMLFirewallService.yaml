@@ -3,6 +3,10 @@ description: 'XML Firewall'
 cli_alias: 'xmlfirewall'
 cmd_group: 'xmlfirewall'
 rest_endpoint: '/mgmt/config/{domain}/XMLFirewallService'
+actions:
+  - name: quiesce
+    pre_body: '{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}'
+    post_body: '{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}'
 attributes:
   - name: Id
     tf_name: id

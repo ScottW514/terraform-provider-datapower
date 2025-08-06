@@ -27,61 +27,63 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type LogTarget struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	Backup              types.String `tfsdk:"backup"`
-	LogEvents           types.List   `tfsdk:"log_events"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	Type                types.String `tfsdk:"type"`
-	Priority            types.String `tfsdk:"priority"`
-	SoapVersion         types.String `tfsdk:"soap_version"`
-	Format              types.String `tfsdk:"format"`
-	TimestampFormat     types.String `tfsdk:"timestamp_format"`
-	FixedFormat         types.Bool   `tfsdk:"fixed_format"`
-	LocalIdentifier     types.String `tfsdk:"local_identifier"`
-	EmailAddress        types.String `tfsdk:"email_address"`
-	SenderAddress       types.String `tfsdk:"sender_address"`
-	SmtpDomain          types.String `tfsdk:"smtp_domain"`
-	Size                types.Int64  `tfsdk:"size"`
-	Url                 types.String `tfsdk:"url"`
-	NfsMount            types.String `tfsdk:"nfs_mount"`
-	LocalFile           types.String `tfsdk:"local_file"`
-	NfsFile             types.String `tfsdk:"nfs_file"`
-	ArchiveMode         types.String `tfsdk:"archive_mode"`
-	UploadMethod        types.String `tfsdk:"upload_method"`
-	Rotate              types.Int64  `tfsdk:"rotate"`
-	UseAnsiColor        types.Bool   `tfsdk:"use_ansi_color"`
-	RemoteAddress       types.String `tfsdk:"remote_address"`
-	RemotePort          types.Int64  `tfsdk:"remote_port"`
-	RemoteLogin         types.String `tfsdk:"remote_login"`
-	RemotePassword      types.String `tfsdk:"remote_password"`
-	RemoteDirectory     types.String `tfsdk:"remote_directory"`
-	LocalAddress        types.String `tfsdk:"local_address"`
-	SyslogFacility      types.String `tfsdk:"syslog_facility"`
-	RateLimit           types.Int64  `tfsdk:"rate_limit"`
-	MaxConnections      types.Int64  `tfsdk:"max_connections"`
-	ConnectTimeout      types.Int64  `tfsdk:"connect_timeout"`
-	IdleTimeout         types.Int64  `tfsdk:"idle_timeout"`
-	ActiveTimeout       types.Int64  `tfsdk:"active_timeout"`
-	FeedbackDetection   types.Bool   `tfsdk:"feedback_detection"`
-	LogEventCode        types.List   `tfsdk:"log_event_code"`
-	LogEventFilter      types.List   `tfsdk:"log_event_filter"`
-	LogObjects          types.List   `tfsdk:"log_objects"`
-	LogIpFilter         types.List   `tfsdk:"log_ip_filter"`
-	LogTriggers         types.List   `tfsdk:"log_triggers"`
-	SslClientProfile    types.String `tfsdk:"ssl_client_profile"`
-	SslClientConfigType types.String `tfsdk:"ssl_client_config_type"`
-	RetryInterval       types.Int64  `tfsdk:"retry_interval"`
-	RetryAttempts       types.Int64  `tfsdk:"retry_attempts"`
-	LongRetryInterval   types.Int64  `tfsdk:"long_retry_interval"`
-	LogPrecision        types.String `tfsdk:"log_precision"`
-	EventBufferSize     types.String `tfsdk:"event_buffer_size"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	Backup              types.String      `tfsdk:"backup"`
+	LogEvents           types.List        `tfsdk:"log_events"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	Type                types.String      `tfsdk:"type"`
+	Priority            types.String      `tfsdk:"priority"`
+	SoapVersion         types.String      `tfsdk:"soap_version"`
+	Format              types.String      `tfsdk:"format"`
+	TimestampFormat     types.String      `tfsdk:"timestamp_format"`
+	FixedFormat         types.Bool        `tfsdk:"fixed_format"`
+	LocalIdentifier     types.String      `tfsdk:"local_identifier"`
+	EmailAddress        types.String      `tfsdk:"email_address"`
+	SenderAddress       types.String      `tfsdk:"sender_address"`
+	SmtpDomain          types.String      `tfsdk:"smtp_domain"`
+	Size                types.Int64       `tfsdk:"size"`
+	Url                 types.String      `tfsdk:"url"`
+	NfsMount            types.String      `tfsdk:"nfs_mount"`
+	LocalFile           types.String      `tfsdk:"local_file"`
+	NfsFile             types.String      `tfsdk:"nfs_file"`
+	ArchiveMode         types.String      `tfsdk:"archive_mode"`
+	UploadMethod        types.String      `tfsdk:"upload_method"`
+	Rotate              types.Int64       `tfsdk:"rotate"`
+	UseAnsiColor        types.Bool        `tfsdk:"use_ansi_color"`
+	RemoteAddress       types.String      `tfsdk:"remote_address"`
+	RemotePort          types.Int64       `tfsdk:"remote_port"`
+	RemoteLogin         types.String      `tfsdk:"remote_login"`
+	RemotePassword      types.String      `tfsdk:"remote_password"`
+	RemoteDirectory     types.String      `tfsdk:"remote_directory"`
+	LocalAddress        types.String      `tfsdk:"local_address"`
+	SyslogFacility      types.String      `tfsdk:"syslog_facility"`
+	RateLimit           types.Int64       `tfsdk:"rate_limit"`
+	MaxConnections      types.Int64       `tfsdk:"max_connections"`
+	ConnectTimeout      types.Int64       `tfsdk:"connect_timeout"`
+	IdleTimeout         types.Int64       `tfsdk:"idle_timeout"`
+	ActiveTimeout       types.Int64       `tfsdk:"active_timeout"`
+	FeedbackDetection   types.Bool        `tfsdk:"feedback_detection"`
+	LogEventCode        types.List        `tfsdk:"log_event_code"`
+	LogEventFilter      types.List        `tfsdk:"log_event_filter"`
+	LogObjects          types.List        `tfsdk:"log_objects"`
+	LogIpFilter         types.List        `tfsdk:"log_ip_filter"`
+	LogTriggers         types.List        `tfsdk:"log_triggers"`
+	SslClientProfile    types.String      `tfsdk:"ssl_client_profile"`
+	SslClientConfigType types.String      `tfsdk:"ssl_client_config_type"`
+	RetryInterval       types.Int64       `tfsdk:"retry_interval"`
+	RetryAttempts       types.Int64       `tfsdk:"retry_attempts"`
+	LongRetryInterval   types.Int64       `tfsdk:"long_retry_interval"`
+	LogPrecision        types.String      `tfsdk:"log_precision"`
+	EventBufferSize     types.String      `tfsdk:"event_buffer_size"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var LogTargetObjectType = map[string]attr.Type{
@@ -134,6 +136,7 @@ var LogTargetObjectType = map[string]attr.Type{
 	"long_retry_interval":    types.Int64Type,
 	"log_precision":          types.StringType,
 	"event_buffer_size":      types.StringType,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data LogTarget) GetPath() string {

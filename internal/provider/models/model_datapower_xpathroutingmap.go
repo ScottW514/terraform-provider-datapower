@@ -27,17 +27,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type XPathRoutingMap struct {
-	Id                types.String `tfsdk:"id"`
-	AppDomain         types.String `tfsdk:"app_domain"`
-	XPathRoutingRules types.List   `tfsdk:"x_path_routing_rules"`
-	NameSpaceMappings types.List   `tfsdk:"name_space_mappings"`
-	UserSummary       types.String `tfsdk:"user_summary"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	XPathRoutingRules types.List        `tfsdk:"x_path_routing_rules"`
+	NameSpaceMappings types.List        `tfsdk:"name_space_mappings"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var XPathRoutingMapObjectType = map[string]attr.Type{
@@ -46,6 +48,7 @@ var XPathRoutingMapObjectType = map[string]attr.Type{
 	"x_path_routing_rules": types.ListType{ElemType: types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType}},
 	"name_space_mappings":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmNamespaceMappingObjectType}},
 	"user_summary":         types.StringType,
+	"object_actions":       actions.ActionsListType,
 }
 
 func (data XPathRoutingMap) GetPath() string {

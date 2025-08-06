@@ -16,7 +16,16 @@ Files
 resource "datapower_file" "test" {
   app_domain  = "acc_test_domain"
   remote_path = "cert:///test_file.txt"
-  local_path  = "/workspaces/terraform-provider-datapower/test/test_file.txt"
+  local_path  = "/workspaces/terraform-provider-datapower/testutils/test_file.txt"
+  object_actions = [
+    {
+      target_type   = "domain",
+      target_domain = "acc_test_domain",
+      target_id     = "ignored",
+      action        = "quiesce"
+      run_on_create = true
+    }
+  ]
 }
 ```
 
@@ -32,3 +41,20 @@ resource "datapower_file" "test" {
 ### Optional
 
 - `hash` (String, Deprecated) Provider calculated hash to track file changes.
+- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
+
+<a id="nestedatt--object_actions"></a>
+### Nested Schema for `object_actions`
+
+Required:
+
+- `action` (String) Action to take on target
+- `target_domain` (String) Application domain of the action target
+- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
+- `target_type` (String) Resource type of action target
+
+Optional:
+
+- `run_on_create` (Boolean) Run this action when creating this resource.
+- `run_on_delete` (Boolean) Run this action when deleting this resource.
+- `run_on_update` (Boolean) Run this action when updating this resource.

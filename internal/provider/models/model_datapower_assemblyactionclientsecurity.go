@@ -27,26 +27,28 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AssemblyActionClientSecurity struct {
-	Id                       types.String `tfsdk:"id"`
-	AppDomain                types.String `tfsdk:"app_domain"`
-	StopOnError              types.Bool   `tfsdk:"stop_on_error"`
-	SecretRequired           types.Bool   `tfsdk:"secret_required"`
-	ExtractCredentialMethod  types.String `tfsdk:"extract_credential_method"`
-	IdName                   types.String `tfsdk:"id_name"`
-	SecretName               types.String `tfsdk:"secret_name"`
-	HttpType                 types.String `tfsdk:"http_type"`
-	AuthenticateClientMethod types.String `tfsdk:"authenticate_client_method"`
-	UserRegistry             types.String `tfsdk:"user_registry"`
-	UserSummary              types.String `tfsdk:"user_summary"`
-	Title                    types.String `tfsdk:"title"`
-	CorrelationPath          types.String `tfsdk:"correlation_path"`
-	ActionDebug              types.Bool   `tfsdk:"action_debug"`
+	Id                       types.String      `tfsdk:"id"`
+	AppDomain                types.String      `tfsdk:"app_domain"`
+	StopOnError              types.Bool        `tfsdk:"stop_on_error"`
+	SecretRequired           types.Bool        `tfsdk:"secret_required"`
+	ExtractCredentialMethod  types.String      `tfsdk:"extract_credential_method"`
+	IdName                   types.String      `tfsdk:"id_name"`
+	SecretName               types.String      `tfsdk:"secret_name"`
+	HttpType                 types.String      `tfsdk:"http_type"`
+	AuthenticateClientMethod types.String      `tfsdk:"authenticate_client_method"`
+	UserRegistry             types.String      `tfsdk:"user_registry"`
+	UserSummary              types.String      `tfsdk:"user_summary"`
+	Title                    types.String      `tfsdk:"title"`
+	CorrelationPath          types.String      `tfsdk:"correlation_path"`
+	ActionDebug              types.Bool        `tfsdk:"action_debug"`
+	ObjectActions            []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AssemblyActionClientSecurityObjectType = map[string]attr.Type{
@@ -64,6 +66,7 @@ var AssemblyActionClientSecurityObjectType = map[string]attr.Type{
 	"title":                      types.StringType,
 	"correlation_path":           types.StringType,
 	"action_debug":               types.BoolType,
+	"object_actions":             actions.ActionsListType,
 }
 
 func (data AssemblyActionClientSecurity) GetPath() string {

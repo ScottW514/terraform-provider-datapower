@@ -26,35 +26,37 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type ErrorReportSettings struct {
-	Enabled               types.Bool   `tfsdk:"enabled"`
-	UserSummary           types.String `tfsdk:"user_summary"`
-	UploadReport          types.Bool   `tfsdk:"upload_report"`
-	UseSmtp               types.Bool   `tfsdk:"use_smtp"`
-	InternalState         types.Bool   `tfsdk:"internal_state"`
-	FfdcPacketCapture     types.Bool   `tfsdk:"ffdc_packet_capture"`
-	FfdcEventLogCapture   types.Bool   `tfsdk:"ffdc_event_log_capture"`
-	FfdcMemoryLeakCapture types.Bool   `tfsdk:"ffdc_memory_leak_capture"`
-	AlwaysOnStartup       types.Bool   `tfsdk:"always_on_startup"`
-	AlwaysOnShutdown      types.Bool   `tfsdk:"always_on_shutdown"`
-	Protocol              types.String `tfsdk:"protocol"`
-	LocationIdentifier    types.String `tfsdk:"location_identifier"`
-	SmtpServer            types.String `tfsdk:"smtp_server"`
-	EmailAddress          types.String `tfsdk:"email_address"`
-	EmailSenderAddress    types.String `tfsdk:"email_sender_address"`
-	FtpServer             types.String `tfsdk:"ftp_server"`
-	FtpPath               types.String `tfsdk:"ftp_path"`
-	FtpUserAgent          types.String `tfsdk:"ftp_user_agent"`
-	NfsMount              types.String `tfsdk:"nfs_mount"`
-	NfsPath               types.String `tfsdk:"nfs_path"`
-	RaidVolume            types.String `tfsdk:"raid_volume"`
-	RaidPath              types.String `tfsdk:"raid_path"`
-	ReportHistoryKept     types.Int64  `tfsdk:"report_history_kept"`
+	Enabled               types.Bool        `tfsdk:"enabled"`
+	UserSummary           types.String      `tfsdk:"user_summary"`
+	UploadReport          types.Bool        `tfsdk:"upload_report"`
+	UseSmtp               types.Bool        `tfsdk:"use_smtp"`
+	InternalState         types.Bool        `tfsdk:"internal_state"`
+	FfdcPacketCapture     types.Bool        `tfsdk:"ffdc_packet_capture"`
+	FfdcEventLogCapture   types.Bool        `tfsdk:"ffdc_event_log_capture"`
+	FfdcMemoryLeakCapture types.Bool        `tfsdk:"ffdc_memory_leak_capture"`
+	AlwaysOnStartup       types.Bool        `tfsdk:"always_on_startup"`
+	AlwaysOnShutdown      types.Bool        `tfsdk:"always_on_shutdown"`
+	Protocol              types.String      `tfsdk:"protocol"`
+	LocationIdentifier    types.String      `tfsdk:"location_identifier"`
+	SmtpServer            types.String      `tfsdk:"smtp_server"`
+	EmailAddress          types.String      `tfsdk:"email_address"`
+	EmailSenderAddress    types.String      `tfsdk:"email_sender_address"`
+	FtpServer             types.String      `tfsdk:"ftp_server"`
+	FtpPath               types.String      `tfsdk:"ftp_path"`
+	FtpUserAgent          types.String      `tfsdk:"ftp_user_agent"`
+	NfsMount              types.String      `tfsdk:"nfs_mount"`
+	NfsPath               types.String      `tfsdk:"nfs_path"`
+	RaidVolume            types.String      `tfsdk:"raid_volume"`
+	RaidPath              types.String      `tfsdk:"raid_path"`
+	ReportHistoryKept     types.Int64       `tfsdk:"report_history_kept"`
+	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
 }
 
 var ErrorReportSettingsObjectType = map[string]attr.Type{
@@ -81,6 +83,7 @@ var ErrorReportSettingsObjectType = map[string]attr.Type{
 	"raid_volume":              types.StringType,
 	"raid_path":                types.StringType,
 	"report_history_kept":      types.Int64Type,
+	"object_actions":           actions.ActionsListType,
 }
 
 func (data ErrorReportSettings) GetPath() string {

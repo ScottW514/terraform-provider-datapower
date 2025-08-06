@@ -27,33 +27,36 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SLMSchedule struct {
-	Id          types.String     `tfsdk:"id"`
-	AppDomain   types.String     `tfsdk:"app_domain"`
-	UserSummary types.String     `tfsdk:"user_summary"`
-	DaysOfWeek  *DmWeekdayBitmap `tfsdk:"days_of_week"`
-	StartTime   types.String     `tfsdk:"start_time"`
-	Duration    types.Int64      `tfsdk:"duration"`
-	StartDate   types.String     `tfsdk:"start_date"`
-	StopDate    types.String     `tfsdk:"stop_date"`
-	TimeZone    types.String     `tfsdk:"time_zone"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	DaysOfWeek    *DmWeekdayBitmap  `tfsdk:"days_of_week"`
+	StartTime     types.String      `tfsdk:"start_time"`
+	Duration      types.Int64       `tfsdk:"duration"`
+	StartDate     types.String      `tfsdk:"start_date"`
+	StopDate      types.String      `tfsdk:"stop_date"`
+	TimeZone      types.String      `tfsdk:"time_zone"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var SLMScheduleObjectType = map[string]attr.Type{
-	"id":           types.StringType,
-	"app_domain":   types.StringType,
-	"user_summary": types.StringType,
-	"days_of_week": types.ObjectType{AttrTypes: DmWeekdayBitmapObjectType},
-	"start_time":   types.StringType,
-	"duration":     types.Int64Type,
-	"start_date":   types.StringType,
-	"stop_date":    types.StringType,
-	"time_zone":    types.StringType,
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"user_summary":   types.StringType,
+	"days_of_week":   types.ObjectType{AttrTypes: DmWeekdayBitmapObjectType},
+	"start_time":     types.StringType,
+	"duration":       types.Int64Type,
+	"start_date":     types.StringType,
+	"stop_date":      types.StringType,
+	"time_zone":      types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data SLMSchedule) GetPath() string {

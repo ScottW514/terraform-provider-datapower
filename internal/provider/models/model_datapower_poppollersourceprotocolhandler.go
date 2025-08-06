@@ -27,25 +27,27 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type POPPollerSourceProtocolHandler struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	MailServer          types.String `tfsdk:"mail_server"`
-	Port                types.Int64  `tfsdk:"port"`
-	ConnSecurity        types.String `tfsdk:"conn_security"`
-	AuthMethod          types.String `tfsdk:"auth_method"`
-	Account             types.String `tfsdk:"account"`
-	PasswordAlias       types.String `tfsdk:"password_alias"`
-	DelayBetweenPolls   types.Int64  `tfsdk:"delay_between_polls"`
-	MaxMessagesPerPoll  types.Int64  `tfsdk:"max_messages_per_poll"`
-	SslClientConfigType types.String `tfsdk:"ssl_client_config_type"`
-	SslClient           types.String `tfsdk:"ssl_client"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	MailServer          types.String      `tfsdk:"mail_server"`
+	Port                types.Int64       `tfsdk:"port"`
+	ConnSecurity        types.String      `tfsdk:"conn_security"`
+	AuthMethod          types.String      `tfsdk:"auth_method"`
+	Account             types.String      `tfsdk:"account"`
+	PasswordAlias       types.String      `tfsdk:"password_alias"`
+	DelayBetweenPolls   types.Int64       `tfsdk:"delay_between_polls"`
+	MaxMessagesPerPoll  types.Int64       `tfsdk:"max_messages_per_poll"`
+	SslClientConfigType types.String      `tfsdk:"ssl_client_config_type"`
+	SslClient           types.String      `tfsdk:"ssl_client"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var POPPollerSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -62,6 +64,7 @@ var POPPollerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"max_messages_per_poll":  types.Int64Type,
 	"ssl_client_config_type": types.StringType,
 	"ssl_client":             types.StringType,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data POPPollerSourceProtocolHandler) GetPath() string {

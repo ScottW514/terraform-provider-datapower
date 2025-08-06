@@ -206,6 +206,7 @@ resource "datapower_rbmsettings" "test" {
   - CLI Alias: `pwd-max-history`
   - Range: `1`-`65535`
   - Default value: `5`
+- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `password_hash_algorithm` (String) Password hash algorithm
   - CLI Alias: `password-hash-algorithm`
   - Choices: `md5crypt`, `sha256crypt`
@@ -228,6 +229,23 @@ resource "datapower_rbmsettings" "test" {
   - CLI Alias: `ssh-au-method` (see [below for nested schema](#nestedatt--sshau_method))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
+
+<a id="nestedatt--object_actions"></a>
+### Nested Schema for `object_actions`
+
+Required:
+
+- `action` (String) Action to take on target
+- `target_domain` (String) Application domain of the action target
+- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
+- `target_type` (String) Resource type of action target
+
+Optional:
+
+- `run_on_create` (Boolean) Run this action when creating this resource.
+- `run_on_delete` (Boolean) Run this action when deleting this resource.
+- `run_on_update` (Boolean) Run this action when updating this resource.
+
 
 <a id="nestedatt--sshau_method"></a>
 ### Nested Schema for `sshau_method`

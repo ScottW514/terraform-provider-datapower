@@ -27,19 +27,21 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WebAppSessionPolicy struct {
-	Id                    types.String `tfsdk:"id"`
-	AppDomain             types.String `tfsdk:"app_domain"`
-	UserSummary           types.String `tfsdk:"user_summary"`
-	AutoRenew             types.Bool   `tfsdk:"auto_renew"`
-	Timeout               types.Int64  `tfsdk:"timeout"`
-	AddressAgnosticCookie types.Bool   `tfsdk:"address_agnostic_cookie"`
-	StartMatches          types.String `tfsdk:"start_matches"`
+	Id                    types.String      `tfsdk:"id"`
+	AppDomain             types.String      `tfsdk:"app_domain"`
+	UserSummary           types.String      `tfsdk:"user_summary"`
+	AutoRenew             types.Bool        `tfsdk:"auto_renew"`
+	Timeout               types.Int64       `tfsdk:"timeout"`
+	AddressAgnosticCookie types.Bool        `tfsdk:"address_agnostic_cookie"`
+	StartMatches          types.String      `tfsdk:"start_matches"`
+	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WebAppSessionPolicyObjectType = map[string]attr.Type{
@@ -50,6 +52,7 @@ var WebAppSessionPolicyObjectType = map[string]attr.Type{
 	"timeout":                 types.Int64Type,
 	"address_agnostic_cookie": types.BoolType,
 	"start_matches":           types.StringType,
+	"object_actions":          actions.ActionsListType,
 }
 
 func (data WebAppSessionPolicy) GetPath() string {

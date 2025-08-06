@@ -3,6 +3,10 @@ description: 'NFS poller handler'
 cli_alias: 'source-nfs-poller'
 cmd_group: 'mpgw'
 rest_endpoint: '/mgmt/config/{domain}/NFSFilePollerSourceProtocolHandler'
+actions:
+  - name: quiesce
+    pre_body: '{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}'
+    post_body: '{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}'
 attributes:
   - name: Id
     tf_name: id

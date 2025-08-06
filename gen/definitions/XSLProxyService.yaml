@@ -3,6 +3,10 @@ description: 'XSL Proxy'
 cli_alias: 'xslproxy'
 cmd_group: 'xslproxy'
 rest_endpoint: '/mgmt/config/{domain}/XSLProxyService'
+actions:
+  - name: quiesce
+    pre_body: '{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}'
+    post_body: '{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}'
 attributes:
   - name: Id
     tf_name: id

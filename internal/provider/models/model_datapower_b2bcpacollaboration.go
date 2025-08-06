@@ -27,23 +27,25 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type B2BCPACollaboration struct {
-	Id                   types.String `tfsdk:"id"`
-	AppDomain            types.String `tfsdk:"app_domain"`
-	UserSummary          types.String `tfsdk:"user_summary"`
-	InternalRole         types.String `tfsdk:"internal_role"`
-	ExternalRole         types.String `tfsdk:"external_role"`
-	ProcessSpecification types.String `tfsdk:"process_specification"`
-	Service              types.String `tfsdk:"service"`
-	ServiceType          types.String `tfsdk:"service_type"`
-	SenderMshSetting     types.String `tfsdk:"sender_msh_setting"`
-	ReceiverMshSetting   types.String `tfsdk:"receiver_msh_setting"`
-	Actions              types.List   `tfsdk:"actions"`
+	Id                   types.String      `tfsdk:"id"`
+	AppDomain            types.String      `tfsdk:"app_domain"`
+	UserSummary          types.String      `tfsdk:"user_summary"`
+	InternalRole         types.String      `tfsdk:"internal_role"`
+	ExternalRole         types.String      `tfsdk:"external_role"`
+	ProcessSpecification types.String      `tfsdk:"process_specification"`
+	Service              types.String      `tfsdk:"service"`
+	ServiceType          types.String      `tfsdk:"service_type"`
+	SenderMshSetting     types.String      `tfsdk:"sender_msh_setting"`
+	ReceiverMshSetting   types.String      `tfsdk:"receiver_msh_setting"`
+	Actions              types.List        `tfsdk:"actions"`
+	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
 }
 
 var B2BCPACollaborationObjectType = map[string]attr.Type{
@@ -58,6 +60,7 @@ var B2BCPACollaborationObjectType = map[string]attr.Type{
 	"sender_msh_setting":    types.StringType,
 	"receiver_msh_setting":  types.StringType,
 	"actions":               types.ListType{ElemType: types.ObjectType{AttrTypes: DmCPACollaborationActionObjectType}},
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data B2BCPACollaboration) GetPath() string {

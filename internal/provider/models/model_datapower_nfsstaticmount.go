@@ -27,25 +27,27 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type NFSStaticMount struct {
-	Id                    types.String `tfsdk:"id"`
-	AppDomain             types.String `tfsdk:"app_domain"`
-	UserSummary           types.String `tfsdk:"user_summary"`
-	Remote                types.String `tfsdk:"remote"`
-	LocalFilesystemAccess types.Bool   `tfsdk:"local_filesystem_access"`
-	Version               types.Int64  `tfsdk:"version"`
-	Transport             types.String `tfsdk:"transport"`
-	MountType             types.String `tfsdk:"mount_type"`
-	ReadOnly              types.Bool   `tfsdk:"read_only"`
-	ReadSize              types.Int64  `tfsdk:"read_size"`
-	WriteSize             types.Int64  `tfsdk:"write_size"`
-	Timeout               types.Int64  `tfsdk:"timeout"`
-	Retransmissions       types.Int64  `tfsdk:"retransmissions"`
+	Id                    types.String      `tfsdk:"id"`
+	AppDomain             types.String      `tfsdk:"app_domain"`
+	UserSummary           types.String      `tfsdk:"user_summary"`
+	Remote                types.String      `tfsdk:"remote"`
+	LocalFilesystemAccess types.Bool        `tfsdk:"local_filesystem_access"`
+	Version               types.Int64       `tfsdk:"version"`
+	Transport             types.String      `tfsdk:"transport"`
+	MountType             types.String      `tfsdk:"mount_type"`
+	ReadOnly              types.Bool        `tfsdk:"read_only"`
+	ReadSize              types.Int64       `tfsdk:"read_size"`
+	WriteSize             types.Int64       `tfsdk:"write_size"`
+	Timeout               types.Int64       `tfsdk:"timeout"`
+	Retransmissions       types.Int64       `tfsdk:"retransmissions"`
+	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
 }
 
 var NFSStaticMountObjectType = map[string]attr.Type{
@@ -62,6 +64,7 @@ var NFSStaticMountObjectType = map[string]attr.Type{
 	"write_size":              types.Int64Type,
 	"timeout":                 types.Int64Type,
 	"retransmissions":         types.Int64Type,
+	"object_actions":          actions.ActionsListType,
 }
 
 func (data NFSStaticMount) GetPath() string {

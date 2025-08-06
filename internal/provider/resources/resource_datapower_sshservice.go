@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -94,6 +95,7 @@ func (r *SSHServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
+			"object_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -113,6 +115,8 @@ func (r *SSHServiceResource) Create(ctx context.Context, req resource.CreateRequ
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
 
 	body := data.ToBody(ctx, `SSHService`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -158,6 +162,8 @@ func (r *SSHServiceResource) Update(ctx context.Context, req resource.UpdateRequ
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `SSHService`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -155,6 +156,7 @@ type MultiProtocolGateway struct {
 	RewriteErrors                            types.Bool            `tfsdk:"rewrite_errors"`
 	DelayErrors                              types.Bool            `tfsdk:"delay_errors"`
 	DelayErrorsDuration                      types.Int64           `tfsdk:"delay_errors_duration"`
+	ObjectActions                            []*actions.Action     `tfsdk:"object_actions"`
 }
 
 var MultiProtocolGatewayObjectType = map[string]attr.Type{
@@ -280,6 +282,7 @@ var MultiProtocolGatewayObjectType = map[string]attr.Type{
 	"rewrite_errors":                                 types.BoolType,
 	"delay_errors":                                   types.BoolType,
 	"delay_errors_duration":                          types.Int64Type,
+	"object_actions":                                 actions.ActionsListType,
 }
 
 func (data MultiProtocolGateway) GetPath() string {

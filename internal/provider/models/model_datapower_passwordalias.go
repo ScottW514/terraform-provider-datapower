@@ -27,22 +27,25 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type PasswordAlias struct {
-	Id             types.String `tfsdk:"id"`
-	AppDomain      types.String `tfsdk:"app_domain"`
-	UserSummary    types.String `tfsdk:"user_summary"`
-	Password       types.String `tfsdk:"password"`
-	PasswordUpdate types.Bool   `tfsdk:"password_update"`
+	Id             types.String      `tfsdk:"id"`
+	AppDomain      types.String      `tfsdk:"app_domain"`
+	UserSummary    types.String      `tfsdk:"user_summary"`
+	Password       types.String      `tfsdk:"password"`
+	PasswordUpdate types.Bool        `tfsdk:"password_update"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 type PasswordAliasWO struct {
-	Id          types.String `tfsdk:"id"`
-	AppDomain   types.String `tfsdk:"app_domain"`
-	UserSummary types.String `tfsdk:"user_summary"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var PasswordAliasObjectType = map[string]attr.Type{
@@ -51,11 +54,13 @@ var PasswordAliasObjectType = map[string]attr.Type{
 	"user_summary":    types.StringType,
 	"password":        types.StringType,
 	"password_update": types.BoolType,
+	"object_actions":  actions.ActionsListType,
 }
 var PasswordAliasObjectTypeWO = map[string]attr.Type{
-	"id":           types.StringType,
-	"app_domain":   types.StringType,
-	"user_summary": types.StringType,
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"user_summary":   types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data PasswordAlias) GetPath() string {

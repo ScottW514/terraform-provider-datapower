@@ -70,6 +70,7 @@ resource "datapower_sslserverprofile" "test" {
   - CLI Alias: `max-renegotiation-allowed`
   - Range: `0`-`512`
   - Default value: `0`
+- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `prefer_server_ciphers` (Boolean) Use server cipher suite preferences
   - CLI Alias: `prefer-server-ciphers`
   - Default value: `true`
@@ -106,6 +107,23 @@ resource "datapower_sslserverprofile" "test" {
 - `validate_client_cert` (Boolean) Validate client certificate
   - CLI Alias: `validate-client-cert`
   - Default value: `true`
+
+<a id="nestedatt--object_actions"></a>
+### Nested Schema for `object_actions`
+
+Required:
+
+- `action` (String) Action to take on target
+- `target_domain` (String) Application domain of the action target
+- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
+- `target_type` (String) Resource type of action target
+
+Optional:
+
+- `run_on_create` (Boolean) Run this action when creating this resource.
+- `run_on_delete` (Boolean) Run this action when deleting this resource.
+- `run_on_update` (Boolean) Run this action when updating this resource.
+
 
 <a id="nestedatt--protocols"></a>
 ### Nested Schema for `protocols`

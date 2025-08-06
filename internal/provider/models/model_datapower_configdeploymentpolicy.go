@@ -27,18 +27,20 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type ConfigDeploymentPolicy struct {
-	Id             types.String `tfsdk:"id"`
-	AppDomain      types.String `tfsdk:"app_domain"`
-	UserSummary    types.String `tfsdk:"user_summary"`
-	AcceptedConfig types.List   `tfsdk:"accepted_config"`
-	FilteredConfig types.List   `tfsdk:"filtered_config"`
-	ModifiedConfig types.List   `tfsdk:"modified_config"`
+	Id             types.String      `tfsdk:"id"`
+	AppDomain      types.String      `tfsdk:"app_domain"`
+	UserSummary    types.String      `tfsdk:"user_summary"`
+	AcceptedConfig types.List        `tfsdk:"accepted_config"`
+	FilteredConfig types.List        `tfsdk:"filtered_config"`
+	ModifiedConfig types.List        `tfsdk:"modified_config"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var ConfigDeploymentPolicyObjectType = map[string]attr.Type{
@@ -48,6 +50,7 @@ var ConfigDeploymentPolicyObjectType = map[string]attr.Type{
 	"accepted_config": types.ListType{ElemType: types.StringType},
 	"filtered_config": types.ListType{ElemType: types.StringType},
 	"modified_config": types.ListType{ElemType: types.ObjectType{AttrTypes: DmConfigModifyTypeObjectType}},
+	"object_actions":  actions.ActionsListType,
 }
 
 func (data ConfigDeploymentPolicy) GetPath() string {

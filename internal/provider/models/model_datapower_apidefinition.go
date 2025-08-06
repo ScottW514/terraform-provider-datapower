@@ -27,56 +27,58 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type APIDefinition struct {
-	Id                               types.String    `tfsdk:"id"`
-	AppDomain                        types.String    `tfsdk:"app_domain"`
-	UserSummary                      types.String    `tfsdk:"user_summary"`
-	ApiId                            types.String    `tfsdk:"api_id"`
-	Name                             types.String    `tfsdk:"name"`
-	Version                          types.String    `tfsdk:"version"`
-	BasePath                         types.String    `tfsdk:"base_path"`
-	HtmlPage                         types.String    `tfsdk:"html_page"`
-	Type                             types.String    `tfsdk:"type"`
-	Assembly                         types.String    `tfsdk:"assembly"`
-	Path                             types.List      `tfsdk:"path"`
-	Consume                          types.List      `tfsdk:"consume"`
-	Produce                          types.List      `tfsdk:"produce"`
-	SwaggerLocation                  types.String    `tfsdk:"swagger_location"`
-	GraphQlSchema                    types.String    `tfsdk:"graph_ql_schema"`
-	WsdlAdvertisedSchemaLocation     types.String    `tfsdk:"wsdl_advertised_schema_location"`
-	WsdlValidationSchema             types.String    `tfsdk:"wsdl_validation_schema"`
-	SecurityRequirement              types.List      `tfsdk:"security_requirement"`
-	RequireApiMutualTls              types.Bool      `tfsdk:"require_api_mutual_tls"`
-	ApiMutualTlsSource               types.List      `tfsdk:"api_mutual_tls_source"`
-	ApiMutualTlsHeaderName           types.String    `tfsdk:"api_mutual_tls_header_name"`
-	Properties                       types.List      `tfsdk:"properties"`
-	Schemas                          types.List      `tfsdk:"schemas"`
-	CorsToggle                       types.Bool      `tfsdk:"cors_toggle"`
-	CorsPolicy                       types.String    `tfsdk:"cors_policy"`
-	ActivityLogToggle                types.Bool      `tfsdk:"activity_log_toggle"`
-	Content                          types.String    `tfsdk:"content"`
-	ErrorContent                     types.String    `tfsdk:"error_content"`
-	PreservedRequestHeader           types.List      `tfsdk:"preserved_request_header"`
-	PreservedResponseHeader          types.List      `tfsdk:"preserved_response_header"`
-	MessageBuffering                 types.Bool      `tfsdk:"message_buffering"`
-	DeploymentState                  types.String    `tfsdk:"deployment_state"`
-	ShareRateLimitCount              types.String    `tfsdk:"share_rate_limit_count"`
-	ReturnV5Responses                types.Bool      `tfsdk:"return_v5_responses"`
-	CopyIdHeadersToMessage           types.Bool      `tfsdk:"copy_id_headers_to_message"`
-	EnforceRequiredParams            types.Bool      `tfsdk:"enforce_required_params"`
-	AllowChunkedUploads              types.Bool      `tfsdk:"allow_chunked_uploads"`
-	SetV5RequestHeaders              types.Bool      `tfsdk:"set_v5_request_headers"`
-	GetRawBodyValue                  types.Bool      `tfsdk:"get_raw_body_value"`
-	AllowedApiProtocols              *DmAPIProtocols `tfsdk:"allowed_api_protocols"`
-	AllowTrailingSlash               types.Bool      `tfsdk:"allow_trailing_slash"`
-	EnforceAllHeadersCaseInsensitive types.Bool      `tfsdk:"enforce_all_headers_case_insensitive"`
-	EnforceFormDataParameter         types.Bool      `tfsdk:"enforce_form_data_parameter"`
-	ForceHttp500ForSoap11            types.Bool      `tfsdk:"force_http500_for_soap11"`
+	Id                               types.String      `tfsdk:"id"`
+	AppDomain                        types.String      `tfsdk:"app_domain"`
+	UserSummary                      types.String      `tfsdk:"user_summary"`
+	ApiId                            types.String      `tfsdk:"api_id"`
+	Name                             types.String      `tfsdk:"name"`
+	Version                          types.String      `tfsdk:"version"`
+	BasePath                         types.String      `tfsdk:"base_path"`
+	HtmlPage                         types.String      `tfsdk:"html_page"`
+	Type                             types.String      `tfsdk:"type"`
+	Assembly                         types.String      `tfsdk:"assembly"`
+	Path                             types.List        `tfsdk:"path"`
+	Consume                          types.List        `tfsdk:"consume"`
+	Produce                          types.List        `tfsdk:"produce"`
+	SwaggerLocation                  types.String      `tfsdk:"swagger_location"`
+	GraphQlSchema                    types.String      `tfsdk:"graph_ql_schema"`
+	WsdlAdvertisedSchemaLocation     types.String      `tfsdk:"wsdl_advertised_schema_location"`
+	WsdlValidationSchema             types.String      `tfsdk:"wsdl_validation_schema"`
+	SecurityRequirement              types.List        `tfsdk:"security_requirement"`
+	RequireApiMutualTls              types.Bool        `tfsdk:"require_api_mutual_tls"`
+	ApiMutualTlsSource               types.List        `tfsdk:"api_mutual_tls_source"`
+	ApiMutualTlsHeaderName           types.String      `tfsdk:"api_mutual_tls_header_name"`
+	Properties                       types.List        `tfsdk:"properties"`
+	Schemas                          types.List        `tfsdk:"schemas"`
+	CorsToggle                       types.Bool        `tfsdk:"cors_toggle"`
+	CorsPolicy                       types.String      `tfsdk:"cors_policy"`
+	ActivityLogToggle                types.Bool        `tfsdk:"activity_log_toggle"`
+	Content                          types.String      `tfsdk:"content"`
+	ErrorContent                     types.String      `tfsdk:"error_content"`
+	PreservedRequestHeader           types.List        `tfsdk:"preserved_request_header"`
+	PreservedResponseHeader          types.List        `tfsdk:"preserved_response_header"`
+	MessageBuffering                 types.Bool        `tfsdk:"message_buffering"`
+	DeploymentState                  types.String      `tfsdk:"deployment_state"`
+	ShareRateLimitCount              types.String      `tfsdk:"share_rate_limit_count"`
+	ReturnV5Responses                types.Bool        `tfsdk:"return_v5_responses"`
+	CopyIdHeadersToMessage           types.Bool        `tfsdk:"copy_id_headers_to_message"`
+	EnforceRequiredParams            types.Bool        `tfsdk:"enforce_required_params"`
+	AllowChunkedUploads              types.Bool        `tfsdk:"allow_chunked_uploads"`
+	SetV5RequestHeaders              types.Bool        `tfsdk:"set_v5_request_headers"`
+	GetRawBodyValue                  types.Bool        `tfsdk:"get_raw_body_value"`
+	AllowedApiProtocols              *DmAPIProtocols   `tfsdk:"allowed_api_protocols"`
+	AllowTrailingSlash               types.Bool        `tfsdk:"allow_trailing_slash"`
+	EnforceAllHeadersCaseInsensitive types.Bool        `tfsdk:"enforce_all_headers_case_insensitive"`
+	EnforceFormDataParameter         types.Bool        `tfsdk:"enforce_form_data_parameter"`
+	ForceHttp500ForSoap11            types.Bool        `tfsdk:"force_http500_for_soap11"`
+	ObjectActions                    []*actions.Action `tfsdk:"object_actions"`
 }
 
 var APIDefinitionObjectType = map[string]attr.Type{
@@ -124,6 +126,7 @@ var APIDefinitionObjectType = map[string]attr.Type{
 	"enforce_all_headers_case_insensitive": types.BoolType,
 	"enforce_form_data_parameter":          types.BoolType,
 	"force_http500_for_soap11":             types.BoolType,
+	"object_actions":                       actions.ActionsListType,
 }
 
 func (data APIDefinition) GetPath() string {

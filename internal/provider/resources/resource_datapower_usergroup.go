@@ -37,6 +37,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -92,6 +93,7 @@ func (r *UserGroupResource) Schema(ctx context.Context, req resource.SchemaReque
 					listvalidator.ValueStringsAre(stringvalidator.OneOf("aaapolicy", "acl", "assembly", "b2b", "common", "compile-options", "config-management", "configuration", "crl", "quota-enforcement", "crypto", "device-management", "diagnostics", "document-crypto-map", "domain", "failure-notification", "file-management", "firewallcred", "flash", "httpserv", "input-conversion", "interface", "load-balancer", "logging", "matching", "messages", "monitors", "mpgw", "mq-qm", "idg-mqqm", "network", "radius", "rbm", "schema-exception-map", "service-monitor", "snmp", "sql", "sslforwarder", "stylesheetaction", "stylesheetpolicy", "stylesheetrule", "system", "tam", "tcpproxy", "urlmap", "urlrefresh", "urlrewrite", "useragent", "usergroup", "validation", "webservice", "wsm-agent", "xmlfirewall", "xmlmgr", "xpath-routing", "xslcoproc", "xslproxy", "http", "document-cache", "parserlimit", "rule", "password-change", "reserved50")),
 				},
 			},
+			"object_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -111,6 +113,8 @@ func (r *UserGroupResource) Create(ctx context.Context, req resource.CreateReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
 
 	body := data.ToBody(ctx, `UserGroup`)
 	_, err := r.client.Post(data.GetPath(), body)
@@ -156,6 +160,8 @@ func (r *UserGroupResource) Update(ctx context.Context, req resource.UpdateReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
 	_, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `UserGroup`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
@@ -172,6 +178,8 @@ func (r *UserGroupResource) Delete(ctx context.Context, req resource.DeleteReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
 	_, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))

@@ -27,33 +27,35 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AnalyticsEndpoint struct {
-	Id                     types.String `tfsdk:"id"`
-	AppDomain              types.String `tfsdk:"app_domain"`
-	UserSummary            types.String `tfsdk:"user_summary"`
-	AnalyticsServerUrl     types.String `tfsdk:"analytics_server_url"`
-	SslClient              types.String `tfsdk:"ssl_client"`
-	RequestTopic           types.String `tfsdk:"request_topic"`
-	MaxRecords             types.Int64  `tfsdk:"max_records"`
-	MaxRecordsMemoryKb     types.Int64  `tfsdk:"max_records_memory_kb"`
-	MaxDeliveryMemoryMb    types.Int64  `tfsdk:"max_delivery_memory_mb"`
-	Interval               types.Int64  `tfsdk:"interval"`
-	DeliveryConnections    types.Int64  `tfsdk:"delivery_connections"`
-	EnableJwt              types.Bool   `tfsdk:"enable_jwt"`
-	ManagementUrl          types.String `tfsdk:"management_url"`
-	ManagementUrlSslClient types.String `tfsdk:"management_url_ssl_client"`
-	ClientId               types.String `tfsdk:"client_id"`
-	ClientSecretAlias      types.String `tfsdk:"client_secret_alias"`
-	GrantType              types.String `tfsdk:"grant_type"`
-	Scope                  types.String `tfsdk:"scope"`
-	PersistentConnection   types.Bool   `tfsdk:"persistent_connection"`
-	Timeout                types.Int64  `tfsdk:"timeout"`
-	PersistentTimeout      types.Int64  `tfsdk:"persistent_timeout"`
+	Id                     types.String      `tfsdk:"id"`
+	AppDomain              types.String      `tfsdk:"app_domain"`
+	UserSummary            types.String      `tfsdk:"user_summary"`
+	AnalyticsServerUrl     types.String      `tfsdk:"analytics_server_url"`
+	SslClient              types.String      `tfsdk:"ssl_client"`
+	RequestTopic           types.String      `tfsdk:"request_topic"`
+	MaxRecords             types.Int64       `tfsdk:"max_records"`
+	MaxRecordsMemoryKb     types.Int64       `tfsdk:"max_records_memory_kb"`
+	MaxDeliveryMemoryMb    types.Int64       `tfsdk:"max_delivery_memory_mb"`
+	Interval               types.Int64       `tfsdk:"interval"`
+	DeliveryConnections    types.Int64       `tfsdk:"delivery_connections"`
+	EnableJwt              types.Bool        `tfsdk:"enable_jwt"`
+	ManagementUrl          types.String      `tfsdk:"management_url"`
+	ManagementUrlSslClient types.String      `tfsdk:"management_url_ssl_client"`
+	ClientId               types.String      `tfsdk:"client_id"`
+	ClientSecretAlias      types.String      `tfsdk:"client_secret_alias"`
+	GrantType              types.String      `tfsdk:"grant_type"`
+	Scope                  types.String      `tfsdk:"scope"`
+	PersistentConnection   types.Bool        `tfsdk:"persistent_connection"`
+	Timeout                types.Int64       `tfsdk:"timeout"`
+	PersistentTimeout      types.Int64       `tfsdk:"persistent_timeout"`
+	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AnalyticsEndpointObjectType = map[string]attr.Type{
@@ -78,6 +80,7 @@ var AnalyticsEndpointObjectType = map[string]attr.Type{
 	"persistent_connection":     types.BoolType,
 	"timeout":                   types.Int64Type,
 	"persistent_timeout":        types.Int64Type,
+	"object_actions":            actions.ActionsListType,
 }
 
 func (data AnalyticsEndpoint) GetPath() string {

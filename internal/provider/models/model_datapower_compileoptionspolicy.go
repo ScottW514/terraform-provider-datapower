@@ -27,36 +27,38 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type CompileOptionsPolicy struct {
-	Id                     types.String `tfsdk:"id"`
-	AppDomain              types.String `tfsdk:"app_domain"`
-	UserSummary            types.String `tfsdk:"user_summary"`
-	XsltVersion            types.String `tfsdk:"xslt_version"`
-	Strict                 types.Bool   `tfsdk:"strict"`
-	Profile                types.String `tfsdk:"profile"`
-	Debug                  types.String `tfsdk:"debug"`
-	Stream                 types.String `tfsdk:"stream"`
-	TryStream              types.String `tfsdk:"try_stream"`
-	MinimumEscaping        types.String `tfsdk:"minimum_escaping"`
-	StackSize              types.Int64  `tfsdk:"stack_size"`
-	PreferXg4              types.String `tfsdk:"prefer_xg4"`
-	DisallowXg4            types.String `tfsdk:"disallow_xg4"`
-	WsiValidation          types.String `tfsdk:"wsi_validation"`
-	WsdlValidateBody       types.String `tfsdk:"wsdl_validate_body"`
-	WsdlValidateHeaders    types.String `tfsdk:"wsdl_validate_headers"`
-	WsdlValidateFaults     types.String `tfsdk:"wsdl_validate_faults"`
-	WsdlWrappedFaults      types.Bool   `tfsdk:"wsdl_wrapped_faults"`
-	AllowSoapEncArray      types.String `tfsdk:"allow_soap_enc_array"`
-	ValidateSoapEncArray   types.String `tfsdk:"validate_soap_enc_array"`
-	WildcardsIgnoreXsiType types.String `tfsdk:"wildcards_ignore_xsi_type"`
-	WsdlStrictSoapVersion  types.Bool   `tfsdk:"wsdl_strict_soap_version"`
-	XacmlDebug             types.Bool   `tfsdk:"xacml_debug"`
-	AllowXopInclude        types.String `tfsdk:"allow_xop_include"`
+	Id                     types.String      `tfsdk:"id"`
+	AppDomain              types.String      `tfsdk:"app_domain"`
+	UserSummary            types.String      `tfsdk:"user_summary"`
+	XsltVersion            types.String      `tfsdk:"xslt_version"`
+	Strict                 types.Bool        `tfsdk:"strict"`
+	Profile                types.String      `tfsdk:"profile"`
+	Debug                  types.String      `tfsdk:"debug"`
+	Stream                 types.String      `tfsdk:"stream"`
+	TryStream              types.String      `tfsdk:"try_stream"`
+	MinimumEscaping        types.String      `tfsdk:"minimum_escaping"`
+	StackSize              types.Int64       `tfsdk:"stack_size"`
+	PreferXg4              types.String      `tfsdk:"prefer_xg4"`
+	DisallowXg4            types.String      `tfsdk:"disallow_xg4"`
+	WsiValidation          types.String      `tfsdk:"wsi_validation"`
+	WsdlValidateBody       types.String      `tfsdk:"wsdl_validate_body"`
+	WsdlValidateHeaders    types.String      `tfsdk:"wsdl_validate_headers"`
+	WsdlValidateFaults     types.String      `tfsdk:"wsdl_validate_faults"`
+	WsdlWrappedFaults      types.Bool        `tfsdk:"wsdl_wrapped_faults"`
+	AllowSoapEncArray      types.String      `tfsdk:"allow_soap_enc_array"`
+	ValidateSoapEncArray   types.String      `tfsdk:"validate_soap_enc_array"`
+	WildcardsIgnoreXsiType types.String      `tfsdk:"wildcards_ignore_xsi_type"`
+	WsdlStrictSoapVersion  types.Bool        `tfsdk:"wsdl_strict_soap_version"`
+	XacmlDebug             types.Bool        `tfsdk:"xacml_debug"`
+	AllowXopInclude        types.String      `tfsdk:"allow_xop_include"`
+	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
 }
 
 var CompileOptionsPolicyObjectType = map[string]attr.Type{
@@ -84,6 +86,7 @@ var CompileOptionsPolicyObjectType = map[string]attr.Type{
 	"wsdl_strict_soap_version":  types.BoolType,
 	"xacml_debug":               types.BoolType,
 	"allow_xop_include":         types.StringType,
+	"object_actions":            actions.ActionsListType,
 }
 
 func (data CompileOptionsPolicy) GetPath() string {

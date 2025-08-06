@@ -46,6 +46,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -189,6 +190,7 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 			},
 {{- end}}
+			"object_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -208,6 +210,8 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
 {{- if hasWriteOnlyAttribute .Attributes}}
 
 	var config models.{{.Name}}
@@ -319,6 +323,8 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
 {{- if hasWriteOnlyAttribute .Attributes}}
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
@@ -387,6 +393,8 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
 
 {{- if eq .Name "Domain"}}
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting

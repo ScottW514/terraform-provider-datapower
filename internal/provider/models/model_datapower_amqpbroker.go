@@ -27,29 +27,31 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AMQPBroker struct {
-	Id                types.String `tfsdk:"id"`
-	AppDomain         types.String `tfsdk:"app_domain"`
-	UserSummary       types.String `tfsdk:"user_summary"`
-	HostName          types.String `tfsdk:"host_name"`
-	Port              types.Int64  `tfsdk:"port"`
-	XmlManager        types.String `tfsdk:"xml_manager"`
-	ContainerId       types.String `tfsdk:"container_id"`
-	Authorization     types.String `tfsdk:"authorization"`
-	UserName          types.String `tfsdk:"user_name"`
-	PasswordAlias     types.String `tfsdk:"password_alias"`
-	MaximumFrameSize  types.Int64  `tfsdk:"maximum_frame_size"`
-	AutoRetry         types.Bool   `tfsdk:"auto_retry"`
-	RetryInterval     types.Int64  `tfsdk:"retry_interval"`
-	RetryAttempts     types.Int64  `tfsdk:"retry_attempts"`
-	LongRetryInterval types.Int64  `tfsdk:"long_retry_interval"`
-	ReportingInterval types.Int64  `tfsdk:"reporting_interval"`
-	SslClient         types.String `tfsdk:"ssl_client"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	HostName          types.String      `tfsdk:"host_name"`
+	Port              types.Int64       `tfsdk:"port"`
+	XmlManager        types.String      `tfsdk:"xml_manager"`
+	ContainerId       types.String      `tfsdk:"container_id"`
+	Authorization     types.String      `tfsdk:"authorization"`
+	UserName          types.String      `tfsdk:"user_name"`
+	PasswordAlias     types.String      `tfsdk:"password_alias"`
+	MaximumFrameSize  types.Int64       `tfsdk:"maximum_frame_size"`
+	AutoRetry         types.Bool        `tfsdk:"auto_retry"`
+	RetryInterval     types.Int64       `tfsdk:"retry_interval"`
+	RetryAttempts     types.Int64       `tfsdk:"retry_attempts"`
+	LongRetryInterval types.Int64       `tfsdk:"long_retry_interval"`
+	ReportingInterval types.Int64       `tfsdk:"reporting_interval"`
+	SslClient         types.String      `tfsdk:"ssl_client"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AMQPBrokerObjectType = map[string]attr.Type{
@@ -70,6 +72,7 @@ var AMQPBrokerObjectType = map[string]attr.Type{
 	"long_retry_interval": types.Int64Type,
 	"reporting_interval":  types.Int64Type,
 	"ssl_client":          types.StringType,
+	"object_actions":      actions.ActionsListType,
 }
 
 func (data AMQPBroker) GetPath() string {

@@ -27,24 +27,26 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type ImportPackage struct {
-	Id                         types.String `tfsdk:"id"`
-	AppDomain                  types.String `tfsdk:"app_domain"`
-	UserSummary                types.String `tfsdk:"user_summary"`
-	Url                        types.String `tfsdk:"url"`
-	ImportFormat               types.String `tfsdk:"import_format"`
-	OverwriteFiles             types.Bool   `tfsdk:"overwrite_files"`
-	OverwriteObjects           types.Bool   `tfsdk:"overwrite_objects"`
-	DestinationDomain          types.String `tfsdk:"destination_domain"`
-	DeploymentPolicy           types.String `tfsdk:"deployment_policy"`
-	DeploymentPolicyParameters types.String `tfsdk:"deployment_policy_parameters"`
-	LocalIpRewrite             types.Bool   `tfsdk:"local_ip_rewrite"`
-	OnStartup                  types.Bool   `tfsdk:"on_startup"`
+	Id                         types.String      `tfsdk:"id"`
+	AppDomain                  types.String      `tfsdk:"app_domain"`
+	UserSummary                types.String      `tfsdk:"user_summary"`
+	Url                        types.String      `tfsdk:"url"`
+	ImportFormat               types.String      `tfsdk:"import_format"`
+	OverwriteFiles             types.Bool        `tfsdk:"overwrite_files"`
+	OverwriteObjects           types.Bool        `tfsdk:"overwrite_objects"`
+	DestinationDomain          types.String      `tfsdk:"destination_domain"`
+	DeploymentPolicy           types.String      `tfsdk:"deployment_policy"`
+	DeploymentPolicyParameters types.String      `tfsdk:"deployment_policy_parameters"`
+	LocalIpRewrite             types.Bool        `tfsdk:"local_ip_rewrite"`
+	OnStartup                  types.Bool        `tfsdk:"on_startup"`
+	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
 }
 
 var ImportPackageObjectType = map[string]attr.Type{
@@ -60,6 +62,7 @@ var ImportPackageObjectType = map[string]attr.Type{
 	"deployment_policy_parameters": types.StringType,
 	"local_ip_rewrite":             types.BoolType,
 	"on_startup":                   types.BoolType,
+	"object_actions":               actions.ActionsListType,
 }
 
 func (data ImportPackage) GetPath() string {

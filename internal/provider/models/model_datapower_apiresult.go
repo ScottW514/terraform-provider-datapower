@@ -27,18 +27,20 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type APIResult struct {
-	Id              types.String `tfsdk:"id"`
-	AppDomain       types.String `tfsdk:"app_domain"`
-	UserSummary     types.String `tfsdk:"user_summary"`
-	Output          types.String `tfsdk:"output"`
-	Title           types.String `tfsdk:"title"`
-	CorrelationPath types.String `tfsdk:"correlation_path"`
+	Id              types.String      `tfsdk:"id"`
+	AppDomain       types.String      `tfsdk:"app_domain"`
+	UserSummary     types.String      `tfsdk:"user_summary"`
+	Output          types.String      `tfsdk:"output"`
+	Title           types.String      `tfsdk:"title"`
+	CorrelationPath types.String      `tfsdk:"correlation_path"`
+	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
 }
 
 var APIResultObjectType = map[string]attr.Type{
@@ -48,6 +50,7 @@ var APIResultObjectType = map[string]attr.Type{
 	"output":           types.StringType,
 	"title":            types.StringType,
 	"correlation_path": types.StringType,
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data APIResult) GetPath() string {

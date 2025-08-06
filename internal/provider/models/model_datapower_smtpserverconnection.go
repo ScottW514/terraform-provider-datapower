@@ -27,23 +27,25 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SMTPServerConnection struct {
-	Id                   types.String   `tfsdk:"id"`
-	AppDomain            types.String   `tfsdk:"app_domain"`
-	UserSummary          types.String   `tfsdk:"user_summary"`
-	MailServerHost       types.String   `tfsdk:"mail_server_host"`
-	MailServerPort       types.Int64    `tfsdk:"mail_server_port"`
-	Options              *DmSMTPOptions `tfsdk:"options"`
-	Auth                 types.String   `tfsdk:"auth"`
-	AccountName          types.String   `tfsdk:"account_name"`
-	AccountPasswordAlias types.String   `tfsdk:"account_password_alias"`
-	SslClientConfigType  types.String   `tfsdk:"ssl_client_config_type"`
-	SslClient            types.String   `tfsdk:"ssl_client"`
+	Id                   types.String      `tfsdk:"id"`
+	AppDomain            types.String      `tfsdk:"app_domain"`
+	UserSummary          types.String      `tfsdk:"user_summary"`
+	MailServerHost       types.String      `tfsdk:"mail_server_host"`
+	MailServerPort       types.Int64       `tfsdk:"mail_server_port"`
+	Options              *DmSMTPOptions    `tfsdk:"options"`
+	Auth                 types.String      `tfsdk:"auth"`
+	AccountName          types.String      `tfsdk:"account_name"`
+	AccountPasswordAlias types.String      `tfsdk:"account_password_alias"`
+	SslClientConfigType  types.String      `tfsdk:"ssl_client_config_type"`
+	SslClient            types.String      `tfsdk:"ssl_client"`
+	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
 }
 
 var SMTPServerConnectionObjectType = map[string]attr.Type{
@@ -58,6 +60,7 @@ var SMTPServerConnectionObjectType = map[string]attr.Type{
 	"account_password_alias": types.StringType,
 	"ssl_client_config_type": types.StringType,
 	"ssl_client":             types.StringType,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data SMTPServerConnection) GetPath() string {

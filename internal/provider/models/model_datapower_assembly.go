@@ -27,29 +27,32 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type Assembly struct {
-	Id           types.String `tfsdk:"id"`
-	AppDomain    types.String `tfsdk:"app_domain"`
-	UserSummary  types.String `tfsdk:"user_summary"`
-	Rule         types.String `tfsdk:"rule"`
-	Catch        types.List   `tfsdk:"catch"`
-	DefaultCatch types.String `tfsdk:"default_catch"`
-	Finally      types.String `tfsdk:"finally"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	Rule          types.String      `tfsdk:"rule"`
+	Catch         types.List        `tfsdk:"catch"`
+	DefaultCatch  types.String      `tfsdk:"default_catch"`
+	Finally       types.String      `tfsdk:"finally"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AssemblyObjectType = map[string]attr.Type{
-	"id":            types.StringType,
-	"app_domain":    types.StringType,
-	"user_summary":  types.StringType,
-	"rule":          types.StringType,
-	"catch":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmAssemblyCatchObjectType}},
-	"default_catch": types.StringType,
-	"finally":       types.StringType,
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"user_summary":   types.StringType,
+	"rule":           types.StringType,
+	"catch":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmAssemblyCatchObjectType}},
+	"default_catch":  types.StringType,
+	"finally":        types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data Assembly) GetPath() string {

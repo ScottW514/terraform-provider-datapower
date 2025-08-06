@@ -27,23 +27,25 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SLMRsrcClass struct {
-	Id                          types.String `tfsdk:"id"`
-	AppDomain                   types.String `tfsdk:"app_domain"`
-	UserSummary                 types.String `tfsdk:"user_summary"`
-	RsrcType                    types.String `tfsdk:"rsrc_type"`
-	RsrcMatchType               types.String `tfsdk:"rsrc_match_type"`
-	RsrcValue                   types.List   `tfsdk:"rsrc_value"`
-	Stylesheet                  types.String `tfsdk:"stylesheet"`
-	XPathFilter                 types.String `tfsdk:"x_path_filter"`
-	Subscription                types.String `tfsdk:"subscription"`
-	WsrrSubscription            types.String `tfsdk:"wsrr_subscription"`
-	WsrrSavedSearchSubscription types.String `tfsdk:"wsrr_saved_search_subscription"`
+	Id                          types.String      `tfsdk:"id"`
+	AppDomain                   types.String      `tfsdk:"app_domain"`
+	UserSummary                 types.String      `tfsdk:"user_summary"`
+	RsrcType                    types.String      `tfsdk:"rsrc_type"`
+	RsrcMatchType               types.String      `tfsdk:"rsrc_match_type"`
+	RsrcValue                   types.List        `tfsdk:"rsrc_value"`
+	Stylesheet                  types.String      `tfsdk:"stylesheet"`
+	XPathFilter                 types.String      `tfsdk:"x_path_filter"`
+	Subscription                types.String      `tfsdk:"subscription"`
+	WsrrSubscription            types.String      `tfsdk:"wsrr_subscription"`
+	WsrrSavedSearchSubscription types.String      `tfsdk:"wsrr_saved_search_subscription"`
+	ObjectActions               []*actions.Action `tfsdk:"object_actions"`
 }
 
 var SLMRsrcClassObjectType = map[string]attr.Type{
@@ -58,6 +60,7 @@ var SLMRsrcClassObjectType = map[string]attr.Type{
 	"subscription":                   types.StringType,
 	"wsrr_subscription":              types.StringType,
 	"wsrr_saved_search_subscription": types.StringType,
+	"object_actions":                 actions.ActionsListType,
 }
 
 func (data SLMRsrcClass) GetPath() string {

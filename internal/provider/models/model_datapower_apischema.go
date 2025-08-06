@@ -27,25 +27,27 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type APISchema struct {
-	Id                         types.String `tfsdk:"id"`
-	AppDomain                  types.String `tfsdk:"app_domain"`
-	UserSummary                types.String `tfsdk:"user_summary"`
-	JsonSchema                 types.String `tfsdk:"json_schema"`
-	GraphQlSchema              types.String `tfsdk:"graph_ql_schema"`
-	XmlType                    types.String `tfsdk:"xml_type"`
-	XmlValidationMode          types.String `tfsdk:"xml_validation_mode"`
-	XmlSchemaUrl               types.String `tfsdk:"xml_schema_url"`
-	WsdlSchemaUrl              types.String `tfsdk:"wsdl_schema_url"`
-	WsdlPortQName              types.String `tfsdk:"wsdl_port_q_name"`
-	WsdlOperationName          types.String `tfsdk:"wsdl_operation_name"`
-	WsdlMessageDirectionOrName types.String `tfsdk:"wsdl_message_direction_or_name"`
-	WsdlAttachmentPart         types.String `tfsdk:"wsdl_attachment_part"`
+	Id                         types.String      `tfsdk:"id"`
+	AppDomain                  types.String      `tfsdk:"app_domain"`
+	UserSummary                types.String      `tfsdk:"user_summary"`
+	JsonSchema                 types.String      `tfsdk:"json_schema"`
+	GraphQlSchema              types.String      `tfsdk:"graph_ql_schema"`
+	XmlType                    types.String      `tfsdk:"xml_type"`
+	XmlValidationMode          types.String      `tfsdk:"xml_validation_mode"`
+	XmlSchemaUrl               types.String      `tfsdk:"xml_schema_url"`
+	WsdlSchemaUrl              types.String      `tfsdk:"wsdl_schema_url"`
+	WsdlPortQName              types.String      `tfsdk:"wsdl_port_q_name"`
+	WsdlOperationName          types.String      `tfsdk:"wsdl_operation_name"`
+	WsdlMessageDirectionOrName types.String      `tfsdk:"wsdl_message_direction_or_name"`
+	WsdlAttachmentPart         types.String      `tfsdk:"wsdl_attachment_part"`
+	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
 }
 
 var APISchemaObjectType = map[string]attr.Type{
@@ -62,6 +64,7 @@ var APISchemaObjectType = map[string]attr.Type{
 	"wsdl_operation_name":            types.StringType,
 	"wsdl_message_direction_or_name": types.StringType,
 	"wsdl_attachment_part":           types.StringType,
+	"object_actions":                 actions.ActionsListType,
 }
 
 func (data APISchema) GetPath() string {

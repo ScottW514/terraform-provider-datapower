@@ -27,21 +27,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type HostAlias struct {
-	Id          types.String `tfsdk:"id"`
-	UserSummary types.String `tfsdk:"user_summary"`
-	IpAddress   types.String `tfsdk:"ip_address"`
+	Id            types.String      `tfsdk:"id"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	IpAddress     types.String      `tfsdk:"ip_address"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var HostAliasObjectType = map[string]attr.Type{
-	"id":           types.StringType,
-	"user_summary": types.StringType,
-	"ip_address":   types.StringType,
+	"id":             types.StringType,
+	"user_summary":   types.StringType,
+	"ip_address":     types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data HostAlias) GetPath() string {

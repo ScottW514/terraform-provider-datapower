@@ -26,17 +26,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type ODR struct {
-	Enabled             types.Bool   `tfsdk:"enabled"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	OdrServerName       types.String `tfsdk:"odr_server_name"`
-	OdrConnectorGroups  types.List   `tfsdk:"odr_connector_groups"`
-	OdrCustomProperties types.List   `tfsdk:"odr_custom_properties"`
+	Enabled             types.Bool        `tfsdk:"enabled"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	OdrServerName       types.String      `tfsdk:"odr_server_name"`
+	OdrConnectorGroups  types.List        `tfsdk:"odr_connector_groups"`
+	OdrCustomProperties types.List        `tfsdk:"odr_custom_properties"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var ODRObjectType = map[string]attr.Type{
@@ -45,6 +47,7 @@ var ODRObjectType = map[string]attr.Type{
 	"odr_server_name":       types.StringType,
 	"odr_connector_groups":  types.ListType{ElemType: types.StringType},
 	"odr_custom_properties": types.ListType{ElemType: types.ObjectType{AttrTypes: DmODRPropertyObjectType}},
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data ODR) GetPath() string {

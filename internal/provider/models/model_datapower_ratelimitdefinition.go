@@ -27,34 +27,36 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type RateLimitDefinition struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	ShortName           types.String `tfsdk:"short_name"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	Type                types.String `tfsdk:"type"`
-	Rate                types.Int64  `tfsdk:"rate"`
-	Interval            types.Int64  `tfsdk:"interval"`
-	Unit                types.String `tfsdk:"unit"`
-	HardLimit           types.Bool   `tfsdk:"hard_limit"`
-	IsClient            types.Bool   `tfsdk:"is_client"`
-	UseApiName          types.Bool   `tfsdk:"use_api_name"`
-	UseAppId            types.Bool   `tfsdk:"use_app_id"`
-	UseClientId         types.Bool   `tfsdk:"use_client_id"`
-	AutoReplenish       types.Bool   `tfsdk:"auto_replenish"`
-	DynamicValue        types.String `tfsdk:"dynamic_value"`
-	Weight              types.String `tfsdk:"weight"`
-	ResponseHeaders     types.Bool   `tfsdk:"response_headers"`
-	EmulateBurstHeaders types.Bool   `tfsdk:"emulate_burst_headers"`
-	UseIntervalOffset   types.Bool   `tfsdk:"use_interval_offset"`
-	AllowCacheFallback  types.Bool   `tfsdk:"allow_cache_fallback"`
-	UseCache            types.Bool   `tfsdk:"use_cache"`
-	Parameters          types.List   `tfsdk:"parameters"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	ShortName           types.String      `tfsdk:"short_name"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	Type                types.String      `tfsdk:"type"`
+	Rate                types.Int64       `tfsdk:"rate"`
+	Interval            types.Int64       `tfsdk:"interval"`
+	Unit                types.String      `tfsdk:"unit"`
+	HardLimit           types.Bool        `tfsdk:"hard_limit"`
+	IsClient            types.Bool        `tfsdk:"is_client"`
+	UseApiName          types.Bool        `tfsdk:"use_api_name"`
+	UseAppId            types.Bool        `tfsdk:"use_app_id"`
+	UseClientId         types.Bool        `tfsdk:"use_client_id"`
+	AutoReplenish       types.Bool        `tfsdk:"auto_replenish"`
+	DynamicValue        types.String      `tfsdk:"dynamic_value"`
+	Weight              types.String      `tfsdk:"weight"`
+	ResponseHeaders     types.Bool        `tfsdk:"response_headers"`
+	EmulateBurstHeaders types.Bool        `tfsdk:"emulate_burst_headers"`
+	UseIntervalOffset   types.Bool        `tfsdk:"use_interval_offset"`
+	AllowCacheFallback  types.Bool        `tfsdk:"allow_cache_fallback"`
+	UseCache            types.Bool        `tfsdk:"use_cache"`
+	Parameters          types.List        `tfsdk:"parameters"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var RateLimitDefinitionObjectType = map[string]attr.Type{
@@ -80,6 +82,7 @@ var RateLimitDefinitionObjectType = map[string]attr.Type{
 	"allow_cache_fallback":  types.BoolType,
 	"use_cache":             types.BoolType,
 	"parameters":            types.ListType{ElemType: types.ObjectType{AttrTypes: DmRateLimitDefinitionNameValuePairObjectType}},
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data RateLimitDefinition) GetPath() string {

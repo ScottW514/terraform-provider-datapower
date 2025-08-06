@@ -27,19 +27,21 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type JWERecipient struct {
-	Id                types.String `tfsdk:"id"`
-	AppDomain         types.String `tfsdk:"app_domain"`
-	UserSummary       types.String `tfsdk:"user_summary"`
-	Algorithm         types.String `tfsdk:"algorithm"`
-	SsKey             types.String `tfsdk:"ss_key"`
-	Certificate       types.String `tfsdk:"certificate"`
-	UnprotectedHeader types.List   `tfsdk:"unprotected_header"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Algorithm         types.String      `tfsdk:"algorithm"`
+	SsKey             types.String      `tfsdk:"ss_key"`
+	Certificate       types.String      `tfsdk:"certificate"`
+	UnprotectedHeader types.List        `tfsdk:"unprotected_header"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var JWERecipientObjectType = map[string]attr.Type{
@@ -50,6 +52,7 @@ var JWERecipientObjectType = map[string]attr.Type{
 	"ss_key":             types.StringType,
 	"certificate":        types.StringType,
 	"unprotected_header": types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
+	"object_actions":     actions.ActionsListType,
 }
 
 func (data JWERecipient) GetPath() string {

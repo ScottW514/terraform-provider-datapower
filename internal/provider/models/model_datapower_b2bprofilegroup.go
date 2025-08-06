@@ -27,23 +27,26 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type B2BProfileGroup struct {
-	Id          types.String `tfsdk:"id"`
-	AppDomain   types.String `tfsdk:"app_domain"`
-	UserSummary types.String `tfsdk:"user_summary"`
-	B2bProfiles types.List   `tfsdk:"b2b_profiles"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	B2bProfiles   types.List        `tfsdk:"b2b_profiles"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var B2BProfileGroupObjectType = map[string]attr.Type{
-	"id":           types.StringType,
-	"app_domain":   types.StringType,
-	"user_summary": types.StringType,
-	"b2b_profiles": types.ListType{ElemType: types.ObjectType{AttrTypes: DmB2BGroupedProfileObjectType}},
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"user_summary":   types.StringType,
+	"b2b_profiles":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmB2BGroupedProfileObjectType}},
+	"object_actions": actions.ActionsListType,
 }
 
 func (data B2BProfileGroup) GetPath() string {

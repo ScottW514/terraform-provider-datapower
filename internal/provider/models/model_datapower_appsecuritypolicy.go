@@ -27,27 +27,30 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AppSecurityPolicy struct {
-	Id           types.String `tfsdk:"id"`
-	AppDomain    types.String `tfsdk:"app_domain"`
-	UserSummary  types.String `tfsdk:"user_summary"`
-	RequestMaps  types.List   `tfsdk:"request_maps"`
-	ResponseMaps types.List   `tfsdk:"response_maps"`
-	ErrorMaps    types.List   `tfsdk:"error_maps"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	RequestMaps   types.List        `tfsdk:"request_maps"`
+	ResponseMaps  types.List        `tfsdk:"response_maps"`
+	ErrorMaps     types.List        `tfsdk:"error_maps"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AppSecurityPolicyObjectType = map[string]attr.Type{
-	"id":            types.StringType,
-	"app_domain":    types.StringType,
-	"user_summary":  types.StringType,
-	"request_maps":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmWebAppRequestPolicyMapObjectType}},
-	"response_maps": types.ListType{ElemType: types.ObjectType{AttrTypes: DmWebAppResponsePolicyMapObjectType}},
-	"error_maps":    types.ListType{ElemType: types.ObjectType{AttrTypes: DmPolicyMapObjectType}},
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"user_summary":   types.StringType,
+	"request_maps":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmWebAppRequestPolicyMapObjectType}},
+	"response_maps":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmWebAppResponsePolicyMapObjectType}},
+	"error_maps":     types.ListType{ElemType: types.ObjectType{AttrTypes: DmPolicyMapObjectType}},
+	"object_actions": actions.ActionsListType,
 }
 
 func (data AppSecurityPolicy) GetPath() string {

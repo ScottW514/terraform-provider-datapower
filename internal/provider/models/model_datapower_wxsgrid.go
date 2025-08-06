@@ -27,26 +27,28 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WXSGrid struct {
-	Id                types.String `tfsdk:"id"`
-	AppDomain         types.String `tfsdk:"app_domain"`
-	UserSummary       types.String `tfsdk:"user_summary"`
-	Collective        types.String `tfsdk:"collective"`
-	Grid              types.String `tfsdk:"grid"`
-	UserName          types.String `tfsdk:"user_name"`
-	PasswordAlias     types.String `tfsdk:"password_alias"`
-	Timeout           types.Int64  `tfsdk:"timeout"`
-	SslClient         types.String `tfsdk:"ssl_client"`
-	Encrypt           types.Bool   `tfsdk:"encrypt"`
-	EncryptSsKey      types.String `tfsdk:"encrypt_ss_key"`
-	EncryptAlg        types.String `tfsdk:"encrypt_alg"`
-	KeyObfuscation    types.Bool   `tfsdk:"key_obfuscation"`
-	KeyObfuscationAlg types.String `tfsdk:"key_obfuscation_alg"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Collective        types.String      `tfsdk:"collective"`
+	Grid              types.String      `tfsdk:"grid"`
+	UserName          types.String      `tfsdk:"user_name"`
+	PasswordAlias     types.String      `tfsdk:"password_alias"`
+	Timeout           types.Int64       `tfsdk:"timeout"`
+	SslClient         types.String      `tfsdk:"ssl_client"`
+	Encrypt           types.Bool        `tfsdk:"encrypt"`
+	EncryptSsKey      types.String      `tfsdk:"encrypt_ss_key"`
+	EncryptAlg        types.String      `tfsdk:"encrypt_alg"`
+	KeyObfuscation    types.Bool        `tfsdk:"key_obfuscation"`
+	KeyObfuscationAlg types.String      `tfsdk:"key_obfuscation_alg"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WXSGridObjectType = map[string]attr.Type{
@@ -64,6 +66,7 @@ var WXSGridObjectType = map[string]attr.Type{
 	"encrypt_alg":         types.StringType,
 	"key_obfuscation":     types.BoolType,
 	"key_obfuscation_alg": types.StringType,
+	"object_actions":      actions.ActionsListType,
 }
 
 func (data WXSGrid) GetPath() string {

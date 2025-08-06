@@ -26,18 +26,20 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type GWScriptSettings struct {
-	Enabled                types.Bool   `tfsdk:"enabled"`
-	UserSummary            types.String `tfsdk:"user_summary"`
-	FrozenEnabled          types.Bool   `tfsdk:"frozen_enabled"`
-	UntrustedCodeMitigated types.Bool   `tfsdk:"untrusted_code_mitigated"`
-	ReloadNeeded           types.Bool   `tfsdk:"reload_needed"`
-	TerminateTime          types.Int64  `tfsdk:"terminate_time"`
+	Enabled                types.Bool        `tfsdk:"enabled"`
+	UserSummary            types.String      `tfsdk:"user_summary"`
+	FrozenEnabled          types.Bool        `tfsdk:"frozen_enabled"`
+	UntrustedCodeMitigated types.Bool        `tfsdk:"untrusted_code_mitigated"`
+	ReloadNeeded           types.Bool        `tfsdk:"reload_needed"`
+	TerminateTime          types.Int64       `tfsdk:"terminate_time"`
+	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
 }
 
 var GWScriptSettingsObjectType = map[string]attr.Type{
@@ -47,6 +49,7 @@ var GWScriptSettingsObjectType = map[string]attr.Type{
 	"untrusted_code_mitigated": types.BoolType,
 	"reload_needed":            types.BoolType,
 	"terminate_time":           types.Int64Type,
+	"object_actions":           actions.ActionsListType,
 }
 
 func (data GWScriptSettings) GetPath() string {

@@ -26,33 +26,35 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SystemSettings struct {
-	Enabled                 types.Bool   `tfsdk:"enabled"`
-	UserSummary             types.String `tfsdk:"user_summary"`
-	ProductOid              types.String `tfsdk:"product_oid"`
-	Description             types.String `tfsdk:"description"`
-	SerialNumber            types.String `tfsdk:"serial_number"`
-	EntitlementNumber       types.String `tfsdk:"entitlement_number"`
-	ProductId               types.String `tfsdk:"product_id"`
-	CapacityMode            types.String `tfsdk:"capacity_mode"`
-	Contact                 types.String `tfsdk:"contact"`
-	SystemName              types.String `tfsdk:"system_name"`
-	Location                types.String `tfsdk:"location"`
-	Services                types.Int64  `tfsdk:"services"`
-	BackupMode              types.String `tfsdk:"backup_mode"`
-	ProductMode             types.String `tfsdk:"product_mode"`
-	CustomUiFile            types.String `tfsdk:"custom_ui_file"`
-	AuditReserve            types.Int64  `tfsdk:"audit_reserve"`
-	DetectIntrusion         types.String `tfsdk:"detect_intrusion"`
-	HardwareXmlAcceleration types.Bool   `tfsdk:"hardware_xml_acceleration"`
-	Locale                  types.String `tfsdk:"locale"`
-	SystemLogFixedFormat    types.Bool   `tfsdk:"system_log_fixed_format"`
-	Uuid                    types.String `tfsdk:"uuid"`
+	Enabled                 types.Bool        `tfsdk:"enabled"`
+	UserSummary             types.String      `tfsdk:"user_summary"`
+	ProductOid              types.String      `tfsdk:"product_oid"`
+	Description             types.String      `tfsdk:"description"`
+	SerialNumber            types.String      `tfsdk:"serial_number"`
+	EntitlementNumber       types.String      `tfsdk:"entitlement_number"`
+	ProductId               types.String      `tfsdk:"product_id"`
+	CapacityMode            types.String      `tfsdk:"capacity_mode"`
+	Contact                 types.String      `tfsdk:"contact"`
+	SystemName              types.String      `tfsdk:"system_name"`
+	Location                types.String      `tfsdk:"location"`
+	Services                types.Int64       `tfsdk:"services"`
+	BackupMode              types.String      `tfsdk:"backup_mode"`
+	ProductMode             types.String      `tfsdk:"product_mode"`
+	CustomUiFile            types.String      `tfsdk:"custom_ui_file"`
+	AuditReserve            types.Int64       `tfsdk:"audit_reserve"`
+	DetectIntrusion         types.String      `tfsdk:"detect_intrusion"`
+	HardwareXmlAcceleration types.Bool        `tfsdk:"hardware_xml_acceleration"`
+	Locale                  types.String      `tfsdk:"locale"`
+	SystemLogFixedFormat    types.Bool        `tfsdk:"system_log_fixed_format"`
+	Uuid                    types.String      `tfsdk:"uuid"`
+	ObjectActions           []*actions.Action `tfsdk:"object_actions"`
 }
 
 var SystemSettingsObjectType = map[string]attr.Type{
@@ -77,6 +79,7 @@ var SystemSettingsObjectType = map[string]attr.Type{
 	"locale":                    types.StringType,
 	"system_log_fixed_format":   types.BoolType,
 	"uuid":                      types.StringType,
+	"object_actions":            actions.ActionsListType,
 }
 
 func (data SystemSettings) GetPath() string {

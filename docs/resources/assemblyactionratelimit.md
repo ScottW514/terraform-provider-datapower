@@ -45,6 +45,7 @@ resource "datapower_assemblyactionratelimit" "test" {
   - CLI Alias: `group-action`
   - Choices: `consume`, `replenish`
   - Default value: `consume`
+- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `rate_limit` (Attributes List) Rate limits
   - CLI Alias: `rate-limit` (see [below for nested schema](#nestedatt--rate_limit))
 - `rate_limit_definition` (Attributes List) Rate limit definitions
@@ -75,6 +76,23 @@ Optional:
   - CLI Alias: `action`
   - Choices: `inc`, `dec`
   - Default value: `inc`
+
+
+<a id="nestedatt--object_actions"></a>
+### Nested Schema for `object_actions`
+
+Required:
+
+- `action` (String) Action to take on target
+- `target_domain` (String) Application domain of the action target
+- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
+- `target_type` (String) Resource type of action target
+
+Optional:
+
+- `run_on_create` (Boolean) Run this action when creating this resource.
+- `run_on_delete` (Boolean) Run this action when deleting this resource.
+- `run_on_update` (Boolean) Run this action when updating this resource.
 
 
 <a id="nestedatt--rate_limit"></a>

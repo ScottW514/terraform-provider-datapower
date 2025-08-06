@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -41,6 +42,7 @@ type CookieAttributePolicy struct {
 	Path            types.String       `tfsdk:"path"`
 	Interval        types.Int64        `tfsdk:"interval"`
 	CustomAttribute types.String       `tfsdk:"custom_attribute"`
+	ObjectActions   []*actions.Action  `tfsdk:"object_actions"`
 }
 
 var CookieAttributePolicyObjectType = map[string]attr.Type{
@@ -52,6 +54,7 @@ var CookieAttributePolicyObjectType = map[string]attr.Type{
 	"path":             types.StringType,
 	"interval":         types.Int64Type,
 	"custom_attribute": types.StringType,
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data CookieAttributePolicy) GetPath() string {

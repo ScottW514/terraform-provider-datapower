@@ -27,39 +27,41 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type APIGateway struct {
-	Id                             types.String `tfsdk:"id"`
-	AppDomain                      types.String `tfsdk:"app_domain"`
-	UserSummary                    types.String `tfsdk:"user_summary"`
-	GatewayServiceName             types.String `tfsdk:"gateway_service_name"`
-	FrontProtocol                  types.List   `tfsdk:"front_protocol"`
-	UrlRefreshPolicy               types.String `tfsdk:"url_refresh_policy"`
-	CacheMemorySize                types.Int64  `tfsdk:"cache_memory_size"`
-	CacheSize                      types.Int64  `tfsdk:"cache_size"`
-	Sha1Caching                    types.Bool   `tfsdk:"sha1_caching"`
-	StaticDocumentCalls            types.Bool   `tfsdk:"static_document_calls"`
-	VirtualServers                 types.List   `tfsdk:"virtual_servers"`
-	DocCacheMaxDocs                types.Int64  `tfsdk:"doc_cache_max_docs"`
-	DocCacheSize                   types.Int64  `tfsdk:"doc_cache_size"`
-	DocMaxWrites                   types.Int64  `tfsdk:"doc_max_writes"`
-	DocCachePolicy                 types.List   `tfsdk:"doc_cache_policy"`
-	ScheduledRule                  types.List   `tfsdk:"scheduled_rule"`
-	ApiCollection                  types.List   `tfsdk:"api_collection"`
-	ShareRateLimitCount            types.String `tfsdk:"share_rate_limit_count"`
-	AssemblyBurstLimit             types.List   `tfsdk:"assembly_burst_limit"`
-	AssemblyRateLimit              types.List   `tfsdk:"assembly_rate_limit"`
-	AssemblyCountLimit             types.List   `tfsdk:"assembly_count_limit"`
-	LdapConnPool                   types.String `tfsdk:"ldap_conn_pool"`
-	ProxyPolicies                  types.List   `tfsdk:"proxy_policies"`
-	FrontTimeout                   types.Int64  `tfsdk:"front_timeout"`
-	FrontPersistentTimeout         types.Int64  `tfsdk:"front_persistent_timeout"`
-	OpenTelemetry                  types.String `tfsdk:"open_telemetry"`
-	OpenTelemetryResourceAttribute types.List   `tfsdk:"open_telemetry_resource_attribute"`
+	Id                             types.String      `tfsdk:"id"`
+	AppDomain                      types.String      `tfsdk:"app_domain"`
+	UserSummary                    types.String      `tfsdk:"user_summary"`
+	GatewayServiceName             types.String      `tfsdk:"gateway_service_name"`
+	FrontProtocol                  types.List        `tfsdk:"front_protocol"`
+	UrlRefreshPolicy               types.String      `tfsdk:"url_refresh_policy"`
+	CacheMemorySize                types.Int64       `tfsdk:"cache_memory_size"`
+	CacheSize                      types.Int64       `tfsdk:"cache_size"`
+	Sha1Caching                    types.Bool        `tfsdk:"sha1_caching"`
+	StaticDocumentCalls            types.Bool        `tfsdk:"static_document_calls"`
+	VirtualServers                 types.List        `tfsdk:"virtual_servers"`
+	DocCacheMaxDocs                types.Int64       `tfsdk:"doc_cache_max_docs"`
+	DocCacheSize                   types.Int64       `tfsdk:"doc_cache_size"`
+	DocMaxWrites                   types.Int64       `tfsdk:"doc_max_writes"`
+	DocCachePolicy                 types.List        `tfsdk:"doc_cache_policy"`
+	ScheduledRule                  types.List        `tfsdk:"scheduled_rule"`
+	ApiCollection                  types.List        `tfsdk:"api_collection"`
+	ShareRateLimitCount            types.String      `tfsdk:"share_rate_limit_count"`
+	AssemblyBurstLimit             types.List        `tfsdk:"assembly_burst_limit"`
+	AssemblyRateLimit              types.List        `tfsdk:"assembly_rate_limit"`
+	AssemblyCountLimit             types.List        `tfsdk:"assembly_count_limit"`
+	LdapConnPool                   types.String      `tfsdk:"ldap_conn_pool"`
+	ProxyPolicies                  types.List        `tfsdk:"proxy_policies"`
+	FrontTimeout                   types.Int64       `tfsdk:"front_timeout"`
+	FrontPersistentTimeout         types.Int64       `tfsdk:"front_persistent_timeout"`
+	OpenTelemetry                  types.String      `tfsdk:"open_telemetry"`
+	OpenTelemetryResourceAttribute types.List        `tfsdk:"open_telemetry_resource_attribute"`
+	ObjectActions                  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var APIGatewayObjectType = map[string]attr.Type{
@@ -90,6 +92,7 @@ var APIGatewayObjectType = map[string]attr.Type{
 	"front_persistent_timeout":          types.Int64Type,
 	"open_telemetry":                    types.StringType,
 	"open_telemetry_resource_attribute": types.ListType{ElemType: types.ObjectType{AttrTypes: DmOpenTelemetryResourceAttributeObjectType}},
+	"object_actions":                    actions.ActionsListType,
 }
 
 func (data APIGateway) GetPath() string {

@@ -27,21 +27,23 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WSStylePolicyRule struct {
-	Id               types.String `tfsdk:"id"`
-	AppDomain        types.String `tfsdk:"app_domain"`
-	Actions          types.List   `tfsdk:"actions"`
-	Direction        types.String `tfsdk:"direction"`
-	InputFormat      types.String `tfsdk:"input_format"`
-	OutputFormat     types.String `tfsdk:"output_format"`
-	NonXmlProcessing types.Bool   `tfsdk:"non_xml_processing"`
-	Unprocessed      types.Bool   `tfsdk:"unprocessed"`
-	UserSummary      types.String `tfsdk:"user_summary"`
+	Id               types.String      `tfsdk:"id"`
+	AppDomain        types.String      `tfsdk:"app_domain"`
+	Actions          types.List        `tfsdk:"actions"`
+	Direction        types.String      `tfsdk:"direction"`
+	InputFormat      types.String      `tfsdk:"input_format"`
+	OutputFormat     types.String      `tfsdk:"output_format"`
+	NonXmlProcessing types.Bool        `tfsdk:"non_xml_processing"`
+	Unprocessed      types.Bool        `tfsdk:"unprocessed"`
+	UserSummary      types.String      `tfsdk:"user_summary"`
+	ObjectActions    []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WSStylePolicyRuleObjectType = map[string]attr.Type{
@@ -54,6 +56,7 @@ var WSStylePolicyRuleObjectType = map[string]attr.Type{
 	"non_xml_processing": types.BoolType,
 	"unprocessed":        types.BoolType,
 	"user_summary":       types.StringType,
+	"object_actions":     actions.ActionsListType,
 }
 
 func (data WSStylePolicyRule) GetPath() string {

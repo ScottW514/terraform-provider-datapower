@@ -28,18 +28,20 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type Probe struct {
-	AppDomain      types.String `tfsdk:"app_domain"`
-	Enabled        types.Bool   `tfsdk:"enabled"`
-	UserSummary    types.String `tfsdk:"user_summary"`
-	MaxRecords     types.Int64  `tfsdk:"max_records"`
-	Expiration     types.Int64  `tfsdk:"expiration"`
-	GatewayPeering types.String `tfsdk:"gateway_peering"`
+	AppDomain      types.String      `tfsdk:"app_domain"`
+	Enabled        types.Bool        `tfsdk:"enabled"`
+	UserSummary    types.String      `tfsdk:"user_summary"`
+	MaxRecords     types.Int64       `tfsdk:"max_records"`
+	Expiration     types.Int64       `tfsdk:"expiration"`
+	GatewayPeering types.String      `tfsdk:"gateway_peering"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var ProbeObjectType = map[string]attr.Type{
@@ -49,6 +51,7 @@ var ProbeObjectType = map[string]attr.Type{
 	"max_records":     types.Int64Type,
 	"expiration":      types.Int64Type,
 	"gateway_peering": types.StringType,
+	"object_actions":  actions.ActionsListType,
 }
 
 func (data Probe) GetPath() string {

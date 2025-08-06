@@ -40,6 +40,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -161,6 +162,7 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				MarkdownDescription: tfutils.NewAttributeDescription("Global permissions profile", "config-permissions-profile", "accessprofile").String,
 				Optional:            true,
 			},
+			"object_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -180,6 +182,8 @@ func (r *DomainResource) Create(ctx context.Context, req resource.CreateRequest,
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
 
 	body := data.ToBody(ctx, `Domain`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -243,6 +247,8 @@ func (r *DomainResource) Update(ctx context.Context, req resource.UpdateRequest,
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `Domain`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
@@ -270,6 +276,8 @@ func (r *DomainResource) Delete(ctx context.Context, req resource.DeleteRequest,
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
 	auRes, auErr := r.client.Get("/mgmt/status/default/ActiveUsers")
 	if auErr != nil {

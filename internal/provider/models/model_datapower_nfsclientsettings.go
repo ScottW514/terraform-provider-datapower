@@ -26,21 +26,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type NFSClientSettings struct {
-	Enabled          types.Bool   `tfsdk:"enabled"`
-	UserSummary      types.String `tfsdk:"user_summary"`
-	MountRefreshTime types.Int64  `tfsdk:"mount_refresh_time"`
+	Enabled          types.Bool        `tfsdk:"enabled"`
+	UserSummary      types.String      `tfsdk:"user_summary"`
+	MountRefreshTime types.Int64       `tfsdk:"mount_refresh_time"`
+	ObjectActions    []*actions.Action `tfsdk:"object_actions"`
 }
 
 var NFSClientSettingsObjectType = map[string]attr.Type{
 	"enabled":            types.BoolType,
 	"user_summary":       types.StringType,
 	"mount_refresh_time": types.Int64Type,
+	"object_actions":     actions.ActionsListType,
 }
 
 func (data NFSClientSettings) GetPath() string {

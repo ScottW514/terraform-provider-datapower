@@ -26,19 +26,22 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type CRLFetch struct {
-	Enabled        types.Bool `tfsdk:"enabled"`
-	CrlFetchConfig types.List `tfsdk:"crl_fetch_config"`
+	Enabled        types.Bool        `tfsdk:"enabled"`
+	CrlFetchConfig types.List        `tfsdk:"crl_fetch_config"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var CRLFetchObjectType = map[string]attr.Type{
 	"enabled":          types.BoolType,
 	"crl_fetch_config": types.ListType{ElemType: types.ObjectType{AttrTypes: DmCRLFetchConfigObjectType}},
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data CRLFetch) GetPath() string {

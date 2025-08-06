@@ -27,31 +27,33 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type APILDAPRegistry struct {
-	Id                     types.String `tfsdk:"id"`
-	AppDomain              types.String `tfsdk:"app_domain"`
-	UserSummary            types.String `tfsdk:"user_summary"`
-	LdapHost               types.String `tfsdk:"ldap_host"`
-	LdapPort               types.Int64  `tfsdk:"ldap_port"`
-	SslClientProfile       types.String `tfsdk:"ssl_client_profile"`
-	LdapVersion            types.String `tfsdk:"ldap_version"`
-	LdapAuthMethod         types.String `tfsdk:"ldap_auth_method"`
-	LdapBindDn             types.String `tfsdk:"ldap_bind_dn"`
-	LdapBindPasswordAlias  types.String `tfsdk:"ldap_bind_password_alias"`
-	LdapSearchParameters   types.String `tfsdk:"ldap_search_parameters"`
-	LdapReadTimeout        types.Int64  `tfsdk:"ldap_read_timeout"`
-	LdapGroupAuthEnabled   types.Bool   `tfsdk:"ldap_group_auth_enabled"`
-	LdapGroupAuthType      types.String `tfsdk:"ldap_group_auth_type"`
-	LdapGroupScope         types.String `tfsdk:"ldap_group_scope"`
-	LdapGroupBaseDn        types.String `tfsdk:"ldap_group_base_dn"`
-	LdapGroupFilterPrefix  types.String `tfsdk:"ldap_group_filter_prefix"`
-	LdapGroupFilterSuffix  types.String `tfsdk:"ldap_group_filter_suffix"`
-	LdapGroupDynamicFilter types.String `tfsdk:"ldap_group_dynamic_filter"`
+	Id                     types.String      `tfsdk:"id"`
+	AppDomain              types.String      `tfsdk:"app_domain"`
+	UserSummary            types.String      `tfsdk:"user_summary"`
+	LdapHost               types.String      `tfsdk:"ldap_host"`
+	LdapPort               types.Int64       `tfsdk:"ldap_port"`
+	SslClientProfile       types.String      `tfsdk:"ssl_client_profile"`
+	LdapVersion            types.String      `tfsdk:"ldap_version"`
+	LdapAuthMethod         types.String      `tfsdk:"ldap_auth_method"`
+	LdapBindDn             types.String      `tfsdk:"ldap_bind_dn"`
+	LdapBindPasswordAlias  types.String      `tfsdk:"ldap_bind_password_alias"`
+	LdapSearchParameters   types.String      `tfsdk:"ldap_search_parameters"`
+	LdapReadTimeout        types.Int64       `tfsdk:"ldap_read_timeout"`
+	LdapGroupAuthEnabled   types.Bool        `tfsdk:"ldap_group_auth_enabled"`
+	LdapGroupAuthType      types.String      `tfsdk:"ldap_group_auth_type"`
+	LdapGroupScope         types.String      `tfsdk:"ldap_group_scope"`
+	LdapGroupBaseDn        types.String      `tfsdk:"ldap_group_base_dn"`
+	LdapGroupFilterPrefix  types.String      `tfsdk:"ldap_group_filter_prefix"`
+	LdapGroupFilterSuffix  types.String      `tfsdk:"ldap_group_filter_suffix"`
+	LdapGroupDynamicFilter types.String      `tfsdk:"ldap_group_dynamic_filter"`
+	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
 }
 
 var APILDAPRegistryObjectType = map[string]attr.Type{
@@ -74,6 +76,7 @@ var APILDAPRegistryObjectType = map[string]attr.Type{
 	"ldap_group_filter_prefix":  types.StringType,
 	"ldap_group_filter_suffix":  types.StringType,
 	"ldap_group_dynamic_filter": types.StringType,
+	"object_actions":            actions.ActionsListType,
 }
 
 func (data APILDAPRegistry) GetPath() string {

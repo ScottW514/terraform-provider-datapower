@@ -28,17 +28,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type DomainSettings struct {
-	AppDomain         types.String `tfsdk:"app_domain"`
-	Enabled           types.Bool   `tfsdk:"enabled"`
-	UserSummary       types.String `tfsdk:"user_summary"`
-	PasswordTreatment types.String `tfsdk:"password_treatment"`
-	Passphrase        types.String `tfsdk:"passphrase"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	PasswordTreatment types.String      `tfsdk:"password_treatment"`
+	Passphrase        types.String      `tfsdk:"passphrase"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var DomainSettingsObjectType = map[string]attr.Type{
@@ -47,6 +49,7 @@ var DomainSettingsObjectType = map[string]attr.Type{
 	"user_summary":       types.StringType,
 	"password_treatment": types.StringType,
 	"passphrase":         types.StringType,
+	"object_actions":     actions.ActionsListType,
 }
 
 func (data DomainSettings) GetPath() string {

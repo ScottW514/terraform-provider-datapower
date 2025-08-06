@@ -27,16 +27,18 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type MCFHttpURL struct {
-	Id                types.String `tfsdk:"id"`
-	AppDomain         types.String `tfsdk:"app_domain"`
-	HttpUrlExpression types.String `tfsdk:"http_url_expression"`
-	UserSummary       types.String `tfsdk:"user_summary"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	HttpUrlExpression types.String      `tfsdk:"http_url_expression"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var MCFHttpURLObjectType = map[string]attr.Type{
@@ -44,6 +46,7 @@ var MCFHttpURLObjectType = map[string]attr.Type{
 	"app_domain":          types.StringType,
 	"http_url_expression": types.StringType,
 	"user_summary":        types.StringType,
+	"object_actions":      actions.ActionsListType,
 }
 
 func (data MCFHttpURL) GetPath() string {

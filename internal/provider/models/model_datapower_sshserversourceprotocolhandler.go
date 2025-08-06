@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -53,6 +54,7 @@ type SSHServerSourceProtocolHandler struct {
 	IdleTimeout                 types.Int64                     `tfsdk:"idle_timeout"`
 	PersistentFilesystemTimeout types.Int64                     `tfsdk:"persistent_filesystem_timeout"`
 	VirtualDirectories          types.List                      `tfsdk:"virtual_directories"`
+	ObjectActions               []*actions.Action               `tfsdk:"object_actions"`
 }
 
 var SSHServerSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -76,6 +78,7 @@ var SSHServerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"idle_timeout":                  types.Int64Type,
 	"persistent_filesystem_timeout": types.Int64Type,
 	"virtual_directories":           types.ListType{ElemType: types.ObjectType{AttrTypes: DmSFTPServerVirtualDirectoryObjectType}},
+	"object_actions":                actions.ActionsListType,
 }
 
 func (data SSHServerSourceProtocolHandler) GetPath() string {

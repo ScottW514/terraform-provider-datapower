@@ -27,23 +27,26 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type MessageType struct {
-	Id          types.String `tfsdk:"id"`
-	AppDomain   types.String `tfsdk:"app_domain"`
-	UserSummary types.String `tfsdk:"user_summary"`
-	Matching    types.List   `tfsdk:"matching"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	Matching      types.List        `tfsdk:"matching"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var MessageTypeObjectType = map[string]attr.Type{
-	"id":           types.StringType,
-	"app_domain":   types.StringType,
-	"user_summary": types.StringType,
-	"matching":     types.ListType{ElemType: types.StringType},
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"user_summary":   types.StringType,
+	"matching":       types.ListType{ElemType: types.StringType},
+	"object_actions": actions.ActionsListType,
 }
 
 func (data MessageType) GetPath() string {

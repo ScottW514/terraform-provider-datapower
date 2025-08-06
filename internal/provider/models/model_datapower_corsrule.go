@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -39,6 +40,7 @@ type CORSRule struct {
 	AllowOrigin      types.List               `tfsdk:"allow_origin"`
 	AllowCredentials types.Bool               `tfsdk:"allow_credentials"`
 	ExposeHeaders    *DmCORSRuleExposeHeaders `tfsdk:"expose_headers"`
+	ObjectActions    []*actions.Action        `tfsdk:"object_actions"`
 }
 
 var CORSRuleObjectType = map[string]attr.Type{
@@ -48,6 +50,7 @@ var CORSRuleObjectType = map[string]attr.Type{
 	"allow_origin":      types.ListType{ElemType: types.StringType},
 	"allow_credentials": types.BoolType,
 	"expose_headers":    types.ObjectType{AttrTypes: DmCORSRuleExposeHeadersObjectType},
+	"object_actions":    actions.ActionsListType,
 }
 
 func (data CORSRule) GetPath() string {

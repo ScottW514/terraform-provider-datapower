@@ -27,18 +27,20 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type DocumentCryptoMap struct {
-	Id                types.String `tfsdk:"id"`
-	AppDomain         types.String `tfsdk:"app_domain"`
-	Operation         types.String `tfsdk:"operation"`
-	XPath             types.List   `tfsdk:"x_path"`
-	NameSpaceMappings types.List   `tfsdk:"name_space_mappings"`
-	UserSummary       types.String `tfsdk:"user_summary"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Operation         types.String      `tfsdk:"operation"`
+	XPath             types.List        `tfsdk:"x_path"`
+	NameSpaceMappings types.List        `tfsdk:"name_space_mappings"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var DocumentCryptoMapObjectType = map[string]attr.Type{
@@ -48,6 +50,7 @@ var DocumentCryptoMapObjectType = map[string]attr.Type{
 	"x_path":              types.ListType{ElemType: types.StringType},
 	"name_space_mappings": types.ListType{ElemType: types.ObjectType{AttrTypes: DmNamespaceMappingObjectType}},
 	"user_summary":        types.StringType,
+	"object_actions":      actions.ActionsListType,
 }
 
 func (data DocumentCryptoMap) GetPath() string {

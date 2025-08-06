@@ -27,19 +27,21 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type PeerGroup struct {
-	Id             types.String `tfsdk:"id"`
-	AppDomain      types.String `tfsdk:"app_domain"`
-	UserSummary    types.String `tfsdk:"user_summary"`
-	Type           types.String `tfsdk:"type"`
-	Url            types.List   `tfsdk:"url"`
-	IpMulticast    types.String `tfsdk:"ip_multicast"`
-	UpdateInterval types.Int64  `tfsdk:"update_interval"`
+	Id             types.String      `tfsdk:"id"`
+	AppDomain      types.String      `tfsdk:"app_domain"`
+	UserSummary    types.String      `tfsdk:"user_summary"`
+	Type           types.String      `tfsdk:"type"`
+	Url            types.List        `tfsdk:"url"`
+	IpMulticast    types.String      `tfsdk:"ip_multicast"`
+	UpdateInterval types.Int64       `tfsdk:"update_interval"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var PeerGroupObjectType = map[string]attr.Type{
@@ -50,6 +52,7 @@ var PeerGroupObjectType = map[string]attr.Type{
 	"url":             types.ListType{ElemType: types.StringType},
 	"ip_multicast":    types.StringType,
 	"update_interval": types.Int64Type,
+	"object_actions":  actions.ActionsListType,
 }
 
 func (data PeerGroup) GetPath() string {

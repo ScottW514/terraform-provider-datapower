@@ -28,30 +28,32 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type GitOps struct {
-	AppDomain             types.String `tfsdk:"app_domain"`
-	Enabled               types.Bool   `tfsdk:"enabled"`
-	UserSummary           types.String `tfsdk:"user_summary"`
-	ConnectionType        types.String `tfsdk:"connection_type"`
-	Mode                  types.String `tfsdk:"mode"`
-	CommitIdentifierType  types.String `tfsdk:"commit_identifier_type"`
-	CommitIdentifier      types.String `tfsdk:"commit_identifier"`
-	RemoteLocation        types.String `tfsdk:"remote_location"`
-	Interval              types.Int64  `tfsdk:"interval"`
-	SshClientProfile      types.String `tfsdk:"ssh_client_profile"`
-	Username              types.String `tfsdk:"username"`
-	Password              types.String `tfsdk:"password"`
-	SshAuthorizedKeysFile types.String `tfsdk:"ssh_authorized_keys_file"`
-	TlsValcred            types.String `tfsdk:"tls_valcred"`
-	GitUser               types.String `tfsdk:"git_user"`
-	GitEmail              types.String `tfsdk:"git_email"`
-	JsonParseSettings     types.String `tfsdk:"json_parse_settings"`
-	TemplatePolicies      types.List   `tfsdk:"template_policies"`
+	AppDomain             types.String      `tfsdk:"app_domain"`
+	Enabled               types.Bool        `tfsdk:"enabled"`
+	UserSummary           types.String      `tfsdk:"user_summary"`
+	ConnectionType        types.String      `tfsdk:"connection_type"`
+	Mode                  types.String      `tfsdk:"mode"`
+	CommitIdentifierType  types.String      `tfsdk:"commit_identifier_type"`
+	CommitIdentifier      types.String      `tfsdk:"commit_identifier"`
+	RemoteLocation        types.String      `tfsdk:"remote_location"`
+	Interval              types.Int64       `tfsdk:"interval"`
+	SshClientProfile      types.String      `tfsdk:"ssh_client_profile"`
+	Username              types.String      `tfsdk:"username"`
+	Password              types.String      `tfsdk:"password"`
+	SshAuthorizedKeysFile types.String      `tfsdk:"ssh_authorized_keys_file"`
+	TlsValcred            types.String      `tfsdk:"tls_valcred"`
+	GitUser               types.String      `tfsdk:"git_user"`
+	GitEmail              types.String      `tfsdk:"git_email"`
+	JsonParseSettings     types.String      `tfsdk:"json_parse_settings"`
+	TemplatePolicies      types.List        `tfsdk:"template_policies"`
+	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
 }
 
 var GitOpsObjectType = map[string]attr.Type{
@@ -73,6 +75,7 @@ var GitOpsObjectType = map[string]attr.Type{
 	"git_email":                types.StringType,
 	"json_parse_settings":      types.StringType,
 	"template_policies":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmGitOpsTemplatePolicyObjectType}},
+	"object_actions":           actions.ActionsListType,
 }
 
 func (data GitOps) GetPath() string {

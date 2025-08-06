@@ -27,20 +27,22 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type JSONSettings struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	JsonMaxNestingDepth types.Int64  `tfsdk:"json_max_nesting_depth"`
-	JsonMaxLabelLength  types.Int64  `tfsdk:"json_max_label_length"`
-	JsonMaxValueLength  types.Int64  `tfsdk:"json_max_value_length"`
-	JsonMaxNumberLength types.Int64  `tfsdk:"json_max_number_length"`
-	JsonDocumentSize    types.Int64  `tfsdk:"json_document_size"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	JsonMaxNestingDepth types.Int64       `tfsdk:"json_max_nesting_depth"`
+	JsonMaxLabelLength  types.Int64       `tfsdk:"json_max_label_length"`
+	JsonMaxValueLength  types.Int64       `tfsdk:"json_max_value_length"`
+	JsonMaxNumberLength types.Int64       `tfsdk:"json_max_number_length"`
+	JsonDocumentSize    types.Int64       `tfsdk:"json_document_size"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var JSONSettingsObjectType = map[string]attr.Type{
@@ -52,6 +54,7 @@ var JSONSettingsObjectType = map[string]attr.Type{
 	"json_max_value_length":  types.Int64Type,
 	"json_max_number_length": types.Int64Type,
 	"json_document_size":     types.Int64Type,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data JSONSettings) GetPath() string {

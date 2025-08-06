@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -50,6 +51,7 @@ type ConformancePolicy struct {
 	ResponseLogTarget            types.String           `tfsdk:"response_log_target"`
 	ResponseRejectLevel          types.String           `tfsdk:"response_reject_level"`
 	ResponseRejectIncludeSummary types.Bool             `tfsdk:"response_reject_include_summary"`
+	ObjectActions                []*actions.Action      `tfsdk:"object_actions"`
 }
 
 var ConformancePolicyObjectType = map[string]attr.Type{
@@ -70,6 +72,7 @@ var ConformancePolicyObjectType = map[string]attr.Type{
 	"response_log_target":             types.StringType,
 	"response_reject_level":           types.StringType,
 	"response_reject_include_summary": types.BoolType,
+	"object_actions":                  actions.ActionsListType,
 }
 
 func (data ConformancePolicy) GetPath() string {

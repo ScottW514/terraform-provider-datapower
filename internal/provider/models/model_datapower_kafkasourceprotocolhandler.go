@@ -27,20 +27,22 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type KafkaSourceProtocolHandler struct {
-	Id            types.String `tfsdk:"id"`
-	AppDomain     types.String `tfsdk:"app_domain"`
-	UserSummary   types.String `tfsdk:"user_summary"`
-	Cluster       types.String `tfsdk:"cluster"`
-	RequestTopic  types.String `tfsdk:"request_topic"`
-	ResponseTopic types.String `tfsdk:"response_topic"`
-	ConsumerGroup types.String `tfsdk:"consumer_group"`
-	BatchSize     types.Int64  `tfsdk:"batch_size"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	Cluster       types.String      `tfsdk:"cluster"`
+	RequestTopic  types.String      `tfsdk:"request_topic"`
+	ResponseTopic types.String      `tfsdk:"response_topic"`
+	ConsumerGroup types.String      `tfsdk:"consumer_group"`
+	BatchSize     types.Int64       `tfsdk:"batch_size"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var KafkaSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -52,6 +54,7 @@ var KafkaSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"response_topic": types.StringType,
 	"consumer_group": types.StringType,
 	"batch_size":     types.Int64Type,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data KafkaSourceProtocolHandler) GetPath() string {

@@ -27,17 +27,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type APIAuthURLRegistry struct {
-	Id               types.String `tfsdk:"id"`
-	AppDomain        types.String `tfsdk:"app_domain"`
-	UserSummary      types.String `tfsdk:"user_summary"`
-	AuthUrl          types.String `tfsdk:"auth_url"`
-	TlsClientProfile types.String `tfsdk:"tls_client_profile"`
+	Id               types.String      `tfsdk:"id"`
+	AppDomain        types.String      `tfsdk:"app_domain"`
+	UserSummary      types.String      `tfsdk:"user_summary"`
+	AuthUrl          types.String      `tfsdk:"auth_url"`
+	TlsClientProfile types.String      `tfsdk:"tls_client_profile"`
+	ObjectActions    []*actions.Action `tfsdk:"object_actions"`
 }
 
 var APIAuthURLRegistryObjectType = map[string]attr.Type{
@@ -46,6 +48,7 @@ var APIAuthURLRegistryObjectType = map[string]attr.Type{
 	"user_summary":       types.StringType,
 	"auth_url":           types.StringType,
 	"tls_client_profile": types.StringType,
+	"object_actions":     actions.ActionsListType,
 }
 
 func (data APIAuthURLRegistry) GetPath() string {

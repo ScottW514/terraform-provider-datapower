@@ -26,23 +26,26 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AuditLog struct {
-	Enabled    types.Bool   `tfsdk:"enabled"`
-	Size       types.Int64  `tfsdk:"size"`
-	Rotate     types.Int64  `tfsdk:"rotate"`
-	AuditLevel types.String `tfsdk:"audit_level"`
+	Enabled       types.Bool        `tfsdk:"enabled"`
+	Size          types.Int64       `tfsdk:"size"`
+	Rotate        types.Int64       `tfsdk:"rotate"`
+	AuditLevel    types.String      `tfsdk:"audit_level"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AuditLogObjectType = map[string]attr.Type{
-	"enabled":     types.BoolType,
-	"size":        types.Int64Type,
-	"rotate":      types.Int64Type,
-	"audit_level": types.StringType,
+	"enabled":        types.BoolType,
+	"size":           types.Int64Type,
+	"rotate":         types.Int64Type,
+	"audit_level":    types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data AuditLog) GetPath() string {

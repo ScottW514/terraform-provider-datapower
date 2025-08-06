@@ -28,6 +28,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -43,6 +44,7 @@ type SSHServerProfile struct {
 	SendPreAuthMsg types.Bool           `tfsdk:"send_pre_auth_msg"`
 	PreAuthMsg     types.String         `tfsdk:"pre_auth_msg"`
 	HostKeyAlg     *DmHostKeyAlgorithms `tfsdk:"host_key_alg"`
+	ObjectActions  []*actions.Action    `tfsdk:"object_actions"`
 }
 
 var SSHServerProfileObjectType = map[string]attr.Type{
@@ -55,6 +57,7 @@ var SSHServerProfileObjectType = map[string]attr.Type{
 	"send_pre_auth_msg": types.BoolType,
 	"pre_auth_msg":      types.StringType,
 	"host_key_alg":      types.ObjectType{AttrTypes: DmHostKeyAlgorithmsObjectType},
+	"object_actions":    actions.ActionsListType,
 }
 
 func (data SSHServerProfile) GetPath() string {

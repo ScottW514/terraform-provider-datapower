@@ -27,20 +27,22 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type ODRConnectorGroup struct {
-	Id                     types.String `tfsdk:"id"`
-	UserSummary            types.String `tfsdk:"user_summary"`
-	OdrGroupConnectors     types.List   `tfsdk:"odr_group_connectors"`
-	MaxRetryInterval       types.Int64  `tfsdk:"max_retry_interval"`
-	XmlManager             types.String `tfsdk:"xml_manager"`
-	OdrConnGroupProperties types.List   `tfsdk:"odr_conn_group_properties"`
-	SslClientConfigType    types.String `tfsdk:"ssl_client_config_type"`
-	SslClient              types.String `tfsdk:"ssl_client"`
+	Id                     types.String      `tfsdk:"id"`
+	UserSummary            types.String      `tfsdk:"user_summary"`
+	OdrGroupConnectors     types.List        `tfsdk:"odr_group_connectors"`
+	MaxRetryInterval       types.Int64       `tfsdk:"max_retry_interval"`
+	XmlManager             types.String      `tfsdk:"xml_manager"`
+	OdrConnGroupProperties types.List        `tfsdk:"odr_conn_group_properties"`
+	SslClientConfigType    types.String      `tfsdk:"ssl_client_config_type"`
+	SslClient              types.String      `tfsdk:"ssl_client"`
+	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
 }
 
 var ODRConnectorGroupObjectType = map[string]attr.Type{
@@ -52,6 +54,7 @@ var ODRConnectorGroupObjectType = map[string]attr.Type{
 	"odr_conn_group_properties": types.ListType{ElemType: types.ObjectType{AttrTypes: DmODRConnPropertyObjectType}},
 	"ssl_client_config_type":    types.StringType,
 	"ssl_client":                types.StringType,
+	"object_actions":            actions.ActionsListType,
 }
 
 func (data ODRConnectorGroup) GetPath() string {

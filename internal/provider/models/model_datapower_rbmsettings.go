@@ -26,6 +26,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -96,6 +97,7 @@ type RBMSettings struct {
 	LdapsslClientProfile              types.String              `tfsdk:"ldapssl_client_profile"`
 	McldapsslClientConfigType         types.String              `tfsdk:"mcldapssl_client_config_type"`
 	McldapsslClientProfile            types.String              `tfsdk:"mcldapssl_client_profile"`
+	ObjectActions                     []*actions.Action         `tfsdk:"object_actions"`
 }
 
 var RBMSettingsObjectType = map[string]attr.Type{
@@ -163,6 +165,7 @@ var RBMSettingsObjectType = map[string]attr.Type{
 	"ldapssl_client_profile":                types.StringType,
 	"mcldapssl_client_config_type":          types.StringType,
 	"mcldapssl_client_profile":              types.StringType,
+	"object_actions":                        actions.ActionsListType,
 }
 
 func (data RBMSettings) GetPath() string {

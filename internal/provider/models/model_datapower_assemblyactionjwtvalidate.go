@@ -27,26 +27,28 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AssemblyActionJWTValidate struct {
-	Id              types.String `tfsdk:"id"`
-	AppDomain       types.String `tfsdk:"app_domain"`
-	Jwt             types.String `tfsdk:"jwt"`
-	OutputClaims    types.String `tfsdk:"output_claims"`
-	IssuerClaim     types.String `tfsdk:"issuer_claim"`
-	AudienceClaim   types.String `tfsdk:"audience_claim"`
-	DecryptCrypto   types.String `tfsdk:"decrypt_crypto"`
-	DecryptJwk      types.String `tfsdk:"decrypt_jwk"`
-	VerifyCrypto    types.String `tfsdk:"verify_crypto"`
-	VerifyJwk       types.String `tfsdk:"verify_jwk"`
-	UserSummary     types.String `tfsdk:"user_summary"`
-	Title           types.String `tfsdk:"title"`
-	CorrelationPath types.String `tfsdk:"correlation_path"`
-	ActionDebug     types.Bool   `tfsdk:"action_debug"`
+	Id              types.String      `tfsdk:"id"`
+	AppDomain       types.String      `tfsdk:"app_domain"`
+	Jwt             types.String      `tfsdk:"jwt"`
+	OutputClaims    types.String      `tfsdk:"output_claims"`
+	IssuerClaim     types.String      `tfsdk:"issuer_claim"`
+	AudienceClaim   types.String      `tfsdk:"audience_claim"`
+	DecryptCrypto   types.String      `tfsdk:"decrypt_crypto"`
+	DecryptJwk      types.String      `tfsdk:"decrypt_jwk"`
+	VerifyCrypto    types.String      `tfsdk:"verify_crypto"`
+	VerifyJwk       types.String      `tfsdk:"verify_jwk"`
+	UserSummary     types.String      `tfsdk:"user_summary"`
+	Title           types.String      `tfsdk:"title"`
+	CorrelationPath types.String      `tfsdk:"correlation_path"`
+	ActionDebug     types.Bool        `tfsdk:"action_debug"`
+	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AssemblyActionJWTValidateObjectType = map[string]attr.Type{
@@ -64,6 +66,7 @@ var AssemblyActionJWTValidateObjectType = map[string]attr.Type{
 	"title":            types.StringType,
 	"correlation_path": types.StringType,
 	"action_debug":     types.BoolType,
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data AssemblyActionJWTValidate) GetPath() string {

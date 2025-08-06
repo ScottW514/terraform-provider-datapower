@@ -27,21 +27,23 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WSEndpointRewritePolicy struct {
-	Id                                types.String `tfsdk:"id"`
-	AppDomain                         types.String `tfsdk:"app_domain"`
-	UserSummary                       types.String `tfsdk:"user_summary"`
-	WsEndpointLocalRewriteRule        types.List   `tfsdk:"ws_endpoint_local_rewrite_rule"`
-	WsEndpointRemoteRewriteRule       types.List   `tfsdk:"ws_endpoint_remote_rewrite_rule"`
-	WsEndpointPublishRewriteRule      types.List   `tfsdk:"ws_endpoint_publish_rewrite_rule"`
-	WsEndpointSubscriptionLocalRule   types.List   `tfsdk:"ws_endpoint_subscription_local_rule"`
-	WsEndpointSubscriptionRemoteRule  types.List   `tfsdk:"ws_endpoint_subscription_remote_rule"`
-	WsEndpointSubscriptionPublishRule types.List   `tfsdk:"ws_endpoint_subscription_publish_rule"`
+	Id                                types.String      `tfsdk:"id"`
+	AppDomain                         types.String      `tfsdk:"app_domain"`
+	UserSummary                       types.String      `tfsdk:"user_summary"`
+	WsEndpointLocalRewriteRule        types.List        `tfsdk:"ws_endpoint_local_rewrite_rule"`
+	WsEndpointRemoteRewriteRule       types.List        `tfsdk:"ws_endpoint_remote_rewrite_rule"`
+	WsEndpointPublishRewriteRule      types.List        `tfsdk:"ws_endpoint_publish_rewrite_rule"`
+	WsEndpointSubscriptionLocalRule   types.List        `tfsdk:"ws_endpoint_subscription_local_rule"`
+	WsEndpointSubscriptionRemoteRule  types.List        `tfsdk:"ws_endpoint_subscription_remote_rule"`
+	WsEndpointSubscriptionPublishRule types.List        `tfsdk:"ws_endpoint_subscription_publish_rule"`
+	ObjectActions                     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WSEndpointRewritePolicyObjectType = map[string]attr.Type{
@@ -54,6 +56,7 @@ var WSEndpointRewritePolicyObjectType = map[string]attr.Type{
 	"ws_endpoint_subscription_local_rule":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSEndpointSubscriptionLocalRuleObjectType}},
 	"ws_endpoint_subscription_remote_rule":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSEndpointSubscriptionRemoteRuleObjectType}},
 	"ws_endpoint_subscription_publish_rule": types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSEndpointSubscriptionPublishRuleObjectType}},
+	"object_actions":                        actions.ActionsListType,
 }
 
 func (data WSEndpointRewritePolicy) GetPath() string {

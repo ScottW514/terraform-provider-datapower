@@ -26,21 +26,23 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type B2BPersistence struct {
-	Enabled      types.Bool   `tfsdk:"enabled"`
-	UserSummary  types.String `tfsdk:"user_summary"`
-	RaidVolume   types.String `tfsdk:"raid_volume"`
-	StorageSize  types.Int64  `tfsdk:"storage_size"`
-	HaEnabled    types.Bool   `tfsdk:"ha_enabled"`
-	HaOtherHosts *DmB2BHAHost `tfsdk:"ha_other_hosts"`
-	HaLocalIp    types.String `tfsdk:"ha_local_ip"`
-	HaLocalPort  types.Int64  `tfsdk:"ha_local_port"`
-	HaVirtualIp  types.String `tfsdk:"ha_virtual_ip"`
+	Enabled       types.Bool        `tfsdk:"enabled"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	RaidVolume    types.String      `tfsdk:"raid_volume"`
+	StorageSize   types.Int64       `tfsdk:"storage_size"`
+	HaEnabled     types.Bool        `tfsdk:"ha_enabled"`
+	HaOtherHosts  *DmB2BHAHost      `tfsdk:"ha_other_hosts"`
+	HaLocalIp     types.String      `tfsdk:"ha_local_ip"`
+	HaLocalPort   types.Int64       `tfsdk:"ha_local_port"`
+	HaVirtualIp   types.String      `tfsdk:"ha_virtual_ip"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var B2BPersistenceObjectType = map[string]attr.Type{
@@ -53,6 +55,7 @@ var B2BPersistenceObjectType = map[string]attr.Type{
 	"ha_local_ip":    types.StringType,
 	"ha_local_port":  types.Int64Type,
 	"ha_virtual_ip":  types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data B2BPersistence) GetPath() string {

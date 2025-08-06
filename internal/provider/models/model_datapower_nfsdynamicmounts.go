@@ -28,25 +28,27 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type NFSDynamicMounts struct {
-	AppDomain           types.String `tfsdk:"app_domain"`
-	Enabled             types.Bool   `tfsdk:"enabled"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	Version             types.Int64  `tfsdk:"version"`
-	Transport           types.String `tfsdk:"transport"`
-	MountType           types.String `tfsdk:"mount_type"`
-	ReadOnly            types.Bool   `tfsdk:"read_only"`
-	ReadSize            types.Int64  `tfsdk:"read_size"`
-	WriteSize           types.Int64  `tfsdk:"write_size"`
-	Timeout             types.Int64  `tfsdk:"timeout"`
-	Retransmissions     types.Int64  `tfsdk:"retransmissions"`
-	IdleUnmountSeconds  types.Int64  `tfsdk:"idle_unmount_seconds"`
-	MountTimeoutSeconds types.Int64  `tfsdk:"mount_timeout_seconds"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	Enabled             types.Bool        `tfsdk:"enabled"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	Version             types.Int64       `tfsdk:"version"`
+	Transport           types.String      `tfsdk:"transport"`
+	MountType           types.String      `tfsdk:"mount_type"`
+	ReadOnly            types.Bool        `tfsdk:"read_only"`
+	ReadSize            types.Int64       `tfsdk:"read_size"`
+	WriteSize           types.Int64       `tfsdk:"write_size"`
+	Timeout             types.Int64       `tfsdk:"timeout"`
+	Retransmissions     types.Int64       `tfsdk:"retransmissions"`
+	IdleUnmountSeconds  types.Int64       `tfsdk:"idle_unmount_seconds"`
+	MountTimeoutSeconds types.Int64       `tfsdk:"mount_timeout_seconds"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var NFSDynamicMountsObjectType = map[string]attr.Type{
@@ -63,6 +65,7 @@ var NFSDynamicMountsObjectType = map[string]attr.Type{
 	"retransmissions":       types.Int64Type,
 	"idle_unmount_seconds":  types.Int64Type,
 	"mount_timeout_seconds": types.Int64Type,
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data NFSDynamicMounts) GetPath() string {

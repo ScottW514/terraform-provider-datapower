@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -49,6 +50,7 @@ type Domain struct {
 	MaxChkpoints               types.Int64            `tfsdk:"max_chkpoints"`
 	ConfigPermissionsMode      types.String           `tfsdk:"config_permissions_mode"`
 	ConfigPermissionsProfile   types.String           `tfsdk:"config_permissions_profile"`
+	ObjectActions              []*actions.Action      `tfsdk:"object_actions"`
 }
 
 var DomainObjectType = map[string]attr.Type{
@@ -68,6 +70,7 @@ var DomainObjectType = map[string]attr.Type{
 	"max_chkpoints":                types.Int64Type,
 	"config_permissions_mode":      types.StringType,
 	"config_permissions_profile":   types.StringType,
+	"object_actions":               actions.ActionsListType,
 }
 
 func (data Domain) GetPath() string {

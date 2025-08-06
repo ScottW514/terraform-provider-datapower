@@ -35,18 +35,21 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
 type File struct {
-	AppDomain  types.String `tfsdk:"app_domain"`
-	RemotePath types.String `tfsdk:"remote_path"`
-	LocalPath  types.String `tfsdk:"local_path"`
-	Hash       types.String `tfsdk:"hash"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	RemotePath    types.String      `tfsdk:"remote_path"`
+	LocalPath     types.String      `tfsdk:"local_path"`
+	Hash          types.String      `tfsdk:"hash"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var _ resource.ResourceWithModifyPlan = &FileResource{}
+var _ resource.ResourceWithValidateConfig = &FileResource{}
 
 func NewFileResource() resource.Resource {
 	return &FileResource{}
@@ -97,6 +100,7 @@ func (r *FileResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Computed:            true,
 				DeprecationMessage:  "This attribute is for INTERNAL PROVIDER USE. Set values are ignored.",
 			},
+			"object_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -116,6 +120,8 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
 
 	fileData, err := r.loadLocalFile(data.LocalPath.ValueString())
 	if err != nil {
@@ -179,6 +185,8 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		return
 	}
 
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+
 	fileData, err := r.loadLocalFile(data.LocalPath.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("%s", err))
@@ -206,6 +214,8 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
 
 	path := fmt.Sprintf("/mgmt/filestore/%s/%s", data.AppDomain.ValueString(), strings.ReplaceAll(data.RemotePath.ValueString(), "://", ""))
 	_, err := r.client.Delete(path)
@@ -278,4 +288,15 @@ func (r *FileResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRe
 
 	resp.Diagnostics.Append(resp.Plan.Set(ctx, &plan)...)
 
+}
+
+func (r *FileResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var data File
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	actions.ValidateConfig(ctx, &resp.Diagnostics, data.ObjectActions)
 }

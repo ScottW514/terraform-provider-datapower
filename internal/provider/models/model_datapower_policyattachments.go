@@ -27,20 +27,22 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type PolicyAttachments struct {
-	Id                            types.String `tfsdk:"id"`
-	AppDomain                     types.String `tfsdk:"app_domain"`
-	UserSummary                   types.String `tfsdk:"user_summary"`
-	EnforcementMode               types.String `tfsdk:"enforcement_mode"`
-	PolicyReferences              types.Bool   `tfsdk:"policy_references"`
-	IgnoredPolicyAttachmentPoints types.List   `tfsdk:"ignored_policy_attachment_points"`
-	ExternalPolicy                types.List   `tfsdk:"external_policy"`
-	SlaEnforcementMode            types.String `tfsdk:"sla_enforcement_mode"`
+	Id                            types.String      `tfsdk:"id"`
+	AppDomain                     types.String      `tfsdk:"app_domain"`
+	UserSummary                   types.String      `tfsdk:"user_summary"`
+	EnforcementMode               types.String      `tfsdk:"enforcement_mode"`
+	PolicyReferences              types.Bool        `tfsdk:"policy_references"`
+	IgnoredPolicyAttachmentPoints types.List        `tfsdk:"ignored_policy_attachment_points"`
+	ExternalPolicy                types.List        `tfsdk:"external_policy"`
+	SlaEnforcementMode            types.String      `tfsdk:"sla_enforcement_mode"`
+	ObjectActions                 []*actions.Action `tfsdk:"object_actions"`
 }
 
 var PolicyAttachmentsObjectType = map[string]attr.Type{
@@ -52,6 +54,7 @@ var PolicyAttachmentsObjectType = map[string]attr.Type{
 	"ignored_policy_attachment_points": types.ListType{ElemType: types.ObjectType{AttrTypes: DmPolicyAttachmentPointObjectType}},
 	"external_policy":                  types.ListType{ElemType: types.ObjectType{AttrTypes: DmExternalAttachedPolicyObjectType}},
 	"sla_enforcement_mode":             types.StringType,
+	"object_actions":                   actions.ActionsListType,
 }
 
 func (data PolicyAttachments) GetPath() string {

@@ -35,6 +35,7 @@ resource "datapower_messagecontentfilters" "test" {
   - CLI Alias: `filter`
 - `filters` (Attributes List) Message Content Filter
   - CLI Alias: `mcfilter` (see [below for nested schema](#nestedatt--filters))
+- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 
@@ -53,3 +54,20 @@ Optional:
 - `http_value` (String) HTTP Header Value
 - `x_path_expression` (String) XPath Expression
 - `x_path_value` (String) XPath Value
+
+
+<a id="nestedatt--object_actions"></a>
+### Nested Schema for `object_actions`
+
+Required:
+
+- `action` (String) Action to take on target
+- `target_domain` (String) Application domain of the action target
+- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
+- `target_type` (String) Resource type of action target
+
+Optional:
+
+- `run_on_create` (Boolean) Run this action when creating this resource.
+- `run_on_delete` (Boolean) Run this action when deleting this resource.
+- `run_on_update` (Boolean) Run this action when updating this resource.

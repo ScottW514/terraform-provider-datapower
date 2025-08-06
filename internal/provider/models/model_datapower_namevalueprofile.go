@@ -27,24 +27,26 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type NameValueProfile struct {
-	Id                     types.String `tfsdk:"id"`
-	AppDomain              types.String `tfsdk:"app_domain"`
-	UserSummary            types.String `tfsdk:"user_summary"`
-	MaxAttributes          types.Int64  `tfsdk:"max_attributes"`
-	MaxAggregateSize       types.Int64  `tfsdk:"max_aggregate_size"`
-	MaxNameSize            types.Int64  `tfsdk:"max_name_size"`
-	MaxValueSize           types.Int64  `tfsdk:"max_value_size"`
-	ValidationList         types.List   `tfsdk:"validation_list"`
-	DefaultFixup           types.String `tfsdk:"default_fixup"`
-	DefaultMapValue        types.String `tfsdk:"default_map_value"`
-	DefaultXss             types.Bool   `tfsdk:"default_xss"`
-	NoMatchXssPatternsFile types.String `tfsdk:"no_match_xss_patterns_file"`
+	Id                     types.String      `tfsdk:"id"`
+	AppDomain              types.String      `tfsdk:"app_domain"`
+	UserSummary            types.String      `tfsdk:"user_summary"`
+	MaxAttributes          types.Int64       `tfsdk:"max_attributes"`
+	MaxAggregateSize       types.Int64       `tfsdk:"max_aggregate_size"`
+	MaxNameSize            types.Int64       `tfsdk:"max_name_size"`
+	MaxValueSize           types.Int64       `tfsdk:"max_value_size"`
+	ValidationList         types.List        `tfsdk:"validation_list"`
+	DefaultFixup           types.String      `tfsdk:"default_fixup"`
+	DefaultMapValue        types.String      `tfsdk:"default_map_value"`
+	DefaultXss             types.Bool        `tfsdk:"default_xss"`
+	NoMatchXssPatternsFile types.String      `tfsdk:"no_match_xss_patterns_file"`
+	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
 }
 
 var NameValueProfileObjectType = map[string]attr.Type{
@@ -60,6 +62,7 @@ var NameValueProfileObjectType = map[string]attr.Type{
 	"default_map_value":          types.StringType,
 	"default_xss":                types.BoolType,
 	"no_match_xss_patterns_file": types.StringType,
+	"object_actions":             actions.ActionsListType,
 }
 
 func (data NameValueProfile) GetPath() string {

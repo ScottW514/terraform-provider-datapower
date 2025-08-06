@@ -27,17 +27,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type APIClientIdentification struct {
-	Id              types.String `tfsdk:"id"`
-	AppDomain       types.String `tfsdk:"app_domain"`
-	UserSummary     types.String `tfsdk:"user_summary"`
-	Title           types.String `tfsdk:"title"`
-	CorrelationPath types.String `tfsdk:"correlation_path"`
+	Id              types.String      `tfsdk:"id"`
+	AppDomain       types.String      `tfsdk:"app_domain"`
+	UserSummary     types.String      `tfsdk:"user_summary"`
+	Title           types.String      `tfsdk:"title"`
+	CorrelationPath types.String      `tfsdk:"correlation_path"`
+	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
 }
 
 var APIClientIdentificationObjectType = map[string]attr.Type{
@@ -46,6 +48,7 @@ var APIClientIdentificationObjectType = map[string]attr.Type{
 	"user_summary":     types.StringType,
 	"title":            types.StringType,
 	"correlation_path": types.StringType,
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data APIClientIdentification) GetPath() string {

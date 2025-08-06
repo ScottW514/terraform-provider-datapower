@@ -27,27 +27,29 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WebAppResponse struct {
-	Id           types.String         `tfsdk:"id"`
-	AppDomain    types.String         `tfsdk:"app_domain"`
-	UserSummary  types.String         `tfsdk:"user_summary"`
-	PolicyType   types.String         `tfsdk:"policy_type"`
-	OkCodes      *DmHTTPResponseCodes `tfsdk:"ok_codes"`
-	OkVersions   *DmHTTPVersionMask   `tfsdk:"ok_versions"`
-	MinBodySize  types.Int64          `tfsdk:"min_body_size"`
-	MaxBodySize  types.Int64          `tfsdk:"max_body_size"`
-	HeaderGnvc   types.String         `tfsdk:"header_gnvc"`
-	ContentTypes types.List           `tfsdk:"content_types"`
-	XmlPolicy    types.String         `tfsdk:"xml_policy"`
-	XmlRule      types.String         `tfsdk:"xml_rule"`
-	NonXmlPolicy types.String         `tfsdk:"non_xml_policy"`
-	NonXmlRule   types.String         `tfsdk:"non_xml_rule"`
-	ErrorPolicy  types.String         `tfsdk:"error_policy"`
+	Id            types.String         `tfsdk:"id"`
+	AppDomain     types.String         `tfsdk:"app_domain"`
+	UserSummary   types.String         `tfsdk:"user_summary"`
+	PolicyType    types.String         `tfsdk:"policy_type"`
+	OkCodes       *DmHTTPResponseCodes `tfsdk:"ok_codes"`
+	OkVersions    *DmHTTPVersionMask   `tfsdk:"ok_versions"`
+	MinBodySize   types.Int64          `tfsdk:"min_body_size"`
+	MaxBodySize   types.Int64          `tfsdk:"max_body_size"`
+	HeaderGnvc    types.String         `tfsdk:"header_gnvc"`
+	ContentTypes  types.List           `tfsdk:"content_types"`
+	XmlPolicy     types.String         `tfsdk:"xml_policy"`
+	XmlRule       types.String         `tfsdk:"xml_rule"`
+	NonXmlPolicy  types.String         `tfsdk:"non_xml_policy"`
+	NonXmlRule    types.String         `tfsdk:"non_xml_rule"`
+	ErrorPolicy   types.String         `tfsdk:"error_policy"`
+	ObjectActions []*actions.Action    `tfsdk:"object_actions"`
 }
 
 var WebAppResponseObjectType = map[string]attr.Type{
@@ -66,6 +68,7 @@ var WebAppResponseObjectType = map[string]attr.Type{
 	"non_xml_policy": types.StringType,
 	"non_xml_rule":   types.StringType,
 	"error_policy":   types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data WebAppResponse) GetPath() string {

@@ -28,20 +28,22 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WebServicesAgent struct {
-	AppDomain        types.String `tfsdk:"app_domain"`
-	Enabled          types.Bool   `tfsdk:"enabled"`
-	UserSummary      types.String `tfsdk:"user_summary"`
-	MaxRecords       types.Int64  `tfsdk:"max_records"`
-	MaxMemoryKb      types.Int64  `tfsdk:"max_memory_kb"`
-	CaptureMode      types.String `tfsdk:"capture_mode"`
-	MediationMetrics types.Bool   `tfsdk:"mediation_metrics"`
-	MaxPayloadSizeKb types.Int64  `tfsdk:"max_payload_size_kb"`
+	AppDomain        types.String      `tfsdk:"app_domain"`
+	Enabled          types.Bool        `tfsdk:"enabled"`
+	UserSummary      types.String      `tfsdk:"user_summary"`
+	MaxRecords       types.Int64       `tfsdk:"max_records"`
+	MaxMemoryKb      types.Int64       `tfsdk:"max_memory_kb"`
+	CaptureMode      types.String      `tfsdk:"capture_mode"`
+	MediationMetrics types.Bool        `tfsdk:"mediation_metrics"`
+	MaxPayloadSizeKb types.Int64       `tfsdk:"max_payload_size_kb"`
+	ObjectActions    []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WebServicesAgentObjectType = map[string]attr.Type{
@@ -53,6 +55,7 @@ var WebServicesAgentObjectType = map[string]attr.Type{
 	"capture_mode":        types.StringType,
 	"mediation_metrics":   types.BoolType,
 	"max_payload_size_kb": types.Int64Type,
+	"object_actions":      actions.ActionsListType,
 }
 
 func (data WebServicesAgent) GetPath() string {

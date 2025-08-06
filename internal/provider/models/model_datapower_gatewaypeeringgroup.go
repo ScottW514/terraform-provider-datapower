@@ -27,23 +27,25 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type GatewayPeeringGroup struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	Mode                types.String `tfsdk:"mode"`
-	PeerNodes           types.List   `tfsdk:"peer_nodes"`
-	ClusterPrimaryCount types.String `tfsdk:"cluster_primary_count"`
-	ClusterNodes        types.List   `tfsdk:"cluster_nodes"`
-	ClusterAutoConfig   types.Bool   `tfsdk:"cluster_auto_config"`
-	EnableSsl           types.Bool   `tfsdk:"enable_ssl"`
-	Idcred              types.String `tfsdk:"idcred"`
-	Valcred             types.String `tfsdk:"valcred"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	Mode                types.String      `tfsdk:"mode"`
+	PeerNodes           types.List        `tfsdk:"peer_nodes"`
+	ClusterPrimaryCount types.String      `tfsdk:"cluster_primary_count"`
+	ClusterNodes        types.List        `tfsdk:"cluster_nodes"`
+	ClusterAutoConfig   types.Bool        `tfsdk:"cluster_auto_config"`
+	EnableSsl           types.Bool        `tfsdk:"enable_ssl"`
+	Idcred              types.String      `tfsdk:"idcred"`
+	Valcred             types.String      `tfsdk:"valcred"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var GatewayPeeringGroupObjectType = map[string]attr.Type{
@@ -58,6 +60,7 @@ var GatewayPeeringGroupObjectType = map[string]attr.Type{
 	"enable_ssl":            types.BoolType,
 	"idcred":                types.StringType,
 	"valcred":               types.StringType,
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data GatewayPeeringGroup) GetPath() string {

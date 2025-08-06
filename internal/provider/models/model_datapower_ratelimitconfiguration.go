@@ -28,21 +28,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type RateLimitConfiguration struct {
-	AppDomain  types.String `tfsdk:"app_domain"`
-	Enabled    types.Bool   `tfsdk:"enabled"`
-	Parameters types.List   `tfsdk:"parameters"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	Enabled       types.Bool        `tfsdk:"enabled"`
+	Parameters    types.List        `tfsdk:"parameters"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var RateLimitConfigurationObjectType = map[string]attr.Type{
-	"app_domain": types.StringType,
-	"enabled":    types.BoolType,
-	"parameters": types.ListType{ElemType: types.ObjectType{AttrTypes: DmRateLimitConfigurationNameValuePairObjectType}},
+	"app_domain":     types.StringType,
+	"enabled":        types.BoolType,
+	"parameters":     types.ListType{ElemType: types.ObjectType{AttrTypes: DmRateLimitConfigurationNameValuePairObjectType}},
+	"object_actions": actions.ActionsListType,
 }
 
 func (data RateLimitConfiguration) GetPath() string {

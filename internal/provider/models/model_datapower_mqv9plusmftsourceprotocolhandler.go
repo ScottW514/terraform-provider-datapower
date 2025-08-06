@@ -27,23 +27,25 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type MQv9PlusMFTSourceProtocolHandler struct {
-	Id                      types.String `tfsdk:"id"`
-	AppDomain               types.String `tfsdk:"app_domain"`
-	UserSummary             types.String `tfsdk:"user_summary"`
-	QueueManager            types.String `tfsdk:"queue_manager"`
-	GetQueue                types.String `tfsdk:"get_queue"`
-	GetMessageOptions       types.Int64  `tfsdk:"get_message_options"`
-	ConcurrentConnections   types.Int64  `tfsdk:"concurrent_connections"`
-	PollingInterval         types.Int64  `tfsdk:"polling_interval"`
-	RetrieveBackoutSettings types.Bool   `tfsdk:"retrieve_backout_settings"`
-	IgnoreBackoutErrors     types.Bool   `tfsdk:"ignore_backout_errors"`
-	UseQmNameInUrl          types.Bool   `tfsdk:"use_qm_name_in_url"`
+	Id                      types.String      `tfsdk:"id"`
+	AppDomain               types.String      `tfsdk:"app_domain"`
+	UserSummary             types.String      `tfsdk:"user_summary"`
+	QueueManager            types.String      `tfsdk:"queue_manager"`
+	GetQueue                types.String      `tfsdk:"get_queue"`
+	GetMessageOptions       types.Int64       `tfsdk:"get_message_options"`
+	ConcurrentConnections   types.Int64       `tfsdk:"concurrent_connections"`
+	PollingInterval         types.Int64       `tfsdk:"polling_interval"`
+	RetrieveBackoutSettings types.Bool        `tfsdk:"retrieve_backout_settings"`
+	IgnoreBackoutErrors     types.Bool        `tfsdk:"ignore_backout_errors"`
+	UseQmNameInUrl          types.Bool        `tfsdk:"use_qm_name_in_url"`
+	ObjectActions           []*actions.Action `tfsdk:"object_actions"`
 }
 
 var MQv9PlusMFTSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -58,6 +60,7 @@ var MQv9PlusMFTSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"retrieve_backout_settings": types.BoolType,
 	"ignore_backout_errors":     types.BoolType,
 	"use_qm_name_in_url":        types.BoolType,
+	"object_actions":            actions.ActionsListType,
 }
 
 func (data MQv9PlusMFTSourceProtocolHandler) GetPath() string {

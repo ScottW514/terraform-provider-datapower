@@ -27,30 +27,32 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WebTokenService struct {
-	Id                     types.String `tfsdk:"id"`
-	AppDomain              types.String `tfsdk:"app_domain"`
-	UserSummary            types.String `tfsdk:"user_summary"`
-	Priority               types.String `tfsdk:"priority"`
-	XmlManager             types.String `tfsdk:"xml_manager"`
-	RequestType            types.String `tfsdk:"request_type"`
-	FrontSide              types.List   `tfsdk:"front_side"`
-	StylePolicy            types.String `tfsdk:"style_policy"`
-	RewriteErrors          types.Bool   `tfsdk:"rewrite_errors"`
-	DelayErrors            types.Bool   `tfsdk:"delay_errors"`
-	DelayErrorsDuration    types.Int64  `tfsdk:"delay_errors_duration"`
-	FrontTimeout           types.Int64  `tfsdk:"front_timeout"`
-	FrontPersistentTimeout types.Int64  `tfsdk:"front_persistent_timeout"`
-	FrontHttpVersion       types.String `tfsdk:"front_http_version"`
-	HttpClientIpLabel      types.String `tfsdk:"http_client_ip_label"`
-	HttpLogCorIdLabel      types.String `tfsdk:"http_log_cor_id_label"`
-	DebugMode              types.String `tfsdk:"debug_mode"`
-	DebugHistory           types.Int64  `tfsdk:"debug_history"`
+	Id                     types.String      `tfsdk:"id"`
+	AppDomain              types.String      `tfsdk:"app_domain"`
+	UserSummary            types.String      `tfsdk:"user_summary"`
+	Priority               types.String      `tfsdk:"priority"`
+	XmlManager             types.String      `tfsdk:"xml_manager"`
+	RequestType            types.String      `tfsdk:"request_type"`
+	FrontSide              types.List        `tfsdk:"front_side"`
+	StylePolicy            types.String      `tfsdk:"style_policy"`
+	RewriteErrors          types.Bool        `tfsdk:"rewrite_errors"`
+	DelayErrors            types.Bool        `tfsdk:"delay_errors"`
+	DelayErrorsDuration    types.Int64       `tfsdk:"delay_errors_duration"`
+	FrontTimeout           types.Int64       `tfsdk:"front_timeout"`
+	FrontPersistentTimeout types.Int64       `tfsdk:"front_persistent_timeout"`
+	FrontHttpVersion       types.String      `tfsdk:"front_http_version"`
+	HttpClientIpLabel      types.String      `tfsdk:"http_client_ip_label"`
+	HttpLogCorIdLabel      types.String      `tfsdk:"http_log_cor_id_label"`
+	DebugMode              types.String      `tfsdk:"debug_mode"`
+	DebugHistory           types.Int64       `tfsdk:"debug_history"`
+	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WebTokenServiceObjectType = map[string]attr.Type{
@@ -72,6 +74,7 @@ var WebTokenServiceObjectType = map[string]attr.Type{
 	"http_log_cor_id_label":    types.StringType,
 	"debug_mode":               types.StringType,
 	"debug_history":            types.Int64Type,
+	"object_actions":           actions.ActionsListType,
 }
 
 func (data WebTokenService) GetPath() string {

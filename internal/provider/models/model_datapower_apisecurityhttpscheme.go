@@ -27,20 +27,22 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type APISecurityHTTPScheme struct {
-	Id                         types.String `tfsdk:"id"`
-	AppDomain                  types.String `tfsdk:"app_domain"`
-	UserSummary                types.String `tfsdk:"user_summary"`
-	Scheme                     types.String `tfsdk:"scheme"`
-	BearerFormat               types.String `tfsdk:"bearer_format"`
-	BearerValidationMethod     types.String `tfsdk:"bearer_validation_method"`
-	BearerValidationEndpoint   types.String `tfsdk:"bearer_validation_endpoint"`
-	BearerValidationTlsProfile types.String `tfsdk:"bearer_validation_tls_profile"`
+	Id                         types.String      `tfsdk:"id"`
+	AppDomain                  types.String      `tfsdk:"app_domain"`
+	UserSummary                types.String      `tfsdk:"user_summary"`
+	Scheme                     types.String      `tfsdk:"scheme"`
+	BearerFormat               types.String      `tfsdk:"bearer_format"`
+	BearerValidationMethod     types.String      `tfsdk:"bearer_validation_method"`
+	BearerValidationEndpoint   types.String      `tfsdk:"bearer_validation_endpoint"`
+	BearerValidationTlsProfile types.String      `tfsdk:"bearer_validation_tls_profile"`
+	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
 }
 
 var APISecurityHTTPSchemeObjectType = map[string]attr.Type{
@@ -52,6 +54,7 @@ var APISecurityHTTPSchemeObjectType = map[string]attr.Type{
 	"bearer_validation_method":      types.StringType,
 	"bearer_validation_endpoint":    types.StringType,
 	"bearer_validation_tls_profile": types.StringType,
+	"object_actions":                actions.ActionsListType,
 }
 
 func (data APISecurityHTTPScheme) GetPath() string {

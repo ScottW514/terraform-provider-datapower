@@ -27,28 +27,30 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SSLProxyService struct {
-	Id            types.String `tfsdk:"id"`
-	AppDomain     types.String `tfsdk:"app_domain"`
-	UserSummary   types.String `tfsdk:"user_summary"`
-	Priority      types.String `tfsdk:"priority"`
-	LocalPort     types.Int64  `tfsdk:"local_port"`
-	RemoteAddress types.String `tfsdk:"remote_address"`
-	RemotePort    types.Int64  `tfsdk:"remote_port"`
-	FrontTimeout  types.Int64  `tfsdk:"front_timeout"`
-	BackTimeout   types.Int64  `tfsdk:"back_timeout"`
-	ConnTimeout   types.Int64  `tfsdk:"conn_timeout"`
-	ConnLimit     types.Int64  `tfsdk:"conn_limit"`
-	SslConfigType types.String `tfsdk:"ssl_config_type"`
-	SslServer     types.String `tfsdk:"ssl_server"`
-	SslsniServer  types.String `tfsdk:"sslsni_server"`
-	SslClient     types.String `tfsdk:"ssl_client"`
-	LocalAddress  types.String `tfsdk:"local_address"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	Priority      types.String      `tfsdk:"priority"`
+	LocalPort     types.Int64       `tfsdk:"local_port"`
+	RemoteAddress types.String      `tfsdk:"remote_address"`
+	RemotePort    types.Int64       `tfsdk:"remote_port"`
+	FrontTimeout  types.Int64       `tfsdk:"front_timeout"`
+	BackTimeout   types.Int64       `tfsdk:"back_timeout"`
+	ConnTimeout   types.Int64       `tfsdk:"conn_timeout"`
+	ConnLimit     types.Int64       `tfsdk:"conn_limit"`
+	SslConfigType types.String      `tfsdk:"ssl_config_type"`
+	SslServer     types.String      `tfsdk:"ssl_server"`
+	SslsniServer  types.String      `tfsdk:"sslsni_server"`
+	SslClient     types.String      `tfsdk:"ssl_client"`
+	LocalAddress  types.String      `tfsdk:"local_address"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var SSLProxyServiceObjectType = map[string]attr.Type{
@@ -68,6 +70,7 @@ var SSLProxyServiceObjectType = map[string]attr.Type{
 	"sslsni_server":   types.StringType,
 	"ssl_client":      types.StringType,
 	"local_address":   types.StringType,
+	"object_actions":  actions.ActionsListType,
 }
 
 func (data SSLProxyService) GetPath() string {

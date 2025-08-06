@@ -26,17 +26,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SSHService struct {
-	Enabled         types.Bool   `tfsdk:"enabled"`
-	LocalPort       types.Int64  `tfsdk:"local_port"`
-	Acl             types.String `tfsdk:"acl"`
-	ConnectionLimit types.Int64  `tfsdk:"connection_limit"`
-	LocalAddress    types.String `tfsdk:"local_address"`
+	Enabled         types.Bool        `tfsdk:"enabled"`
+	LocalPort       types.Int64       `tfsdk:"local_port"`
+	Acl             types.String      `tfsdk:"acl"`
+	ConnectionLimit types.Int64       `tfsdk:"connection_limit"`
+	LocalAddress    types.String      `tfsdk:"local_address"`
+	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
 }
 
 var SSHServiceObjectType = map[string]attr.Type{
@@ -45,6 +47,7 @@ var SSHServiceObjectType = map[string]attr.Type{
 	"acl":              types.StringType,
 	"connection_limit": types.Int64Type,
 	"local_address":    types.StringType,
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data SSHService) GetPath() string {

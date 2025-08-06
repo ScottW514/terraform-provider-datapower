@@ -27,28 +27,31 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type User struct {
-	Id              types.String `tfsdk:"id"`
-	UserSummary     types.String `tfsdk:"user_summary"`
-	Password        types.String `tfsdk:"password"`
-	PasswordUpdate  types.Bool   `tfsdk:"password_update"`
-	AccessLevel     types.String `tfsdk:"access_level"`
-	GroupName       types.String `tfsdk:"group_name"`
-	SnmpCreds       types.List   `tfsdk:"snmp_creds"`
-	HashedSnmpCreds types.List   `tfsdk:"hashed_snmp_creds"`
+	Id              types.String      `tfsdk:"id"`
+	UserSummary     types.String      `tfsdk:"user_summary"`
+	Password        types.String      `tfsdk:"password"`
+	PasswordUpdate  types.Bool        `tfsdk:"password_update"`
+	AccessLevel     types.String      `tfsdk:"access_level"`
+	GroupName       types.String      `tfsdk:"group_name"`
+	SnmpCreds       types.List        `tfsdk:"snmp_creds"`
+	HashedSnmpCreds types.List        `tfsdk:"hashed_snmp_creds"`
+	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
 }
 type UserWO struct {
-	Id              types.String `tfsdk:"id"`
-	UserSummary     types.String `tfsdk:"user_summary"`
-	AccessLevel     types.String `tfsdk:"access_level"`
-	GroupName       types.String `tfsdk:"group_name"`
-	SnmpCreds       types.List   `tfsdk:"snmp_creds"`
-	HashedSnmpCreds types.List   `tfsdk:"hashed_snmp_creds"`
+	Id              types.String      `tfsdk:"id"`
+	UserSummary     types.String      `tfsdk:"user_summary"`
+	AccessLevel     types.String      `tfsdk:"access_level"`
+	GroupName       types.String      `tfsdk:"group_name"`
+	SnmpCreds       types.List        `tfsdk:"snmp_creds"`
+	HashedSnmpCreds types.List        `tfsdk:"hashed_snmp_creds"`
+	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
 }
 
 var UserObjectType = map[string]attr.Type{
@@ -60,6 +63,7 @@ var UserObjectType = map[string]attr.Type{
 	"group_name":        types.StringType,
 	"snmp_creds":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
 	"hashed_snmp_creds": types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
+	"object_actions":    actions.ActionsListType,
 }
 var UserObjectTypeWO = map[string]attr.Type{
 	"id":                types.StringType,
@@ -68,6 +72,7 @@ var UserObjectTypeWO = map[string]attr.Type{
 	"group_name":        types.StringType,
 	"snmp_creds":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
 	"hashed_snmp_creds": types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
+	"object_actions":    actions.ActionsListType,
 }
 
 func (data User) GetPath() string {

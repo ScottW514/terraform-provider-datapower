@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -73,6 +74,7 @@ type OAuthSupportedClient struct {
 	ClientJwtValidator         types.String          `tfsdk:"client_jwt_validator"`
 	OidcidTokenGenerator       types.String          `tfsdk:"oidcid_token_generator"`
 	OAuthFeatures              *DmOAuthFeatures      `tfsdk:"o_auth_features"`
+	ObjectActions              []*actions.Action     `tfsdk:"object_actions"`
 }
 
 var OAuthSupportedClientObjectType = map[string]attr.Type{
@@ -116,6 +118,7 @@ var OAuthSupportedClientObjectType = map[string]attr.Type{
 	"client_jwt_validator":          types.StringType,
 	"oidcid_token_generator":        types.StringType,
 	"o_auth_features":               types.ObjectType{AttrTypes: DmOAuthFeaturesObjectType},
+	"object_actions":                actions.ActionsListType,
 }
 
 func (data OAuthSupportedClient) GetPath() string {

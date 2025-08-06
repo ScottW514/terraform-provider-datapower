@@ -27,18 +27,20 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type LDAPConnectionPool struct {
-	Id                types.String `tfsdk:"id"`
-	AppDomain         types.String `tfsdk:"app_domain"`
-	UserSummary       types.String `tfsdk:"user_summary"`
-	IdleTimeout       types.Int64  `tfsdk:"idle_timeout"`
-	MaxPoolSize       types.Int64  `tfsdk:"max_pool_size"`
-	RejectOnPoolLimit types.Bool   `tfsdk:"reject_on_pool_limit"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	IdleTimeout       types.Int64       `tfsdk:"idle_timeout"`
+	MaxPoolSize       types.Int64       `tfsdk:"max_pool_size"`
+	RejectOnPoolLimit types.Bool        `tfsdk:"reject_on_pool_limit"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var LDAPConnectionPoolObjectType = map[string]attr.Type{
@@ -48,6 +50,7 @@ var LDAPConnectionPoolObjectType = map[string]attr.Type{
 	"idle_timeout":         types.Int64Type,
 	"max_pool_size":        types.Int64Type,
 	"reject_on_pool_limit": types.BoolType,
+	"object_actions":       actions.ActionsListType,
 }
 
 func (data LDAPConnectionPool) GetPath() string {

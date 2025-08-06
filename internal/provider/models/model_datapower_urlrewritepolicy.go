@@ -27,16 +27,18 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type URLRewritePolicy struct {
-	Id             types.String `tfsdk:"id"`
-	AppDomain      types.String `tfsdk:"app_domain"`
-	Direction      types.String `tfsdk:"direction"`
-	UrlRewriteRule types.List   `tfsdk:"url_rewrite_rule"`
+	Id             types.String      `tfsdk:"id"`
+	AppDomain      types.String      `tfsdk:"app_domain"`
+	Direction      types.String      `tfsdk:"direction"`
+	UrlRewriteRule types.List        `tfsdk:"url_rewrite_rule"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var URLRewritePolicyObjectType = map[string]attr.Type{
@@ -44,6 +46,7 @@ var URLRewritePolicyObjectType = map[string]attr.Type{
 	"app_domain":       types.StringType,
 	"direction":        types.StringType,
 	"url_rewrite_rule": types.ListType{ElemType: types.ObjectType{AttrTypes: DmURLRewriteRuleObjectType}},
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data URLRewritePolicy) GetPath() string {

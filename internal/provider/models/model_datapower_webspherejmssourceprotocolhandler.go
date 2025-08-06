@@ -27,23 +27,25 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WebSphereJMSSourceProtocolHandler struct {
-	Id                     types.String `tfsdk:"id"`
-	AppDomain              types.String `tfsdk:"app_domain"`
-	Server                 types.String `tfsdk:"server"`
-	RequestTopicSpace      types.String `tfsdk:"request_topic_space"`
-	ReplyTopicSpace        types.String `tfsdk:"reply_topic_space"`
-	StrictMessageOrder     types.Bool   `tfsdk:"strict_message_order"`
-	UserSummary            types.String `tfsdk:"user_summary"`
-	GetQueue               types.String `tfsdk:"get_queue"`
-	PutQueue               types.String `tfsdk:"put_queue"`
-	Selector               types.String `tfsdk:"selector"`
-	AsyncMessageProcessing types.Bool   `tfsdk:"async_message_processing"`
+	Id                     types.String      `tfsdk:"id"`
+	AppDomain              types.String      `tfsdk:"app_domain"`
+	Server                 types.String      `tfsdk:"server"`
+	RequestTopicSpace      types.String      `tfsdk:"request_topic_space"`
+	ReplyTopicSpace        types.String      `tfsdk:"reply_topic_space"`
+	StrictMessageOrder     types.Bool        `tfsdk:"strict_message_order"`
+	UserSummary            types.String      `tfsdk:"user_summary"`
+	GetQueue               types.String      `tfsdk:"get_queue"`
+	PutQueue               types.String      `tfsdk:"put_queue"`
+	Selector               types.String      `tfsdk:"selector"`
+	AsyncMessageProcessing types.Bool        `tfsdk:"async_message_processing"`
+	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WebSphereJMSSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -58,6 +60,7 @@ var WebSphereJMSSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"put_queue":                types.StringType,
 	"selector":                 types.StringType,
 	"async_message_processing": types.BoolType,
+	"object_actions":           actions.ActionsListType,
 }
 
 func (data WebSphereJMSSourceProtocolHandler) GetPath() string {

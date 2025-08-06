@@ -27,17 +27,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type MQManagerGroup struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	PrimaryQueueManager types.String `tfsdk:"primary_queue_manager"`
-	BackupQueueManagers types.List   `tfsdk:"backup_queue_managers"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	PrimaryQueueManager types.String      `tfsdk:"primary_queue_manager"`
+	BackupQueueManagers types.List        `tfsdk:"backup_queue_managers"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var MQManagerGroupObjectType = map[string]attr.Type{
@@ -46,6 +48,7 @@ var MQManagerGroupObjectType = map[string]attr.Type{
 	"user_summary":          types.StringType,
 	"primary_queue_manager": types.StringType,
 	"backup_queue_managers": types.ListType{ElemType: types.StringType},
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data MQManagerGroup) GetPath() string {

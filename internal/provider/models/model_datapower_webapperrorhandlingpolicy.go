@@ -27,19 +27,21 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WebAppErrorHandlingPolicy struct {
-	Id                   types.String `tfsdk:"id"`
-	AppDomain            types.String `tfsdk:"app_domain"`
-	UserSummary          types.String `tfsdk:"user_summary"`
-	Type                 types.String `tfsdk:"type"`
-	Url                  types.String `tfsdk:"url"`
-	ErrorStylePolicyRule types.String `tfsdk:"error_style_policy_rule"`
-	ErrorMonitor         types.String `tfsdk:"error_monitor"`
+	Id                   types.String      `tfsdk:"id"`
+	AppDomain            types.String      `tfsdk:"app_domain"`
+	UserSummary          types.String      `tfsdk:"user_summary"`
+	Type                 types.String      `tfsdk:"type"`
+	Url                  types.String      `tfsdk:"url"`
+	ErrorStylePolicyRule types.String      `tfsdk:"error_style_policy_rule"`
+	ErrorMonitor         types.String      `tfsdk:"error_monitor"`
+	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WebAppErrorHandlingPolicyObjectType = map[string]attr.Type{
@@ -50,6 +52,7 @@ var WebAppErrorHandlingPolicyObjectType = map[string]attr.Type{
 	"url":                     types.StringType,
 	"error_style_policy_rule": types.StringType,
 	"error_monitor":           types.StringType,
+	"object_actions":          actions.ActionsListType,
 }
 
 func (data WebAppErrorHandlingPolicy) GetPath() string {

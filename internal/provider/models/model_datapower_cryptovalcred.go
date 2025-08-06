@@ -27,22 +27,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type CryptoValCred struct {
-	Id                 types.String `tfsdk:"id"`
-	AppDomain          types.String `tfsdk:"app_domain"`
-	Certificate        types.List   `tfsdk:"certificate"`
-	CertValidationMode types.String `tfsdk:"cert_validation_mode"`
-	UseCrl             types.Bool   `tfsdk:"use_crl"`
-	RequireCrl         types.Bool   `tfsdk:"require_crl"`
-	CrldpHandling      types.String `tfsdk:"crldp_handling"`
-	InitialPolicySet   types.List   `tfsdk:"initial_policy_set"`
-	ExplicitPolicy     types.Bool   `tfsdk:"explicit_policy"`
-	CheckDates         types.Bool   `tfsdk:"check_dates"`
+	Id                 types.String      `tfsdk:"id"`
+	AppDomain          types.String      `tfsdk:"app_domain"`
+	Certificate        types.List        `tfsdk:"certificate"`
+	CertValidationMode types.String      `tfsdk:"cert_validation_mode"`
+	UseCrl             types.Bool        `tfsdk:"use_crl"`
+	RequireCrl         types.Bool        `tfsdk:"require_crl"`
+	CrldpHandling      types.String      `tfsdk:"crldp_handling"`
+	InitialPolicySet   types.List        `tfsdk:"initial_policy_set"`
+	ExplicitPolicy     types.Bool        `tfsdk:"explicit_policy"`
+	CheckDates         types.Bool        `tfsdk:"check_dates"`
+	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
 }
 
 var CryptoValCredObjectType = map[string]attr.Type{
@@ -56,6 +58,7 @@ var CryptoValCredObjectType = map[string]attr.Type{
 	"initial_policy_set":   types.ListType{ElemType: types.StringType},
 	"explicit_policy":      types.BoolType,
 	"check_dates":          types.BoolType,
+	"object_actions":       actions.ActionsListType,
 }
 
 func (data CryptoValCred) GetPath() string {

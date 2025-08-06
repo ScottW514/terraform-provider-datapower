@@ -27,16 +27,18 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type PolicyParameters struct {
-	Id              types.String `tfsdk:"id"`
-	AppDomain       types.String `tfsdk:"app_domain"`
-	UserSummary     types.String `tfsdk:"user_summary"`
-	PolicyParameter types.List   `tfsdk:"policy_parameter"`
+	Id              types.String      `tfsdk:"id"`
+	AppDomain       types.String      `tfsdk:"app_domain"`
+	UserSummary     types.String      `tfsdk:"user_summary"`
+	PolicyParameter types.List        `tfsdk:"policy_parameter"`
+	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
 }
 
 var PolicyParametersObjectType = map[string]attr.Type{
@@ -44,6 +46,7 @@ var PolicyParametersObjectType = map[string]attr.Type{
 	"app_domain":       types.StringType,
 	"user_summary":     types.StringType,
 	"policy_parameter": types.ListType{ElemType: types.ObjectType{AttrTypes: DmPolicyParameterObjectType}},
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data PolicyParameters) GetPath() string {

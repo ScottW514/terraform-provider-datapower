@@ -27,16 +27,18 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type GraphQLSchemaOptions struct {
-	Id             types.String `tfsdk:"id"`
-	AppDomain      types.String `tfsdk:"app_domain"`
-	VisibilityList types.String `tfsdk:"visibility_list"`
-	Api            types.String `tfsdk:"api"`
+	Id             types.String      `tfsdk:"id"`
+	AppDomain      types.String      `tfsdk:"app_domain"`
+	VisibilityList types.String      `tfsdk:"visibility_list"`
+	Api            types.String      `tfsdk:"api"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var GraphQLSchemaOptionsObjectType = map[string]attr.Type{
@@ -44,6 +46,7 @@ var GraphQLSchemaOptionsObjectType = map[string]attr.Type{
 	"app_domain":      types.StringType,
 	"visibility_list": types.StringType,
 	"api":             types.StringType,
+	"object_actions":  actions.ActionsListType,
 }
 
 func (data GraphQLSchemaOptions) GetPath() string {

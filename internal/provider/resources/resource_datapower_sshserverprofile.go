@@ -37,6 +37,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -140,7 +141,8 @@ func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				MarkdownDescription: tfutils.NewAttributeDescription("Preauthentication message", "preauth-msg", "").String,
 				Optional:            true,
 			},
-			"host_key_alg": models.GetDmHostKeyAlgorithmsResourceSchema("Host key algorithms", "host-key-alg", "", false),
+			"host_key_alg":   models.GetDmHostKeyAlgorithmsResourceSchema("Host key algorithms", "host-key-alg", "", false),
+			"object_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -160,6 +162,8 @@ func (r *SSHServerProfileResource) Create(ctx context.Context, req resource.Crea
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
 
 	body := data.ToBody(ctx, `SSHServerProfile`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -211,6 +215,8 @@ func (r *SSHServerProfileResource) Update(ctx context.Context, req resource.Upda
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `SSHServerProfile`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

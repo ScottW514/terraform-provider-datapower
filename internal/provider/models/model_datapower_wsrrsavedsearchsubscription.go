@@ -27,21 +27,23 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WSRRSavedSearchSubscription struct {
-	Id                     types.String `tfsdk:"id"`
-	AppDomain              types.String `tfsdk:"app_domain"`
-	Server                 types.String `tfsdk:"server"`
-	SavedSearchName        types.String `tfsdk:"saved_search_name"`
-	SavedSearchParameters  types.List   `tfsdk:"saved_search_parameters"`
-	Method                 types.String `tfsdk:"method"`
-	RefreshInterval        types.Int64  `tfsdk:"refresh_interval"`
-	FetchPolicyAttachments types.Bool   `tfsdk:"fetch_policy_attachments"`
-	UserSummary            types.String `tfsdk:"user_summary"`
+	Id                     types.String      `tfsdk:"id"`
+	AppDomain              types.String      `tfsdk:"app_domain"`
+	Server                 types.String      `tfsdk:"server"`
+	SavedSearchName        types.String      `tfsdk:"saved_search_name"`
+	SavedSearchParameters  types.List        `tfsdk:"saved_search_parameters"`
+	Method                 types.String      `tfsdk:"method"`
+	RefreshInterval        types.Int64       `tfsdk:"refresh_interval"`
+	FetchPolicyAttachments types.Bool        `tfsdk:"fetch_policy_attachments"`
+	UserSummary            types.String      `tfsdk:"user_summary"`
+	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WSRRSavedSearchSubscriptionObjectType = map[string]attr.Type{
@@ -54,6 +56,7 @@ var WSRRSavedSearchSubscriptionObjectType = map[string]attr.Type{
 	"refresh_interval":         types.Int64Type,
 	"fetch_policy_attachments": types.BoolType,
 	"user_summary":             types.StringType,
+	"object_actions":           actions.ActionsListType,
 }
 
 func (data WSRRSavedSearchSubscription) GetPath() string {

@@ -27,16 +27,18 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type URLRefreshPolicy struct {
-	Id             types.String `tfsdk:"id"`
-	AppDomain      types.String `tfsdk:"app_domain"`
-	UserSummary    types.String `tfsdk:"user_summary"`
-	UrlRefreshRule types.List   `tfsdk:"url_refresh_rule"`
+	Id             types.String      `tfsdk:"id"`
+	AppDomain      types.String      `tfsdk:"app_domain"`
+	UserSummary    types.String      `tfsdk:"user_summary"`
+	UrlRefreshRule types.List        `tfsdk:"url_refresh_rule"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var URLRefreshPolicyObjectType = map[string]attr.Type{
@@ -44,6 +46,7 @@ var URLRefreshPolicyObjectType = map[string]attr.Type{
 	"app_domain":       types.StringType,
 	"user_summary":     types.StringType,
 	"url_refresh_rule": types.ListType{ElemType: types.ObjectType{AttrTypes: DmURLRefreshRuleObjectType}},
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data URLRefreshPolicy) GetPath() string {

@@ -27,50 +27,52 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WebAppFW struct {
-	Id                      types.String `tfsdk:"id"`
-	AppDomain               types.String `tfsdk:"app_domain"`
-	UserSummary             types.String `tfsdk:"user_summary"`
-	Priority                types.String `tfsdk:"priority"`
-	FrontSide               types.List   `tfsdk:"front_side"`
-	RemoteAddress           types.String `tfsdk:"remote_address"`
-	RemotePort              types.Int64  `tfsdk:"remote_port"`
-	StylePolicy             types.String `tfsdk:"style_policy"`
-	XmlManager              types.String `tfsdk:"xml_manager"`
-	ErrorPolicy             types.String `tfsdk:"error_policy"`
-	UriNormalization        types.Bool   `tfsdk:"uri_normalization"`
-	RewriteErrors           types.Bool   `tfsdk:"rewrite_errors"`
-	DelayErrors             types.Bool   `tfsdk:"delay_errors"`
-	DelayErrorsDuration     types.Int64  `tfsdk:"delay_errors_duration"`
-	StreamOutputToBack      types.String `tfsdk:"stream_output_to_back"`
-	StreamOutputToFront     types.String `tfsdk:"stream_output_to_front"`
-	FrontTimeout            types.Int64  `tfsdk:"front_timeout"`
-	BackTimeout             types.Int64  `tfsdk:"back_timeout"`
-	FrontPersistentTimeout  types.Int64  `tfsdk:"front_persistent_timeout"`
-	AllowCacheControlHeader types.Bool   `tfsdk:"allow_cache_control_header"`
-	BackPersistentTimeout   types.Int64  `tfsdk:"back_persistent_timeout"`
-	FrontHttpVersion        types.String `tfsdk:"front_http_version"`
-	BackHttpVersion         types.String `tfsdk:"back_http_version"`
-	RequestSideSecurity     types.Bool   `tfsdk:"request_side_security"`
-	ResponseSideSecurity    types.Bool   `tfsdk:"response_side_security"`
-	DoChunkedUpload         types.Bool   `tfsdk:"do_chunked_upload"`
-	FollowRedirects         types.Bool   `tfsdk:"follow_redirects"`
-	HttpClientIpLabel       types.String `tfsdk:"http_client_ip_label"`
-	HttpLogCorIdLabel       types.String `tfsdk:"http_log_cor_id_label"`
-	DebugMode               types.String `tfsdk:"debug_mode"`
-	DebugHistory            types.Int64  `tfsdk:"debug_history"`
-	DebugTrigger            types.List   `tfsdk:"debug_trigger"`
-	UrlRewritePolicy        types.String `tfsdk:"url_rewrite_policy"`
-	DoHostRewriting         types.Bool   `tfsdk:"do_host_rewriting"`
-	SslConfigType           types.String `tfsdk:"ssl_config_type"`
-	SslServer               types.String `tfsdk:"ssl_server"`
-	SslsniServer            types.String `tfsdk:"sslsni_server"`
-	SslClient               types.String `tfsdk:"ssl_client"`
+	Id                      types.String      `tfsdk:"id"`
+	AppDomain               types.String      `tfsdk:"app_domain"`
+	UserSummary             types.String      `tfsdk:"user_summary"`
+	Priority                types.String      `tfsdk:"priority"`
+	FrontSide               types.List        `tfsdk:"front_side"`
+	RemoteAddress           types.String      `tfsdk:"remote_address"`
+	RemotePort              types.Int64       `tfsdk:"remote_port"`
+	StylePolicy             types.String      `tfsdk:"style_policy"`
+	XmlManager              types.String      `tfsdk:"xml_manager"`
+	ErrorPolicy             types.String      `tfsdk:"error_policy"`
+	UriNormalization        types.Bool        `tfsdk:"uri_normalization"`
+	RewriteErrors           types.Bool        `tfsdk:"rewrite_errors"`
+	DelayErrors             types.Bool        `tfsdk:"delay_errors"`
+	DelayErrorsDuration     types.Int64       `tfsdk:"delay_errors_duration"`
+	StreamOutputToBack      types.String      `tfsdk:"stream_output_to_back"`
+	StreamOutputToFront     types.String      `tfsdk:"stream_output_to_front"`
+	FrontTimeout            types.Int64       `tfsdk:"front_timeout"`
+	BackTimeout             types.Int64       `tfsdk:"back_timeout"`
+	FrontPersistentTimeout  types.Int64       `tfsdk:"front_persistent_timeout"`
+	AllowCacheControlHeader types.Bool        `tfsdk:"allow_cache_control_header"`
+	BackPersistentTimeout   types.Int64       `tfsdk:"back_persistent_timeout"`
+	FrontHttpVersion        types.String      `tfsdk:"front_http_version"`
+	BackHttpVersion         types.String      `tfsdk:"back_http_version"`
+	RequestSideSecurity     types.Bool        `tfsdk:"request_side_security"`
+	ResponseSideSecurity    types.Bool        `tfsdk:"response_side_security"`
+	DoChunkedUpload         types.Bool        `tfsdk:"do_chunked_upload"`
+	FollowRedirects         types.Bool        `tfsdk:"follow_redirects"`
+	HttpClientIpLabel       types.String      `tfsdk:"http_client_ip_label"`
+	HttpLogCorIdLabel       types.String      `tfsdk:"http_log_cor_id_label"`
+	DebugMode               types.String      `tfsdk:"debug_mode"`
+	DebugHistory            types.Int64       `tfsdk:"debug_history"`
+	DebugTrigger            types.List        `tfsdk:"debug_trigger"`
+	UrlRewritePolicy        types.String      `tfsdk:"url_rewrite_policy"`
+	DoHostRewriting         types.Bool        `tfsdk:"do_host_rewriting"`
+	SslConfigType           types.String      `tfsdk:"ssl_config_type"`
+	SslServer               types.String      `tfsdk:"ssl_server"`
+	SslsniServer            types.String      `tfsdk:"sslsni_server"`
+	SslClient               types.String      `tfsdk:"ssl_client"`
+	ObjectActions           []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WebAppFWObjectType = map[string]attr.Type{
@@ -112,6 +114,7 @@ var WebAppFWObjectType = map[string]attr.Type{
 	"ssl_server":                 types.StringType,
 	"sslsni_server":              types.StringType,
 	"ssl_client":                 types.StringType,
+	"object_actions":             actions.ActionsListType,
 }
 
 func (data WebAppFW) GetPath() string {

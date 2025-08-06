@@ -27,27 +27,29 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type KafkaCluster struct {
-	Id                 types.String `tfsdk:"id"`
-	AppDomain          types.String `tfsdk:"app_domain"`
-	UserSummary        types.String `tfsdk:"user_summary"`
-	Protocol           types.String `tfsdk:"protocol"`
-	Endpoint           types.List   `tfsdk:"endpoint"`
-	SaslMechanism      types.String `tfsdk:"sasl_mechanism"`
-	UserName           types.String `tfsdk:"user_name"`
-	PasswordAlias      types.String `tfsdk:"password_alias"`
-	Autocommit         types.Bool   `tfsdk:"autocommit"`
-	SslClient          types.String `tfsdk:"ssl_client"`
-	MemoryThreshold    types.Int64  `tfsdk:"memory_threshold"`
-	MaximumMessageSize types.Int64  `tfsdk:"maximum_message_size"`
-	AutoRetry          types.Bool   `tfsdk:"auto_retry"`
-	RetryInterval      types.Int64  `tfsdk:"retry_interval"`
-	Property           types.List   `tfsdk:"property"`
+	Id                 types.String      `tfsdk:"id"`
+	AppDomain          types.String      `tfsdk:"app_domain"`
+	UserSummary        types.String      `tfsdk:"user_summary"`
+	Protocol           types.String      `tfsdk:"protocol"`
+	Endpoint           types.List        `tfsdk:"endpoint"`
+	SaslMechanism      types.String      `tfsdk:"sasl_mechanism"`
+	UserName           types.String      `tfsdk:"user_name"`
+	PasswordAlias      types.String      `tfsdk:"password_alias"`
+	Autocommit         types.Bool        `tfsdk:"autocommit"`
+	SslClient          types.String      `tfsdk:"ssl_client"`
+	MemoryThreshold    types.Int64       `tfsdk:"memory_threshold"`
+	MaximumMessageSize types.Int64       `tfsdk:"maximum_message_size"`
+	AutoRetry          types.Bool        `tfsdk:"auto_retry"`
+	RetryInterval      types.Int64       `tfsdk:"retry_interval"`
+	Property           types.List        `tfsdk:"property"`
+	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
 }
 
 var KafkaClusterObjectType = map[string]attr.Type{
@@ -66,6 +68,7 @@ var KafkaClusterObjectType = map[string]attr.Type{
 	"auto_retry":           types.BoolType,
 	"retry_interval":       types.Int64Type,
 	"property":             types.ListType{ElemType: types.ObjectType{AttrTypes: DmKafkaPropertyObjectType}},
+	"object_actions":       actions.ActionsListType,
 }
 
 func (data KafkaCluster) GetPath() string {

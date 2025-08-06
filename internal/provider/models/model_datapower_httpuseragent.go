@@ -27,31 +27,33 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type HTTPUserAgent struct {
-	Id                       types.String `tfsdk:"id"`
-	AppDomain                types.String `tfsdk:"app_domain"`
-	UserSummary              types.String `tfsdk:"user_summary"`
-	Identifier               types.String `tfsdk:"identifier"`
-	MaxRedirects             types.Int64  `tfsdk:"max_redirects"`
-	Timeout                  types.Int64  `tfsdk:"timeout"`
-	ProxyPolicies            types.List   `tfsdk:"proxy_policies"`
-	SslPolicies              types.List   `tfsdk:"ssl_policies"`
-	BasicAuthPolicies        types.List   `tfsdk:"basic_auth_policies"`
-	SoapActionPolicies       types.List   `tfsdk:"soap_action_policies"`
-	PubkeyAuthPolicies       types.List   `tfsdk:"pubkey_auth_policies"`
-	AllowCompressionPolicies types.List   `tfsdk:"allow_compression_policies"`
-	HeaderRetentionPolicies  types.List   `tfsdk:"header_retention_policies"`
-	HttpVersionPolicies      types.List   `tfsdk:"http_version_policies"`
-	AddHeaderPolicies        types.List   `tfsdk:"add_header_policies"`
-	UploadChunkedPolicies    types.List   `tfsdk:"upload_chunked_policies"`
-	FtpPolicies              types.List   `tfsdk:"ftp_policies"`
-	SmtpPolicies             types.List   `tfsdk:"smtp_policies"`
-	SftpPolicies             types.List   `tfsdk:"sftp_policies"`
+	Id                       types.String      `tfsdk:"id"`
+	AppDomain                types.String      `tfsdk:"app_domain"`
+	UserSummary              types.String      `tfsdk:"user_summary"`
+	Identifier               types.String      `tfsdk:"identifier"`
+	MaxRedirects             types.Int64       `tfsdk:"max_redirects"`
+	Timeout                  types.Int64       `tfsdk:"timeout"`
+	ProxyPolicies            types.List        `tfsdk:"proxy_policies"`
+	SslPolicies              types.List        `tfsdk:"ssl_policies"`
+	BasicAuthPolicies        types.List        `tfsdk:"basic_auth_policies"`
+	SoapActionPolicies       types.List        `tfsdk:"soap_action_policies"`
+	PubkeyAuthPolicies       types.List        `tfsdk:"pubkey_auth_policies"`
+	AllowCompressionPolicies types.List        `tfsdk:"allow_compression_policies"`
+	HeaderRetentionPolicies  types.List        `tfsdk:"header_retention_policies"`
+	HttpVersionPolicies      types.List        `tfsdk:"http_version_policies"`
+	AddHeaderPolicies        types.List        `tfsdk:"add_header_policies"`
+	UploadChunkedPolicies    types.List        `tfsdk:"upload_chunked_policies"`
+	FtpPolicies              types.List        `tfsdk:"ftp_policies"`
+	SmtpPolicies             types.List        `tfsdk:"smtp_policies"`
+	SftpPolicies             types.List        `tfsdk:"sftp_policies"`
+	ObjectActions            []*actions.Action `tfsdk:"object_actions"`
 }
 
 var HTTPUserAgentObjectType = map[string]attr.Type{
@@ -74,6 +76,7 @@ var HTTPUserAgentObjectType = map[string]attr.Type{
 	"ftp_policies":               types.ListType{ElemType: types.ObjectType{AttrTypes: DmFTPPolicyObjectType}},
 	"smtp_policies":              types.ListType{ElemType: types.ObjectType{AttrTypes: DmSMTPPolicyObjectType}},
 	"sftp_policies":              types.ListType{ElemType: types.ObjectType{AttrTypes: DmSFTPPolicyObjectType}},
+	"object_actions":             actions.ActionsListType,
 }
 
 func (data HTTPUserAgent) GetPath() string {

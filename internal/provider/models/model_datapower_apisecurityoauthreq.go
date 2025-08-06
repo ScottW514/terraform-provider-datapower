@@ -27,17 +27,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type APISecurityOAuthReq struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	ApiSecurityOAuthDef types.String `tfsdk:"api_security_o_auth_def"`
-	OAuthAllowedScope   types.String `tfsdk:"o_auth_allowed_scope"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	ApiSecurityOAuthDef types.String      `tfsdk:"api_security_o_auth_def"`
+	OAuthAllowedScope   types.String      `tfsdk:"o_auth_allowed_scope"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var APISecurityOAuthReqObjectType = map[string]attr.Type{
@@ -46,6 +48,7 @@ var APISecurityOAuthReqObjectType = map[string]attr.Type{
 	"user_summary":            types.StringType,
 	"api_security_o_auth_def": types.StringType,
 	"o_auth_allowed_scope":    types.StringType,
+	"object_actions":          actions.ActionsListType,
 }
 
 func (data APISecurityOAuthReq) GetPath() string {

@@ -27,18 +27,20 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type JWEHeader struct {
-	Id                         types.String `tfsdk:"id"`
-	AppDomain                  types.String `tfsdk:"app_domain"`
-	UserSummary                types.String `tfsdk:"user_summary"`
-	JweProtectedHeader         types.List   `tfsdk:"jwe_protected_header"`
-	JweSharedUnprotectedHeader types.List   `tfsdk:"jwe_shared_unprotected_header"`
-	Recipient                  types.String `tfsdk:"recipient"`
+	Id                         types.String      `tfsdk:"id"`
+	AppDomain                  types.String      `tfsdk:"app_domain"`
+	UserSummary                types.String      `tfsdk:"user_summary"`
+	JweProtectedHeader         types.List        `tfsdk:"jwe_protected_header"`
+	JweSharedUnprotectedHeader types.List        `tfsdk:"jwe_shared_unprotected_header"`
+	Recipient                  types.String      `tfsdk:"recipient"`
+	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
 }
 
 var JWEHeaderObjectType = map[string]attr.Type{
@@ -48,6 +50,7 @@ var JWEHeaderObjectType = map[string]attr.Type{
 	"jwe_protected_header":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
 	"jwe_shared_unprotected_header": types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
 	"recipient":                     types.StringType,
+	"object_actions":                actions.ActionsListType,
 }
 
 func (data JWEHeader) GetPath() string {

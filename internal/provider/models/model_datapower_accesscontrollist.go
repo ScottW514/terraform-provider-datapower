@@ -27,21 +27,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AccessControlList struct {
-	Id                 types.String `tfsdk:"id"`
-	AppDomain          types.String `tfsdk:"app_domain"`
-	AccessControlEntry types.List   `tfsdk:"access_control_entry"`
+	Id                 types.String      `tfsdk:"id"`
+	AppDomain          types.String      `tfsdk:"app_domain"`
+	AccessControlEntry types.List        `tfsdk:"access_control_entry"`
+	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AccessControlListObjectType = map[string]attr.Type{
 	"id":                   types.StringType,
 	"app_domain":           types.StringType,
 	"access_control_entry": types.ListType{ElemType: types.ObjectType{AttrTypes: DmACEObjectType}},
+	"object_actions":       actions.ActionsListType,
 }
 
 func (data AccessControlList) GetPath() string {

@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -59,6 +60,7 @@ type HTTPSourceProtocolHandler struct {
 	ChunkedEncoding               types.Bool               `tfsdk:"chunked_encoding"`
 	HeaderTimeout                 types.Int64              `tfsdk:"header_timeout"`
 	Http2IdleTimeout              types.Int64              `tfsdk:"http2_idle_timeout"`
+	ObjectActions                 []*actions.Action        `tfsdk:"object_actions"`
 }
 
 var HTTPSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -88,6 +90,7 @@ var HTTPSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"chunked_encoding":                 types.BoolType,
 	"header_timeout":                   types.Int64Type,
 	"http2_idle_timeout":               types.Int64Type,
+	"object_actions":                   actions.ActionsListType,
 }
 
 func (data HTTPSourceProtocolHandler) GetPath() string {

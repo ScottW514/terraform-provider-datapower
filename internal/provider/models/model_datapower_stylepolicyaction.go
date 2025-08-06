@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -122,6 +123,7 @@ type StylePolicyAction struct {
 	MethodType                 types.String                     `tfsdk:"method_type"`
 	MethodType2                types.String                     `tfsdk:"method_type2"`
 	PolicyKey                  types.String                     `tfsdk:"policy_key"`
+	ObjectActions              []*actions.Action                `tfsdk:"object_actions"`
 }
 
 var StylePolicyActionObjectType = map[string]attr.Type{
@@ -214,6 +216,7 @@ var StylePolicyActionObjectType = map[string]attr.Type{
 	"method_type":                    types.StringType,
 	"method_type2":                   types.StringType,
 	"policy_key":                     types.StringType,
+	"object_actions":                 actions.ActionsListType,
 }
 
 func (data StylePolicyAction) GetPath() string {

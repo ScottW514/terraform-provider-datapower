@@ -27,20 +27,22 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SLMCredClass struct {
-	Id            types.String `tfsdk:"id"`
-	AppDomain     types.String `tfsdk:"app_domain"`
-	UserSummary   types.String `tfsdk:"user_summary"`
-	CredType      types.String `tfsdk:"cred_type"`
-	CredMatchType types.String `tfsdk:"cred_match_type"`
-	CredValue     types.List   `tfsdk:"cred_value"`
-	Stylesheet    types.String `tfsdk:"stylesheet"`
-	Header        types.String `tfsdk:"header"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	CredType      types.String      `tfsdk:"cred_type"`
+	CredMatchType types.String      `tfsdk:"cred_match_type"`
+	CredValue     types.List        `tfsdk:"cred_value"`
+	Stylesheet    types.String      `tfsdk:"stylesheet"`
+	Header        types.String      `tfsdk:"header"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var SLMCredClassObjectType = map[string]attr.Type{
@@ -52,6 +54,7 @@ var SLMCredClassObjectType = map[string]attr.Type{
 	"cred_value":      types.ListType{ElemType: types.StringType},
 	"stylesheet":      types.StringType,
 	"header":          types.StringType,
+	"object_actions":  actions.ActionsListType,
 }
 
 func (data SLMCredClass) GetPath() string {

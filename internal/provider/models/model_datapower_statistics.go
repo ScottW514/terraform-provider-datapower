@@ -28,21 +28,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type Statistics struct {
-	AppDomain    types.String `tfsdk:"app_domain"`
-	Enabled      types.Bool   `tfsdk:"enabled"`
-	LoadInterval types.Int64  `tfsdk:"load_interval"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	Enabled       types.Bool        `tfsdk:"enabled"`
+	LoadInterval  types.Int64       `tfsdk:"load_interval"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var StatisticsObjectType = map[string]attr.Type{
-	"app_domain":    types.StringType,
-	"enabled":       types.BoolType,
-	"load_interval": types.Int64Type,
+	"app_domain":     types.StringType,
+	"enabled":        types.BoolType,
+	"load_interval":  types.Int64Type,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data Statistics) GetPath() string {

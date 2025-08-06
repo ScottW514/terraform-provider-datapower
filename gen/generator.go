@@ -48,6 +48,8 @@ const (
 	changelogTemplate    = "./gen/templates/changelog.md.tmpl"
 	changelogLocation    = "./templates/guides/changelog.md.tmpl"
 	changelogOriginal    = "./CHANGELOG.md"
+	actionMapTemplate    = "./gen/templates/actionmap.go.tmpl"
+	actionMapLocation    = "./internal/provider/actions/actionmap.go"
 )
 
 type templateInfo struct {
@@ -103,8 +105,15 @@ type YamlConfig struct {
 	SkipTest              bool                  `yaml:"skip_test"`
 	TestPrerequisites     string                `yaml:"test_prerequisites"`
 	RestartDomainOnUpdate bool                  `yaml:"restart_domain_on_update"`
+	Actions               []YamlActionAttribute `yaml:"actions"`
 	Attributes            []YamlConfigAttribute `yaml:"attributes"`
 	DataResource          []string
+}
+
+type YamlActionAttribute struct {
+	Name     string `yaml:"name"`
+	PreBody  string `yaml:"pre_body"`
+	PostBody string `yaml:"post_body"`
 }
 
 type YamlConfigAttribute struct {
@@ -383,6 +392,9 @@ func main() {
 
 	// Process provider.go with all configs.
 	processTemplate(providerTemplate, providerLocation, configs)
+
+	// Process actions.go with all configs.
+	processTemplate(actionMapTemplate, actionMapLocation, configs)
 
 	// Process example generator with all configs.
 	processTemplate(exGenTemplate, exGenLocation, configs)

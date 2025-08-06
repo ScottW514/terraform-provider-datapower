@@ -26,21 +26,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type RaidVolume struct {
-	UserSummary types.String `tfsdk:"user_summary"`
-	ReadOnly    types.Bool   `tfsdk:"read_only"`
-	Directory   types.String `tfsdk:"directory"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	ReadOnly      types.Bool        `tfsdk:"read_only"`
+	Directory     types.String      `tfsdk:"directory"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var RaidVolumeObjectType = map[string]attr.Type{
-	"user_summary": types.StringType,
-	"read_only":    types.BoolType,
-	"directory":    types.StringType,
+	"user_summary":   types.StringType,
+	"read_only":      types.BoolType,
+	"directory":      types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data RaidVolume) GetPath() string {

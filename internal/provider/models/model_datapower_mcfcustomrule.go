@@ -27,17 +27,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type MCFCustomRule struct {
-	Id              types.String `tfsdk:"id"`
-	AppDomain       types.String `tfsdk:"app_domain"`
-	CustomRuleName  types.String `tfsdk:"custom_rule_name"`
-	CustomRuleValue types.String `tfsdk:"custom_rule_value"`
-	UserSummary     types.String `tfsdk:"user_summary"`
+	Id              types.String      `tfsdk:"id"`
+	AppDomain       types.String      `tfsdk:"app_domain"`
+	CustomRuleName  types.String      `tfsdk:"custom_rule_name"`
+	CustomRuleValue types.String      `tfsdk:"custom_rule_value"`
+	UserSummary     types.String      `tfsdk:"user_summary"`
+	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
 }
 
 var MCFCustomRuleObjectType = map[string]attr.Type{
@@ -46,6 +48,7 @@ var MCFCustomRuleObjectType = map[string]attr.Type{
 	"custom_rule_name":  types.StringType,
 	"custom_rule_value": types.StringType,
 	"user_summary":      types.StringType,
+	"object_actions":    actions.ActionsListType,
 }
 
 func (data MCFCustomRule) GetPath() string {

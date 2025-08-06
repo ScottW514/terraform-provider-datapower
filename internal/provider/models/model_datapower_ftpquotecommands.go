@@ -27,16 +27,18 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type FTPQuoteCommands struct {
-	Id                types.String `tfsdk:"id"`
-	AppDomain         types.String `tfsdk:"app_domain"`
-	UserSummary       types.String `tfsdk:"user_summary"`
-	FtpQuotedCommands types.List   `tfsdk:"ftp_quoted_commands"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	FtpQuotedCommands types.List        `tfsdk:"ftp_quoted_commands"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var FTPQuoteCommandsObjectType = map[string]attr.Type{
@@ -44,6 +46,7 @@ var FTPQuoteCommandsObjectType = map[string]attr.Type{
 	"app_domain":          types.StringType,
 	"user_summary":        types.StringType,
 	"ftp_quoted_commands": types.ListType{ElemType: types.ObjectType{AttrTypes: DmFTPQuotedCommandObjectType}},
+	"object_actions":      actions.ActionsListType,
 }
 
 func (data FTPQuoteCommands) GetPath() string {

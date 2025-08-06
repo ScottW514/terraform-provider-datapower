@@ -27,17 +27,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type Luna struct {
-	Id             types.String `tfsdk:"id"`
-	UserSummary    types.String `tfsdk:"user_summary"`
-	RemoteAddress  types.String `tfsdk:"remote_address"`
-	ServerCert     types.String `tfsdk:"server_cert"`
-	SecurityOption types.String `tfsdk:"security_option"`
+	Id             types.String      `tfsdk:"id"`
+	UserSummary    types.String      `tfsdk:"user_summary"`
+	RemoteAddress  types.String      `tfsdk:"remote_address"`
+	ServerCert     types.String      `tfsdk:"server_cert"`
+	SecurityOption types.String      `tfsdk:"security_option"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var LunaObjectType = map[string]attr.Type{
@@ -46,6 +48,7 @@ var LunaObjectType = map[string]attr.Type{
 	"remote_address":  types.StringType,
 	"server_cert":     types.StringType,
 	"security_option": types.StringType,
+	"object_actions":  actions.ActionsListType,
 }
 
 func (data Luna) GetPath() string {

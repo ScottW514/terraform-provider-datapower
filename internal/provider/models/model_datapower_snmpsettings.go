@@ -26,32 +26,34 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type SNMPSettings struct {
-	Enabled                        types.Bool   `tfsdk:"enabled"`
-	UserSummary                    types.String `tfsdk:"user_summary"`
-	LocalAddress                   types.String `tfsdk:"local_address"`
-	LocalPort                      types.Int64  `tfsdk:"local_port"`
-	Policies                       types.List   `tfsdk:"policies"`
-	PoliciesMq                     types.List   `tfsdk:"policies_mq"`
-	Targets                        types.List   `tfsdk:"targets"`
-	Users                          types.List   `tfsdk:"users"`
-	Contexts                       types.List   `tfsdk:"contexts"`
-	SecurityLevel                  types.String `tfsdk:"security_level"`
-	AccessLevel                    types.String `tfsdk:"access_level"`
-	EnableDefaultTrapSubscriptions types.Bool   `tfsdk:"enable_default_trap_subscriptions"`
-	TrapPriority                   types.String `tfsdk:"trap_priority"`
-	TrapEventCode                  types.List   `tfsdk:"trap_event_code"`
-	ConfigMib                      types.String `tfsdk:"config_mib"`
-	ConfigMibMq                    types.String `tfsdk:"config_mib_mq"`
-	StatusMib                      types.String `tfsdk:"status_mib"`
-	StatusMibMq                    types.String `tfsdk:"status_mib_mq"`
-	NotifMib                       types.String `tfsdk:"notif_mib"`
-	NotifMibMq                     types.String `tfsdk:"notif_mib_mq"`
+	Enabled                        types.Bool        `tfsdk:"enabled"`
+	UserSummary                    types.String      `tfsdk:"user_summary"`
+	LocalAddress                   types.String      `tfsdk:"local_address"`
+	LocalPort                      types.Int64       `tfsdk:"local_port"`
+	Policies                       types.List        `tfsdk:"policies"`
+	PoliciesMq                     types.List        `tfsdk:"policies_mq"`
+	Targets                        types.List        `tfsdk:"targets"`
+	Users                          types.List        `tfsdk:"users"`
+	Contexts                       types.List        `tfsdk:"contexts"`
+	SecurityLevel                  types.String      `tfsdk:"security_level"`
+	AccessLevel                    types.String      `tfsdk:"access_level"`
+	EnableDefaultTrapSubscriptions types.Bool        `tfsdk:"enable_default_trap_subscriptions"`
+	TrapPriority                   types.String      `tfsdk:"trap_priority"`
+	TrapEventCode                  types.List        `tfsdk:"trap_event_code"`
+	ConfigMib                      types.String      `tfsdk:"config_mib"`
+	ConfigMibMq                    types.String      `tfsdk:"config_mib_mq"`
+	StatusMib                      types.String      `tfsdk:"status_mib"`
+	StatusMibMq                    types.String      `tfsdk:"status_mib_mq"`
+	NotifMib                       types.String      `tfsdk:"notif_mib"`
+	NotifMibMq                     types.String      `tfsdk:"notif_mib_mq"`
+	ObjectActions                  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var SNMPSettingsObjectType = map[string]attr.Type{
@@ -75,6 +77,7 @@ var SNMPSettingsObjectType = map[string]attr.Type{
 	"status_mib_mq":                     types.StringType,
 	"notif_mib":                         types.StringType,
 	"notif_mib_mq":                      types.StringType,
+	"object_actions":                    actions.ActionsListType,
 }
 
 func (data SNMPSettings) GetPath() string {

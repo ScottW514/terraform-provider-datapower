@@ -3,6 +3,10 @@ description: 'Stateful raw XML handler'
 cli_alias: 'source-stateful-tcp'
 cmd_group: 'mpgw'
 rest_endpoint: '/mgmt/config/{domain}/XTCProtocolHandler'
+actions:
+  - name: quiesce
+    pre_body: '{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}'
+    post_body: '{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}'
 attributes:
   - name: Id
     tf_name: id

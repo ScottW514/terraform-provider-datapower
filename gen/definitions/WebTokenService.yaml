@@ -3,6 +3,10 @@ description: 'Web Token Service'
 cli_alias: 'web-token-service'
 cmd_group: 'mpgw'
 rest_endpoint: '/mgmt/config/{domain}/WebTokenService'
+actions:
+  - name: quiesce
+    pre_body: '{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}'
+    post_body: '{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}'
 attributes:
   - name: Id
     tf_name: id

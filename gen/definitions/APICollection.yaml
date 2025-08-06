@@ -3,6 +3,9 @@ description: 'API collection'
 cli_alias: 'api-collection'
 cmd_group: 'configuration'
 rest_endpoint: '/mgmt/config/{domain}/APICollection'
+actions:
+  - name: flush_cache
+    post_body: '{"FlushAPISubscriberCache": {"APICollection": "{name}"}}'
 attributes:
   - name: Id
     tf_name: id

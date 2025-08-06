@@ -34,6 +34,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
@@ -146,7 +147,8 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: tfutils.NewAttributeDescription("JWT URL", "jwt-url", "").String,
 				Optional:            true,
 			},
-			"proxy_policy": models.GetDmAPICGSProxyPolicyResourceSchema("API Manager proxy", "proxy", "", false),
+			"proxy_policy":   models.GetDmAPICGSProxyPolicyResourceSchema("API Manager proxy", "proxy", "", false),
+			"object_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -166,6 +168,8 @@ func (r *APIConnectGatewayServiceResource) Create(ctx context.Context, req resou
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
 
 	body := data.ToBody(ctx, `APIConnectGatewayService`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -211,6 +215,8 @@ func (r *APIConnectGatewayServiceResource) Update(ctx context.Context, req resou
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `APIConnectGatewayService`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

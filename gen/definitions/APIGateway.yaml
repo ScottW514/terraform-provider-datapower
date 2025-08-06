@@ -3,6 +3,11 @@ description: 'API gateway'
 cli_alias: 'apigw'
 cmd_group: 'configuration'
 rest_endpoint: '/mgmt/config/{domain}/APIGateway'
+actions:
+  - name: flush_stylesheet_cache
+    post_body: '{"FlushAPIGWStylesheetCache": {"APIGateway": "{name}", "MatchPattern": "*"}}'
+  - name: flush_document_cache
+    post_body: '{"FlushAPIGWDocumentCache": {"APIGateway": "{name}", "MatchPattern": "*"}}'
 attributes:
   - name: Id
     tf_name: id

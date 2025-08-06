@@ -21,9 +21,9 @@ import (
 	"context"
 	"log"
 
-	"github.com/scottw514/terraform-provider-datapower/internal/provider"
-
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 )
 
 //go:generate go run gen/generator.go
@@ -33,6 +33,13 @@ var (
 )
 
 func main() {
+	defer func() {
+		err := actions.PostProcess()
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+	}()
+
 	opts := providerserver.ServeOpts{
 		Address: "registry.terraform.io/ScottW514/datapower",
 	}

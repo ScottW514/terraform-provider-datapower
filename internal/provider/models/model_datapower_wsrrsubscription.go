@@ -27,24 +27,26 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WSRRSubscription struct {
-	Id                     types.String `tfsdk:"id"`
-	AppDomain              types.String `tfsdk:"app_domain"`
-	Server                 types.String `tfsdk:"server"`
-	Namespace              types.String `tfsdk:"namespace"`
-	ObjectType             types.String `tfsdk:"object_type"`
-	ObjectName             types.String `tfsdk:"object_name"`
-	Method                 types.String `tfsdk:"method"`
-	RefreshInterval        types.Int64  `tfsdk:"refresh_interval"`
-	UseVersion             types.Bool   `tfsdk:"use_version"`
-	ObjectVersion          types.String `tfsdk:"object_version"`
-	FetchPolicyAttachments types.Bool   `tfsdk:"fetch_policy_attachments"`
-	UserSummary            types.String `tfsdk:"user_summary"`
+	Id                     types.String      `tfsdk:"id"`
+	AppDomain              types.String      `tfsdk:"app_domain"`
+	Server                 types.String      `tfsdk:"server"`
+	Namespace              types.String      `tfsdk:"namespace"`
+	ObjectType             types.String      `tfsdk:"object_type"`
+	ObjectName             types.String      `tfsdk:"object_name"`
+	Method                 types.String      `tfsdk:"method"`
+	RefreshInterval        types.Int64       `tfsdk:"refresh_interval"`
+	UseVersion             types.Bool        `tfsdk:"use_version"`
+	ObjectVersion          types.String      `tfsdk:"object_version"`
+	FetchPolicyAttachments types.Bool        `tfsdk:"fetch_policy_attachments"`
+	UserSummary            types.String      `tfsdk:"user_summary"`
+	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WSRRSubscriptionObjectType = map[string]attr.Type{
@@ -60,6 +62,7 @@ var WSRRSubscriptionObjectType = map[string]attr.Type{
 	"object_version":           types.StringType,
 	"fetch_policy_attachments": types.BoolType,
 	"user_summary":             types.StringType,
+	"object_actions":           actions.ActionsListType,
 }
 
 func (data WSRRSubscription) GetPath() string {

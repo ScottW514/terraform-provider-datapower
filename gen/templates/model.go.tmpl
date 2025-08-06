@@ -43,6 +43,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
@@ -61,6 +62,9 @@ type {{.Name}} struct {
 {{- if .RestartDomainOnUpdate}}
 	RestartDomainOnUpdate types.Bool `tfsdk:"restart_domain_on_update"`
 {{- end}}
+{{- if not .ModelOnly}}
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+{{- end}}
 }
 
 {{- if hasWriteOnlyAttribute .Attributes}}
@@ -74,6 +78,9 @@ type {{.Name}}WO struct {
     {{- end}}
 {{- if .RestartDomainOnUpdate}}
 	RestartDomainOnUpdate types.Bool `tfsdk:"restart_domain_on_update"`
+{{- end}}
+{{- if not .ModelOnly}}
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 {{- end}}
 }
 {{- end}}
@@ -96,6 +103,9 @@ var {{.Name}}ObjectType = map[string]attr.Type{
 {{- if .RestartDomainOnUpdate}}
 	"restart_domain_on_update": types.BoolType,
 {{- end}}
+{{- if not .ModelOnly}}
+	"object_actions": actions.ActionsListType,
+{{- end}}
 }
 
 {{- if hasWriteOnlyAttribute .Attributes}}
@@ -115,6 +125,9 @@ var {{.Name}}ObjectTypeWO = map[string]attr.Type{
     {{- end}}
     {{- if .RestartDomainOnUpdate}}
 	"restart_domain_on_update": types.BoolType,
+    {{- end}}
+    {{- if not .ModelOnly}}
+	"object_actions": actions.ActionsListType,
     {{- end}}
 }
 {{- end}}

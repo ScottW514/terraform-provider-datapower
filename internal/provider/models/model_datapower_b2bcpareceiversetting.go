@@ -27,26 +27,28 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type B2BCPAReceiverSetting struct {
-	Id                    types.String `tfsdk:"id"`
-	AppDomain             types.String `tfsdk:"app_domain"`
-	UserSummary           types.String `tfsdk:"user_summary"`
-	LocalEndpointUri      types.String `tfsdk:"local_endpoint_uri"`
-	SyncReplyMode         types.String `tfsdk:"sync_reply_mode"`
-	AckRequested          types.String `tfsdk:"ack_requested"`
-	AckSignatureRequested types.String `tfsdk:"ack_signature_requested"`
-	AllowDuplicateMessage types.String `tfsdk:"allow_duplicate_message"`
-	PersistDuration       types.Int64  `tfsdk:"persist_duration"`
-	EncryptionRequired    types.Bool   `tfsdk:"encryption_required"`
-	DecryptIdCred         types.String `tfsdk:"decrypt_id_cred"`
-	SignatureRequired     types.Bool   `tfsdk:"signature_required"`
-	VerifyValCred         types.String `tfsdk:"verify_val_cred"`
-	DefaultSignerCert     types.String `tfsdk:"default_signer_cert"`
+	Id                    types.String      `tfsdk:"id"`
+	AppDomain             types.String      `tfsdk:"app_domain"`
+	UserSummary           types.String      `tfsdk:"user_summary"`
+	LocalEndpointUri      types.String      `tfsdk:"local_endpoint_uri"`
+	SyncReplyMode         types.String      `tfsdk:"sync_reply_mode"`
+	AckRequested          types.String      `tfsdk:"ack_requested"`
+	AckSignatureRequested types.String      `tfsdk:"ack_signature_requested"`
+	AllowDuplicateMessage types.String      `tfsdk:"allow_duplicate_message"`
+	PersistDuration       types.Int64       `tfsdk:"persist_duration"`
+	EncryptionRequired    types.Bool        `tfsdk:"encryption_required"`
+	DecryptIdCred         types.String      `tfsdk:"decrypt_id_cred"`
+	SignatureRequired     types.Bool        `tfsdk:"signature_required"`
+	VerifyValCred         types.String      `tfsdk:"verify_val_cred"`
+	DefaultSignerCert     types.String      `tfsdk:"default_signer_cert"`
+	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
 }
 
 var B2BCPAReceiverSettingObjectType = map[string]attr.Type{
@@ -64,6 +66,7 @@ var B2BCPAReceiverSettingObjectType = map[string]attr.Type{
 	"signature_required":      types.BoolType,
 	"verify_val_cred":         types.StringType,
 	"default_signer_cert":     types.StringType,
+	"object_actions":          actions.ActionsListType,
 }
 
 func (data B2BCPAReceiverSetting) GetPath() string {

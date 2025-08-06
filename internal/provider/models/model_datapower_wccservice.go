@@ -27,21 +27,23 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WCCService struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	OdcInfoHostname     types.String `tfsdk:"odc_info_hostname"`
-	OdcInfoPort         types.Int64  `tfsdk:"odc_info_port"`
-	UpdateType          types.String `tfsdk:"update_type"`
-	TimeInterval        types.Int64  `tfsdk:"time_interval"`
-	SslClientConfigType types.String `tfsdk:"ssl_client_config_type"`
-	SslClient           types.String `tfsdk:"ssl_client"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	OdcInfoHostname     types.String      `tfsdk:"odc_info_hostname"`
+	OdcInfoPort         types.Int64       `tfsdk:"odc_info_port"`
+	UpdateType          types.String      `tfsdk:"update_type"`
+	TimeInterval        types.Int64       `tfsdk:"time_interval"`
+	SslClientConfigType types.String      `tfsdk:"ssl_client_config_type"`
+	SslClient           types.String      `tfsdk:"ssl_client"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WCCServiceObjectType = map[string]attr.Type{
@@ -54,6 +56,7 @@ var WCCServiceObjectType = map[string]attr.Type{
 	"time_interval":          types.Int64Type,
 	"ssl_client_config_type": types.StringType,
 	"ssl_client":             types.StringType,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data WCCService) GetPath() string {

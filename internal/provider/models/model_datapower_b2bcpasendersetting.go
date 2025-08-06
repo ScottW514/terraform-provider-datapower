@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -60,6 +61,7 @@ type B2BCPASenderSetting struct {
 	SignatureC14nAlgorithm types.String         `tfsdk:"signature_c14n_algorithm"`
 	SslClientConfigType    types.String         `tfsdk:"ssl_client_config_type"`
 	SslClient              types.String         `tfsdk:"ssl_client"`
+	ObjectActions          []*actions.Action    `tfsdk:"object_actions"`
 }
 
 var B2BCPASenderSettingObjectType = map[string]attr.Type{
@@ -90,6 +92,7 @@ var B2BCPASenderSettingObjectType = map[string]attr.Type{
 	"signature_c14n_algorithm": types.StringType,
 	"ssl_client_config_type":   types.StringType,
 	"ssl_client":               types.StringType,
+	"object_actions":           actions.ActionsListType,
 }
 
 func (data B2BCPASenderSetting) GetPath() string {

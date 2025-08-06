@@ -27,31 +27,34 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AssemblyFunction struct {
-	Id          types.String `tfsdk:"id"`
-	AppDomain   types.String `tfsdk:"app_domain"`
-	UserSummary types.String `tfsdk:"user_summary"`
-	Title       types.String `tfsdk:"title"`
-	Description types.String `tfsdk:"description"`
-	Scope       types.String `tfsdk:"scope"`
-	Parameter   types.List   `tfsdk:"parameter"`
-	Assembly    types.String `tfsdk:"assembly"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	Title         types.String      `tfsdk:"title"`
+	Description   types.String      `tfsdk:"description"`
+	Scope         types.String      `tfsdk:"scope"`
+	Parameter     types.List        `tfsdk:"parameter"`
+	Assembly      types.String      `tfsdk:"assembly"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AssemblyFunctionObjectType = map[string]attr.Type{
-	"id":           types.StringType,
-	"app_domain":   types.StringType,
-	"user_summary": types.StringType,
-	"title":        types.StringType,
-	"description":  types.StringType,
-	"scope":        types.StringType,
-	"parameter":    types.ListType{ElemType: types.ObjectType{AttrTypes: DmAssemblyFunctionParameterObjectType}},
-	"assembly":     types.StringType,
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"user_summary":   types.StringType,
+	"title":          types.StringType,
+	"description":    types.StringType,
+	"scope":          types.StringType,
+	"parameter":      types.ListType{ElemType: types.ObjectType{AttrTypes: DmAssemblyFunctionParameterObjectType}},
+	"assembly":       types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data AssemblyFunction) GetPath() string {

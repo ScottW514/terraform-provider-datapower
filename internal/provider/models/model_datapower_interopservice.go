@@ -26,27 +26,29 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type InteropService struct {
-	Enabled             types.Bool   `tfsdk:"enabled"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	XmlManager          types.String `tfsdk:"xml_manager"`
-	AaaPolicy           types.String `tfsdk:"aaa_policy"`
-	HttpService         types.Bool   `tfsdk:"http_service"`
-	LocalAddress        types.String `tfsdk:"local_address"`
-	LocalPort           types.Int64  `tfsdk:"local_port"`
-	Acl                 types.String `tfsdk:"acl"`
-	HttpsService        types.Bool   `tfsdk:"https_service"`
-	HttpsLocalAddress   types.String `tfsdk:"https_local_address"`
-	HttpsLocalPort      types.Int64  `tfsdk:"https_local_port"`
-	HttpsAcl            types.String `tfsdk:"https_acl"`
-	SslServerConfigType types.String `tfsdk:"ssl_server_config_type"`
-	SslServer           types.String `tfsdk:"ssl_server"`
-	SslsniServer        types.String `tfsdk:"sslsni_server"`
+	Enabled             types.Bool        `tfsdk:"enabled"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	XmlManager          types.String      `tfsdk:"xml_manager"`
+	AaaPolicy           types.String      `tfsdk:"aaa_policy"`
+	HttpService         types.Bool        `tfsdk:"http_service"`
+	LocalAddress        types.String      `tfsdk:"local_address"`
+	LocalPort           types.Int64       `tfsdk:"local_port"`
+	Acl                 types.String      `tfsdk:"acl"`
+	HttpsService        types.Bool        `tfsdk:"https_service"`
+	HttpsLocalAddress   types.String      `tfsdk:"https_local_address"`
+	HttpsLocalPort      types.Int64       `tfsdk:"https_local_port"`
+	HttpsAcl            types.String      `tfsdk:"https_acl"`
+	SslServerConfigType types.String      `tfsdk:"ssl_server_config_type"`
+	SslServer           types.String      `tfsdk:"ssl_server"`
+	SslsniServer        types.String      `tfsdk:"sslsni_server"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var InteropServiceObjectType = map[string]attr.Type{
@@ -65,6 +67,7 @@ var InteropServiceObjectType = map[string]attr.Type{
 	"ssl_server_config_type": types.StringType,
 	"ssl_server":             types.StringType,
 	"sslsni_server":          types.StringType,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data InteropService) GetPath() string {

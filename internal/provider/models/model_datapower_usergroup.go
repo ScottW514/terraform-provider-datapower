@@ -27,16 +27,18 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type UserGroup struct {
-	Id             types.String `tfsdk:"id"`
-	UserSummary    types.String `tfsdk:"user_summary"`
-	AccessPolicies types.List   `tfsdk:"access_policies"`
-	CommandGroup   types.List   `tfsdk:"command_group"`
+	Id             types.String      `tfsdk:"id"`
+	UserSummary    types.String      `tfsdk:"user_summary"`
+	AccessPolicies types.List        `tfsdk:"access_policies"`
+	CommandGroup   types.List        `tfsdk:"command_group"`
+	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
 }
 
 var UserGroupObjectType = map[string]attr.Type{
@@ -44,6 +46,7 @@ var UserGroupObjectType = map[string]attr.Type{
 	"user_summary":    types.StringType,
 	"access_policies": types.ListType{ElemType: types.StringType},
 	"command_group":   types.ListType{ElemType: types.StringType},
+	"object_actions":  actions.ActionsListType,
 }
 
 func (data UserGroup) GetPath() string {

@@ -26,16 +26,18 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type LunaHASettings struct {
-	Enabled       types.Bool   `tfsdk:"enabled"`
-	Mode          types.String `tfsdk:"mode"`
-	RecoveryCount types.Int64  `tfsdk:"recovery_count"`
-	Interval      types.Int64  `tfsdk:"interval"`
+	Enabled       types.Bool        `tfsdk:"enabled"`
+	Mode          types.String      `tfsdk:"mode"`
+	RecoveryCount types.Int64       `tfsdk:"recovery_count"`
+	Interval      types.Int64       `tfsdk:"interval"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var LunaHASettingsObjectType = map[string]attr.Type{
@@ -43,6 +45,7 @@ var LunaHASettingsObjectType = map[string]attr.Type{
 	"mode":           types.StringType,
 	"recovery_count": types.Int64Type,
 	"interval":       types.Int64Type,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data LunaHASettings) GetPath() string {

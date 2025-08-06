@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -40,6 +41,7 @@ type CryptoKerberosKeytab struct {
 	UseReplayCache      types.Bool          `tfsdk:"use_replay_cache"`
 	GenerateGssChecksum types.Bool          `tfsdk:"generate_gss_checksum"`
 	GssChecksumFlags    *DmGssChecksumFlags `tfsdk:"gss_checksum_flags"`
+	ObjectActions       []*actions.Action   `tfsdk:"object_actions"`
 }
 
 var CryptoKerberosKeytabObjectType = map[string]attr.Type{
@@ -50,6 +52,7 @@ var CryptoKerberosKeytabObjectType = map[string]attr.Type{
 	"use_replay_cache":      types.BoolType,
 	"generate_gss_checksum": types.BoolType,
 	"gss_checksum_flags":    types.ObjectType{AttrTypes: DmGssChecksumFlagsObjectType},
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data CryptoKerberosKeytab) GetPath() string {

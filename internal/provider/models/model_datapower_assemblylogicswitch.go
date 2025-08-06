@@ -27,20 +27,22 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AssemblyLogicSwitch struct {
-	Id              types.String `tfsdk:"id"`
-	AppDomain       types.String `tfsdk:"app_domain"`
-	Case            types.List   `tfsdk:"case"`
-	Otherwise       types.String `tfsdk:"otherwise"`
-	UserSummary     types.String `tfsdk:"user_summary"`
-	Title           types.String `tfsdk:"title"`
-	CorrelationPath types.String `tfsdk:"correlation_path"`
-	ActionDebug     types.Bool   `tfsdk:"action_debug"`
+	Id              types.String      `tfsdk:"id"`
+	AppDomain       types.String      `tfsdk:"app_domain"`
+	Case            types.List        `tfsdk:"case"`
+	Otherwise       types.String      `tfsdk:"otherwise"`
+	UserSummary     types.String      `tfsdk:"user_summary"`
+	Title           types.String      `tfsdk:"title"`
+	CorrelationPath types.String      `tfsdk:"correlation_path"`
+	ActionDebug     types.Bool        `tfsdk:"action_debug"`
+	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AssemblyLogicSwitchObjectType = map[string]attr.Type{
@@ -52,6 +54,7 @@ var AssemblyLogicSwitchObjectType = map[string]attr.Type{
 	"title":            types.StringType,
 	"correlation_path": types.StringType,
 	"action_debug":     types.BoolType,
+	"object_actions":   actions.ActionsListType,
 }
 
 func (data AssemblyLogicSwitch) GetPath() string {

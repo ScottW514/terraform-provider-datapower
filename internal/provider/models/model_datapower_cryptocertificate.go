@@ -27,17 +27,19 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type CryptoCertificate struct {
-	Id               types.String `tfsdk:"id"`
-	AppDomain        types.String `tfsdk:"app_domain"`
-	Filename         types.String `tfsdk:"filename"`
-	Alias            types.String `tfsdk:"alias"`
-	IgnoreExpiration types.Bool   `tfsdk:"ignore_expiration"`
+	Id               types.String      `tfsdk:"id"`
+	AppDomain        types.String      `tfsdk:"app_domain"`
+	Filename         types.String      `tfsdk:"filename"`
+	Alias            types.String      `tfsdk:"alias"`
+	IgnoreExpiration types.Bool        `tfsdk:"ignore_expiration"`
+	ObjectActions    []*actions.Action `tfsdk:"object_actions"`
 }
 
 var CryptoCertificateObjectType = map[string]attr.Type{
@@ -46,6 +48,7 @@ var CryptoCertificateObjectType = map[string]attr.Type{
 	"filename":          types.StringType,
 	"alias":             types.StringType,
 	"ignore_expiration": types.BoolType,
+	"object_actions":    actions.ActionsListType,
 }
 
 func (data CryptoCertificate) GetPath() string {

@@ -27,6 +27,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
@@ -108,6 +109,7 @@ type OAuthProviderSettings struct {
 	ThirdPartyBasicAuthHeaderName         types.String              `tfsdk:"third_party_basic_auth_header_name"`
 	ThirdPartyCustomHeaderNameFormat      types.String              `tfsdk:"third_party_custom_header_name_format"`
 	ThirdPartyIntrospectSslProfile        types.String              `tfsdk:"third_party_introspect_ssl_profile"`
+	ObjectActions                         []*actions.Action         `tfsdk:"object_actions"`
 }
 
 var OAuthProviderSettingsObjectType = map[string]attr.Type{
@@ -186,6 +188,7 @@ var OAuthProviderSettingsObjectType = map[string]attr.Type{
 	"third_party_basic_auth_header_name":          types.StringType,
 	"third_party_custom_header_name_format":       types.StringType,
 	"third_party_introspect_ssl_profile":          types.StringType,
+	"object_actions":                              actions.ActionsListType,
 }
 
 func (data OAuthProviderSettings) GetPath() string {

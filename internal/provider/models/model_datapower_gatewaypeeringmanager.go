@@ -28,19 +28,21 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type GatewayPeeringManager struct {
-	AppDomain                types.String `tfsdk:"app_domain"`
-	Enabled                  types.Bool   `tfsdk:"enabled"`
-	UserSummary              types.String `tfsdk:"user_summary"`
-	ApiConnectGatewayService types.String `tfsdk:"api_connect_gateway_service"`
-	RateLimit                types.String `tfsdk:"rate_limit"`
-	Subscription             types.String `tfsdk:"subscription"`
-	RatelimitModule          types.String `tfsdk:"ratelimit_module"`
+	AppDomain                types.String      `tfsdk:"app_domain"`
+	Enabled                  types.Bool        `tfsdk:"enabled"`
+	UserSummary              types.String      `tfsdk:"user_summary"`
+	ApiConnectGatewayService types.String      `tfsdk:"api_connect_gateway_service"`
+	RateLimit                types.String      `tfsdk:"rate_limit"`
+	Subscription             types.String      `tfsdk:"subscription"`
+	RatelimitModule          types.String      `tfsdk:"ratelimit_module"`
+	ObjectActions            []*actions.Action `tfsdk:"object_actions"`
 }
 
 var GatewayPeeringManagerObjectType = map[string]attr.Type{
@@ -51,6 +53,7 @@ var GatewayPeeringManagerObjectType = map[string]attr.Type{
 	"rate_limit":                  types.StringType,
 	"subscription":                types.StringType,
 	"ratelimit_module":            types.StringType,
+	"object_actions":              actions.ActionsListType,
 }
 
 func (data GatewayPeeringManager) GetPath() string {

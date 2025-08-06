@@ -27,25 +27,27 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AssemblyActionRateLimit struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	Source              types.String `tfsdk:"source"`
-	BurstLimit          types.List   `tfsdk:"burst_limit"`
-	RateLimit           types.List   `tfsdk:"rate_limit"`
-	CountLimit          types.List   `tfsdk:"count_limit"`
-	RateLimitDefinition types.List   `tfsdk:"rate_limit_definition"`
-	RateLimitGroup      types.String `tfsdk:"rate_limit_group"`
-	GroupAction         types.String `tfsdk:"group_action"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	Title               types.String `tfsdk:"title"`
-	CorrelationPath     types.String `tfsdk:"correlation_path"`
-	ActionDebug         types.Bool   `tfsdk:"action_debug"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	Source              types.String      `tfsdk:"source"`
+	BurstLimit          types.List        `tfsdk:"burst_limit"`
+	RateLimit           types.List        `tfsdk:"rate_limit"`
+	CountLimit          types.List        `tfsdk:"count_limit"`
+	RateLimitDefinition types.List        `tfsdk:"rate_limit_definition"`
+	RateLimitGroup      types.String      `tfsdk:"rate_limit_group"`
+	GroupAction         types.String      `tfsdk:"group_action"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	Title               types.String      `tfsdk:"title"`
+	CorrelationPath     types.String      `tfsdk:"correlation_path"`
+	ActionDebug         types.Bool        `tfsdk:"action_debug"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AssemblyActionRateLimitObjectType = map[string]attr.Type{
@@ -62,6 +64,7 @@ var AssemblyActionRateLimitObjectType = map[string]attr.Type{
 	"title":                 types.StringType,
 	"correlation_path":      types.StringType,
 	"action_debug":          types.BoolType,
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data AssemblyActionRateLimit) GetPath() string {

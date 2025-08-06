@@ -1,5 +1,6 @@
 # Files to prevent from deletion during cleanup before running go generate.
 # Format is the same as .gitignore
+actions/
 models/testconfig/model_test_config.go
 models/testconfig/model_datapower_file_test_config.go
 modifiers/

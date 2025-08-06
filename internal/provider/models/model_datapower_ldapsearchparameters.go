@@ -27,20 +27,22 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type LDAPSearchParameters struct {
-	Id                    types.String `tfsdk:"id"`
-	AppDomain             types.String `tfsdk:"app_domain"`
-	UserSummary           types.String `tfsdk:"user_summary"`
-	LdapBaseDn            types.String `tfsdk:"ldap_base_dn"`
-	LdapReturnedAttribute types.String `tfsdk:"ldap_returned_attribute"`
-	LdapFilterPrefix      types.String `tfsdk:"ldap_filter_prefix"`
-	LdapFilterSuffix      types.String `tfsdk:"ldap_filter_suffix"`
-	LdapScope             types.String `tfsdk:"ldap_scope"`
+	Id                    types.String      `tfsdk:"id"`
+	AppDomain             types.String      `tfsdk:"app_domain"`
+	UserSummary           types.String      `tfsdk:"user_summary"`
+	LdapBaseDn            types.String      `tfsdk:"ldap_base_dn"`
+	LdapReturnedAttribute types.String      `tfsdk:"ldap_returned_attribute"`
+	LdapFilterPrefix      types.String      `tfsdk:"ldap_filter_prefix"`
+	LdapFilterSuffix      types.String      `tfsdk:"ldap_filter_suffix"`
+	LdapScope             types.String      `tfsdk:"ldap_scope"`
+	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
 }
 
 var LDAPSearchParametersObjectType = map[string]attr.Type{
@@ -52,6 +54,7 @@ var LDAPSearchParametersObjectType = map[string]attr.Type{
 	"ldap_filter_prefix":      types.StringType,
 	"ldap_filter_suffix":      types.StringType,
 	"ldap_scope":              types.StringType,
+	"object_actions":          actions.ActionsListType,
 }
 
 func (data LDAPSearchParameters) GetPath() string {

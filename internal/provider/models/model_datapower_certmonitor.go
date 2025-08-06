@@ -26,18 +26,20 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type CertMonitor struct {
-	Enabled             types.Bool   `tfsdk:"enabled"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	PollingInterval     types.Int64  `tfsdk:"polling_interval"`
-	ReminderTime        types.Int64  `tfsdk:"reminder_time"`
-	LogLevel            types.String `tfsdk:"log_level"`
-	DisableExpiredCerts types.Bool   `tfsdk:"disable_expired_certs"`
+	Enabled             types.Bool        `tfsdk:"enabled"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	PollingInterval     types.Int64       `tfsdk:"polling_interval"`
+	ReminderTime        types.Int64       `tfsdk:"reminder_time"`
+	LogLevel            types.String      `tfsdk:"log_level"`
+	DisableExpiredCerts types.Bool        `tfsdk:"disable_expired_certs"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var CertMonitorObjectType = map[string]attr.Type{
@@ -47,6 +49,7 @@ var CertMonitorObjectType = map[string]attr.Type{
 	"reminder_time":         types.Int64Type,
 	"log_level":             types.StringType,
 	"disable_expired_certs": types.BoolType,
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data CertMonitor) GetPath() string {

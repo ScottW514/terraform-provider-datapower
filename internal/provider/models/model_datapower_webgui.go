@@ -26,24 +26,26 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type WebGUI struct {
-	Enabled              types.Bool   `tfsdk:"enabled"`
-	UserSummary          types.String `tfsdk:"user_summary"`
-	LocalPort            types.Int64  `tfsdk:"local_port"`
-	UserAgent            types.String `tfsdk:"user_agent"`
-	SaveConfigOverwrites types.Bool   `tfsdk:"save_config_overwrites"`
-	IdleTimeout          types.Int64  `tfsdk:"idle_timeout"`
-	Acl                  types.String `tfsdk:"acl"`
-	SslServerConfigType  types.String `tfsdk:"ssl_server_config_type"`
-	SslServer            types.String `tfsdk:"ssl_server"`
-	SslsniServer         types.String `tfsdk:"sslsni_server"`
-	EnableSts            types.Bool   `tfsdk:"enable_sts"`
-	LocalAddress         types.String `tfsdk:"local_address"`
+	Enabled              types.Bool        `tfsdk:"enabled"`
+	UserSummary          types.String      `tfsdk:"user_summary"`
+	LocalPort            types.Int64       `tfsdk:"local_port"`
+	UserAgent            types.String      `tfsdk:"user_agent"`
+	SaveConfigOverwrites types.Bool        `tfsdk:"save_config_overwrites"`
+	IdleTimeout          types.Int64       `tfsdk:"idle_timeout"`
+	Acl                  types.String      `tfsdk:"acl"`
+	SslServerConfigType  types.String      `tfsdk:"ssl_server_config_type"`
+	SslServer            types.String      `tfsdk:"ssl_server"`
+	SslsniServer         types.String      `tfsdk:"sslsni_server"`
+	EnableSts            types.Bool        `tfsdk:"enable_sts"`
+	LocalAddress         types.String      `tfsdk:"local_address"`
+	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
 }
 
 var WebGUIObjectType = map[string]attr.Type{
@@ -59,6 +61,7 @@ var WebGUIObjectType = map[string]attr.Type{
 	"sslsni_server":          types.StringType,
 	"enable_sts":             types.BoolType,
 	"local_address":          types.StringType,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data WebGUI) GetPath() string {

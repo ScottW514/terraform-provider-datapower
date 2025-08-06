@@ -27,54 +27,56 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type AS3SourceProtocolHandler struct {
-	Id                          types.String `tfsdk:"id"`
-	AppDomain                   types.String `tfsdk:"app_domain"`
-	UserSummary                 types.String `tfsdk:"user_summary"`
-	LocalAddress                types.String `tfsdk:"local_address"`
-	LocalPort                   types.Int64  `tfsdk:"local_port"`
-	FilesystemType              types.String `tfsdk:"filesystem_type"`
-	PersistentFilesystemTimeout types.Int64  `tfsdk:"persistent_filesystem_timeout"`
-	VirtualDirectories          types.List   `tfsdk:"virtual_directories"`
-	DefaultDirectory            types.String `tfsdk:"default_directory"`
-	MaxFilenameLength           types.Int64  `tfsdk:"max_filename_length"`
-	Acl                         types.String `tfsdk:"acl"`
-	RequireTls                  types.String `tfsdk:"require_tls"`
-	PasswordAaaPolicy           types.String `tfsdk:"password_aaa_policy"`
-	CertificateAaaPolicy        types.String `tfsdk:"certificate_aaa_policy"`
-	AllowCcc                    types.Bool   `tfsdk:"allow_ccc"`
-	Passive                     types.String `tfsdk:"passive"`
-	UsePasvPortRange            types.Bool   `tfsdk:"use_pasv_port_range"`
-	PasvMinPort                 types.Int64  `tfsdk:"pasv_min_port"`
-	PasvMaxPort                 types.Int64  `tfsdk:"pasv_max_port"`
-	PasvIdleTimeOut             types.Int64  `tfsdk:"pasv_idle_time_out"`
-	DisablePasvipCheck          types.Bool   `tfsdk:"disable_pasvip_check"`
-	DisablePortipCheck          types.Bool   `tfsdk:"disable_portip_check"`
-	UseAlternatePasvAddr        types.Bool   `tfsdk:"use_alternate_pasv_addr"`
-	AlternatePasvAddr           types.String `tfsdk:"alternate_pasv_addr"`
-	AllowListCmd                types.Bool   `tfsdk:"allow_list_cmd"`
-	AllowDeleCmd                types.Bool   `tfsdk:"allow_dele_cmd"`
-	DataEncryption              types.String `tfsdk:"data_encryption"`
-	AllowCompression            types.Bool   `tfsdk:"allow_compression"`
-	AllowStou                   types.Bool   `tfsdk:"allow_stou"`
-	UniqueFilenamePrefix        types.String `tfsdk:"unique_filename_prefix"`
-	AllowRest                   types.Bool   `tfsdk:"allow_rest"`
-	RestartTimeout              types.Int64  `tfsdk:"restart_timeout"`
-	IdleTimeout                 types.Int64  `tfsdk:"idle_timeout"`
-	ResponseType                types.String `tfsdk:"response_type"`
-	ResponseStorage             types.String `tfsdk:"response_storage"`
-	TemporaryStorageSize        types.Int64  `tfsdk:"temporary_storage_size"`
-	ResponseNfsMount            types.String `tfsdk:"response_nfs_mount"`
-	ResponseSuffix              types.String `tfsdk:"response_suffix"`
-	ResponseUrl                 types.String `tfsdk:"response_url"`
-	SslServerConfigType         types.String `tfsdk:"ssl_server_config_type"`
-	SslServer                   types.String `tfsdk:"ssl_server"`
-	SslsniServer                types.String `tfsdk:"sslsni_server"`
+	Id                          types.String      `tfsdk:"id"`
+	AppDomain                   types.String      `tfsdk:"app_domain"`
+	UserSummary                 types.String      `tfsdk:"user_summary"`
+	LocalAddress                types.String      `tfsdk:"local_address"`
+	LocalPort                   types.Int64       `tfsdk:"local_port"`
+	FilesystemType              types.String      `tfsdk:"filesystem_type"`
+	PersistentFilesystemTimeout types.Int64       `tfsdk:"persistent_filesystem_timeout"`
+	VirtualDirectories          types.List        `tfsdk:"virtual_directories"`
+	DefaultDirectory            types.String      `tfsdk:"default_directory"`
+	MaxFilenameLength           types.Int64       `tfsdk:"max_filename_length"`
+	Acl                         types.String      `tfsdk:"acl"`
+	RequireTls                  types.String      `tfsdk:"require_tls"`
+	PasswordAaaPolicy           types.String      `tfsdk:"password_aaa_policy"`
+	CertificateAaaPolicy        types.String      `tfsdk:"certificate_aaa_policy"`
+	AllowCcc                    types.Bool        `tfsdk:"allow_ccc"`
+	Passive                     types.String      `tfsdk:"passive"`
+	UsePasvPortRange            types.Bool        `tfsdk:"use_pasv_port_range"`
+	PasvMinPort                 types.Int64       `tfsdk:"pasv_min_port"`
+	PasvMaxPort                 types.Int64       `tfsdk:"pasv_max_port"`
+	PasvIdleTimeOut             types.Int64       `tfsdk:"pasv_idle_time_out"`
+	DisablePasvipCheck          types.Bool        `tfsdk:"disable_pasvip_check"`
+	DisablePortipCheck          types.Bool        `tfsdk:"disable_portip_check"`
+	UseAlternatePasvAddr        types.Bool        `tfsdk:"use_alternate_pasv_addr"`
+	AlternatePasvAddr           types.String      `tfsdk:"alternate_pasv_addr"`
+	AllowListCmd                types.Bool        `tfsdk:"allow_list_cmd"`
+	AllowDeleCmd                types.Bool        `tfsdk:"allow_dele_cmd"`
+	DataEncryption              types.String      `tfsdk:"data_encryption"`
+	AllowCompression            types.Bool        `tfsdk:"allow_compression"`
+	AllowStou                   types.Bool        `tfsdk:"allow_stou"`
+	UniqueFilenamePrefix        types.String      `tfsdk:"unique_filename_prefix"`
+	AllowRest                   types.Bool        `tfsdk:"allow_rest"`
+	RestartTimeout              types.Int64       `tfsdk:"restart_timeout"`
+	IdleTimeout                 types.Int64       `tfsdk:"idle_timeout"`
+	ResponseType                types.String      `tfsdk:"response_type"`
+	ResponseStorage             types.String      `tfsdk:"response_storage"`
+	TemporaryStorageSize        types.Int64       `tfsdk:"temporary_storage_size"`
+	ResponseNfsMount            types.String      `tfsdk:"response_nfs_mount"`
+	ResponseSuffix              types.String      `tfsdk:"response_suffix"`
+	ResponseUrl                 types.String      `tfsdk:"response_url"`
+	SslServerConfigType         types.String      `tfsdk:"ssl_server_config_type"`
+	SslServer                   types.String      `tfsdk:"ssl_server"`
+	SslsniServer                types.String      `tfsdk:"sslsni_server"`
+	ObjectActions               []*actions.Action `tfsdk:"object_actions"`
 }
 
 var AS3SourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -120,6 +122,7 @@ var AS3SourceProtocolHandlerObjectType = map[string]attr.Type{
 	"ssl_server_config_type":        types.StringType,
 	"ssl_server":                    types.StringType,
 	"sslsni_server":                 types.StringType,
+	"object_actions":                actions.ActionsListType,
 }
 
 func (data AS3SourceProtocolHandler) GetPath() string {

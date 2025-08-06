@@ -27,18 +27,20 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type OpenTelemetry struct {
-	Id                types.String `tfsdk:"id"`
-	AppDomain         types.String `tfsdk:"app_domain"`
-	UserSummary       types.String `tfsdk:"user_summary"`
-	Exporter          types.String `tfsdk:"exporter"`
-	Sampler           types.String `tfsdk:"sampler"`
-	ResourceAttribute types.List   `tfsdk:"resource_attribute"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Exporter          types.String      `tfsdk:"exporter"`
+	Sampler           types.String      `tfsdk:"sampler"`
+	ResourceAttribute types.List        `tfsdk:"resource_attribute"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var OpenTelemetryObjectType = map[string]attr.Type{
@@ -48,6 +50,7 @@ var OpenTelemetryObjectType = map[string]attr.Type{
 	"exporter":           types.StringType,
 	"sampler":            types.StringType,
 	"resource_attribute": types.ListType{ElemType: types.ObjectType{AttrTypes: DmOpenTelemetryResourceAttributeObjectType}},
+	"object_actions":     actions.ActionsListType,
 }
 
 func (data OpenTelemetry) GetPath() string {

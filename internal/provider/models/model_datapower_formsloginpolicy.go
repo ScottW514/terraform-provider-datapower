@@ -27,38 +27,40 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type FormsLoginPolicy struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	LoginForm           types.String `tfsdk:"login_form"`
-	UseCookieAttributes types.Bool   `tfsdk:"use_cookie_attributes"`
-	CookieAttributes    types.String `tfsdk:"cookie_attributes"`
-	UseSslForLogin      types.Bool   `tfsdk:"use_ssl_for_login"`
-	EnableMigration     types.Bool   `tfsdk:"enable_migration"`
-	SslPort             types.Int64  `tfsdk:"ssl_port"`
-	SharedSecret        types.String `tfsdk:"shared_secret"`
-	ErrorPage           types.String `tfsdk:"error_page"`
-	LogoutPage          types.String `tfsdk:"logout_page"`
-	DefaultUrl          types.String `tfsdk:"default_url"`
-	FormsLocation       types.String `tfsdk:"forms_location"`
-	LocalLoginForm      types.String `tfsdk:"local_login_form"`
-	LocalErrorPage      types.String `tfsdk:"local_error_page"`
-	LocalLogoutPage     types.String `tfsdk:"local_logout_page"`
-	UsernameField       types.String `tfsdk:"username_field"`
-	PasswordField       types.String `tfsdk:"password_field"`
-	RedirectField       types.String `tfsdk:"redirect_field"`
-	FormProcessingUrl   types.String `tfsdk:"form_processing_url"`
-	InactivityTimeout   types.Int64  `tfsdk:"inactivity_timeout"`
-	SessionLifetime     types.Int64  `tfsdk:"session_lifetime"`
-	RedirectUrlType     types.String `tfsdk:"redirect_url_type"`
-	FormSupportType     types.String `tfsdk:"form_support_type"`
-	FormSupportScript   types.String `tfsdk:"form_support_script"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	LoginForm           types.String      `tfsdk:"login_form"`
+	UseCookieAttributes types.Bool        `tfsdk:"use_cookie_attributes"`
+	CookieAttributes    types.String      `tfsdk:"cookie_attributes"`
+	UseSslForLogin      types.Bool        `tfsdk:"use_ssl_for_login"`
+	EnableMigration     types.Bool        `tfsdk:"enable_migration"`
+	SslPort             types.Int64       `tfsdk:"ssl_port"`
+	SharedSecret        types.String      `tfsdk:"shared_secret"`
+	ErrorPage           types.String      `tfsdk:"error_page"`
+	LogoutPage          types.String      `tfsdk:"logout_page"`
+	DefaultUrl          types.String      `tfsdk:"default_url"`
+	FormsLocation       types.String      `tfsdk:"forms_location"`
+	LocalLoginForm      types.String      `tfsdk:"local_login_form"`
+	LocalErrorPage      types.String      `tfsdk:"local_error_page"`
+	LocalLogoutPage     types.String      `tfsdk:"local_logout_page"`
+	UsernameField       types.String      `tfsdk:"username_field"`
+	PasswordField       types.String      `tfsdk:"password_field"`
+	RedirectField       types.String      `tfsdk:"redirect_field"`
+	FormProcessingUrl   types.String      `tfsdk:"form_processing_url"`
+	InactivityTimeout   types.Int64       `tfsdk:"inactivity_timeout"`
+	SessionLifetime     types.Int64       `tfsdk:"session_lifetime"`
+	RedirectUrlType     types.String      `tfsdk:"redirect_url_type"`
+	FormSupportType     types.String      `tfsdk:"form_support_type"`
+	FormSupportScript   types.String      `tfsdk:"form_support_script"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var FormsLoginPolicyObjectType = map[string]attr.Type{
@@ -88,6 +90,7 @@ var FormsLoginPolicyObjectType = map[string]attr.Type{
 	"redirect_url_type":     types.StringType,
 	"form_support_type":     types.StringType,
 	"form_support_script":   types.StringType,
+	"object_actions":        actions.ActionsListType,
 }
 
 func (data FormsLoginPolicy) GetPath() string {

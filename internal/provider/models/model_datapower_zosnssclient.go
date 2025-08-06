@@ -27,24 +27,26 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type ZosNSSClient struct {
-	Id                  types.String `tfsdk:"id"`
-	AppDomain           types.String `tfsdk:"app_domain"`
-	UserSummary         types.String `tfsdk:"user_summary"`
-	RemoteAddress       types.String `tfsdk:"remote_address"`
-	RemotePort          types.Int64  `tfsdk:"remote_port"`
-	ClientId            types.String `tfsdk:"client_id"`
-	SystemName          types.String `tfsdk:"system_name"`
-	UserName            types.String `tfsdk:"user_name"`
-	Password            types.String `tfsdk:"password"`
-	PasswordAlias       types.String `tfsdk:"password_alias"`
-	SslClientConfigType types.String `tfsdk:"ssl_client_config_type"`
-	SslClient           types.String `tfsdk:"ssl_client"`
+	Id                  types.String      `tfsdk:"id"`
+	AppDomain           types.String      `tfsdk:"app_domain"`
+	UserSummary         types.String      `tfsdk:"user_summary"`
+	RemoteAddress       types.String      `tfsdk:"remote_address"`
+	RemotePort          types.Int64       `tfsdk:"remote_port"`
+	ClientId            types.String      `tfsdk:"client_id"`
+	SystemName          types.String      `tfsdk:"system_name"`
+	UserName            types.String      `tfsdk:"user_name"`
+	Password            types.String      `tfsdk:"password"`
+	PasswordAlias       types.String      `tfsdk:"password_alias"`
+	SslClientConfigType types.String      `tfsdk:"ssl_client_config_type"`
+	SslClient           types.String      `tfsdk:"ssl_client"`
+	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
 }
 
 var ZosNSSClientObjectType = map[string]attr.Type{
@@ -60,6 +62,7 @@ var ZosNSSClientObjectType = map[string]attr.Type{
 	"password_alias":         types.StringType,
 	"ssl_client_config_type": types.StringType,
 	"ssl_client":             types.StringType,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data ZosNSSClient) GetPath() string {

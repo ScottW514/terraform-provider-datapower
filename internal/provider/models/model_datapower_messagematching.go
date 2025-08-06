@@ -27,21 +27,23 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type MessageMatching struct {
-	Id                types.String `tfsdk:"id"`
-	AppDomain         types.String `tfsdk:"app_domain"`
-	UserSummary       types.String `tfsdk:"user_summary"`
-	IpAddress         types.String `tfsdk:"ip_address"`
-	IpExclude         types.String `tfsdk:"ip_exclude"`
-	HttpMethod        types.String `tfsdk:"http_method"`
-	HttpHeader        types.List   `tfsdk:"http_header"`
-	HttpHeaderExclude types.List   `tfsdk:"http_header_exclude"`
-	RequestUrl        types.String `tfsdk:"request_url"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	IpAddress         types.String      `tfsdk:"ip_address"`
+	IpExclude         types.String      `tfsdk:"ip_exclude"`
+	HttpMethod        types.String      `tfsdk:"http_method"`
+	HttpHeader        types.List        `tfsdk:"http_header"`
+	HttpHeaderExclude types.List        `tfsdk:"http_header_exclude"`
+	RequestUrl        types.String      `tfsdk:"request_url"`
+	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
 }
 
 var MessageMatchingObjectType = map[string]attr.Type{
@@ -54,6 +56,7 @@ var MessageMatchingObjectType = map[string]attr.Type{
 	"http_header":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmHTTPHeaderObjectType}},
 	"http_header_exclude": types.ListType{ElemType: types.ObjectType{AttrTypes: DmHTTPHeaderObjectType}},
 	"request_url":         types.StringType,
+	"object_actions":      actions.ActionsListType,
 }
 
 func (data MessageMatching) GetPath() string {

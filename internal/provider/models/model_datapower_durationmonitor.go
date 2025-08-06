@@ -27,27 +27,30 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type DurationMonitor struct {
-	Id          types.String `tfsdk:"id"`
-	AppDomain   types.String `tfsdk:"app_domain"`
-	Measure     types.String `tfsdk:"measure"`
-	Filter      types.List   `tfsdk:"filter"`
-	UserSummary types.String `tfsdk:"user_summary"`
-	MessageType types.String `tfsdk:"message_type"`
+	Id            types.String      `tfsdk:"id"`
+	AppDomain     types.String      `tfsdk:"app_domain"`
+	Measure       types.String      `tfsdk:"measure"`
+	Filter        types.List        `tfsdk:"filter"`
+	UserSummary   types.String      `tfsdk:"user_summary"`
+	MessageType   types.String      `tfsdk:"message_type"`
+	ObjectActions []*actions.Action `tfsdk:"object_actions"`
 }
 
 var DurationMonitorObjectType = map[string]attr.Type{
-	"id":           types.StringType,
-	"app_domain":   types.StringType,
-	"measure":      types.StringType,
-	"filter":       types.ListType{ElemType: types.ObjectType{AttrTypes: DmDurationMonitorFilterObjectType}},
-	"user_summary": types.StringType,
-	"message_type": types.StringType,
+	"id":             types.StringType,
+	"app_domain":     types.StringType,
+	"measure":        types.StringType,
+	"filter":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmDurationMonitorFilterObjectType}},
+	"user_summary":   types.StringType,
+	"message_type":   types.StringType,
+	"object_actions": actions.ActionsListType,
 }
 
 func (data DurationMonitor) GetPath() string {

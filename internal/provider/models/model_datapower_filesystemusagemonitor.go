@@ -26,22 +26,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type FileSystemUsageMonitor struct {
-	Enabled                    types.Bool   `tfsdk:"enabled"`
-	UserSummary                types.String `tfsdk:"user_summary"`
-	PollingInterval            types.Int64  `tfsdk:"polling_interval"`
-	AllSystem                  types.Bool   `tfsdk:"all_system"`
-	AllSystemWarningThreshold  types.Int64  `tfsdk:"all_system_warning_threshold"`
-	AllSystemCriticalThreshold types.Int64  `tfsdk:"all_system_critical_threshold"`
-	System                     types.List   `tfsdk:"system"`
-	AllQmWarningThreshold      types.Int64  `tfsdk:"all_qm_warning_threshold"`
-	AllQmCriticalThreshold     types.Int64  `tfsdk:"all_qm_critical_threshold"`
-	QueueManager               types.List   `tfsdk:"queue_manager"`
+	Enabled                    types.Bool        `tfsdk:"enabled"`
+	UserSummary                types.String      `tfsdk:"user_summary"`
+	PollingInterval            types.Int64       `tfsdk:"polling_interval"`
+	AllSystem                  types.Bool        `tfsdk:"all_system"`
+	AllSystemWarningThreshold  types.Int64       `tfsdk:"all_system_warning_threshold"`
+	AllSystemCriticalThreshold types.Int64       `tfsdk:"all_system_critical_threshold"`
+	System                     types.List        `tfsdk:"system"`
+	AllQmWarningThreshold      types.Int64       `tfsdk:"all_qm_warning_threshold"`
+	AllQmCriticalThreshold     types.Int64       `tfsdk:"all_qm_critical_threshold"`
+	QueueManager               types.List        `tfsdk:"queue_manager"`
+	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
 }
 
 var FileSystemUsageMonitorObjectType = map[string]attr.Type{
@@ -55,6 +57,7 @@ var FileSystemUsageMonitorObjectType = map[string]attr.Type{
 	"all_qm_warning_threshold":      types.Int64Type,
 	"all_qm_critical_threshold":     types.Int64Type,
 	"queue_manager":                 types.ListType{ElemType: types.ObjectType{AttrTypes: DmQMFileSystemUsageObjectType}},
+	"object_actions":                actions.ActionsListType,
 }
 
 func (data FileSystemUsageMonitor) GetPath() string {

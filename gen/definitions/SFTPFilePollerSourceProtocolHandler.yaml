@@ -3,6 +3,10 @@ description: 'SFTP poller handler'
 cli_alias: 'source-sftp-poller'
 cmd_group: 'mpgw'
 rest_endpoint: '/mgmt/config/{domain}/SFTPFilePollerSourceProtocolHandler'
+actions:
+  - name: quiesce
+    pre_body: '{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}'
+    post_body: '{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}'
 attributes:
   - name: Id
     tf_name: id

@@ -26,22 +26,24 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
 type DNSNameService struct {
-	Enabled              types.Bool   `tfsdk:"enabled"`
-	UserSummary          types.String `tfsdk:"user_summary"`
-	SearchDomains        types.List   `tfsdk:"search_domains"`
-	NameServers          types.List   `tfsdk:"name_servers"`
-	StaticHosts          types.List   `tfsdk:"static_hosts"`
-	IpPreference         types.String `tfsdk:"ip_preference"`
-	ForceIpPreference    types.Bool   `tfsdk:"force_ip_preference"`
-	LoadBalanceAlgorithm types.String `tfsdk:"load_balance_algorithm"`
-	MaxRetries           types.Int64  `tfsdk:"max_retries"`
-	Timeout              types.Int64  `tfsdk:"timeout"`
+	Enabled              types.Bool        `tfsdk:"enabled"`
+	UserSummary          types.String      `tfsdk:"user_summary"`
+	SearchDomains        types.List        `tfsdk:"search_domains"`
+	NameServers          types.List        `tfsdk:"name_servers"`
+	StaticHosts          types.List        `tfsdk:"static_hosts"`
+	IpPreference         types.String      `tfsdk:"ip_preference"`
+	ForceIpPreference    types.Bool        `tfsdk:"force_ip_preference"`
+	LoadBalanceAlgorithm types.String      `tfsdk:"load_balance_algorithm"`
+	MaxRetries           types.Int64       `tfsdk:"max_retries"`
+	Timeout              types.Int64       `tfsdk:"timeout"`
+	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
 }
 
 var DNSNameServiceObjectType = map[string]attr.Type{
@@ -55,6 +57,7 @@ var DNSNameServiceObjectType = map[string]attr.Type{
 	"load_balance_algorithm": types.StringType,
 	"max_retries":            types.Int64Type,
 	"timeout":                types.Int64Type,
+	"object_actions":         actions.ActionsListType,
 }
 
 func (data DNSNameService) GetPath() string {
