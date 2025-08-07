@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceWebTokenService(t *testing.T) {
 			{
 				Config: testconfig.WebTokenServiceTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_webtokenservice.test", "result.0.id", "WebTokenService_name"),
+					resource.TestCheckResourceAttr("data.datapower_webtokenservice.test", "result.0.id", "AccTest_WebTokenService"),
 					resource.TestCheckResourceAttr("data.datapower_webtokenservice.test", "result.0.priority", "normal"),
 					resource.TestCheckResourceAttr("data.datapower_webtokenservice.test", "result.0.xml_manager", "default"),
 					resource.TestCheckResourceAttr("data.datapower_webtokenservice.test", "result.0.request_type", "preprocessed"),
@@ -60,5 +59,4 @@ func TestAccDataSourceWebTokenService(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

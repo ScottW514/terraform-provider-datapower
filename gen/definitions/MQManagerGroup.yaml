@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'MQManagerGroup_name'
+    test_value: '"ResTestMQManagerGroup"'
+    test_expect_ds: '"AccTest_MQManagerGroup"'
+    example: 'MQManagerGroupName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -33,7 +35,8 @@ attributes:
     type: String
     reference_to: MQManager
     required: true
-    test_value: '"TestAccMQManager"'
+    test_value: '"AccTest_MQManager"'
+    test_bed_value: 'datapower_mqmanager.acc_test.id'
     description: 'Primary queue manager'
     cli_alias: primary
   - name: BackupQueueManagers

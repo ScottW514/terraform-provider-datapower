@@ -16,8 +16,8 @@ Web Application Firewall Error Policy
 
 ```terraform
 resource "datapower_webapperrorhandlingpolicy" "test" {
-  id         = "WebAppErrorHandlingPolicy_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestWebAppErrorHandlingPolicy"
+  app_domain = "acceptance_test"
 }
 ```
 

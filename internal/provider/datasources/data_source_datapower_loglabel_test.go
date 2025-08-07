@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,10 +40,9 @@ func TestAccDataSourceLogLabel(t *testing.T) {
 			{
 				Config: testconfig.LogLabelTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_loglabel.test", "result.0.id", "___LogLabel_name"),
+					resource.TestCheckResourceAttr("data.datapower_loglabel.test", "result.0.id", "aaa"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

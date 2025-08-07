@@ -34,14 +34,14 @@ import (
 )
 
 type WebAppSessionPolicy struct {
-	Id                    types.String      `tfsdk:"id"`
-	AppDomain             types.String      `tfsdk:"app_domain"`
-	UserSummary           types.String      `tfsdk:"user_summary"`
-	AutoRenew             types.Bool        `tfsdk:"auto_renew"`
-	Timeout               types.Int64       `tfsdk:"timeout"`
-	AddressAgnosticCookie types.Bool        `tfsdk:"address_agnostic_cookie"`
-	StartMatches          types.String      `tfsdk:"start_matches"`
-	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
+	Id                    types.String                `tfsdk:"id"`
+	AppDomain             types.String                `tfsdk:"app_domain"`
+	UserSummary           types.String                `tfsdk:"user_summary"`
+	AutoRenew             types.Bool                  `tfsdk:"auto_renew"`
+	Timeout               types.Int64                 `tfsdk:"timeout"`
+	AddressAgnosticCookie types.Bool                  `tfsdk:"address_agnostic_cookie"`
+	StartMatches          types.String                `tfsdk:"start_matches"`
+	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WebAppSessionPolicyObjectType = map[string]attr.Type{

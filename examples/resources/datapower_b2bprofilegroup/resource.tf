@@ -1,8 +1,8 @@
 
 resource "datapower_b2bprofilegroup" "test" {
-  id         = "B2BProfileGroup_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestB2BProfileGroup"
+  app_domain = "acceptance_test"
   b2b_profiles = [{
-    partner_profile = "TestAccB2BProfile"
+    partner_profile = "AccTest_B2BProfile"
   }]
 }

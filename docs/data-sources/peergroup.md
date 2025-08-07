@@ -14,8 +14,7 @@ Peer group
 
 ```terraform
 data "datapower_peergroup" "test" {
-  depends_on = [datapower_peergroup.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

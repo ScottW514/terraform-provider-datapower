@@ -16,8 +16,8 @@ URL Rewrite Policy
 
 ```terraform
 resource "datapower_urlrewritepolicy" "test" {
-  id         = "URLRewritePolicy_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestURLRewritePolicy"
+  app_domain = "acceptance_test"
 }
 ```
 

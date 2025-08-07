@@ -34,10 +34,10 @@ import (
 )
 
 type HostAlias struct {
-	Id                types.String      `tfsdk:"id"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	IpAddress         types.String      `tfsdk:"ip_address"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	IpAddress         types.String                `tfsdk:"ip_address"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var HostAliasObjectType = map[string]attr.Type{

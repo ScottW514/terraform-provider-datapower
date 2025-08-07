@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceHTTPSSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.HTTPSSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.id", "HTTPSSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.id", "AccTest_HTTPSSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.local_address", "0.0.0.0"),
 					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.local_port", "443"),
 					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.http_version", "HTTP/1.1"),
@@ -61,5 +60,4 @@ func TestAccDataSourceHTTPSSourceProtocolHandler(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

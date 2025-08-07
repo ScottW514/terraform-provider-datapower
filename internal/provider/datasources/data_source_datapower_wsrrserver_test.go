@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourceWSRRServer(t *testing.T) {
 			{
 				Config: testconfig.WSRRServerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.id", "_WSRRServer_name"),
+					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.id", "AccTest_WSRRServer"),
 					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.soap_url", "https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort"),
 					resource.TestCheckResourceAttr("data.datapower_wsrrserver.test", "result.0.ssl_client_config_type", "client"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

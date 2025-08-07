@@ -14,8 +14,7 @@ Analytics endpoint
 
 ```terraform
 data "datapower_analyticsendpoint" "test" {
-  depends_on = [datapower_analyticsendpoint.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

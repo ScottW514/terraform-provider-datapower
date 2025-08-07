@@ -16,7 +16,7 @@ ODR Connector Group (`default` domain only)
 
 ```terraform
 resource "datapower_odrconnectorgroup" "test" {
-  id          = "ODRConnectorGroup_name"
+  id          = "ResTestODRConnectorGroup"
   xml_manager = "default"
 }
 ```

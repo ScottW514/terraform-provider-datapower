@@ -16,8 +16,8 @@ Load Balancer Group
 
 ```terraform
 resource "datapower_loadbalancergroup" "test" {
-  id            = "LoadBalancerGroup_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestLoadBalancerGroup"
+  app_domain    = "acceptance_test"
   algorithm     = "round-robin"
   retrieve_info = false
   damp          = 120

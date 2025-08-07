@@ -34,15 +34,15 @@ import (
 )
 
 type LDAPSearchParameters struct {
-	Id                    types.String      `tfsdk:"id"`
-	AppDomain             types.String      `tfsdk:"app_domain"`
-	UserSummary           types.String      `tfsdk:"user_summary"`
-	LdapBaseDn            types.String      `tfsdk:"ldap_base_dn"`
-	LdapReturnedAttribute types.String      `tfsdk:"ldap_returned_attribute"`
-	LdapFilterPrefix      types.String      `tfsdk:"ldap_filter_prefix"`
-	LdapFilterSuffix      types.String      `tfsdk:"ldap_filter_suffix"`
-	LdapScope             types.String      `tfsdk:"ldap_scope"`
-	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
+	Id                    types.String                `tfsdk:"id"`
+	AppDomain             types.String                `tfsdk:"app_domain"`
+	UserSummary           types.String                `tfsdk:"user_summary"`
+	LdapBaseDn            types.String                `tfsdk:"ldap_base_dn"`
+	LdapReturnedAttribute types.String                `tfsdk:"ldap_returned_attribute"`
+	LdapFilterPrefix      types.String                `tfsdk:"ldap_filter_prefix"`
+	LdapFilterSuffix      types.String                `tfsdk:"ldap_filter_suffix"`
+	LdapScope             types.String                `tfsdk:"ldap_scope"`
+	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var LDAPSearchParametersObjectType = map[string]attr.Type{

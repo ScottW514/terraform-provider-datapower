@@ -14,8 +14,7 @@ API operation rate limit
 
 ```terraform
 data "datapower_operationratelimit" "test" {
-  depends_on = [datapower_operationratelimit.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceWebAppSessionPolicy(t *testing.T) {
 			{
 				Config: testconfig.WebAppSessionPolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_webappsessionpolicy.test", "result.0.id", "WebAppSessionPolicy_name"),
+					resource.TestCheckResourceAttr("data.datapower_webappsessionpolicy.test", "result.0.id", "AccTest_WebAppSessionPolicy"),
 					resource.TestCheckResourceAttr("data.datapower_webappsessionpolicy.test", "result.0.auto_renew", "true"),
 					resource.TestCheckResourceAttr("data.datapower_webappsessionpolicy.test", "result.0.timeout", "3600"),
 					resource.TestCheckResourceAttr("data.datapower_webappsessionpolicy.test", "result.0.address_agnostic_cookie", "false"),
@@ -49,5 +48,4 @@ func TestAccDataSourceWebAppSessionPolicy(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

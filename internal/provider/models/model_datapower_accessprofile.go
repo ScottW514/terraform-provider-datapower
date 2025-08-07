@@ -34,11 +34,11 @@ import (
 )
 
 type AccessProfile struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	AccessPolicies    types.List        `tfsdk:"access_policies"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	AccessPolicies    types.List                  `tfsdk:"access_policies"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AccessProfileObjectType = map[string]attr.Type{

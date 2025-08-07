@@ -123,7 +123,7 @@ type StylePolicyAction struct {
 	MethodType                 types.String                     `tfsdk:"method_type"`
 	MethodType2                types.String                     `tfsdk:"method_type2"`
 	PolicyKey                  types.String                     `tfsdk:"policy_key"`
-	DependencyActions          []*actions.Action                `tfsdk:"dependency_actions"`
+	DependencyActions          []*actions.DependencyAction      `tfsdk:"dependency_actions"`
 }
 
 var StylePolicyActionObjectType = map[string]attr.Type{

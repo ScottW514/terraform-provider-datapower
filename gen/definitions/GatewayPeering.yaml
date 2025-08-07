@@ -9,8 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'GatewayPeering_name'
-    test_value: '"___GatewayPeering_name"'
+    test_value: '"ResTestGatewayPeering"'
+    test_expect_ds: '"AccTest_GatewayPeering"'
+    example: 'GatewayPeeringName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

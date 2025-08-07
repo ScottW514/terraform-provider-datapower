@@ -14,8 +14,7 @@ Import configuration file
 
 ```terraform
 data "datapower_importpackage" "test" {
-  depends_on = [datapower_importpackage.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

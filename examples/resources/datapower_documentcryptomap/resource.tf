@@ -1,7 +1,7 @@
 
 resource "datapower_documentcryptomap" "test" {
-  id         = "DocumentCryptoMap_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestDocumentCryptoMap"
+  app_domain = "acceptance_test"
   operation  = "encrypt"
   x_path     = ["*", ]
 }

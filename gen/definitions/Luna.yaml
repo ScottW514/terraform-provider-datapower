@@ -10,7 +10,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'Luna_name'
+    test_value: '"ResTestLuna"'
+    test_expect_ds: '"AccTest_Luna"'
+    example: 'LunaName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

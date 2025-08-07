@@ -34,13 +34,13 @@ import (
 )
 
 type APIRule struct {
-	Id                 types.String      `tfsdk:"id"`
-	AppDomain          types.String      `tfsdk:"app_domain"`
-	DynamicActionsMode types.Bool        `tfsdk:"dynamic_actions_mode"`
-	Actions            types.List        `tfsdk:"actions"`
-	DynamicActions     types.List        `tfsdk:"dynamic_actions"`
-	UserSummary        types.String      `tfsdk:"user_summary"`
-	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
+	Id                 types.String                `tfsdk:"id"`
+	AppDomain          types.String                `tfsdk:"app_domain"`
+	DynamicActionsMode types.Bool                  `tfsdk:"dynamic_actions_mode"`
+	Actions            types.List                  `tfsdk:"actions"`
+	DynamicActions     types.List                  `tfsdk:"dynamic_actions"`
+	UserSummary        types.String                `tfsdk:"user_summary"`
+	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APIRuleObjectType = map[string]attr.Type{

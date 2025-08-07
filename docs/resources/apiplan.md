@@ -16,9 +16,9 @@ API plan
 
 ```terraform
 resource "datapower_apiplan" "test" {
-  id               = "APIPlan_name"
-  app_domain       = "acc_test_domain"
-  api              = ["TestAccAPIDefinition"]
+  id               = "ResTestAPIPlan"
+  app_domain       = "acceptance_test"
+  api              = ["AccTest_APIDefinition"]
   rate_limit_scope = "per-application"
 }
 ```

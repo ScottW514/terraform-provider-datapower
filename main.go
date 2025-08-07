@@ -33,8 +33,9 @@ var (
 )
 
 func main() {
+	p := provider.New(version)
 	defer func() {
-		err := actions.PostProcess()
+		err := actions.SaveDomains()
 		if err != nil {
 			log.Fatal(err.Error())
 		}
@@ -44,7 +45,7 @@ func main() {
 		Address: "registry.terraform.io/ScottW514/datapower",
 	}
 
-	err := providerserver.Serve(context.Background(), provider.New(version), opts)
+	err := providerserver.Serve(context.Background(), p, opts)
 
 	if err != nil {
 		log.Fatal(err.Error())

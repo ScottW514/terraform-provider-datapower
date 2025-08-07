@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceLuna(t *testing.T) {
 			{
 				Config: testconfig.LunaTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_luna.test", "result.0.id", "Luna_name"),
+					resource.TestCheckResourceAttr("data.datapower_luna.test", "result.0.id", "AccTest_Luna"),
 					resource.TestCheckResourceAttr("data.datapower_luna.test", "result.0.security_option", "none"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceOAuthProviderSettings(t *testing.T) {
 			{
 				Config: testconfig.OAuthProviderSettingsTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_oauthprovidersettings.test", "result.0.id", "OAuthProviderSettings_name"),
+					resource.TestCheckResourceAttr("data.datapower_oauthprovidersettings.test", "result.0.id", "AccTest_OAuthProviderSettings"),
 					resource.TestCheckResourceAttr("data.datapower_oauthprovidersettings.test", "result.0.enable_debug_mode", "false"),
 					resource.TestCheckResourceAttr("data.datapower_oauthprovidersettings.test", "result.0.provider_type", "native"),
 					resource.TestCheckResourceAttr("data.datapower_oauthprovidersettings.test", "result.0.apic_provider_base_path", "/"),
@@ -84,5 +83,4 @@ func TestAccDataSourceOAuthProviderSettings(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

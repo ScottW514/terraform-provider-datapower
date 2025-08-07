@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAAAJWTGenerator(t *testing.T) {
 			{
 				Config: testconfig.AAAJWTGeneratorTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.id", "AAAJWTGenerator_name"),
+					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.id", "AccTest_AAAJWTGenerator"),
 					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.issuer", "idg"),
 					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.duration", "3600"),
 					resource.TestCheckResourceAttr("data.datapower_aaajwtgenerator.test", "result.0.sign_algorithm", "RS256"),
@@ -51,5 +50,4 @@ func TestAccDataSourceAAAJWTGenerator(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

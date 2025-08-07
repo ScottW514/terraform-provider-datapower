@@ -14,7 +14,6 @@ RBM settings (`default` domain only)
 
 ```terraform
 data "datapower_rbmsettings" "test" {
-  depends_on = [datapower_rbmsettings.test]
 }
 ```
 

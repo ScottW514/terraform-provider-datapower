@@ -34,11 +34,11 @@ import (
 )
 
 type B2BProfileGroup struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	B2bProfiles       types.List        `tfsdk:"b2b_profiles"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	B2bProfiles       types.List                  `tfsdk:"b2b_profiles"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var B2BProfileGroupObjectType = map[string]attr.Type{

@@ -34,14 +34,14 @@ import (
 )
 
 type JOSERecipientIdentifier struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Type              types.String      `tfsdk:"type"`
-	Key               types.String      `tfsdk:"key"`
-	SsKey             types.String      `tfsdk:"ss_key"`
-	HeaderParam       types.List        `tfsdk:"header_param"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Type              types.String                `tfsdk:"type"`
+	Key               types.String                `tfsdk:"key"`
+	SsKey             types.String                `tfsdk:"ss_key"`
+	HeaderParam       types.List                  `tfsdk:"header_param"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var JOSERecipientIdentifierObjectType = map[string]attr.Type{

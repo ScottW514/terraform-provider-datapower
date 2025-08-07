@@ -34,13 +34,13 @@ import (
 )
 
 type APIResult struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Output            types.String      `tfsdk:"output"`
-	Title             types.String      `tfsdk:"title"`
-	CorrelationPath   types.String      `tfsdk:"correlation_path"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Output            types.String                `tfsdk:"output"`
+	Title             types.String                `tfsdk:"title"`
+	CorrelationPath   types.String                `tfsdk:"correlation_path"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APIResultObjectType = map[string]attr.Type{

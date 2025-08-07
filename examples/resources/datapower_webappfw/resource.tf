@@ -1,9 +1,9 @@
 
 resource "datapower_webappfw" "test" {
-  id                       = "WebAppFW_name"
-  app_domain               = "acc_test_domain"
+  id                       = "ResTestWebAppFW"
+  app_domain               = "acceptance_test"
   remote_address           = "10.10.10.10"
-  style_policy             = "TestAccAppSecurityPolicy"
+  style_policy             = "AccTest_AppSecurityPolicy"
   xml_manager              = "default"
   front_timeout            = 120
   back_timeout             = 120

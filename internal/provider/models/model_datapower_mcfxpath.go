@@ -34,12 +34,12 @@ import (
 )
 
 type MCFXPath struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	XPathExpression   types.String      `tfsdk:"x_path_expression"`
-	XPathValue        types.String      `tfsdk:"x_path_value"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	XPathExpression   types.String                `tfsdk:"x_path_expression"`
+	XPathValue        types.String                `tfsdk:"x_path_value"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MCFXPathObjectType = map[string]attr.Type{

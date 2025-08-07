@@ -14,7 +14,6 @@ Web management service (`default` domain only)
 
 ```terraform
 data "datapower_webgui" "test" {
-  depends_on = [datapower_webgui.test]
 }
 ```
 

@@ -14,7 +14,6 @@ RADIUS settings (`default` domain only)
 
 ```terraform
 data "datapower_radiussettings" "test" {
-  depends_on = [datapower_radiussettings.test]
 }
 ```
 

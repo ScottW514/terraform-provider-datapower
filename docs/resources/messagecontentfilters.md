@@ -16,8 +16,8 @@ Message Content Filters
 
 ```terraform
 resource "datapower_messagecontentfilters" "test" {
-  id         = "MessageContentFilters_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestMessageContentFilters"
+  app_domain = "acceptance_test"
 }
 ```
 

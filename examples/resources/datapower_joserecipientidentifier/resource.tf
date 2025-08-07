@@ -1,7 +1,7 @@
 
 resource "datapower_joserecipientidentifier" "test" {
-  id         = "JOSERecipientIdentifier_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestJOSERecipientIdentifier"
+  app_domain = "acceptance_test"
   type       = "key"
   header_param = [{
     header_value = "VALUE"

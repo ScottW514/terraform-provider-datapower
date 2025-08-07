@@ -34,12 +34,12 @@ import (
 )
 
 type APIAuthURLRegistry struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	AuthUrl           types.String      `tfsdk:"auth_url"`
-	TlsClientProfile  types.String      `tfsdk:"tls_client_profile"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	AuthUrl           types.String                `tfsdk:"auth_url"`
+	TlsClientProfile  types.String                `tfsdk:"tls_client_profile"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APIAuthURLRegistryObjectType = map[string]attr.Type{

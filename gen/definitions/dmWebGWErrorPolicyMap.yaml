@@ -12,5 +12,6 @@ attributes:
     type: String
     reference_to: MPGWErrorAction
     required: true
-    test_value: '"TestAccMPGWErrorAction"'
+    test_value: '"AccTest_MPGWErrorAction"'
+    test_bed_value: 'datapower_mpgwerroraction.acc_test.id'
     description: 'Error Action'

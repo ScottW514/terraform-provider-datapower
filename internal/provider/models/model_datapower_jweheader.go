@@ -34,13 +34,13 @@ import (
 )
 
 type JWEHeader struct {
-	Id                         types.String      `tfsdk:"id"`
-	AppDomain                  types.String      `tfsdk:"app_domain"`
-	UserSummary                types.String      `tfsdk:"user_summary"`
-	JweProtectedHeader         types.List        `tfsdk:"jwe_protected_header"`
-	JweSharedUnprotectedHeader types.List        `tfsdk:"jwe_shared_unprotected_header"`
-	Recipient                  types.String      `tfsdk:"recipient"`
-	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
+	Id                         types.String                `tfsdk:"id"`
+	AppDomain                  types.String                `tfsdk:"app_domain"`
+	UserSummary                types.String                `tfsdk:"user_summary"`
+	JweProtectedHeader         types.List                  `tfsdk:"jwe_protected_header"`
+	JweSharedUnprotectedHeader types.List                  `tfsdk:"jwe_shared_unprotected_header"`
+	Recipient                  types.String                `tfsdk:"recipient"`
+	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var JWEHeaderObjectType = map[string]attr.Type{

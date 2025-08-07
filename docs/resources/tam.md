@@ -16,8 +16,8 @@ Access Manager Client
 
 ```terraform
 resource "datapower_tam" "test" {
-  id                 = "TAM_name"
-  app_domain         = "acc_test_domain"
+  id                 = "ResTestTAM"
+  app_domain         = "acceptance_test"
   configuration_file = "local:///tam.config"
   ssl_key_file       = "cert:///ssl.key"
   ssl_key_stash_file = "cert:///ssl.stash"

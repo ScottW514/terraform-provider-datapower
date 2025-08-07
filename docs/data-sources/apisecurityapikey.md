@@ -14,8 +14,7 @@ API security API key
 
 ```terraform
 data "datapower_apisecurityapikey" "test" {
-  depends_on = [datapower_apisecurityapikey.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

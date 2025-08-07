@@ -34,14 +34,14 @@ import (
 )
 
 type APIPath struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Path              types.String      `tfsdk:"path"`
-	Operation         types.List        `tfsdk:"operation"`
-	RequestSchema     types.String      `tfsdk:"request_schema"`
-	Parameter         types.List        `tfsdk:"parameter"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Path              types.String                `tfsdk:"path"`
+	Operation         types.List                  `tfsdk:"operation"`
+	RequestSchema     types.String                `tfsdk:"request_schema"`
+	Parameter         types.List                  `tfsdk:"parameter"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APIPathObjectType = map[string]attr.Type{

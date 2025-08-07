@@ -34,15 +34,15 @@ import (
 )
 
 type APISecurityHTTPScheme struct {
-	Id                         types.String      `tfsdk:"id"`
-	AppDomain                  types.String      `tfsdk:"app_domain"`
-	UserSummary                types.String      `tfsdk:"user_summary"`
-	Scheme                     types.String      `tfsdk:"scheme"`
-	BearerFormat               types.String      `tfsdk:"bearer_format"`
-	BearerValidationMethod     types.String      `tfsdk:"bearer_validation_method"`
-	BearerValidationEndpoint   types.String      `tfsdk:"bearer_validation_endpoint"`
-	BearerValidationTlsProfile types.String      `tfsdk:"bearer_validation_tls_profile"`
-	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
+	Id                         types.String                `tfsdk:"id"`
+	AppDomain                  types.String                `tfsdk:"app_domain"`
+	UserSummary                types.String                `tfsdk:"user_summary"`
+	Scheme                     types.String                `tfsdk:"scheme"`
+	BearerFormat               types.String                `tfsdk:"bearer_format"`
+	BearerValidationMethod     types.String                `tfsdk:"bearer_validation_method"`
+	BearerValidationEndpoint   types.String                `tfsdk:"bearer_validation_endpoint"`
+	BearerValidationTlsProfile types.String                `tfsdk:"bearer_validation_tls_profile"`
+	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APISecurityHTTPSchemeObjectType = map[string]attr.Type{

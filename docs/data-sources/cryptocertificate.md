@@ -14,8 +14,7 @@ Certificate
 
 ```terraform
 data "datapower_cryptocertificate" "test" {
-  depends_on = [datapower_cryptocertificate.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

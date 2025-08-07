@@ -6,7 +6,8 @@ attributes:
     type: String
     reference_to: B2BProfile
     required: true
-    test_value: '"TestAccB2BProfile"'
+    test_value: '"AccTest_B2BProfile"'
+    test_bed_value: 'datapower_b2bprofile.acc_test.id'
     description: 'Partner profile'
     cli_alias: profile
   - name: ProfileEnabled

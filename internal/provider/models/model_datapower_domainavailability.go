@@ -35,11 +35,11 @@ import (
 )
 
 type DomainAvailability struct {
-	AppDomain             types.String      `tfsdk:"app_domain"`
-	Enabled               types.Bool        `tfsdk:"enabled"`
-	UserSummary           types.String      `tfsdk:"user_summary"`
-	RestartDomainOnUpdate types.Bool        `tfsdk:"restart_domain_on_update"`
-	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain             types.String                `tfsdk:"app_domain"`
+	Enabled               types.Bool                  `tfsdk:"enabled"`
+	UserSummary           types.String                `tfsdk:"user_summary"`
+	RestartDomainOnUpdate types.Bool                  `tfsdk:"restart_domain_on_update"`
+	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var DomainAvailabilityObjectType = map[string]attr.Type{

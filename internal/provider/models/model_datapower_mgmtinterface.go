@@ -33,18 +33,18 @@ import (
 )
 
 type MgmtInterface struct {
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	LocalPort         types.Int64       `tfsdk:"local_port"`
-	UserAgent         types.String      `tfsdk:"user_agent"`
-	Acl               types.String      `tfsdk:"acl"`
-	SlmPeering        types.Int64       `tfsdk:"slm_peering"`
-	Mode              *DmXMLMgmtModes   `tfsdk:"mode"`
-	SslConfigType     types.String      `tfsdk:"ssl_config_type"`
-	SslServer         types.String      `tfsdk:"ssl_server"`
-	SslsniServer      types.String      `tfsdk:"sslsni_server"`
-	LocalAddress      types.String      `tfsdk:"local_address"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	LocalPort         types.Int64                 `tfsdk:"local_port"`
+	UserAgent         types.String                `tfsdk:"user_agent"`
+	Acl               types.String                `tfsdk:"acl"`
+	SlmPeering        types.Int64                 `tfsdk:"slm_peering"`
+	Mode              *DmXMLMgmtModes             `tfsdk:"mode"`
+	SslConfigType     types.String                `tfsdk:"ssl_config_type"`
+	SslServer         types.String                `tfsdk:"ssl_server"`
+	SslsniServer      types.String                `tfsdk:"sslsni_server"`
+	LocalAddress      types.String                `tfsdk:"local_address"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MgmtInterfaceObjectType = map[string]attr.Type{

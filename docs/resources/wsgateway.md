@@ -17,8 +17,8 @@ Web Service Proxy
 
 ```terraform
 resource "datapower_wsgateway" "test" {
-  id                       = "WSGateway_name"
-  app_domain               = "acc_test_domain"
+  id                       = "ResTestWSGateway"
+  app_domain               = "acceptance_test"
   type                     = "static-from-wsdl"
   style_policy             = "default"
   xml_manager              = "default"

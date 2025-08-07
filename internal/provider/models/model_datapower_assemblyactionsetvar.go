@@ -34,14 +34,14 @@ import (
 )
 
 type AssemblyActionSetVar struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Variable          types.List        `tfsdk:"variable"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Title             types.String      `tfsdk:"title"`
-	CorrelationPath   types.String      `tfsdk:"correlation_path"`
-	ActionDebug       types.Bool        `tfsdk:"action_debug"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Variable          types.List                  `tfsdk:"variable"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Title             types.String                `tfsdk:"title"`
+	CorrelationPath   types.String                `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionSetVarObjectType = map[string]attr.Type{

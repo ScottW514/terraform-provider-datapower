@@ -34,13 +34,13 @@ import (
 )
 
 type CORSRule struct {
-	Id                types.String             `tfsdk:"id"`
-	AppDomain         types.String             `tfsdk:"app_domain"`
-	UserSummary       types.String             `tfsdk:"user_summary"`
-	AllowOrigin       types.List               `tfsdk:"allow_origin"`
-	AllowCredentials  types.Bool               `tfsdk:"allow_credentials"`
-	ExposeHeaders     *DmCORSRuleExposeHeaders `tfsdk:"expose_headers"`
-	DependencyActions []*actions.Action        `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	AllowOrigin       types.List                  `tfsdk:"allow_origin"`
+	AllowCredentials  types.Bool                  `tfsdk:"allow_credentials"`
+	ExposeHeaders     *DmCORSRuleExposeHeaders    `tfsdk:"expose_headers"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CORSRuleObjectType = map[string]attr.Type{

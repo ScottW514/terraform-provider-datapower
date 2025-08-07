@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,8 +40,8 @@ func TestAccDataSourceStylePolicyRule(t *testing.T) {
 			{
 				Config: testconfig.StylePolicyRuleTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.id", "___StylePolicyRule_name"),
-					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.direction", "rule"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.id", "__default-accept-service-providers-request__"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.direction", "request-rule"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.input_format", "none"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.output_format", "none"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyrule.test", "result.0.non_xml_processing", "false"),
@@ -51,5 +50,4 @@ func TestAccDataSourceStylePolicyRule(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -16,8 +16,8 @@ SSH client profile
 
 ```terraform
 resource "datapower_sshclientprofile" "test" {
-  id            = "SSHClientProfile_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestSSHClientProfile"
+  app_domain    = "acceptance_test"
   user_name     = "someuser"
   profile_usage = "sftp"
 }

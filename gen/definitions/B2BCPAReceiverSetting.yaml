@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'B2BCPAReceiverSetting_name'
+    test_value: '"ResTestB2BCPAReceiverSetting"'
+    test_expect_ds: '"AccTest_B2BCPAReceiverSetting"'
+    example: 'B2BCPAReceiverSettingName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

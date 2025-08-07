@@ -1,6 +1,6 @@
 
 resource "datapower_cryptosskey" "test" {
-  id         = "CryptoSSKey_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestCryptoSSKey"
+  app_domain = "acceptance_test"
   filename   = "cert:///acc-test-server.key"
 }

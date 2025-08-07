@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAssemblyActionGraphQLExecute(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionGraphQLExecuteTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactiongraphqlexecute.test", "result.0.id", "AssemblyActionGraphQLExecute_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactiongraphqlexecute.test", "result.0.id", "AccTest_AssemblyActionGraphQLExecute"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactiongraphqlexecute.test", "result.0.input", "message"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactiongraphqlexecute.test", "result.0.allow_cost_introspection", "false"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactiongraphqlexecute.test", "result.0.action_debug", "false"),
@@ -49,5 +48,4 @@ func TestAccDataSourceAssemblyActionGraphQLExecute(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

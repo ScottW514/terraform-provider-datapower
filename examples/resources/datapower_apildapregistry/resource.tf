@@ -1,8 +1,8 @@
 
 resource "datapower_apildapregistry" "test" {
-  id                     = "APILDAPRegistry_name"
-  app_domain             = "acc_test_domain"
+  id                     = "ResTestAPILDAPRegistry"
+  app_domain             = "acceptance_test"
   ldap_host              = "localhost"
   ldap_port              = 636
-  ldap_search_parameters = "TestAccLDAPSearchParameters"
+  ldap_search_parameters = "AccTest_LDAPSearchParameters"
 }

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -44,10 +43,9 @@ func TestAccDataSourceAuditLog(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_auditlog.test", "enabled", "true"),
 					resource.TestCheckResourceAttr("data.datapower_auditlog.test", "size", "1000"),
 					resource.TestCheckResourceAttr("data.datapower_auditlog.test", "rotate", "3"),
-					resource.TestCheckResourceAttr("data.datapower_auditlog.test", "audit_level", "full"),
+					resource.TestCheckResourceAttr("data.datapower_auditlog.test", "audit_level", "standard"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

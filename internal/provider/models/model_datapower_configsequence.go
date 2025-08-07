@@ -47,7 +47,7 @@ type ConfigSequence struct {
 	DeleteUnused        types.Bool                    `tfsdk:"delete_unused"`
 	RunSequenceInterval types.Int64                   `tfsdk:"run_sequence_interval"`
 	Capabilities        *DmConfigSequenceCapabilities `tfsdk:"capabilities"`
-	DependencyActions   []*actions.Action             `tfsdk:"dependency_actions"`
+	DependencyActions   []*actions.DependencyAction   `tfsdk:"dependency_actions"`
 }
 
 var ConfigSequenceObjectType = map[string]attr.Type{

@@ -1,9 +1,9 @@
 
 resource "datapower_mpgwerrorhandlingpolicy" "test" {
-  id         = "MPGWErrorHandlingPolicy_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestMPGWErrorHandlingPolicy"
+  app_domain = "acceptance_test"
   policy_maps = [{
     match  = "__default-accept-service-providers__"
-    action = "TestAccMPGWErrorAction"
+    action = "AccTest_MPGWErrorAction"
   }]
 }

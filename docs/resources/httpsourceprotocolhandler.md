@@ -17,8 +17,8 @@ HTTP handler
 
 ```terraform
 resource "datapower_httpsourceprotocolhandler" "test" {
-  id            = "HTTPSourceProtocolHandler_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestHTTPSourceProtocolHandler"
+  app_domain    = "acceptance_test"
   local_address = "0.0.0.0"
   local_port    = 80
 }

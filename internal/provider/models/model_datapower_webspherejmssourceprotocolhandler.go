@@ -34,18 +34,18 @@ import (
 )
 
 type WebSphereJMSSourceProtocolHandler struct {
-	Id                     types.String      `tfsdk:"id"`
-	AppDomain              types.String      `tfsdk:"app_domain"`
-	Server                 types.String      `tfsdk:"server"`
-	RequestTopicSpace      types.String      `tfsdk:"request_topic_space"`
-	ReplyTopicSpace        types.String      `tfsdk:"reply_topic_space"`
-	StrictMessageOrder     types.Bool        `tfsdk:"strict_message_order"`
-	UserSummary            types.String      `tfsdk:"user_summary"`
-	GetQueue               types.String      `tfsdk:"get_queue"`
-	PutQueue               types.String      `tfsdk:"put_queue"`
-	Selector               types.String      `tfsdk:"selector"`
-	AsyncMessageProcessing types.Bool        `tfsdk:"async_message_processing"`
-	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
+	Id                     types.String                `tfsdk:"id"`
+	AppDomain              types.String                `tfsdk:"app_domain"`
+	Server                 types.String                `tfsdk:"server"`
+	RequestTopicSpace      types.String                `tfsdk:"request_topic_space"`
+	ReplyTopicSpace        types.String                `tfsdk:"reply_topic_space"`
+	StrictMessageOrder     types.Bool                  `tfsdk:"strict_message_order"`
+	UserSummary            types.String                `tfsdk:"user_summary"`
+	GetQueue               types.String                `tfsdk:"get_queue"`
+	PutQueue               types.String                `tfsdk:"put_queue"`
+	Selector               types.String                `tfsdk:"selector"`
+	AsyncMessageProcessing types.Bool                  `tfsdk:"async_message_processing"`
+	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WebSphereJMSSourceProtocolHandlerObjectType = map[string]attr.Type{

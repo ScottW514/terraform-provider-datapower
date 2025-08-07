@@ -5,7 +5,9 @@ attributes:
   - name: Name
     type: String
     required: true
-    example: 'DmDurationMonitorFilter_name'
+    test_value: '"ResTestDmDurationMonitorFilter"'
+    test_expect_ds: '"AccTest_DmDurationMonitorFilter"'
+    example: 'DmDurationMonitorFilterName'
     description: 'Name'
   - name: Value
     type: Int64
@@ -16,5 +18,6 @@ attributes:
     type: String
     reference_to: FilterAction
     required: true
-    test_value: '"TestAccFilterAction"'
+    test_value: '"AccTest_FilterAction"'
+    test_bed_value: 'datapower_filteraction.acc_test.id'
     description: 'Action'

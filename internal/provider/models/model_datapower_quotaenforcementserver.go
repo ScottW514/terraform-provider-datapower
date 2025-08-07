@@ -33,21 +33,21 @@ import (
 )
 
 type QuotaEnforcementServer struct {
-	Enabled              types.Bool        `tfsdk:"enabled"`
-	UserSummary          types.String      `tfsdk:"user_summary"`
-	PasswordAlias        types.String      `tfsdk:"password_alias"`
-	RaidVolume           types.String      `tfsdk:"raid_volume"`
-	ServerPort           types.Int64       `tfsdk:"server_port"`
-	MonitorPort          types.Int64       `tfsdk:"monitor_port"`
-	EnablePeerGroup      types.Bool        `tfsdk:"enable_peer_group"`
-	EnableSsl            types.Bool        `tfsdk:"enable_ssl"`
-	SslCryptoKey         types.String      `tfsdk:"ssl_crypto_key"`
-	SslCryptoCertificate types.String      `tfsdk:"ssl_crypto_certificate"`
-	IpAddress            types.String      `tfsdk:"ip_address"`
-	Peers                types.List        `tfsdk:"peers"`
-	Priority             types.Int64       `tfsdk:"priority"`
-	StrictMode           types.Bool        `tfsdk:"strict_mode"`
-	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled              types.Bool                  `tfsdk:"enabled"`
+	UserSummary          types.String                `tfsdk:"user_summary"`
+	PasswordAlias        types.String                `tfsdk:"password_alias"`
+	RaidVolume           types.String                `tfsdk:"raid_volume"`
+	ServerPort           types.Int64                 `tfsdk:"server_port"`
+	MonitorPort          types.Int64                 `tfsdk:"monitor_port"`
+	EnablePeerGroup      types.Bool                  `tfsdk:"enable_peer_group"`
+	EnableSsl            types.Bool                  `tfsdk:"enable_ssl"`
+	SslCryptoKey         types.String                `tfsdk:"ssl_crypto_key"`
+	SslCryptoCertificate types.String                `tfsdk:"ssl_crypto_certificate"`
+	IpAddress            types.String                `tfsdk:"ip_address"`
+	Peers                types.List                  `tfsdk:"peers"`
+	Priority             types.Int64                 `tfsdk:"priority"`
+	StrictMode           types.Bool                  `tfsdk:"strict_mode"`
+	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var QuotaEnforcementServerObjectType = map[string]attr.Type{

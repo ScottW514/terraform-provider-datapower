@@ -17,8 +17,8 @@ HTTPS handler
 
 ```terraform
 resource "datapower_httpssourceprotocolhandler" "test" {
-  id                     = "HTTPSSourceProtocolHandler_name"
-  app_domain             = "acc_test_domain"
+  id                     = "ResTestHTTPSSourceProtocolHandler"
+  app_domain             = "acceptance_test"
   ssl_server_config_type = "server"
 }
 ```

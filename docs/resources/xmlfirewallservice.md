@@ -17,8 +17,8 @@ XML Firewall
 
 ```terraform
 resource "datapower_xmlfirewallservice" "test" {
-  id            = "XMLFirewallService_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestXMLFirewallService"
+  app_domain    = "acceptance_test"
   type          = "dynamic-backend"
   xml_manager   = "default"
   local_port    = 8888

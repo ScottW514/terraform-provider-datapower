@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceCompileSettings(t *testing.T) {
 			{
 				Config: testconfig.CompileSettingsTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_compilesettings.test", "result.0.id", "CompileSettings_name"),
+					resource.TestCheckResourceAttr("data.datapower_compilesettings.test", "result.0.id", "AccTest_CompileSettings"),
 					resource.TestCheckResourceAttr("data.datapower_compilesettings.test", "result.0.xslt_version", "XSLT10"),
 					resource.TestCheckResourceAttr("data.datapower_compilesettings.test", "result.0.strict", "true"),
 					resource.TestCheckResourceAttr("data.datapower_compilesettings.test", "result.0.profile", "false"),
@@ -65,5 +64,4 @@ func TestAccDataSourceCompileSettings(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

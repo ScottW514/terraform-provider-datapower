@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAPICollection(t *testing.T) {
 			{
 				Config: testconfig.APICollectionTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apicollection.test", "result.0.id", "APICollection_name"),
+					resource.TestCheckResourceAttr("data.datapower_apicollection.test", "result.0.id", "AccTest_APICollection"),
 					resource.TestCheckResourceAttr("data.datapower_apicollection.test", "result.0.sandbox", "false"),
 					resource.TestCheckResourceAttr("data.datapower_apicollection.test", "result.0.catalog_id", "default-catalog-id"),
 					resource.TestCheckResourceAttr("data.datapower_apicollection.test", "result.0.catalog_name", "default"),
@@ -54,5 +53,4 @@ func TestAccDataSourceAPICollection(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -9,8 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'Matching_name'
-    test_value: '"___Matching_name"'
+    test_value: '"ResTestMatching"'
+    test_expect_ds: '"__default-accept-service-providers__"'
+    example: 'MatchingName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

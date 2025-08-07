@@ -16,8 +16,8 @@ Log category
 
 ```terraform
 resource "datapower_loglabel" "test" {
-  id         = "___LogLabel_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestLogLabel"
+  app_domain = "acceptance_test"
 }
 ```
 

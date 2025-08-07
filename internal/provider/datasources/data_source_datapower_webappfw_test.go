@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceWebAppFW(t *testing.T) {
 			{
 				Config: testconfig.WebAppFWTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.id", "WebAppFW_name"),
+					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.id", "AccTest_WebAppFW"),
 					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.priority", "normal"),
 					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.remote_port", "80"),
 					resource.TestCheckResourceAttr("data.datapower_webappfw.test", "result.0.xml_manager", "default"),
@@ -72,5 +71,4 @@ func TestAccDataSourceWebAppFW(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

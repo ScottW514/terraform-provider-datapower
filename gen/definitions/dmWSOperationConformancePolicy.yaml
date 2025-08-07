@@ -6,7 +6,8 @@ attributes:
     type: String
     reference_to: ConformancePolicy
     required: true
-    test_value: '"TestAccConformancePolicy"'
+    test_value: '"AccTest_ConformancePolicy"'
+    test_bed_value: 'datapower_conformancepolicy.acc_test.id'
     description: 'Conformance Policy'
   - name: ConformancePolicyWSDLComponentType
     type: String

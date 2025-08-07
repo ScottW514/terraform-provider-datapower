@@ -34,16 +34,16 @@ import (
 )
 
 type WSRRSavedSearchSubscription struct {
-	Id                     types.String      `tfsdk:"id"`
-	AppDomain              types.String      `tfsdk:"app_domain"`
-	Server                 types.String      `tfsdk:"server"`
-	SavedSearchName        types.String      `tfsdk:"saved_search_name"`
-	SavedSearchParameters  types.List        `tfsdk:"saved_search_parameters"`
-	Method                 types.String      `tfsdk:"method"`
-	RefreshInterval        types.Int64       `tfsdk:"refresh_interval"`
-	FetchPolicyAttachments types.Bool        `tfsdk:"fetch_policy_attachments"`
-	UserSummary            types.String      `tfsdk:"user_summary"`
-	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
+	Id                     types.String                `tfsdk:"id"`
+	AppDomain              types.String                `tfsdk:"app_domain"`
+	Server                 types.String                `tfsdk:"server"`
+	SavedSearchName        types.String                `tfsdk:"saved_search_name"`
+	SavedSearchParameters  types.List                  `tfsdk:"saved_search_parameters"`
+	Method                 types.String                `tfsdk:"method"`
+	RefreshInterval        types.Int64                 `tfsdk:"refresh_interval"`
+	FetchPolicyAttachments types.Bool                  `tfsdk:"fetch_policy_attachments"`
+	UserSummary            types.String                `tfsdk:"user_summary"`
+	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WSRRSavedSearchSubscriptionObjectType = map[string]attr.Type{

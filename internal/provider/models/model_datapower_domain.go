@@ -34,23 +34,23 @@ import (
 )
 
 type Domain struct {
-	AppDomain                  types.String           `tfsdk:"app_domain"`
-	UserSummary                types.String           `tfsdk:"user_summary"`
-	ConfigDir                  types.String           `tfsdk:"config_dir"`
-	NeighborDomain             types.List             `tfsdk:"neighbor_domain"`
-	DomainUser                 types.List             `tfsdk:"domain_user"`
-	FileMap                    *DmDomainFileMap       `tfsdk:"file_map"`
-	MonitoringMap              *DmDomainMonitoringMap `tfsdk:"monitoring_map"`
-	ConfigMode                 types.String           `tfsdk:"config_mode"`
-	ImportUrl                  types.String           `tfsdk:"import_url"`
-	ImportFormat               types.String           `tfsdk:"import_format"`
-	DeploymentPolicy           types.String           `tfsdk:"deployment_policy"`
-	DeploymentPolicyParameters types.String           `tfsdk:"deployment_policy_parameters"`
-	LocalIpRewrite             types.Bool             `tfsdk:"local_ip_rewrite"`
-	MaxChkpoints               types.Int64            `tfsdk:"max_chkpoints"`
-	ConfigPermissionsMode      types.String           `tfsdk:"config_permissions_mode"`
-	ConfigPermissionsProfile   types.String           `tfsdk:"config_permissions_profile"`
-	DependencyActions          []*actions.Action      `tfsdk:"dependency_actions"`
+	AppDomain                  types.String                `tfsdk:"app_domain"`
+	UserSummary                types.String                `tfsdk:"user_summary"`
+	ConfigDir                  types.String                `tfsdk:"config_dir"`
+	NeighborDomain             types.List                  `tfsdk:"neighbor_domain"`
+	DomainUser                 types.List                  `tfsdk:"domain_user"`
+	FileMap                    *DmDomainFileMap            `tfsdk:"file_map"`
+	MonitoringMap              *DmDomainMonitoringMap      `tfsdk:"monitoring_map"`
+	ConfigMode                 types.String                `tfsdk:"config_mode"`
+	ImportUrl                  types.String                `tfsdk:"import_url"`
+	ImportFormat               types.String                `tfsdk:"import_format"`
+	DeploymentPolicy           types.String                `tfsdk:"deployment_policy"`
+	DeploymentPolicyParameters types.String                `tfsdk:"deployment_policy_parameters"`
+	LocalIpRewrite             types.Bool                  `tfsdk:"local_ip_rewrite"`
+	MaxChkpoints               types.Int64                 `tfsdk:"max_chkpoints"`
+	ConfigPermissionsMode      types.String                `tfsdk:"config_permissions_mode"`
+	ConfigPermissionsProfile   types.String                `tfsdk:"config_permissions_profile"`
+	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var DomainObjectType = map[string]attr.Type{

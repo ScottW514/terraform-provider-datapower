@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAAAPolicy(t *testing.T) {
 			{
 				Config: testconfig.AAAPolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_aaapolicy.test", "result.0.id", "AAAPolicy_name"),
+					resource.TestCheckResourceAttr("data.datapower_aaapolicy.test", "result.0.id", "AccTest_AAAPolicy"),
 					resource.TestCheckResourceAttr("data.datapower_aaapolicy.test", "result.0.log_allowed", "false"),
 					resource.TestCheckResourceAttr("data.datapower_aaapolicy.test", "result.0.log_allowed_level", "info"),
 					resource.TestCheckResourceAttr("data.datapower_aaapolicy.test", "result.0.log_rejected", "true"),
@@ -55,5 +54,4 @@ func TestAccDataSourceAAAPolicy(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

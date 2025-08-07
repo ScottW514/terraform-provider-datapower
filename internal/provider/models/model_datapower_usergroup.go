@@ -34,11 +34,11 @@ import (
 )
 
 type UserGroup struct {
-	Id                types.String      `tfsdk:"id"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	AccessPolicies    types.List        `tfsdk:"access_policies"`
-	CommandGroup      types.List        `tfsdk:"command_group"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	AccessPolicies    types.List                  `tfsdk:"access_policies"`
+	CommandGroup      types.List                  `tfsdk:"command_group"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var UserGroupObjectType = map[string]attr.Type{

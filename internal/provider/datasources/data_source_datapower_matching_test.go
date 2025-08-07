@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourceMatching(t *testing.T) {
 			{
 				Config: testconfig.MatchingTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_matching.test", "result.0.id", "___Matching_name"),
+					resource.TestCheckResourceAttr("data.datapower_matching.test", "result.0.id", "__default-accept-service-providers__"),
 					resource.TestCheckResourceAttr("data.datapower_matching.test", "result.0.match_with_pcre", "false"),
 					resource.TestCheckResourceAttr("data.datapower_matching.test", "result.0.combine_with_or", "false"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

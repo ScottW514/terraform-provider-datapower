@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceAPISecurityOAuth(t *testing.T) {
 			{
 				Config: testconfig.APISecurityOAuthTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apisecurityoauth.test", "result.0.id", "APISecurityOAuth_name"),
+					resource.TestCheckResourceAttr("data.datapower_apisecurityoauth.test", "result.0.id", "AccTest_APISecurityOAuth"),
 					resource.TestCheckResourceAttr("data.datapower_apisecurityoauth.test", "result.0.o_auth_flow", "implicit"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

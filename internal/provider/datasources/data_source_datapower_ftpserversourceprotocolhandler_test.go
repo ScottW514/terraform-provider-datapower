@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceFTPServerSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.FTPServerSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_ftpserversourceprotocolhandler.test", "result.0.id", "FTPServerSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_ftpserversourceprotocolhandler.test", "result.0.id", "AccTest_FTPServerSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_ftpserversourceprotocolhandler.test", "result.0.local_address", "0.0.0.0"),
 					resource.TestCheckResourceAttr("data.datapower_ftpserversourceprotocolhandler.test", "result.0.local_port", "21"),
 					resource.TestCheckResourceAttr("data.datapower_ftpserversourceprotocolhandler.test", "result.0.filesystem_type", "virtual-ephemeral"),
@@ -74,5 +73,4 @@ func TestAccDataSourceFTPServerSourceProtocolHandler(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

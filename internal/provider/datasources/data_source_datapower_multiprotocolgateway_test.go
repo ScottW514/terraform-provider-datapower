@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceMultiProtocolGateway(t *testing.T) {
 			{
 				Config: testconfig.MultiProtocolGatewayTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_multiprotocolgateway.test", "result.0.id", "MultiProtocolGateway_name"),
+					resource.TestCheckResourceAttr("data.datapower_multiprotocolgateway.test", "result.0.id", "AccTest_MultiProtocolGateway"),
 					resource.TestCheckResourceAttr("data.datapower_multiprotocolgateway.test", "result.0.back_http_version", "HTTP/1.1"),
 					resource.TestCheckResourceAttr("data.datapower_multiprotocolgateway.test", "result.0.http2_required", "false"),
 					resource.TestCheckResourceAttr("data.datapower_multiprotocolgateway.test", "result.0.request_type", "soap"),
@@ -136,5 +135,4 @@ func TestAccDataSourceMultiProtocolGateway(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

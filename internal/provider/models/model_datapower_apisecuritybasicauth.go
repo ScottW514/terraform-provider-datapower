@@ -34,11 +34,11 @@ import (
 )
 
 type APISecurityBasicAuth struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	UserRegistry      types.String      `tfsdk:"user_registry"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	UserRegistry      types.String                `tfsdk:"user_registry"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APISecurityBasicAuthObjectType = map[string]attr.Type{

@@ -34,12 +34,12 @@ import (
 )
 
 type CryptoFWCred struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	PrivateKey        types.List        `tfsdk:"private_key"`
-	SharedSecretKey   types.List        `tfsdk:"shared_secret_key"`
-	Certificate       types.List        `tfsdk:"certificate"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	PrivateKey        types.List                  `tfsdk:"private_key"`
+	SharedSecretKey   types.List                  `tfsdk:"shared_secret_key"`
+	Certificate       types.List                  `tfsdk:"certificate"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CryptoFWCredObjectType = map[string]attr.Type{

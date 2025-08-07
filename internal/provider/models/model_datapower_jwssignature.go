@@ -34,15 +34,15 @@ import (
 )
 
 type JWSSignature struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Algorithm         types.String      `tfsdk:"algorithm"`
-	Key               types.String      `tfsdk:"key"`
-	SsKey             types.String      `tfsdk:"ss_key"`
-	ProtectedHeader   types.List        `tfsdk:"protected_header"`
-	UnprotectedHeader types.List        `tfsdk:"unprotected_header"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Algorithm         types.String                `tfsdk:"algorithm"`
+	Key               types.String                `tfsdk:"key"`
+	SsKey             types.String                `tfsdk:"ss_key"`
+	ProtectedHeader   types.List                  `tfsdk:"protected_header"`
+	UnprotectedHeader types.List                  `tfsdk:"unprotected_header"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var JWSSignatureObjectType = map[string]attr.Type{

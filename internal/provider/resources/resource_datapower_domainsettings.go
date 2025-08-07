@@ -113,13 +113,17 @@ func (r *DomainSettingsResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
 
 	body := data.ToBody(ctx, `DomainSettings`)
 	_, err := r.client.Put(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
+		return
+	}
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
 		return
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -160,17 +164,44 @@ func (r *DomainSettingsResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `DomainSettings`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
 
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *DomainSettingsResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var data models.DomainSettings
+
+	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *DomainSettingsResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var data models.DomainSettings
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }

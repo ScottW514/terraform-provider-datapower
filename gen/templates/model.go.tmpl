@@ -63,7 +63,7 @@ type {{.Name}} struct {
 	RestartDomainOnUpdate types.Bool `tfsdk:"restart_domain_on_update"`
 {{- end}}
 {{- if not .ModelOnly}}
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 {{- end}}
 }
 
@@ -80,7 +80,7 @@ type {{.Name}}WO struct {
 	RestartDomainOnUpdate types.Bool `tfsdk:"restart_domain_on_update"`
 {{- end}}
 {{- if not .ModelOnly}}
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 {{- end}}
 }
 {{- end}}

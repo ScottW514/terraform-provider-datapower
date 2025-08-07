@@ -1,8 +1,8 @@
 
 resource "datapower_kafkasourceprotocolhandler" "test" {
-  id             = "KafkaSourceProtocolHandler_name"
-  app_domain     = "acc_test_domain"
-  cluster        = "TestAccKafkaCluster"
+  id             = "ResTestKafkaSourceProtocolHandler"
+  app_domain     = "acceptance_test"
+  cluster        = "AccTest_KafkaCluster"
   request_topic  = "topic"
   consumer_group = "consumer"
 }

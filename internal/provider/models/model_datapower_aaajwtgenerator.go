@@ -34,24 +34,24 @@ import (
 )
 
 type AAAJWTGenerator struct {
-	Id                 types.String      `tfsdk:"id"`
-	AppDomain          types.String      `tfsdk:"app_domain"`
-	UserSummary        types.String      `tfsdk:"user_summary"`
-	Issuer             types.String      `tfsdk:"issuer"`
-	Duration           types.Int64       `tfsdk:"duration"`
-	AdditionalClaims   *DmJWTClaims      `tfsdk:"additional_claims"`
-	Audience           types.List        `tfsdk:"audience"`
-	NotBefore          types.Int64       `tfsdk:"not_before"`
-	CustomClaims       types.String      `tfsdk:"custom_claims"`
-	GenMethod          *DmJWTGenMethod   `tfsdk:"gen_method"`
-	SignAlgorithm      types.String      `tfsdk:"sign_algorithm"`
-	SignKey            types.String      `tfsdk:"sign_key"`
-	SignSsKey          types.String      `tfsdk:"sign_ss_key"`
-	EncAlgorithm       types.String      `tfsdk:"enc_algorithm"`
-	EncryptAlgorithm   types.String      `tfsdk:"encrypt_algorithm"`
-	EncryptCertificate types.String      `tfsdk:"encrypt_certificate"`
-	EncryptSsKey       types.String      `tfsdk:"encrypt_ss_key"`
-	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
+	Id                 types.String                `tfsdk:"id"`
+	AppDomain          types.String                `tfsdk:"app_domain"`
+	UserSummary        types.String                `tfsdk:"user_summary"`
+	Issuer             types.String                `tfsdk:"issuer"`
+	Duration           types.Int64                 `tfsdk:"duration"`
+	AdditionalClaims   *DmJWTClaims                `tfsdk:"additional_claims"`
+	Audience           types.List                  `tfsdk:"audience"`
+	NotBefore          types.Int64                 `tfsdk:"not_before"`
+	CustomClaims       types.String                `tfsdk:"custom_claims"`
+	GenMethod          *DmJWTGenMethod             `tfsdk:"gen_method"`
+	SignAlgorithm      types.String                `tfsdk:"sign_algorithm"`
+	SignKey            types.String                `tfsdk:"sign_key"`
+	SignSsKey          types.String                `tfsdk:"sign_ss_key"`
+	EncAlgorithm       types.String                `tfsdk:"enc_algorithm"`
+	EncryptAlgorithm   types.String                `tfsdk:"encrypt_algorithm"`
+	EncryptCertificate types.String                `tfsdk:"encrypt_certificate"`
+	EncryptSsKey       types.String                `tfsdk:"encrypt_ss_key"`
+	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AAAJWTGeneratorObjectType = map[string]attr.Type{

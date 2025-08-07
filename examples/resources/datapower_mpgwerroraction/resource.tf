@@ -1,6 +1,6 @@
 
 resource "datapower_mpgwerroraction" "test" {
-  id         = "MPGWErrorAction_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestMPGWErrorAction"
+  app_domain = "acceptance_test"
   remote_url = "http://google.com"
 }

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceNFSFilePollerSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.NFSFilePollerSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_nfsfilepollersourceprotocolhandler.test", "result.0.id", "NFSFilePollerSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_nfsfilepollersourceprotocolhandler.test", "result.0.id", "AccTest_NFSFilePollerSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_nfsfilepollersourceprotocolhandler.test", "result.0.delay_between_polls", "60000"),
 					resource.TestCheckResourceAttr("data.datapower_nfsfilepollersourceprotocolhandler.test", "result.0.delete_on_success", "false"),
 					resource.TestCheckResourceAttr("data.datapower_nfsfilepollersourceprotocolhandler.test", "result.0.success_rename_pattern", "$1.processed.ok"),
@@ -55,5 +54,4 @@ func TestAccDataSourceNFSFilePollerSourceProtocolHandler(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

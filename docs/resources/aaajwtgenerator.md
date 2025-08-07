@@ -16,8 +16,8 @@ JWT Generator
 
 ```terraform
 resource "datapower_aaajwtgenerator" "test" {
-  id         = "AAAJWTGenerator_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAAAJWTGenerator"
+  app_domain = "acceptance_test"
 }
 ```
 

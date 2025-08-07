@@ -16,8 +16,8 @@ Processing Policy
 
 ```terraform
 resource "datapower_stylepolicy" "test" {
-  id         = "___StylePolicy_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestStylePolicy"
+  app_domain = "acceptance_test"
 }
 ```
 

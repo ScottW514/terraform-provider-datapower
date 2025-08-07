@@ -14,8 +14,7 @@ Custom Rule Message Content Filter
 
 ```terraform
 data "datapower_mcfcustomrule" "test" {
-  depends_on = [datapower_mcfcustomrule.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -1,5 +1,5 @@
 
 resource "datapower_assemblyactionhtmlpage" "test" {
-  id         = "AssemblyActionHtmlPage_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyActionHtmlPage"
+  app_domain = "acceptance_test"
 }

@@ -16,7 +16,7 @@ GitOps
 
 ```terraform
 resource "datapower_gitops" "test" {
-  app_domain             = "acc_test_domain"
+  app_domain             = "acceptance_test"
   connection_type        = "https"
   mode                   = "read-write"
   commit_identifier_type = "branch"

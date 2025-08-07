@@ -16,8 +16,8 @@ Security API action
 
 ```terraform
 resource "datapower_apisecurity" "test" {
-  id         = "APISecurity_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAPISecurity"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceNFSStaticMount(t *testing.T) {
 			{
 				Config: testconfig.NFSStaticMountTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_nfsstaticmount.test", "result.0.id", "NFSStaticMount_name"),
+					resource.TestCheckResourceAttr("data.datapower_nfsstaticmount.test", "result.0.id", "AccTest_NFSStaticMount"),
 					resource.TestCheckResourceAttr("data.datapower_nfsstaticmount.test", "result.0.local_filesystem_access", "false"),
 					resource.TestCheckResourceAttr("data.datapower_nfsstaticmount.test", "result.0.version", "3"),
 					resource.TestCheckResourceAttr("data.datapower_nfsstaticmount.test", "result.0.transport", "tcp"),
@@ -55,5 +54,4 @@ func TestAccDataSourceNFSStaticMount(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

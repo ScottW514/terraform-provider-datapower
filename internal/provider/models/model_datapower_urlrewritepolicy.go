@@ -34,11 +34,11 @@ import (
 )
 
 type URLRewritePolicy struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Direction         types.String      `tfsdk:"direction"`
-	UrlRewriteRule    types.List        `tfsdk:"url_rewrite_rule"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Direction         types.String                `tfsdk:"direction"`
+	UrlRewriteRule    types.List                  `tfsdk:"url_rewrite_rule"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var URLRewritePolicyObjectType = map[string]attr.Type{

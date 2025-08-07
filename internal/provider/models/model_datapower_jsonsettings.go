@@ -34,15 +34,15 @@ import (
 )
 
 type JSONSettings struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	JsonMaxNestingDepth types.Int64       `tfsdk:"json_max_nesting_depth"`
-	JsonMaxLabelLength  types.Int64       `tfsdk:"json_max_label_length"`
-	JsonMaxValueLength  types.Int64       `tfsdk:"json_max_value_length"`
-	JsonMaxNumberLength types.Int64       `tfsdk:"json_max_number_length"`
-	JsonDocumentSize    types.Int64       `tfsdk:"json_document_size"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	JsonMaxNestingDepth types.Int64                 `tfsdk:"json_max_nesting_depth"`
+	JsonMaxLabelLength  types.Int64                 `tfsdk:"json_max_label_length"`
+	JsonMaxValueLength  types.Int64                 `tfsdk:"json_max_value_length"`
+	JsonMaxNumberLength types.Int64                 `tfsdk:"json_max_number_length"`
+	JsonDocumentSize    types.Int64                 `tfsdk:"json_document_size"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var JSONSettingsObjectType = map[string]attr.Type{

@@ -34,12 +34,12 @@ import (
 )
 
 type MCFHttpHeader struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	HttpName          types.String      `tfsdk:"http_name"`
-	HttpValue         types.String      `tfsdk:"http_value"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	HttpName          types.String                `tfsdk:"http_name"`
+	HttpValue         types.String                `tfsdk:"http_value"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MCFHttpHeaderObjectType = map[string]attr.Type{

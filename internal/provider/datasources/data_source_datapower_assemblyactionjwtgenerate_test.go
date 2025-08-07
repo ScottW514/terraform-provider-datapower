@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAssemblyActionJWTGenerate(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionJWTGenerateTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtgenerate.test", "result.0.id", "AssemblyActionJWTGenerate_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtgenerate.test", "result.0.id", "AccTest_AssemblyActionJWTGenerate"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtgenerate.test", "result.0.jwt", "generated.jwt"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtgenerate.test", "result.0.jwtid_claims", "false"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjwtgenerate.test", "result.0.issuer_claim", "iss.claim"),
@@ -51,5 +50,4 @@ func TestAccDataSourceAssemblyActionJWTGenerate(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

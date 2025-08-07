@@ -14,7 +14,6 @@ User group (`default` domain only)
 
 ```terraform
 data "datapower_usergroup" "test" {
-  depends_on = [datapower_usergroup.test]
 }
 ```
 

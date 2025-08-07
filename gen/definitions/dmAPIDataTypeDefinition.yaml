@@ -10,6 +10,7 @@ attributes:
   - name: Schema
     type: String
     reference_to: APISchema
-    test_value: '"TestAccAPISchema"'
+    test_value: '"AccTest_APISchema"'
+    test_bed_value: 'datapower_apischema.acc_test.id'
     required: true
     description: 'Schema'

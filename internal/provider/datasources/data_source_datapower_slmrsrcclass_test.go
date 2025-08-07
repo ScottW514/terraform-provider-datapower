@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourceSLMRsrcClass(t *testing.T) {
 			{
 				Config: testconfig.SLMRsrcClassTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_slmrsrcclass.test", "result.0.id", "SLMRsrcClass_name"),
+					resource.TestCheckResourceAttr("data.datapower_slmrsrcclass.test", "result.0.id", "AccTest_SLMRsrcClass"),
 					resource.TestCheckResourceAttr("data.datapower_slmrsrcclass.test", "result.0.rsrc_type", "aaa-mapped-resource"),
 					resource.TestCheckResourceAttr("data.datapower_slmrsrcclass.test", "result.0.rsrc_match_type", "per-extracted-value"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

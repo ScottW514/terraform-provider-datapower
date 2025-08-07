@@ -34,31 +34,31 @@ import (
 )
 
 type AAAJWTValidator struct {
-	Id                              types.String      `tfsdk:"id"`
-	AppDomain                       types.String      `tfsdk:"app_domain"`
-	UserSummary                     types.String      `tfsdk:"user_summary"`
-	Issuer                          types.String      `tfsdk:"issuer"`
-	Aud                             types.String      `tfsdk:"aud"`
-	ValMethod                       *DmJWTValMethod   `tfsdk:"val_method"`
-	CustomizedScript                types.String      `tfsdk:"customized_script"`
-	DecryptCredentialType           types.String      `tfsdk:"decrypt_credential_type"`
-	DecryptKey                      types.String      `tfsdk:"decrypt_key"`
-	DecryptSSecret                  types.String      `tfsdk:"decrypt_s_secret"`
-	DecryptJwk                      types.String      `tfsdk:"decrypt_jwk"`
-	DecryptFetchCredUrl             types.String      `tfsdk:"decrypt_fetch_cred_url"`
-	DecryptFetchCredSslProfile      types.String      `tfsdk:"decrypt_fetch_cred_ssl_profile"`
-	ValidateCustom                  types.String      `tfsdk:"validate_custom"`
-	VerifyCredentialType            types.String      `tfsdk:"verify_credential_type"`
-	VerifyCertificate               types.String      `tfsdk:"verify_certificate"`
-	VerifyCertificateAgainstValCred types.Bool        `tfsdk:"verify_certificate_against_val_cred"`
-	VerifyValCred                   types.String      `tfsdk:"verify_val_cred"`
-	VerifySSecret                   types.String      `tfsdk:"verify_s_secret"`
-	VerifyJwk                       types.String      `tfsdk:"verify_jwk"`
-	VerifyFetchCredUrl              types.String      `tfsdk:"verify_fetch_cred_url"`
-	VerifyFetchCredSslProfile       types.String      `tfsdk:"verify_fetch_cred_ssl_profile"`
-	Claims                          types.List        `tfsdk:"claims"`
-	UsernameClaim                   types.String      `tfsdk:"username_claim"`
-	DependencyActions               []*actions.Action `tfsdk:"dependency_actions"`
+	Id                              types.String                `tfsdk:"id"`
+	AppDomain                       types.String                `tfsdk:"app_domain"`
+	UserSummary                     types.String                `tfsdk:"user_summary"`
+	Issuer                          types.String                `tfsdk:"issuer"`
+	Aud                             types.String                `tfsdk:"aud"`
+	ValMethod                       *DmJWTValMethod             `tfsdk:"val_method"`
+	CustomizedScript                types.String                `tfsdk:"customized_script"`
+	DecryptCredentialType           types.String                `tfsdk:"decrypt_credential_type"`
+	DecryptKey                      types.String                `tfsdk:"decrypt_key"`
+	DecryptSSecret                  types.String                `tfsdk:"decrypt_s_secret"`
+	DecryptJwk                      types.String                `tfsdk:"decrypt_jwk"`
+	DecryptFetchCredUrl             types.String                `tfsdk:"decrypt_fetch_cred_url"`
+	DecryptFetchCredSslProfile      types.String                `tfsdk:"decrypt_fetch_cred_ssl_profile"`
+	ValidateCustom                  types.String                `tfsdk:"validate_custom"`
+	VerifyCredentialType            types.String                `tfsdk:"verify_credential_type"`
+	VerifyCertificate               types.String                `tfsdk:"verify_certificate"`
+	VerifyCertificateAgainstValCred types.Bool                  `tfsdk:"verify_certificate_against_val_cred"`
+	VerifyValCred                   types.String                `tfsdk:"verify_val_cred"`
+	VerifySSecret                   types.String                `tfsdk:"verify_s_secret"`
+	VerifyJwk                       types.String                `tfsdk:"verify_jwk"`
+	VerifyFetchCredUrl              types.String                `tfsdk:"verify_fetch_cred_url"`
+	VerifyFetchCredSslProfile       types.String                `tfsdk:"verify_fetch_cred_ssl_profile"`
+	Claims                          types.List                  `tfsdk:"claims"`
+	UsernameClaim                   types.String                `tfsdk:"username_claim"`
+	DependencyActions               []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AAAJWTValidatorObjectType = map[string]attr.Type{

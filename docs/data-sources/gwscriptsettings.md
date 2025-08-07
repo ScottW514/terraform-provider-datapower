@@ -14,7 +14,6 @@ GatewayScript Settings (`default` domain only)
 
 ```terraform
 data "datapower_gwscriptsettings" "test" {
-  depends_on = [datapower_gwscriptsettings.test]
 }
 ```
 

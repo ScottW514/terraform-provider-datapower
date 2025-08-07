@@ -54,7 +54,7 @@ type SSHServerSourceProtocolHandler struct {
 	IdleTimeout                 types.Int64                     `tfsdk:"idle_timeout"`
 	PersistentFilesystemTimeout types.Int64                     `tfsdk:"persistent_filesystem_timeout"`
 	VirtualDirectories          types.List                      `tfsdk:"virtual_directories"`
-	DependencyActions           []*actions.Action               `tfsdk:"dependency_actions"`
+	DependencyActions           []*actions.DependencyAction     `tfsdk:"dependency_actions"`
 }
 
 var SSHServerSourceProtocolHandlerObjectType = map[string]attr.Type{

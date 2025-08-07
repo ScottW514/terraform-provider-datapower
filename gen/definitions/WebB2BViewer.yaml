@@ -51,6 +51,7 @@ attributes:
       - 'server'
       - 'sni'
     default: 'server'
+    test_expect_ds: '"proxy"'
     description: 'Custom TLS server type'
     cli_alias: ssl-config-type
   - name: SSLServer

@@ -69,7 +69,7 @@ type WebAppRequest struct {
 	ProcessAllCookie         types.Bool                  `tfsdk:"process_all_cookie"`
 	CookieNameVector         types.List                  `tfsdk:"cookie_name_vector"`
 	SqlInjectionPatternsFile types.String                `tfsdk:"sql_injection_patterns_file"`
-	DependencyActions        []*actions.Action           `tfsdk:"dependency_actions"`
+	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WebAppRequestObjectType = map[string]attr.Type{

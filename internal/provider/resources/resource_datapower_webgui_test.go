@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccResourceWebGUI(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_webgui.test", "enabled", "true"),
 			resource.TestCheckResourceAttr("datapower_webgui.test", "local_port", "9090"),
 			resource.TestCheckResourceAttr("datapower_webgui.test", "save_config_overwrites", "true"),
-			resource.TestCheckResourceAttr("datapower_webgui.test", "idle_timeout", "600"),
+			resource.TestCheckResourceAttr("datapower_webgui.test", "idle_timeout", "0"),
 			resource.TestCheckResourceAttr("datapower_webgui.test", "acl", "web-mgmt"),
 			resource.TestCheckResourceAttr("datapower_webgui.test", "ssl_server_config_type", "server"),
 			resource.TestCheckResourceAttr("datapower_webgui.test", "enable_sts", "true"),
@@ -54,5 +53,4 @@ func TestAccResourceWebGUI(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps:                    steps,
 	})
-	actions.PostProcess()
 }

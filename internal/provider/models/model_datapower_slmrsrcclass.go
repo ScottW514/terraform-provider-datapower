@@ -34,18 +34,18 @@ import (
 )
 
 type SLMRsrcClass struct {
-	Id                          types.String      `tfsdk:"id"`
-	AppDomain                   types.String      `tfsdk:"app_domain"`
-	UserSummary                 types.String      `tfsdk:"user_summary"`
-	RsrcType                    types.String      `tfsdk:"rsrc_type"`
-	RsrcMatchType               types.String      `tfsdk:"rsrc_match_type"`
-	RsrcValue                   types.List        `tfsdk:"rsrc_value"`
-	Stylesheet                  types.String      `tfsdk:"stylesheet"`
-	XPathFilter                 types.String      `tfsdk:"x_path_filter"`
-	Subscription                types.String      `tfsdk:"subscription"`
-	WsrrSubscription            types.String      `tfsdk:"wsrr_subscription"`
-	WsrrSavedSearchSubscription types.String      `tfsdk:"wsrr_saved_search_subscription"`
-	DependencyActions           []*actions.Action `tfsdk:"dependency_actions"`
+	Id                          types.String                `tfsdk:"id"`
+	AppDomain                   types.String                `tfsdk:"app_domain"`
+	UserSummary                 types.String                `tfsdk:"user_summary"`
+	RsrcType                    types.String                `tfsdk:"rsrc_type"`
+	RsrcMatchType               types.String                `tfsdk:"rsrc_match_type"`
+	RsrcValue                   types.List                  `tfsdk:"rsrc_value"`
+	Stylesheet                  types.String                `tfsdk:"stylesheet"`
+	XPathFilter                 types.String                `tfsdk:"x_path_filter"`
+	Subscription                types.String                `tfsdk:"subscription"`
+	WsrrSubscription            types.String                `tfsdk:"wsrr_subscription"`
+	WsrrSavedSearchSubscription types.String                `tfsdk:"wsrr_saved_search_subscription"`
+	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SLMRsrcClassObjectType = map[string]attr.Type{

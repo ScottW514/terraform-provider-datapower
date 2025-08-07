@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'WebServiceMonitor_name'
+    test_value: '"ResTestWebServiceMonitor"'
+    test_expect_ds: '"AccTest_WebServiceMonitor"'
+    example: 'WebServiceMonitorName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

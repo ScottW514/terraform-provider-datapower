@@ -1,6 +1,6 @@
 
 resource "datapower_gatewaypeering" "test" {
-  id         = "___GatewayPeering_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestGatewayPeering"
+  app_domain = "acceptance_test"
   local_port = 16380
 }

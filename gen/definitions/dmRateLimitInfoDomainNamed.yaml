@@ -6,7 +6,8 @@ attributes:
     type: String
     reference_to: RateLimitDefinition
     required: true
-    test_value: '"TestAccRateLimitDefinition"'
+    test_value: '"AccTest_RateLimitDefinition"'
+    test_bed_value: 'datapower_ratelimitdefinition.acc_test.id'
     description: 'Name'
     cli_alias: name
   - name: Action

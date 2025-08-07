@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'CryptoFWCred_name'
+    test_value: '"ResTestCryptoFWCred"'
+    test_expect_ds: '"AccTest_CryptoFWCred"'
+    example: 'CryptoFWCredName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -29,7 +31,8 @@ attributes:
     type: List
     reference_to: CryptoKey
     element_type: String
-    test_value: '["TestAccCryptoKey"]'
+    test_value: '["AccTest_CryptoKey"]'
+    test_bed_value: '[datapower_cryptokey.acc_test.id]'
     description: 'Private key'
     cli_alias: key
   - name: SharedSecretKey

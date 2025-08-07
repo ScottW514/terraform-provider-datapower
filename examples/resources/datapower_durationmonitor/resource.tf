@@ -1,7 +1,7 @@
 
 resource "datapower_durationmonitor" "test" {
-  id           = "DurationMonitor_name"
-  app_domain   = "acc_test_domain"
+  id           = "ResTestDurationMonitor"
+  app_domain   = "acceptance_test"
   measure      = "messages"
-  message_type = "TestAccMessageType"
+  message_type = "AccTest_MessageType"
 }

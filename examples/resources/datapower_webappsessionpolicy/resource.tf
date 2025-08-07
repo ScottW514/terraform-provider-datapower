@@ -1,6 +1,6 @@
 
 resource "datapower_webappsessionpolicy" "test" {
-  id            = "WebAppSessionPolicy_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestWebAppSessionPolicy"
+  app_domain    = "acceptance_test"
   start_matches = "__default-accept-service-providers__"
 }

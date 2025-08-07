@@ -33,13 +33,13 @@ import (
 )
 
 type GWScriptSettings struct {
-	Enabled                types.Bool        `tfsdk:"enabled"`
-	UserSummary            types.String      `tfsdk:"user_summary"`
-	FrozenEnabled          types.Bool        `tfsdk:"frozen_enabled"`
-	UntrustedCodeMitigated types.Bool        `tfsdk:"untrusted_code_mitigated"`
-	ReloadNeeded           types.Bool        `tfsdk:"reload_needed"`
-	TerminateTime          types.Int64       `tfsdk:"terminate_time"`
-	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled                types.Bool                  `tfsdk:"enabled"`
+	UserSummary            types.String                `tfsdk:"user_summary"`
+	FrozenEnabled          types.Bool                  `tfsdk:"frozen_enabled"`
+	UntrustedCodeMitigated types.Bool                  `tfsdk:"untrusted_code_mitigated"`
+	ReloadNeeded           types.Bool                  `tfsdk:"reload_needed"`
+	TerminateTime          types.Int64                 `tfsdk:"terminate_time"`
+	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var GWScriptSettingsObjectType = map[string]attr.Type{

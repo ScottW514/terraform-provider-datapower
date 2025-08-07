@@ -34,13 +34,13 @@ import (
 )
 
 type WSStylePolicy struct {
-	Id                   types.String      `tfsdk:"id"`
-	AppDomain            types.String      `tfsdk:"app_domain"`
-	UserSummary          types.String      `tfsdk:"user_summary"`
-	DefStylesheetForSoap types.String      `tfsdk:"def_stylesheet_for_soap"`
-	DefStylesheetForXsl  types.String      `tfsdk:"def_stylesheet_for_xsl"`
-	PolicyMaps           types.List        `tfsdk:"policy_maps"`
-	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
+	Id                   types.String                `tfsdk:"id"`
+	AppDomain            types.String                `tfsdk:"app_domain"`
+	UserSummary          types.String                `tfsdk:"user_summary"`
+	DefStylesheetForSoap types.String                `tfsdk:"def_stylesheet_for_soap"`
+	DefStylesheetForXsl  types.String                `tfsdk:"def_stylesheet_for_xsl"`
+	PolicyMaps           types.List                  `tfsdk:"policy_maps"`
+	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WSStylePolicyObjectType = map[string]attr.Type{

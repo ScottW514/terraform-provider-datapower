@@ -35,14 +35,14 @@ import (
 )
 
 type GatewayPeeringManager struct {
-	AppDomain                types.String      `tfsdk:"app_domain"`
-	Enabled                  types.Bool        `tfsdk:"enabled"`
-	UserSummary              types.String      `tfsdk:"user_summary"`
-	ApiConnectGatewayService types.String      `tfsdk:"api_connect_gateway_service"`
-	RateLimit                types.String      `tfsdk:"rate_limit"`
-	Subscription             types.String      `tfsdk:"subscription"`
-	RatelimitModule          types.String      `tfsdk:"ratelimit_module"`
-	DependencyActions        []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain                types.String                `tfsdk:"app_domain"`
+	Enabled                  types.Bool                  `tfsdk:"enabled"`
+	UserSummary              types.String                `tfsdk:"user_summary"`
+	ApiConnectGatewayService types.String                `tfsdk:"api_connect_gateway_service"`
+	RateLimit                types.String                `tfsdk:"rate_limit"`
+	Subscription             types.String                `tfsdk:"subscription"`
+	RatelimitModule          types.String                `tfsdk:"ratelimit_module"`
+	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var GatewayPeeringManagerObjectType = map[string]attr.Type{

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceConformancePolicy(t *testing.T) {
 			{
 				Config: testconfig.ConformancePolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_conformancepolicy.test", "result.0.id", "ConformancePolicy_name"),
+					resource.TestCheckResourceAttr("data.datapower_conformancepolicy.test", "result.0.id", "AccTest_ConformancePolicy"),
 					resource.TestCheckResourceAttr("data.datapower_conformancepolicy.test", "result.0.assert_bp10_conformance", "false"),
 					resource.TestCheckResourceAttr("data.datapower_conformancepolicy.test", "result.0.report_level", "never"),
 					resource.TestCheckResourceAttr("data.datapower_conformancepolicy.test", "result.0.reject_level", "never"),
@@ -55,5 +54,4 @@ func TestAccDataSourceConformancePolicy(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -14,8 +14,7 @@ GraphQL introspect assembly action
 
 ```terraform
 data "datapower_assemblyactiongraphqlintrospect" "test" {
-  depends_on = [datapower_assemblyactiongraphqlintrospect.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

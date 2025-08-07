@@ -34,16 +34,16 @@ import (
 )
 
 type WCCService struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	OdcInfoHostname     types.String      `tfsdk:"odc_info_hostname"`
-	OdcInfoPort         types.Int64       `tfsdk:"odc_info_port"`
-	UpdateType          types.String      `tfsdk:"update_type"`
-	TimeInterval        types.Int64       `tfsdk:"time_interval"`
-	SslClientConfigType types.String      `tfsdk:"ssl_client_config_type"`
-	SslClient           types.String      `tfsdk:"ssl_client"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	OdcInfoHostname     types.String                `tfsdk:"odc_info_hostname"`
+	OdcInfoPort         types.Int64                 `tfsdk:"odc_info_port"`
+	UpdateType          types.String                `tfsdk:"update_type"`
+	TimeInterval        types.Int64                 `tfsdk:"time_interval"`
+	SslClientConfigType types.String                `tfsdk:"ssl_client_config_type"`
+	SslClient           types.String                `tfsdk:"ssl_client"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WCCServiceObjectType = map[string]attr.Type{

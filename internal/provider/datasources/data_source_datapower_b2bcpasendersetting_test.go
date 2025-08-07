@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceB2BCPASenderSetting(t *testing.T) {
 			{
 				Config: testconfig.B2BCPASenderSettingTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_b2bcpasendersetting.test", "result.0.id", "B2BCPASenderSetting_name"),
+					resource.TestCheckResourceAttr("data.datapower_b2bcpasendersetting.test", "result.0.id", "AccTest_B2BCPASenderSetting"),
 					resource.TestCheckResourceAttr("data.datapower_b2bcpasendersetting.test", "result.0.connection_timeout", "300"),
 					resource.TestCheckResourceAttr("data.datapower_b2bcpasendersetting.test", "result.0.sync_reply_mode", "none"),
 					resource.TestCheckResourceAttr("data.datapower_b2bcpasendersetting.test", "result.0.duplicate_elimination", "always"),
@@ -62,5 +61,4 @@ func TestAccDataSourceB2BCPASenderSetting(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

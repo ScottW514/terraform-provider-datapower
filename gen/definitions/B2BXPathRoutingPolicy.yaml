@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'B2BXPathRoutingPolicy_name'
+    test_value: '"ResTestB2BXPathRoutingPolicy"'
+    test_expect_ds: '"AccTest_B2BXPathRoutingPolicy"'
+    example: 'B2BXPathRoutingPolicyName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

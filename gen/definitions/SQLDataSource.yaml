@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'SQLDataSource_name'
+    test_value: '"ResTestSQLDataSource"'
+    test_expect_ds: '"AccTest_SQLDataSource"'
+    example: 'SQLDataSourceName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -52,7 +54,8 @@ attributes:
     type: String
     required: true
     reference_to: PasswordAlias
-    test_value: '"TestAccPasswordAlias"'
+    test_value: '"AccTest_PasswordAlias"'
+    test_bed_value: 'datapower_passwordalias.acc_test.id'
     description: 'Connection password alias'
     cli_alias: password-alias
   - name: DataSourceID

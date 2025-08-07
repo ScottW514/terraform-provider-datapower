@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceWSStylePolicyRule(t *testing.T) {
 			{
 				Config: testconfig.WSStylePolicyRuleTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_wsstylepolicyrule.test", "result.0.id", "_WSStylePolicyRule_name"),
+					resource.TestCheckResourceAttr("data.datapower_wsstylepolicyrule.test", "result.0.id", "AccTest_WSStylePolicyRule"),
 					resource.TestCheckResourceAttr("data.datapower_wsstylepolicyrule.test", "result.0.direction", "rule"),
 					resource.TestCheckResourceAttr("data.datapower_wsstylepolicyrule.test", "result.0.input_format", "none"),
 					resource.TestCheckResourceAttr("data.datapower_wsstylepolicyrule.test", "result.0.output_format", "none"),
@@ -51,5 +50,4 @@ func TestAccDataSourceWSStylePolicyRule(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

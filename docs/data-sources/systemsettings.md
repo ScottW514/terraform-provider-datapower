@@ -14,7 +14,6 @@ System settings (`default` domain only)
 
 ```terraform
 data "datapower_systemsettings" "test" {
-  depends_on = [datapower_systemsettings.test]
 }
 ```
 

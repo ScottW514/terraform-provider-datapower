@@ -34,22 +34,22 @@ import (
 )
 
 type APIOperation struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Method            types.String      `tfsdk:"method"`
-	OperationId       types.String      `tfsdk:"operation_id"`
-	RemoveConsume     types.Bool        `tfsdk:"remove_consume"`
-	Consume           types.List        `tfsdk:"consume"`
-	Produce           types.List        `tfsdk:"produce"`
-	RequestSchema     types.String      `tfsdk:"request_schema"`
-	ResponseSchema    types.List        `tfsdk:"response_schema"`
-	Parameter         types.List        `tfsdk:"parameter"`
-	RemoveSecurity    types.Bool        `tfsdk:"remove_security"`
-	Security          types.List        `tfsdk:"security"`
-	SoapAction        types.String      `tfsdk:"soap_action"`
-	SoapElementName   types.String      `tfsdk:"soap_element_name"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Method            types.String                `tfsdk:"method"`
+	OperationId       types.String                `tfsdk:"operation_id"`
+	RemoveConsume     types.Bool                  `tfsdk:"remove_consume"`
+	Consume           types.List                  `tfsdk:"consume"`
+	Produce           types.List                  `tfsdk:"produce"`
+	RequestSchema     types.String                `tfsdk:"request_schema"`
+	ResponseSchema    types.List                  `tfsdk:"response_schema"`
+	Parameter         types.List                  `tfsdk:"parameter"`
+	RemoveSecurity    types.Bool                  `tfsdk:"remove_security"`
+	Security          types.List                  `tfsdk:"security"`
+	SoapAction        types.String                `tfsdk:"soap_action"`
+	SoapElementName   types.String                `tfsdk:"soap_element_name"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APIOperationObjectType = map[string]attr.Type{

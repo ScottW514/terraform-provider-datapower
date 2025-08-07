@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceControlList(t *testing.T) {
 			{
 				Config: testconfig.ControlListTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_controllist.test", "result.0.id", "ControlList_name"),
+					resource.TestCheckResourceAttr("data.datapower_controllist.test", "result.0.id", "AccTest_ControlList"),
 					resource.TestCheckResourceAttr("data.datapower_controllist.test", "result.0.case_insensitive", "false"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

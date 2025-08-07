@@ -34,13 +34,13 @@ import (
 )
 
 type OpenTelemetrySampler struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	ParentBased       types.Bool        `tfsdk:"parent_based"`
-	Type              types.String      `tfsdk:"type"`
-	Ratio             types.Int64       `tfsdk:"ratio"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	ParentBased       types.Bool                  `tfsdk:"parent_based"`
+	Type              types.String                `tfsdk:"type"`
+	Ratio             types.Int64                 `tfsdk:"ratio"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var OpenTelemetrySamplerObjectType = map[string]attr.Type{

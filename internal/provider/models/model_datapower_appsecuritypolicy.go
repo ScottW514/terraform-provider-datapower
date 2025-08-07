@@ -34,13 +34,13 @@ import (
 )
 
 type AppSecurityPolicy struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	RequestMaps       types.List        `tfsdk:"request_maps"`
-	ResponseMaps      types.List        `tfsdk:"response_maps"`
-	ErrorMaps         types.List        `tfsdk:"error_maps"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	RequestMaps       types.List                  `tfsdk:"request_maps"`
+	ResponseMaps      types.List                  `tfsdk:"response_maps"`
+	ErrorMaps         types.List                  `tfsdk:"error_maps"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AppSecurityPolicyObjectType = map[string]attr.Type{

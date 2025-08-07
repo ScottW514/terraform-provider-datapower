@@ -34,15 +34,15 @@ import (
 )
 
 type CookieAttributePolicy struct {
-	Id                types.String       `tfsdk:"id"`
-	AppDomain         types.String       `tfsdk:"app_domain"`
-	UserSummary       types.String       `tfsdk:"user_summary"`
-	CookieAttribute   *DmCookieAttribute `tfsdk:"cookie_attribute"`
-	Domain            types.String       `tfsdk:"domain"`
-	Path              types.String       `tfsdk:"path"`
-	Interval          types.Int64        `tfsdk:"interval"`
-	CustomAttribute   types.String       `tfsdk:"custom_attribute"`
-	DependencyActions []*actions.Action  `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	CookieAttribute   *DmCookieAttribute          `tfsdk:"cookie_attribute"`
+	Domain            types.String                `tfsdk:"domain"`
+	Path              types.String                `tfsdk:"path"`
+	Interval          types.Int64                 `tfsdk:"interval"`
+	CustomAttribute   types.String                `tfsdk:"custom_attribute"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CookieAttributePolicyObjectType = map[string]attr.Type{

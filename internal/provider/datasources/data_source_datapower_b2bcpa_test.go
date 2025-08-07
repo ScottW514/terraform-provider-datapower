@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,10 +40,9 @@ func TestAccDataSourceB2BCPA(t *testing.T) {
 			{
 				Config: testconfig.B2BCPATestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_b2bcpa.test", "result.0.id", "B2BCPA_name"),
+					resource.TestCheckResourceAttr("data.datapower_b2bcpa.test", "result.0.id", "AccTest_B2BCPA"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

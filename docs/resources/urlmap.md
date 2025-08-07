@@ -16,8 +16,8 @@ URL Map
 
 ```terraform
 resource "datapower_urlmap" "test" {
-  id         = "___URLMap_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestURLMap"
+  app_domain = "acceptance_test"
   url_map_rule = [{
     pattern = "https://www.company.com/XML/stylesheets/*"
   }]

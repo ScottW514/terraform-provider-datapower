@@ -11,7 +11,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'WebAppFW_name'
+    test_value: '"ResTestWebAppFW"'
+    test_expect_ds: '"AccTest_WebAppFW"'
+    example: 'WebAppFWName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -69,7 +71,8 @@ attributes:
     type: String
     reference_to: AppSecurityPolicy
     required: true
-    test_value: '"TestAccAppSecurityPolicy"'
+    test_value: '"AccTest_AppSecurityPolicy"'
+    test_bed_value: 'datapower_appsecuritypolicy.acc_test.id'
     description: 'Security Policy'
     cli_alias: security-policy
   - name: XMLManager

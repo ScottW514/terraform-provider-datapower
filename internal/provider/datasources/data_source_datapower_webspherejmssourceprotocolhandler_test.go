@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourceWebSphereJMSSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.WebSphereJMSSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_webspherejmssourceprotocolhandler.test", "result.0.id", "WebSphereJMSSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_webspherejmssourceprotocolhandler.test", "result.0.id", "AccTest_WebSphereJMSSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_webspherejmssourceprotocolhandler.test", "result.0.strict_message_order", "false"),
 					resource.TestCheckResourceAttr("data.datapower_webspherejmssourceprotocolhandler.test", "result.0.async_message_processing", "false"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

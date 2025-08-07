@@ -34,10 +34,10 @@ import (
 )
 
 type AccessControlList struct {
-	Id                 types.String      `tfsdk:"id"`
-	AppDomain          types.String      `tfsdk:"app_domain"`
-	AccessControlEntry types.List        `tfsdk:"access_control_entry"`
-	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
+	Id                 types.String                `tfsdk:"id"`
+	AppDomain          types.String                `tfsdk:"app_domain"`
+	AccessControlEntry types.List                  `tfsdk:"access_control_entry"`
+	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AccessControlListObjectType = map[string]attr.Type{

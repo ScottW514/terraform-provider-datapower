@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAPIPlan(t *testing.T) {
 			{
 				Config: testconfig.APIPlanTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apiplan.test", "result.0.id", "APIPlan_name"),
+					resource.TestCheckResourceAttr("data.datapower_apiplan.test", "result.0.id", "AccTest_APIPlan"),
 					resource.TestCheckResourceAttr("data.datapower_apiplan.test", "result.0.product_version", "1.0.0"),
 					resource.TestCheckResourceAttr("data.datapower_apiplan.test", "result.0.use_rate_limit_group", "false"),
 					resource.TestCheckResourceAttr("data.datapower_apiplan.test", "result.0.use_limit_definitions", "false"),
@@ -50,5 +49,4 @@ func TestAccDataSourceAPIPlan(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

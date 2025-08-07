@@ -34,21 +34,21 @@ import (
 )
 
 type ParseSettings struct {
-	Id                 types.String      `tfsdk:"id"`
-	AppDomain          types.String      `tfsdk:"app_domain"`
-	UserSummary        types.String      `tfsdk:"user_summary"`
-	DocumentType       types.String      `tfsdk:"document_type"`
-	DocumentSize       types.Int64       `tfsdk:"document_size"`
-	NestingDepth       types.Int64       `tfsdk:"nesting_depth"`
-	Width              types.Int64       `tfsdk:"width"`
-	NameLength         types.Int64       `tfsdk:"name_length"`
-	ValueLength        types.Int64       `tfsdk:"value_length"`
-	UniquePrefixes     types.Int64       `tfsdk:"unique_prefixes"`
-	UniqueNamespaces   types.Int64       `tfsdk:"unique_namespaces"`
-	UniqueNames        types.Int64       `tfsdk:"unique_names"`
-	NumberLength       types.Int64       `tfsdk:"number_length"`
-	StrictUtf8Encoding types.Bool        `tfsdk:"strict_utf8_encoding"`
-	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
+	Id                 types.String                `tfsdk:"id"`
+	AppDomain          types.String                `tfsdk:"app_domain"`
+	UserSummary        types.String                `tfsdk:"user_summary"`
+	DocumentType       types.String                `tfsdk:"document_type"`
+	DocumentSize       types.Int64                 `tfsdk:"document_size"`
+	NestingDepth       types.Int64                 `tfsdk:"nesting_depth"`
+	Width              types.Int64                 `tfsdk:"width"`
+	NameLength         types.Int64                 `tfsdk:"name_length"`
+	ValueLength        types.Int64                 `tfsdk:"value_length"`
+	UniquePrefixes     types.Int64                 `tfsdk:"unique_prefixes"`
+	UniqueNamespaces   types.Int64                 `tfsdk:"unique_namespaces"`
+	UniqueNames        types.Int64                 `tfsdk:"unique_names"`
+	NumberLength       types.Int64                 `tfsdk:"number_length"`
+	StrictUtf8Encoding types.Bool                  `tfsdk:"strict_utf8_encoding"`
+	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ParseSettingsObjectType = map[string]attr.Type{

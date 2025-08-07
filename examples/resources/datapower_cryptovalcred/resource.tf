@@ -1,5 +1,5 @@
 
 resource "datapower_cryptovalcred" "test" {
-  id         = "CryptoValCred_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestCryptoValCred"
+  app_domain = "acceptance_test"
 }

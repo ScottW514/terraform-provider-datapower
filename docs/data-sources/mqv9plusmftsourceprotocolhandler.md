@@ -14,8 +14,7 @@ IBM MQ v9+ MFT handler
 
 ```terraform
 data "datapower_mqv9plusmftsourceprotocolhandler" "test" {
-  depends_on = [datapower_mqv9plusmftsourceprotocolhandler.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

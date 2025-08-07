@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourcePolicyAttachments(t *testing.T) {
 			{
 				Config: testconfig.PolicyAttachmentsTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_policyattachments.test", "result.0.id", "PolicyAttachments_name"),
+					resource.TestCheckResourceAttr("data.datapower_policyattachments.test", "result.0.id", "AccTest_PolicyAttachments"),
 					resource.TestCheckResourceAttr("data.datapower_policyattachments.test", "result.0.enforcement_mode", "enforce"),
 					resource.TestCheckResourceAttr("data.datapower_policyattachments.test", "result.0.policy_references", "false"),
 					resource.TestCheckResourceAttr("data.datapower_policyattachments.test", "result.0.sla_enforcement_mode", "allow-if-no-sla"),
@@ -49,5 +48,4 @@ func TestAccDataSourcePolicyAttachments(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

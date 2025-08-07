@@ -1,7 +1,7 @@
 
 resource "datapower_webspherejmssourceprotocolhandler" "test" {
-  id         = "WebSphereJMSSourceProtocolHandler_name"
-  app_domain = "acc_test_domain"
-  server     = "TestAccWebSphereJMSServer"
+  id         = "ResTestWebSphereJMSSourceProtocolHandler"
+  app_domain = "acceptance_test"
+  server     = "AccTest_WebSphereJMSServer"
   get_queue  = "getqueue"
 }

@@ -16,8 +16,8 @@ Gateway-peering group
 
 ```terraform
 resource "datapower_gatewaypeeringgroup" "test" {
-  id         = "GatewayPeeringGroup_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestGatewayPeeringGroup"
+  app_domain = "acceptance_test"
   mode       = "peer"
   enable_ssl = true
 }

@@ -33,11 +33,11 @@ import (
 )
 
 type GWSRemoteDebug struct {
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	LocalPort         types.Int64       `tfsdk:"local_port"`
-	LocalAddress      types.String      `tfsdk:"local_address"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	LocalPort         types.Int64                 `tfsdk:"local_port"`
+	LocalAddress      types.String                `tfsdk:"local_address"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var GWSRemoteDebugObjectType = map[string]attr.Type{

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceNameValueProfile(t *testing.T) {
 			{
 				Config: testconfig.NameValueProfileTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_namevalueprofile.test", "result.0.id", "NameValueProfile_name"),
+					resource.TestCheckResourceAttr("data.datapower_namevalueprofile.test", "result.0.id", "AccTest_NameValueProfile"),
 					resource.TestCheckResourceAttr("data.datapower_namevalueprofile.test", "result.0.max_attributes", "256"),
 					resource.TestCheckResourceAttr("data.datapower_namevalueprofile.test", "result.0.max_aggregate_size", "128000"),
 					resource.TestCheckResourceAttr("data.datapower_namevalueprofile.test", "result.0.max_name_size", "512"),
@@ -53,5 +52,4 @@ func TestAccDataSourceNameValueProfile(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

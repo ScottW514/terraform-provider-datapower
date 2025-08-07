@@ -1,7 +1,7 @@
 
 resource "datapower_tcpproxyservice" "test" {
-  id             = "TCPProxyService_name"
-  app_domain     = "acc_test_domain"
+  id             = "ResTestTCPProxyService"
+  app_domain     = "acceptance_test"
   local_port     = 8888
   remote_address = "10.10.10.10"
   remote_port    = 9999

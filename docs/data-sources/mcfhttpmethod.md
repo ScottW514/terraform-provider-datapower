@@ -14,8 +14,7 @@ HTTP Method Message Content Filter
 
 ```terraform
 data "datapower_mcfhttpmethod" "test" {
-  depends_on = [datapower_mcfhttpmethod.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

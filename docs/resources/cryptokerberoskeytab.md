@@ -16,8 +16,8 @@ Kerberos Keytab
 
 ```terraform
 resource "datapower_cryptokerberoskeytab" "test" {
-  id         = "CryptoKerberosKeytab_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestCryptoKerberosKeytab"
+  app_domain = "acceptance_test"
   filename   = "cert:///kerberos-keytab"
 }
 ```

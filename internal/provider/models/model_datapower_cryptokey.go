@@ -34,11 +34,11 @@ import (
 )
 
 type CryptoKey struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Filename          types.String      `tfsdk:"filename"`
-	Alias             types.String      `tfsdk:"alias"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Filename          types.String                `tfsdk:"filename"`
+	Alias             types.String                `tfsdk:"alias"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CryptoKeyObjectType = map[string]attr.Type{

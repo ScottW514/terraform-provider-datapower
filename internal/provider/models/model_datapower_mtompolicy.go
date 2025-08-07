@@ -34,13 +34,13 @@ import (
 )
 
 type MTOMPolicy struct {
-	Id                 types.String      `tfsdk:"id"`
-	AppDomain          types.String      `tfsdk:"app_domain"`
-	UserSummary        types.String      `tfsdk:"user_summary"`
-	Mode               types.String      `tfsdk:"mode"`
-	IncludeContentType types.Bool        `tfsdk:"include_content_type"`
-	Rule               types.List        `tfsdk:"rule"`
-	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
+	Id                 types.String                `tfsdk:"id"`
+	AppDomain          types.String                `tfsdk:"app_domain"`
+	UserSummary        types.String                `tfsdk:"user_summary"`
+	Mode               types.String                `tfsdk:"mode"`
+	IncludeContentType types.Bool                  `tfsdk:"include_content_type"`
+	Rule               types.List                  `tfsdk:"rule"`
+	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MTOMPolicyObjectType = map[string]attr.Type{

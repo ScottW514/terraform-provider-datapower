@@ -14,8 +14,7 @@ Multi-Protocol Gateway
 
 ```terraform
 data "datapower_multiprotocolgateway" "test" {
-  depends_on = [datapower_multiprotocolgateway.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

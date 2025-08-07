@@ -17,8 +17,8 @@ API collection
 
 ```terraform
 resource "datapower_apicollection" "test" {
-  id         = "APICollection_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAPICollection"
+  app_domain = "acceptance_test"
   org_id     = "orgid"
   org_name   = "orgname"
   routing_prefix = [{
@@ -26,7 +26,7 @@ resource "datapower_apicollection" "test" {
   }]
   api_processing_rule = "default-api-rule"
   api_error_rule      = "default-api-error-rule"
-  plan                = ["TestAccAPIPlan"]
+  plan                = ["AccTest_APIPlan"]
 }
 ```
 

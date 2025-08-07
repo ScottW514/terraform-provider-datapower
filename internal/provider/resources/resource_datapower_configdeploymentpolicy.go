@@ -120,13 +120,17 @@ func (r *ConfigDeploymentPolicyResource) Create(ctx context.Context, req resourc
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
 
 	body := data.ToBody(ctx, `ConfigDeploymentPolicy`)
 	_, err := r.client.Post(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "POST", err))
+		return
+	}
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
 		return
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -167,13 +171,17 @@ func (r *ConfigDeploymentPolicyResource) Update(ctx context.Context, req resourc
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
 	_, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `ConfigDeploymentPolicy`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
 
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -185,12 +193,27 @@ func (r *ConfigDeploymentPolicyResource) Delete(ctx context.Context, req resourc
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
 	_, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
 		return
 	}
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *ConfigDeploymentPolicyResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var data models.ConfigDeploymentPolicy
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }

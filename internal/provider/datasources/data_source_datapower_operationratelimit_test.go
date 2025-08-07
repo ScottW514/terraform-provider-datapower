@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceOperationRateLimit(t *testing.T) {
 			{
 				Config: testconfig.OperationRateLimitTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_operationratelimit.test", "result.0.id", "OperationRateLimit_name"),
+					resource.TestCheckResourceAttr("data.datapower_operationratelimit.test", "result.0.id", "AccTest_OperationRateLimit"),
 					resource.TestCheckResourceAttr("data.datapower_operationratelimit.test", "result.0.use_rate_limit_group", "false"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

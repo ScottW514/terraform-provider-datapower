@@ -34,13 +34,13 @@ import (
 )
 
 type APISecurityAPIKey struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Where             types.String      `tfsdk:"where"`
-	Type              types.String      `tfsdk:"type"`
-	KeyName           types.String      `tfsdk:"key_name"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Where             types.String                `tfsdk:"where"`
+	Type              types.String                `tfsdk:"type"`
+	KeyName           types.String                `tfsdk:"key_name"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APISecurityAPIKeyObjectType = map[string]attr.Type{

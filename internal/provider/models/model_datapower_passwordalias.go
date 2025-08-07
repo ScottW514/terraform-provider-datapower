@@ -34,18 +34,18 @@ import (
 )
 
 type PasswordAlias struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Password          types.String      `tfsdk:"password"`
-	PasswordUpdate    types.Bool        `tfsdk:"password_update"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Password          types.String                `tfsdk:"password"`
+	PasswordUpdate    types.Bool                  `tfsdk:"password_update"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 type PasswordAliasWO struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var PasswordAliasObjectType = map[string]attr.Type{

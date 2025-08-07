@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceMPGWErrorAction(t *testing.T) {
 			{
 				Config: testconfig.MPGWErrorActionTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_mpgwerroraction.test", "result.0.id", "MPGWErrorAction_name"),
+					resource.TestCheckResourceAttr("data.datapower_mpgwerroraction.test", "result.0.id", "AccTest_MPGWErrorAction"),
 					resource.TestCheckResourceAttr("data.datapower_mpgwerroraction.test", "result.0.type", "static"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

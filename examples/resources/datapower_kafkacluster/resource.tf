@@ -1,7 +1,7 @@
 
 resource "datapower_kafkacluster" "test" {
-  id         = "KafkaCluster_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestKafkaCluster"
+  app_domain = "acceptance_test"
   protocol   = "plaintext"
   endpoint = [{
     host = "localhost"

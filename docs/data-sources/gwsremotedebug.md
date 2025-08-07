@@ -14,7 +14,6 @@ GatewayScript Remote Debugger (`default` domain only)
 
 ```terraform
 data "datapower_gwsremotedebug" "test" {
-  depends_on = [datapower_gwsremotedebug.test]
 }
 ```
 

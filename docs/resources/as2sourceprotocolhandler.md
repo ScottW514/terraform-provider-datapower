@@ -17,8 +17,8 @@ AS2 handler
 
 ```terraform
 resource "datapower_as2sourceprotocolhandler" "test" {
-  id            = "AS2SourceProtocolHandler_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestAS2SourceProtocolHandler"
+  app_domain    = "acceptance_test"
   local_address = "0.0.0.0"
   local_port    = 80
 }

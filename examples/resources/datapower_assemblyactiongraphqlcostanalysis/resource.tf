@@ -1,6 +1,6 @@
 
 resource "datapower_assemblyactiongraphqlcostanalysis" "test" {
-  id         = "AssemblyActionGraphQLCostAnalysis_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyActionGraphQLCostAnalysis"
+  app_domain = "acceptance_test"
   target     = "targetquery"
 }

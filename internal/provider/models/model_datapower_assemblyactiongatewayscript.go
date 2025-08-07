@@ -34,14 +34,14 @@ import (
 )
 
 type AssemblyActionGatewayScript struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Source            types.String      `tfsdk:"source"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Title             types.String      `tfsdk:"title"`
-	CorrelationPath   types.String      `tfsdk:"correlation_path"`
-	ActionDebug       types.Bool        `tfsdk:"action_debug"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Source            types.String                `tfsdk:"source"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Title             types.String                `tfsdk:"title"`
+	CorrelationPath   types.String                `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionGatewayScriptObjectType = map[string]attr.Type{

@@ -16,8 +16,8 @@ Deployment Policy Variables
 
 ```terraform
 resource "datapower_deploymentpolicyparametersbinding" "test" {
-  id         = "DeploymentPolicyParametersBinding_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestDeploymentPolicyParametersBinding"
+  app_domain = "acceptance_test"
 }
 ```
 

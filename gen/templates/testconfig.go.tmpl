@@ -26,8 +26,9 @@ type ModelTestConfig struct {
 	Model        string
 	Resource     string
 	Data         string
+    TestBed      string
+    ModelTestBed string
 	ModelOnly    bool
-	Dependencies map[string]*ModelTestConfig
 	TestPre      string
 }
 
@@ -47,8 +48,24 @@ func (c ModelTestConfig) GetModelConfig() string {
 	}
 }
 
+func (c ModelTestConfig) GetModelTestBedListConfig() string {
+	if c.Model == "\n" {
+		return "null"
+	} else {
+		return "[" + c.ModelTestBed + "]"
+	}
+}
+
+func (c ModelTestConfig) GetModelTestBedConfig() string {
+	if c.Model == "{}" {
+		return "null"
+	} else {
+		return c.ModelTestBed
+	}
+}
+
 func (c ModelTestConfig) GetDataConfig() string {
-	return c.GetResourceConfig() + c.Data
+	return c.Data
 }
 
 func (c ModelTestConfig) GetResourceConfig() string {
@@ -56,46 +73,29 @@ func (c ModelTestConfig) GetResourceConfig() string {
 }
 
 func (c *ModelTestConfig) getPrequisites() string {
-	referencesTo := make(map[string]*ModelTestConfig)
-	preReqs := c.TestPre
-	for _, v := range referencesTo {
-		if !v.ModelOnly {
-			preReqs = preReqs + v.Resource
-		}
-	}
-	return preReqs
+	return c.TestPre
 }
 
 var FileTestConfig = ModelTestConfig{
 	Name: "File",
 	Resource: `
-resource "datapower_file" "test" {
-  app_domain = "acc_test_domain"
+resource "datapower_file" "acc_test" {
+  app_domain = "acceptance_test"
   remote_path = "cert:///test_file.txt"
   local_path = "/workspaces/terraform-provider-datapower/testutils/test_file.txt"
-  dependency_actions = [
-    {
-      target_type = "resource_datapower_domain",
-      target_domain = "acc_test_domain",
-      target_id = "ignored",
-      action = "quiesce"
-      on_create = true
-    }
-  ]
 }
 `,
 	ModelOnly:    false,
-	Dependencies: map[string]*ModelTestConfig{},
 }
 
 {{- range .}}
 var {{.Name}}TestConfig = ModelTestConfig{
     Name:         "{{.Name}}",
     {{- if not .ModelOnly}}
-    Resource:    `
+    Resource: `
 resource "datapower_{{snakeCase .Name}}" "test" {
     {{- else}}
-    Model:    `{
+    Model: `{
     {{- end}}
     {{- $root := .}}
     {{- range  .Attributes}}
@@ -104,7 +104,7 @@ resource "datapower_{{snakeCase .Name}}" "test" {
                 {{- if eq $root.Name "Domain"}}
   app_domain = "domain_resource_test"
 	             {{- else}}
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
                 {{- end}}
             {{- end}}
     	{{- else if or .Required .TestValue}}
@@ -125,28 +125,61 @@ resource "datapower_{{snakeCase .Name}}" "test" {
     {{- end}}
 }`,
     {{- if not .ModelOnly}}
-    Data:   `
+    Data: `
 data "datapower_{{snakeCase .Name}}" "test" {
-  depends_on = [ datapower_{{snakeCase .Name}}.test ]
         {{- if not .DefaultDomainOnly}}
             {{- $modelName := .Name}}
             {{- range  .Attributes}}
                 {{- if and (eq .Name "AppDomain") (ne $modelName "Domain")}}
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
                 {{- end}}
             {{- end}}
         {{- end}}
 }`,
     {{- end}}
-    ModelOnly:    {{if .ModelOnly}}true{{else}}false{{end}},
-    Dependencies: map[string]*ModelTestConfig{
-    {{- range (getTestDependencies .)}}
-        "{{.}}": &{{.}}TestConfig,
+    {{- if not .UpdateOnly}}
+        {{- if not .ModelOnly}}
+    TestBed: `
+resource "datapower_{{snakeCase .Name}}" "acc_test" {
+        {{- else}}
+    ModelTestBed: `{
     {{- end}}
-    },
-    TestPre:  `
+        {{- $root := .}}
+        {{- range  .Attributes}}
+    	    {{- if eq .Name "AppDomain"}}
+                {{- if eq $root.Name "Domain"}}
+  app_domain = "acceptance_test"
+                {{- else}}
+  app_domain = datapower_domain.acc_test.app_domain
+                {{- end}}
+            {{- else if eq .Name "Id"}}
+  id = "AccTest_{{$root.Name}}"
+    	    {{- else if or .Required .TestValue}}
+                {{- if .TestBedValue}}
+  {{.TfName}} = {{.TestBedValue}}
+                {{- else if .TestValue}}
+  {{.TfName}} = {{.TestValue}}
+		        {{- else if or (isObject .) (isObjectList .)}}
+  {{.TfName}} = ` + {{if isObjectList .}}{{.ElementType}}{{else}}{{.DmType}}{{end}}TestConfig.GetModelTestBed{{if isObjectList .}}List{{end}}Config() + `
+                {{- else if and (len .ListDefault) (eq .Type "List")}}
+  {{.TfName}} = [{{- range .ListDefault}}{{quote .}},{{- end}}]
+                {{- else if and (len .ListExample) (eq .Type "List")}}
+  {{.TfName}} = [{{- range .ListExample}}{{quote .}},{{- end}}]
+                {{- else if len .Example}}
+  {{.TfName}} = {{if eq .Type "String"}}{{quote .Example}}{{else}}{{.Example}}{{end}}
+                {{- else if len .Default}}
+  {{.TfName}} = {{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}}
+		        {{- end}}
+	        {{- end}}
+        {{- end}}
+}`,
+    {{- end}}
+    ModelOnly:    {{if .ModelOnly}}true{{else}}false{{end}},
+    {{- if len .TestPrerequisites}}
+    TestPre: `
     {{- .TestPrerequisites}}
 `,
+    {{- end}}
 }
 
 {{- end}}

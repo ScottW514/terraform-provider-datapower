@@ -14,7 +14,6 @@ SNMP Settings (`default` domain only)
 
 ```terraform
 data "datapower_snmpsettings" "test" {
-  depends_on = [datapower_snmpsettings.test]
 }
 ```
 

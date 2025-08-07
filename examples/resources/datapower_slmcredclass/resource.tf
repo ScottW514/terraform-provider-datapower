@@ -1,6 +1,6 @@
 
 resource "datapower_slmcredclass" "test" {
-  id         = "SLMCredClass_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestSLMCredClass"
+  app_domain = "acceptance_test"
   cred_type  = "aaa-mapped-credential"
 }

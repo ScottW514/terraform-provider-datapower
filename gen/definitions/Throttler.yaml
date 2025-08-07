@@ -22,6 +22,7 @@ attributes:
     maximum: 100
     required: true
     default: 20
+    test_expect_ds: '"0"'
     description: 'Memory throttle threshold'
     cli_alias: memory-throttle
   - name: TerminateAt
@@ -29,6 +30,7 @@ attributes:
     maximum: 100
     required: true
     default: 5
+    test_expect_ds: '"0"'
     description: 'Memory terminate threshold'
     cli_alias: memory-terminate
   - name: TempFSThrottleAt

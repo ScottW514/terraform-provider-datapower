@@ -14,8 +14,7 @@ Deployment Policy Variables
 
 ```terraform
 data "datapower_deploymentpolicyparametersbinding" "test" {
-  depends_on = [datapower_deploymentpolicyparametersbinding.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

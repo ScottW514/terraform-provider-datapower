@@ -9,8 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'StylePolicyRule_name'
-    test_value: '"___StylePolicyRule_name"'
+    test_value: '"ResTestStylePolicyRule"'
+    test_expect_ds: '"__default-accept-service-providers-request__"'
+    example: 'StylePolicyRuleName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -41,6 +42,7 @@ attributes:
       - 'error-rule'
     required: true
     default: 'rule'
+    test_expect_ds: '"request-rule"'
     description: 'Rule Direction'
     cli_alias: type
   - name: InputFormat

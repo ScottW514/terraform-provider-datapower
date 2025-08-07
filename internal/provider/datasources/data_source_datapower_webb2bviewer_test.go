@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -45,11 +44,10 @@ func TestAccDataSourceWebB2BViewer(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_webb2bviewer.test", "local_port", "9091"),
 					resource.TestCheckResourceAttr("data.datapower_webb2bviewer.test", "idle_timeout", "600"),
 					resource.TestCheckResourceAttr("data.datapower_webb2bviewer.test", "acl", "web-b2b-viewer"),
-					resource.TestCheckResourceAttr("data.datapower_webb2bviewer.test", "ssl_server_config_type", "server"),
+					resource.TestCheckResourceAttr("data.datapower_webb2bviewer.test", "ssl_server_config_type", "proxy"),
 					resource.TestCheckResourceAttr("data.datapower_webb2bviewer.test", "local_address", "0.0.0.0"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

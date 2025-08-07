@@ -16,8 +16,8 @@ Map assembly action
 
 ```terraform
 resource "datapower_assemblyactionmap" "test" {
-  id         = "AssemblyActionMap_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyActionMap"
+  app_domain = "acceptance_test"
   location   = "local:///file"
 }
 ```

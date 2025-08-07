@@ -34,27 +34,27 @@ import (
 )
 
 type AssemblyActionWebSocketUpgrade struct {
-	Id                            types.String      `tfsdk:"id"`
-	AppDomain                     types.String      `tfsdk:"app_domain"`
-	Url                           types.String      `tfsdk:"url"`
-	SslClient                     types.String      `tfsdk:"ssl_client"`
-	Timeout                       types.Int64       `tfsdk:"timeout"`
-	UserName                      types.String      `tfsdk:"user_name"`
-	Password                      types.String      `tfsdk:"password"`
-	FollowRedirects               types.Bool        `tfsdk:"follow_redirects"`
-	DecodeRequestParams           types.Bool        `tfsdk:"decode_request_params"`
-	EncodePlusChar                types.Bool        `tfsdk:"encode_plus_char"`
-	InjectUserAgentHeader         types.Bool        `tfsdk:"inject_user_agent_header"`
-	InjectProxyHeaders            types.Bool        `tfsdk:"inject_proxy_headers"`
-	HeaderControlList             types.String      `tfsdk:"header_control_list"`
-	ParameterControlList          types.String      `tfsdk:"parameter_control_list"`
-	ApiRequestProcessingAssembly  types.String      `tfsdk:"api_request_processing_assembly"`
-	ApiResponseProcessingAssembly types.String      `tfsdk:"api_response_processing_assembly"`
-	UserSummary                   types.String      `tfsdk:"user_summary"`
-	Title                         types.String      `tfsdk:"title"`
-	CorrelationPath               types.String      `tfsdk:"correlation_path"`
-	ActionDebug                   types.Bool        `tfsdk:"action_debug"`
-	DependencyActions             []*actions.Action `tfsdk:"dependency_actions"`
+	Id                            types.String                `tfsdk:"id"`
+	AppDomain                     types.String                `tfsdk:"app_domain"`
+	Url                           types.String                `tfsdk:"url"`
+	SslClient                     types.String                `tfsdk:"ssl_client"`
+	Timeout                       types.Int64                 `tfsdk:"timeout"`
+	UserName                      types.String                `tfsdk:"user_name"`
+	Password                      types.String                `tfsdk:"password"`
+	FollowRedirects               types.Bool                  `tfsdk:"follow_redirects"`
+	DecodeRequestParams           types.Bool                  `tfsdk:"decode_request_params"`
+	EncodePlusChar                types.Bool                  `tfsdk:"encode_plus_char"`
+	InjectUserAgentHeader         types.Bool                  `tfsdk:"inject_user_agent_header"`
+	InjectProxyHeaders            types.Bool                  `tfsdk:"inject_proxy_headers"`
+	HeaderControlList             types.String                `tfsdk:"header_control_list"`
+	ParameterControlList          types.String                `tfsdk:"parameter_control_list"`
+	ApiRequestProcessingAssembly  types.String                `tfsdk:"api_request_processing_assembly"`
+	ApiResponseProcessingAssembly types.String                `tfsdk:"api_response_processing_assembly"`
+	UserSummary                   types.String                `tfsdk:"user_summary"`
+	Title                         types.String                `tfsdk:"title"`
+	CorrelationPath               types.String                `tfsdk:"correlation_path"`
+	ActionDebug                   types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions             []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionWebSocketUpgradeObjectType = map[string]attr.Type{

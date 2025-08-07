@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAnalyticsEndpoint(t *testing.T) {
 			{
 				Config: testconfig.AnalyticsEndpointTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.id", "AnalyticsEndpoint_name"),
+					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.id", "AccTest_AnalyticsEndpoint"),
 					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.max_records", "1024"),
 					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.max_records_memory_kb", "512"),
 					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.max_delivery_memory_mb", "512"),
@@ -55,5 +54,4 @@ func TestAccDataSourceAnalyticsEndpoint(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

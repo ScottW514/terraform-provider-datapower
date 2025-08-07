@@ -11,5 +11,6 @@ attributes:
     type: String
     reference_to: SSLServerProfile
     required: true
-    test_value: '"TestAccSSLServerProfile"'
+    test_value: '"AccTest_SSLServerProfile"'
+    test_bed_value: 'datapower_sslserverprofile.acc_test.id'
     description: 'Server profile'

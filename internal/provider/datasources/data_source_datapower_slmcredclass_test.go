@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceSLMCredClass(t *testing.T) {
 			{
 				Config: testconfig.SLMCredClassTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_slmcredclass.test", "result.0.id", "SLMCredClass_name"),
+					resource.TestCheckResourceAttr("data.datapower_slmcredclass.test", "result.0.id", "AccTest_SLMCredClass"),
 					resource.TestCheckResourceAttr("data.datapower_slmcredclass.test", "result.0.cred_type", "aaa-mapped-credential"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

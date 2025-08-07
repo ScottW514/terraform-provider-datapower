@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceSQLDataSource(t *testing.T) {
 			{
 				Config: testconfig.SQLDataSourceTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_sqldatasource.test", "result.0.id", "SQLDataSource_name"),
+					resource.TestCheckResourceAttr("data.datapower_sqldatasource.test", "result.0.id", "AccTest_SQLDataSource"),
 					resource.TestCheckResourceAttr("data.datapower_sqldatasource.test", "result.0.limit_returned_data", "false"),
 					resource.TestCheckResourceAttr("data.datapower_sqldatasource.test", "result.0.limit_returned_data_size", "128"),
 					resource.TestCheckResourceAttr("data.datapower_sqldatasource.test", "result.0.max_connection", "10"),
@@ -58,5 +57,4 @@ func TestAccDataSourceSQLDataSource(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -34,14 +34,14 @@ import (
 )
 
 type StylePolicy struct {
-	Id                   types.String      `tfsdk:"id"`
-	AppDomain            types.String      `tfsdk:"app_domain"`
-	UserSummary          types.String      `tfsdk:"user_summary"`
-	DefStylesheetForSoap types.String      `tfsdk:"def_stylesheet_for_soap"`
-	DefStylesheetForXsl  types.String      `tfsdk:"def_stylesheet_for_xsl"`
-	DefXQueryForJson     types.String      `tfsdk:"def_x_query_for_json"`
-	PolicyMaps           types.List        `tfsdk:"policy_maps"`
-	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
+	Id                   types.String                `tfsdk:"id"`
+	AppDomain            types.String                `tfsdk:"app_domain"`
+	UserSummary          types.String                `tfsdk:"user_summary"`
+	DefStylesheetForSoap types.String                `tfsdk:"def_stylesheet_for_soap"`
+	DefStylesheetForXsl  types.String                `tfsdk:"def_stylesheet_for_xsl"`
+	DefXQueryForJson     types.String                `tfsdk:"def_x_query_for_json"`
+	PolicyMaps           types.List                  `tfsdk:"policy_maps"`
+	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var StylePolicyObjectType = map[string]attr.Type{

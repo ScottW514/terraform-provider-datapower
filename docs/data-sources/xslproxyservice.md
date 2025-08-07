@@ -14,8 +14,7 @@ XSL Proxy
 
 ```terraform
 data "datapower_xslproxyservice" "test" {
-  depends_on = [datapower_xslproxyservice.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

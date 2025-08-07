@@ -16,8 +16,8 @@ B2B CPA
 
 ```terraform
 resource "datapower_b2bcpa" "test" {
-  id         = "B2BCPA_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestB2BCPA"
+  app_domain = "acceptance_test"
   cpa_id     = "cpaid"
 }
 ```

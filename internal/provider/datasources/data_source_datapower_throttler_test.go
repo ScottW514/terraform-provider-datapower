@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -42,8 +41,8 @@ func TestAccDataSourceThrottler(t *testing.T) {
 				Config: testconfig.ThrottlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_throttler.test", "enabled", "true"),
-					resource.TestCheckResourceAttr("data.datapower_throttler.test", "throttle_at", "20"),
-					resource.TestCheckResourceAttr("data.datapower_throttler.test", "terminate_at", "5"),
+					resource.TestCheckResourceAttr("data.datapower_throttler.test", "throttle_at", "0"),
+					resource.TestCheckResourceAttr("data.datapower_throttler.test", "terminate_at", "0"),
 					resource.TestCheckResourceAttr("data.datapower_throttler.test", "temp_fs_throttle_at", "0"),
 					resource.TestCheckResourceAttr("data.datapower_throttler.test", "temp_fs_terminate_at", "0"),
 					resource.TestCheckResourceAttr("data.datapower_throttler.test", "qname_warn_at", "10"),
@@ -57,5 +56,4 @@ func TestAccDataSourceThrottler(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

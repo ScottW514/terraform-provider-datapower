@@ -34,15 +34,15 @@ import (
 )
 
 type AssemblyActionRateLimitInfo struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Input             types.String      `tfsdk:"input"`
-	Output            types.String      `tfsdk:"output"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Title             types.String      `tfsdk:"title"`
-	CorrelationPath   types.String      `tfsdk:"correlation_path"`
-	ActionDebug       types.Bool        `tfsdk:"action_debug"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Input             types.String                `tfsdk:"input"`
+	Output            types.String                `tfsdk:"output"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Title             types.String                `tfsdk:"title"`
+	CorrelationPath   types.String                `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionRateLimitInfoObjectType = map[string]attr.Type{

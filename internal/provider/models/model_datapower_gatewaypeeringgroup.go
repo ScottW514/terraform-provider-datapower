@@ -34,18 +34,18 @@ import (
 )
 
 type GatewayPeeringGroup struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	Mode                types.String      `tfsdk:"mode"`
-	PeerNodes           types.List        `tfsdk:"peer_nodes"`
-	ClusterPrimaryCount types.String      `tfsdk:"cluster_primary_count"`
-	ClusterNodes        types.List        `tfsdk:"cluster_nodes"`
-	ClusterAutoConfig   types.Bool        `tfsdk:"cluster_auto_config"`
-	EnableSsl           types.Bool        `tfsdk:"enable_ssl"`
-	Idcred              types.String      `tfsdk:"idcred"`
-	Valcred             types.String      `tfsdk:"valcred"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	Mode                types.String                `tfsdk:"mode"`
+	PeerNodes           types.List                  `tfsdk:"peer_nodes"`
+	ClusterPrimaryCount types.String                `tfsdk:"cluster_primary_count"`
+	ClusterNodes        types.List                  `tfsdk:"cluster_nodes"`
+	ClusterAutoConfig   types.Bool                  `tfsdk:"cluster_auto_config"`
+	EnableSsl           types.Bool                  `tfsdk:"enable_ssl"`
+	Idcred              types.String                `tfsdk:"idcred"`
+	Valcred             types.String                `tfsdk:"valcred"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var GatewayPeeringGroupObjectType = map[string]attr.Type{

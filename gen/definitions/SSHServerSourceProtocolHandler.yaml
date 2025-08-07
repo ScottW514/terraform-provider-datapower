@@ -11,7 +11,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'SSHServerSourceProtocolHandler_name'
+    test_value: '"ResTestSSHServerSourceProtocolHandler"'
+    test_expect_ds: '"AccTest_SSHServerSourceProtocolHandler"'
+    example: 'SSHServerSourceProtocolHandlerName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

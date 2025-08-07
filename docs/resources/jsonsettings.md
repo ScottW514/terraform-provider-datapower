@@ -16,8 +16,8 @@ JSON settings
 
 ```terraform
 resource "datapower_jsonsettings" "test" {
-  id         = "JSONSettings_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestJSONSettings"
+  app_domain = "acceptance_test"
 }
 ```
 

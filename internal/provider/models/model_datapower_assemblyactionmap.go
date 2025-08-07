@@ -42,7 +42,7 @@ type AssemblyActionMap struct {
 	Title                  types.String                     `tfsdk:"title"`
 	CorrelationPath        types.String                     `tfsdk:"correlation_path"`
 	ActionDebug            types.Bool                       `tfsdk:"action_debug"`
-	DependencyActions      []*actions.Action                `tfsdk:"dependency_actions"`
+	DependencyActions      []*actions.DependencyAction      `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionMapObjectType = map[string]attr.Type{

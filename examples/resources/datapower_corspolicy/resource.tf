@@ -1,6 +1,6 @@
 
 resource "datapower_corspolicy" "test" {
-  id         = "CORSPolicy_name"
-  app_domain = "acc_test_domain"
-  rule       = ["TestAccCORSRule"]
+  id         = "ResTestCORSPolicy"
+  app_domain = "acceptance_test"
+  rule       = ["AccTest_CORSRule"]
 }

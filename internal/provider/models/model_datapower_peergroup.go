@@ -34,14 +34,14 @@ import (
 )
 
 type PeerGroup struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Type              types.String      `tfsdk:"type"`
-	Url               types.List        `tfsdk:"url"`
-	IpMulticast       types.String      `tfsdk:"ip_multicast"`
-	UpdateInterval    types.Int64       `tfsdk:"update_interval"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Type              types.String                `tfsdk:"type"`
+	Url               types.List                  `tfsdk:"url"`
+	IpMulticast       types.String                `tfsdk:"ip_multicast"`
+	UpdateInterval    types.Int64                 `tfsdk:"update_interval"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var PeerGroupObjectType = map[string]attr.Type{

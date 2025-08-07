@@ -34,13 +34,13 @@ import (
 )
 
 type Matching struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	MatchRules        types.List        `tfsdk:"match_rules"`
-	MatchWithPcre     types.Bool        `tfsdk:"match_with_pcre"`
-	CombineWithOr     types.Bool        `tfsdk:"combine_with_or"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	MatchRules        types.List                  `tfsdk:"match_rules"`
+	MatchWithPcre     types.Bool                  `tfsdk:"match_with_pcre"`
+	CombineWithOr     types.Bool                  `tfsdk:"combine_with_or"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MatchingObjectType = map[string]attr.Type{

@@ -16,9 +16,10 @@ JWE Recipient
 
 ```terraform
 resource "datapower_jwerecipient" "test" {
-  id         = "JWERecipient_name"
-  app_domain = "acc_test_domain"
-  algorithm  = "RSA1_5"
+  id          = "ResTestJWERecipient"
+  app_domain  = "acceptance_test"
+  algorithm   = "RSA1_5"
+  certificate = "TestAcc_CryptoCertificate"
 }
 ```
 

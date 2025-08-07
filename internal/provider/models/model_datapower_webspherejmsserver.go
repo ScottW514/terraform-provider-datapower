@@ -34,28 +34,28 @@ import (
 )
 
 type WebSphereJMSServer struct {
-	Id                    types.String      `tfsdk:"id"`
-	AppDomain             types.String      `tfsdk:"app_domain"`
-	Endpoint              types.List        `tfsdk:"endpoint"`
-	TargetTransportChain  types.String      `tfsdk:"target_transport_chain"`
-	MessagingBus          types.String      `tfsdk:"messaging_bus"`
-	SslCipher             types.String      `tfsdk:"ssl_cipher"`
-	Fips                  types.Bool        `tfsdk:"fips"`
-	UserSummary           types.String      `tfsdk:"user_summary"`
-	UserName              types.String      `tfsdk:"user_name"`
-	PasswordAlias         types.String      `tfsdk:"password_alias"`
-	Transactional         types.Bool        `tfsdk:"transactional"`
-	MemoryThreshold       types.Int64       `tfsdk:"memory_threshold"`
-	MaximumMessageSize    types.Int64       `tfsdk:"maximum_message_size"`
-	DefaultMessageType    types.String      `tfsdk:"default_message_type"`
-	TotalConnectionLimit  types.Int64       `tfsdk:"total_connection_limit"`
-	SessionsPerConnection types.Int64       `tfsdk:"sessions_per_connection"`
-	AutoRetry             types.Bool        `tfsdk:"auto_retry"`
-	RetryInterval         types.Int64       `tfsdk:"retry_interval"`
-	EnableLogging         types.Bool        `tfsdk:"enable_logging"`
-	SslClientConfigType   types.String      `tfsdk:"ssl_client_config_type"`
-	SslClient             types.String      `tfsdk:"ssl_client"`
-	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
+	Id                    types.String                `tfsdk:"id"`
+	AppDomain             types.String                `tfsdk:"app_domain"`
+	Endpoint              types.List                  `tfsdk:"endpoint"`
+	TargetTransportChain  types.String                `tfsdk:"target_transport_chain"`
+	MessagingBus          types.String                `tfsdk:"messaging_bus"`
+	SslCipher             types.String                `tfsdk:"ssl_cipher"`
+	Fips                  types.Bool                  `tfsdk:"fips"`
+	UserSummary           types.String                `tfsdk:"user_summary"`
+	UserName              types.String                `tfsdk:"user_name"`
+	PasswordAlias         types.String                `tfsdk:"password_alias"`
+	Transactional         types.Bool                  `tfsdk:"transactional"`
+	MemoryThreshold       types.Int64                 `tfsdk:"memory_threshold"`
+	MaximumMessageSize    types.Int64                 `tfsdk:"maximum_message_size"`
+	DefaultMessageType    types.String                `tfsdk:"default_message_type"`
+	TotalConnectionLimit  types.Int64                 `tfsdk:"total_connection_limit"`
+	SessionsPerConnection types.Int64                 `tfsdk:"sessions_per_connection"`
+	AutoRetry             types.Bool                  `tfsdk:"auto_retry"`
+	RetryInterval         types.Int64                 `tfsdk:"retry_interval"`
+	EnableLogging         types.Bool                  `tfsdk:"enable_logging"`
+	SslClientConfigType   types.String                `tfsdk:"ssl_client_config_type"`
+	SslClient             types.String                `tfsdk:"ssl_client"`
+	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WebSphereJMSServerObjectType = map[string]attr.Type{

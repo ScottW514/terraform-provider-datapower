@@ -34,18 +34,18 @@ import (
 )
 
 type MQv9PlusMFTSourceProtocolHandler struct {
-	Id                      types.String      `tfsdk:"id"`
-	AppDomain               types.String      `tfsdk:"app_domain"`
-	UserSummary             types.String      `tfsdk:"user_summary"`
-	QueueManager            types.String      `tfsdk:"queue_manager"`
-	GetQueue                types.String      `tfsdk:"get_queue"`
-	GetMessageOptions       types.Int64       `tfsdk:"get_message_options"`
-	ConcurrentConnections   types.Int64       `tfsdk:"concurrent_connections"`
-	PollingInterval         types.Int64       `tfsdk:"polling_interval"`
-	RetrieveBackoutSettings types.Bool        `tfsdk:"retrieve_backout_settings"`
-	IgnoreBackoutErrors     types.Bool        `tfsdk:"ignore_backout_errors"`
-	UseQmNameInUrl          types.Bool        `tfsdk:"use_qm_name_in_url"`
-	DependencyActions       []*actions.Action `tfsdk:"dependency_actions"`
+	Id                      types.String                `tfsdk:"id"`
+	AppDomain               types.String                `tfsdk:"app_domain"`
+	UserSummary             types.String                `tfsdk:"user_summary"`
+	QueueManager            types.String                `tfsdk:"queue_manager"`
+	GetQueue                types.String                `tfsdk:"get_queue"`
+	GetMessageOptions       types.Int64                 `tfsdk:"get_message_options"`
+	ConcurrentConnections   types.Int64                 `tfsdk:"concurrent_connections"`
+	PollingInterval         types.Int64                 `tfsdk:"polling_interval"`
+	RetrieveBackoutSettings types.Bool                  `tfsdk:"retrieve_backout_settings"`
+	IgnoreBackoutErrors     types.Bool                  `tfsdk:"ignore_backout_errors"`
+	UseQmNameInUrl          types.Bool                  `tfsdk:"use_qm_name_in_url"`
+	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MQv9PlusMFTSourceProtocolHandlerObjectType = map[string]attr.Type{

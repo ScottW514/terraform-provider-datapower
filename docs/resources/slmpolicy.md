@@ -16,8 +16,8 @@ SLM policy
 
 ```terraform
 resource "datapower_slmpolicy" "test" {
-  id         = "SLMPolicy_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestSLMPolicy"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -16,8 +16,8 @@ JWT generate assembly action
 
 ```terraform
 resource "datapower_assemblyactionjwtgenerate" "test" {
-  id              = "AssemblyActionJWTGenerate_name"
-  app_domain      = "acc_test_domain"
+  id              = "ResTestAssemblyActionJWTGenerate"
+  app_domain      = "acceptance_test"
   issuer_claim    = "iss.claim"
   validity_period = 3600
 }

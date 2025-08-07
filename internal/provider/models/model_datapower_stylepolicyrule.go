@@ -34,16 +34,16 @@ import (
 )
 
 type StylePolicyRule struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Actions           types.List        `tfsdk:"actions"`
-	Direction         types.String      `tfsdk:"direction"`
-	InputFormat       types.String      `tfsdk:"input_format"`
-	OutputFormat      types.String      `tfsdk:"output_format"`
-	NonXmlProcessing  types.Bool        `tfsdk:"non_xml_processing"`
-	Unprocessed       types.Bool        `tfsdk:"unprocessed"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Actions           types.List                  `tfsdk:"actions"`
+	Direction         types.String                `tfsdk:"direction"`
+	InputFormat       types.String                `tfsdk:"input_format"`
+	OutputFormat      types.String                `tfsdk:"output_format"`
+	NonXmlProcessing  types.Bool                  `tfsdk:"non_xml_processing"`
+	Unprocessed       types.Bool                  `tfsdk:"unprocessed"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var StylePolicyRuleObjectType = map[string]attr.Type{

@@ -14,7 +14,6 @@ Backup Mode (`default` domain only)
 
 ```terraform
 data "datapower_securebackupmode" "test" {
-  depends_on = [datapower_securebackupmode.test]
 }
 ```
 

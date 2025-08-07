@@ -16,8 +16,8 @@ OpenTelemetry sampler
 
 ```terraform
 resource "datapower_opentelemetrysampler" "test" {
-  id           = "OpenTelemetrySampler_name"
-  app_domain   = "acc_test_domain"
+  id           = "ResTestOpenTelemetrySampler"
+  app_domain   = "acceptance_test"
   parent_based = true
   type         = "always-on"
 }

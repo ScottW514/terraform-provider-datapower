@@ -12,7 +12,9 @@ attributes:
     tf_name: app_domain
     type: String
     required: true
-    example: 'Domain_name'
+    test_value: '"ResTestDomain"'
+    test_expect_ds: '"AccTest_Domain"'
+    example: 'DomainName'
     description: 'The name of the application domain the object belongs to'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceSFTPFilePollerSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.SFTPFilePollerSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_sftpfilepollersourceprotocolhandler.test", "result.0.id", "SFTPFilePollerSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_sftpfilepollersourceprotocolhandler.test", "result.0.id", "AccTest_SFTPFilePollerSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_sftpfilepollersourceprotocolhandler.test", "result.0.delay_between_polls", "60000"),
 					resource.TestCheckResourceAttr("data.datapower_sftpfilepollersourceprotocolhandler.test", "result.0.delete_on_success", "false"),
 					resource.TestCheckResourceAttr("data.datapower_sftpfilepollersourceprotocolhandler.test", "result.0.success_rename_pattern", "$1.processed.ok"),
@@ -55,5 +54,4 @@ func TestAccDataSourceSFTPFilePollerSourceProtocolHandler(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -34,11 +34,11 @@ import (
 )
 
 type ProcessingMetadata struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	MetaItem          types.List        `tfsdk:"meta_item"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	MetaItem          types.List                  `tfsdk:"meta_item"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ProcessingMetadataObjectType = map[string]attr.Type{

@@ -35,15 +35,15 @@ import (
 )
 
 type WebServicesAgent struct {
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	MaxRecords        types.Int64       `tfsdk:"max_records"`
-	MaxMemoryKb       types.Int64       `tfsdk:"max_memory_kb"`
-	CaptureMode       types.String      `tfsdk:"capture_mode"`
-	MediationMetrics  types.Bool        `tfsdk:"mediation_metrics"`
-	MaxPayloadSizeKb  types.Int64       `tfsdk:"max_payload_size_kb"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	MaxRecords        types.Int64                 `tfsdk:"max_records"`
+	MaxMemoryKb       types.Int64                 `tfsdk:"max_memory_kb"`
+	CaptureMode       types.String                `tfsdk:"capture_mode"`
+	MediationMetrics  types.Bool                  `tfsdk:"mediation_metrics"`
+	MaxPayloadSizeKb  types.Int64                 `tfsdk:"max_payload_size_kb"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WebServicesAgentObjectType = map[string]attr.Type{

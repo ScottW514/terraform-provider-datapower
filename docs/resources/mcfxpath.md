@@ -16,8 +16,8 @@ XPath Message Content Filter
 
 ```terraform
 resource "datapower_mcfxpath" "test" {
-  id                = "MCFXPath_name"
-  app_domain        = "acc_test_domain"
+  id                = "ResTestMCFXPath"
+  app_domain        = "acceptance_test"
   x_path_expression = "*"
   x_path_value      = "value"
 }

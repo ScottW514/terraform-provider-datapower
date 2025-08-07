@@ -11,7 +11,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'B2BGateway_name'
+    test_value: '"ResTestB2BGateway"'
+    test_expect_ds: '"AccTest_B2BGateway"'
+    example: 'B2BGatewayName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

@@ -35,12 +35,12 @@ import (
 )
 
 type DomainSettings struct {
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	PasswordTreatment types.String      `tfsdk:"password_treatment"`
-	Passphrase        types.String      `tfsdk:"passphrase"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	PasswordTreatment types.String                `tfsdk:"password_treatment"`
+	Passphrase        types.String                `tfsdk:"passphrase"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var DomainSettingsObjectType = map[string]attr.Type{

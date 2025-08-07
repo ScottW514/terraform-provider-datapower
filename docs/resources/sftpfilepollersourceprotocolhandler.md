@@ -17,9 +17,9 @@ SFTP poller handler
 
 ```terraform
 resource "datapower_sftpfilepollersourceprotocolhandler" "test" {
-  id                       = "SFTPFilePollerSourceProtocolHandler_name"
-  app_domain               = "acc_test_domain"
-  ssh_client_connection    = "TestAccSSHClientProfile"
+  id                       = "ResTestSFTPFilePollerSourceProtocolHandler"
+  app_domain               = "acceptance_test"
+  ssh_client_connection    = "AccTest_SSHClientProfile"
   target_directory         = "/"
   delay_between_polls      = 60000
   input_file_match_pattern = ".*"

@@ -16,8 +16,8 @@ API operation
 
 ```terraform
 resource "datapower_apioperation" "test" {
-  id         = "APIOperation_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAPIOperation"
+  app_domain = "acceptance_test"
   method     = "GET"
 }
 ```

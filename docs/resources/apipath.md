@@ -16,8 +16,8 @@ API path
 
 ```terraform
 resource "datapower_apipath" "test" {
-  id         = "APIPath_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAPIPath"
+  app_domain = "acceptance_test"
   path       = "/"
 }
 ```

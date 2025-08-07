@@ -14,8 +14,7 @@ Domain availability (updates restart domain)
 
 ```terraform
 data "datapower_domainavailability" "test" {
-  depends_on = [datapower_domainavailability.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

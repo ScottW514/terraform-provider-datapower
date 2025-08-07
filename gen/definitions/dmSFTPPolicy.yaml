@@ -11,7 +11,8 @@ attributes:
     type: String
     reference_to: SSHClientProfile
     required: true
-    test_value: '"TestAccSSHClientProfile"'
+    test_value: '"AccTest_SSHClientProfile"'
+    test_bed_value: 'datapower_sshclientprofile.acc_test.id'
     description: 'SSH client profile'
   - name: UseUniqueFilenames
     type: Bool

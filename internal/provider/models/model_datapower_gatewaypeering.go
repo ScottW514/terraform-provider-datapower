@@ -34,19 +34,19 @@ import (
 )
 
 type GatewayPeering struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	PasswordAlias       types.String      `tfsdk:"password_alias"`
-	LocalAddress        types.String      `tfsdk:"local_address"`
-	LocalPort           types.Int64       `tfsdk:"local_port"`
-	PeerGroup           types.String      `tfsdk:"peer_group"`
-	MonitorPort         types.Int64       `tfsdk:"monitor_port"`
-	EnablePeerGroup     types.Bool        `tfsdk:"enable_peer_group"`
-	PersistenceLocation types.String      `tfsdk:"persistence_location"`
-	LocalDirectory      types.String      `tfsdk:"local_directory"`
-	MaxMemory           types.Int64       `tfsdk:"max_memory"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	PasswordAlias       types.String                `tfsdk:"password_alias"`
+	LocalAddress        types.String                `tfsdk:"local_address"`
+	LocalPort           types.Int64                 `tfsdk:"local_port"`
+	PeerGroup           types.String                `tfsdk:"peer_group"`
+	MonitorPort         types.Int64                 `tfsdk:"monitor_port"`
+	EnablePeerGroup     types.Bool                  `tfsdk:"enable_peer_group"`
+	PersistenceLocation types.String                `tfsdk:"persistence_location"`
+	LocalDirectory      types.String                `tfsdk:"local_directory"`
+	MaxMemory           types.Int64                 `tfsdk:"max_memory"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var GatewayPeeringObjectType = map[string]attr.Type{

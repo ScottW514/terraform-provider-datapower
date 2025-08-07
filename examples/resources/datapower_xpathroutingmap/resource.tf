@@ -1,7 +1,7 @@
 
 resource "datapower_xpathroutingmap" "test" {
-  id         = "XPathRoutingMap_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestXPathRoutingMap"
+  app_domain = "acceptance_test"
   x_path_routing_rules = [{
     x_path = "*"
     host   = "localhost"

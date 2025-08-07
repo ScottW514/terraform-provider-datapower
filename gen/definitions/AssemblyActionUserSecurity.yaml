@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'AssemblyActionUserSecurity_name'
+    test_value: '"ResTestAssemblyActionUserSecurity"'
+    test_expect_ds: '"AccTest_AssemblyActionUserSecurity"'
+    example: 'AssemblyActionUserSecurityName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

@@ -1,7 +1,7 @@
 
 resource "datapower_mqv9plusmftsourceprotocolhandler" "test" {
-  id            = "MQv9PlusMFTSourceProtocolHandler_name"
-  app_domain    = "acc_test_domain"
-  queue_manager = datapower_mqmanager.test.id
+  id            = "ResTestMQv9PlusMFTSourceProtocolHandler"
+  app_domain    = "acceptance_test"
+  queue_manager = "AccTest_MQManager"
   get_queue     = "queue"
 }

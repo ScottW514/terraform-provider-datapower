@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceWebAppResponse(t *testing.T) {
 			{
 				Config: testconfig.WebAppResponseTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_webappresponse.test", "result.0.id", "_WebAppResponse_name"),
+					resource.TestCheckResourceAttr("data.datapower_webappresponse.test", "result.0.id", "AccTest_WebAppResponse"),
 					resource.TestCheckResourceAttr("data.datapower_webappresponse.test", "result.0.policy_type", "admission"),
 					resource.TestCheckResourceAttr("data.datapower_webappresponse.test", "result.0.max_body_size", "128000000"),
 					resource.TestCheckResourceAttr("data.datapower_webappresponse.test", "result.0.xml_policy", "nothing"),
@@ -50,5 +49,4 @@ func TestAccDataSourceWebAppResponse(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

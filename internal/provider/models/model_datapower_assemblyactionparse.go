@@ -45,7 +45,7 @@ type AssemblyActionParse struct {
 	Title                  types.String                     `tfsdk:"title"`
 	CorrelationPath        types.String                     `tfsdk:"correlation_path"`
 	ActionDebug            types.Bool                       `tfsdk:"action_debug"`
-	DependencyActions      []*actions.Action                `tfsdk:"dependency_actions"`
+	DependencyActions      []*actions.DependencyAction      `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionParseObjectType = map[string]attr.Type{

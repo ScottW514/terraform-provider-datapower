@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourceLDAPSearchParameters(t *testing.T) {
 			{
 				Config: testconfig.LDAPSearchParametersTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_ldapsearchparameters.test", "result.0.id", "LDAPSearchParameters_name"),
+					resource.TestCheckResourceAttr("data.datapower_ldapsearchparameters.test", "result.0.id", "AccTest_LDAPSearchParameters"),
 					resource.TestCheckResourceAttr("data.datapower_ldapsearchparameters.test", "result.0.ldap_returned_attribute", "dn"),
 					resource.TestCheckResourceAttr("data.datapower_ldapsearchparameters.test", "result.0.ldap_scope", "subtree"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

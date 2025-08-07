@@ -9,8 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'StylePolicy_name'
-    test_value: '"___StylePolicy_name"'
+    test_value: '"ResTestStylePolicy"'
+    test_expect_ds: '"AccTest_StylePolicy"'
+    example: 'StylePolicyName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

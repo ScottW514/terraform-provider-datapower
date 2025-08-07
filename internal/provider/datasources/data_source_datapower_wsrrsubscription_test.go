@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceWSRRSubscription(t *testing.T) {
 			{
 				Config: testconfig.WSRRSubscriptionTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.id", "WSRRSubscription_name"),
+					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.id", "AccTest_WSRRSubscription"),
 					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.method", "poll"),
 					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.refresh_interval", "86400"),
 					resource.TestCheckResourceAttr("data.datapower_wsrrsubscription.test", "result.0.use_version", "false"),
@@ -50,5 +49,4 @@ func TestAccDataSourceWSRRSubscription(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

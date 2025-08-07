@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'ZosNSSClient_name'
+    test_value: '"ResTestZosNSSClient"'
+    test_expect_ds: '"AccTest_ZosNSSClient"'
+    example: 'ZosNSSClientName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -52,7 +54,9 @@ attributes:
   - name: SystemName
     type: String
     required: true
-    example: 'system_name'
+    test_value: '"ResTestsystem"'
+    test_expect_ds: '"AccTest_system"'
+    example: 'systemName'
     description: 'System Name'
     cli_alias: system-name
   - name: UserName

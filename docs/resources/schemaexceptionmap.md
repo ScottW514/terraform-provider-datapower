@@ -16,8 +16,8 @@ Schema Exception Map
 
 ```terraform
 resource "datapower_schemaexceptionmap" "test" {
-  id                  = "SchemaExceptionMap_name"
-  app_domain          = "acc_test_domain"
+  id                  = "ResTestSchemaExceptionMap"
+  app_domain          = "acceptance_test"
   original_schema_url = "http://localhost"
   schema_exception_rules = [{
     x_path         = "*"

@@ -16,8 +16,8 @@ HTML forms login policy
 
 ```terraform
 resource "datapower_formsloginpolicy" "test" {
-  id                    = "FormsLoginPolicy_name"
-  app_domain            = "acc_test_domain"
+  id                    = "ResTestFormsLoginPolicy"
+  app_domain            = "acceptance_test"
   login_form            = "/LoginPage.htm"
   use_cookie_attributes = false
   enable_migration      = false

@@ -183,7 +183,7 @@ func (r *DomainResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, true)
 
 	body := data.ToBody(ctx, `Domain`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -198,6 +198,10 @@ func (r *DomainResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 	data.UpdateUnknownFromBody(ctx, `Domain`, getRes)
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -236,13 +240,17 @@ func (r *DomainResource) Update(ctx context.Context, req resource.UpdateRequest,
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, true)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `Domain`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
 
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -254,7 +262,8 @@ func (r *DomainResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, true)
+
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
 	auRes, auErr := r.client.Get("/mgmt/status/default/ActiveUsers")
 	if auErr != nil {
@@ -275,9 +284,14 @@ func (r *DomainResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
 		return
 	}
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	resp.State.RemoveResource(ctx)
 }
+
 func (r *DomainResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
 	var data models.Domain
 

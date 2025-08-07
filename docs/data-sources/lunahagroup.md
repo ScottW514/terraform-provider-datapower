@@ -14,8 +14,7 @@ SafeNet Luna HSM HA group
 
 ```terraform
 data "datapower_lunahagroup" "test" {
-  depends_on = [datapower_lunahagroup.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

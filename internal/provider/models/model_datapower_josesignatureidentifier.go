@@ -34,15 +34,15 @@ import (
 )
 
 type JOSESignatureIdentifier struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Type              types.String      `tfsdk:"type"`
-	SsKey             types.String      `tfsdk:"ss_key"`
-	Certificate       types.String      `tfsdk:"certificate"`
-	ValidAlgorithms   types.List        `tfsdk:"valid_algorithms"`
-	HeaderParam       types.List        `tfsdk:"header_param"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Type              types.String                `tfsdk:"type"`
+	SsKey             types.String                `tfsdk:"ss_key"`
+	Certificate       types.String                `tfsdk:"certificate"`
+	ValidAlgorithms   types.List                  `tfsdk:"valid_algorithms"`
+	HeaderParam       types.List                  `tfsdk:"header_param"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var JOSESignatureIdentifierObjectType = map[string]attr.Type{

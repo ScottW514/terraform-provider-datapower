@@ -10,7 +10,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: '_HostAlias_name'
+    test_value: '"ResTest_HostAlias"'
+    test_expect_ds: '"AccTest_HostAlias"'
+    example: 'HostAliasName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

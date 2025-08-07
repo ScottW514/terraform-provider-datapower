@@ -14,8 +14,7 @@ WSDL assembly action
 
 ```terraform
 data "datapower_assemblyactionwsdl" "test" {
-  depends_on = [datapower_assemblyactionwsdl.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

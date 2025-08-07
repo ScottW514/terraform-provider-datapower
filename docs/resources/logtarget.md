@@ -16,8 +16,8 @@ Log Target
 
 ```terraform
 resource "datapower_logtarget" "test" {
-  id         = "___LogTarget_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTest_LogTarget"
+  app_domain = "acceptance_test"
   type       = "file"
 }
 ```

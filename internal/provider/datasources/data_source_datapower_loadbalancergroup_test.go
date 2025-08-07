@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceLoadBalancerGroup(t *testing.T) {
 			{
 				Config: testconfig.LoadBalancerGroupTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_loadbalancergroup.test", "result.0.id", "LoadBalancerGroup_name"),
+					resource.TestCheckResourceAttr("data.datapower_loadbalancergroup.test", "result.0.id", "AccTest_LoadBalancerGroup"),
 					resource.TestCheckResourceAttr("data.datapower_loadbalancergroup.test", "result.0.algorithm", "round-robin"),
 					resource.TestCheckResourceAttr("data.datapower_loadbalancergroup.test", "result.0.retrieve_info", "false"),
 					resource.TestCheckResourceAttr("data.datapower_loadbalancergroup.test", "result.0.wlm_retrieval", "use-websphere"),
@@ -55,5 +54,4 @@ func TestAccDataSourceLoadBalancerGroup(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

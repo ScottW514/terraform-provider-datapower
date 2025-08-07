@@ -14,7 +14,6 @@ RAID Array (`default` domain only)
 
 ```terraform
 data "datapower_raidvolume" "test" {
-  depends_on = [datapower_raidvolume.test]
 }
 ```
 

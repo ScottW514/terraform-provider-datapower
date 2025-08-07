@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceCryptoValCred(t *testing.T) {
 			{
 				Config: testconfig.CryptoValCredTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_cryptovalcred.test", "result.0.id", "CryptoValCred_name"),
+					resource.TestCheckResourceAttr("data.datapower_cryptovalcred.test", "result.0.id", "AccTest_CryptoValCred"),
 					resource.TestCheckResourceAttr("data.datapower_cryptovalcred.test", "result.0.cert_validation_mode", "legacy"),
 					resource.TestCheckResourceAttr("data.datapower_cryptovalcred.test", "result.0.use_crl", "true"),
 					resource.TestCheckResourceAttr("data.datapower_cryptovalcred.test", "result.0.require_crl", "false"),
@@ -52,5 +51,4 @@ func TestAccDataSourceCryptoValCred(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -34,22 +34,22 @@ import (
 )
 
 type SocialLoginPolicy struct {
-	Id                        types.String      `tfsdk:"id"`
-	AppDomain                 types.String      `tfsdk:"app_domain"`
-	UserSummary               types.String      `tfsdk:"user_summary"`
-	ClientId                  types.String      `tfsdk:"client_id"`
-	ClientSecret              types.String      `tfsdk:"client_secret"`
-	ClientGrant               types.String      `tfsdk:"client_grant"`
-	ClientScope               types.String      `tfsdk:"client_scope"`
-	ClientRedirectUri         types.String      `tfsdk:"client_redirect_uri"`
-	ClientOptionalQueryParams types.String      `tfsdk:"client_optional_query_params"`
-	ClientSslProfile          types.String      `tfsdk:"client_ssl_profile"`
-	SocialProvider            types.String      `tfsdk:"social_provider"`
-	ProviderAzEndpoint        types.String      `tfsdk:"provider_az_endpoint"`
-	ProviderTokenEndpoint     types.String      `tfsdk:"provider_token_endpoint"`
-	ValidateJwtToken          types.Bool        `tfsdk:"validate_jwt_token"`
-	JwtValidator              types.String      `tfsdk:"jwt_validator"`
-	DependencyActions         []*actions.Action `tfsdk:"dependency_actions"`
+	Id                        types.String                `tfsdk:"id"`
+	AppDomain                 types.String                `tfsdk:"app_domain"`
+	UserSummary               types.String                `tfsdk:"user_summary"`
+	ClientId                  types.String                `tfsdk:"client_id"`
+	ClientSecret              types.String                `tfsdk:"client_secret"`
+	ClientGrant               types.String                `tfsdk:"client_grant"`
+	ClientScope               types.String                `tfsdk:"client_scope"`
+	ClientRedirectUri         types.String                `tfsdk:"client_redirect_uri"`
+	ClientOptionalQueryParams types.String                `tfsdk:"client_optional_query_params"`
+	ClientSslProfile          types.String                `tfsdk:"client_ssl_profile"`
+	SocialProvider            types.String                `tfsdk:"social_provider"`
+	ProviderAzEndpoint        types.String                `tfsdk:"provider_az_endpoint"`
+	ProviderTokenEndpoint     types.String                `tfsdk:"provider_token_endpoint"`
+	ValidateJwtToken          types.Bool                  `tfsdk:"validate_jwt_token"`
+	JwtValidator              types.String                `tfsdk:"jwt_validator"`
+	DependencyActions         []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SocialLoginPolicyObjectType = map[string]attr.Type{

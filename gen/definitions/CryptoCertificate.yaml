@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'CryptoCertificate_name'
+    test_value: '"ResTestCryptoCertificate"'
+    test_expect_ds: '"AccTest_CryptoCertificate"'
+    example: 'CryptoCertificateName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -30,7 +32,9 @@ attributes:
     required: true
     description: 'File remote path'
     cli_alias: file-name
-    example: 'cert:///acc-test-server.crt'
+    example: 'cert:///certificate.crt'
+    test_value: '"cert:///acc-test-server.crt"'
+    test_bed_value: 'datapower_file.acc_test_server_crt.remote_path'
   # DEPRECATED
   # - name: Password
   # DEPRECATED

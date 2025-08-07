@@ -16,8 +16,8 @@ SOAP Header Disposition Table
 
 ```terraform
 resource "datapower_soapheaderdisposition" "test" {
-  id         = "SOAPHeaderDisposition_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestSOAPHeaderDisposition"
+  app_domain = "acceptance_test"
 }
 ```
 

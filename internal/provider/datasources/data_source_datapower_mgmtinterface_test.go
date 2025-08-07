@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceMgmtInterface(t *testing.T) {
 			{
 				Config: testconfig.MgmtInterfaceTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_mgmtinterface.test", "enabled", "true"),
+					resource.TestCheckResourceAttr("data.datapower_mgmtinterface.test", "enabled", "false"),
 					resource.TestCheckResourceAttr("data.datapower_mgmtinterface.test", "local_port", "5550"),
 					resource.TestCheckResourceAttr("data.datapower_mgmtinterface.test", "acl", "xml-mgmt"),
 					resource.TestCheckResourceAttr("data.datapower_mgmtinterface.test", "slm_peering", "10"),
@@ -51,5 +50,4 @@ func TestAccDataSourceMgmtInterface(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

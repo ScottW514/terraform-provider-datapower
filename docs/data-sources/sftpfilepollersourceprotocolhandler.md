@@ -14,8 +14,7 @@ SFTP poller handler
 
 ```terraform
 data "datapower_sftpfilepollersourceprotocolhandler" "test" {
-  depends_on = [datapower_sftpfilepollersourceprotocolhandler.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

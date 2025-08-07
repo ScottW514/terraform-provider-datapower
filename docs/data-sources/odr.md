@@ -14,7 +14,6 @@ On Demand Router (`default` domain only)
 
 ```terraform
 data "datapower_odr" "test" {
-  depends_on = [datapower_odr.test]
 }
 ```
 

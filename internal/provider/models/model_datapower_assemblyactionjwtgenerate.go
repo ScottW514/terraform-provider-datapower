@@ -34,29 +34,29 @@ import (
 )
 
 type AssemblyActionJWTGenerate struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	Jwt                 types.String      `tfsdk:"jwt"`
-	JwtidClaims         types.Bool        `tfsdk:"jwtid_claims"`
-	IssuerClaim         types.String      `tfsdk:"issuer_claim"`
-	SubjectClaim        types.String      `tfsdk:"subject_claim"`
-	AudienceClaim       types.String      `tfsdk:"audience_claim"`
-	ValidityPeriod      types.Int64       `tfsdk:"validity_period"`
-	PrivateClaim        types.String      `tfsdk:"private_claim"`
-	SignJwk             types.String      `tfsdk:"sign_jwk"`
-	CryptoAlgorithm     types.String      `tfsdk:"crypto_algorithm"`
-	SignCrypto          types.String      `tfsdk:"sign_crypto"`
-	CustomKidValueJws   types.String      `tfsdk:"custom_kid_value_jws"`
-	EncryptAlgorithm    types.String      `tfsdk:"encrypt_algorithm"`
-	EncryptJwk          types.String      `tfsdk:"encrypt_jwk"`
-	KeyEncryptAlgorithm types.String      `tfsdk:"key_encrypt_algorithm"`
-	EncryptCrypto       types.String      `tfsdk:"encrypt_crypto"`
-	CustomKidValueJwe   types.String      `tfsdk:"custom_kid_value_jwe"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	Title               types.String      `tfsdk:"title"`
-	CorrelationPath     types.String      `tfsdk:"correlation_path"`
-	ActionDebug         types.Bool        `tfsdk:"action_debug"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	Jwt                 types.String                `tfsdk:"jwt"`
+	JwtidClaims         types.Bool                  `tfsdk:"jwtid_claims"`
+	IssuerClaim         types.String                `tfsdk:"issuer_claim"`
+	SubjectClaim        types.String                `tfsdk:"subject_claim"`
+	AudienceClaim       types.String                `tfsdk:"audience_claim"`
+	ValidityPeriod      types.Int64                 `tfsdk:"validity_period"`
+	PrivateClaim        types.String                `tfsdk:"private_claim"`
+	SignJwk             types.String                `tfsdk:"sign_jwk"`
+	CryptoAlgorithm     types.String                `tfsdk:"crypto_algorithm"`
+	SignCrypto          types.String                `tfsdk:"sign_crypto"`
+	CustomKidValueJws   types.String                `tfsdk:"custom_kid_value_jws"`
+	EncryptAlgorithm    types.String                `tfsdk:"encrypt_algorithm"`
+	EncryptJwk          types.String                `tfsdk:"encrypt_jwk"`
+	KeyEncryptAlgorithm types.String                `tfsdk:"key_encrypt_algorithm"`
+	EncryptCrypto       types.String                `tfsdk:"encrypt_crypto"`
+	CustomKidValueJwe   types.String                `tfsdk:"custom_kid_value_jwe"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	Title               types.String                `tfsdk:"title"`
+	CorrelationPath     types.String                `tfsdk:"correlation_path"`
+	ActionDebug         types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionJWTGenerateObjectType = map[string]attr.Type{

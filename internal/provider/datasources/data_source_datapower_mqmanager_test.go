@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceMQManager(t *testing.T) {
 			{
 				Config: testconfig.MQManagerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_mqmanager.test", "result.0.id", "MQManager_name"),
+					resource.TestCheckResourceAttr("data.datapower_mqmanager.test", "result.0.id", "AccTest_MQManager"),
 					resource.TestCheckResourceAttr("data.datapower_mqmanager.test", "result.0.ccsid", "819"),
 					resource.TestCheckResourceAttr("data.datapower_mqmanager.test", "result.0.channel_name", "SYSTEM.DEF.SVRCONN"),
 					resource.TestCheckResourceAttr("data.datapower_mqmanager.test", "result.0.heartbeat", "300"),
@@ -73,5 +72,4 @@ func TestAccDataSourceMQManager(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

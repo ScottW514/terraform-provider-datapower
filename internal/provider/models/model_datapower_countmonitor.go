@@ -34,16 +34,16 @@ import (
 )
 
 type CountMonitor struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Measure           types.String      `tfsdk:"measure"`
-	Source            types.String      `tfsdk:"source"`
-	Header            types.String      `tfsdk:"header"`
-	Filter            types.List        `tfsdk:"filter"`
-	MaxSources        types.Int64       `tfsdk:"max_sources"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	MessageType       types.String      `tfsdk:"message_type"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Measure           types.String                `tfsdk:"measure"`
+	Source            types.String                `tfsdk:"source"`
+	Header            types.String                `tfsdk:"header"`
+	Filter            types.List                  `tfsdk:"filter"`
+	MaxSources        types.Int64                 `tfsdk:"max_sources"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	MessageType       types.String                `tfsdk:"message_type"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CountMonitorObjectType = map[string]attr.Type{

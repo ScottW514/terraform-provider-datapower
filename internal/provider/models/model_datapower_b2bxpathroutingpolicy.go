@@ -34,14 +34,14 @@ import (
 )
 
 type B2BXPathRoutingPolicy struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	SenderXPath       types.String      `tfsdk:"sender_x_path"`
-	ReceiverXPath     types.String      `tfsdk:"receiver_x_path"`
-	DocumentIdxPath   types.String      `tfsdk:"document_idx_path"`
-	DateTimeXPath     types.String      `tfsdk:"date_time_x_path"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	SenderXPath       types.String                `tfsdk:"sender_x_path"`
+	ReceiverXPath     types.String                `tfsdk:"receiver_x_path"`
+	DocumentIdxPath   types.String                `tfsdk:"document_idx_path"`
+	DateTimeXPath     types.String                `tfsdk:"date_time_x_path"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var B2BXPathRoutingPolicyObjectType = map[string]attr.Type{

@@ -14,7 +14,6 @@ B2B persistence (`default` domain only)
 
 ```terraform
 data "datapower_b2bpersistence" "test" {
-  depends_on = [datapower_b2bpersistence.test]
 }
 ```
 

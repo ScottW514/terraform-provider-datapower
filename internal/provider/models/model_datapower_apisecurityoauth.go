@@ -34,15 +34,15 @@ import (
 )
 
 type APISecurityOAuth struct {
-	Id                      types.String      `tfsdk:"id"`
-	AppDomain               types.String      `tfsdk:"app_domain"`
-	UserSummary             types.String      `tfsdk:"user_summary"`
-	OAuthProvider           types.String      `tfsdk:"o_auth_provider"`
-	OAuthFlow               types.String      `tfsdk:"o_auth_flow"`
-	OAuthScope              types.String      `tfsdk:"o_auth_scope"`
-	OAuthAdvScopeUrl        types.String      `tfsdk:"o_auth_adv_scope_url"`
-	OAuthAdvScopeTlsProfile types.String      `tfsdk:"o_auth_adv_scope_tls_profile"`
-	DependencyActions       []*actions.Action `tfsdk:"dependency_actions"`
+	Id                      types.String                `tfsdk:"id"`
+	AppDomain               types.String                `tfsdk:"app_domain"`
+	UserSummary             types.String                `tfsdk:"user_summary"`
+	OAuthProvider           types.String                `tfsdk:"o_auth_provider"`
+	OAuthFlow               types.String                `tfsdk:"o_auth_flow"`
+	OAuthScope              types.String                `tfsdk:"o_auth_scope"`
+	OAuthAdvScopeUrl        types.String                `tfsdk:"o_auth_adv_scope_url"`
+	OAuthAdvScopeTlsProfile types.String                `tfsdk:"o_auth_adv_scope_tls_profile"`
+	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APISecurityOAuthObjectType = map[string]attr.Type{

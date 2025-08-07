@@ -14,8 +14,7 @@ B2B gateway
 
 ```terraform
 data "datapower_b2bgateway" "test" {
-  depends_on = [datapower_b2bgateway.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

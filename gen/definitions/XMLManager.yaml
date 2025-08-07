@@ -16,8 +16,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'XMLManager_name'
-    test_value: '"0_XMLManger_name"'
+    test_value: '"ResTestXMLManager"'
+    test_expect_ds: '"AccTest_XMLManager"'
+    example: 'XMLManagerName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

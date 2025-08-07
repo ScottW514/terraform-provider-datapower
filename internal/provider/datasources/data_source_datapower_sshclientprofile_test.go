@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceSSHClientProfile(t *testing.T) {
 			{
 				Config: testconfig.SSHClientProfileTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_sshclientprofile.test", "result.0.id", "SSHClientProfile_name"),
+					resource.TestCheckResourceAttr("data.datapower_sshclientprofile.test", "result.0.id", "AccTest_SSHClientProfile"),
 					resource.TestCheckResourceAttr("data.datapower_sshclientprofile.test", "result.0.profile_usage", "sftp"),
 					resource.TestCheckResourceAttr("data.datapower_sshclientprofile.test", "result.0.persistent_connections", "true"),
 					resource.TestCheckResourceAttr("data.datapower_sshclientprofile.test", "result.0.persistent_connection_timeout", "120"),
@@ -50,5 +49,4 @@ func TestAccDataSourceSSHClientProfile(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

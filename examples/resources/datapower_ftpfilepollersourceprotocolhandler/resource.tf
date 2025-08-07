@@ -1,7 +1,7 @@
 
 resource "datapower_ftpfilepollersourceprotocolhandler" "test" {
-  id                       = "FTPFilePollerSourceProtocolHandler_name"
-  app_domain               = "acc_test_domain"
+  id                       = "ResTestFTPFilePollerSourceProtocolHandler"
+  app_domain               = "acceptance_test"
   target_directory         = "ftp://user:password@host:port/path/"
   delay_between_polls      = 60000
   input_file_match_pattern = ".*"

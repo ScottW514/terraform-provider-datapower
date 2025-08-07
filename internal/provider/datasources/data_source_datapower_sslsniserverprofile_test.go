@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceSSLSNIServerProfile(t *testing.T) {
 			{
 				Config: testconfig.SSLSNIServerProfileTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_sslsniserverprofile.test", "result.0.id", "SSLSNIServerProfile_name"),
+					resource.TestCheckResourceAttr("data.datapower_sslsniserverprofile.test", "result.0.id", "AccTest_SSLSNIServerProfile"),
 					resource.TestCheckResourceAttr("data.datapower_sslsniserverprofile.test", "result.0.max_ssl_duration", "3600"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

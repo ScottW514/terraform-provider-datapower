@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceWCCService(t *testing.T) {
 			{
 				Config: testconfig.WCCServiceTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_wccservice.test", "result.0.id", "WCCService_name"),
+					resource.TestCheckResourceAttr("data.datapower_wccservice.test", "result.0.id", "AccTest_WCCService"),
 					resource.TestCheckResourceAttr("data.datapower_wccservice.test", "result.0.update_type", "poll"),
 					resource.TestCheckResourceAttr("data.datapower_wccservice.test", "result.0.time_interval", "10"),
 					resource.TestCheckResourceAttr("data.datapower_wccservice.test", "result.0.ssl_client_config_type", "client"),
@@ -49,5 +48,4 @@ func TestAccDataSourceWCCService(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

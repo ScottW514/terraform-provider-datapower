@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceXMLFirewallService(t *testing.T) {
 			{
 				Config: testconfig.XMLFirewallServiceTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_xmlfirewallservice.test", "result.0.id", "XMLFirewallService_name"),
+					resource.TestCheckResourceAttr("data.datapower_xmlfirewallservice.test", "result.0.id", "AccTest_XMLFirewallService"),
 					resource.TestCheckResourceAttr("data.datapower_xmlfirewallservice.test", "result.0.type", "dynamic-backend"),
 					resource.TestCheckResourceAttr("data.datapower_xmlfirewallservice.test", "result.0.xml_manager", "default"),
 					resource.TestCheckResourceAttr("data.datapower_xmlfirewallservice.test", "result.0.style_policy", "default"),
@@ -97,5 +96,4 @@ func TestAccDataSourceXMLFirewallService(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -35,13 +35,13 @@ import (
 )
 
 type SSHDomainClientProfile struct {
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Ciphers           types.List        `tfsdk:"ciphers"`
-	KexAlg            types.List        `tfsdk:"kex_alg"`
-	MacAlg            types.List        `tfsdk:"mac_alg"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Ciphers           types.List                  `tfsdk:"ciphers"`
+	KexAlg            types.List                  `tfsdk:"kex_alg"`
+	MacAlg            types.List                  `tfsdk:"mac_alg"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SSHDomainClientProfileObjectType = map[string]attr.Type{

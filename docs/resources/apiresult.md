@@ -16,8 +16,8 @@ Result API action
 
 ```terraform
 resource "datapower_apiresult" "test" {
-  id         = "APIResult_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAPIResult"
+  app_domain = "acceptance_test"
 }
 ```
 

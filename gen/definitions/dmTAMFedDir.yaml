@@ -5,7 +5,9 @@ attributes:
   - name: FedName
     type: String
     required: true
-    example: 'fed_name'
+    test_value: '"ResTestfed"'
+    test_expect_ds: '"AccTest_fed"'
+    example: 'fedName'
     description: 'Name'
     cli_alias: federate-name
   - name: Suffix
@@ -36,7 +38,8 @@ attributes:
     type: String
     reference_to: PasswordAlias
     required: true
-    test_value: '"TestAccPasswordAlias"'
+    test_value: '"AccTest_PasswordAlias"'
+    test_bed_value: 'datapower_passwordalias.acc_test.id'
     description: 'LDAP administrator password alias'
     cli_alias: bind-pw
   - name: UseSSL

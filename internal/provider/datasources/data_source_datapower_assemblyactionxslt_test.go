@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAssemblyActionXSLT(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionXSLTTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionxslt.test", "result.0.id", "AssemblyActionXSLT_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionxslt.test", "result.0.id", "AccTest_AssemblyActionXSLT"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionxslt.test", "result.0.use_payload", "false"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionxslt.test", "result.0.serialize_output", "false"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionxslt.test", "result.0.action_debug", "false"),
@@ -49,5 +48,4 @@ func TestAccDataSourceAssemblyActionXSLT(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

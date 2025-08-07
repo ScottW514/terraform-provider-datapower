@@ -17,8 +17,8 @@ AS1 poller handler
 
 ```terraform
 resource "datapower_as1pollersourceprotocolhandler" "test" {
-  id                    = "AS1PollerSourceProtocolHandler_name"
-  app_domain            = "acc_test_domain"
+  id                    = "ResTestAS1PollerSourceProtocolHandler"
+  app_domain            = "acceptance_test"
   mail_server           = "smtp.host"
   port                  = 25
   conn_security         = "none"

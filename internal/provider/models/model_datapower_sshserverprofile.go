@@ -35,16 +35,16 @@ import (
 )
 
 type SSHServerProfile struct {
-	AppDomain         types.String         `tfsdk:"app_domain"`
-	Enabled           types.Bool           `tfsdk:"enabled"`
-	UserSummary       types.String         `tfsdk:"user_summary"`
-	Ciphers           types.List           `tfsdk:"ciphers"`
-	KexAlg            types.List           `tfsdk:"kex_alg"`
-	MacAlg            types.List           `tfsdk:"mac_alg"`
-	SendPreAuthMsg    types.Bool           `tfsdk:"send_pre_auth_msg"`
-	PreAuthMsg        types.String         `tfsdk:"pre_auth_msg"`
-	HostKeyAlg        *DmHostKeyAlgorithms `tfsdk:"host_key_alg"`
-	DependencyActions []*actions.Action    `tfsdk:"dependency_actions"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Ciphers           types.List                  `tfsdk:"ciphers"`
+	KexAlg            types.List                  `tfsdk:"kex_alg"`
+	MacAlg            types.List                  `tfsdk:"mac_alg"`
+	SendPreAuthMsg    types.Bool                  `tfsdk:"send_pre_auth_msg"`
+	PreAuthMsg        types.String                `tfsdk:"pre_auth_msg"`
+	HostKeyAlg        *DmHostKeyAlgorithms        `tfsdk:"host_key_alg"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SSHServerProfileObjectType = map[string]attr.Type{

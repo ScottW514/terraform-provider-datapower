@@ -34,13 +34,13 @@ import (
 )
 
 type ControlList struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Type              types.String      `tfsdk:"type"`
-	Value             types.List        `tfsdk:"value"`
-	CaseInsensitive   types.Bool        `tfsdk:"case_insensitive"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Type              types.String                `tfsdk:"type"`
+	Value             types.List                  `tfsdk:"value"`
+	CaseInsensitive   types.Bool                  `tfsdk:"case_insensitive"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ControlListObjectType = map[string]attr.Type{

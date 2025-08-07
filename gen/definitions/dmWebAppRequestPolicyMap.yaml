@@ -12,5 +12,6 @@ attributes:
     type: String
     reference_to: WebAppRequest
     required: true
-    test_value: '"TestAccRequestProfile"'
+    test_value: '"AccTest_WebAppRequest"'
+    test_bed_value: 'datapower_webapprequest.acc_test.id'
     description: 'Request Profile'

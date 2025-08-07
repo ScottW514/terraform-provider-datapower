@@ -34,18 +34,18 @@ import (
 )
 
 type B2BCPACollaboration struct {
-	Id                   types.String      `tfsdk:"id"`
-	AppDomain            types.String      `tfsdk:"app_domain"`
-	UserSummary          types.String      `tfsdk:"user_summary"`
-	InternalRole         types.String      `tfsdk:"internal_role"`
-	ExternalRole         types.String      `tfsdk:"external_role"`
-	ProcessSpecification types.String      `tfsdk:"process_specification"`
-	Service              types.String      `tfsdk:"service"`
-	ServiceType          types.String      `tfsdk:"service_type"`
-	SenderMshSetting     types.String      `tfsdk:"sender_msh_setting"`
-	ReceiverMshSetting   types.String      `tfsdk:"receiver_msh_setting"`
-	Actions              types.List        `tfsdk:"actions"`
-	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
+	Id                   types.String                `tfsdk:"id"`
+	AppDomain            types.String                `tfsdk:"app_domain"`
+	UserSummary          types.String                `tfsdk:"user_summary"`
+	InternalRole         types.String                `tfsdk:"internal_role"`
+	ExternalRole         types.String                `tfsdk:"external_role"`
+	ProcessSpecification types.String                `tfsdk:"process_specification"`
+	Service              types.String                `tfsdk:"service"`
+	ServiceType          types.String                `tfsdk:"service_type"`
+	SenderMshSetting     types.String                `tfsdk:"sender_msh_setting"`
+	ReceiverMshSetting   types.String                `tfsdk:"receiver_msh_setting"`
+	Actions              types.List                  `tfsdk:"actions"`
+	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var B2BCPACollaborationObjectType = map[string]attr.Type{

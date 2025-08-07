@@ -16,8 +16,8 @@ Deployment Policy
 
 ```terraform
 resource "datapower_configdeploymentpolicy" "test" {
-  id         = "ConfigDeploymentPolicy_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestConfigDeploymentPolicy"
+  app_domain = "acceptance_test"
 }
 ```
 

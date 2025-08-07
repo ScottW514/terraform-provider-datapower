@@ -23,6 +23,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 )
@@ -55,10 +56,39 @@ func writeOutput(outputPath, content string) {
 }
 
 func main() {
-	for k, v := range endPoints {
-		if v.Data != "" {
-			writeOutput("./examples/data-sources/datapower_"+k+"/data-source.tf", v.Data)
+	if err := os.MkdirAll("./examples/test_bed", 0755); err != nil {
+		log.Fatalf("Error creating directories: %v", err)
+	}
+	f, err := os.Create("./examples/test_bed/resources.tf")
+	if err != nil {
+		log.Fatalf("Error creating output file: %v", err)
+	}
+	if _, err := f.WriteString(`terraform {
+  required_providers {
+    datapower = {
+      source  = "scottw514/datapower"
+    }
+  }
+}`); err != nil {
+		log.Fatalf("Error writing output file: %v", err)
+	}
+	defer f.Close()
+
+	resources := make([]string, 0, len(endPoints))
+	for k := range endPoints {
+		resources = append(resources, k)
+	}
+	sort.Strings(resources)
+
+	for _, k := range resources {
+		if endPoints[k].Data != "" {
+			writeOutput("./examples/data-sources/datapower_"+k+"/data-source.tf", endPoints[k].Data)
 		}
-		writeOutput("./examples/resources/datapower_"+k+"/resource.tf", v.Resource)
+		writeOutput("./examples/resources/datapower_"+k+"/resource.tf", endPoints[k].Resource)
+		if endPoints[k].TestBed != "" {
+			if _, err := f.WriteString(endPoints[k].TestBed); err != nil {
+				log.Fatalf("Error writing output file: %v", err)
+			}
+		}
 	}
 }

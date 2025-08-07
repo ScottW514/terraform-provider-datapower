@@ -33,9 +33,9 @@ import (
 )
 
 type CRLFetch struct {
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	CrlFetchConfig    types.List        `tfsdk:"crl_fetch_config"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	CrlFetchConfig    types.List                  `tfsdk:"crl_fetch_config"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CRLFetchObjectType = map[string]attr.Type{

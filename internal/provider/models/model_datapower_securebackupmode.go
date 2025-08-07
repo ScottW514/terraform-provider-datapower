@@ -33,10 +33,10 @@ import (
 )
 
 type SecureBackupMode struct {
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Mode              types.String      `tfsdk:"mode"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Mode              types.String                `tfsdk:"mode"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SecureBackupModeObjectType = map[string]attr.Type{

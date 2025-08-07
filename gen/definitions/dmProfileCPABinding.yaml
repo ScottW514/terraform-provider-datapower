@@ -6,21 +6,24 @@ attributes:
     type: String
     reference_to: B2BProfile
     required: true
-    test_value: '"TestAccB2BProfile"'
+    test_value: '"AccTest_B2BProfile"'
+    test_bed_value: 'datapower_b2bprofile.acc_test.id'
     description: 'CPA sender (internal partner profile)'
     cli_alias: internal-partner
   - name: CPA
     type: String
     reference_to: B2BCPA
     required: true
-    test_value: '"TestAccB2BCPA"'
+    test_value: '"AccTest_B2BCPA"'
+    test_bed_value: 'datapower_b2bcpa.acc_test.id'
     description: 'CPA'
     cli_alias: cpa
   - name: Collaboration
     type: String
     reference_to: B2BCPACollaboration
     required: true
-    test_value: '"TestAccB2BCPACollaboration"'
+    test_value: '"AccTest_B2BCPACollaboration"'
+    test_bed_value: 'datapower_b2bcpacollaboration.acc_test.id'
     description: 'Service'
     cli_alias: collaboration
   - name: Action

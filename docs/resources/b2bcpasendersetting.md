@@ -16,8 +16,8 @@ CPA sender setting
 
 ```terraform
 resource "datapower_b2bcpasendersetting" "test" {
-  id         = "B2BCPASenderSetting_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestB2BCPASenderSetting"
+  app_domain = "acceptance_test"
 }
 ```
 

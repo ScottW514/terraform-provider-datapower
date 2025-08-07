@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'WXSGrid_name'
+    test_value: '"ResTestWXSGrid"'
+    test_expect_ds: '"AccTest_WXSGrid"'
+    example: 'WXSGridName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -32,7 +34,8 @@ attributes:
   - name: Collective
     type: String
     reference_to: LoadBalancerGroup
-    test_value: '"TestAccLoadBalancerGroup"'
+    test_value: '"AccTest_LoadBalancerGroup"'
+    test_bed_value: 'datapower_loadbalancergroup.acc_test.id'
     required: true
     description: 'Collective'
     cli_alias: collective
@@ -52,7 +55,8 @@ attributes:
     type: String
     reference_to: PasswordAlias
     required: true
-    test_value: '"TestAccPasswordAlias"'
+    test_value: '"AccTest_PasswordAlias"'
+    test_bed_value: 'datapower_passwordalias.acc_test.id'
     description: 'Password Alias'
     cli_alias: password-alias
   - name: Timeout

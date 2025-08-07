@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'APIDefinition_name'
+    test_value: '"ResTestAPIDefinition"'
+    test_expect_ds: '"AccTest_APIDefinition"'
+    example: 'APIDefinitionName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -72,7 +74,8 @@ attributes:
     reference_to: APIPath
     element_type: String
     required: true
-    test_value: '["TestAccAPIPath"]'
+    test_value: '["AccTest_APIPath"]'
+    test_bed_value: '[datapower_apipath.acc_test.id]'
     description: 'Paths'
     cli_alias: path
   - name: Consume

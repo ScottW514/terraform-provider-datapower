@@ -16,8 +16,8 @@ Compile Options Policy
 
 ```terraform
 resource "datapower_compileoptionspolicy" "test" {
-  id         = "CompileOptionsPolicy_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestCompileOptionsPolicy"
+  app_domain = "acceptance_test"
 }
 ```
 

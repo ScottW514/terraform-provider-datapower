@@ -34,29 +34,29 @@ import (
 )
 
 type CompileSettings struct {
-	Id                     types.String      `tfsdk:"id"`
-	AppDomain              types.String      `tfsdk:"app_domain"`
-	UserSummary            types.String      `tfsdk:"user_summary"`
-	XsltVersion            types.String      `tfsdk:"xslt_version"`
-	Strict                 types.Bool        `tfsdk:"strict"`
-	Profile                types.Bool        `tfsdk:"profile"`
-	Debug                  types.Bool        `tfsdk:"debug"`
-	Stream                 types.Bool        `tfsdk:"stream"`
-	TryStream              types.Bool        `tfsdk:"try_stream"`
-	MinimumEscaping        types.Bool        `tfsdk:"minimum_escaping"`
-	StackSize              types.Int64       `tfsdk:"stack_size"`
-	WsiValidation          types.String      `tfsdk:"wsi_validation"`
-	WsdlValidateBody       types.String      `tfsdk:"wsdl_validate_body"`
-	WsdlValidateHeaders    types.String      `tfsdk:"wsdl_validate_headers"`
-	WsdlValidateFaults     types.String      `tfsdk:"wsdl_validate_faults"`
-	WsdlWrappedFaults      types.Bool        `tfsdk:"wsdl_wrapped_faults"`
-	AllowSoapEncArray      types.Bool        `tfsdk:"allow_soap_enc_array"`
-	ValidateSoapEncArray   types.Bool        `tfsdk:"validate_soap_enc_array"`
-	WildcardsIgnoreXsiType types.Bool        `tfsdk:"wildcards_ignore_xsi_type"`
-	WsdlStrictSoapVersion  types.Bool        `tfsdk:"wsdl_strict_soap_version"`
-	XacmlDebug             types.Bool        `tfsdk:"xacml_debug"`
-	AllowXopInclude        types.Bool        `tfsdk:"allow_xop_include"`
-	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
+	Id                     types.String                `tfsdk:"id"`
+	AppDomain              types.String                `tfsdk:"app_domain"`
+	UserSummary            types.String                `tfsdk:"user_summary"`
+	XsltVersion            types.String                `tfsdk:"xslt_version"`
+	Strict                 types.Bool                  `tfsdk:"strict"`
+	Profile                types.Bool                  `tfsdk:"profile"`
+	Debug                  types.Bool                  `tfsdk:"debug"`
+	Stream                 types.Bool                  `tfsdk:"stream"`
+	TryStream              types.Bool                  `tfsdk:"try_stream"`
+	MinimumEscaping        types.Bool                  `tfsdk:"minimum_escaping"`
+	StackSize              types.Int64                 `tfsdk:"stack_size"`
+	WsiValidation          types.String                `tfsdk:"wsi_validation"`
+	WsdlValidateBody       types.String                `tfsdk:"wsdl_validate_body"`
+	WsdlValidateHeaders    types.String                `tfsdk:"wsdl_validate_headers"`
+	WsdlValidateFaults     types.String                `tfsdk:"wsdl_validate_faults"`
+	WsdlWrappedFaults      types.Bool                  `tfsdk:"wsdl_wrapped_faults"`
+	AllowSoapEncArray      types.Bool                  `tfsdk:"allow_soap_enc_array"`
+	ValidateSoapEncArray   types.Bool                  `tfsdk:"validate_soap_enc_array"`
+	WildcardsIgnoreXsiType types.Bool                  `tfsdk:"wildcards_ignore_xsi_type"`
+	WsdlStrictSoapVersion  types.Bool                  `tfsdk:"wsdl_strict_soap_version"`
+	XacmlDebug             types.Bool                  `tfsdk:"xacml_debug"`
+	AllowXopInclude        types.Bool                  `tfsdk:"allow_xop_include"`
+	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CompileSettingsObjectType = map[string]attr.Type{

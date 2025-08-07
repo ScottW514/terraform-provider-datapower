@@ -1,7 +1,7 @@
 
 resource "datapower_cryptokerberoskdc" "test" {
-  id         = "CryptoKerberosKDC_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestCryptoKerberosKDC"
+  app_domain = "acceptance_test"
   realm      = "realm"
   server     = "localhost"
 }

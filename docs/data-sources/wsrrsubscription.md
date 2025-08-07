@@ -14,8 +14,7 @@ WSRR subscription
 
 ```terraform
 data "datapower_wsrrsubscription" "test" {
-  depends_on = [datapower_wsrrsubscription.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

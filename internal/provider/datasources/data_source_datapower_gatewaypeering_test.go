@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceGatewayPeering(t *testing.T) {
 			{
 				Config: testconfig.GatewayPeeringTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_gatewaypeering.test", "result.0.id", "___GatewayPeering_name"),
+					resource.TestCheckResourceAttr("data.datapower_gatewaypeering.test", "result.0.id", "AccTest_GatewayPeering"),
 					resource.TestCheckResourceAttr("data.datapower_gatewaypeering.test", "result.0.local_port", "16380"),
 					resource.TestCheckResourceAttr("data.datapower_gatewaypeering.test", "result.0.monitor_port", "26380"),
 					resource.TestCheckResourceAttr("data.datapower_gatewaypeering.test", "result.0.enable_peer_group", "true"),
@@ -51,5 +50,4 @@ func TestAccDataSourceGatewayPeering(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

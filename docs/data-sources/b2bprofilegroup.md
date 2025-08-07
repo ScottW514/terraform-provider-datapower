@@ -14,8 +14,7 @@ B2B partner profile group
 
 ```terraform
 data "datapower_b2bprofilegroup" "test" {
-  depends_on = [datapower_b2bprofilegroup.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

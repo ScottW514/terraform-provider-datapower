@@ -33,17 +33,17 @@ import (
 )
 
 type DNSNameService struct {
-	Enabled              types.Bool        `tfsdk:"enabled"`
-	UserSummary          types.String      `tfsdk:"user_summary"`
-	SearchDomains        types.List        `tfsdk:"search_domains"`
-	NameServers          types.List        `tfsdk:"name_servers"`
-	StaticHosts          types.List        `tfsdk:"static_hosts"`
-	IpPreference         types.String      `tfsdk:"ip_preference"`
-	ForceIpPreference    types.Bool        `tfsdk:"force_ip_preference"`
-	LoadBalanceAlgorithm types.String      `tfsdk:"load_balance_algorithm"`
-	MaxRetries           types.Int64       `tfsdk:"max_retries"`
-	Timeout              types.Int64       `tfsdk:"timeout"`
-	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled              types.Bool                  `tfsdk:"enabled"`
+	UserSummary          types.String                `tfsdk:"user_summary"`
+	SearchDomains        types.List                  `tfsdk:"search_domains"`
+	NameServers          types.List                  `tfsdk:"name_servers"`
+	StaticHosts          types.List                  `tfsdk:"static_hosts"`
+	IpPreference         types.String                `tfsdk:"ip_preference"`
+	ForceIpPreference    types.Bool                  `tfsdk:"force_ip_preference"`
+	LoadBalanceAlgorithm types.String                `tfsdk:"load_balance_algorithm"`
+	MaxRetries           types.Int64                 `tfsdk:"max_retries"`
+	Timeout              types.Int64                 `tfsdk:"timeout"`
+	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var DNSNameServiceObjectType = map[string]attr.Type{

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceLogTarget(t *testing.T) {
 			{
 				Config: testconfig.LogTargetTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_logtarget.test", "result.0.id", "___LogTarget_name"),
+					resource.TestCheckResourceAttr("data.datapower_logtarget.test", "result.0.id", "AccTest_LogTarget"),
 					resource.TestCheckResourceAttr("data.datapower_logtarget.test", "result.0.type", "file"),
 					resource.TestCheckResourceAttr("data.datapower_logtarget.test", "result.0.priority", "normal"),
 					resource.TestCheckResourceAttr("data.datapower_logtarget.test", "result.0.soap_version", "soap11"),
@@ -70,5 +69,4 @@ func TestAccDataSourceLogTarget(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

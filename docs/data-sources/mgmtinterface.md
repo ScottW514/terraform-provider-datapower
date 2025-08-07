@@ -14,7 +14,6 @@ XML management interface (`default` domain only)
 
 ```terraform
 data "datapower_mgmtinterface" "test" {
-  depends_on = [datapower_mgmtinterface.test]
 }
 ```
 

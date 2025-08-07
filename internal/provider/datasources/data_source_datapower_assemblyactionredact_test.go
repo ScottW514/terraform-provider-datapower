@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceAssemblyActionRedact(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionRedactTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionredact.test", "result.0.id", "AssemblyActionRedact_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionredact.test", "result.0.id", "AccTest_AssemblyActionRedact"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionredact.test", "result.0.action_debug", "false"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -16,9 +16,9 @@ JWE Header
 
 ```terraform
 resource "datapower_jweheader" "test" {
-  id         = "JWEHeader_name"
-  app_domain = "acc_test_domain"
-  recipient  = "TestAccJWERecipient"
+  id         = "ResTestJWEHeader"
+  app_domain = "acceptance_test"
+  recipient  = "AccTest_JWERecipient"
 }
 ```
 

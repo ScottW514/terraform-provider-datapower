@@ -1,5 +1,5 @@
 
 resource "datapower_apiclientidentification" "test" {
-  id         = "APIClientIdentification_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAPIClientIdentification"
+  app_domain = "acceptance_test"
 }

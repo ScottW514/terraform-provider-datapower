@@ -34,13 +34,13 @@ import (
 )
 
 type FilterAction struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Type              types.String      `tfsdk:"type"`
-	LogLevel          types.String      `tfsdk:"log_level"`
-	BlockInterval     types.Int64       `tfsdk:"block_interval"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Type              types.String                `tfsdk:"type"`
+	LogLevel          types.String                `tfsdk:"log_level"`
+	BlockInterval     types.Int64                 `tfsdk:"block_interval"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var FilterActionObjectType = map[string]attr.Type{

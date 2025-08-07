@@ -14,8 +14,7 @@ Shared secret key
 
 ```terraform
 data "datapower_cryptosskey" "test" {
-  depends_on = [datapower_cryptosskey.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

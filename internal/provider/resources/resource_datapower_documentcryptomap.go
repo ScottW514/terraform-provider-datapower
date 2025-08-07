@@ -125,13 +125,17 @@ func (r *DocumentCryptoMapResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
 
 	body := data.ToBody(ctx, `DocumentCryptoMap`)
 	_, err := r.client.Post(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "POST", err))
+		return
+	}
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
 		return
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -172,13 +176,17 @@ func (r *DocumentCryptoMapResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
 	_, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `DocumentCryptoMap`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
 
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -190,12 +198,27 @@ func (r *DocumentCryptoMapResource) Delete(ctx context.Context, req resource.Del
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
 	_, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
 		return
 	}
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	resp.State.RemoveResource(ctx)
+}
+
+func (r *DocumentCryptoMapResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var data models.DocumentCryptoMap
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }

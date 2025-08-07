@@ -16,9 +16,9 @@ API security basic authentication
 
 ```terraform
 resource "datapower_apisecuritybasicauth" "test" {
-  id            = "APISecurityBasicAuth_name"
-  app_domain    = "acc_test_domain"
-  user_registry = datapower_apiauthurlregistry.test.id
+  id            = "ResTestAPISecurityBasicAuth"
+  app_domain    = "acceptance_test"
+  user_registry = "AccTest_APIAuthURLRegistry"
 }
 ```
 

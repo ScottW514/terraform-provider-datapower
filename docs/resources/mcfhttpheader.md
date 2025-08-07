@@ -16,8 +16,8 @@ HTTP Header Message Content Filter
 
 ```terraform
 resource "datapower_mcfhttpheader" "test" {
-  id         = "MCFHttpHeader_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestMCFHttpHeader"
+  app_domain = "acceptance_test"
   http_name  = "HEADERNAME"
   http_value = "HEADERVALUE"
 }

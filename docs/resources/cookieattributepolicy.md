@@ -16,8 +16,8 @@ Cookie Attribute Policy
 
 ```terraform
 resource "datapower_cookieattributepolicy" "test" {
-  id         = "CookieAttributePolicy_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestCookieAttributePolicy"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceVisibilityList(t *testing.T) {
 			{
 				Config: testconfig.VisibilityListTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_visibilitylist.test", "result.0.id", "VisibilityList_name"),
+					resource.TestCheckResourceAttr("data.datapower_visibilitylist.test", "result.0.id", "AccTest_VisibilityList"),
 					resource.TestCheckResourceAttr("data.datapower_visibilitylist.test", "result.0.type", "remove"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

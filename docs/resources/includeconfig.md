@@ -16,8 +16,8 @@ Include configuration file
 
 ```terraform
 resource "datapower_includeconfig" "test" {
-  id         = "IncludeConfig_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestIncludeConfig"
+  app_domain = "acceptance_test"
   url        = "http://localhost/config.zip"
 }
 ```

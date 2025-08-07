@@ -34,16 +34,16 @@ import (
 )
 
 type WSEndpointRewritePolicy struct {
-	Id                                types.String      `tfsdk:"id"`
-	AppDomain                         types.String      `tfsdk:"app_domain"`
-	UserSummary                       types.String      `tfsdk:"user_summary"`
-	WsEndpointLocalRewriteRule        types.List        `tfsdk:"ws_endpoint_local_rewrite_rule"`
-	WsEndpointRemoteRewriteRule       types.List        `tfsdk:"ws_endpoint_remote_rewrite_rule"`
-	WsEndpointPublishRewriteRule      types.List        `tfsdk:"ws_endpoint_publish_rewrite_rule"`
-	WsEndpointSubscriptionLocalRule   types.List        `tfsdk:"ws_endpoint_subscription_local_rule"`
-	WsEndpointSubscriptionRemoteRule  types.List        `tfsdk:"ws_endpoint_subscription_remote_rule"`
-	WsEndpointSubscriptionPublishRule types.List        `tfsdk:"ws_endpoint_subscription_publish_rule"`
-	DependencyActions                 []*actions.Action `tfsdk:"dependency_actions"`
+	Id                                types.String                `tfsdk:"id"`
+	AppDomain                         types.String                `tfsdk:"app_domain"`
+	UserSummary                       types.String                `tfsdk:"user_summary"`
+	WsEndpointLocalRewriteRule        types.List                  `tfsdk:"ws_endpoint_local_rewrite_rule"`
+	WsEndpointRemoteRewriteRule       types.List                  `tfsdk:"ws_endpoint_remote_rewrite_rule"`
+	WsEndpointPublishRewriteRule      types.List                  `tfsdk:"ws_endpoint_publish_rewrite_rule"`
+	WsEndpointSubscriptionLocalRule   types.List                  `tfsdk:"ws_endpoint_subscription_local_rule"`
+	WsEndpointSubscriptionRemoteRule  types.List                  `tfsdk:"ws_endpoint_subscription_remote_rule"`
+	WsEndpointSubscriptionPublishRule types.List                  `tfsdk:"ws_endpoint_subscription_publish_rule"`
+	DependencyActions                 []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WSEndpointRewritePolicyObjectType = map[string]attr.Type{

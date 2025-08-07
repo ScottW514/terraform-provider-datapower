@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceWXSGrid(t *testing.T) {
 			{
 				Config: testconfig.WXSGridTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_wxsgrid.test", "result.0.id", "WXSGrid_name"),
+					resource.TestCheckResourceAttr("data.datapower_wxsgrid.test", "result.0.id", "AccTest_WXSGrid"),
 					resource.TestCheckResourceAttr("data.datapower_wxsgrid.test", "result.0.timeout", "1000"),
 					resource.TestCheckResourceAttr("data.datapower_wxsgrid.test", "result.0.encrypt", "false"),
 					resource.TestCheckResourceAttr("data.datapower_wxsgrid.test", "result.0.encrypt_alg", "tripledes-cbc"),
@@ -51,5 +50,4 @@ func TestAccDataSourceWXSGrid(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

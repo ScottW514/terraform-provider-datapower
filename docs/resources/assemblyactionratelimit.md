@@ -16,8 +16,8 @@ Rate limit assembly action
 
 ```terraform
 resource "datapower_assemblyactionratelimit" "test" {
-  id         = "AssemblyActionRateLimit_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyActionRateLimit"
+  app_domain = "acceptance_test"
   source     = "plan-default"
 }
 ```

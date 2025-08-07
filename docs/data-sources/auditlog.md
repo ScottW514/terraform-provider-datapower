@@ -14,7 +14,6 @@ Audit log settings (`default` domain only)
 
 ```terraform
 data "datapower_auditlog" "test" {
-  depends_on = [datapower_auditlog.test]
 }
 ```
 

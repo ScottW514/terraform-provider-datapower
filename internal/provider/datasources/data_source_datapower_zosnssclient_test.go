@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceZosNSSClient(t *testing.T) {
 			{
 				Config: testconfig.ZosNSSClientTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_zosnssclient.test", "result.0.id", "ZosNSSClient_name"),
+					resource.TestCheckResourceAttr("data.datapower_zosnssclient.test", "result.0.id", "AccTest_ZosNSSClient"),
 					resource.TestCheckResourceAttr("data.datapower_zosnssclient.test", "result.0.ssl_client_config_type", "client"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -34,11 +34,11 @@ import (
 )
 
 type GraphQLSchemaOptions struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	VisibilityList    types.String      `tfsdk:"visibility_list"`
-	Api               types.String      `tfsdk:"api"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	VisibilityList    types.String                `tfsdk:"visibility_list"`
+	Api               types.String                `tfsdk:"api"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var GraphQLSchemaOptionsObjectType = map[string]attr.Type{

@@ -34,15 +34,15 @@ import (
 )
 
 type AssemblyActionHtmlPage struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Description       types.String      `tfsdk:"description"`
-	Output            types.String      `tfsdk:"output"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Title             types.String      `tfsdk:"title"`
-	CorrelationPath   types.String      `tfsdk:"correlation_path"`
-	ActionDebug       types.Bool        `tfsdk:"action_debug"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Description       types.String                `tfsdk:"description"`
+	Output            types.String                `tfsdk:"output"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Title             types.String                `tfsdk:"title"`
+	CorrelationPath   types.String                `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionHtmlPageObjectType = map[string]attr.Type{

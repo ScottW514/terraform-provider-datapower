@@ -34,12 +34,12 @@ import (
 )
 
 type HTTPInputConversionMap struct {
-	Id                   types.String      `tfsdk:"id"`
-	AppDomain            types.String      `tfsdk:"app_domain"`
-	UserSummary          types.String      `tfsdk:"user_summary"`
-	DefaultInputEncoding types.String      `tfsdk:"default_input_encoding"`
-	InputEncoding        types.List        `tfsdk:"input_encoding"`
-	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
+	Id                   types.String                `tfsdk:"id"`
+	AppDomain            types.String                `tfsdk:"app_domain"`
+	UserSummary          types.String                `tfsdk:"user_summary"`
+	DefaultInputEncoding types.String                `tfsdk:"default_input_encoding"`
+	InputEncoding        types.List                  `tfsdk:"input_encoding"`
+	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var HTTPInputConversionMapObjectType = map[string]attr.Type{

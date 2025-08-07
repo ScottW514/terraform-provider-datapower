@@ -34,21 +34,21 @@ import (
 )
 
 type AssemblyActionClientSecurity struct {
-	Id                       types.String      `tfsdk:"id"`
-	AppDomain                types.String      `tfsdk:"app_domain"`
-	StopOnError              types.Bool        `tfsdk:"stop_on_error"`
-	SecretRequired           types.Bool        `tfsdk:"secret_required"`
-	ExtractCredentialMethod  types.String      `tfsdk:"extract_credential_method"`
-	IdName                   types.String      `tfsdk:"id_name"`
-	SecretName               types.String      `tfsdk:"secret_name"`
-	HttpType                 types.String      `tfsdk:"http_type"`
-	AuthenticateClientMethod types.String      `tfsdk:"authenticate_client_method"`
-	UserRegistry             types.String      `tfsdk:"user_registry"`
-	UserSummary              types.String      `tfsdk:"user_summary"`
-	Title                    types.String      `tfsdk:"title"`
-	CorrelationPath          types.String      `tfsdk:"correlation_path"`
-	ActionDebug              types.Bool        `tfsdk:"action_debug"`
-	DependencyActions        []*actions.Action `tfsdk:"dependency_actions"`
+	Id                       types.String                `tfsdk:"id"`
+	AppDomain                types.String                `tfsdk:"app_domain"`
+	StopOnError              types.Bool                  `tfsdk:"stop_on_error"`
+	SecretRequired           types.Bool                  `tfsdk:"secret_required"`
+	ExtractCredentialMethod  types.String                `tfsdk:"extract_credential_method"`
+	IdName                   types.String                `tfsdk:"id_name"`
+	SecretName               types.String                `tfsdk:"secret_name"`
+	HttpType                 types.String                `tfsdk:"http_type"`
+	AuthenticateClientMethod types.String                `tfsdk:"authenticate_client_method"`
+	UserRegistry             types.String                `tfsdk:"user_registry"`
+	UserSummary              types.String                `tfsdk:"user_summary"`
+	Title                    types.String                `tfsdk:"title"`
+	CorrelationPath          types.String                `tfsdk:"correlation_path"`
+	ActionDebug              types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionClientSecurityObjectType = map[string]attr.Type{

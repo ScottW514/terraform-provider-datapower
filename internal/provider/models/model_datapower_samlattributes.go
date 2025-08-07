@@ -34,11 +34,11 @@ import (
 )
 
 type SAMLAttributes struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	SamlAttribute     types.List        `tfsdk:"saml_attribute"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	SamlAttribute     types.List                  `tfsdk:"saml_attribute"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SAMLAttributesObjectType = map[string]attr.Type{

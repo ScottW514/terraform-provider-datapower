@@ -33,13 +33,13 @@ import (
 )
 
 type CertMonitor struct {
-	Enabled             types.Bool        `tfsdk:"enabled"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	PollingInterval     types.Int64       `tfsdk:"polling_interval"`
-	ReminderTime        types.Int64       `tfsdk:"reminder_time"`
-	LogLevel            types.String      `tfsdk:"log_level"`
-	DisableExpiredCerts types.Bool        `tfsdk:"disable_expired_certs"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled             types.Bool                  `tfsdk:"enabled"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	PollingInterval     types.Int64                 `tfsdk:"polling_interval"`
+	ReminderTime        types.Int64                 `tfsdk:"reminder_time"`
+	LogLevel            types.String                `tfsdk:"log_level"`
+	DisableExpiredCerts types.Bool                  `tfsdk:"disable_expired_certs"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CertMonitorObjectType = map[string]attr.Type{

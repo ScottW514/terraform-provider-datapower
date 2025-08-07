@@ -34,6 +34,8 @@ attributes:
   sensitive: bool(required=False) # Set to true if sensitive value
   cli_alias: str(require=False) # CLI Alias for the endpoint
   test_value: str(required=False) # Value used for acceptance test. Overrides example, list_example, default and list_default.
+  test_bed_value: str(required=False) # Value used for acceptance test bed build. Overrides example, list_example, default and list_default.
+  test_expect_ds: str(required=False) # Value to be expected when testing data source results
   example: any(str(), int(), bool(), num(), required=False) # Example value for documentation, also used for acceptance test if test_value is not set
   default: any(str(), int(), bool(), required=False) # Default value for the attribute, also used for acceptance test in test_value and example are not set
   list_default: list(str(), required=False) # Default values for the string list attribute, also used for acceptance test in test_value and example are not set

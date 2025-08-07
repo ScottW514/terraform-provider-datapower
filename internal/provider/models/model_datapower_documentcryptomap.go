@@ -34,13 +34,13 @@ import (
 )
 
 type DocumentCryptoMap struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Operation         types.String      `tfsdk:"operation"`
-	XPath             types.List        `tfsdk:"x_path"`
-	NameSpaceMappings types.List        `tfsdk:"name_space_mappings"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Operation         types.String                `tfsdk:"operation"`
+	XPath             types.List                  `tfsdk:"x_path"`
+	NameSpaceMappings types.List                  `tfsdk:"name_space_mappings"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var DocumentCryptoMapObjectType = map[string]attr.Type{

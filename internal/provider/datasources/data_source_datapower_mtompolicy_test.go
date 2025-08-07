@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourceMTOMPolicy(t *testing.T) {
 			{
 				Config: testconfig.MTOMPolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_mtompolicy.test", "result.0.id", "MTOMPolicy_name"),
+					resource.TestCheckResourceAttr("data.datapower_mtompolicy.test", "result.0.id", "AccTest_MTOMPolicy"),
 					resource.TestCheckResourceAttr("data.datapower_mtompolicy.test", "result.0.mode", "encode"),
 					resource.TestCheckResourceAttr("data.datapower_mtompolicy.test", "result.0.include_content_type", "true"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

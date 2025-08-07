@@ -33,20 +33,20 @@ import (
 )
 
 type Throttler struct {
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	ThrottleAt        types.Int64       `tfsdk:"throttle_at"`
-	TerminateAt       types.Int64       `tfsdk:"terminate_at"`
-	TempFsThrottleAt  types.Int64       `tfsdk:"temp_fs_throttle_at"`
-	TempFsTerminateAt types.Int64       `tfsdk:"temp_fs_terminate_at"`
-	QnameWarnAt       types.Int64       `tfsdk:"qname_warn_at"`
-	Timeout           types.Int64       `tfsdk:"timeout"`
-	Statistics        types.Bool        `tfsdk:"statistics"`
-	LogLevel          types.String      `tfsdk:"log_level"`
-	EnvironmentalLog  types.Bool        `tfsdk:"environmental_log"`
-	BacklogSize       types.Int64       `tfsdk:"backlog_size"`
-	BacklogTimeout    types.Int64       `tfsdk:"backlog_timeout"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	ThrottleAt        types.Int64                 `tfsdk:"throttle_at"`
+	TerminateAt       types.Int64                 `tfsdk:"terminate_at"`
+	TempFsThrottleAt  types.Int64                 `tfsdk:"temp_fs_throttle_at"`
+	TempFsTerminateAt types.Int64                 `tfsdk:"temp_fs_terminate_at"`
+	QnameWarnAt       types.Int64                 `tfsdk:"qname_warn_at"`
+	Timeout           types.Int64                 `tfsdk:"timeout"`
+	Statistics        types.Bool                  `tfsdk:"statistics"`
+	LogLevel          types.String                `tfsdk:"log_level"`
+	EnvironmentalLog  types.Bool                  `tfsdk:"environmental_log"`
+	BacklogSize       types.Int64                 `tfsdk:"backlog_size"`
+	BacklogTimeout    types.Int64                 `tfsdk:"backlog_timeout"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ThrottlerObjectType = map[string]attr.Type{

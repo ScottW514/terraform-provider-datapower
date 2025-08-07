@@ -34,11 +34,11 @@ import (
 )
 
 type URLRefreshPolicy struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	UrlRefreshRule    types.List        `tfsdk:"url_refresh_rule"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	UrlRefreshRule    types.List                  `tfsdk:"url_refresh_rule"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var URLRefreshPolicyObjectType = map[string]attr.Type{

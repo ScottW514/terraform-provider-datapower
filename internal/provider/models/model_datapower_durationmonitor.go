@@ -34,13 +34,13 @@ import (
 )
 
 type DurationMonitor struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Measure           types.String      `tfsdk:"measure"`
-	Filter            types.List        `tfsdk:"filter"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	MessageType       types.String      `tfsdk:"message_type"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Measure           types.String                `tfsdk:"measure"`
+	Filter            types.List                  `tfsdk:"filter"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	MessageType       types.String                `tfsdk:"message_type"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var DurationMonitorObjectType = map[string]attr.Type{

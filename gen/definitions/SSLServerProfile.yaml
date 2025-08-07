@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'SSLServerProfile_name'
+    test_value: '"ResTestSSLServerProfile"'
+    test_expect_ds: '"AccTest_SSLServerProfile"'
+    example: 'SSLServerProfileName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -118,7 +120,8 @@ attributes:
     type: String
     reference_to: CryptoIdentCred
     required: true
-    test_value: '"TestAccCryptoIdentCred"'
+    test_value: '"AccTest_CryptoIdentCred"'
+    test_bed_value: 'datapower_cryptoidentcred.acc_test.id'
     description: 'Identification credentials'
     cli_alias: idcred
   - name: RequestClientAuth

@@ -34,18 +34,18 @@ import (
 )
 
 type AssemblyActionGraphQLExecute struct {
-	Id                     types.String      `tfsdk:"id"`
-	AppDomain              types.String      `tfsdk:"app_domain"`
-	Description            types.String      `tfsdk:"description"`
-	Input                  types.String      `tfsdk:"input"`
-	Output                 types.String      `tfsdk:"output"`
-	TargetMapRule          types.List        `tfsdk:"target_map_rule"`
-	AllowCostIntrospection types.Bool        `tfsdk:"allow_cost_introspection"`
-	UserSummary            types.String      `tfsdk:"user_summary"`
-	Title                  types.String      `tfsdk:"title"`
-	CorrelationPath        types.String      `tfsdk:"correlation_path"`
-	ActionDebug            types.Bool        `tfsdk:"action_debug"`
-	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
+	Id                     types.String                `tfsdk:"id"`
+	AppDomain              types.String                `tfsdk:"app_domain"`
+	Description            types.String                `tfsdk:"description"`
+	Input                  types.String                `tfsdk:"input"`
+	Output                 types.String                `tfsdk:"output"`
+	TargetMapRule          types.List                  `tfsdk:"target_map_rule"`
+	AllowCostIntrospection types.Bool                  `tfsdk:"allow_cost_introspection"`
+	UserSummary            types.String                `tfsdk:"user_summary"`
+	Title                  types.String                `tfsdk:"title"`
+	CorrelationPath        types.String                `tfsdk:"correlation_path"`
+	ActionDebug            types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionGraphQLExecuteObjectType = map[string]attr.Type{

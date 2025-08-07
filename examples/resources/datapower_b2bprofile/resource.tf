@@ -1,7 +1,7 @@
 
 resource "datapower_b2bprofile" "test" {
-  id         = "B2BProfile_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestB2BProfile"
+  app_domain = "acceptance_test"
   destinations = [{
     dest_name = "b2bdestinationname"
     dest_url  = "https://localhost"

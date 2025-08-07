@@ -139,6 +139,8 @@ type YamlConfigAttribute struct {
 	Default         string   `yaml:"default"`
 	ListDefault     []string `yaml:"list_default"`
 	TestValue       string   `yaml:"test_value"`
+	TestBedValue    string   `yaml:"test_bed_value"`
+	TestExpectDs    string   `yaml:"test_expect_ds"`
 	ReferenceTo     string   `yaml:"reference_to"`
 }
 
@@ -151,29 +153,6 @@ func camelCase(s string) string {
 		b.WriteString(cases.Title(language.English).String(part))
 	}
 	return b.String()
-}
-
-// getTestDependencies collects unique dependencies for testing.
-func getTestDependencies(config YamlConfig) []string {
-	seen := make(map[string]bool)
-	unique := []string{}
-	seen[config.Name] = true
-	for _, v := range config.Attributes {
-		if (v.Required || v.TestValue != "") && v.DmType != "" && !seen[v.DmType] {
-			seen[v.DmType] = true
-			unique = append(unique, v.DmType)
-		} else if (v.Required || v.TestValue != "") && v.Type == "List" && v.ElementType != "String" && !seen[v.ElementType] {
-			seen[v.ElementType] = true
-			unique = append(unique, v.ElementType)
-		} else if (v.Required || v.TestValue != "") && v.Type != "" && v.Type != "List" && v.Type != "String" && v.Type != "Int64" && v.Type != "Bool" && !seen[v.Type] {
-			seen[v.Type] = true
-			unique = append(unique, v.Type)
-		} else if (v.Required || v.TestValue != "") && v.ReferenceTo != "" && !seen[v.ReferenceTo] {
-			seen[v.ReferenceTo] = true
-			unique = append(unique, v.ReferenceTo)
-		}
-	}
-	return unique
 }
 
 // hasDomainAttribute returns true if an "AppDomain" attribute is present.
@@ -252,7 +231,6 @@ func updateComputed(attributes []YamlConfigAttribute) bool {
 // Map of templating functions.
 var functions = template.FuncMap{
 	"camelCase":             camelCase,
-	"getTestDependencies":   getTestDependencies,
 	"hasDomainAttribute":    hasDomainAttribute,
 	"hasWriteOnlyAttribute": hasWriteOnlyAttribute,
 	"isList":                isList,

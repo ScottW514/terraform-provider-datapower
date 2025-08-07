@@ -12,5 +12,6 @@ attributes:
     type: String
     reference_to: WebAppResponse
     required: true
-    test_value: '"TestAccResponseProfile"'
+    test_value: '"AccTest_WebAppResponse"'
+    test_bed_value: 'datapower_webappresponse.acc_test.id'
     description: 'Response Profile'

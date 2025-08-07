@@ -34,20 +34,20 @@ import (
 )
 
 type XTCProtocolHandler struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	LocalAddress      types.String      `tfsdk:"local_address"`
-	LocalPort         types.Int64       `tfsdk:"local_port"`
-	RemoteAddress     types.String      `tfsdk:"remote_address"`
-	RemotePort        types.Int64       `tfsdk:"remote_port"`
-	CloseOnFault      types.Bool        `tfsdk:"close_on_fault"`
-	Acl               types.String      `tfsdk:"acl"`
-	SslConfigType     types.String      `tfsdk:"ssl_config_type"`
-	SslClient         types.String      `tfsdk:"ssl_client"`
-	SslServer         types.String      `tfsdk:"ssl_server"`
-	SslsniServer      types.String      `tfsdk:"sslsni_server"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	LocalAddress      types.String                `tfsdk:"local_address"`
+	LocalPort         types.Int64                 `tfsdk:"local_port"`
+	RemoteAddress     types.String                `tfsdk:"remote_address"`
+	RemotePort        types.Int64                 `tfsdk:"remote_port"`
+	CloseOnFault      types.Bool                  `tfsdk:"close_on_fault"`
+	Acl               types.String                `tfsdk:"acl"`
+	SslConfigType     types.String                `tfsdk:"ssl_config_type"`
+	SslClient         types.String                `tfsdk:"ssl_client"`
+	SslServer         types.String                `tfsdk:"ssl_server"`
+	SslsniServer      types.String                `tfsdk:"sslsni_server"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var XTCProtocolHandlerObjectType = map[string]attr.Type{

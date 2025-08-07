@@ -35,10 +35,10 @@ import (
 )
 
 type Statistics struct {
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	LoadInterval      types.Int64       `tfsdk:"load_interval"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	LoadInterval      types.Int64                 `tfsdk:"load_interval"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var StatisticsObjectType = map[string]attr.Type{

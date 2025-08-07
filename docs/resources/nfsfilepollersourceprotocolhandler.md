@@ -17,8 +17,8 @@ NFS poller handler
 
 ```terraform
 resource "datapower_nfsfilepollersourceprotocolhandler" "test" {
-  id                       = "NFSFilePollerSourceProtocolHandler_name"
-  app_domain               = "acc_test_domain"
+  id                       = "ResTestNFSFilePollerSourceProtocolHandler"
+  app_domain               = "acceptance_test"
   target_directory         = "dpnfs://static-mount-name/path/"
   delay_between_polls      = 60000
   input_file_match_pattern = ".*"

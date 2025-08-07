@@ -16,8 +16,8 @@ AMQP broker
 
 ```terraform
 resource "datapower_amqpbroker" "test" {
-  id            = "AMQPBroker_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestAMQPBroker"
+  app_domain    = "acceptance_test"
   host_name     = "host.name"
   port          = 5672
   xml_manager   = "default"

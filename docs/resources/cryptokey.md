@@ -16,10 +16,10 @@ Key
 
 ```terraform
 resource "datapower_cryptokey" "test" {
-  id         = "CryptoKey_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestCryptoKey"
+  app_domain = "acceptance_test"
   filename   = "cert:///acc-test-server.key"
-  alias      = "TestAccPasswordAlias"
+  alias      = "AccTest_PasswordAlias"
 }
 ```
 

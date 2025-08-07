@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,10 +40,9 @@ func TestAccDataSourceAppSecurityPolicy(t *testing.T) {
 			{
 				Config: testconfig.AppSecurityPolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_appsecuritypolicy.test", "result.0.id", "AppSecurityPolicy_name"),
+					resource.TestCheckResourceAttr("data.datapower_appsecuritypolicy.test", "result.0.id", "AccTest_AppSecurityPolicy"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

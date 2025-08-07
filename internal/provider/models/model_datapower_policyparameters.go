@@ -34,11 +34,11 @@ import (
 )
 
 type PolicyParameters struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	PolicyParameter   types.List        `tfsdk:"policy_parameter"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	PolicyParameter   types.List                  `tfsdk:"policy_parameter"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var PolicyParametersObjectType = map[string]attr.Type{

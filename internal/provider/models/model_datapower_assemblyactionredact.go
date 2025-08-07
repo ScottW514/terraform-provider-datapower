@@ -34,15 +34,15 @@ import (
 )
 
 type AssemblyActionRedact struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Root              types.String      `tfsdk:"root"`
-	Redact            types.List        `tfsdk:"redact"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Title             types.String      `tfsdk:"title"`
-	CorrelationPath   types.String      `tfsdk:"correlation_path"`
-	ActionDebug       types.Bool        `tfsdk:"action_debug"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Root              types.String                `tfsdk:"root"`
+	Redact            types.List                  `tfsdk:"redact"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Title             types.String                `tfsdk:"title"`
+	CorrelationPath   types.String                `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionRedactObjectType = map[string]attr.Type{

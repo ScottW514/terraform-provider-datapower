@@ -34,14 +34,14 @@ import (
 )
 
 type WebAppErrorHandlingPolicy struct {
-	Id                   types.String      `tfsdk:"id"`
-	AppDomain            types.String      `tfsdk:"app_domain"`
-	UserSummary          types.String      `tfsdk:"user_summary"`
-	Type                 types.String      `tfsdk:"type"`
-	Url                  types.String      `tfsdk:"url"`
-	ErrorStylePolicyRule types.String      `tfsdk:"error_style_policy_rule"`
-	ErrorMonitor         types.String      `tfsdk:"error_monitor"`
-	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
+	Id                   types.String                `tfsdk:"id"`
+	AppDomain            types.String                `tfsdk:"app_domain"`
+	UserSummary          types.String                `tfsdk:"user_summary"`
+	Type                 types.String                `tfsdk:"type"`
+	Url                  types.String                `tfsdk:"url"`
+	ErrorStylePolicyRule types.String                `tfsdk:"error_style_policy_rule"`
+	ErrorMonitor         types.String                `tfsdk:"error_monitor"`
+	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WebAppErrorHandlingPolicyObjectType = map[string]attr.Type{

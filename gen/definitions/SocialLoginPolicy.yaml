@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'SocialLoginPolicy_name'
+    test_value: '"ResTestSocialLoginPolicy"'
+    test_expect_ds: '"AccTest_SocialLoginPolicy"'
+    example: 'SocialLoginPolicyName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -69,7 +71,8 @@ attributes:
     type: String
     reference_to: SSLClientProfile
     required: true
-    test_value: '"TestAccSSLClientProfile"'
+    test_value: '"AccTest_SSLClientProfile"'
+    test_bed_value: 'datapower_sslclientprofile.acc_test.id'
     description: 'TLS client profile'
     cli_alias: client-ssl
   - name: Provider

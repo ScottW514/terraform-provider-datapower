@@ -1,5 +1,5 @@
 
 resource "datapower_apirule" "test" {
-  id         = "APIRule_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAPIRule"
+  app_domain = "acceptance_test"
 }

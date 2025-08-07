@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceB2BGateway(t *testing.T) {
 			{
 				Config: testconfig.B2BGatewayTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_b2bgateway.test", "result.0.id", "B2BGateway_name"),
+					resource.TestCheckResourceAttr("data.datapower_b2bgateway.test", "result.0.id", "AccTest_B2BGateway"),
 					resource.TestCheckResourceAttr("data.datapower_b2bgateway.test", "result.0.priority", "normal"),
 					resource.TestCheckResourceAttr("data.datapower_b2bgateway.test", "result.0.doc_store_location", "(default)"),
 					resource.TestCheckResourceAttr("data.datapower_b2bgateway.test", "result.0.document_routing_preprocessor_type", "stylesheet"),
@@ -63,5 +62,4 @@ func TestAccDataSourceB2BGateway(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

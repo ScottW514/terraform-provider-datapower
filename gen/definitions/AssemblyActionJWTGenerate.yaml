@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'AssemblyActionJWTGenerate_name'
+    test_value: '"ResTestAssemblyActionJWTGenerate"'
+    test_expect_ds: '"AccTest_AssemblyActionJWTGenerate"'
+    example: 'AssemblyActionJWTGenerateName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

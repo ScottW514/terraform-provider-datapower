@@ -1,7 +1,7 @@
 
 resource "datapower_policyattachments" "test" {
-  id                   = "PolicyAttachments_name"
-  app_domain           = "acc_test_domain"
+  id                   = "ResTestPolicyAttachments"
+  app_domain           = "acceptance_test"
   enforcement_mode     = "enforce"
   policy_references    = false
   sla_enforcement_mode = "allow-if-no-sla"

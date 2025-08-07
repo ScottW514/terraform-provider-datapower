@@ -28,7 +28,8 @@ attributes:
     type: String
     reference_to: WSStylePolicyRule
     required: true
-    test_value: '"TestAccWSStylePolicyRule"'
+    test_value: '"AccTest_WSStylePolicyRule"'
+    test_bed_value: 'datapower_wsstylepolicyrule.acc_test.id'
     description: 'Stylepolicy Rule'
   - name: Subscription
     type: String

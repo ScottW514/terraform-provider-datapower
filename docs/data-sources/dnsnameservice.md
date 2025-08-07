@@ -14,7 +14,6 @@ DNS settings (`default` domain only)
 
 ```terraform
 data "datapower_dnsnameservice" "test" {
-  depends_on = [datapower_dnsnameservice.test]
 }
 ```
 

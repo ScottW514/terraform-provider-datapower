@@ -1,6 +1,6 @@
 
 resource "datapower_assemblyactionwebsocketupgrade" "test" {
-  id         = "AssemblyActionWebSocketUpgrade_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyActionWebSocketUpgrade"
+  app_domain = "acceptance_test"
   url        = "https://localhost"
 }

@@ -1,6 +1,11 @@
 
 resource "datapower_b2bcpacollaboration" "test" {
-  id         = "B2BCPACollaboration_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestB2BCPACollaboration"
+  app_domain = "acceptance_test"
   service    = "service"
+  actions = [{
+    name       = "cpacollaborationactionname"
+    value      = "value"
+    capability = "cansend"
+  }]
 }

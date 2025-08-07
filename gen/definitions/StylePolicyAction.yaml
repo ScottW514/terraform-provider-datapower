@@ -9,8 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'StylePolicyAction_name'
-    test_value: '"___StylePolicyAction_test"'
+    test_value: '"ResTestStylePolicyAction"'
+    test_expect_ds: '"__default-accept-service-providers-filter-action__"'
+    example: 'StylePolicyActionName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -70,6 +71,7 @@ attributes:
       - 'parse'
     required: true
     default: 'xform'
+    test_expect_ds: '"filter"'
     description: 'Action type'
     cli_alias: type
   - name: Input
@@ -261,6 +263,7 @@ attributes:
     enum:
       - 'client'
     default: 'client'
+    test_expect_ds: '"proxy"'
     description: 'TLS client type'
     cli_alias: ssl-client-type
   - name: SSLClientCred

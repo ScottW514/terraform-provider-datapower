@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -42,10 +41,9 @@ func TestAccDataSourceDomainSettings(t *testing.T) {
 				Config: testconfig.DomainSettingsTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_domainsettings.test", "enabled", "true"),
-					resource.TestCheckResourceAttr("data.datapower_domainsettings.test", "password_treatment", "none"),
+					resource.TestCheckResourceAttr("data.datapower_domainsettings.test", "password_treatment", "masked"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

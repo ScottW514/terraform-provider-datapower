@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAMQPBroker(t *testing.T) {
 			{
 				Config: testconfig.AMQPBrokerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_amqpbroker.test", "result.0.id", "AMQPBroker_name"),
+					resource.TestCheckResourceAttr("data.datapower_amqpbroker.test", "result.0.id", "AccTest_AMQPBroker"),
 					resource.TestCheckResourceAttr("data.datapower_amqpbroker.test", "result.0.port", "5672"),
 					resource.TestCheckResourceAttr("data.datapower_amqpbroker.test", "result.0.xml_manager", "default"),
 					resource.TestCheckResourceAttr("data.datapower_amqpbroker.test", "result.0.authorization", "none"),
@@ -55,5 +54,4 @@ func TestAccDataSourceAMQPBroker(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

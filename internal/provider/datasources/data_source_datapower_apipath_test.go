@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceAPIPath(t *testing.T) {
 			{
 				Config: testconfig.APIPathTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_apipath.test", "result.0.id", "APIPath_name"),
+					resource.TestCheckResourceAttr("data.datapower_apipath.test", "result.0.id", "AccTest_APIPath"),
 					resource.TestCheckResourceAttr("data.datapower_apipath.test", "result.0.path", "/"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

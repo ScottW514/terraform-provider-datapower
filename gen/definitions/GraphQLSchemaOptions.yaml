@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'GraphQLSchemaOptions_name'
+    test_value: '"ResTestGraphQLSchemaOptions"'
+    test_expect_ds: '"AccTest_GraphQLSchemaOptions"'
+    example: 'GraphQLSchemaOptionsName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -34,6 +36,7 @@ attributes:
     type: String
     reference_to: APIDefinition
     required: true
-    test_value: '"TestAccAPIDefinition"'
+    test_value: '"AccTest_APIDefinition"'
+    test_bed_value: 'datapower_apidefinition.acc_test.id'
     description: 'API'
     cli_alias: api

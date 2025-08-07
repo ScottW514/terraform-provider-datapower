@@ -34,12 +34,12 @@ import (
 )
 
 type RateLimitDefinitionGroup struct {
-	Id                   types.String      `tfsdk:"id"`
-	AppDomain            types.String      `tfsdk:"app_domain"`
-	UserSummary          types.String      `tfsdk:"user_summary"`
-	UpdateOnExceed       types.String      `tfsdk:"update_on_exceed"`
-	RateLimitDefinitions types.List        `tfsdk:"rate_limit_definitions"`
-	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
+	Id                   types.String                `tfsdk:"id"`
+	AppDomain            types.String                `tfsdk:"app_domain"`
+	UserSummary          types.String                `tfsdk:"user_summary"`
+	UpdateOnExceed       types.String                `tfsdk:"update_on_exceed"`
+	RateLimitDefinitions types.List                  `tfsdk:"rate_limit_definitions"`
+	DependencyActions    []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var RateLimitDefinitionGroupObjectType = map[string]attr.Type{

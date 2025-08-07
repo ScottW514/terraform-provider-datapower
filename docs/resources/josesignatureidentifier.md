@@ -16,8 +16,8 @@ Signature Identifier
 
 ```terraform
 resource "datapower_josesignatureidentifier" "test" {
-  id         = "JOSESignatureIdentifier_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestJOSESignatureIdentifier"
+  app_domain = "acceptance_test"
   type       = "certificate"
   header_param = [{
     header_value = "VALUE"

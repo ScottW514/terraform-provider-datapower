@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceSSHServerSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.SSHServerSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_sshserversourceprotocolhandler.test", "result.0.id", "SSHServerSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_sshserversourceprotocolhandler.test", "result.0.id", "AccTest_SSHServerSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_sshserversourceprotocolhandler.test", "result.0.local_address", "0.0.0.0"),
 					resource.TestCheckResourceAttr("data.datapower_sshserversourceprotocolhandler.test", "result.0.local_port", "22"),
 					resource.TestCheckResourceAttr("data.datapower_sshserversourceprotocolhandler.test", "result.0.allow_backend_listings", "true"),
@@ -58,5 +57,4 @@ func TestAccDataSourceSSHServerSourceProtocolHandler(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

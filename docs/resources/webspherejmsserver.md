@@ -16,8 +16,8 @@ WebSphere JMS Server
 
 ```terraform
 resource "datapower_webspherejmsserver" "test" {
-  id         = "_WebSphereJMSServer_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTest_WebSphereJMSServer"
+  app_domain = "acceptance_test"
   endpoint = [{
     host      = "localhost"
     port      = 8888

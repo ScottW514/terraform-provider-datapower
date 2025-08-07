@@ -16,8 +16,8 @@ Password map alias
 
 ```terraform
 resource "datapower_passwordalias" "test" {
-  id         = "PasswordAlias_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestPasswordAlias"
+  app_domain = "acceptance_test"
   password   = "password"
 }
 ```

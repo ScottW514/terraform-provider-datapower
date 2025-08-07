@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourceSLMSchedule(t *testing.T) {
 			{
 				Config: testconfig.SLMScheduleTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_slmschedule.test", "result.0.id", "SLMSchedule_name"),
+					resource.TestCheckResourceAttr("data.datapower_slmschedule.test", "result.0.id", "AccTest_SLMSchedule"),
 					resource.TestCheckResourceAttr("data.datapower_slmschedule.test", "result.0.duration", "1440"),
 					resource.TestCheckResourceAttr("data.datapower_slmschedule.test", "result.0.time_zone", "LOCAL"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

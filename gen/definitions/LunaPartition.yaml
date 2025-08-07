@@ -10,7 +10,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'LunaPartition_name'
+    test_value: '"ResTestLunaPartition"'
+    test_expect_ds: '"AccTest_LunaPartition"'
+    example: 'LunaPartitionName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -46,7 +48,8 @@ attributes:
     type: String
     reference_to: PasswordAlias
     required: true
-    test_value: '"TestAccPasswordAlias"'
+    test_value: '"AccTest_PasswordAlias"'
+    test_bed_value: 'datapower_passwordalias.acc_test.id'
     description: 'Password alias'
     cli_alias: password-alias
   - name: LoginRole

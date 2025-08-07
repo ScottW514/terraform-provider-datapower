@@ -16,7 +16,7 @@ Domain settings
 
 ```terraform
 resource "datapower_domainsettings" "test" {
-  app_domain         = "acc_test_domain"
+  app_domain         = "acceptance_test"
   password_treatment = "none"
 }
 ```

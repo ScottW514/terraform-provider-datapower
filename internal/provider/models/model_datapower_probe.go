@@ -35,13 +35,13 @@ import (
 )
 
 type Probe struct {
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	MaxRecords        types.Int64       `tfsdk:"max_records"`
-	Expiration        types.Int64       `tfsdk:"expiration"`
-	GatewayPeering    types.String      `tfsdk:"gateway_peering"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	MaxRecords        types.Int64                 `tfsdk:"max_records"`
+	Expiration        types.Int64                 `tfsdk:"expiration"`
+	GatewayPeering    types.String                `tfsdk:"gateway_peering"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ProbeObjectType = map[string]attr.Type{

@@ -14,7 +14,6 @@ User account (`default` domain only)
 
 ```terraform
 data "datapower_user" "test" {
-  depends_on = [datapower_user.test]
 }
 ```
 

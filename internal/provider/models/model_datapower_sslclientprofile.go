@@ -56,7 +56,7 @@ type SSLClientProfile struct {
 	DisableRenegotiation          types.Bool                    `tfsdk:"disable_renegotiation"`
 	SigAlgs                       types.List                    `tfsdk:"sig_algs"`
 	RequireClosureNotification    types.Bool                    `tfsdk:"require_closure_notification"`
-	DependencyActions             []*actions.Action             `tfsdk:"dependency_actions"`
+	DependencyActions             []*actions.DependencyAction   `tfsdk:"dependency_actions"`
 }
 
 var SSLClientProfileObjectType = map[string]attr.Type{

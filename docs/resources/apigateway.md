@@ -17,9 +17,9 @@ API gateway
 
 ```terraform
 resource "datapower_apigateway" "test" {
-  id                       = "APIGateway_name"
-  app_domain               = "acc_test_domain"
-  front_protocol           = [datapower_httpsourceprotocolhandler.test.id]
+  id                       = "ResTestAPIGateway"
+  app_domain               = "acceptance_test"
+  front_protocol           = ["AccTest_HTTPSourceProtocolHandler"]
   front_timeout            = 120
   front_persistent_timeout = 180
 }

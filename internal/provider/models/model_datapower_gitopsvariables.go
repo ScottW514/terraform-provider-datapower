@@ -33,10 +33,10 @@ import (
 )
 
 type GitOpsVariables struct {
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Variables         types.List        `tfsdk:"variables"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Variables         types.List                  `tfsdk:"variables"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var GitOpsVariablesObjectType = map[string]attr.Type{

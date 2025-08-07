@@ -34,25 +34,25 @@ import (
 )
 
 type WebTokenService struct {
-	Id                     types.String      `tfsdk:"id"`
-	AppDomain              types.String      `tfsdk:"app_domain"`
-	UserSummary            types.String      `tfsdk:"user_summary"`
-	Priority               types.String      `tfsdk:"priority"`
-	XmlManager             types.String      `tfsdk:"xml_manager"`
-	RequestType            types.String      `tfsdk:"request_type"`
-	FrontSide              types.List        `tfsdk:"front_side"`
-	StylePolicy            types.String      `tfsdk:"style_policy"`
-	RewriteErrors          types.Bool        `tfsdk:"rewrite_errors"`
-	DelayErrors            types.Bool        `tfsdk:"delay_errors"`
-	DelayErrorsDuration    types.Int64       `tfsdk:"delay_errors_duration"`
-	FrontTimeout           types.Int64       `tfsdk:"front_timeout"`
-	FrontPersistentTimeout types.Int64       `tfsdk:"front_persistent_timeout"`
-	FrontHttpVersion       types.String      `tfsdk:"front_http_version"`
-	HttpClientIpLabel      types.String      `tfsdk:"http_client_ip_label"`
-	HttpLogCorIdLabel      types.String      `tfsdk:"http_log_cor_id_label"`
-	DebugMode              types.String      `tfsdk:"debug_mode"`
-	DebugHistory           types.Int64       `tfsdk:"debug_history"`
-	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
+	Id                     types.String                `tfsdk:"id"`
+	AppDomain              types.String                `tfsdk:"app_domain"`
+	UserSummary            types.String                `tfsdk:"user_summary"`
+	Priority               types.String                `tfsdk:"priority"`
+	XmlManager             types.String                `tfsdk:"xml_manager"`
+	RequestType            types.String                `tfsdk:"request_type"`
+	FrontSide              types.List                  `tfsdk:"front_side"`
+	StylePolicy            types.String                `tfsdk:"style_policy"`
+	RewriteErrors          types.Bool                  `tfsdk:"rewrite_errors"`
+	DelayErrors            types.Bool                  `tfsdk:"delay_errors"`
+	DelayErrorsDuration    types.Int64                 `tfsdk:"delay_errors_duration"`
+	FrontTimeout           types.Int64                 `tfsdk:"front_timeout"`
+	FrontPersistentTimeout types.Int64                 `tfsdk:"front_persistent_timeout"`
+	FrontHttpVersion       types.String                `tfsdk:"front_http_version"`
+	HttpClientIpLabel      types.String                `tfsdk:"http_client_ip_label"`
+	HttpLogCorIdLabel      types.String                `tfsdk:"http_log_cor_id_label"`
+	DebugMode              types.String                `tfsdk:"debug_mode"`
+	DebugHistory           types.Int64                 `tfsdk:"debug_history"`
+	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WebTokenServiceObjectType = map[string]attr.Type{

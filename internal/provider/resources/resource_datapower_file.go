@@ -41,11 +41,11 @@ import (
 )
 
 type File struct {
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	RemotePath        types.String      `tfsdk:"remote_path"`
-	LocalPath         types.String      `tfsdk:"local_path"`
-	Hash              types.String      `tfsdk:"hash"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	RemotePath        types.String                `tfsdk:"remote_path"`
+	LocalPath         types.String                `tfsdk:"local_path"`
+	Hash              types.String                `tfsdk:"hash"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var _ resource.ResourceWithModifyPlan = &FileResource{}
@@ -121,7 +121,7 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
 
 	fileData, err := r.loadLocalFile(data.LocalPath.ValueString())
 	if err != nil {
@@ -150,6 +150,10 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 
 	data.Hash = types.StringValue(r.generateHash(fileData))
 
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Delete)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -185,7 +189,7 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
 
 	fileData, err := r.loadLocalFile(data.LocalPath.ValueString())
 	if err != nil {
@@ -204,6 +208,10 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 
 	data.Hash = types.StringValue(r.generateHash(fileData))
 
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Delete)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -215,7 +223,7 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
 
 	path := fmt.Sprintf("/mgmt/filestore/%s/%s", data.AppDomain.ValueString(), strings.ReplaceAll(data.RemotePath.ValueString(), "://", ""))
 	_, err := r.client.Delete(path)
@@ -224,6 +232,10 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		return
 	}
 
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Delete)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	resp.State.RemoveResource(ctx)
 }
 

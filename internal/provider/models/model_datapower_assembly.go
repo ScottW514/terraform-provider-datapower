@@ -34,14 +34,14 @@ import (
 )
 
 type Assembly struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Rule              types.String      `tfsdk:"rule"`
-	Catch             types.List        `tfsdk:"catch"`
-	DefaultCatch      types.String      `tfsdk:"default_catch"`
-	Finally           types.String      `tfsdk:"finally"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Rule              types.String                `tfsdk:"rule"`
+	Catch             types.List                  `tfsdk:"catch"`
+	DefaultCatch      types.String                `tfsdk:"default_catch"`
+	Finally           types.String                `tfsdk:"finally"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyObjectType = map[string]attr.Type{

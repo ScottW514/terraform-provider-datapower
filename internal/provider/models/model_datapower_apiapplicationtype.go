@@ -34,12 +34,12 @@ import (
 )
 
 type APIApplicationType struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	Title               types.String      `tfsdk:"title"`
-	SupportedOAuthTypes types.List        `tfsdk:"supported_o_auth_types"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	Title               types.String                `tfsdk:"title"`
+	SupportedOAuthTypes types.List                  `tfsdk:"supported_o_auth_types"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APIApplicationTypeObjectType = map[string]attr.Type{

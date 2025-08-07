@@ -16,8 +16,8 @@ Web service monitor
 
 ```terraform
 resource "datapower_webservicemonitor" "test" {
-  id           = "WebServiceMonitor_name"
-  app_domain   = "acc_test_domain"
+  id           = "ResTestWebServiceMonitor"
+  app_domain   = "acceptance_test"
   wsdlurl      = "wsdlurl"
   endpoint_url = "endpointurl"
   frontend_url = "frontendurl"

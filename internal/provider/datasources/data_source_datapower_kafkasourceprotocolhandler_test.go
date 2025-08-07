@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceKafkaSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.KafkaSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_kafkasourceprotocolhandler.test", "result.0.id", "KafkaSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_kafkasourceprotocolhandler.test", "result.0.id", "AccTest_KafkaSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_kafkasourceprotocolhandler.test", "result.0.batch_size", "1"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

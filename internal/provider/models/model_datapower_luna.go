@@ -34,12 +34,12 @@ import (
 )
 
 type Luna struct {
-	Id                types.String      `tfsdk:"id"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	RemoteAddress     types.String      `tfsdk:"remote_address"`
-	ServerCert        types.String      `tfsdk:"server_cert"`
-	SecurityOption    types.String      `tfsdk:"security_option"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	RemoteAddress     types.String                `tfsdk:"remote_address"`
+	ServerCert        types.String                `tfsdk:"server_cert"`
+	SecurityOption    types.String                `tfsdk:"security_option"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var LunaObjectType = map[string]attr.Type{

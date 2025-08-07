@@ -14,8 +14,7 @@ Schema Exception Map
 
 ```terraform
 data "datapower_schemaexceptionmap" "test" {
-  depends_on = [datapower_schemaexceptionmap.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,8 +40,8 @@ func TestAccDataSourceStylePolicyAction(t *testing.T) {
 			{
 				Config: testconfig.StylePolicyActionTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.id", "___StylePolicyAction_test"),
-					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.type", "xform"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.id", "__default-accept-service-providers-filter-action__"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.type", "filter"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.parse_metrics_result_type", "none"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.input_language", "xml"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.transform_language", "none"),
@@ -50,7 +49,7 @@ func TestAccDataSourceStylePolicyAction(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.action_debug", "false"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.no_transcode_utf8", "false"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.named_in_out_location_type", "default"),
-					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.ssl_client_config_type", "client"),
+					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.ssl_client_config_type", "proxy"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.transactional", "false"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.soap_validation", "body"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.sql_source_type", "static"),
@@ -67,5 +66,4 @@ func TestAccDataSourceStylePolicyAction(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

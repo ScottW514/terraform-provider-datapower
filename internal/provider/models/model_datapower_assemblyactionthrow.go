@@ -34,17 +34,17 @@ import (
 )
 
 type AssemblyActionThrow struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	ErrorId           types.String      `tfsdk:"error_id"`
-	ErrorText         types.String      `tfsdk:"error_text"`
-	ErrorStatusCode   types.String      `tfsdk:"error_status_code"`
-	ErrorStatusReason types.String      `tfsdk:"error_status_reason"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Title             types.String      `tfsdk:"title"`
-	CorrelationPath   types.String      `tfsdk:"correlation_path"`
-	ActionDebug       types.Bool        `tfsdk:"action_debug"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	ErrorId           types.String                `tfsdk:"error_id"`
+	ErrorText         types.String                `tfsdk:"error_text"`
+	ErrorStatusCode   types.String                `tfsdk:"error_status_code"`
+	ErrorStatusReason types.String                `tfsdk:"error_status_reason"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Title             types.String                `tfsdk:"title"`
+	CorrelationPath   types.String                `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionThrowObjectType = map[string]attr.Type{

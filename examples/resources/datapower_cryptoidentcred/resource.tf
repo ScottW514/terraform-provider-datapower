@@ -1,7 +1,7 @@
 
 resource "datapower_cryptoidentcred" "test" {
-  id          = "CookieAttributePolicy_name"
-  app_domain  = "acc_test_domain"
-  key         = "TestAccCryptoKey"
-  certificate = "TestAccCryptoCertificate"
+  id          = "ResTestCryptoIdentCred"
+  app_domain  = "acceptance_test"
+  key         = "AccTest_CryptoKey"
+  certificate = "AccTest_CryptoCertificate"
 }

@@ -34,11 +34,11 @@ import (
 )
 
 type MPGWErrorHandlingPolicy struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	PolicyMaps        types.List        `tfsdk:"policy_maps"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	PolicyMaps        types.List                  `tfsdk:"policy_maps"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MPGWErrorHandlingPolicyObjectType = map[string]attr.Type{

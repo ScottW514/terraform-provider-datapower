@@ -34,16 +34,16 @@ import (
 )
 
 type OAuthSupportedClientGroup struct {
-	Id                 types.String      `tfsdk:"id"`
-	AppDomain          types.String      `tfsdk:"app_domain"`
-	UserSummary        types.String      `tfsdk:"user_summary"`
-	Customized         types.Bool        `tfsdk:"customized"`
-	CustomizedType     types.String      `tfsdk:"customized_type"`
-	OAuthRole          *DmOAuthRole      `tfsdk:"o_auth_role"`
-	Client             types.List        `tfsdk:"client"`
-	TemplateProcessUrl types.String      `tfsdk:"template_process_url"`
-	ClientTemplate     types.String      `tfsdk:"client_template"`
-	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
+	Id                 types.String                `tfsdk:"id"`
+	AppDomain          types.String                `tfsdk:"app_domain"`
+	UserSummary        types.String                `tfsdk:"user_summary"`
+	Customized         types.Bool                  `tfsdk:"customized"`
+	CustomizedType     types.String                `tfsdk:"customized_type"`
+	OAuthRole          *DmOAuthRole                `tfsdk:"o_auth_role"`
+	Client             types.List                  `tfsdk:"client"`
+	TemplateProcessUrl types.String                `tfsdk:"template_process_url"`
+	ClientTemplate     types.String                `tfsdk:"client_template"`
+	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var OAuthSupportedClientGroupObjectType = map[string]attr.Type{

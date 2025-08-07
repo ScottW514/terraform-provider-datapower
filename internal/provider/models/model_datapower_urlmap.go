@@ -34,11 +34,11 @@ import (
 )
 
 type URLMap struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	UrlMapRule        types.List        `tfsdk:"url_map_rule"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	UrlMapRule        types.List                  `tfsdk:"url_map_rule"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var URLMapObjectType = map[string]attr.Type{

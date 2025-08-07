@@ -34,16 +34,16 @@ import (
 )
 
 type WebServiceMonitor struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Wsdlurl           types.String      `tfsdk:"wsdlurl"`
-	Operations        types.List        `tfsdk:"operations"`
-	EndpointName      types.String      `tfsdk:"endpoint_name"`
-	EndpointUrl       types.String      `tfsdk:"endpoint_url"`
-	FrontendUrl       types.String      `tfsdk:"frontend_url"`
-	Transport         types.String      `tfsdk:"transport"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Wsdlurl           types.String                `tfsdk:"wsdlurl"`
+	Operations        types.List                  `tfsdk:"operations"`
+	EndpointName      types.String                `tfsdk:"endpoint_name"`
+	EndpointUrl       types.String                `tfsdk:"endpoint_url"`
+	FrontendUrl       types.String                `tfsdk:"frontend_url"`
+	Transport         types.String                `tfsdk:"transport"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WebServiceMonitorObjectType = map[string]attr.Type{

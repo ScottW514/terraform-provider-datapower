@@ -34,17 +34,17 @@ import (
 )
 
 type CryptoValCred struct {
-	Id                 types.String      `tfsdk:"id"`
-	AppDomain          types.String      `tfsdk:"app_domain"`
-	Certificate        types.List        `tfsdk:"certificate"`
-	CertValidationMode types.String      `tfsdk:"cert_validation_mode"`
-	UseCrl             types.Bool        `tfsdk:"use_crl"`
-	RequireCrl         types.Bool        `tfsdk:"require_crl"`
-	CrldpHandling      types.String      `tfsdk:"crldp_handling"`
-	InitialPolicySet   types.List        `tfsdk:"initial_policy_set"`
-	ExplicitPolicy     types.Bool        `tfsdk:"explicit_policy"`
-	CheckDates         types.Bool        `tfsdk:"check_dates"`
-	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
+	Id                 types.String                `tfsdk:"id"`
+	AppDomain          types.String                `tfsdk:"app_domain"`
+	Certificate        types.List                  `tfsdk:"certificate"`
+	CertValidationMode types.String                `tfsdk:"cert_validation_mode"`
+	UseCrl             types.Bool                  `tfsdk:"use_crl"`
+	RequireCrl         types.Bool                  `tfsdk:"require_crl"`
+	CrldpHandling      types.String                `tfsdk:"crldp_handling"`
+	InitialPolicySet   types.List                  `tfsdk:"initial_policy_set"`
+	ExplicitPolicy     types.Bool                  `tfsdk:"explicit_policy"`
+	CheckDates         types.Bool                  `tfsdk:"check_dates"`
+	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CryptoValCredObjectType = map[string]attr.Type{

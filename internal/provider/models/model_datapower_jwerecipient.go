@@ -34,14 +34,14 @@ import (
 )
 
 type JWERecipient struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Algorithm         types.String      `tfsdk:"algorithm"`
-	SsKey             types.String      `tfsdk:"ss_key"`
-	Certificate       types.String      `tfsdk:"certificate"`
-	UnprotectedHeader types.List        `tfsdk:"unprotected_header"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Algorithm         types.String                `tfsdk:"algorithm"`
+	SsKey             types.String                `tfsdk:"ss_key"`
+	Certificate       types.String                `tfsdk:"certificate"`
+	UnprotectedHeader types.List                  `tfsdk:"unprotected_header"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var JWERecipientObjectType = map[string]attr.Type{

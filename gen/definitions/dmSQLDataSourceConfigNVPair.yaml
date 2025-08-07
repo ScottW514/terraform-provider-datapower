@@ -5,7 +5,9 @@ attributes:
   - name: ParamName
     type: String
     required: true
-    example: 'param_name'
+    test_value: '"ResTestparam"'
+    test_expect_ds: '"AccTest_param"'
+    example: 'paramName'
     description: 'Name'
   - name: ParamValue
     type: String

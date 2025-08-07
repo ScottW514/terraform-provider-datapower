@@ -16,8 +16,8 @@ Client security assembly action
 
 ```terraform
 resource "datapower_assemblyactionclientsecurity" "test" {
-  id                         = "AssemblyActionClientSecurity_name"
-  app_domain                 = "acc_test_domain"
+  id                         = "ResTestAssemblyActionClientSecurity"
+  app_domain                 = "acceptance_test"
   authenticate_client_method = "native"
 }
 ```

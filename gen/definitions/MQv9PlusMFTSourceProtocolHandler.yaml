@@ -11,7 +11,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'MQv9PlusMFTSourceProtocolHandler_name'
+    test_value: '"ResTestMQv9PlusMFTSourceProtocolHandler"'
+    test_expect_ds: '"AccTest_MQv9PlusMFTSourceProtocolHandler"'
+    example: 'MQv9PlusMFTSourceProtocolHandlerName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -35,7 +37,8 @@ attributes:
     type: String
     required: true
     description: 'Queue manager (reference to MQManger or MQManagerGroup)'
-    test_value: 'datapower_mqmanager.test.id'
+    test_value: '"AccTest_MQManager"'
+    test_bed_value: 'datapower_mqmanager.acc_test.id'
     cli_alias: queue-manager
   - name: GetQueue
     type: String
@@ -79,11 +82,3 @@ attributes:
     default: false
     description: 'Use queue manager in URL'
     cli_alias: use-qm-in-url
-test_prerequisites: |
-  resource "datapower_mqmanager" "test" {
-    id = "MQManager_name"
-    app_domain = "acc_test_domain"
-    host_name = "localhost"
-    cache_timeout = 60
-    xml_manager = "default"
-  }

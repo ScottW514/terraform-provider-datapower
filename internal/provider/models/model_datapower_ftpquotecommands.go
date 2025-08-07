@@ -34,11 +34,11 @@ import (
 )
 
 type FTPQuoteCommands struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	FtpQuotedCommands types.List        `tfsdk:"ftp_quoted_commands"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	FtpQuotedCommands types.List                  `tfsdk:"ftp_quoted_commands"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var FTPQuoteCommandsObjectType = map[string]attr.Type{

@@ -34,19 +34,19 @@ import (
 )
 
 type ZosNSSClient struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	RemoteAddress       types.String      `tfsdk:"remote_address"`
-	RemotePort          types.Int64       `tfsdk:"remote_port"`
-	ClientId            types.String      `tfsdk:"client_id"`
-	SystemName          types.String      `tfsdk:"system_name"`
-	UserName            types.String      `tfsdk:"user_name"`
-	Password            types.String      `tfsdk:"password"`
-	PasswordAlias       types.String      `tfsdk:"password_alias"`
-	SslClientConfigType types.String      `tfsdk:"ssl_client_config_type"`
-	SslClient           types.String      `tfsdk:"ssl_client"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	RemoteAddress       types.String                `tfsdk:"remote_address"`
+	RemotePort          types.Int64                 `tfsdk:"remote_port"`
+	ClientId            types.String                `tfsdk:"client_id"`
+	SystemName          types.String                `tfsdk:"system_name"`
+	UserName            types.String                `tfsdk:"user_name"`
+	Password            types.String                `tfsdk:"password"`
+	PasswordAlias       types.String                `tfsdk:"password_alias"`
+	SslClientConfigType types.String                `tfsdk:"ssl_client_config_type"`
+	SslClient           types.String                `tfsdk:"ssl_client"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ZosNSSClientObjectType = map[string]attr.Type{

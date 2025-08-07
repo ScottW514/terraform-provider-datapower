@@ -1,6 +1,6 @@
 
 resource "datapower_slmaction" "test" {
-  id         = "___SLMAction_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTest_SLMAction"
+  app_domain = "acceptance_test"
   type       = "log-only"
 }

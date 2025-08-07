@@ -34,10 +34,10 @@ import (
 )
 
 type CryptoSSKey struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Filename          types.String      `tfsdk:"filename"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Filename          types.String                `tfsdk:"filename"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CryptoSSKeyObjectType = map[string]attr.Type{

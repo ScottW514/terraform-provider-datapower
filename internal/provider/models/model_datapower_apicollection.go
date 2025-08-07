@@ -60,7 +60,7 @@ type APICollection struct {
 	AnalyticsEndpoint            types.String                     `tfsdk:"analytics_endpoint"`
 	ApplicationType              types.List                       `tfsdk:"application_type"`
 	ParseSettingsReference       *DmDynamicParseSettingsReference `tfsdk:"parse_settings_reference"`
-	DependencyActions            []*actions.Action                `tfsdk:"dependency_actions"`
+	DependencyActions            []*actions.DependencyAction      `tfsdk:"dependency_actions"`
 }
 
 var APICollectionObjectType = map[string]attr.Type{

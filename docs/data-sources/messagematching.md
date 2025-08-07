@@ -14,8 +14,7 @@ Message Matching
 
 ```terraform
 data "datapower_messagematching" "test" {
-  depends_on = [datapower_messagematching.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

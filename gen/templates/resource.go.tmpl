@@ -36,6 +36,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
@@ -217,7 +218,7 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Create, {{if eq .Name "Domain"}}true{{else}}false{{end}})
 {{- if hasWriteOnlyAttribute .Attributes}}
 
 	var config models.{{.Name}}
@@ -269,6 +270,10 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 		}
 	}
 {{- end}}
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -312,7 +317,7 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Update, {{if eq .Name "Domain"}}true{{else}}false{{end}})
 {{- if hasWriteOnlyAttribute .Attributes}}
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
@@ -354,11 +359,14 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 	}
 {{- end}}
 
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-{{- if not .UpdateOnly}}
 	var data models.{{.Name}}
 
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -366,9 +374,11 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Delete, {{if eq .Name "Domain"}}true{{else}}false{{end}})
 
-{{- if eq .Name "Domain"}}
+{{- if not .UpdateOnly}}
+	{{- if eq .Name "Domain"}}
+
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
 	auRes, auErr := r.client.Get("/mgmt/status/default/ActiveUsers")
 	if auErr != nil {
@@ -384,18 +394,23 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 			}
 		}
 	}
-{{- end}}
+	{{- end}}
 
-{{- if or (eq .Name "Domain") .UpdateOnly}}
+	{{- if or (eq .Name "Domain") .UpdateOnly}}
 	_, err := r.client.Delete(data.GetPath())
-{{- else}}
+	{{- else}}
 	_, err := r.client.Delete(data.GetPath()+"/"+data.Id.ValueString())
-{{- end}}
+	{{- end}}
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
 		return
 	}
+
 {{- end}}
+	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	resp.State.RemoveResource(ctx)
 }
@@ -437,7 +452,6 @@ func (r *{{.Name}}Resource) ModifyPlan(ctx context.Context, req resource.ModifyP
 }
 {{- end}}
 
-{{- if len .Actions}}
 func (r *{{.Name}}Resource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
 	var data models.{{.Name}}
 
@@ -448,4 +462,3 @@ func (r *{{.Name}}Resource) ValidateConfig(ctx context.Context, req resource.Val
 
 	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }
-{{- end}}

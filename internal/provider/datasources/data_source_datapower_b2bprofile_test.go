@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceB2BProfile(t *testing.T) {
 			{
 				Config: testconfig.B2BProfileTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_b2bprofile.test", "result.0.id", "B2BProfile_name"),
+					resource.TestCheckResourceAttr("data.datapower_b2bprofile.test", "result.0.id", "AccTest_B2BProfile"),
 					resource.TestCheckResourceAttr("data.datapower_b2bprofile.test", "result.0.profile_type", "internal"),
 					resource.TestCheckResourceAttr("data.datapower_b2bprofile.test", "result.0.response_type", "preprocessed"),
 					resource.TestCheckResourceAttr("data.datapower_b2bprofile.test", "result.0.inbound_require_signed", "false"),
@@ -79,5 +78,4 @@ func TestAccDataSourceB2BProfile(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

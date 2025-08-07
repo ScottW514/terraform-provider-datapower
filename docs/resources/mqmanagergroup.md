@@ -16,9 +16,9 @@ IBM MQ v9+ queue manager group
 
 ```terraform
 resource "datapower_mqmanagergroup" "test" {
-  id                    = "MQManagerGroup_name"
-  app_domain            = "acc_test_domain"
-  primary_queue_manager = "TestAccMQManager"
+  id                    = "ResTestMQManagerGroup"
+  app_domain            = "acceptance_test"
+  primary_queue_manager = "AccTest_MQManager"
 }
 ```
 

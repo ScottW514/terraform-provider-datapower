@@ -34,13 +34,13 @@ import (
 )
 
 type LDAPConnectionPool struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	IdleTimeout       types.Int64       `tfsdk:"idle_timeout"`
-	MaxPoolSize       types.Int64       `tfsdk:"max_pool_size"`
-	RejectOnPoolLimit types.Bool        `tfsdk:"reject_on_pool_limit"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	IdleTimeout       types.Int64                 `tfsdk:"idle_timeout"`
+	MaxPoolSize       types.Int64                 `tfsdk:"max_pool_size"`
+	RejectOnPoolLimit types.Bool                  `tfsdk:"reject_on_pool_limit"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var LDAPConnectionPoolObjectType = map[string]attr.Type{

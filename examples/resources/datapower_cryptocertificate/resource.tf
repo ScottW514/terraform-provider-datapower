@@ -1,6 +1,6 @@
 
 resource "datapower_cryptocertificate" "test" {
-  id         = "CryptoCertificate_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestCryptoCertificate"
+  app_domain = "acceptance_test"
   filename   = "cert:///acc-test-server.crt"
 }

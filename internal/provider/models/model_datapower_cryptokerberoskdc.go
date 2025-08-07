@@ -34,18 +34,18 @@ import (
 )
 
 type CryptoKerberosKDC struct {
-	Id                      types.String      `tfsdk:"id"`
-	AppDomain               types.String      `tfsdk:"app_domain"`
-	UserSummary             types.String      `tfsdk:"user_summary"`
-	Realm                   types.String      `tfsdk:"realm"`
-	Server                  types.String      `tfsdk:"server"`
-	UseTcp                  types.Bool        `tfsdk:"use_tcp"`
-	ServerPort              types.Int64       `tfsdk:"server_port"`
-	UdpTimeout              types.Int64       `tfsdk:"udp_timeout"`
-	CacheTickets            types.Bool        `tfsdk:"cache_tickets"`
-	MaxCachedTickets        types.Int64       `tfsdk:"max_cached_tickets"`
-	MinCachedTicketValidity types.Int64       `tfsdk:"min_cached_ticket_validity"`
-	DependencyActions       []*actions.Action `tfsdk:"dependency_actions"`
+	Id                      types.String                `tfsdk:"id"`
+	AppDomain               types.String                `tfsdk:"app_domain"`
+	UserSummary             types.String                `tfsdk:"user_summary"`
+	Realm                   types.String                `tfsdk:"realm"`
+	Server                  types.String                `tfsdk:"server"`
+	UseTcp                  types.Bool                  `tfsdk:"use_tcp"`
+	ServerPort              types.Int64                 `tfsdk:"server_port"`
+	UdpTimeout              types.Int64                 `tfsdk:"udp_timeout"`
+	CacheTickets            types.Bool                  `tfsdk:"cache_tickets"`
+	MaxCachedTickets        types.Int64                 `tfsdk:"max_cached_tickets"`
+	MinCachedTicketValidity types.Int64                 `tfsdk:"min_cached_ticket_validity"`
+	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CryptoKerberosKDCObjectType = map[string]attr.Type{

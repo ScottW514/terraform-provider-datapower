@@ -34,16 +34,16 @@ import (
 )
 
 type AssemblyActionLog struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Mode              types.String      `tfsdk:"mode"`
-	LogLevel          types.String      `tfsdk:"log_level"`
-	RecountBytesSent  types.Bool        `tfsdk:"recount_bytes_sent"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Title             types.String      `tfsdk:"title"`
-	CorrelationPath   types.String      `tfsdk:"correlation_path"`
-	ActionDebug       types.Bool        `tfsdk:"action_debug"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Mode              types.String                `tfsdk:"mode"`
+	LogLevel          types.String                `tfsdk:"log_level"`
+	RecountBytesSent  types.Bool                  `tfsdk:"recount_bytes_sent"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Title             types.String                `tfsdk:"title"`
+	CorrelationPath   types.String                `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionLogObjectType = map[string]attr.Type{

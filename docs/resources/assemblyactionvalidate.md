@@ -16,8 +16,8 @@ Validate assembly action
 
 ```terraform
 resource "datapower_assemblyactionvalidate" "test" {
-  id         = "AssemblyActionValidate_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyActionValidate"
+  app_domain = "acceptance_test"
 }
 ```
 

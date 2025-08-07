@@ -16,8 +16,8 @@ Access profile
 
 ```terraform
 resource "datapower_accessprofile" "test" {
-  id         = "AccessProfile_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAccessProfile"
+  app_domain = "acceptance_test"
 }
 ```
 

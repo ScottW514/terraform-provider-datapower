@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceMQv9PlusMFTSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.MQv9PlusMFTSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_mqv9plusmftsourceprotocolhandler.test", "result.0.id", "MQv9PlusMFTSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_mqv9plusmftsourceprotocolhandler.test", "result.0.id", "AccTest_MQv9PlusMFTSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_mqv9plusmftsourceprotocolhandler.test", "result.0.get_message_options", "32769"),
 					resource.TestCheckResourceAttr("data.datapower_mqv9plusmftsourceprotocolhandler.test", "result.0.concurrent_connections", "1"),
 					resource.TestCheckResourceAttr("data.datapower_mqv9plusmftsourceprotocolhandler.test", "result.0.polling_interval", "30"),
@@ -52,5 +51,4 @@ func TestAccDataSourceMQv9PlusMFTSourceProtocolHandler(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -16,10 +16,10 @@ User account (`default` domain only)
 
 ```terraform
 resource "datapower_user" "test" {
-  id                = "0user"
+  id                = "ResTest_User"
   password          = "Password$123"
   access_level      = "group-defined"
-  group_name        = "TestAccUserGroup"
+  group_name        = "AccTest_UserGroup"
   snmp_creds        = null
   hashed_snmp_creds = null
 }

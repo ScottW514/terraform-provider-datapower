@@ -34,24 +34,24 @@ import (
 )
 
 type AMQPBroker struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	HostName          types.String      `tfsdk:"host_name"`
-	Port              types.Int64       `tfsdk:"port"`
-	XmlManager        types.String      `tfsdk:"xml_manager"`
-	ContainerId       types.String      `tfsdk:"container_id"`
-	Authorization     types.String      `tfsdk:"authorization"`
-	UserName          types.String      `tfsdk:"user_name"`
-	PasswordAlias     types.String      `tfsdk:"password_alias"`
-	MaximumFrameSize  types.Int64       `tfsdk:"maximum_frame_size"`
-	AutoRetry         types.Bool        `tfsdk:"auto_retry"`
-	RetryInterval     types.Int64       `tfsdk:"retry_interval"`
-	RetryAttempts     types.Int64       `tfsdk:"retry_attempts"`
-	LongRetryInterval types.Int64       `tfsdk:"long_retry_interval"`
-	ReportingInterval types.Int64       `tfsdk:"reporting_interval"`
-	SslClient         types.String      `tfsdk:"ssl_client"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	HostName          types.String                `tfsdk:"host_name"`
+	Port              types.Int64                 `tfsdk:"port"`
+	XmlManager        types.String                `tfsdk:"xml_manager"`
+	ContainerId       types.String                `tfsdk:"container_id"`
+	Authorization     types.String                `tfsdk:"authorization"`
+	UserName          types.String                `tfsdk:"user_name"`
+	PasswordAlias     types.String                `tfsdk:"password_alias"`
+	MaximumFrameSize  types.Int64                 `tfsdk:"maximum_frame_size"`
+	AutoRetry         types.Bool                  `tfsdk:"auto_retry"`
+	RetryInterval     types.Int64                 `tfsdk:"retry_interval"`
+	RetryAttempts     types.Int64                 `tfsdk:"retry_attempts"`
+	LongRetryInterval types.Int64                 `tfsdk:"long_retry_interval"`
+	ReportingInterval types.Int64                 `tfsdk:"reporting_interval"`
+	SslClient         types.String                `tfsdk:"ssl_client"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AMQPBrokerObjectType = map[string]attr.Type{

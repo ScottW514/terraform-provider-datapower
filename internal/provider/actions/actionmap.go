@@ -28,10 +28,10 @@ type target struct {
 	ValidActions map[string]action
 }
 
-const DomainQuiesceBody = `{"DomainQuiesce": {"name": "{domain}", "timeout": 60}}`
-const DomainUnquiesceBody = `{"DomainUnquiesce": {"name": "{domain}"}}`
-const ServiceQuiesceBody = `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`
-const ServiceUnquiesceBody = `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`
+const domainQuiesceBody = `{"DomainQuiesce": {"name": "{domain}", "timeout": 60}}`
+const domainUnquiesceBody = `{"DomainUnquiesce": {"name": "{domain}"}}`
+const serviceQuiesceBody = `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`
+const serviceUnquiesceBody = `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`
 
 var actionMap = map[string]target{
 	"resource_datapower_aaapolicy": {

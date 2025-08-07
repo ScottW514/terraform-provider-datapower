@@ -16,11 +16,11 @@ WSRR subscription
 
 ```terraform
 resource "datapower_wsrrsubscription" "test" {
-  id          = "WSRRSubscription_name"
-  app_domain  = "acc_test_domain"
-  server      = "TestAccWSRRServer"
+  id          = "ResTestWSRRSubscription"
+  app_domain  = "acceptance_test"
+  server      = "AccTest_WSRRServer"
   object_type = "wsdl"
-  object_name = "object_name"
+  object_name = "ResTestobject"
 }
 ```
 

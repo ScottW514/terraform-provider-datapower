@@ -14,7 +14,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'APIGateway_name'
+    test_value: '"ResTestAPIGateway"'
+    test_expect_ds: '"AccTest_APIGateway"'
+    example: 'APIGatewayName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -41,7 +43,8 @@ attributes:
   - name: FrontProtocol
     type: List
     element_type: String
-    test_value: '[datapower_httpsourceprotocolhandler.test.id]'
+    test_value: '["AccTest_HTTPSourceProtocolHandler"]'
+    test_bed_value: '[datapower_httpsourceprotocolhandler.acc_test.id]'
     required: true
     description: 'Protocol handler (reference to HTTP or HTTPS Source Protocol Hander)'
     cli_alias: front-protocol
@@ -170,10 +173,3 @@ attributes:
     element_type: DmOpenTelemetryResourceAttribute
     description: 'OpenTelemetry resource attributes'
     cli_alias: otel-resource-attribute
-test_prerequisites: |
-  resource "datapower_httpsourceprotocolhandler" "test" {
-    id = "HTTPSourceProtocolHandler_name"
-    app_domain = "acc_test_domain"
-    local_address = "0.0.0.0"
-    local_port = 80
-  }

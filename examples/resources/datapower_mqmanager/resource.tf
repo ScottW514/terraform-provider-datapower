@@ -1,7 +1,7 @@
 
 resource "datapower_mqmanager" "test" {
-  id            = "MQManager_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestMQManager"
+  app_domain    = "acceptance_test"
   host_name     = "localhost"
   cache_timeout = 60
   xml_manager   = "default"

@@ -34,14 +34,14 @@ import (
 )
 
 type CryptoKerberosKeytab struct {
-	Id                  types.String        `tfsdk:"id"`
-	AppDomain           types.String        `tfsdk:"app_domain"`
-	UserSummary         types.String        `tfsdk:"user_summary"`
-	Filename            types.String        `tfsdk:"filename"`
-	UseReplayCache      types.Bool          `tfsdk:"use_replay_cache"`
-	GenerateGssChecksum types.Bool          `tfsdk:"generate_gss_checksum"`
-	GssChecksumFlags    *DmGssChecksumFlags `tfsdk:"gss_checksum_flags"`
-	DependencyActions   []*actions.Action   `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	Filename            types.String                `tfsdk:"filename"`
+	UseReplayCache      types.Bool                  `tfsdk:"use_replay_cache"`
+	GenerateGssChecksum types.Bool                  `tfsdk:"generate_gss_checksum"`
+	GssChecksumFlags    *DmGssChecksumFlags         `tfsdk:"gss_checksum_flags"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CryptoKerberosKeytabObjectType = map[string]attr.Type{

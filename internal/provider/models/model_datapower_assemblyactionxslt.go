@@ -34,17 +34,17 @@ import (
 )
 
 type AssemblyActionXSLT struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UsePayload        types.Bool        `tfsdk:"use_payload"`
-	Stylesheet        types.String      `tfsdk:"stylesheet"`
-	SerializeOutput   types.Bool        `tfsdk:"serialize_output"`
-	CompileSettings   types.String      `tfsdk:"compile_settings"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Title             types.String      `tfsdk:"title"`
-	CorrelationPath   types.String      `tfsdk:"correlation_path"`
-	ActionDebug       types.Bool        `tfsdk:"action_debug"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UsePayload        types.Bool                  `tfsdk:"use_payload"`
+	Stylesheet        types.String                `tfsdk:"stylesheet"`
+	SerializeOutput   types.Bool                  `tfsdk:"serialize_output"`
+	CompileSettings   types.String                `tfsdk:"compile_settings"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Title             types.String                `tfsdk:"title"`
+	CorrelationPath   types.String                `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionXSLTObjectType = map[string]attr.Type{

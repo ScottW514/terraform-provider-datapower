@@ -17,8 +17,8 @@ XSL Proxy
 
 ```terraform
 resource "datapower_xslproxyservice" "test" {
-  id             = "XSLProxyService_name"
-  app_domain     = "acc_test_domain"
+  id             = "ResTestXSLProxyService"
+  app_domain     = "acceptance_test"
   type           = "static-backend"
   xml_manager    = "default"
   local_port     = 8899

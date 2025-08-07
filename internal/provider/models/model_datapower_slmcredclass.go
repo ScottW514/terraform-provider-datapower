@@ -34,15 +34,15 @@ import (
 )
 
 type SLMCredClass struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	CredType          types.String      `tfsdk:"cred_type"`
-	CredMatchType     types.String      `tfsdk:"cred_match_type"`
-	CredValue         types.List        `tfsdk:"cred_value"`
-	Stylesheet        types.String      `tfsdk:"stylesheet"`
-	Header            types.String      `tfsdk:"header"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	CredType          types.String                `tfsdk:"cred_type"`
+	CredMatchType     types.String                `tfsdk:"cred_match_type"`
+	CredValue         types.List                  `tfsdk:"cred_value"`
+	Stylesheet        types.String                `tfsdk:"stylesheet"`
+	Header            types.String                `tfsdk:"header"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SLMCredClassObjectType = map[string]attr.Type{

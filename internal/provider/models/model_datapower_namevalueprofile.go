@@ -34,19 +34,19 @@ import (
 )
 
 type NameValueProfile struct {
-	Id                     types.String      `tfsdk:"id"`
-	AppDomain              types.String      `tfsdk:"app_domain"`
-	UserSummary            types.String      `tfsdk:"user_summary"`
-	MaxAttributes          types.Int64       `tfsdk:"max_attributes"`
-	MaxAggregateSize       types.Int64       `tfsdk:"max_aggregate_size"`
-	MaxNameSize            types.Int64       `tfsdk:"max_name_size"`
-	MaxValueSize           types.Int64       `tfsdk:"max_value_size"`
-	ValidationList         types.List        `tfsdk:"validation_list"`
-	DefaultFixup           types.String      `tfsdk:"default_fixup"`
-	DefaultMapValue        types.String      `tfsdk:"default_map_value"`
-	DefaultXss             types.Bool        `tfsdk:"default_xss"`
-	NoMatchXssPatternsFile types.String      `tfsdk:"no_match_xss_patterns_file"`
-	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
+	Id                     types.String                `tfsdk:"id"`
+	AppDomain              types.String                `tfsdk:"app_domain"`
+	UserSummary            types.String                `tfsdk:"user_summary"`
+	MaxAttributes          types.Int64                 `tfsdk:"max_attributes"`
+	MaxAggregateSize       types.Int64                 `tfsdk:"max_aggregate_size"`
+	MaxNameSize            types.Int64                 `tfsdk:"max_name_size"`
+	MaxValueSize           types.Int64                 `tfsdk:"max_value_size"`
+	ValidationList         types.List                  `tfsdk:"validation_list"`
+	DefaultFixup           types.String                `tfsdk:"default_fixup"`
+	DefaultMapValue        types.String                `tfsdk:"default_map_value"`
+	DefaultXss             types.Bool                  `tfsdk:"default_xss"`
+	NoMatchXssPatternsFile types.String                `tfsdk:"no_match_xss_patterns_file"`
+	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var NameValueProfileObjectType = map[string]attr.Type{

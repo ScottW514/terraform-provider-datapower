@@ -1,10 +1,10 @@
 
 resource "datapower_wxsgrid" "test" {
-  id             = "WXSGrid_name"
-  app_domain     = "acc_test_domain"
-  collective     = "TestAccLoadBalancerGroup"
+  id             = "ResTestWXSGrid"
+  app_domain     = "acceptance_test"
+  collective     = "AccTest_LoadBalancerGroup"
   grid           = "gridname"
   user_name      = "username"
-  password_alias = "TestAccPasswordAlias"
+  password_alias = "AccTest_PasswordAlias"
   timeout        = 1000
 }

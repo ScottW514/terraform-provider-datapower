@@ -34,12 +34,12 @@ import (
 )
 
 type MCFCustomRule struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	CustomRuleName    types.String      `tfsdk:"custom_rule_name"`
-	CustomRuleValue   types.String      `tfsdk:"custom_rule_value"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	CustomRuleName    types.String                `tfsdk:"custom_rule_name"`
+	CustomRuleValue   types.String                `tfsdk:"custom_rule_value"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MCFCustomRuleObjectType = map[string]attr.Type{

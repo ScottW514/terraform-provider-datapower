@@ -34,13 +34,13 @@ import (
 )
 
 type IncludeConfig struct {
-	Id                 types.String      `tfsdk:"id"`
-	AppDomain          types.String      `tfsdk:"app_domain"`
-	UserSummary        types.String      `tfsdk:"user_summary"`
-	Url                types.String      `tfsdk:"url"`
-	OnStartup          types.Bool        `tfsdk:"on_startup"`
-	InterfaceDetection types.Bool        `tfsdk:"interface_detection"`
-	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
+	Id                 types.String                `tfsdk:"id"`
+	AppDomain          types.String                `tfsdk:"app_domain"`
+	UserSummary        types.String                `tfsdk:"user_summary"`
+	Url                types.String                `tfsdk:"url"`
+	OnStartup          types.Bool                  `tfsdk:"on_startup"`
+	InterfaceDetection types.Bool                  `tfsdk:"interface_detection"`
+	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var IncludeConfigObjectType = map[string]attr.Type{

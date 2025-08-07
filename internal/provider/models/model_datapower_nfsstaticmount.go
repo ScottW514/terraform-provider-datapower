@@ -34,20 +34,20 @@ import (
 )
 
 type NFSStaticMount struct {
-	Id                    types.String      `tfsdk:"id"`
-	AppDomain             types.String      `tfsdk:"app_domain"`
-	UserSummary           types.String      `tfsdk:"user_summary"`
-	Remote                types.String      `tfsdk:"remote"`
-	LocalFilesystemAccess types.Bool        `tfsdk:"local_filesystem_access"`
-	Version               types.Int64       `tfsdk:"version"`
-	Transport             types.String      `tfsdk:"transport"`
-	MountType             types.String      `tfsdk:"mount_type"`
-	ReadOnly              types.Bool        `tfsdk:"read_only"`
-	ReadSize              types.Int64       `tfsdk:"read_size"`
-	WriteSize             types.Int64       `tfsdk:"write_size"`
-	Timeout               types.Int64       `tfsdk:"timeout"`
-	Retransmissions       types.Int64       `tfsdk:"retransmissions"`
-	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
+	Id                    types.String                `tfsdk:"id"`
+	AppDomain             types.String                `tfsdk:"app_domain"`
+	UserSummary           types.String                `tfsdk:"user_summary"`
+	Remote                types.String                `tfsdk:"remote"`
+	LocalFilesystemAccess types.Bool                  `tfsdk:"local_filesystem_access"`
+	Version               types.Int64                 `tfsdk:"version"`
+	Transport             types.String                `tfsdk:"transport"`
+	MountType             types.String                `tfsdk:"mount_type"`
+	ReadOnly              types.Bool                  `tfsdk:"read_only"`
+	ReadSize              types.Int64                 `tfsdk:"read_size"`
+	WriteSize             types.Int64                 `tfsdk:"write_size"`
+	Timeout               types.Int64                 `tfsdk:"timeout"`
+	Retransmissions       types.Int64                 `tfsdk:"retransmissions"`
+	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var NFSStaticMountObjectType = map[string]attr.Type{

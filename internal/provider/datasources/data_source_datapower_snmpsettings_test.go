@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -47,7 +46,7 @@ func TestAccDataSourceSNMPSettings(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_snmpsettings.test", "security_level", "authPriv"),
 					resource.TestCheckResourceAttr("data.datapower_snmpsettings.test", "access_level", "read-only"),
 					resource.TestCheckResourceAttr("data.datapower_snmpsettings.test", "enable_default_trap_subscriptions", "true"),
-					resource.TestCheckResourceAttr("data.datapower_snmpsettings.test", "trap_priority", "error"),
+					resource.TestCheckResourceAttr("data.datapower_snmpsettings.test", "trap_priority", "warn"),
 					resource.TestCheckResourceAttr("data.datapower_snmpsettings.test", "config_mib", "/drConfigMIB.txt"),
 					resource.TestCheckResourceAttr("data.datapower_snmpsettings.test", "config_mib_mq", "/mqConfigMIB.txt"),
 					resource.TestCheckResourceAttr("data.datapower_snmpsettings.test", "status_mib", "/drStatusMIB.txt"),
@@ -58,5 +57,4 @@ func TestAccDataSourceSNMPSettings(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

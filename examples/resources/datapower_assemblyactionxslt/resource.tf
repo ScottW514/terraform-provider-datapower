@@ -1,6 +1,6 @@
 
 resource "datapower_assemblyactionxslt" "test" {
-  id         = "AssemblyActionXSLT_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyActionXSLT"
+  app_domain = "acceptance_test"
   stylesheet = "local:///stylesheet"
 }

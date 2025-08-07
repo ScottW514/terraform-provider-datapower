@@ -14,8 +14,7 @@ Web Token Service
 
 ```terraform
 data "datapower_webtokenservice" "test" {
-  depends_on = [datapower_webtokenservice.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

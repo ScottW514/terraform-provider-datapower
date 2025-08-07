@@ -34,17 +34,17 @@ import (
 )
 
 type MPGWErrorAction struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Type              types.String      `tfsdk:"type"`
-	RemoteUrl         types.String      `tfsdk:"remote_url"`
-	LocalUrl          types.String      `tfsdk:"local_url"`
-	ErrorRule         types.String      `tfsdk:"error_rule"`
-	StatusCode        types.Int64       `tfsdk:"status_code"`
-	ReasonPhrase      types.String      `tfsdk:"reason_phrase"`
-	HeaderInjection   types.List        `tfsdk:"header_injection"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Type              types.String                `tfsdk:"type"`
+	RemoteUrl         types.String                `tfsdk:"remote_url"`
+	LocalUrl          types.String                `tfsdk:"local_url"`
+	ErrorRule         types.String                `tfsdk:"error_rule"`
+	StatusCode        types.Int64                 `tfsdk:"status_code"`
+	ReasonPhrase      types.String                `tfsdk:"reason_phrase"`
+	HeaderInjection   types.List                  `tfsdk:"header_injection"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MPGWErrorActionObjectType = map[string]attr.Type{

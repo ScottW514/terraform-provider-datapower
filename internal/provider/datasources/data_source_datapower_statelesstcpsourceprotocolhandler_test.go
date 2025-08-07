@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceStatelessTCPSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.StatelessTCPSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_statelesstcpsourceprotocolhandler.test", "result.0.id", "StatelessTCPSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_statelesstcpsourceprotocolhandler.test", "result.0.id", "AccTest_StatelessTCPSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_statelesstcpsourceprotocolhandler.test", "result.0.local_address", "0.0.0.0"),
 					resource.TestCheckResourceAttr("data.datapower_statelesstcpsourceprotocolhandler.test", "result.0.local_port", "4000"),
 					resource.TestCheckResourceAttr("data.datapower_statelesstcpsourceprotocolhandler.test", "result.0.persistent_connections", "true"),
@@ -50,5 +49,4 @@ func TestAccDataSourceStatelessTCPSourceProtocolHandler(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

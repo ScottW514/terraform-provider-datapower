@@ -14,7 +14,6 @@ CRL Retrieval (`default` domain only)
 
 ```terraform
 data "datapower_crlfetch" "test" {
-  depends_on = [datapower_crlfetch.test]
 }
 ```
 

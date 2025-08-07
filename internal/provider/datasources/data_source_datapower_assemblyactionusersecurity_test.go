@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAssemblyActionUserSecurity(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionUserSecurityTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionusersecurity.test", "result.0.id", "AssemblyActionUserSecurity_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionusersecurity.test", "result.0.id", "AccTest_AssemblyActionUserSecurity"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionusersecurity.test", "result.0.factor_id", "default"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionusersecurity.test", "result.0.extract_identity_method", "basic"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionusersecurity.test", "result.0.ei_stop_on_error", "true"),
@@ -65,5 +64,4 @@ func TestAccDataSourceAssemblyActionUserSecurity(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

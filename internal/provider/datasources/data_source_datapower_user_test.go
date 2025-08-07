@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceUser(t *testing.T) {
 			{
 				Config: testconfig.UserTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_user.test", "result.0.id", "0user"),
-					resource.TestCheckResourceAttr("data.datapower_user.test", "result.0.access_level", "group-defined"),
+					resource.TestCheckResourceAttr("data.datapower_user.test", "result.0.id", "admin"),
+					resource.TestCheckResourceAttr("data.datapower_user.test", "result.0.access_level", "privileged"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

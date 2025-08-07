@@ -16,11 +16,11 @@ TLS hostname map
 
 ```terraform
 resource "datapower_sslsnimapping" "test" {
-  id         = "SSLSNIMapping_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestSSLSNIMapping"
+  app_domain = "acceptance_test"
   sni_mapping = [{
     host_name_wildmat = "hostname_wildmat"
-    ssl_server        = "TestAccSSLServerProfile"
+    ssl_server        = "AccTest_SSLServerProfile"
   }]
 }
 ```

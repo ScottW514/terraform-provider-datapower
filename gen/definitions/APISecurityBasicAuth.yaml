@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'APISecurityBasicAuth_name'
+    test_value: '"ResTestAPISecurityBasicAuth"'
+    test_expect_ds: '"AccTest_APISecurityBasicAuth"'
+    example: 'APISecurityBasicAuthName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -32,12 +34,7 @@ attributes:
   - name: UserRegistry
     type: String
     required: true
-    test_value: 'datapower_apiauthurlregistry.test.id'
+    test_value: '"AccTest_APIAuthURLRegistry"'
+    test_bed_value: 'datapower_apiauthurlregistry.acc_test.id'
     description: 'User registry (reference to APIAuthenticationURLRegistry or APILDAPRegistry)'
     cli_alias: user-registry
-test_prerequisites: |
-  resource "datapower_apiauthurlregistry" "test" {
-    id = "APIAuthURLRegistry_test"
-    app_domain = "acc_test_domain"
-    auth_url = "http://localhost"
-  }

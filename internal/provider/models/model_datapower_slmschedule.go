@@ -34,16 +34,16 @@ import (
 )
 
 type SLMSchedule struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DaysOfWeek        *DmWeekdayBitmap  `tfsdk:"days_of_week"`
-	StartTime         types.String      `tfsdk:"start_time"`
-	Duration          types.Int64       `tfsdk:"duration"`
-	StartDate         types.String      `tfsdk:"start_date"`
-	StopDate          types.String      `tfsdk:"stop_date"`
-	TimeZone          types.String      `tfsdk:"time_zone"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DaysOfWeek        *DmWeekdayBitmap            `tfsdk:"days_of_week"`
+	StartTime         types.String                `tfsdk:"start_time"`
+	Duration          types.Int64                 `tfsdk:"duration"`
+	StartDate         types.String                `tfsdk:"start_date"`
+	StopDate          types.String                `tfsdk:"stop_date"`
+	TimeZone          types.String                `tfsdk:"time_zone"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SLMScheduleObjectType = map[string]attr.Type{

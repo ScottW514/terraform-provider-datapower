@@ -16,8 +16,8 @@ API security OAuth
 
 ```terraform
 resource "datapower_apisecurityoauth" "test" {
-  id          = "APISecurityOAuth_name"
-  app_domain  = "acc_test_domain"
+  id          = "ResTestAPISecurityOAuth"
+  app_domain  = "acceptance_test"
   o_auth_flow = "implicit"
 }
 ```

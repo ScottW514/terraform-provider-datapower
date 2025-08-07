@@ -16,7 +16,7 @@ User group (`default` domain only)
 
 ```terraform
 resource "datapower_usergroup" "test" {
-  id              = "_UserGroup_name"
+  id              = "ResTest_UserGroup"
   access_policies = ["*/*/*?Access=r"]
 }
 ```

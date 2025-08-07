@@ -6,7 +6,9 @@ attributes:
     type: String
     required: true
     description: 'Variable Name'
-    example: 'parameter_name'
+    test_value: '"ResTestparameter"'
+    test_expect_ds: '"AccTest_parameter"'
+    example: 'parameterName'
   - name: ParameterValue
     type: String
     required: true

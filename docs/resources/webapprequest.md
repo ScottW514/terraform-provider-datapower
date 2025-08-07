@@ -16,8 +16,8 @@ Web Request Profile
 
 ```terraform
 resource "datapower_webapprequest" "test" {
-  id         = "_WebAppRequest_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTest_WebAppRequest"
+  app_domain = "acceptance_test"
 }
 ```
 

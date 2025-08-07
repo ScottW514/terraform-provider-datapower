@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourceSocialLoginPolicy(t *testing.T) {
 			{
 				Config: testconfig.SocialLoginPolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_socialloginpolicy.test", "result.0.id", "SocialLoginPolicy_name"),
+					resource.TestCheckResourceAttr("data.datapower_socialloginpolicy.test", "result.0.id", "AccTest_SocialLoginPolicy"),
 					resource.TestCheckResourceAttr("data.datapower_socialloginpolicy.test", "result.0.client_redirect_uri", "URL-in/social-login-callback"),
 					resource.TestCheckResourceAttr("data.datapower_socialloginpolicy.test", "result.0.validate_jwt_token", "true"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceWebSphereJMSServer(t *testing.T) {
 			{
 				Config: testconfig.WebSphereJMSServerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_webspherejmsserver.test", "result.0.id", "_WebSphereJMSServer_name"),
+					resource.TestCheckResourceAttr("data.datapower_webspherejmsserver.test", "result.0.id", "AccTest_WebSphereJMSServer"),
 					resource.TestCheckResourceAttr("data.datapower_webspherejmsserver.test", "result.0.target_transport_chain", "InboundBasicMessaging"),
 					resource.TestCheckResourceAttr("data.datapower_webspherejmsserver.test", "result.0.fips", "false"),
 					resource.TestCheckResourceAttr("data.datapower_webspherejmsserver.test", "result.0.transactional", "false"),
@@ -58,5 +57,4 @@ func TestAccDataSourceWebSphereJMSServer(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

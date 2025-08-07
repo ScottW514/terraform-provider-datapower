@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'LunaHAGroup_name'
+    test_value: '"ResTestLunaHAGroup"'
+    test_expect_ds: '"AccTest_LunaHAGroup"'
+    example: 'LunaHAGroupName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -40,7 +42,8 @@ attributes:
     reference_to: LunaPartition
     element_type: String
     required: true
-    test_value: '["TestAccLunaPartition"]'
+    test_value: '["AccTest_LunaPartition"]'
+    test_bed_value: '[datapower_lunapartition.acc_test.id]'
     description: 'Members'
     cli_alias: member
   - name: Standby

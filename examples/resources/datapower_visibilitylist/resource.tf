@@ -1,5 +1,5 @@
 
 resource "datapower_visibilitylist" "test" {
-  id         = "VisibilityList_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestVisibilityList"
+  app_domain = "acceptance_test"
 }

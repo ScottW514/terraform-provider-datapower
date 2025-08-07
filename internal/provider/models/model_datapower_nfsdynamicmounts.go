@@ -35,20 +35,20 @@ import (
 )
 
 type NFSDynamicMounts struct {
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	Enabled             types.Bool        `tfsdk:"enabled"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	Version             types.Int64       `tfsdk:"version"`
-	Transport           types.String      `tfsdk:"transport"`
-	MountType           types.String      `tfsdk:"mount_type"`
-	ReadOnly            types.Bool        `tfsdk:"read_only"`
-	ReadSize            types.Int64       `tfsdk:"read_size"`
-	WriteSize           types.Int64       `tfsdk:"write_size"`
-	Timeout             types.Int64       `tfsdk:"timeout"`
-	Retransmissions     types.Int64       `tfsdk:"retransmissions"`
-	IdleUnmountSeconds  types.Int64       `tfsdk:"idle_unmount_seconds"`
-	MountTimeoutSeconds types.Int64       `tfsdk:"mount_timeout_seconds"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	Enabled             types.Bool                  `tfsdk:"enabled"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	Version             types.Int64                 `tfsdk:"version"`
+	Transport           types.String                `tfsdk:"transport"`
+	MountType           types.String                `tfsdk:"mount_type"`
+	ReadOnly            types.Bool                  `tfsdk:"read_only"`
+	ReadSize            types.Int64                 `tfsdk:"read_size"`
+	WriteSize           types.Int64                 `tfsdk:"write_size"`
+	Timeout             types.Int64                 `tfsdk:"timeout"`
+	Retransmissions     types.Int64                 `tfsdk:"retransmissions"`
+	IdleUnmountSeconds  types.Int64                 `tfsdk:"idle_unmount_seconds"`
+	MountTimeoutSeconds types.Int64                 `tfsdk:"mount_timeout_seconds"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var NFSDynamicMountsObjectType = map[string]attr.Type{

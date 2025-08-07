@@ -34,24 +34,24 @@ import (
 )
 
 type ConformancePolicy struct {
-	Id                           types.String           `tfsdk:"id"`
-	AppDomain                    types.String           `tfsdk:"app_domain"`
-	UserSummary                  types.String           `tfsdk:"user_summary"`
-	Profiles                     *DmConformanceProfiles `tfsdk:"profiles"`
-	IgnoredRequirements          types.List             `tfsdk:"ignored_requirements"`
-	FixupStylesheets             types.List             `tfsdk:"fixup_stylesheets"`
-	AssertBp10Conformance        types.Bool             `tfsdk:"assert_bp10_conformance"`
-	ReportLevel                  types.String           `tfsdk:"report_level"`
-	LogTarget                    types.String           `tfsdk:"log_target"`
-	RejectLevel                  types.String           `tfsdk:"reject_level"`
-	RejectIncludeSummary         types.Bool             `tfsdk:"reject_include_summary"`
-	ResultIsConformanceReport    types.Bool             `tfsdk:"result_is_conformance_report"`
-	ResponsePropertiesEnabled    types.Bool             `tfsdk:"response_properties_enabled"`
-	ResponseReportLevel          types.String           `tfsdk:"response_report_level"`
-	ResponseLogTarget            types.String           `tfsdk:"response_log_target"`
-	ResponseRejectLevel          types.String           `tfsdk:"response_reject_level"`
-	ResponseRejectIncludeSummary types.Bool             `tfsdk:"response_reject_include_summary"`
-	DependencyActions            []*actions.Action      `tfsdk:"dependency_actions"`
+	Id                           types.String                `tfsdk:"id"`
+	AppDomain                    types.String                `tfsdk:"app_domain"`
+	UserSummary                  types.String                `tfsdk:"user_summary"`
+	Profiles                     *DmConformanceProfiles      `tfsdk:"profiles"`
+	IgnoredRequirements          types.List                  `tfsdk:"ignored_requirements"`
+	FixupStylesheets             types.List                  `tfsdk:"fixup_stylesheets"`
+	AssertBp10Conformance        types.Bool                  `tfsdk:"assert_bp10_conformance"`
+	ReportLevel                  types.String                `tfsdk:"report_level"`
+	LogTarget                    types.String                `tfsdk:"log_target"`
+	RejectLevel                  types.String                `tfsdk:"reject_level"`
+	RejectIncludeSummary         types.Bool                  `tfsdk:"reject_include_summary"`
+	ResultIsConformanceReport    types.Bool                  `tfsdk:"result_is_conformance_report"`
+	ResponsePropertiesEnabled    types.Bool                  `tfsdk:"response_properties_enabled"`
+	ResponseReportLevel          types.String                `tfsdk:"response_report_level"`
+	ResponseLogTarget            types.String                `tfsdk:"response_log_target"`
+	ResponseRejectLevel          types.String                `tfsdk:"response_reject_level"`
+	ResponseRejectIncludeSummary types.Bool                  `tfsdk:"response_reject_include_summary"`
+	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ConformancePolicyObjectType = map[string]attr.Type{

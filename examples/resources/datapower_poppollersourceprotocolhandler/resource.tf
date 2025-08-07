@@ -1,7 +1,7 @@
 
 resource "datapower_poppollersourceprotocolhandler" "test" {
-  id                    = "POPPollerSourceProtocolHandler_name"
-  app_domain            = "acc_test_domain"
+  id                    = "ResTestPOPPollerSourceProtocolHandler"
+  app_domain            = "acceptance_test"
   mail_server           = "localhost"
   port                  = 8888
   conn_security         = "none"

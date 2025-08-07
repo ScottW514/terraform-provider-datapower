@@ -34,13 +34,13 @@ import (
 )
 
 type OpenTelemetry struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Exporter          types.String      `tfsdk:"exporter"`
-	Sampler           types.String      `tfsdk:"sampler"`
-	ResourceAttribute types.List        `tfsdk:"resource_attribute"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Exporter          types.String                `tfsdk:"exporter"`
+	Sampler           types.String                `tfsdk:"sampler"`
+	ResourceAttribute types.List                  `tfsdk:"resource_attribute"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var OpenTelemetryObjectType = map[string]attr.Type{

@@ -1,6 +1,6 @@
 
 resource "datapower_oauthprovidersettings" "test" {
-  id            = "OAuthProviderSettings_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestOAuthProviderSettings"
+  app_domain    = "acceptance_test"
   provider_type = "native"
 }

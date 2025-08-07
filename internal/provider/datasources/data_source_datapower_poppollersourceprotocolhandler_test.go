@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourcePOPPollerSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.POPPollerSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_poppollersourceprotocolhandler.test", "result.0.id", "POPPollerSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_poppollersourceprotocolhandler.test", "result.0.id", "AccTest_POPPollerSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_poppollersourceprotocolhandler.test", "result.0.conn_security", "none"),
 					resource.TestCheckResourceAttr("data.datapower_poppollersourceprotocolhandler.test", "result.0.auth_method", "basic"),
 					resource.TestCheckResourceAttr("data.datapower_poppollersourceprotocolhandler.test", "result.0.delay_between_polls", "300"),
@@ -51,5 +50,4 @@ func TestAccDataSourcePOPPollerSourceProtocolHandler(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

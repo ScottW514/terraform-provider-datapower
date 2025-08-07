@@ -17,8 +17,8 @@ Web Token Service
 
 ```terraform
 resource "datapower_webtokenservice" "test" {
-  id                       = "WebTokenService_name"
-  app_domain               = "acc_test_domain"
+  id                       = "ResTestWebTokenService"
+  app_domain               = "acceptance_test"
   xml_manager              = "default"
   style_policy             = "default"
   front_timeout            = 120

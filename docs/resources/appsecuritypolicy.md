@@ -16,15 +16,15 @@ Application Security Policy
 
 ```terraform
 resource "datapower_appsecuritypolicy" "test" {
-  id         = "AppSecurityPolicy_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAppSecurityPolicy"
+  app_domain = "acceptance_test"
   request_maps = [{
     match = "__default-accept-service-providers__"
-    rule  = "TestAccRequestProfile"
+    rule  = "AccTest_WebAppRequest"
   }]
   response_maps = [{
     match = "__default-accept-service-providers__"
-    rule  = "TestAccResponseProfile"
+    rule  = "AccTest_WebAppResponse"
   }]
 }
 ```

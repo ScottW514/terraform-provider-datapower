@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceEBMS2SourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.EBMS2SourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_ebms2sourceprotocolhandler.test", "result.0.id", "EBMS2SourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_ebms2sourceprotocolhandler.test", "result.0.id", "AccTest_EBMS2SourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_ebms2sourceprotocolhandler.test", "result.0.local_address", "0.0.0.0"),
 					resource.TestCheckResourceAttr("data.datapower_ebms2sourceprotocolhandler.test", "result.0.local_port", "80"),
 					resource.TestCheckResourceAttr("data.datapower_ebms2sourceprotocolhandler.test", "result.0.http_version", "HTTP/1.1"),
@@ -59,5 +58,4 @@ func TestAccDataSourceEBMS2SourceProtocolHandler(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceCORSRule(t *testing.T) {
 			{
 				Config: testconfig.CORSRuleTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_corsrule.test", "result.0.id", "CORSRule_name"),
+					resource.TestCheckResourceAttr("data.datapower_corsrule.test", "result.0.id", "AccTest_CORSRule"),
 					resource.TestCheckResourceAttr("data.datapower_corsrule.test", "result.0.allow_credentials", "false"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

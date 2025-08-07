@@ -16,7 +16,7 @@ Host alias (`default` domain only)
 
 ```terraform
 resource "datapower_hostalias" "test" {
-  id         = "_HostAlias_name"
+  id         = "ResTest_HostAlias"
   ip_address = "10.10.10.10"
 }
 ```

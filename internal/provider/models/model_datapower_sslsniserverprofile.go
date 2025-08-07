@@ -34,16 +34,16 @@ import (
 )
 
 type SSLSNIServerProfile struct {
-	Id                           types.String              `tfsdk:"id"`
-	AppDomain                    types.String              `tfsdk:"app_domain"`
-	UserSummary                  types.String              `tfsdk:"user_summary"`
-	Protocols                    *DmSSLProtoVersionsBitmap `tfsdk:"protocols"`
-	SniServerMapping             types.String              `tfsdk:"sni_server_mapping"`
-	SniServerDefault             types.String              `tfsdk:"sni_server_default"`
-	SslOptions                   *DmSSLOptions             `tfsdk:"ssl_options"`
-	MaxSslDuration               types.Int64               `tfsdk:"max_ssl_duration"`
-	NumberOfRenegotiationAllowed types.Int64               `tfsdk:"number_of_renegotiation_allowed"`
-	DependencyActions            []*actions.Action         `tfsdk:"dependency_actions"`
+	Id                           types.String                `tfsdk:"id"`
+	AppDomain                    types.String                `tfsdk:"app_domain"`
+	UserSummary                  types.String                `tfsdk:"user_summary"`
+	Protocols                    *DmSSLProtoVersionsBitmap   `tfsdk:"protocols"`
+	SniServerMapping             types.String                `tfsdk:"sni_server_mapping"`
+	SniServerDefault             types.String                `tfsdk:"sni_server_default"`
+	SslOptions                   *DmSSLOptions               `tfsdk:"ssl_options"`
+	MaxSslDuration               types.Int64                 `tfsdk:"max_ssl_duration"`
+	NumberOfRenegotiationAllowed types.Int64                 `tfsdk:"number_of_renegotiation_allowed"`
+	DependencyActions            []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SSLSNIServerProfileObjectType = map[string]attr.Type{

@@ -14,7 +14,6 @@ SafeNet Luna HSM HA settings (`default` domain only)
 
 ```terraform
 data "datapower_lunahasettings" "test" {
-  depends_on = [datapower_lunahasettings.test]
 }
 ```
 

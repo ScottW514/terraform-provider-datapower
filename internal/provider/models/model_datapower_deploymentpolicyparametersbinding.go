@@ -34,11 +34,11 @@ import (
 )
 
 type DeploymentPolicyParametersBinding struct {
-	Id                        types.String      `tfsdk:"id"`
-	AppDomain                 types.String      `tfsdk:"app_domain"`
-	UserSummary               types.String      `tfsdk:"user_summary"`
-	DeploymentPolicyParameter types.List        `tfsdk:"deployment_policy_parameter"`
-	DependencyActions         []*actions.Action `tfsdk:"dependency_actions"`
+	Id                        types.String                `tfsdk:"id"`
+	AppDomain                 types.String                `tfsdk:"app_domain"`
+	UserSummary               types.String                `tfsdk:"user_summary"`
+	DeploymentPolicyParameter types.List                  `tfsdk:"deployment_policy_parameter"`
+	DependencyActions         []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var DeploymentPolicyParametersBindingObjectType = map[string]attr.Type{

@@ -14,8 +14,7 @@ API security OAuth
 
 ```terraform
 data "datapower_apisecurityoauth" "test" {
-  depends_on = [datapower_apisecurityoauth.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

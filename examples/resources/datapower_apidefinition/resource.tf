@@ -1,9 +1,9 @@
 
 resource "datapower_apidefinition" "test" {
-  id            = "APIDefinition_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestAPIDefinition"
+  app_domain    = "acceptance_test"
   base_path     = "/"
-  path          = ["TestAccAPIPath"]
+  path          = ["AccTest_APIPath"]
   content       = "activity"
   error_content = "payload"
 }

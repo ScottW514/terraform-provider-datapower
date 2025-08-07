@@ -33,11 +33,11 @@ import (
 )
 
 type AuditLog struct {
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	Size              types.Int64       `tfsdk:"size"`
-	Rotate            types.Int64       `tfsdk:"rotate"`
-	AuditLevel        types.String      `tfsdk:"audit_level"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	Size              types.Int64                 `tfsdk:"size"`
+	Rotate            types.Int64                 `tfsdk:"rotate"`
+	AuditLevel        types.String                `tfsdk:"audit_level"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AuditLogObjectType = map[string]attr.Type{

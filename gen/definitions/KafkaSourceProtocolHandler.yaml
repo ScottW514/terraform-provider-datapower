@@ -11,7 +11,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'KafkaSourceProtocolHandler_name'
+    test_value: '"ResTestKafkaSourceProtocolHandler"'
+    test_expect_ds: '"AccTest_KafkaSourceProtocolHandler"'
+    example: 'KafkaSourceProtocolHandlerName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -35,7 +37,8 @@ attributes:
     type: String
     reference_to: KafkaCluster
     required: true
-    test_value: '"TestAccKafkaCluster"'
+    test_value: '"AccTest_KafkaCluster"'
+    test_bed_value: 'datapower_kafkacluster.acc_test.id'
     description: 'Kafka cluster'
     cli_alias: cluster
   - name: RequestTopic

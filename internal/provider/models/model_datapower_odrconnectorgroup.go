@@ -34,15 +34,15 @@ import (
 )
 
 type ODRConnectorGroup struct {
-	Id                     types.String      `tfsdk:"id"`
-	UserSummary            types.String      `tfsdk:"user_summary"`
-	OdrGroupConnectors     types.List        `tfsdk:"odr_group_connectors"`
-	MaxRetryInterval       types.Int64       `tfsdk:"max_retry_interval"`
-	XmlManager             types.String      `tfsdk:"xml_manager"`
-	OdrConnGroupProperties types.List        `tfsdk:"odr_conn_group_properties"`
-	SslClientConfigType    types.String      `tfsdk:"ssl_client_config_type"`
-	SslClient              types.String      `tfsdk:"ssl_client"`
-	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
+	Id                     types.String                `tfsdk:"id"`
+	UserSummary            types.String                `tfsdk:"user_summary"`
+	OdrGroupConnectors     types.List                  `tfsdk:"odr_group_connectors"`
+	MaxRetryInterval       types.Int64                 `tfsdk:"max_retry_interval"`
+	XmlManager             types.String                `tfsdk:"xml_manager"`
+	OdrConnGroupProperties types.List                  `tfsdk:"odr_conn_group_properties"`
+	SslClientConfigType    types.String                `tfsdk:"ssl_client_config_type"`
+	SslClient              types.String                `tfsdk:"ssl_client"`
+	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ODRConnectorGroupObjectType = map[string]attr.Type{

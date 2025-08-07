@@ -1,7 +1,7 @@
 
 resource "datapower_assemblylogicswitch" "test" {
-  id         = "AssemblyLogicSwitch_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyLogicSwitch"
+  app_domain = "acceptance_test"
   case = [{
     condition = "condition"
     execute   = "default-api-rule"

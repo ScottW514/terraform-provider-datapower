@@ -34,28 +34,28 @@ import (
 )
 
 type XSLCoprocService struct {
-	Id                        types.String      `tfsdk:"id"`
-	AppDomain                 types.String      `tfsdk:"app_domain"`
-	UserSummary               types.String      `tfsdk:"user_summary"`
-	Priority                  types.String      `tfsdk:"priority"`
-	LocalPort                 types.Int64       `tfsdk:"local_port"`
-	XmlManager                types.String      `tfsdk:"xml_manager"`
-	UrlRewritePolicy          types.String      `tfsdk:"url_rewrite_policy"`
-	StylePolicyRule           types.String      `tfsdk:"style_policy_rule"`
-	ConnectionTimeout         types.Int64       `tfsdk:"connection_timeout"`
-	IntermediateResultTimeout types.Int64       `tfsdk:"intermediate_result_timeout"`
-	CacheRelativeUrl          types.Bool        `tfsdk:"cache_relative_url"`
-	UseClientUriResolver      types.Bool        `tfsdk:"use_client_uri_resolver"`
-	CryptoExtensions          types.Bool        `tfsdk:"crypto_extensions"`
-	DefaultParamNamespace     types.String      `tfsdk:"default_param_namespace"`
-	DebugMode                 types.String      `tfsdk:"debug_mode"`
-	DebugHistory              types.Int64       `tfsdk:"debug_history"`
-	DebugTrigger              types.List        `tfsdk:"debug_trigger"`
-	SslServerConfigType       types.String      `tfsdk:"ssl_server_config_type"`
-	SslServer                 types.String      `tfsdk:"ssl_server"`
-	SslsniServer              types.String      `tfsdk:"sslsni_server"`
-	LocalAddress              types.String      `tfsdk:"local_address"`
-	DependencyActions         []*actions.Action `tfsdk:"dependency_actions"`
+	Id                        types.String                `tfsdk:"id"`
+	AppDomain                 types.String                `tfsdk:"app_domain"`
+	UserSummary               types.String                `tfsdk:"user_summary"`
+	Priority                  types.String                `tfsdk:"priority"`
+	LocalPort                 types.Int64                 `tfsdk:"local_port"`
+	XmlManager                types.String                `tfsdk:"xml_manager"`
+	UrlRewritePolicy          types.String                `tfsdk:"url_rewrite_policy"`
+	StylePolicyRule           types.String                `tfsdk:"style_policy_rule"`
+	ConnectionTimeout         types.Int64                 `tfsdk:"connection_timeout"`
+	IntermediateResultTimeout types.Int64                 `tfsdk:"intermediate_result_timeout"`
+	CacheRelativeUrl          types.Bool                  `tfsdk:"cache_relative_url"`
+	UseClientUriResolver      types.Bool                  `tfsdk:"use_client_uri_resolver"`
+	CryptoExtensions          types.Bool                  `tfsdk:"crypto_extensions"`
+	DefaultParamNamespace     types.String                `tfsdk:"default_param_namespace"`
+	DebugMode                 types.String                `tfsdk:"debug_mode"`
+	DebugHistory              types.Int64                 `tfsdk:"debug_history"`
+	DebugTrigger              types.List                  `tfsdk:"debug_trigger"`
+	SslServerConfigType       types.String                `tfsdk:"ssl_server_config_type"`
+	SslServer                 types.String                `tfsdk:"ssl_server"`
+	SslsniServer              types.String                `tfsdk:"sslsni_server"`
+	LocalAddress              types.String                `tfsdk:"local_address"`
+	DependencyActions         []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var XSLCoprocServiceObjectType = map[string]attr.Type{

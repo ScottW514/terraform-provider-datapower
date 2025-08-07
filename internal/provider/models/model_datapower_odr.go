@@ -33,12 +33,12 @@ import (
 )
 
 type ODR struct {
-	Enabled             types.Bool        `tfsdk:"enabled"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	OdrServerName       types.String      `tfsdk:"odr_server_name"`
-	OdrConnectorGroups  types.List        `tfsdk:"odr_connector_groups"`
-	OdrCustomProperties types.List        `tfsdk:"odr_custom_properties"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled             types.Bool                  `tfsdk:"enabled"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	OdrServerName       types.String                `tfsdk:"odr_server_name"`
+	OdrConnectorGroups  types.List                  `tfsdk:"odr_connector_groups"`
+	OdrCustomProperties types.List                  `tfsdk:"odr_custom_properties"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ODRObjectType = map[string]attr.Type{

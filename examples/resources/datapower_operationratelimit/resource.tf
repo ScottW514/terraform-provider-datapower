@@ -1,6 +1,6 @@
 
 resource "datapower_operationratelimit" "test" {
-  id         = "OperationRateLimit_name"
-  app_domain = "acc_test_domain"
-  operation  = "TestAccAPIOperation"
+  id         = "ResTestOperationRateLimit"
+  app_domain = "acceptance_test"
+  operation  = "AccTest_APIOperation"
 }

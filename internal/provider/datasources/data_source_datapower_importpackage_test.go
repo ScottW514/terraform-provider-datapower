@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceImportPackage(t *testing.T) {
 			{
 				Config: testconfig.ImportPackageTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_importpackage.test", "result.0.id", "ImportPackage_name"),
+					resource.TestCheckResourceAttr("data.datapower_importpackage.test", "result.0.id", "AccTest_ImportPackage"),
 					resource.TestCheckResourceAttr("data.datapower_importpackage.test", "result.0.import_format", "ZIP"),
 					resource.TestCheckResourceAttr("data.datapower_importpackage.test", "result.0.overwrite_files", "true"),
 					resource.TestCheckResourceAttr("data.datapower_importpackage.test", "result.0.overwrite_objects", "true"),
@@ -51,5 +50,4 @@ func TestAccDataSourceImportPackage(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

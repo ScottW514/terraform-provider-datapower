@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'WCCService_name'
+    test_value: '"ResTestWCCService"'
+    test_expect_ds: '"AccTest_WCCService"'
+    example: 'WCCServiceName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

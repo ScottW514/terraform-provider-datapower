@@ -40,8 +40,10 @@ attributes:
     cli_alias: save-config-overwrite
   - name: IdleTimeout
     type: Int64
+    minimum: 0
     maximum: 65535
     required: true
+    test_value: '0'
     default: 600
     description: 'Idle timeout'
     cli_alias: idle-timeout

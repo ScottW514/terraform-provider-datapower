@@ -34,11 +34,11 @@ import (
 )
 
 type MCFHttpURL struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	HttpUrlExpression types.String      `tfsdk:"http_url_expression"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	HttpUrlExpression types.String                `tfsdk:"http_url_expression"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MCFHttpURLObjectType = map[string]attr.Type{

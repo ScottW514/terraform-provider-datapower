@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'WSRRSubscription_name'
+    test_value: '"ResTestWSRRSubscription"'
+    test_expect_ds: '"AccTest_WSRRSubscription"'
+    example: 'WSRRSubscriptionName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -29,7 +31,8 @@ attributes:
     type: String
     reference_to: WSRRServer
     required: true
-    test_value: '"TestAccWSRRServer"'
+    test_value: '"AccTest_WSRRServer"'
+    test_bed_value: 'datapower_wsrrserver.acc_test.id'
     description: 'WSRR server'
     cli_alias: server
   - name: Namespace
@@ -50,7 +53,9 @@ attributes:
   - name: ObjectName
     type: String
     required: true
-    example: 'object_name'
+    test_value: '"ResTestobject"'
+    test_expect_ds: '"AccTest_object"'
+    example: 'objectName'
     description: 'Object name'
     cli_alias: object-name
   - name: Method

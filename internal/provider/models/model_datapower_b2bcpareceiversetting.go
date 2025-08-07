@@ -34,21 +34,21 @@ import (
 )
 
 type B2BCPAReceiverSetting struct {
-	Id                    types.String      `tfsdk:"id"`
-	AppDomain             types.String      `tfsdk:"app_domain"`
-	UserSummary           types.String      `tfsdk:"user_summary"`
-	LocalEndpointUri      types.String      `tfsdk:"local_endpoint_uri"`
-	SyncReplyMode         types.String      `tfsdk:"sync_reply_mode"`
-	AckRequested          types.String      `tfsdk:"ack_requested"`
-	AckSignatureRequested types.String      `tfsdk:"ack_signature_requested"`
-	AllowDuplicateMessage types.String      `tfsdk:"allow_duplicate_message"`
-	PersistDuration       types.Int64       `tfsdk:"persist_duration"`
-	EncryptionRequired    types.Bool        `tfsdk:"encryption_required"`
-	DecryptIdCred         types.String      `tfsdk:"decrypt_id_cred"`
-	SignatureRequired     types.Bool        `tfsdk:"signature_required"`
-	VerifyValCred         types.String      `tfsdk:"verify_val_cred"`
-	DefaultSignerCert     types.String      `tfsdk:"default_signer_cert"`
-	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
+	Id                    types.String                `tfsdk:"id"`
+	AppDomain             types.String                `tfsdk:"app_domain"`
+	UserSummary           types.String                `tfsdk:"user_summary"`
+	LocalEndpointUri      types.String                `tfsdk:"local_endpoint_uri"`
+	SyncReplyMode         types.String                `tfsdk:"sync_reply_mode"`
+	AckRequested          types.String                `tfsdk:"ack_requested"`
+	AckSignatureRequested types.String                `tfsdk:"ack_signature_requested"`
+	AllowDuplicateMessage types.String                `tfsdk:"allow_duplicate_message"`
+	PersistDuration       types.Int64                 `tfsdk:"persist_duration"`
+	EncryptionRequired    types.Bool                  `tfsdk:"encryption_required"`
+	DecryptIdCred         types.String                `tfsdk:"decrypt_id_cred"`
+	SignatureRequired     types.Bool                  `tfsdk:"signature_required"`
+	VerifyValCred         types.String                `tfsdk:"verify_val_cred"`
+	DefaultSignerCert     types.String                `tfsdk:"default_signer_cert"`
+	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var B2BCPAReceiverSettingObjectType = map[string]attr.Type{

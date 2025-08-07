@@ -16,8 +16,8 @@ SLM resource class
 
 ```terraform
 resource "datapower_slmrsrcclass" "test" {
-  id         = "SLMRsrcClass_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestSLMRsrcClass"
+  app_domain = "acceptance_test"
   rsrc_type  = "aaa-mapped-resource"
 }
 ```

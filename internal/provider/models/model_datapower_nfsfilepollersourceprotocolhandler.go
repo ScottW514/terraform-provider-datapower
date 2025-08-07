@@ -34,24 +34,24 @@ import (
 )
 
 type NFSFilePollerSourceProtocolHandler struct {
-	Id                      types.String      `tfsdk:"id"`
-	AppDomain               types.String      `tfsdk:"app_domain"`
-	UserSummary             types.String      `tfsdk:"user_summary"`
-	TargetDirectory         types.String      `tfsdk:"target_directory"`
-	DelayBetweenPolls       types.Int64       `tfsdk:"delay_between_polls"`
-	InputFileMatchPattern   types.String      `tfsdk:"input_file_match_pattern"`
-	ProcessingRenamePattern types.String      `tfsdk:"processing_rename_pattern"`
-	DeleteOnSuccess         types.Bool        `tfsdk:"delete_on_success"`
-	SuccessRenamePattern    types.String      `tfsdk:"success_rename_pattern"`
-	DeleteOnError           types.Bool        `tfsdk:"delete_on_error"`
-	ErrorRenamePattern      types.String      `tfsdk:"error_rename_pattern"`
-	GenerateResultFile      types.Bool        `tfsdk:"generate_result_file"`
-	ResultNamePattern       types.String      `tfsdk:"result_name_pattern"`
-	ProcessingSeizeTimeout  types.Int64       `tfsdk:"processing_seize_timeout"`
-	ProcessingSeizePattern  types.String      `tfsdk:"processing_seize_pattern"`
-	XmlManager              types.String      `tfsdk:"xml_manager"`
-	MaxTransfersPerPoll     types.Int64       `tfsdk:"max_transfers_per_poll"`
-	DependencyActions       []*actions.Action `tfsdk:"dependency_actions"`
+	Id                      types.String                `tfsdk:"id"`
+	AppDomain               types.String                `tfsdk:"app_domain"`
+	UserSummary             types.String                `tfsdk:"user_summary"`
+	TargetDirectory         types.String                `tfsdk:"target_directory"`
+	DelayBetweenPolls       types.Int64                 `tfsdk:"delay_between_polls"`
+	InputFileMatchPattern   types.String                `tfsdk:"input_file_match_pattern"`
+	ProcessingRenamePattern types.String                `tfsdk:"processing_rename_pattern"`
+	DeleteOnSuccess         types.Bool                  `tfsdk:"delete_on_success"`
+	SuccessRenamePattern    types.String                `tfsdk:"success_rename_pattern"`
+	DeleteOnError           types.Bool                  `tfsdk:"delete_on_error"`
+	ErrorRenamePattern      types.String                `tfsdk:"error_rename_pattern"`
+	GenerateResultFile      types.Bool                  `tfsdk:"generate_result_file"`
+	ResultNamePattern       types.String                `tfsdk:"result_name_pattern"`
+	ProcessingSeizeTimeout  types.Int64                 `tfsdk:"processing_seize_timeout"`
+	ProcessingSeizePattern  types.String                `tfsdk:"processing_seize_pattern"`
+	XmlManager              types.String                `tfsdk:"xml_manager"`
+	MaxTransfersPerPoll     types.Int64                 `tfsdk:"max_transfers_per_poll"`
+	DependencyActions       []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var NFSFilePollerSourceProtocolHandlerObjectType = map[string]attr.Type{

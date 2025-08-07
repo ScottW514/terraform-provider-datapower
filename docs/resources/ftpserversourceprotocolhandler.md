@@ -17,8 +17,8 @@ FTP server handler
 
 ```terraform
 resource "datapower_ftpserversourceprotocolhandler" "test" {
-  id            = "FTPServerSourceProtocolHandler_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestFTPServerSourceProtocolHandler"
+  app_domain    = "acceptance_test"
   local_address = "0.0.0.0"
   local_port    = 21
 }

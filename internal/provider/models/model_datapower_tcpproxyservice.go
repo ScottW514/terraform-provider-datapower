@@ -34,16 +34,16 @@ import (
 )
 
 type TCPProxyService struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Priority          types.String      `tfsdk:"priority"`
-	LocalPort         types.Int64       `tfsdk:"local_port"`
-	RemoteAddress     types.String      `tfsdk:"remote_address"`
-	RemotePort        types.Int64       `tfsdk:"remote_port"`
-	Timeout           types.Int64       `tfsdk:"timeout"`
-	LocalAddress      types.String      `tfsdk:"local_address"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Priority          types.String                `tfsdk:"priority"`
+	LocalPort         types.Int64                 `tfsdk:"local_port"`
+	RemoteAddress     types.String                `tfsdk:"remote_address"`
+	RemotePort        types.Int64                 `tfsdk:"remote_port"`
+	Timeout           types.Int64                 `tfsdk:"timeout"`
+	LocalAddress      types.String                `tfsdk:"local_address"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var TCPProxyServiceObjectType = map[string]attr.Type{

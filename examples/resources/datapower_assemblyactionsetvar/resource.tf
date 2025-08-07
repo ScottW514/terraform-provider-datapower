@@ -1,7 +1,7 @@
 
 resource "datapower_assemblyactionsetvar" "test" {
-  id         = "AssemblyActionSetVar_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyActionSetVar"
+  app_domain = "acceptance_test"
   variable = [{
     name = "varname"
   }]

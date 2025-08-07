@@ -17,8 +17,8 @@ AS3 handler
 
 ```terraform
 resource "datapower_as3sourceprotocolhandler" "test" {
-  id            = "AS3SourceProtocolHandler_name"
-  app_domain    = "acc_test_domain"
+  id            = "ResTestAS3SourceProtocolHandler"
+  app_domain    = "acceptance_test"
   local_address = "0.0.0.0"
   local_port    = 21
 }

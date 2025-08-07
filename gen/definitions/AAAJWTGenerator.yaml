@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'AAAJWTGenerator_name'
+    test_value: '"ResTestAAAJWTGenerator"'
+    test_expect_ds: '"AccTest_AAAJWTGenerator"'
+    example: 'AAAJWTGeneratorName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

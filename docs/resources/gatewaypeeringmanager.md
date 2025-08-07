@@ -16,7 +16,7 @@ Gateway-peering manager
 
 ```terraform
 resource "datapower_gatewaypeeringmanager" "test" {
-  app_domain                  = "acc_test_domain"
+  app_domain                  = "acceptance_test"
   api_connect_gateway_service = "default-gateway-peering"
   rate_limit                  = "default-gateway-peering"
   subscription                = "default-gateway-peering"

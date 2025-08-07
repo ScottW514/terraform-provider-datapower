@@ -33,10 +33,10 @@ import (
 )
 
 type RaidVolume struct {
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	ReadOnly          types.Bool        `tfsdk:"read_only"`
-	Directory         types.String      `tfsdk:"directory"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	ReadOnly          types.Bool                  `tfsdk:"read_only"`
+	Directory         types.String                `tfsdk:"directory"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var RaidVolumeObjectType = map[string]attr.Type{

@@ -35,25 +35,25 @@ import (
 )
 
 type GitOps struct {
-	AppDomain             types.String      `tfsdk:"app_domain"`
-	Enabled               types.Bool        `tfsdk:"enabled"`
-	UserSummary           types.String      `tfsdk:"user_summary"`
-	ConnectionType        types.String      `tfsdk:"connection_type"`
-	Mode                  types.String      `tfsdk:"mode"`
-	CommitIdentifierType  types.String      `tfsdk:"commit_identifier_type"`
-	CommitIdentifier      types.String      `tfsdk:"commit_identifier"`
-	RemoteLocation        types.String      `tfsdk:"remote_location"`
-	Interval              types.Int64       `tfsdk:"interval"`
-	SshClientProfile      types.String      `tfsdk:"ssh_client_profile"`
-	Username              types.String      `tfsdk:"username"`
-	Password              types.String      `tfsdk:"password"`
-	SshAuthorizedKeysFile types.String      `tfsdk:"ssh_authorized_keys_file"`
-	TlsValcred            types.String      `tfsdk:"tls_valcred"`
-	GitUser               types.String      `tfsdk:"git_user"`
-	GitEmail              types.String      `tfsdk:"git_email"`
-	JsonParseSettings     types.String      `tfsdk:"json_parse_settings"`
-	TemplatePolicies      types.List        `tfsdk:"template_policies"`
-	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain             types.String                `tfsdk:"app_domain"`
+	Enabled               types.Bool                  `tfsdk:"enabled"`
+	UserSummary           types.String                `tfsdk:"user_summary"`
+	ConnectionType        types.String                `tfsdk:"connection_type"`
+	Mode                  types.String                `tfsdk:"mode"`
+	CommitIdentifierType  types.String                `tfsdk:"commit_identifier_type"`
+	CommitIdentifier      types.String                `tfsdk:"commit_identifier"`
+	RemoteLocation        types.String                `tfsdk:"remote_location"`
+	Interval              types.Int64                 `tfsdk:"interval"`
+	SshClientProfile      types.String                `tfsdk:"ssh_client_profile"`
+	Username              types.String                `tfsdk:"username"`
+	Password              types.String                `tfsdk:"password"`
+	SshAuthorizedKeysFile types.String                `tfsdk:"ssh_authorized_keys_file"`
+	TlsValcred            types.String                `tfsdk:"tls_valcred"`
+	GitUser               types.String                `tfsdk:"git_user"`
+	GitEmail              types.String                `tfsdk:"git_email"`
+	JsonParseSettings     types.String                `tfsdk:"json_parse_settings"`
+	TemplatePolicies      types.List                  `tfsdk:"template_policies"`
+	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var GitOpsObjectType = map[string]attr.Type{

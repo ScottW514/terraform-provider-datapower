@@ -1,7 +1,7 @@
 
 resource "datapower_lunahagroup" "test" {
-  id         = "LunaHAGroup_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestLunaHAGroup"
+  app_domain = "acceptance_test"
   group_name = "groupname"
-  member     = ["TestAccLunaPartition"]
+  member     = ["AccTest_LunaPartition"]
 }

@@ -16,8 +16,8 @@ Peer group
 
 ```terraform
 resource "datapower_peergroup" "test" {
-  id         = "PeerGroup_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestPeerGroup"
+  app_domain = "acceptance_test"
   type       = "slm"
 }
 ```

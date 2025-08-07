@@ -17,7 +17,8 @@ attributes:
     type: String
     reference_to: CryptoValCred
     required: true
-    test_value: '"TestAccCryptoValCred"'
+    test_value: '"AccTest_CryptoValCred"'
+    test_bed_value: 'datapower_cryptovalcred.acc_test.id'
     description: 'Issuer validation credentials'
     cli_alias: issuer
   - name: RefreshInterval

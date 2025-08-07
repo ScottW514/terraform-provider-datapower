@@ -14,8 +14,7 @@ SafeNet Luna HSM partition
 
 ```terraform
 data "datapower_lunapartition" "test" {
-  depends_on = [datapower_lunapartition.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

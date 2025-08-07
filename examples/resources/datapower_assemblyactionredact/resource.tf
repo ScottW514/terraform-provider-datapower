@@ -1,7 +1,7 @@
 
 resource "datapower_assemblyactionredact" "test" {
-  id         = "AssemblyActionRedact_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyActionRedact"
+  app_domain = "acceptance_test"
   redact = [{
     path = "path"
   }]

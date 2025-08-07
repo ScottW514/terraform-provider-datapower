@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceODRConnectorGroup(t *testing.T) {
 			{
 				Config: testconfig.ODRConnectorGroupTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_odrconnectorgroup.test", "result.0.id", "ODRConnectorGroup_name"),
+					resource.TestCheckResourceAttr("data.datapower_odrconnectorgroup.test", "result.0.id", "AccTest_ODRConnectorGroup"),
 					resource.TestCheckResourceAttr("data.datapower_odrconnectorgroup.test", "result.0.max_retry_interval", "60"),
 					resource.TestCheckResourceAttr("data.datapower_odrconnectorgroup.test", "result.0.xml_manager", "default"),
 					resource.TestCheckResourceAttr("data.datapower_odrconnectorgroup.test", "result.0.ssl_client_config_type", "client"),
@@ -49,5 +48,4 @@ func TestAccDataSourceODRConnectorGroup(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

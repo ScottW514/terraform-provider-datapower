@@ -34,12 +34,12 @@ import (
 )
 
 type XPathRoutingMap struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	XPathRoutingRules types.List        `tfsdk:"x_path_routing_rules"`
-	NameSpaceMappings types.List        `tfsdk:"name_space_mappings"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	XPathRoutingRules types.List                  `tfsdk:"x_path_routing_rules"`
+	NameSpaceMappings types.List                  `tfsdk:"name_space_mappings"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var XPathRoutingMapObjectType = map[string]attr.Type{

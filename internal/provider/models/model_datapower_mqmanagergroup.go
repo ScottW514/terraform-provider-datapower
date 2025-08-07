@@ -34,12 +34,12 @@ import (
 )
 
 type MQManagerGroup struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	PrimaryQueueManager types.String      `tfsdk:"primary_queue_manager"`
-	BackupQueueManagers types.List        `tfsdk:"backup_queue_managers"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	PrimaryQueueManager types.String                `tfsdk:"primary_queue_manager"`
+	BackupQueueManagers types.List                  `tfsdk:"backup_queue_managers"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MQManagerGroupObjectType = map[string]attr.Type{

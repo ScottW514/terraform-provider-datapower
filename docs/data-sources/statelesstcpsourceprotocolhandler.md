@@ -14,8 +14,7 @@ Stateless raw XML handler
 
 ```terraform
 data "datapower_statelesstcpsourceprotocolhandler" "test" {
-  depends_on = [datapower_statelesstcpsourceprotocolhandler.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

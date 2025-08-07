@@ -34,12 +34,12 @@ import (
 )
 
 type MessageContentFilters struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	FilterRefs        types.List        `tfsdk:"filter_refs"`
-	Filters           types.List        `tfsdk:"filters"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	FilterRefs        types.List                  `tfsdk:"filter_refs"`
+	Filters           types.List                  `tfsdk:"filters"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MessageContentFiltersObjectType = map[string]attr.Type{

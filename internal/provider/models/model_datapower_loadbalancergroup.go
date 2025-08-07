@@ -34,25 +34,25 @@ import (
 )
 
 type LoadBalancerGroup struct {
-	Id                          types.String       `tfsdk:"id"`
-	AppDomain                   types.String       `tfsdk:"app_domain"`
-	UserSummary                 types.String       `tfsdk:"user_summary"`
-	Algorithm                   types.String       `tfsdk:"algorithm"`
-	RetrieveInfo                types.Bool         `tfsdk:"retrieve_info"`
-	WlmRetrieval                types.String       `tfsdk:"wlm_retrieval"`
-	WebSphereCellConfig         types.String       `tfsdk:"web_sphere_cell_config"`
-	WlmGroup                    types.String       `tfsdk:"wlm_group"`
-	WlmTransport                types.String       `tfsdk:"wlm_transport"`
-	Damp                        types.Int64        `tfsdk:"damp"`
-	NeverReturnSickMember       types.Bool         `tfsdk:"never_return_sick_member"`
-	LbGroupMembers              types.List         `tfsdk:"lb_group_members"`
-	TryEveryServerBeforeFailing types.Bool         `tfsdk:"try_every_server_before_failing"`
-	LbGroupChecks               *DmLBGroupCheck    `tfsdk:"lb_group_checks"`
-	MasqueradeMember            types.Bool         `tfsdk:"masquerade_member"`
-	ApplicationRouting          types.Bool         `tfsdk:"application_routing"`
-	LbGroupAffinityConf         *DmLBGroupAffinity `tfsdk:"lb_group_affinity_conf"`
-	MonitoredCookies            types.List         `tfsdk:"monitored_cookies"`
-	DependencyActions           []*actions.Action  `tfsdk:"dependency_actions"`
+	Id                          types.String                `tfsdk:"id"`
+	AppDomain                   types.String                `tfsdk:"app_domain"`
+	UserSummary                 types.String                `tfsdk:"user_summary"`
+	Algorithm                   types.String                `tfsdk:"algorithm"`
+	RetrieveInfo                types.Bool                  `tfsdk:"retrieve_info"`
+	WlmRetrieval                types.String                `tfsdk:"wlm_retrieval"`
+	WebSphereCellConfig         types.String                `tfsdk:"web_sphere_cell_config"`
+	WlmGroup                    types.String                `tfsdk:"wlm_group"`
+	WlmTransport                types.String                `tfsdk:"wlm_transport"`
+	Damp                        types.Int64                 `tfsdk:"damp"`
+	NeverReturnSickMember       types.Bool                  `tfsdk:"never_return_sick_member"`
+	LbGroupMembers              types.List                  `tfsdk:"lb_group_members"`
+	TryEveryServerBeforeFailing types.Bool                  `tfsdk:"try_every_server_before_failing"`
+	LbGroupChecks               *DmLBGroupCheck             `tfsdk:"lb_group_checks"`
+	MasqueradeMember            types.Bool                  `tfsdk:"masquerade_member"`
+	ApplicationRouting          types.Bool                  `tfsdk:"application_routing"`
+	LbGroupAffinityConf         *DmLBGroupAffinity          `tfsdk:"lb_group_affinity_conf"`
+	MonitoredCookies            types.List                  `tfsdk:"monitored_cookies"`
+	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var LoadBalancerGroupObjectType = map[string]attr.Type{

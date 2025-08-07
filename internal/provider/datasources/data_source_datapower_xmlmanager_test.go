@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceXMLManager(t *testing.T) {
 			{
 				Config: testconfig.XMLManagerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_xmlmanager.test", "result.0.id", "0_XMLManger_name"),
+					resource.TestCheckResourceAttr("data.datapower_xmlmanager.test", "result.0.id", "AccTest_XMLManager"),
 					resource.TestCheckResourceAttr("data.datapower_xmlmanager.test", "result.0.cache_memory_size", "2147483647"),
 					resource.TestCheckResourceAttr("data.datapower_xmlmanager.test", "result.0.cache_size", "256"),
 					resource.TestCheckResourceAttr("data.datapower_xmlmanager.test", "result.0.sha1_caching", "true"),
@@ -62,5 +61,4 @@ func TestAccDataSourceXMLManager(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

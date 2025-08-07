@@ -16,8 +16,8 @@ Web Response Profile
 
 ```terraform
 resource "datapower_webappresponse" "test" {
-  id          = "_WebAppResponse_name"
-  app_domain  = "acc_test_domain"
+  id          = "ResTest_WebAppResponse"
+  app_domain  = "acceptance_test"
   policy_type = "admission"
 }
 ```

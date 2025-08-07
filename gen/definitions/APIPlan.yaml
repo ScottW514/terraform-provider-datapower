@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'APIPlan_name'
+    test_value: '"ResTestAPIPlan"'
+    test_expect_ds: '"AccTest_APIPlan"'
+    example: 'APIPlanName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -118,7 +120,8 @@ attributes:
     reference_to: APIDefinition
     element_type: String
     required: true
-    test_value: '["TestAccAPIDefinition"]'
+    test_value: '["AccTest_APIDefinition"]'
+    test_bed_value: '[datapower_apidefinition.acc_test.id]'
     description: 'API'
     cli_alias: api
   - name: ExcludeOperation

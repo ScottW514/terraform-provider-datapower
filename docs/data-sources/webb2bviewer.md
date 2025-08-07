@@ -14,7 +14,6 @@ B2B viewer management service (`default` domain only)
 
 ```terraform
 data "datapower_webb2bviewer" "test" {
-  depends_on = [datapower_webb2bviewer.test]
 }
 ```
 

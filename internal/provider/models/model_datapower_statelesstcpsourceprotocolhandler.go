@@ -34,17 +34,17 @@ import (
 )
 
 type StatelessTCPSourceProtocolHandler struct {
-	Id                    types.String      `tfsdk:"id"`
-	AppDomain             types.String      `tfsdk:"app_domain"`
-	UserSummary           types.String      `tfsdk:"user_summary"`
-	LocalAddress          types.String      `tfsdk:"local_address"`
-	LocalPort             types.Int64       `tfsdk:"local_port"`
-	PersistentConnections types.Bool        `tfsdk:"persistent_connections"`
-	Acl                   types.String      `tfsdk:"acl"`
-	SslServerConfigType   types.String      `tfsdk:"ssl_server_config_type"`
-	SslServer             types.String      `tfsdk:"ssl_server"`
-	SslsniServer          types.String      `tfsdk:"sslsni_server"`
-	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
+	Id                    types.String                `tfsdk:"id"`
+	AppDomain             types.String                `tfsdk:"app_domain"`
+	UserSummary           types.String                `tfsdk:"user_summary"`
+	LocalAddress          types.String                `tfsdk:"local_address"`
+	LocalPort             types.Int64                 `tfsdk:"local_port"`
+	PersistentConnections types.Bool                  `tfsdk:"persistent_connections"`
+	Acl                   types.String                `tfsdk:"acl"`
+	SslServerConfigType   types.String                `tfsdk:"ssl_server_config_type"`
+	SslServer             types.String                `tfsdk:"ssl_server"`
+	SslsniServer          types.String                `tfsdk:"sslsni_server"`
+	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var StatelessTCPSourceProtocolHandlerObjectType = map[string]attr.Type{

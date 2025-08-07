@@ -34,20 +34,20 @@ import (
 )
 
 type APISchema struct {
-	Id                         types.String      `tfsdk:"id"`
-	AppDomain                  types.String      `tfsdk:"app_domain"`
-	UserSummary                types.String      `tfsdk:"user_summary"`
-	JsonSchema                 types.String      `tfsdk:"json_schema"`
-	GraphQlSchema              types.String      `tfsdk:"graph_ql_schema"`
-	XmlType                    types.String      `tfsdk:"xml_type"`
-	XmlValidationMode          types.String      `tfsdk:"xml_validation_mode"`
-	XmlSchemaUrl               types.String      `tfsdk:"xml_schema_url"`
-	WsdlSchemaUrl              types.String      `tfsdk:"wsdl_schema_url"`
-	WsdlPortQName              types.String      `tfsdk:"wsdl_port_q_name"`
-	WsdlOperationName          types.String      `tfsdk:"wsdl_operation_name"`
-	WsdlMessageDirectionOrName types.String      `tfsdk:"wsdl_message_direction_or_name"`
-	WsdlAttachmentPart         types.String      `tfsdk:"wsdl_attachment_part"`
-	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
+	Id                         types.String                `tfsdk:"id"`
+	AppDomain                  types.String                `tfsdk:"app_domain"`
+	UserSummary                types.String                `tfsdk:"user_summary"`
+	JsonSchema                 types.String                `tfsdk:"json_schema"`
+	GraphQlSchema              types.String                `tfsdk:"graph_ql_schema"`
+	XmlType                    types.String                `tfsdk:"xml_type"`
+	XmlValidationMode          types.String                `tfsdk:"xml_validation_mode"`
+	XmlSchemaUrl               types.String                `tfsdk:"xml_schema_url"`
+	WsdlSchemaUrl              types.String                `tfsdk:"wsdl_schema_url"`
+	WsdlPortQName              types.String                `tfsdk:"wsdl_port_q_name"`
+	WsdlOperationName          types.String                `tfsdk:"wsdl_operation_name"`
+	WsdlMessageDirectionOrName types.String                `tfsdk:"wsdl_message_direction_or_name"`
+	WsdlAttachmentPart         types.String                `tfsdk:"wsdl_attachment_part"`
+	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APISchemaObjectType = map[string]attr.Type{

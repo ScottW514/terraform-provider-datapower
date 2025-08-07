@@ -11,7 +11,8 @@ attributes:
     type: String
     required: true
     example: 'Username'
-    test_value: '"0user"'
+    test_value: '"ResTest_User"'
+    test_expect_ds: '"admin"'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -52,6 +53,7 @@ attributes:
       - 'config-sequence'
     required: true
     default: 'group-defined'
+    test_expect_ds: '"privileged"'
     description: 'Access level'
     cli_alias: access-level
   - name: GroupName
@@ -59,7 +61,8 @@ attributes:
     reference_to: UserGroup
     description: 'User group'
     cli_alias: group
-    test_value: '"TestAccUserGroup"'
+    test_value: '"AccTest_UserGroup"'
+    test_bed_value: 'datapower_usergroup.acc_test.id'
   - name: SnmpCreds
     type: List
     element_type: DmSnmpCred

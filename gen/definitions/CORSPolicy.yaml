@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'CORSPolicy_name'
+    test_value: '"ResTestCORSPolicy"'
+    test_expect_ds: '"AccTest_CORSPolicy"'
+    example: 'CORSPolicyName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -34,6 +36,7 @@ attributes:
     reference_to: CORSRule
     element_type: String
     required: true
-    test_value: '["TestAccCORSRule"]'
+    test_value: '["AccTest_CORSRule"]'
+    test_bed_value: '[datapower_corsrule.acc_test.id]'
     description: 'CORS rules'
     cli_alias: rule

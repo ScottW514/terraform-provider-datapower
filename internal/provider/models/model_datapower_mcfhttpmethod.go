@@ -34,11 +34,11 @@ import (
 )
 
 type MCFHttpMethod struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	HttpMethod        types.String      `tfsdk:"http_method"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	HttpMethod        types.String                `tfsdk:"http_method"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MCFHttpMethodObjectType = map[string]attr.Type{

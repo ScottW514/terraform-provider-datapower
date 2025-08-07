@@ -14,8 +14,7 @@ Multi-Protocol Gateway Error Policy
 
 ```terraform
 data "datapower_mpgwerrorhandlingpolicy" "test" {
-  depends_on = [datapower_mpgwerrorhandlingpolicy.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

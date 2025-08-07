@@ -48,7 +48,7 @@ type SSHClientProfile struct {
 	Ciphers                     types.List                      `tfsdk:"ciphers"`
 	KexAlg                      types.List                      `tfsdk:"kex_alg"`
 	MacAlg                      types.List                      `tfsdk:"mac_alg"`
-	DependencyActions           []*actions.Action               `tfsdk:"dependency_actions"`
+	DependencyActions           []*actions.DependencyAction     `tfsdk:"dependency_actions"`
 }
 
 var SSHClientProfileObjectType = map[string]attr.Type{

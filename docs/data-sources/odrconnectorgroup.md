@@ -14,7 +14,6 @@ ODR Connector Group (`default` domain only)
 
 ```terraform
 data "datapower_odrconnectorgroup" "test" {
-  depends_on = [datapower_odrconnectorgroup.test]
 }
 ```
 

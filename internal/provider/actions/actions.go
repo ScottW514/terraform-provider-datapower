@@ -43,7 +43,7 @@ const (
 	Delete
 )
 
-type Action struct {
+type DependencyAction struct {
 	TargetId     types.String `tfsdk:"target_id"`
 	TargetDomain types.String `tfsdk:"target_domain"`
 	TargetType   types.String `tfsdk:"target_type"`
@@ -139,7 +139,7 @@ var ActionsListType = types.ListType{
 	},
 }
 
-func ValidateConfig(ctx context.Context, diag *diag.Diagnostics, actions []*Action) {
+func ValidateConfig(ctx context.Context, diag *diag.Diagnostics, actions []*DependencyAction) {
 	for _, target := range actions {
 		if act, ok := actionMap[target.TargetType.ValueString()]; ok {
 			if _, ok := act.ValidActions[target.Action.ValueString()]; !ok {

@@ -33,16 +33,16 @@ import (
 )
 
 type B2BPersistence struct {
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	RaidVolume        types.String      `tfsdk:"raid_volume"`
-	StorageSize       types.Int64       `tfsdk:"storage_size"`
-	HaEnabled         types.Bool        `tfsdk:"ha_enabled"`
-	HaOtherHosts      *DmB2BHAHost      `tfsdk:"ha_other_hosts"`
-	HaLocalIp         types.String      `tfsdk:"ha_local_ip"`
-	HaLocalPort       types.Int64       `tfsdk:"ha_local_port"`
-	HaVirtualIp       types.String      `tfsdk:"ha_virtual_ip"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	RaidVolume        types.String                `tfsdk:"raid_volume"`
+	StorageSize       types.Int64                 `tfsdk:"storage_size"`
+	HaEnabled         types.Bool                  `tfsdk:"ha_enabled"`
+	HaOtherHosts      *DmB2BHAHost                `tfsdk:"ha_other_hosts"`
+	HaLocalIp         types.String                `tfsdk:"ha_local_ip"`
+	HaLocalPort       types.Int64                 `tfsdk:"ha_local_port"`
+	HaVirtualIp       types.String                `tfsdk:"ha_virtual_ip"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var B2BPersistenceObjectType = map[string]attr.Type{

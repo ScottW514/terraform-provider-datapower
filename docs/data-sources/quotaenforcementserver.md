@@ -14,7 +14,6 @@ Quota Enforcement Server (`default` domain only)
 
 ```terraform
 data "datapower_quotaenforcementserver" "test" {
-  depends_on = [datapower_quotaenforcementserver.test]
 }
 ```
 

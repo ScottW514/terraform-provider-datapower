@@ -11,7 +11,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'SFTPFilePollerSourceProtocolHandler_name'
+    test_value: '"ResTestSFTPFilePollerSourceProtocolHandler"'
+    test_expect_ds: '"AccTest_SFTPFilePollerSourceProtocolHandler"'
+    example: 'SFTPFilePollerSourceProtocolHandlerName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -31,7 +33,8 @@ attributes:
     type: String
     reference_to: SSHClientProfile
     required: true
-    test_value: '"TestAccSSHClientProfile"'
+    test_value: '"AccTest_SSHClientProfile"'
+    test_bed_value: 'datapower_sshclientprofile.acc_test.id'
     description: 'SSH client connection'
     cli_alias: ssh-client-connection
   - name: UserSummary

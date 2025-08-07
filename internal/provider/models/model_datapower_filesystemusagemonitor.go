@@ -33,17 +33,17 @@ import (
 )
 
 type FileSystemUsageMonitor struct {
-	Enabled                    types.Bool        `tfsdk:"enabled"`
-	UserSummary                types.String      `tfsdk:"user_summary"`
-	PollingInterval            types.Int64       `tfsdk:"polling_interval"`
-	AllSystem                  types.Bool        `tfsdk:"all_system"`
-	AllSystemWarningThreshold  types.Int64       `tfsdk:"all_system_warning_threshold"`
-	AllSystemCriticalThreshold types.Int64       `tfsdk:"all_system_critical_threshold"`
-	System                     types.List        `tfsdk:"system"`
-	AllQmWarningThreshold      types.Int64       `tfsdk:"all_qm_warning_threshold"`
-	AllQmCriticalThreshold     types.Int64       `tfsdk:"all_qm_critical_threshold"`
-	QueueManager               types.List        `tfsdk:"queue_manager"`
-	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled                    types.Bool                  `tfsdk:"enabled"`
+	UserSummary                types.String                `tfsdk:"user_summary"`
+	PollingInterval            types.Int64                 `tfsdk:"polling_interval"`
+	AllSystem                  types.Bool                  `tfsdk:"all_system"`
+	AllSystemWarningThreshold  types.Int64                 `tfsdk:"all_system_warning_threshold"`
+	AllSystemCriticalThreshold types.Int64                 `tfsdk:"all_system_critical_threshold"`
+	System                     types.List                  `tfsdk:"system"`
+	AllQmWarningThreshold      types.Int64                 `tfsdk:"all_qm_warning_threshold"`
+	AllQmCriticalThreshold     types.Int64                 `tfsdk:"all_qm_critical_threshold"`
+	QueueManager               types.List                  `tfsdk:"queue_manager"`
+	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var FileSystemUsageMonitorObjectType = map[string]attr.Type{

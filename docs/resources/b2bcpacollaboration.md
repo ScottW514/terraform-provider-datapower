@@ -16,9 +16,14 @@ B2B CPA collaboration
 
 ```terraform
 resource "datapower_b2bcpacollaboration" "test" {
-  id         = "B2BCPACollaboration_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestB2BCPACollaboration"
+  app_domain = "acceptance_test"
   service    = "service"
+  actions = [{
+    name       = "cpacollaborationactionname"
+    value      = "value"
+    capability = "cansend"
+  }]
 }
 ```
 
@@ -27,6 +32,8 @@ resource "datapower_b2bcpacollaboration" "test" {
 
 ### Required
 
+- `actions` (Attributes List) Actions
+  - CLI Alias: `action` (see [below for nested schema](#nestedatt--actions))
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `service` (String) Service
@@ -34,8 +41,6 @@ resource "datapower_b2bcpacollaboration" "test" {
 
 ### Optional
 
-- `actions` (Attributes List) Actions
-  - CLI Alias: `action` (see [below for nested schema](#nestedatt--actions))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `external_role` (String) External role
   - CLI Alias: `external-role`

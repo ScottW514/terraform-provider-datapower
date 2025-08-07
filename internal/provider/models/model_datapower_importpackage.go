@@ -34,19 +34,19 @@ import (
 )
 
 type ImportPackage struct {
-	Id                         types.String      `tfsdk:"id"`
-	AppDomain                  types.String      `tfsdk:"app_domain"`
-	UserSummary                types.String      `tfsdk:"user_summary"`
-	Url                        types.String      `tfsdk:"url"`
-	ImportFormat               types.String      `tfsdk:"import_format"`
-	OverwriteFiles             types.Bool        `tfsdk:"overwrite_files"`
-	OverwriteObjects           types.Bool        `tfsdk:"overwrite_objects"`
-	DestinationDomain          types.String      `tfsdk:"destination_domain"`
-	DeploymentPolicy           types.String      `tfsdk:"deployment_policy"`
-	DeploymentPolicyParameters types.String      `tfsdk:"deployment_policy_parameters"`
-	LocalIpRewrite             types.Bool        `tfsdk:"local_ip_rewrite"`
-	OnStartup                  types.Bool        `tfsdk:"on_startup"`
-	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
+	Id                         types.String                `tfsdk:"id"`
+	AppDomain                  types.String                `tfsdk:"app_domain"`
+	UserSummary                types.String                `tfsdk:"user_summary"`
+	Url                        types.String                `tfsdk:"url"`
+	ImportFormat               types.String                `tfsdk:"import_format"`
+	OverwriteFiles             types.Bool                  `tfsdk:"overwrite_files"`
+	OverwriteObjects           types.Bool                  `tfsdk:"overwrite_objects"`
+	DestinationDomain          types.String                `tfsdk:"destination_domain"`
+	DeploymentPolicy           types.String                `tfsdk:"deployment_policy"`
+	DeploymentPolicyParameters types.String                `tfsdk:"deployment_policy_parameters"`
+	LocalIpRewrite             types.Bool                  `tfsdk:"local_ip_rewrite"`
+	OnStartup                  types.Bool                  `tfsdk:"on_startup"`
+	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ImportPackageObjectType = map[string]attr.Type{

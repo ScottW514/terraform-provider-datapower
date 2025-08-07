@@ -34,13 +34,13 @@ import (
 )
 
 type ConfigDeploymentPolicy struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	AcceptedConfig    types.List        `tfsdk:"accepted_config"`
-	FilteredConfig    types.List        `tfsdk:"filtered_config"`
-	ModifiedConfig    types.List        `tfsdk:"modified_config"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	AcceptedConfig    types.List                  `tfsdk:"accepted_config"`
+	FilteredConfig    types.List                  `tfsdk:"filtered_config"`
+	ModifiedConfig    types.List                  `tfsdk:"modified_config"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var ConfigDeploymentPolicyObjectType = map[string]attr.Type{

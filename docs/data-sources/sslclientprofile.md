@@ -14,8 +14,7 @@ TLS client profile
 
 ```terraform
 data "datapower_sslclientprofile" "test" {
-  depends_on = [datapower_sslclientprofile.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

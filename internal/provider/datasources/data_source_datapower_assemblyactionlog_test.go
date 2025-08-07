@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAssemblyActionLog(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionLogTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionlog.test", "result.0.id", "AssemblyActionLog_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionlog.test", "result.0.id", "AccTest_AssemblyActionLog"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionlog.test", "result.0.mode", "gather-only"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionlog.test", "result.0.log_level", "default"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionlog.test", "result.0.recount_bytes_sent", "false"),
@@ -50,5 +49,4 @@ func TestAccDataSourceAssemblyActionLog(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

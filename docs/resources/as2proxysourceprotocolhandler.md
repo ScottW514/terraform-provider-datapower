@@ -17,8 +17,8 @@ MEIG AS2 proxy handler
 
 ```terraform
 resource "datapower_as2proxysourceprotocolhandler" "test" {
-  id                        = "AS2ProxySourceProtocolHandler_name"
-  app_domain                = "acc_test_domain"
+  id                        = "ResTestAS2ProxySourceProtocolHandler"
+  app_domain                = "acceptance_test"
   local_address             = "0.0.0.0"
   local_port                = 80
   remote_address            = "10.10.10.10"

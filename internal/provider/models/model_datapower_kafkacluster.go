@@ -34,22 +34,22 @@ import (
 )
 
 type KafkaCluster struct {
-	Id                 types.String      `tfsdk:"id"`
-	AppDomain          types.String      `tfsdk:"app_domain"`
-	UserSummary        types.String      `tfsdk:"user_summary"`
-	Protocol           types.String      `tfsdk:"protocol"`
-	Endpoint           types.List        `tfsdk:"endpoint"`
-	SaslMechanism      types.String      `tfsdk:"sasl_mechanism"`
-	UserName           types.String      `tfsdk:"user_name"`
-	PasswordAlias      types.String      `tfsdk:"password_alias"`
-	Autocommit         types.Bool        `tfsdk:"autocommit"`
-	SslClient          types.String      `tfsdk:"ssl_client"`
-	MemoryThreshold    types.Int64       `tfsdk:"memory_threshold"`
-	MaximumMessageSize types.Int64       `tfsdk:"maximum_message_size"`
-	AutoRetry          types.Bool        `tfsdk:"auto_retry"`
-	RetryInterval      types.Int64       `tfsdk:"retry_interval"`
-	Property           types.List        `tfsdk:"property"`
-	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
+	Id                 types.String                `tfsdk:"id"`
+	AppDomain          types.String                `tfsdk:"app_domain"`
+	UserSummary        types.String                `tfsdk:"user_summary"`
+	Protocol           types.String                `tfsdk:"protocol"`
+	Endpoint           types.List                  `tfsdk:"endpoint"`
+	SaslMechanism      types.String                `tfsdk:"sasl_mechanism"`
+	UserName           types.String                `tfsdk:"user_name"`
+	PasswordAlias      types.String                `tfsdk:"password_alias"`
+	Autocommit         types.Bool                  `tfsdk:"autocommit"`
+	SslClient          types.String                `tfsdk:"ssl_client"`
+	MemoryThreshold    types.Int64                 `tfsdk:"memory_threshold"`
+	MaximumMessageSize types.Int64                 `tfsdk:"maximum_message_size"`
+	AutoRetry          types.Bool                  `tfsdk:"auto_retry"`
+	RetryInterval      types.Int64                 `tfsdk:"retry_interval"`
+	Property           types.List                  `tfsdk:"property"`
+	DependencyActions  []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var KafkaClusterObjectType = map[string]attr.Type{

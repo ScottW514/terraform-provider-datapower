@@ -14,8 +14,7 @@ IBM MQ v9+ queue manager group
 
 ```terraform
 data "datapower_mqmanagergroup" "test" {
-  depends_on = [datapower_mqmanagergroup.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

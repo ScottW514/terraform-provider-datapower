@@ -35,25 +35,25 @@ import (
 )
 
 type APIConnectGatewayService struct {
-	AppDomain             types.String         `tfsdk:"app_domain"`
-	Enabled               types.Bool           `tfsdk:"enabled"`
-	UserSummary           types.String         `tfsdk:"user_summary"`
-	LocalAddress          types.String         `tfsdk:"local_address"`
-	LocalPort             types.Int64          `tfsdk:"local_port"`
-	SslServer             types.String         `tfsdk:"ssl_server"`
-	ApiGatewayAddress     types.String         `tfsdk:"api_gateway_address"`
-	ApiGatewayPort        types.Int64          `tfsdk:"api_gateway_port"`
-	GatewayPeering        types.String         `tfsdk:"gateway_peering"`
-	GatewayPeeringManager types.String         `tfsdk:"gateway_peering_manager"`
-	V5CompatibilityMode   types.Bool           `tfsdk:"v5_compatibility_mode"`
-	UserDefinedPolicies   types.List           `tfsdk:"user_defined_policies"`
-	V5cSlmMode            types.String         `tfsdk:"v5c_slm_mode"`
-	IpMulticast           types.String         `tfsdk:"ip_multicast"`
-	IpUnicast             types.String         `tfsdk:"ip_unicast"`
-	JwtValidationMode     types.String         `tfsdk:"jwt_validation_mode"`
-	Jwturl                types.String         `tfsdk:"jwturl"`
-	ProxyPolicy           *DmAPICGSProxyPolicy `tfsdk:"proxy_policy"`
-	DependencyActions     []*actions.Action    `tfsdk:"dependency_actions"`
+	AppDomain             types.String                `tfsdk:"app_domain"`
+	Enabled               types.Bool                  `tfsdk:"enabled"`
+	UserSummary           types.String                `tfsdk:"user_summary"`
+	LocalAddress          types.String                `tfsdk:"local_address"`
+	LocalPort             types.Int64                 `tfsdk:"local_port"`
+	SslServer             types.String                `tfsdk:"ssl_server"`
+	ApiGatewayAddress     types.String                `tfsdk:"api_gateway_address"`
+	ApiGatewayPort        types.Int64                 `tfsdk:"api_gateway_port"`
+	GatewayPeering        types.String                `tfsdk:"gateway_peering"`
+	GatewayPeeringManager types.String                `tfsdk:"gateway_peering_manager"`
+	V5CompatibilityMode   types.Bool                  `tfsdk:"v5_compatibility_mode"`
+	UserDefinedPolicies   types.List                  `tfsdk:"user_defined_policies"`
+	V5cSlmMode            types.String                `tfsdk:"v5c_slm_mode"`
+	IpMulticast           types.String                `tfsdk:"ip_multicast"`
+	IpUnicast             types.String                `tfsdk:"ip_unicast"`
+	JwtValidationMode     types.String                `tfsdk:"jwt_validation_mode"`
+	Jwturl                types.String                `tfsdk:"jwturl"`
+	ProxyPolicy           *DmAPICGSProxyPolicy        `tfsdk:"proxy_policy"`
+	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APIConnectGatewayServiceObjectType = map[string]attr.Type{

@@ -1,10 +1,10 @@
 
 resource "datapower_sqldatasource" "test" {
-  id               = "SQLDataSource_name"
-  app_domain       = "acc_test_domain"
+  id               = "ResTestSQLDataSource"
+  app_domain       = "acceptance_test"
   database         = "Oracle"
   username         = "username"
-  password_alias   = "TestAccPasswordAlias"
+  password_alias   = "AccTest_PasswordAlias"
   data_source_id   = "datasource_id"
   data_source_host = "datasource.host"
   data_source_port = 1488

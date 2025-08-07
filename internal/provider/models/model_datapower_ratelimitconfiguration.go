@@ -35,10 +35,10 @@ import (
 )
 
 type RateLimitConfiguration struct {
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	Parameters        types.List        `tfsdk:"parameters"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	Parameters        types.List                  `tfsdk:"parameters"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var RateLimitConfigurationObjectType = map[string]attr.Type{

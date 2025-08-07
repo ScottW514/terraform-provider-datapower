@@ -16,10 +16,10 @@ OpenTelemetry
 
 ```terraform
 resource "datapower_opentelemetry" "test" {
-  id         = "OpenTelemetry_name"
-  app_domain = "acc_test_domain"
-  exporter   = "TestAccOpenTelemetryExporter"
-  sampler    = "TestAccOpenTelemetrySampler"
+  id         = "ResTestOpenTelemetry"
+  app_domain = "acceptance_test"
+  exporter   = "AccTest_OpenTelemetryExporter"
+  sampler    = "AccTest_OpenTelemetrySampler"
 }
 ```
 

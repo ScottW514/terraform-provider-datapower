@@ -9,8 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'HTTPUserAgent_name'
-    test_value: '"___HTTPUserAgent_test"'
+    test_value: '"ResTestHTTPUserAgent"'
+    test_expect_ds: '"AccTest_HTTPUserAgent"'
+    example: 'HTTPUserAgentName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

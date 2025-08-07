@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'JWEHeader_name'
+    test_value: '"ResTestJWEHeader"'
+    test_expect_ds: '"AccTest_JWEHeader"'
+    example: 'JWEHeaderName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -43,6 +45,7 @@ attributes:
     type: String
     reference_to: JWERecipient
     required: true
-    test_value: '"TestAccJWERecipient"'
+    test_value: '"AccTest_JWERecipient"'
+    test_bed_value: 'datapower_jwerecipient.acc_test.id'
     description: 'Recipient'
     cli_alias: recipient

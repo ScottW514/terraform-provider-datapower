@@ -34,14 +34,14 @@ import (
 )
 
 type OperationRateLimit struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Operation         types.String      `tfsdk:"operation"`
-	UseRateLimitGroup types.Bool        `tfsdk:"use_rate_limit_group"`
-	RateLimit         types.List        `tfsdk:"rate_limit"`
-	RateLimitGroup    types.String      `tfsdk:"rate_limit_group"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Operation         types.String                `tfsdk:"operation"`
+	UseRateLimitGroup types.Bool                  `tfsdk:"use_rate_limit_group"`
+	RateLimit         types.List                  `tfsdk:"rate_limit"`
+	RateLimitGroup    types.String                `tfsdk:"rate_limit_group"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var OperationRateLimitObjectType = map[string]attr.Type{

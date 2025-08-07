@@ -19,7 +19,9 @@ attributes:
   - name: MetaName
     type: String
     required: true
-    example: 'meta_name'
+    test_value: '"ResTestmeta"'
+    test_expect_ds: '"AccTest_meta"'
+    example: 'metaName'
     description: 'Metadata Item'
   - name: DataSource
     type: String

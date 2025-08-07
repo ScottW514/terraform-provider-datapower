@@ -34,11 +34,11 @@ import (
 )
 
 type VisibilityList struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Type              types.String      `tfsdk:"type"`
-	Value             types.List        `tfsdk:"value"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Type              types.String                `tfsdk:"type"`
+	Value             types.List                  `tfsdk:"value"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var VisibilityListObjectType = map[string]attr.Type{

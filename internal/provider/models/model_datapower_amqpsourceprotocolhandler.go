@@ -34,15 +34,15 @@ import (
 )
 
 type AMQPSourceProtocolHandler struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Broker            types.String      `tfsdk:"broker"`
-	From              types.String      `tfsdk:"from"`
-	To                types.String      `tfsdk:"to"`
-	Credit            types.Int64       `tfsdk:"credit"`
-	IgnoreReplyTo     types.Bool        `tfsdk:"ignore_reply_to"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Broker            types.String                `tfsdk:"broker"`
+	From              types.String                `tfsdk:"from"`
+	To                types.String                `tfsdk:"to"`
+	Credit            types.Int64                 `tfsdk:"credit"`
+	IgnoreReplyTo     types.Bool                  `tfsdk:"ignore_reply_to"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AMQPSourceProtocolHandlerObjectType = map[string]attr.Type{

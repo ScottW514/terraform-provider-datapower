@@ -34,16 +34,16 @@ import (
 )
 
 type XACMLPDP struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	EqualPolicies     types.Bool        `tfsdk:"equal_policies"`
-	GeneralPolicy     types.String      `tfsdk:"general_policy"`
-	CombiningAlg      types.String      `tfsdk:"combining_alg"`
-	DependentPolicy   types.List        `tfsdk:"dependent_policy"`
-	Directory         types.List        `tfsdk:"directory"`
-	CacheTtl          types.Int64       `tfsdk:"cache_ttl"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	EqualPolicies     types.Bool                  `tfsdk:"equal_policies"`
+	GeneralPolicy     types.String                `tfsdk:"general_policy"`
+	CombiningAlg      types.String                `tfsdk:"combining_alg"`
+	DependentPolicy   types.List                  `tfsdk:"dependent_policy"`
+	Directory         types.List                  `tfsdk:"directory"`
+	CacheTtl          types.Int64                 `tfsdk:"cache_ttl"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var XACMLPDPObjectType = map[string]attr.Type{

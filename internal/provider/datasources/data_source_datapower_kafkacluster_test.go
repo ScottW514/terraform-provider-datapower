@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceKafkaCluster(t *testing.T) {
 			{
 				Config: testconfig.KafkaClusterTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_kafkacluster.test", "result.0.id", "KafkaCluster_name"),
+					resource.TestCheckResourceAttr("data.datapower_kafkacluster.test", "result.0.id", "AccTest_KafkaCluster"),
 					resource.TestCheckResourceAttr("data.datapower_kafkacluster.test", "result.0.protocol", "plaintext"),
 					resource.TestCheckResourceAttr("data.datapower_kafkacluster.test", "result.0.sasl_mechanism", "plain"),
 					resource.TestCheckResourceAttr("data.datapower_kafkacluster.test", "result.0.autocommit", "true"),
@@ -53,5 +52,4 @@ func TestAccDataSourceKafkaCluster(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

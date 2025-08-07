@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourceOpenTelemetrySampler(t *testing.T) {
 			{
 				Config: testconfig.OpenTelemetrySamplerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_opentelemetrysampler.test", "result.0.id", "OpenTelemetrySampler_name"),
+					resource.TestCheckResourceAttr("data.datapower_opentelemetrysampler.test", "result.0.id", "AccTest_OpenTelemetrySampler"),
 					resource.TestCheckResourceAttr("data.datapower_opentelemetrysampler.test", "result.0.parent_based", "true"),
 					resource.TestCheckResourceAttr("data.datapower_opentelemetrysampler.test", "result.0.type", "always-on"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

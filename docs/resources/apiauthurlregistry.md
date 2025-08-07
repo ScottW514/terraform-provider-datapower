@@ -16,8 +16,8 @@ API authentication URL registry
 
 ```terraform
 resource "datapower_apiauthurlregistry" "test" {
-  id         = "APIAuthURLRegistry_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAPIAuthURLRegistry"
+  app_domain = "acceptance_test"
   auth_url   = "http://localhost"
 }
 ```

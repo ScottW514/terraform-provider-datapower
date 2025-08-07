@@ -34,16 +34,16 @@ import (
 )
 
 type MessageMatching struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	IpAddress         types.String      `tfsdk:"ip_address"`
-	IpExclude         types.String      `tfsdk:"ip_exclude"`
-	HttpMethod        types.String      `tfsdk:"http_method"`
-	HttpHeader        types.List        `tfsdk:"http_header"`
-	HttpHeaderExclude types.List        `tfsdk:"http_header_exclude"`
-	RequestUrl        types.String      `tfsdk:"request_url"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	IpAddress         types.String                `tfsdk:"ip_address"`
+	IpExclude         types.String                `tfsdk:"ip_exclude"`
+	HttpMethod        types.String                `tfsdk:"http_method"`
+	HttpHeader        types.List                  `tfsdk:"http_header"`
+	HttpHeaderExclude types.List                  `tfsdk:"http_header_exclude"`
+	RequestUrl        types.String                `tfsdk:"request_url"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var MessageMatchingObjectType = map[string]attr.Type{

@@ -34,16 +34,16 @@ import (
 )
 
 type WSRRServer struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	SoapUrl             types.String      `tfsdk:"soap_url"`
-	ServerPrefix        types.String      `tfsdk:"server_prefix"`
-	Username            types.String      `tfsdk:"username"`
-	PasswordAlias       types.String      `tfsdk:"password_alias"`
-	SslClientConfigType types.String      `tfsdk:"ssl_client_config_type"`
-	SslClient           types.String      `tfsdk:"ssl_client"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	SoapUrl             types.String                `tfsdk:"soap_url"`
+	ServerPrefix        types.String                `tfsdk:"server_prefix"`
+	Username            types.String                `tfsdk:"username"`
+	PasswordAlias       types.String                `tfsdk:"password_alias"`
+	SslClientConfigType types.String                `tfsdk:"ssl_client_config_type"`
+	SslClient           types.String                `tfsdk:"ssl_client"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WSRRServerObjectType = map[string]attr.Type{

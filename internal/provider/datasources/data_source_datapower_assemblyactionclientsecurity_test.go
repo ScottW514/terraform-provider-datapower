@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceAssemblyActionClientSecurity(t *testing.T) {
 			{
 				Config: testconfig.AssemblyActionClientSecurityTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_assemblyactionclientsecurity.test", "result.0.id", "AssemblyActionClientSecurity_name"),
+					resource.TestCheckResourceAttr("data.datapower_assemblyactionclientsecurity.test", "result.0.id", "AccTest_AssemblyActionClientSecurity"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionclientsecurity.test", "result.0.stop_on_error", "true"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionclientsecurity.test", "result.0.secret_required", "true"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionclientsecurity.test", "result.0.extract_credential_method", "header"),
@@ -52,5 +51,4 @@ func TestAccDataSourceAssemblyActionClientSecurity(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -33,13 +33,13 @@ import (
 )
 
 type RADIUSSettings struct {
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Id                types.String      `tfsdk:"id"`
-	Timeout           types.Int64       `tfsdk:"timeout"`
-	Retries           types.Int64       `tfsdk:"retries"`
-	AaaServers        types.List        `tfsdk:"aaa_servers"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Id                types.String                `tfsdk:"id"`
+	Timeout           types.Int64                 `tfsdk:"timeout"`
+	Retries           types.Int64                 `tfsdk:"retries"`
+	AaaServers        types.List                  `tfsdk:"aaa_servers"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var RADIUSSettingsObjectType = map[string]attr.Type{

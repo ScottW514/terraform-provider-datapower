@@ -14,8 +14,7 @@ Stateful raw XML handler
 
 ```terraform
 data "datapower_xtcprotocolhandler" "test" {
-  depends_on = [datapower_xtcprotocolhandler.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -34,14 +34,14 @@ import (
 )
 
 type SLMPolicy struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	ExecutionPolicy   types.String      `tfsdk:"execution_policy"`
-	Statement         types.List        `tfsdk:"statement"`
-	PeerGroup         types.String      `tfsdk:"peer_group"`
-	ApiMgmt           types.Bool        `tfsdk:"api_mgmt"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	ExecutionPolicy   types.String                `tfsdk:"execution_policy"`
+	Statement         types.List                  `tfsdk:"statement"`
+	PeerGroup         types.String                `tfsdk:"peer_group"`
+	ApiMgmt           types.Bool                  `tfsdk:"api_mgmt"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var SLMPolicyObjectType = map[string]attr.Type{

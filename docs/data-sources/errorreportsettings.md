@@ -14,7 +14,6 @@ Failure Notification (`default` domain only)
 
 ```terraform
 data "datapower_errorreportsettings" "test" {
-  depends_on = [datapower_errorreportsettings.test]
 }
 ```
 

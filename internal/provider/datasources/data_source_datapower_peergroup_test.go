@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourcePeerGroup(t *testing.T) {
 			{
 				Config: testconfig.PeerGroupTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_peergroup.test", "result.0.id", "PeerGroup_name"),
+					resource.TestCheckResourceAttr("data.datapower_peergroup.test", "result.0.id", "AccTest_PeerGroup"),
 					resource.TestCheckResourceAttr("data.datapower_peergroup.test", "result.0.type", "slm"),
 					resource.TestCheckResourceAttr("data.datapower_peergroup.test", "result.0.update_interval", "10"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'SOAPHeaderDisposition_name'
+    test_value: '"ResTestSOAPHeaderDisposition"'
+    test_expect_ds: '"AccTest_SOAPHeaderDisposition"'
+    example: 'SOAPHeaderDispositionName'
     description: 'Identifier'
     cli_alias: id
   - name: AppDomain

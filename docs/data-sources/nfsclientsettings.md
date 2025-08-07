@@ -14,7 +14,6 @@ NFS client settings (`default` domain only)
 
 ```terraform
 data "datapower_nfsclientsettings" "test" {
-  depends_on = [datapower_nfsclientsettings.test]
 }
 ```
 

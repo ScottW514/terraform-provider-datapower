@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: '___SLMAction_name'
+    test_value: '"ResTest_SLMAction"'
+    test_expect_ds: '"AccTest_SLMAction"'
+    example: 'SLMActionName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'

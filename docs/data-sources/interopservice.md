@@ -14,7 +14,6 @@ Interoperability test service (`default` domain only)
 
 ```terraform
 data "datapower_interopservice" "test" {
-  depends_on = [datapower_interopservice.test]
 }
 ```
 

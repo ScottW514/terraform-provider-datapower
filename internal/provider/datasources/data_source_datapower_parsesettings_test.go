@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceParseSettings(t *testing.T) {
 			{
 				Config: testconfig.ParseSettingsTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_parsesettings.test", "result.0.id", "___ParseSettings_name"),
+					resource.TestCheckResourceAttr("data.datapower_parsesettings.test", "result.0.id", "AccTest_ParseSettings"),
 					resource.TestCheckResourceAttr("data.datapower_parsesettings.test", "result.0.document_type", "detect"),
 					resource.TestCheckResourceAttr("data.datapower_parsesettings.test", "result.0.document_size", "4194304"),
 					resource.TestCheckResourceAttr("data.datapower_parsesettings.test", "result.0.nesting_depth", "512"),
@@ -57,5 +56,4 @@ func TestAccDataSourceParseSettings(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

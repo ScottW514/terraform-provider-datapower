@@ -16,8 +16,8 @@ Invoke assembly action
 
 ```terraform
 resource "datapower_assemblyactioninvoke" "test" {
-  id           = "AssemblyActionInvoke_name"
-  app_domain   = "acc_test_domain"
+  id           = "ResTestAssemblyActionInvoke"
+  app_domain   = "acceptance_test"
   url          = "https://localhost"
   method       = "Keep"
   backend_type = "detect"

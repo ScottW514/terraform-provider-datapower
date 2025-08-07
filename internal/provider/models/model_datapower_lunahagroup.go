@@ -34,13 +34,13 @@ import (
 )
 
 type LunaHAGroup struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	GroupName         types.String      `tfsdk:"group_name"`
-	Member            types.List        `tfsdk:"member"`
-	Standby           types.List        `tfsdk:"standby"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	GroupName         types.String                `tfsdk:"group_name"`
+	Member            types.List                  `tfsdk:"member"`
+	Standby           types.List                  `tfsdk:"standby"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var LunaHAGroupObjectType = map[string]attr.Type{

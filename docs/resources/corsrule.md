@@ -16,8 +16,8 @@ CORS rule
 
 ```terraform
 resource "datapower_corsrule" "test" {
-  id           = "CORSRule_name"
-  app_domain   = "acc_test_domain"
+  id           = "ResTestCORSRule"
+  app_domain   = "acceptance_test"
   allow_origin = ["origin"]
 }
 ```

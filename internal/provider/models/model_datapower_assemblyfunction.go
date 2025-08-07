@@ -34,15 +34,15 @@ import (
 )
 
 type AssemblyFunction struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Title             types.String      `tfsdk:"title"`
-	Description       types.String      `tfsdk:"description"`
-	Scope             types.String      `tfsdk:"scope"`
-	Parameter         types.List        `tfsdk:"parameter"`
-	Assembly          types.String      `tfsdk:"assembly"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Title             types.String                `tfsdk:"title"`
+	Description       types.String                `tfsdk:"description"`
+	Scope             types.String                `tfsdk:"scope"`
+	Parameter         types.List                  `tfsdk:"parameter"`
+	Assembly          types.String                `tfsdk:"assembly"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyFunctionObjectType = map[string]attr.Type{

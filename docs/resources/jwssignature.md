@@ -16,10 +16,10 @@ JWS Signature
 
 ```terraform
 resource "datapower_jwssignature" "test" {
-  id         = "JWSSignature_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestJWSSignature"
+  app_domain = "acceptance_test"
   algorithm  = "RS256"
-  key        = "TestAccCryptoKey"
+  key        = "AccTest_CryptoKey"
 }
 ```
 

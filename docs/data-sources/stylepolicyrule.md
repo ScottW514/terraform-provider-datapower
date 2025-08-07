@@ -14,8 +14,7 @@ Processing Rule
 
 ```terraform
 data "datapower_stylepolicyrule" "test" {
-  depends_on = [datapower_stylepolicyrule.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

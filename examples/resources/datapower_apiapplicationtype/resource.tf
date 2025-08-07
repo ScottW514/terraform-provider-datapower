@@ -1,5 +1,5 @@
 
 resource "datapower_apiapplicationtype" "test" {
-  id         = "APIApplicationType_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAPIApplicationType"
+  app_domain = "acceptance_test"
 }

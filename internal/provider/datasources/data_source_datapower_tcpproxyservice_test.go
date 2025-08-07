@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceTCPProxyService(t *testing.T) {
 			{
 				Config: testconfig.TCPProxyServiceTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_tcpproxyservice.test", "result.0.id", "TCPProxyService_name"),
+					resource.TestCheckResourceAttr("data.datapower_tcpproxyservice.test", "result.0.id", "AccTest_TCPProxyService"),
 					resource.TestCheckResourceAttr("data.datapower_tcpproxyservice.test", "result.0.priority", "normal"),
 					resource.TestCheckResourceAttr("data.datapower_tcpproxyservice.test", "result.0.timeout", "360"),
 					resource.TestCheckResourceAttr("data.datapower_tcpproxyservice.test", "result.0.local_address", "0.0.0.0"),
@@ -49,5 +48,4 @@ func TestAccDataSourceTCPProxyService(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

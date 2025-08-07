@@ -16,8 +16,8 @@ Throw assembly action
 
 ```terraform
 resource "datapower_assemblyactionthrow" "test" {
-  id         = "AssemblyActionThrow_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAssemblyActionThrow"
+  app_domain = "acceptance_test"
   error_id   = "errorid"
 }
 ```

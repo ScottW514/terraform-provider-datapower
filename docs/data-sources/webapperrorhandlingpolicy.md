@@ -14,8 +14,7 @@ Web Application Firewall Error Policy
 
 ```terraform
 data "datapower_webapperrorhandlingpolicy" "test" {
-  depends_on = [datapower_webapperrorhandlingpolicy.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -34,28 +34,28 @@ import (
 )
 
 type AnalyticsEndpoint struct {
-	Id                     types.String      `tfsdk:"id"`
-	AppDomain              types.String      `tfsdk:"app_domain"`
-	UserSummary            types.String      `tfsdk:"user_summary"`
-	AnalyticsServerUrl     types.String      `tfsdk:"analytics_server_url"`
-	SslClient              types.String      `tfsdk:"ssl_client"`
-	RequestTopic           types.String      `tfsdk:"request_topic"`
-	MaxRecords             types.Int64       `tfsdk:"max_records"`
-	MaxRecordsMemoryKb     types.Int64       `tfsdk:"max_records_memory_kb"`
-	MaxDeliveryMemoryMb    types.Int64       `tfsdk:"max_delivery_memory_mb"`
-	Interval               types.Int64       `tfsdk:"interval"`
-	DeliveryConnections    types.Int64       `tfsdk:"delivery_connections"`
-	EnableJwt              types.Bool        `tfsdk:"enable_jwt"`
-	ManagementUrl          types.String      `tfsdk:"management_url"`
-	ManagementUrlSslClient types.String      `tfsdk:"management_url_ssl_client"`
-	ClientId               types.String      `tfsdk:"client_id"`
-	ClientSecretAlias      types.String      `tfsdk:"client_secret_alias"`
-	GrantType              types.String      `tfsdk:"grant_type"`
-	Scope                  types.String      `tfsdk:"scope"`
-	PersistentConnection   types.Bool        `tfsdk:"persistent_connection"`
-	Timeout                types.Int64       `tfsdk:"timeout"`
-	PersistentTimeout      types.Int64       `tfsdk:"persistent_timeout"`
-	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
+	Id                     types.String                `tfsdk:"id"`
+	AppDomain              types.String                `tfsdk:"app_domain"`
+	UserSummary            types.String                `tfsdk:"user_summary"`
+	AnalyticsServerUrl     types.String                `tfsdk:"analytics_server_url"`
+	SslClient              types.String                `tfsdk:"ssl_client"`
+	RequestTopic           types.String                `tfsdk:"request_topic"`
+	MaxRecords             types.Int64                 `tfsdk:"max_records"`
+	MaxRecordsMemoryKb     types.Int64                 `tfsdk:"max_records_memory_kb"`
+	MaxDeliveryMemoryMb    types.Int64                 `tfsdk:"max_delivery_memory_mb"`
+	Interval               types.Int64                 `tfsdk:"interval"`
+	DeliveryConnections    types.Int64                 `tfsdk:"delivery_connections"`
+	EnableJwt              types.Bool                  `tfsdk:"enable_jwt"`
+	ManagementUrl          types.String                `tfsdk:"management_url"`
+	ManagementUrlSslClient types.String                `tfsdk:"management_url_ssl_client"`
+	ClientId               types.String                `tfsdk:"client_id"`
+	ClientSecretAlias      types.String                `tfsdk:"client_secret_alias"`
+	GrantType              types.String                `tfsdk:"grant_type"`
+	Scope                  types.String                `tfsdk:"scope"`
+	PersistentConnection   types.Bool                  `tfsdk:"persistent_connection"`
+	Timeout                types.Int64                 `tfsdk:"timeout"`
+	PersistentTimeout      types.Int64                 `tfsdk:"persistent_timeout"`
+	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AnalyticsEndpointObjectType = map[string]attr.Type{

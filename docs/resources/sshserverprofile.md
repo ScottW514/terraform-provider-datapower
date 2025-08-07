@@ -16,7 +16,7 @@ SSH server profile
 
 ```terraform
 resource "datapower_sshserverprofile" "test" {
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'CryptoKey_name'
+    test_value: '"ResTestCryptoKey"'
+    test_expect_ds: '"AccTest_CryptoKey"'
+    example: 'CryptoKeyName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -30,7 +32,9 @@ attributes:
     required: true
     description: 'File'
     cli_alias: file-name
-    example: 'cert:///acc-test-server.key'
+    example: 'cert:///crypto.key'
+    test_value: '"cert:///acc-test-server.key"'
+    test_bed_value: 'datapower_file.acc_test_server_key.remote_path'
   # DEPRECATED
   # - name: Password
   # DEPRECATED
@@ -38,6 +42,7 @@ attributes:
   - name: Alias
     type: String
     reference_to: PasswordAlias
-    test_value: '"TestAccPasswordAlias"'
+    test_value: '"AccTest_PasswordAlias"'
+    test_bed_value: 'datapower_passwordalias.acc_test.id'
     description: 'Password alias'
     cli_alias: password-alias

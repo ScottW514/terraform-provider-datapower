@@ -34,29 +34,29 @@ import (
 )
 
 type RateLimitDefinition struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	ShortName           types.String      `tfsdk:"short_name"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	Type                types.String      `tfsdk:"type"`
-	Rate                types.Int64       `tfsdk:"rate"`
-	Interval            types.Int64       `tfsdk:"interval"`
-	Unit                types.String      `tfsdk:"unit"`
-	HardLimit           types.Bool        `tfsdk:"hard_limit"`
-	IsClient            types.Bool        `tfsdk:"is_client"`
-	UseApiName          types.Bool        `tfsdk:"use_api_name"`
-	UseAppId            types.Bool        `tfsdk:"use_app_id"`
-	UseClientId         types.Bool        `tfsdk:"use_client_id"`
-	AutoReplenish       types.Bool        `tfsdk:"auto_replenish"`
-	DynamicValue        types.String      `tfsdk:"dynamic_value"`
-	Weight              types.String      `tfsdk:"weight"`
-	ResponseHeaders     types.Bool        `tfsdk:"response_headers"`
-	EmulateBurstHeaders types.Bool        `tfsdk:"emulate_burst_headers"`
-	UseIntervalOffset   types.Bool        `tfsdk:"use_interval_offset"`
-	AllowCacheFallback  types.Bool        `tfsdk:"allow_cache_fallback"`
-	UseCache            types.Bool        `tfsdk:"use_cache"`
-	Parameters          types.List        `tfsdk:"parameters"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	ShortName           types.String                `tfsdk:"short_name"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	Type                types.String                `tfsdk:"type"`
+	Rate                types.Int64                 `tfsdk:"rate"`
+	Interval            types.Int64                 `tfsdk:"interval"`
+	Unit                types.String                `tfsdk:"unit"`
+	HardLimit           types.Bool                  `tfsdk:"hard_limit"`
+	IsClient            types.Bool                  `tfsdk:"is_client"`
+	UseApiName          types.Bool                  `tfsdk:"use_api_name"`
+	UseAppId            types.Bool                  `tfsdk:"use_app_id"`
+	UseClientId         types.Bool                  `tfsdk:"use_client_id"`
+	AutoReplenish       types.Bool                  `tfsdk:"auto_replenish"`
+	DynamicValue        types.String                `tfsdk:"dynamic_value"`
+	Weight              types.String                `tfsdk:"weight"`
+	ResponseHeaders     types.Bool                  `tfsdk:"response_headers"`
+	EmulateBurstHeaders types.Bool                  `tfsdk:"emulate_burst_headers"`
+	UseIntervalOffset   types.Bool                  `tfsdk:"use_interval_offset"`
+	AllowCacheFallback  types.Bool                  `tfsdk:"allow_cache_fallback"`
+	UseCache            types.Bool                  `tfsdk:"use_cache"`
+	Parameters          types.List                  `tfsdk:"parameters"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var RateLimitDefinitionObjectType = map[string]attr.Type{

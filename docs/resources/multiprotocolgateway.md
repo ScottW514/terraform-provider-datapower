@@ -17,8 +17,8 @@ Multi-Protocol Gateway
 
 ```terraform
 resource "datapower_multiprotocolgateway" "test" {
-  id                       = "MultiProtocolGateway_name"
-  app_domain               = "acc_test_domain"
+  id                       = "ResTestMultiProtocolGateway"
+  app_domain               = "acceptance_test"
   type                     = "static-backend"
   xml_manager              = "default"
   front_timeout            = 120

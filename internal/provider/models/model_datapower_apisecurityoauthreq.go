@@ -34,12 +34,12 @@ import (
 )
 
 type APISecurityOAuthReq struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	ApiSecurityOAuthDef types.String      `tfsdk:"api_security_o_auth_def"`
-	OAuthAllowedScope   types.String      `tfsdk:"o_auth_allowed_scope"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	ApiSecurityOAuthDef types.String                `tfsdk:"api_security_o_auth_def"`
+	OAuthAllowedScope   types.String                `tfsdk:"o_auth_allowed_scope"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APISecurityOAuthReqObjectType = map[string]attr.Type{

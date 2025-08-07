@@ -16,3 +16,5 @@ tfdocs:
 	go run gen/generate_examples.go
 	terraform fmt -recursive ./examples/
 	go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs
+test:
+	go test -v -p 1 ./...

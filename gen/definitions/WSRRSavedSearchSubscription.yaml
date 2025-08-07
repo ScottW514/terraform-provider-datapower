@@ -9,7 +9,9 @@ attributes:
     path: name
     type: String
     required: true
-    example: 'WSRRSavedSearchSubscription_name'
+    test_value: '"ResTestWSRRSavedSearchSubscription"'
+    test_expect_ds: '"AccTest_WSRRSavedSearchSubscription"'
+    example: 'WSRRSavedSearchSubscriptionName'
     description: 'Name of the object. Must be unique among object types in application domain.'
     string_patterns:
       - '^[a-zA-Z0-9_-]+$'
@@ -29,13 +31,16 @@ attributes:
     type: String
     reference_to: WSRRServer
     required: true
-    test_value: '"TestAccWSRRServer"'
+    test_value: '"AccTest_WSRRServer"'
+    test_bed_value: 'datapower_wsrrserver.acc_test.id'
     description: 'WSRR server'
     cli_alias: server
   - name: SavedSearchName
     type: String
     required: true
-    example: 'saved_search_name'
+    test_value: '"ResTestsaved_search"'
+    test_expect_ds: '"AccTest_saved_search"'
+    example: 'saved_searchName'
     description: 'Saved search or named query'
     cli_alias: saved-search-name
   - name: SavedSearchParameters

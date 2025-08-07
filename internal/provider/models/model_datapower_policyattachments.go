@@ -34,15 +34,15 @@ import (
 )
 
 type PolicyAttachments struct {
-	Id                            types.String      `tfsdk:"id"`
-	AppDomain                     types.String      `tfsdk:"app_domain"`
-	UserSummary                   types.String      `tfsdk:"user_summary"`
-	EnforcementMode               types.String      `tfsdk:"enforcement_mode"`
-	PolicyReferences              types.Bool        `tfsdk:"policy_references"`
-	IgnoredPolicyAttachmentPoints types.List        `tfsdk:"ignored_policy_attachment_points"`
-	ExternalPolicy                types.List        `tfsdk:"external_policy"`
-	SlaEnforcementMode            types.String      `tfsdk:"sla_enforcement_mode"`
-	DependencyActions             []*actions.Action `tfsdk:"dependency_actions"`
+	Id                            types.String                `tfsdk:"id"`
+	AppDomain                     types.String                `tfsdk:"app_domain"`
+	UserSummary                   types.String                `tfsdk:"user_summary"`
+	EnforcementMode               types.String                `tfsdk:"enforcement_mode"`
+	PolicyReferences              types.Bool                  `tfsdk:"policy_references"`
+	IgnoredPolicyAttachmentPoints types.List                  `tfsdk:"ignored_policy_attachment_points"`
+	ExternalPolicy                types.List                  `tfsdk:"external_policy"`
+	SlaEnforcementMode            types.String                `tfsdk:"sla_enforcement_mode"`
+	DependencyActions             []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var PolicyAttachmentsObjectType = map[string]attr.Type{

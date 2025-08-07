@@ -14,8 +14,7 @@ NFS poller handler
 
 ```terraform
 data "datapower_nfsfilepollersourceprotocolhandler" "test" {
-  depends_on = [datapower_nfsfilepollersourceprotocolhandler.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

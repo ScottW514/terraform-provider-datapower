@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,11 +40,10 @@ func TestAccDataSourceMessageMatching(t *testing.T) {
 			{
 				Config: testconfig.MessageMatchingTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_messagematching.test", "result.0.id", "MessageMatching_name"),
+					resource.TestCheckResourceAttr("data.datapower_messagematching.test", "result.0.id", "AccTest_MessageMatching"),
 					resource.TestCheckResourceAttr("data.datapower_messagematching.test", "result.0.http_method", "any"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

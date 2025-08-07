@@ -16,9 +16,9 @@ API security requirement
 
 ```terraform
 resource "datapower_apisecurityrequirement" "test" {
-  id         = "APISecurityRequirement_name"
-  app_domain = "acc_test_domain"
-  security   = [datapower_apisecurityapikey.test.id]
+  id         = "ResTestAPISecurityRequirement"
+  app_domain = "acceptance_test"
+  security   = ["AccTest_APISecurityAPIKey"]
 }
 ```
 

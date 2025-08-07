@@ -34,20 +34,20 @@ import (
 )
 
 type POPPollerSourceProtocolHandler struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	MailServer          types.String      `tfsdk:"mail_server"`
-	Port                types.Int64       `tfsdk:"port"`
-	ConnSecurity        types.String      `tfsdk:"conn_security"`
-	AuthMethod          types.String      `tfsdk:"auth_method"`
-	Account             types.String      `tfsdk:"account"`
-	PasswordAlias       types.String      `tfsdk:"password_alias"`
-	DelayBetweenPolls   types.Int64       `tfsdk:"delay_between_polls"`
-	MaxMessagesPerPoll  types.Int64       `tfsdk:"max_messages_per_poll"`
-	SslClientConfigType types.String      `tfsdk:"ssl_client_config_type"`
-	SslClient           types.String      `tfsdk:"ssl_client"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	MailServer          types.String                `tfsdk:"mail_server"`
+	Port                types.Int64                 `tfsdk:"port"`
+	ConnSecurity        types.String                `tfsdk:"conn_security"`
+	AuthMethod          types.String                `tfsdk:"auth_method"`
+	Account             types.String                `tfsdk:"account"`
+	PasswordAlias       types.String                `tfsdk:"password_alias"`
+	DelayBetweenPolls   types.Int64                 `tfsdk:"delay_between_polls"`
+	MaxMessagesPerPoll  types.Int64                 `tfsdk:"max_messages_per_poll"`
+	SslClientConfigType types.String                `tfsdk:"ssl_client_config_type"`
+	SslClient           types.String                `tfsdk:"ssl_client"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var POPPollerSourceProtocolHandlerObjectType = map[string]attr.Type{

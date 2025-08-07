@@ -34,19 +34,19 @@ import (
 )
 
 type WSRRSubscription struct {
-	Id                     types.String      `tfsdk:"id"`
-	AppDomain              types.String      `tfsdk:"app_domain"`
-	Server                 types.String      `tfsdk:"server"`
-	Namespace              types.String      `tfsdk:"namespace"`
-	ObjectType             types.String      `tfsdk:"object_type"`
-	ObjectName             types.String      `tfsdk:"object_name"`
-	Method                 types.String      `tfsdk:"method"`
-	RefreshInterval        types.Int64       `tfsdk:"refresh_interval"`
-	UseVersion             types.Bool        `tfsdk:"use_version"`
-	ObjectVersion          types.String      `tfsdk:"object_version"`
-	FetchPolicyAttachments types.Bool        `tfsdk:"fetch_policy_attachments"`
-	UserSummary            types.String      `tfsdk:"user_summary"`
-	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
+	Id                     types.String                `tfsdk:"id"`
+	AppDomain              types.String                `tfsdk:"app_domain"`
+	Server                 types.String                `tfsdk:"server"`
+	Namespace              types.String                `tfsdk:"namespace"`
+	ObjectType             types.String                `tfsdk:"object_type"`
+	ObjectName             types.String                `tfsdk:"object_name"`
+	Method                 types.String                `tfsdk:"method"`
+	RefreshInterval        types.Int64                 `tfsdk:"refresh_interval"`
+	UseVersion             types.Bool                  `tfsdk:"use_version"`
+	ObjectVersion          types.String                `tfsdk:"object_version"`
+	FetchPolicyAttachments types.Bool                  `tfsdk:"fetch_policy_attachments"`
+	UserSummary            types.String                `tfsdk:"user_summary"`
+	DependencyActions      []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WSRRSubscriptionObjectType = map[string]attr.Type{

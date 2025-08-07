@@ -14,8 +14,7 @@ GraphQL schema options
 
 ```terraform
 data "datapower_graphqlschemaoptions" "test" {
-  depends_on = [datapower_graphqlschemaoptions.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -34,21 +34,21 @@ import (
 )
 
 type WXSGrid struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Collective        types.String      `tfsdk:"collective"`
-	Grid              types.String      `tfsdk:"grid"`
-	UserName          types.String      `tfsdk:"user_name"`
-	PasswordAlias     types.String      `tfsdk:"password_alias"`
-	Timeout           types.Int64       `tfsdk:"timeout"`
-	SslClient         types.String      `tfsdk:"ssl_client"`
-	Encrypt           types.Bool        `tfsdk:"encrypt"`
-	EncryptSsKey      types.String      `tfsdk:"encrypt_ss_key"`
-	EncryptAlg        types.String      `tfsdk:"encrypt_alg"`
-	KeyObfuscation    types.Bool        `tfsdk:"key_obfuscation"`
-	KeyObfuscationAlg types.String      `tfsdk:"key_obfuscation_alg"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Collective        types.String                `tfsdk:"collective"`
+	Grid              types.String                `tfsdk:"grid"`
+	UserName          types.String                `tfsdk:"user_name"`
+	PasswordAlias     types.String                `tfsdk:"password_alias"`
+	Timeout           types.Int64                 `tfsdk:"timeout"`
+	SslClient         types.String                `tfsdk:"ssl_client"`
+	Encrypt           types.Bool                  `tfsdk:"encrypt"`
+	EncryptSsKey      types.String                `tfsdk:"encrypt_ss_key"`
+	EncryptAlg        types.String                `tfsdk:"encrypt_alg"`
+	KeyObfuscation    types.Bool                  `tfsdk:"key_obfuscation"`
+	KeyObfuscationAlg types.String                `tfsdk:"key_obfuscation_alg"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var WXSGridObjectType = map[string]attr.Type{

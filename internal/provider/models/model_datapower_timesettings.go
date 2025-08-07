@@ -33,25 +33,25 @@ import (
 )
 
 type TimeSettings struct {
-	Enabled                  types.Bool        `tfsdk:"enabled"`
-	LocalTimeZone            types.String      `tfsdk:"local_time_zone"`
-	CustomTzName             types.String      `tfsdk:"custom_tz_name"`
-	UtcDirection             types.String      `tfsdk:"utc_direction"`
-	OffsetHours              types.Int64       `tfsdk:"offset_hours"`
-	OffsetMinutes            types.Int64       `tfsdk:"offset_minutes"`
-	DaylightOffsetHours      types.Int64       `tfsdk:"daylight_offset_hours"`
-	TzNameDst                types.String      `tfsdk:"tz_name_dst"`
-	DaylightStartMonth       types.String      `tfsdk:"daylight_start_month"`
-	DaylightStartWeek        types.Int64       `tfsdk:"daylight_start_week"`
-	DaylightStartDay         types.String      `tfsdk:"daylight_start_day"`
-	DaylightStartTimeHours   types.Int64       `tfsdk:"daylight_start_time_hours"`
-	DaylightStartTimeMinutes types.Int64       `tfsdk:"daylight_start_time_minutes"`
-	DaylightStopMonth        types.String      `tfsdk:"daylight_stop_month"`
-	DaylightStopWeek         types.Int64       `tfsdk:"daylight_stop_week"`
-	DaylightStopDay          types.String      `tfsdk:"daylight_stop_day"`
-	DaylightStopTimeHours    types.Int64       `tfsdk:"daylight_stop_time_hours"`
-	DaylightStopTimeMinutes  types.Int64       `tfsdk:"daylight_stop_time_minutes"`
-	DependencyActions        []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled                  types.Bool                  `tfsdk:"enabled"`
+	LocalTimeZone            types.String                `tfsdk:"local_time_zone"`
+	CustomTzName             types.String                `tfsdk:"custom_tz_name"`
+	UtcDirection             types.String                `tfsdk:"utc_direction"`
+	OffsetHours              types.Int64                 `tfsdk:"offset_hours"`
+	OffsetMinutes            types.Int64                 `tfsdk:"offset_minutes"`
+	DaylightOffsetHours      types.Int64                 `tfsdk:"daylight_offset_hours"`
+	TzNameDst                types.String                `tfsdk:"tz_name_dst"`
+	DaylightStartMonth       types.String                `tfsdk:"daylight_start_month"`
+	DaylightStartWeek        types.Int64                 `tfsdk:"daylight_start_week"`
+	DaylightStartDay         types.String                `tfsdk:"daylight_start_day"`
+	DaylightStartTimeHours   types.Int64                 `tfsdk:"daylight_start_time_hours"`
+	DaylightStartTimeMinutes types.Int64                 `tfsdk:"daylight_start_time_minutes"`
+	DaylightStopMonth        types.String                `tfsdk:"daylight_stop_month"`
+	DaylightStopWeek         types.Int64                 `tfsdk:"daylight_stop_week"`
+	DaylightStopDay          types.String                `tfsdk:"daylight_stop_day"`
+	DaylightStopTimeHours    types.Int64                 `tfsdk:"daylight_stop_time_hours"`
+	DaylightStopTimeMinutes  types.Int64                 `tfsdk:"daylight_stop_time_minutes"`
+	DependencyActions        []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var TimeSettingsObjectType = map[string]attr.Type{

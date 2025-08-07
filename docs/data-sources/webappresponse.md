@@ -14,8 +14,7 @@ Web Response Profile
 
 ```terraform
 data "datapower_webappresponse" "test" {
-  depends_on = [datapower_webappresponse.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

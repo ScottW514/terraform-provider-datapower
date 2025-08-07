@@ -14,7 +14,6 @@ GitOps variables (`default` domain only)
 
 ```terraform
 data "datapower_gitopsvariables" "test" {
-  depends_on = [datapower_gitopsvariables.test]
 }
 ```
 

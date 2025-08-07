@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceSMTPServerConnection(t *testing.T) {
 			{
 				Config: testconfig.SMTPServerConnectionTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_smtpserverconnection.test", "result.0.id", "___SMTPServerConnection_name"),
+					resource.TestCheckResourceAttr("data.datapower_smtpserverconnection.test", "result.0.id", "AccTest_SMTPServerConnection"),
 					resource.TestCheckResourceAttr("data.datapower_smtpserverconnection.test", "result.0.mail_server_port", "25"),
 					resource.TestCheckResourceAttr("data.datapower_smtpserverconnection.test", "result.0.auth", "plain"),
 					resource.TestCheckResourceAttr("data.datapower_smtpserverconnection.test", "result.0.ssl_client_config_type", "client"),
@@ -49,5 +48,4 @@ func TestAccDataSourceSMTPServerConnection(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

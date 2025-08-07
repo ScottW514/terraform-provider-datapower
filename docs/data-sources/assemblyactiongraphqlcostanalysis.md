@@ -14,8 +14,7 @@ GraphQL cost analysis assembly action
 
 ```terraform
 data "datapower_assemblyactiongraphqlcostanalysis" "test" {
-  depends_on = [datapower_assemblyactiongraphqlcostanalysis.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

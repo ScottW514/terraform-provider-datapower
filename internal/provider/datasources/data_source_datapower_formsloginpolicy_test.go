@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceFormsLoginPolicy(t *testing.T) {
 			{
 				Config: testconfig.FormsLoginPolicyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.id", "FormsLoginPolicy_name"),
+					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.id", "AccTest_FormsLoginPolicy"),
 					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.login_form", "/LoginPage.htm"),
 					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.use_cookie_attributes", "false"),
 					resource.TestCheckResourceAttr("data.datapower_formsloginpolicy.test", "result.0.use_ssl_for_login", "true"),
@@ -67,5 +66,4 @@ func TestAccDataSourceFormsLoginPolicy(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

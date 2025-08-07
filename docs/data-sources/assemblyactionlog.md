@@ -14,8 +14,7 @@ Log assembly action
 
 ```terraform
 data "datapower_assemblyactionlog" "test" {
-  depends_on = [datapower_assemblyactionlog.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceXSLProxyService(t *testing.T) {
 			{
 				Config: testconfig.XSLProxyServiceTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_xslproxyservice.test", "result.0.id", "XSLProxyService_name"),
+					resource.TestCheckResourceAttr("data.datapower_xslproxyservice.test", "result.0.id", "AccTest_XSLProxyService"),
 					resource.TestCheckResourceAttr("data.datapower_xslproxyservice.test", "result.0.type", "static-backend"),
 					resource.TestCheckResourceAttr("data.datapower_xslproxyservice.test", "result.0.xml_manager", "default"),
 					resource.TestCheckResourceAttr("data.datapower_xslproxyservice.test", "result.0.style_policy", "default"),
@@ -73,5 +72,4 @@ func TestAccDataSourceXSLProxyService(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

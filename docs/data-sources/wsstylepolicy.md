@@ -14,8 +14,7 @@ WS-Proxy Processing Policy
 
 ```terraform
 data "datapower_wsstylepolicy" "test" {
-  depends_on = [datapower_wsstylepolicy.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

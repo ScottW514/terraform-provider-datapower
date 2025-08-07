@@ -35,13 +35,13 @@ import (
 )
 
 type APISecurityTokenManager struct {
-	AppDomain                   types.String      `tfsdk:"app_domain"`
-	Enabled                     types.Bool        `tfsdk:"enabled"`
-	UserSummary                 types.String      `tfsdk:"user_summary"`
-	GatewayPeering              types.String      `tfsdk:"gateway_peering"`
-	GatewayPeeringExternal      types.String      `tfsdk:"gateway_peering_external"`
-	ExpiredTokenCleanupInterval types.Int64       `tfsdk:"expired_token_cleanup_interval"`
-	DependencyActions           []*actions.Action `tfsdk:"dependency_actions"`
+	AppDomain                   types.String                `tfsdk:"app_domain"`
+	Enabled                     types.Bool                  `tfsdk:"enabled"`
+	UserSummary                 types.String                `tfsdk:"user_summary"`
+	GatewayPeering              types.String                `tfsdk:"gateway_peering"`
+	GatewayPeeringExternal      types.String                `tfsdk:"gateway_peering_external"`
+	ExpiredTokenCleanupInterval types.Int64                 `tfsdk:"expired_token_cleanup_interval"`
+	DependencyActions           []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var APISecurityTokenManagerObjectType = map[string]attr.Type{

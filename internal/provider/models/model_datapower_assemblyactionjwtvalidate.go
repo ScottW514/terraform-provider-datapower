@@ -34,21 +34,21 @@ import (
 )
 
 type AssemblyActionJWTValidate struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Jwt               types.String      `tfsdk:"jwt"`
-	OutputClaims      types.String      `tfsdk:"output_claims"`
-	IssuerClaim       types.String      `tfsdk:"issuer_claim"`
-	AudienceClaim     types.String      `tfsdk:"audience_claim"`
-	DecryptCrypto     types.String      `tfsdk:"decrypt_crypto"`
-	DecryptJwk        types.String      `tfsdk:"decrypt_jwk"`
-	VerifyCrypto      types.String      `tfsdk:"verify_crypto"`
-	VerifyJwk         types.String      `tfsdk:"verify_jwk"`
-	UserSummary       types.String      `tfsdk:"user_summary"`
-	Title             types.String      `tfsdk:"title"`
-	CorrelationPath   types.String      `tfsdk:"correlation_path"`
-	ActionDebug       types.Bool        `tfsdk:"action_debug"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Jwt               types.String                `tfsdk:"jwt"`
+	OutputClaims      types.String                `tfsdk:"output_claims"`
+	IssuerClaim       types.String                `tfsdk:"issuer_claim"`
+	AudienceClaim     types.String                `tfsdk:"audience_claim"`
+	DecryptCrypto     types.String                `tfsdk:"decrypt_crypto"`
+	DecryptJwk        types.String                `tfsdk:"decrypt_jwk"`
+	VerifyCrypto      types.String                `tfsdk:"verify_crypto"`
+	VerifyJwk         types.String                `tfsdk:"verify_jwk"`
+	UserSummary       types.String                `tfsdk:"user_summary"`
+	Title             types.String                `tfsdk:"title"`
+	CorrelationPath   types.String                `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool                  `tfsdk:"action_debug"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionJWTValidateObjectType = map[string]attr.Type{

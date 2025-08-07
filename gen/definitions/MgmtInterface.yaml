@@ -11,6 +11,7 @@ attributes:
     type: Bool
     bool_type: 'admin'
     default: true
+    test_expect_ds: '"false"'
     description: 'Administrative state'
     cli_alias: admin-state
   - name: UserSummary

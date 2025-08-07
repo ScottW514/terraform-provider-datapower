@@ -34,12 +34,12 @@ import (
 )
 
 type CryptoIdentCred struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Key               types.String      `tfsdk:"key"`
-	Certificate       types.String      `tfsdk:"certificate"`
-	Ca                types.List        `tfsdk:"ca"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Key               types.String                `tfsdk:"key"`
+	Certificate       types.String                `tfsdk:"certificate"`
+	Ca                types.List                  `tfsdk:"ca"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CryptoIdentCredObjectType = map[string]attr.Type{

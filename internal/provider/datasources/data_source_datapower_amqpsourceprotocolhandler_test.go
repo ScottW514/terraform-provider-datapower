@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,12 +40,11 @@ func TestAccDataSourceAMQPSourceProtocolHandler(t *testing.T) {
 			{
 				Config: testconfig.AMQPSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_amqpsourceprotocolhandler.test", "result.0.id", "AMQPSourceProtocolHandler_name"),
+					resource.TestCheckResourceAttr("data.datapower_amqpsourceprotocolhandler.test", "result.0.id", "AccTest_AMQPSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_amqpsourceprotocolhandler.test", "result.0.credit", "100"),
 					resource.TestCheckResourceAttr("data.datapower_amqpsourceprotocolhandler.test", "result.0.ignore_reply_to", "true"),
 				}...),
 			},
 		},
 	})
-	actions.PostProcess()
 }

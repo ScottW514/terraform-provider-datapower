@@ -33,11 +33,11 @@ import (
 )
 
 type LunaHASettings struct {
-	Enabled           types.Bool        `tfsdk:"enabled"`
-	Mode              types.String      `tfsdk:"mode"`
-	RecoveryCount     types.Int64       `tfsdk:"recovery_count"`
-	Interval          types.Int64       `tfsdk:"interval"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Enabled           types.Bool                  `tfsdk:"enabled"`
+	Mode              types.String                `tfsdk:"mode"`
+	RecoveryCount     types.Int64                 `tfsdk:"recovery_count"`
+	Interval          types.Int64                 `tfsdk:"interval"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var LunaHASettingsObjectType = map[string]attr.Type{

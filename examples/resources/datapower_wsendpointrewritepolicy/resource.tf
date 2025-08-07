@@ -1,5 +1,5 @@
 
 resource "datapower_wsendpointrewritepolicy" "test" {
-  id         = "WSEndpointRewritePolicy_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestWSEndpointRewritePolicy"
+  app_domain = "acceptance_test"
 }

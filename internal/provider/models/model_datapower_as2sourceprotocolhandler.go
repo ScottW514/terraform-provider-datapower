@@ -34,27 +34,27 @@ import (
 )
 
 type AS2SourceProtocolHandler struct {
-	Id                    types.String      `tfsdk:"id"`
-	AppDomain             types.String      `tfsdk:"app_domain"`
-	UserSummary           types.String      `tfsdk:"user_summary"`
-	LocalAddress          types.String      `tfsdk:"local_address"`
-	LocalPort             types.Int64       `tfsdk:"local_port"`
-	HttpVersion           types.String      `tfsdk:"http_version"`
-	PersistentConnections types.Bool        `tfsdk:"persistent_connections"`
-	AllowCompression      types.Bool        `tfsdk:"allow_compression"`
-	MaxUrlLen             types.Int64       `tfsdk:"max_url_len"`
-	MaxTotalHdrLen        types.Int64       `tfsdk:"max_total_hdr_len"`
-	MaxHdrCount           types.Int64       `tfsdk:"max_hdr_count"`
-	MaxNameHdrLen         types.Int64       `tfsdk:"max_name_hdr_len"`
-	MaxValueHdrLen        types.Int64       `tfsdk:"max_value_hdr_len"`
-	MaxQueryStringLen     types.Int64       `tfsdk:"max_query_string_len"`
-	Acl                   types.String      `tfsdk:"acl"`
-	AaaPolicy             types.String      `tfsdk:"aaa_policy"`
-	CredentialCharset     types.String      `tfsdk:"credential_charset"`
-	SslServerConfigType   types.String      `tfsdk:"ssl_server_config_type"`
-	SslServer             types.String      `tfsdk:"ssl_server"`
-	SslsniServer          types.String      `tfsdk:"sslsni_server"`
-	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
+	Id                    types.String                `tfsdk:"id"`
+	AppDomain             types.String                `tfsdk:"app_domain"`
+	UserSummary           types.String                `tfsdk:"user_summary"`
+	LocalAddress          types.String                `tfsdk:"local_address"`
+	LocalPort             types.Int64                 `tfsdk:"local_port"`
+	HttpVersion           types.String                `tfsdk:"http_version"`
+	PersistentConnections types.Bool                  `tfsdk:"persistent_connections"`
+	AllowCompression      types.Bool                  `tfsdk:"allow_compression"`
+	MaxUrlLen             types.Int64                 `tfsdk:"max_url_len"`
+	MaxTotalHdrLen        types.Int64                 `tfsdk:"max_total_hdr_len"`
+	MaxHdrCount           types.Int64                 `tfsdk:"max_hdr_count"`
+	MaxNameHdrLen         types.Int64                 `tfsdk:"max_name_hdr_len"`
+	MaxValueHdrLen        types.Int64                 `tfsdk:"max_value_hdr_len"`
+	MaxQueryStringLen     types.Int64                 `tfsdk:"max_query_string_len"`
+	Acl                   types.String                `tfsdk:"acl"`
+	AaaPolicy             types.String                `tfsdk:"aaa_policy"`
+	CredentialCharset     types.String                `tfsdk:"credential_charset"`
+	SslServerConfigType   types.String                `tfsdk:"ssl_server_config_type"`
+	SslServer             types.String                `tfsdk:"ssl_server"`
+	SslsniServer          types.String                `tfsdk:"sslsni_server"`
+	DependencyActions     []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var AS2SourceProtocolHandlerObjectType = map[string]attr.Type{

@@ -34,12 +34,12 @@ import (
 )
 
 type CryptoCertificate struct {
-	Id                types.String      `tfsdk:"id"`
-	AppDomain         types.String      `tfsdk:"app_domain"`
-	Filename          types.String      `tfsdk:"filename"`
-	Alias             types.String      `tfsdk:"alias"`
-	IgnoreExpiration  types.Bool        `tfsdk:"ignore_expiration"`
-	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
+	Id                types.String                `tfsdk:"id"`
+	AppDomain         types.String                `tfsdk:"app_domain"`
+	Filename          types.String                `tfsdk:"filename"`
+	Alias             types.String                `tfsdk:"alias"`
+	IgnoreExpiration  types.Bool                  `tfsdk:"ignore_expiration"`
+	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var CryptoCertificateObjectType = map[string]attr.Type{

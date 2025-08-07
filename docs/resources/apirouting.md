@@ -16,8 +16,8 @@ Routing API action
 
 ```terraform
 resource "datapower_apirouting" "test" {
-  id         = "APIRouting_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestAPIRouting"
+  app_domain = "acceptance_test"
 }
 ```
 

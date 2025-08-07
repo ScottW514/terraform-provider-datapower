@@ -16,8 +16,8 @@ Matching Rule
 
 ```terraform
 resource "datapower_matching" "test" {
-  id         = "___Matching_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestMatching"
+  app_domain = "acceptance_test"
 }
 ```
 

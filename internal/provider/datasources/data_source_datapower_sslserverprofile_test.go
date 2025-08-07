@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
@@ -41,7 +40,7 @@ func TestAccDataSourceSSLServerProfile(t *testing.T) {
 			{
 				Config: testconfig.SSLServerProfileTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-					resource.TestCheckResourceAttr("data.datapower_sslserverprofile.test", "result.0.id", "SSLServerProfile_name"),
+					resource.TestCheckResourceAttr("data.datapower_sslserverprofile.test", "result.0.id", "AccTest_SSLServerProfile"),
 					resource.TestCheckResourceAttr("data.datapower_sslserverprofile.test", "result.0.request_client_auth", "false"),
 					resource.TestCheckResourceAttr("data.datapower_sslserverprofile.test", "result.0.require_client_auth", "true"),
 					resource.TestCheckResourceAttr("data.datapower_sslserverprofile.test", "result.0.validate_client_cert", "true"),
@@ -62,5 +61,4 @@ func TestAccDataSourceSSLServerProfile(t *testing.T) {
 			},
 		},
 	})
-	actions.PostProcess()
 }

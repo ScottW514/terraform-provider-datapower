@@ -1,5 +1,5 @@
 
 resource "datapower_httpinputconversionmap" "test" {
-  id         = "___HTTPInputConversionMap_name"
-  app_domain = "acc_test_domain"
+  id         = "ResTestHTTPInputConversionMap"
+  app_domain = "acceptance_test"
 }

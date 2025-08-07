@@ -34,23 +34,23 @@ import (
 )
 
 type OpenTelemetryExporter struct {
-	Id                  types.String      `tfsdk:"id"`
-	AppDomain           types.String      `tfsdk:"app_domain"`
-	UserSummary         types.String      `tfsdk:"user_summary"`
-	Type                types.String      `tfsdk:"type"`
-	HostName            types.String      `tfsdk:"host_name"`
-	TracesPath          types.String      `tfsdk:"traces_path"`
-	Port                types.Int64       `tfsdk:"port"`
-	HttpContentType     types.String      `tfsdk:"http_content_type"`
-	Timeout             types.Int64       `tfsdk:"timeout"`
-	Header              types.List        `tfsdk:"header"`
-	Processor           types.String      `tfsdk:"processor"`
-	MaxQueueSize        types.Int64       `tfsdk:"max_queue_size"`
-	MaxExportSize       types.Int64       `tfsdk:"max_export_size"`
-	ExportDelayInterval types.Int64       `tfsdk:"export_delay_interval"`
-	ProxyPolicies       types.List        `tfsdk:"proxy_policies"`
-	SslClient           types.String      `tfsdk:"ssl_client"`
-	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
+	Id                  types.String                `tfsdk:"id"`
+	AppDomain           types.String                `tfsdk:"app_domain"`
+	UserSummary         types.String                `tfsdk:"user_summary"`
+	Type                types.String                `tfsdk:"type"`
+	HostName            types.String                `tfsdk:"host_name"`
+	TracesPath          types.String                `tfsdk:"traces_path"`
+	Port                types.Int64                 `tfsdk:"port"`
+	HttpContentType     types.String                `tfsdk:"http_content_type"`
+	Timeout             types.Int64                 `tfsdk:"timeout"`
+	Header              types.List                  `tfsdk:"header"`
+	Processor           types.String                `tfsdk:"processor"`
+	MaxQueueSize        types.Int64                 `tfsdk:"max_queue_size"`
+	MaxExportSize       types.Int64                 `tfsdk:"max_export_size"`
+	ExportDelayInterval types.Int64                 `tfsdk:"export_delay_interval"`
+	ProxyPolicies       types.List                  `tfsdk:"proxy_policies"`
+	SslClient           types.String                `tfsdk:"ssl_client"`
+	DependencyActions   []*actions.DependencyAction `tfsdk:"dependency_actions"`
 }
 
 var OpenTelemetryExporterObjectType = map[string]attr.Type{

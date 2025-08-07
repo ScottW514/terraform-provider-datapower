@@ -14,8 +14,7 @@ FTP poller handler
 
 ```terraform
 data "datapower_ftpfilepollersourceprotocolhandler" "test" {
-  depends_on = [datapower_ftpfilepollersourceprotocolhandler.test]
-  app_domain = "acc_test_domain"
+  app_domain = "acceptance_test"
 }
 ```
 

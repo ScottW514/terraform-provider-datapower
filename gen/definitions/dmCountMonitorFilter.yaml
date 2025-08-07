@@ -28,5 +28,6 @@ attributes:
     type: String
     reference_to: FilterAction
     required: true
-    test_value: '"TestAccFilterAction"'
+    test_value: '"AccTest_FilterAction"'
+    test_bed_value: 'datapower_filteraction.acc_test.id'
     description: 'Action'

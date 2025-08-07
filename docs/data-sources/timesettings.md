@@ -14,7 +14,6 @@ Time Settings (`default` domain only)
 
 ```terraform
 data "datapower_timesettings" "test" {
-  depends_on = [datapower_timesettings.test]
 }
 ```
 
