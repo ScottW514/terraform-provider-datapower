@@ -1,0 +1,152 @@
+//go:build ignore
+// Copyright © 2025 Scott Wiederhold <s.e.wiederhold@gmail.com>
+// All rights reserved.
+//
+// Licensed under the Mozilla Public License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://mozilla.org/MPL/2.0/
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// SPDX-License-Identifier: MPL-2.0
+
+// This file is generated "gen/generator.go"
+// !!CHANGES TO THIS FILE WILL BE OVERWRITTEN!!
+
+package testconfig
+
+type ModelTestConfig struct {
+	Name         string
+	Model        string
+	Resource     string
+	Data         string
+	ModelOnly    bool
+	Dependencies map[string]*ModelTestConfig
+	TestPre      string
+}
+
+func (c ModelTestConfig) GetModelListConfig() string {
+	if c.Model == "\n" {
+		return "null"
+	} else {
+		return "[" + c.Model + "]"
+	}
+}
+
+func (c ModelTestConfig) GetModelConfig() string {
+	if c.Model == "{}" {
+		return "null"
+	} else {
+		return c.Model
+	}
+}
+
+func (c ModelTestConfig) GetDataConfig() string {
+	return c.GetResourceConfig() + c.Data
+}
+
+func (c ModelTestConfig) GetResourceConfig() string {
+	return c.getPrequisites() + c.Resource
+}
+
+func (c *ModelTestConfig) getPrequisites() string {
+	referencesTo := make(map[string]*ModelTestConfig)
+	preReqs := c.TestPre
+	for _, v := range referencesTo {
+		if !v.ModelOnly {
+			preReqs = preReqs + v.Resource
+		}
+	}
+	return preReqs
+}
+
+var FileTestConfig = ModelTestConfig{
+	Name: "File",
+	Resource: `
+resource "datapower_file" "test" {
+  app_domain = "acc_test_domain"
+  remote_path = "cert:///test_file.txt"
+  local_path = "/workspaces/terraform-provider-datapower/testutils/test_file.txt"
+  object_actions = [
+    {
+      target_type = "domain",
+	    target_domain = "acc_test_domain",
+	    target_id = "ignored",
+	    action = "quiesce"
+      run_on_create = true
+    }
+  ]
+}
+`,
+	ModelOnly:    false,
+	Dependencies: map[string]*ModelTestConfig{},
+}
+
+{{- range .}}
+var {{.Name}}TestConfig = ModelTestConfig{
+    Name:         "{{.Name}}",
+    {{- if not .ModelOnly}}
+    Resource:    `
+resource "datapower_{{snakeCase .Name}}" "test" {
+    {{- else}}
+    Model:    `{
+    {{- end}}
+    {{- $root := .}}
+    {{- range  .Attributes}}
+    	{{- if eq .Name "AppDomain"}}
+            {{- if not $root.DefaultDomainOnly}}
+                {{- if eq $root.Name "Domain"}}
+  app_domain = "domain_resource_test"
+	             {{- else}}
+  app_domain = "acc_test_domain"
+                {{- end}}
+            {{- end}}
+    	{{- else if or .Required .TestValue}}
+            {{- if .TestValue}}
+  {{.TfName}} = {{.TestValue}}
+		    {{- else if or (isObject .) (isObjectList .)}}
+  {{.TfName}} = ` + {{if isObjectList .}}{{.ElementType}}{{else}}{{.DmType}}{{end}}TestConfig.GetModel{{if isObjectList .}}List{{end}}Config() + `
+            {{- else if and (len .ListDefault) (eq .Type "List")}}
+  {{.TfName}} = [{{- range .ListDefault}}{{quote .}},{{- end}}]
+            {{- else if and (len .ListExample) (eq .Type "List")}}
+  {{.TfName}} = [{{- range .ListExample}}{{quote .}},{{- end}}]
+            {{- else if len .Example}}
+  {{.TfName}} = {{if eq .Type "String"}}{{quote .Example}}{{else}}{{.Example}}{{end}}
+            {{- else if len .Default}}
+  {{.TfName}} = {{if eq .Type "String"}}{{quote .Default}}{{else}}{{.Default}}{{end}}
+		    {{- end}}
+	    {{- end}}
+    {{- end}}
+}`,
+    {{- if not .ModelOnly}}
+    Data:   `
+data "datapower_{{snakeCase .Name}}" "test" {
+  depends_on = [ datapower_{{snakeCase .Name}}.test ]
+        {{- if not .DefaultDomainOnly}}
+            {{- $modelName := .Name}}
+            {{- range  .Attributes}}
+                {{- if and (eq .Name "AppDomain") (ne $modelName "Domain")}}
+  app_domain = "acc_test_domain"
+                {{- end}}
+            {{- end}}
+        {{- end}}
+}`,
+    {{- end}}
+    ModelOnly:    {{if .ModelOnly}}true{{else}}false{{end}},
+    Dependencies: map[string]*ModelTestConfig{
+    {{- range (getTestDependencies .)}}
+        "{{.}}": &{{.}}TestConfig,
+    {{- end}}
+    },
+    TestPre:  `
+    {{- .TestPrerequisites}}
+`,
+}
+
+{{- end}}

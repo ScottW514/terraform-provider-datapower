@@ -50,6 +50,8 @@ const (
 	changelogOriginal    = "./CHANGELOG.md"
 	actionMapTemplate    = "./gen/templates/actionmap.go.tmpl"
 	actionMapLocation    = "./internal/provider/actions/actionmap.go"
+	testConfigTemplate   = "./gen/templates/testconfig.go.tmpl"
+	testConfigLocation   = "./internal/provider/testconfig/testconfig.go"
 )
 
 type templateInfo struct {
@@ -59,11 +61,6 @@ type templateInfo struct {
 }
 
 var providerTemplates = []templateInfo{
-	{
-		path:   "./gen/templates/model_test_config.go.tmpl",
-		prefix: "./internal/provider/models/testconfig/model_datapower_",
-		suffix: "_test_config.go",
-	},
 	{
 		path:   "./gen/templates/model.go.tmpl",
 		prefix: "./internal/provider/models/model_datapower_",
@@ -395,6 +392,9 @@ func main() {
 
 	// Process actions.go with all configs.
 	processTemplate(actionMapTemplate, actionMapLocation, configs)
+
+	// Process testconfig.go with all configs.
+	processTemplate(testConfigTemplate, testConfigLocation, configs)
 
 	// Process example generator with all configs.
 	processTemplate(exGenTemplate, exGenLocation, configs)
