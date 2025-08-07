@@ -84,7 +84,7 @@ func (r *FileResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^((shared|pub)?cert|chkpoints|config|image|local|policyframework|tasktemplates|temporary):///[a-zA-Z0-9_.-/]+[a-zA-Z0-9_-]$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile(`^((shared|pub)?cert|chkpoints|config|image|local|policyframework|tasktemplates|temporary):///[a-zA-Z0-9_./-]+[a-zA-Z0-9_-]$`), ""),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
