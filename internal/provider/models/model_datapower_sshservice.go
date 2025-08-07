@@ -33,21 +33,21 @@ import (
 )
 
 type SSHService struct {
-	Enabled         types.Bool        `tfsdk:"enabled"`
-	LocalPort       types.Int64       `tfsdk:"local_port"`
-	Acl             types.String      `tfsdk:"acl"`
-	ConnectionLimit types.Int64       `tfsdk:"connection_limit"`
-	LocalAddress    types.String      `tfsdk:"local_address"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	LocalPort         types.Int64       `tfsdk:"local_port"`
+	Acl               types.String      `tfsdk:"acl"`
+	ConnectionLimit   types.Int64       `tfsdk:"connection_limit"`
+	LocalAddress      types.String      `tfsdk:"local_address"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SSHServiceObjectType = map[string]attr.Type{
-	"enabled":          types.BoolType,
-	"local_port":       types.Int64Type,
-	"acl":              types.StringType,
-	"connection_limit": types.Int64Type,
-	"local_address":    types.StringType,
-	"object_actions":   actions.ActionsListType,
+	"enabled":            types.BoolType,
+	"local_port":         types.Int64Type,
+	"acl":                types.StringType,
+	"connection_limit":   types.Int64Type,
+	"local_address":      types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data SSHService) GetPath() string {

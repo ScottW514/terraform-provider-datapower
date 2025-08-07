@@ -3,6 +3,7 @@ description: 'ODR Connector Group (`default` domain only)'
 cli_alias: 'odr-connector-group'
 cmd_group: 'network'
 rest_endpoint: '/mgmt/config/default/ODRConnectorGroup'
+default_domain_only: true
 attributes:
   - name: Id
     tf_name: id

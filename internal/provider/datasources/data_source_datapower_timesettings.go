@@ -27,6 +27,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -123,6 +124,7 @@ func (d *TimeSettingsDataSource) Schema(ctx context.Context, req datasource.Sche
 				MarkdownDescription: "DST stop minutes",
 				Computed:            true,
 			},
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

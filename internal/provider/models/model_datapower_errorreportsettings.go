@@ -56,7 +56,7 @@ type ErrorReportSettings struct {
 	RaidVolume            types.String      `tfsdk:"raid_volume"`
 	RaidPath              types.String      `tfsdk:"raid_path"`
 	ReportHistoryKept     types.Int64       `tfsdk:"report_history_kept"`
-	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var ErrorReportSettingsObjectType = map[string]attr.Type{
@@ -83,7 +83,7 @@ var ErrorReportSettingsObjectType = map[string]attr.Type{
 	"raid_volume":              types.StringType,
 	"raid_path":                types.StringType,
 	"report_history_kept":      types.Int64Type,
-	"object_actions":           actions.ActionsListType,
+	"dependency_actions":       actions.ActionsListType,
 }
 
 func (data ErrorReportSettings) GetPath() string {

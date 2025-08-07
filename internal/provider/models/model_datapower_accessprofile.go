@@ -34,19 +34,19 @@ import (
 )
 
 type AccessProfile struct {
-	Id             types.String      `tfsdk:"id"`
-	AppDomain      types.String      `tfsdk:"app_domain"`
-	UserSummary    types.String      `tfsdk:"user_summary"`
-	AccessPolicies types.List        `tfsdk:"access_policies"`
-	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	AccessPolicies    types.List        `tfsdk:"access_policies"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AccessProfileObjectType = map[string]attr.Type{
-	"id":              types.StringType,
-	"app_domain":      types.StringType,
-	"user_summary":    types.StringType,
-	"access_policies": types.ListType{ElemType: types.StringType},
-	"object_actions":  actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"access_policies":    types.ListType{ElemType: types.StringType},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data AccessProfile) GetPath() string {

@@ -43,7 +43,7 @@ type OAuthSupportedClientGroup struct {
 	Client             types.List        `tfsdk:"client"`
 	TemplateProcessUrl types.String      `tfsdk:"template_process_url"`
 	ClientTemplate     types.String      `tfsdk:"client_template"`
-	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var OAuthSupportedClientGroupObjectType = map[string]attr.Type{
@@ -56,7 +56,7 @@ var OAuthSupportedClientGroupObjectType = map[string]attr.Type{
 	"client":               types.ListType{ElemType: types.StringType},
 	"template_process_url": types.StringType,
 	"client_template":      types.StringType,
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data OAuthSupportedClientGroup) GetPath() string {

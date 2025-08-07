@@ -56,7 +56,6 @@ func (r *InteropServiceResource) Metadata(ctx context.Context, req resource.Meta
 func (r *InteropServiceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("Interoperability test service (`default` domain only)", "iop-mgmt", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
@@ -145,7 +144,7 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "sslsniserverprofile").String,
 				Optional:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -166,7 +165,7 @@ func (r *InteropServiceResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `InteropService`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -213,7 +212,7 @@ func (r *InteropServiceResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `InteropService`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

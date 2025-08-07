@@ -58,7 +58,6 @@ func (r *ODRConnectorGroupResource) Metadata(ctx context.Context, req resource.M
 func (r *ODRConnectorGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("ODR Connector Group (`default` domain only)", "odr-connector-group", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -114,7 +113,7 @@ func (r *ODRConnectorGroupResource) Schema(ctx context.Context, req resource.Sch
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
 				Optional:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -135,7 +134,7 @@ func (r *ODRConnectorGroupResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `ODRConnectorGroup`)
 	_, err := r.client.Post(data.GetPath(), body)
@@ -182,7 +181,7 @@ func (r *ODRConnectorGroupResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `ODRConnectorGroup`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
@@ -200,7 +199,7 @@ func (r *ODRConnectorGroupResource) Delete(ctx context.Context, req resource.Del
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Delete)
 	_, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))

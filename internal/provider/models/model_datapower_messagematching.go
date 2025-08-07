@@ -43,7 +43,7 @@ type MessageMatching struct {
 	HttpHeader        types.List        `tfsdk:"http_header"`
 	HttpHeaderExclude types.List        `tfsdk:"http_header_exclude"`
 	RequestUrl        types.String      `tfsdk:"request_url"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MessageMatchingObjectType = map[string]attr.Type{
@@ -56,7 +56,7 @@ var MessageMatchingObjectType = map[string]attr.Type{
 	"http_header":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmHTTPHeaderObjectType}},
 	"http_header_exclude": types.ListType{ElemType: types.ObjectType{AttrTypes: DmHTTPHeaderObjectType}},
 	"request_url":         types.StringType,
-	"object_actions":      actions.ActionsListType,
+	"dependency_actions":  actions.ActionsListType,
 }
 
 func (data MessageMatching) GetPath() string {

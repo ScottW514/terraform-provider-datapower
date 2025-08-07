@@ -34,19 +34,19 @@ import (
 )
 
 type URLMap struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	UrlMapRule    types.List        `tfsdk:"url_map_rule"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	UrlMapRule        types.List        `tfsdk:"url_map_rule"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var URLMapObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"url_map_rule":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmURLMapRuleObjectType}},
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"url_map_rule":       types.ListType{ElemType: types.ObjectType{AttrTypes: DmURLMapRuleObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data URLMap) GetPath() string {

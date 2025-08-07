@@ -34,45 +34,45 @@ import (
 )
 
 type User struct {
-	Id              types.String      `tfsdk:"id"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	Password        types.String      `tfsdk:"password"`
-	PasswordUpdate  types.Bool        `tfsdk:"password_update"`
-	AccessLevel     types.String      `tfsdk:"access_level"`
-	GroupName       types.String      `tfsdk:"group_name"`
-	SnmpCreds       types.List        `tfsdk:"snmp_creds"`
-	HashedSnmpCreds types.List        `tfsdk:"hashed_snmp_creds"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Password          types.String      `tfsdk:"password"`
+	PasswordUpdate    types.Bool        `tfsdk:"password_update"`
+	AccessLevel       types.String      `tfsdk:"access_level"`
+	GroupName         types.String      `tfsdk:"group_name"`
+	SnmpCreds         types.List        `tfsdk:"snmp_creds"`
+	HashedSnmpCreds   types.List        `tfsdk:"hashed_snmp_creds"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 type UserWO struct {
-	Id              types.String      `tfsdk:"id"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	AccessLevel     types.String      `tfsdk:"access_level"`
-	GroupName       types.String      `tfsdk:"group_name"`
-	SnmpCreds       types.List        `tfsdk:"snmp_creds"`
-	HashedSnmpCreds types.List        `tfsdk:"hashed_snmp_creds"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	AccessLevel       types.String      `tfsdk:"access_level"`
+	GroupName         types.String      `tfsdk:"group_name"`
+	SnmpCreds         types.List        `tfsdk:"snmp_creds"`
+	HashedSnmpCreds   types.List        `tfsdk:"hashed_snmp_creds"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var UserObjectType = map[string]attr.Type{
-	"id":                types.StringType,
-	"user_summary":      types.StringType,
-	"password":          types.StringType,
-	"password_update":   types.BoolType,
-	"access_level":      types.StringType,
-	"group_name":        types.StringType,
-	"snmp_creds":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
-	"hashed_snmp_creds": types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
-	"object_actions":    actions.ActionsListType,
+	"id":                 types.StringType,
+	"user_summary":       types.StringType,
+	"password":           types.StringType,
+	"password_update":    types.BoolType,
+	"access_level":       types.StringType,
+	"group_name":         types.StringType,
+	"snmp_creds":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
+	"hashed_snmp_creds":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 var UserObjectTypeWO = map[string]attr.Type{
-	"id":                types.StringType,
-	"user_summary":      types.StringType,
-	"access_level":      types.StringType,
-	"group_name":        types.StringType,
-	"snmp_creds":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
-	"hashed_snmp_creds": types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
-	"object_actions":    actions.ActionsListType,
+	"id":                 types.StringType,
+	"user_summary":       types.StringType,
+	"access_level":       types.StringType,
+	"group_name":         types.StringType,
+	"snmp_creds":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredObjectType}},
+	"hashed_snmp_creds":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmSnmpCredMaskedObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data User) GetPath() string {

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -175,6 +176,7 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"parse_settings_reference": models.GetDmDynamicParseSettingsReferenceDataSourceSchema("Parse settings", "parse-settings-reference", ""),
+						"dependency_actions":       actions.ActionsSchema,
 					},
 				},
 			},

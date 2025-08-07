@@ -33,19 +33,19 @@ import (
 )
 
 type LunaHASettings struct {
-	Enabled       types.Bool        `tfsdk:"enabled"`
-	Mode          types.String      `tfsdk:"mode"`
-	RecoveryCount types.Int64       `tfsdk:"recovery_count"`
-	Interval      types.Int64       `tfsdk:"interval"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	Mode              types.String      `tfsdk:"mode"`
+	RecoveryCount     types.Int64       `tfsdk:"recovery_count"`
+	Interval          types.Int64       `tfsdk:"interval"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var LunaHASettingsObjectType = map[string]attr.Type{
-	"enabled":        types.BoolType,
-	"mode":           types.StringType,
-	"recovery_count": types.Int64Type,
-	"interval":       types.Int64Type,
-	"object_actions": actions.ActionsListType,
+	"enabled":            types.BoolType,
+	"mode":               types.StringType,
+	"recovery_count":     types.Int64Type,
+	"interval":           types.Int64Type,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data LunaHASettings) GetPath() string {

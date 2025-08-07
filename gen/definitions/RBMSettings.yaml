@@ -5,7 +5,7 @@ cmd_group: 'rbm'
 rest_endpoint: '/mgmt/config/default/RBMSettings/RBM-Settings'
 actions:
   - name: flush_cache
-    post_body: '{"FlushRBMCache": 0}'
+    body: '{"FlushRBMCache": 0}'
 update_only: true
 default_domain_only: true
 attributes:

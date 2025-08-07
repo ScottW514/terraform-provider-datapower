@@ -34,25 +34,25 @@ import (
 )
 
 type B2BXPathRoutingPolicy struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	SenderXPath     types.String      `tfsdk:"sender_x_path"`
-	ReceiverXPath   types.String      `tfsdk:"receiver_x_path"`
-	DocumentIdxPath types.String      `tfsdk:"document_idx_path"`
-	DateTimeXPath   types.String      `tfsdk:"date_time_x_path"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	SenderXPath       types.String      `tfsdk:"sender_x_path"`
+	ReceiverXPath     types.String      `tfsdk:"receiver_x_path"`
+	DocumentIdxPath   types.String      `tfsdk:"document_idx_path"`
+	DateTimeXPath     types.String      `tfsdk:"date_time_x_path"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var B2BXPathRoutingPolicyObjectType = map[string]attr.Type{
-	"id":                types.StringType,
-	"app_domain":        types.StringType,
-	"user_summary":      types.StringType,
-	"sender_x_path":     types.StringType,
-	"receiver_x_path":   types.StringType,
-	"document_idx_path": types.StringType,
-	"date_time_x_path":  types.StringType,
-	"object_actions":    actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"sender_x_path":      types.StringType,
+	"receiver_x_path":    types.StringType,
+	"document_idx_path":  types.StringType,
+	"date_time_x_path":   types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data B2BXPathRoutingPolicy) GetPath() string {

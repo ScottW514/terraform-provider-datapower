@@ -41,11 +41,11 @@ import (
 )
 
 type File struct {
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	RemotePath    types.String      `tfsdk:"remote_path"`
-	LocalPath     types.String      `tfsdk:"local_path"`
-	Hash          types.String      `tfsdk:"hash"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	RemotePath        types.String      `tfsdk:"remote_path"`
+	LocalPath         types.String      `tfsdk:"local_path"`
+	Hash              types.String      `tfsdk:"hash"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var _ resource.ResourceWithModifyPlan = &FileResource{}
@@ -100,7 +100,7 @@ func (r *FileResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Computed:            true,
 				DeprecationMessage:  "This attribute is for INTERNAL PROVIDER USE. Set values are ignored.",
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -121,7 +121,7 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
 
 	fileData, err := r.loadLocalFile(data.LocalPath.ValueString())
 	if err != nil {
@@ -185,7 +185,7 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
 
 	fileData, err := r.loadLocalFile(data.LocalPath.ValueString())
 	if err != nil {
@@ -215,7 +215,7 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete)
 
 	path := fmt.Sprintf("/mgmt/filestore/%s/%s", data.AppDomain.ValueString(), strings.ReplaceAll(data.RemotePath.ValueString(), "://", ""))
 	_, err := r.client.Delete(path)
@@ -298,5 +298,5 @@ func (r *FileResource) ValidateConfig(ctx context.Context, req resource.Validate
 		return
 	}
 
-	actions.ValidateConfig(ctx, &resp.Diagnostics, data.ObjectActions)
+	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }

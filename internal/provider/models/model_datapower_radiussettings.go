@@ -33,23 +33,23 @@ import (
 )
 
 type RADIUSSettings struct {
-	Enabled       types.Bool        `tfsdk:"enabled"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Id            types.String      `tfsdk:"id"`
-	Timeout       types.Int64       `tfsdk:"timeout"`
-	Retries       types.Int64       `tfsdk:"retries"`
-	AaaServers    types.List        `tfsdk:"aaa_servers"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Id                types.String      `tfsdk:"id"`
+	Timeout           types.Int64       `tfsdk:"timeout"`
+	Retries           types.Int64       `tfsdk:"retries"`
+	AaaServers        types.List        `tfsdk:"aaa_servers"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var RADIUSSettingsObjectType = map[string]attr.Type{
-	"enabled":        types.BoolType,
-	"user_summary":   types.StringType,
-	"id":             types.StringType,
-	"timeout":        types.Int64Type,
-	"retries":        types.Int64Type,
-	"aaa_servers":    types.ListType{ElemType: types.ObjectType{AttrTypes: DmRadiusServerObjectType}},
-	"object_actions": actions.ActionsListType,
+	"enabled":            types.BoolType,
+	"user_summary":       types.StringType,
+	"id":                 types.StringType,
+	"timeout":            types.Int64Type,
+	"retries":            types.Int64Type,
+	"aaa_servers":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmRadiusServerObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data RADIUSSettings) GetPath() string {

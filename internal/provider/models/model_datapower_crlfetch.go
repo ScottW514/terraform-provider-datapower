@@ -33,15 +33,15 @@ import (
 )
 
 type CRLFetch struct {
-	Enabled        types.Bool        `tfsdk:"enabled"`
-	CrlFetchConfig types.List        `tfsdk:"crl_fetch_config"`
-	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	CrlFetchConfig    types.List        `tfsdk:"crl_fetch_config"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var CRLFetchObjectType = map[string]attr.Type{
-	"enabled":          types.BoolType,
-	"crl_fetch_config": types.ListType{ElemType: types.ObjectType{AttrTypes: DmCRLFetchConfigObjectType}},
-	"object_actions":   actions.ActionsListType,
+	"enabled":            types.BoolType,
+	"crl_fetch_config":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmCRLFetchConfigObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data CRLFetch) GetPath() string {

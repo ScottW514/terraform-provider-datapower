@@ -34,31 +34,31 @@ import (
 )
 
 type MPGWErrorAction struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	Type            types.String      `tfsdk:"type"`
-	RemoteUrl       types.String      `tfsdk:"remote_url"`
-	LocalUrl        types.String      `tfsdk:"local_url"`
-	ErrorRule       types.String      `tfsdk:"error_rule"`
-	StatusCode      types.Int64       `tfsdk:"status_code"`
-	ReasonPhrase    types.String      `tfsdk:"reason_phrase"`
-	HeaderInjection types.List        `tfsdk:"header_injection"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Type              types.String      `tfsdk:"type"`
+	RemoteUrl         types.String      `tfsdk:"remote_url"`
+	LocalUrl          types.String      `tfsdk:"local_url"`
+	ErrorRule         types.String      `tfsdk:"error_rule"`
+	StatusCode        types.Int64       `tfsdk:"status_code"`
+	ReasonPhrase      types.String      `tfsdk:"reason_phrase"`
+	HeaderInjection   types.List        `tfsdk:"header_injection"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MPGWErrorActionObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"user_summary":     types.StringType,
-	"type":             types.StringType,
-	"remote_url":       types.StringType,
-	"local_url":        types.StringType,
-	"error_rule":       types.StringType,
-	"status_code":      types.Int64Type,
-	"reason_phrase":    types.StringType,
-	"header_injection": types.ListType{ElemType: types.ObjectType{AttrTypes: DmWebGWErrorRespHeaderInjectionObjectType}},
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"type":               types.StringType,
+	"remote_url":         types.StringType,
+	"local_url":          types.StringType,
+	"error_rule":         types.StringType,
+	"status_code":        types.Int64Type,
+	"reason_phrase":      types.StringType,
+	"header_injection":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmWebGWErrorRespHeaderInjectionObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data MPGWErrorAction) GetPath() string {

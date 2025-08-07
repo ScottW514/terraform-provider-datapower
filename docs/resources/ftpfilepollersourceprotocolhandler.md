@@ -4,13 +4,14 @@ page_title: "datapower_ftpfilepollersourceprotocolhandler Resource - terraform-p
 subcategory: ""
 description: |-
   FTP poller handler
-  CLI Alias: source-ftp-poller
+  CLI Alias: source-ftp-pollerAccepted Dependency Actions: quiesce
 ---
 
 # datapower_ftpfilepollersourceprotocolhandler (Resource)
 
 FTP poller handler
   - CLI Alias: `source-ftp-poller`
+  - Accepted Dependency Actions: `quiesce`
 
 ## Example Usage
 
@@ -50,6 +51,7 @@ resource "datapower_ftpfilepollersourceprotocolhandler" "test" {
 - `delete_on_success` (Boolean) Delete input file on success
   - CLI Alias: `success-delete`
   - Default value: `false`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `error_rename_pattern` (String) Error file renaming pattern
   - CLI Alias: `error-rename-pattern`
   - Default value: `$0.processed.error`
@@ -60,7 +62,6 @@ resource "datapower_ftpfilepollersourceprotocolhandler" "test" {
   - CLI Alias: `max-transfers-per-poll`
   - Range: `0`-`100`
   - Default value: `0`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `processing_rename_pattern` (String) Processing file renaming pattern
   - CLI Alias: `processing-rename-pattern`
 - `processing_seize_pattern` (String) Processing seize pattern
@@ -81,18 +82,18 @@ resource "datapower_ftpfilepollersourceprotocolhandler" "test" {
   - Reference to: `datapower_xmlmanager:id`
   - Default value: `default`
 
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
 
 Required:
 
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
 
 Optional:
 
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)

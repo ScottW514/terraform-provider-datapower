@@ -1,9 +1,10 @@
 name: GWScriptSettings
-description: 'GatewayScript Settings'
+description: 'GatewayScript Settings (`default` domain only)'
 cli_alias: 'gatewayscript-settings'
 cmd_group: 'system'
 rest_endpoint: '/mgmt/config/default/GWScriptSettings/GatewayScript-Settings'
 update_only: true
+default_domain_only: true
 attributes:
   - name: mAdminState
     tf_name: 'enabled'

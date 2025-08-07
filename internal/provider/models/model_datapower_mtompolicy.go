@@ -40,7 +40,7 @@ type MTOMPolicy struct {
 	Mode               types.String      `tfsdk:"mode"`
 	IncludeContentType types.Bool        `tfsdk:"include_content_type"`
 	Rule               types.List        `tfsdk:"rule"`
-	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MTOMPolicyObjectType = map[string]attr.Type{
@@ -50,7 +50,7 @@ var MTOMPolicyObjectType = map[string]attr.Type{
 	"mode":                 types.StringType,
 	"include_content_type": types.BoolType,
 	"rule":                 types.ListType{ElemType: types.ObjectType{AttrTypes: DmMtomRuleObjectType}},
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data MTOMPolicy) GetPath() string {

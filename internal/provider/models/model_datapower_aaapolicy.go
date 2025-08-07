@@ -73,7 +73,7 @@ type AAAPolicy struct {
 	DynConfig                     types.String           `tfsdk:"dyn_config"`
 	ExternalAaaTemplate           types.String           `tfsdk:"external_aaa_template"`
 	DynConfigCustomUrl            types.String           `tfsdk:"dyn_config_custom_url"`
-	ObjectActions                 []*actions.Action      `tfsdk:"object_actions"`
+	DependencyActions             []*actions.Action      `tfsdk:"dependency_actions"`
 }
 
 var AAAPolicyObjectType = map[string]attr.Type{
@@ -116,7 +116,7 @@ var AAAPolicyObjectType = map[string]attr.Type{
 	"dyn_config":                        types.StringType,
 	"external_aaa_template":             types.StringType,
 	"dyn_config_custom_url":             types.StringType,
-	"object_actions":                    actions.ActionsListType,
+	"dependency_actions":                actions.ActionsListType,
 }
 
 func (data AAAPolicy) GetPath() string {

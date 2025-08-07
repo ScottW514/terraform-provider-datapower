@@ -34,27 +34,27 @@ import (
 )
 
 type KafkaSourceProtocolHandler struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Cluster       types.String      `tfsdk:"cluster"`
-	RequestTopic  types.String      `tfsdk:"request_topic"`
-	ResponseTopic types.String      `tfsdk:"response_topic"`
-	ConsumerGroup types.String      `tfsdk:"consumer_group"`
-	BatchSize     types.Int64       `tfsdk:"batch_size"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Cluster           types.String      `tfsdk:"cluster"`
+	RequestTopic      types.String      `tfsdk:"request_topic"`
+	ResponseTopic     types.String      `tfsdk:"response_topic"`
+	ConsumerGroup     types.String      `tfsdk:"consumer_group"`
+	BatchSize         types.Int64       `tfsdk:"batch_size"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var KafkaSourceProtocolHandlerObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"cluster":        types.StringType,
-	"request_topic":  types.StringType,
-	"response_topic": types.StringType,
-	"consumer_group": types.StringType,
-	"batch_size":     types.Int64Type,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"cluster":            types.StringType,
+	"request_topic":      types.StringType,
+	"response_topic":     types.StringType,
+	"consumer_group":     types.StringType,
+	"batch_size":         types.Int64Type,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data KafkaSourceProtocolHandler) GetPath() string {

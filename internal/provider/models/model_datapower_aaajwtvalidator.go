@@ -58,7 +58,7 @@ type AAAJWTValidator struct {
 	VerifyFetchCredSslProfile       types.String      `tfsdk:"verify_fetch_cred_ssl_profile"`
 	Claims                          types.List        `tfsdk:"claims"`
 	UsernameClaim                   types.String      `tfsdk:"username_claim"`
-	ObjectActions                   []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions               []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AAAJWTValidatorObjectType = map[string]attr.Type{
@@ -86,7 +86,7 @@ var AAAJWTValidatorObjectType = map[string]attr.Type{
 	"verify_fetch_cred_ssl_profile":       types.StringType,
 	"claims":                              types.ListType{ElemType: types.ObjectType{AttrTypes: DmClaimObjectType}},
 	"username_claim":                      types.StringType,
-	"object_actions":                      actions.ActionsListType,
+	"dependency_actions":                  actions.ActionsListType,
 }
 
 func (data AAAJWTValidator) GetPath() string {

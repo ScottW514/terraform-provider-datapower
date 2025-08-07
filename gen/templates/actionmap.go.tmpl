@@ -21,8 +21,7 @@
 package actions
 
 type action struct {
-	PreBody  string
-	PostBody string
+	Body  string
 }
 
 type target struct {
@@ -30,18 +29,23 @@ type target struct {
 	ValidActions map[string]action
 }
 
+const DomainQuiesceBody    = `{"DomainQuiesce": {"name": "{domain}", "timeout": 60}}`
+const DomainUnquiesceBody  = `{"DomainUnquiesce": {"name": "{domain}"}}`
+const ServiceQuiesceBody   = `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`
+const ServiceUnquiesceBody = `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`
+
+
 var actionMap = map[string]target{
 {{- range .}}
     {{- if len .Actions}}
-	"{{snakeCase .Name}}": {
+	"resource_datapower_{{snakeCase .Name}}": {
 		ObjectName: "{{.Name}}",
 		ValidActions: map[string]action{
         {{- range .Actions}}
 			"{{.Name}}": {
-            {{- if len .PreBody}}
-                PreBody:  `{{.PreBody}}`,
+            {{- if and (len .Body) (ne .Name "quiesce")}}
+                Body: `{{.Body}}`,
             {{- end}}
-                PostBody: `{{.PostBody}}`,
 			},
         {{- end}}
 		},

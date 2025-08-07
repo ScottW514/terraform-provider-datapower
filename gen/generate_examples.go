@@ -23,7 +23,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/models/testconfig"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 )
 
 var endPoints = map[string]testconfig.ModelTestConfig{

@@ -38,7 +38,7 @@ type FTPQuoteCommands struct {
 	AppDomain         types.String      `tfsdk:"app_domain"`
 	UserSummary       types.String      `tfsdk:"user_summary"`
 	FtpQuotedCommands types.List        `tfsdk:"ftp_quoted_commands"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var FTPQuoteCommandsObjectType = map[string]attr.Type{
@@ -46,7 +46,7 @@ var FTPQuoteCommandsObjectType = map[string]attr.Type{
 	"app_domain":          types.StringType,
 	"user_summary":        types.StringType,
 	"ftp_quoted_commands": types.ListType{ElemType: types.ObjectType{AttrTypes: DmFTPQuotedCommandObjectType}},
-	"object_actions":      actions.ActionsListType,
+	"dependency_actions":  actions.ActionsListType,
 }
 
 func (data FTPQuoteCommands) GetPath() string {

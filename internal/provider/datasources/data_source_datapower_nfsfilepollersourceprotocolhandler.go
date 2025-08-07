@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -135,6 +136,7 @@ func (d *NFSFilePollerSourceProtocolHandlerDataSource) Schema(ctx context.Contex
 							MarkdownDescription: "Maximum file transfers per poll cycle",
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

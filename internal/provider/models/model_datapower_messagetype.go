@@ -34,19 +34,19 @@ import (
 )
 
 type MessageType struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Matching      types.List        `tfsdk:"matching"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Matching          types.List        `tfsdk:"matching"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MessageTypeObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"matching":       types.ListType{ElemType: types.StringType},
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"matching":           types.ListType{ElemType: types.StringType},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data MessageType) GetPath() string {

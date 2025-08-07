@@ -44,7 +44,7 @@ type CryptoValCred struct {
 	InitialPolicySet   types.List        `tfsdk:"initial_policy_set"`
 	ExplicitPolicy     types.Bool        `tfsdk:"explicit_policy"`
 	CheckDates         types.Bool        `tfsdk:"check_dates"`
-	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var CryptoValCredObjectType = map[string]attr.Type{
@@ -58,7 +58,7 @@ var CryptoValCredObjectType = map[string]attr.Type{
 	"initial_policy_set":   types.ListType{ElemType: types.StringType},
 	"explicit_policy":      types.BoolType,
 	"check_dates":          types.BoolType,
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data CryptoValCred) GetPath() string {

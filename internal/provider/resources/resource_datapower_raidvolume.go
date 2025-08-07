@@ -51,7 +51,6 @@ func (r *RaidVolumeResource) Metadata(ctx context.Context, req resource.Metadata
 func (r *RaidVolumeResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("RAID Array (`default` domain only)", "raid-volume", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"user_summary": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
@@ -67,7 +66,7 @@ func (r *RaidVolumeResource) Schema(ctx context.Context, req resource.SchemaRequ
 				MarkdownDescription: tfutils.NewAttributeDescription("Directory", "directory", "").String,
 				Optional:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -88,7 +87,7 @@ func (r *RaidVolumeResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `RaidVolume`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -135,7 +134,7 @@ func (r *RaidVolumeResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `RaidVolume`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

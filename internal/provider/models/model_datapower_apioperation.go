@@ -34,41 +34,41 @@ import (
 )
 
 type APIOperation struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	Method          types.String      `tfsdk:"method"`
-	OperationId     types.String      `tfsdk:"operation_id"`
-	RemoveConsume   types.Bool        `tfsdk:"remove_consume"`
-	Consume         types.List        `tfsdk:"consume"`
-	Produce         types.List        `tfsdk:"produce"`
-	RequestSchema   types.String      `tfsdk:"request_schema"`
-	ResponseSchema  types.List        `tfsdk:"response_schema"`
-	Parameter       types.List        `tfsdk:"parameter"`
-	RemoveSecurity  types.Bool        `tfsdk:"remove_security"`
-	Security        types.List        `tfsdk:"security"`
-	SoapAction      types.String      `tfsdk:"soap_action"`
-	SoapElementName types.String      `tfsdk:"soap_element_name"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Method            types.String      `tfsdk:"method"`
+	OperationId       types.String      `tfsdk:"operation_id"`
+	RemoveConsume     types.Bool        `tfsdk:"remove_consume"`
+	Consume           types.List        `tfsdk:"consume"`
+	Produce           types.List        `tfsdk:"produce"`
+	RequestSchema     types.String      `tfsdk:"request_schema"`
+	ResponseSchema    types.List        `tfsdk:"response_schema"`
+	Parameter         types.List        `tfsdk:"parameter"`
+	RemoveSecurity    types.Bool        `tfsdk:"remove_security"`
+	Security          types.List        `tfsdk:"security"`
+	SoapAction        types.String      `tfsdk:"soap_action"`
+	SoapElementName   types.String      `tfsdk:"soap_element_name"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APIOperationObjectType = map[string]attr.Type{
-	"id":                types.StringType,
-	"app_domain":        types.StringType,
-	"user_summary":      types.StringType,
-	"method":            types.StringType,
-	"operation_id":      types.StringType,
-	"remove_consume":    types.BoolType,
-	"consume":           types.ListType{ElemType: types.StringType},
-	"produce":           types.ListType{ElemType: types.StringType},
-	"request_schema":    types.StringType,
-	"response_schema":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmAPIResponseSchemaObjectType}},
-	"parameter":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmAPIParameterObjectType}},
-	"remove_security":   types.BoolType,
-	"security":          types.ListType{ElemType: types.StringType},
-	"soap_action":       types.StringType,
-	"soap_element_name": types.StringType,
-	"object_actions":    actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"method":             types.StringType,
+	"operation_id":       types.StringType,
+	"remove_consume":     types.BoolType,
+	"consume":            types.ListType{ElemType: types.StringType},
+	"produce":            types.ListType{ElemType: types.StringType},
+	"request_schema":     types.StringType,
+	"response_schema":    types.ListType{ElemType: types.ObjectType{AttrTypes: DmAPIResponseSchemaObjectType}},
+	"parameter":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmAPIParameterObjectType}},
+	"remove_security":    types.BoolType,
+	"security":           types.ListType{ElemType: types.StringType},
+	"soap_action":        types.StringType,
+	"soap_element_name":  types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data APIOperation) GetPath() string {

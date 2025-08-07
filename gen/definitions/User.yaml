@@ -1,8 +1,9 @@
 name: User
-description: 'User account'
+description: 'User account (`default` domain only)'
 cli_alias: 'user'
 cmd_group: 'usergroup'
 rest_endpoint: '/mgmt/config/default/User'
+default_domain_only: true
 attributes:
   - name: Id
     tf_name: id

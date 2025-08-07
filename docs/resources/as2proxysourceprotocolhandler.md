@@ -4,13 +4,14 @@ page_title: "datapower_as2proxysourceprotocolhandler Resource - terraform-provid
 subcategory: ""
 description: |-
   MEIG AS2 proxy handler
-  CLI Alias: source-as2-proxy
+  CLI Alias: source-as2-proxyAccepted Dependency Actions: quiesce
 ---
 
 # datapower_as2proxysourceprotocolhandler (Resource)
 
 MEIG AS2 proxy handler
   - CLI Alias: `source-as2-proxy`
+  - Accepted Dependency Actions: `quiesce`
 
 ## Example Usage
 
@@ -54,6 +55,7 @@ resource "datapower_as2proxysourceprotocolhandler" "test" {
   - CLI Alias: `credential-charset`
   - Choices: `protocol`, `ascii`, `utf8`, `big5`, `cp1250`, `cp1251`, `cp1252`, `cp1253`, `cp1254`, `cp1255`, `cp1256`, `cp1257`, `cp1258`, `euc_jp`, `euc_kr`, `gb18030`, `gb2312`, `iso2022_jp`, `iso2022_kr`, `iso8859_1`, `iso8859_2`, `iso8859_4`, `iso8859_5`, `iso8859_6`, `iso8859_7`, `iso8859_8`, `iso8859_9`, `iso8859_15`, `sjis`, `tis620`, `unicode_le`
   - Default value: `protocol`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enable_hmac_authentication` (Boolean) Enable HMAC authentication
   - CLI Alias: `enable-hmac-authentication`
   - Default value: `true`
@@ -99,7 +101,6 @@ resource "datapower_as2proxysourceprotocolhandler" "test" {
   - CLI Alias: `max-header-value-len`
   - Range: `0`-`65535`
   - Default value: `0`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `persistent_connections` (Boolean) Negotiate persistent connections
   - CLI Alias: `persistent-connections`
   - Default value: `true`
@@ -152,18 +153,18 @@ Optional:
   - Default value: `true`
 
 
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
 
 Required:
 
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
 
 Optional:
 
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)

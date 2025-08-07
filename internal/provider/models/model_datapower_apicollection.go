@@ -60,7 +60,7 @@ type APICollection struct {
 	AnalyticsEndpoint            types.String                     `tfsdk:"analytics_endpoint"`
 	ApplicationType              types.List                       `tfsdk:"application_type"`
 	ParseSettingsReference       *DmDynamicParseSettingsReference `tfsdk:"parse_settings_reference"`
-	ObjectActions                []*actions.Action                `tfsdk:"object_actions"`
+	DependencyActions            []*actions.Action                `tfsdk:"dependency_actions"`
 }
 
 var APICollectionObjectType = map[string]attr.Type{
@@ -90,7 +90,7 @@ var APICollectionObjectType = map[string]attr.Type{
 	"analytics_endpoint":               types.StringType,
 	"application_type":                 types.ListType{ElemType: types.StringType},
 	"parse_settings_reference":         types.ObjectType{AttrTypes: DmDynamicParseSettingsReferenceObjectType},
-	"object_actions":                   actions.ActionsListType,
+	"dependency_actions":               actions.ActionsListType,
 }
 
 func (data APICollection) GetPath() string {

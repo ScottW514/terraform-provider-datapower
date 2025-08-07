@@ -34,27 +34,27 @@ import (
 )
 
 type AssemblyActionExtract struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	Root            types.String      `tfsdk:"root"`
-	Extract         types.List        `tfsdk:"extract"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	Title           types.String      `tfsdk:"title"`
-	CorrelationPath types.String      `tfsdk:"correlation_path"`
-	ActionDebug     types.Bool        `tfsdk:"action_debug"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Root              types.String      `tfsdk:"root"`
+	Extract           types.List        `tfsdk:"extract"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Title             types.String      `tfsdk:"title"`
+	CorrelationPath   types.String      `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool        `tfsdk:"action_debug"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionExtractObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"root":             types.StringType,
-	"extract":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmAssemblyActionExtractObjectType}},
-	"user_summary":     types.StringType,
-	"title":            types.StringType,
-	"correlation_path": types.StringType,
-	"action_debug":     types.BoolType,
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"root":               types.StringType,
+	"extract":            types.ListType{ElemType: types.ObjectType{AttrTypes: DmAssemblyActionExtractObjectType}},
+	"user_summary":       types.StringType,
+	"title":              types.StringType,
+	"correlation_path":   types.StringType,
+	"action_debug":       types.BoolType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data AssemblyActionExtract) GetPath() string {

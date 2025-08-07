@@ -60,7 +60,6 @@ func (r *PasswordAliasResource) Metadata(ctx context.Context, req resource.Metad
 func (r *PasswordAliasResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("Password map alias", "password-alias", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -100,7 +99,7 @@ func (r *PasswordAliasResource) Schema(ctx context.Context, req resource.SchemaR
 				Default:             booldefault.StaticBool(false),
 				DeprecationMessage:  "This attribute is for INTERNAL PROVIDER USE. Set values are ignored.",
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -121,7 +120,7 @@ func (r *PasswordAliasResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
 
 	var config models.PasswordAlias
 
@@ -137,12 +136,6 @@ func (r *PasswordAliasResource) Create(ctx context.Context, req resource.CreateR
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "POST", err))
-		return
-	}
-
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 	getRes, getErr := r.client.Get(data.GetPath() + "/" + data.Id.ValueString())
@@ -189,7 +182,7 @@ func (r *PasswordAliasResource) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
 	if resp.Diagnostics.HasError() {
@@ -206,11 +199,6 @@ func (r *PasswordAliasResource) Update(ctx context.Context, req resource.UpdateR
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
-		return
-	}
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -223,7 +211,7 @@ func (r *PasswordAliasResource) Delete(ctx context.Context, req resource.DeleteR
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete)
 	_, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))

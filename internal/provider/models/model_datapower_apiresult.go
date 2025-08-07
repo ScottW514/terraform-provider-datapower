@@ -34,23 +34,23 @@ import (
 )
 
 type APIResult struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	Output          types.String      `tfsdk:"output"`
-	Title           types.String      `tfsdk:"title"`
-	CorrelationPath types.String      `tfsdk:"correlation_path"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Output            types.String      `tfsdk:"output"`
+	Title             types.String      `tfsdk:"title"`
+	CorrelationPath   types.String      `tfsdk:"correlation_path"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APIResultObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"user_summary":     types.StringType,
-	"output":           types.StringType,
-	"title":            types.StringType,
-	"correlation_path": types.StringType,
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"output":             types.StringType,
+	"title":              types.StringType,
+	"correlation_path":   types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data APIResult) GetPath() string {

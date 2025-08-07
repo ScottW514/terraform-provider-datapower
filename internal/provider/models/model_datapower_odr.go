@@ -38,7 +38,7 @@ type ODR struct {
 	OdrServerName       types.String      `tfsdk:"odr_server_name"`
 	OdrConnectorGroups  types.List        `tfsdk:"odr_connector_groups"`
 	OdrCustomProperties types.List        `tfsdk:"odr_custom_properties"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var ODRObjectType = map[string]attr.Type{
@@ -47,7 +47,7 @@ var ODRObjectType = map[string]attr.Type{
 	"odr_server_name":       types.StringType,
 	"odr_connector_groups":  types.ListType{ElemType: types.StringType},
 	"odr_custom_properties": types.ListType{ElemType: types.ObjectType{AttrTypes: DmODRPropertyObjectType}},
-	"object_actions":        actions.ActionsListType,
+	"dependency_actions":    actions.ActionsListType,
 }
 
 func (data ODR) GetPath() string {

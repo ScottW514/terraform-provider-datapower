@@ -30,6 +30,7 @@ resource "datapower_mgmtinterface" "test" {
   - CLI Alias: `acl`
   - Reference to: `datapower_accesscontrollist:id`
   - Default value: `xml-mgmt`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enabled` (Boolean) Administrative state
   - CLI Alias: `admin-state`
   - Default value: `true`
@@ -42,7 +43,6 @@ resource "datapower_mgmtinterface" "test" {
   - Default value: `5550`
 - `mode` (Attributes) Enabled services
   - CLI Alias: `mode` (see [below for nested schema](#nestedatt--mode))
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `slm_peering` (Number) SLM update interval
   - CLI Alias: `slm-peering`
   - Default value: `10`
@@ -61,6 +61,23 @@ resource "datapower_mgmtinterface" "test" {
   - Reference to: `datapower_httpuseragent:id`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
+
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
 
 <a id="nestedatt--mode"></a>
 ### Nested Schema for `mode`
@@ -83,20 +100,3 @@ Optional:
   - Default value: `false`
 - `wsrr_subscription` (Boolean) WSRR subscription
   - Default value: `true`
-
-
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
-
-Required:
-
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
-
-Optional:
-
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.

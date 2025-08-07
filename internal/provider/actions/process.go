@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -32,24 +33,31 @@ type queue struct {
 	// [domain][objectType][objectId]{action,...}
 	DomainActions map[string]map[string]map[string][]string
 	ObjectActions map[string]map[string]map[string][]string
+	SaveDomains   []string
 	Client        *client.DatapowerClient
+	mu            sync.Mutex
 }
 
 var actionQueue = queue{}
 
 // Called by resources prior to create/update runs.
 // Triggers quiesce calls, and queues the rest for post-process execution. Duplicate actions on the same domain/resource are ignored.
-func PreProcess(ctx context.Context, diag *diag.Diagnostics, client *client.DatapowerClient, actions []*Action, operation Operation) {
+func PreProcess(ctx context.Context, diag *diag.Diagnostics, client *client.DatapowerClient, srcDomain string, actions []*Action, operation Operation) {
+	actionQueue.mu.Lock()
+	defer actionQueue.mu.Unlock()
+	if !slices.Contains(actionQueue.SaveDomains, srcDomain) {
+		actionQueue.SaveDomains = append(actionQueue.SaveDomains, srcDomain)
+	}
 	actionQueue.Client = client
 	for _, item := range actions {
 		var name string
-		if (operation == Create && !item.RunOnCreate.ValueBool()) ||
-			(operation == Update && !item.RunOnUpdate.ValueBool()) ||
-			(operation == Delete && !item.RunOnDelete.ValueBool()) ||
+		if (operation == Create && !item.OnCreate.ValueBool()) ||
+			(operation == Update && !item.OnUpdate.ValueBool()) ||
+			(operation == Delete && !item.OnDelete.ValueBool()) ||
 			alreadyQueued(item.TargetDomain.ValueString(), item.TargetType.ValueString(), item.TargetId.ValueString(), item.Action.ValueString()) {
 			continue
 		}
-		if item.TargetType.ValueString() == "domain" {
+		if item.TargetType.ValueString() == "resource_datapower_domain" {
 			name = "default"
 		} else {
 			name = item.TargetId.ValueString()
@@ -62,7 +70,7 @@ func PreProcess(ctx context.Context, diag *diag.Diagnostics, client *client.Data
 			return
 		}
 
-		if item.TargetType.ValueString() == "domain" {
+		if item.TargetType.ValueString() == "resource_datapower_domain" {
 			addToQueue(&actionQueue.DomainActions, item.TargetDomain.ValueString(), item.TargetType.ValueString(), name, item.Action.ValueString())
 		} else {
 			addToQueue(&actionQueue.ObjectActions, item.TargetDomain.ValueString(), item.TargetType.ValueString(), name, item.Action.ValueString())
@@ -80,6 +88,17 @@ func PostProcess() error {
 	if diag.HasError() {
 		for _, e := range diag.Errors() {
 			return fmt.Errorf("%s: %s", e.Summary(), e.Detail())
+		}
+	}
+
+	for _, domain := range actionQueue.SaveDomains {
+		res, err := actionQueue.Client.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain), `{"SaveConfig": 0}`)
+		if err == nil {
+			if res.StatusCode() != 404 && res.StatusCode() != 401 {
+				return fmt.Errorf("failed to save domain `%s`. status: %d body: %s", domain, res.StatusCode(), res.Body())
+			}
+		} else {
+			return fmt.Errorf("failed to save domain `%s`. error: %s", domain, err.Error())
 		}
 	}
 	return nil
@@ -135,10 +154,18 @@ func quiesceAction(diag *diag.Diagnostics, domain, objectType, objectId string, 
 
 func getBody(domain, objectType, objectId, action string, pre bool) string {
 	var body string
-	if pre {
-		body = actionMap[objectType].ValidActions[action].PreBody
+	if action == "quiesce" {
+		if objectType == "resource_datapower_domain" && pre {
+			body = DomainQuiesceBody
+		} else if objectType == "resource_datapower_domain" && !pre {
+			body = DomainUnquiesceBody
+		} else if objectType != "resource_datapower_domain" && pre {
+			body = ServiceQuiesceBody
+		} else {
+			body = ServiceUnquiesceBody
+		}
 	} else {
-		body = actionMap[objectType].ValidActions[action].PostBody
+		body = actionMap[objectType].ValidActions[action].Body
 	}
 	return strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(body, "{type}", actionMap[objectType].ObjectName), "{name}", objectId), "{domain}", domain)
 }

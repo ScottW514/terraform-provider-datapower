@@ -27,6 +27,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -67,6 +68,7 @@ func (d *DomainAvailabilityDataSource) Schema(ctx context.Context, req datasourc
 				MarkdownDescription: "Set to true to restart the domain when changes are made to this resource.",
 				Computed:            true,
 			},
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

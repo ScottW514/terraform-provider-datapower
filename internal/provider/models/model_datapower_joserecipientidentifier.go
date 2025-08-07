@@ -34,25 +34,25 @@ import (
 )
 
 type JOSERecipientIdentifier struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Type          types.String      `tfsdk:"type"`
-	Key           types.String      `tfsdk:"key"`
-	SsKey         types.String      `tfsdk:"ss_key"`
-	HeaderParam   types.List        `tfsdk:"header_param"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Type              types.String      `tfsdk:"type"`
+	Key               types.String      `tfsdk:"key"`
+	SsKey             types.String      `tfsdk:"ss_key"`
+	HeaderParam       types.List        `tfsdk:"header_param"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var JOSERecipientIdentifierObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"type":           types.StringType,
-	"key":            types.StringType,
-	"ss_key":         types.StringType,
-	"header_param":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"type":               types.StringType,
+	"key":                types.StringType,
+	"ss_key":             types.StringType,
+	"header_param":       types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data JOSERecipientIdentifier) GetPath() string {

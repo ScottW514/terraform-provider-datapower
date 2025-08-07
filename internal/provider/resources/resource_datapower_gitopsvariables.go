@@ -51,7 +51,6 @@ func (r *GitOpsVariablesResource) Metadata(ctx context.Context, req resource.Met
 func (r *GitOpsVariablesResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("GitOps variables (`default` domain only)", "gitops-variables", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
@@ -68,7 +67,7 @@ func (r *GitOpsVariablesResource) Schema(ctx context.Context, req resource.Schem
 				NestedObject:        models.DmGitOpsVariableEntryResourceSchema,
 				Optional:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -89,7 +88,7 @@ func (r *GitOpsVariablesResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `GitOpsVariables`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -136,7 +135,7 @@ func (r *GitOpsVariablesResource) Update(ctx context.Context, req resource.Updat
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `GitOpsVariables`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

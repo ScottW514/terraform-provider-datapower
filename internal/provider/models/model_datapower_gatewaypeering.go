@@ -46,7 +46,7 @@ type GatewayPeering struct {
 	PersistenceLocation types.String      `tfsdk:"persistence_location"`
 	LocalDirectory      types.String      `tfsdk:"local_directory"`
 	MaxMemory           types.Int64       `tfsdk:"max_memory"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var GatewayPeeringObjectType = map[string]attr.Type{
@@ -62,7 +62,7 @@ var GatewayPeeringObjectType = map[string]attr.Type{
 	"persistence_location": types.StringType,
 	"local_directory":      types.StringType,
 	"max_memory":           types.Int64Type,
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data GatewayPeering) GetPath() string {

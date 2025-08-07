@@ -218,7 +218,6 @@ func TestNewClient(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
 			// Unset relevant environment variables to isolate tests
 			for _, envVar := range relevantEnvVars {
 				os.Unsetenv(envVar)

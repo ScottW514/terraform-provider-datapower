@@ -34,39 +34,39 @@ import (
 )
 
 type AssemblyActionJWTValidate struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	Jwt             types.String      `tfsdk:"jwt"`
-	OutputClaims    types.String      `tfsdk:"output_claims"`
-	IssuerClaim     types.String      `tfsdk:"issuer_claim"`
-	AudienceClaim   types.String      `tfsdk:"audience_claim"`
-	DecryptCrypto   types.String      `tfsdk:"decrypt_crypto"`
-	DecryptJwk      types.String      `tfsdk:"decrypt_jwk"`
-	VerifyCrypto    types.String      `tfsdk:"verify_crypto"`
-	VerifyJwk       types.String      `tfsdk:"verify_jwk"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	Title           types.String      `tfsdk:"title"`
-	CorrelationPath types.String      `tfsdk:"correlation_path"`
-	ActionDebug     types.Bool        `tfsdk:"action_debug"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Jwt               types.String      `tfsdk:"jwt"`
+	OutputClaims      types.String      `tfsdk:"output_claims"`
+	IssuerClaim       types.String      `tfsdk:"issuer_claim"`
+	AudienceClaim     types.String      `tfsdk:"audience_claim"`
+	DecryptCrypto     types.String      `tfsdk:"decrypt_crypto"`
+	DecryptJwk        types.String      `tfsdk:"decrypt_jwk"`
+	VerifyCrypto      types.String      `tfsdk:"verify_crypto"`
+	VerifyJwk         types.String      `tfsdk:"verify_jwk"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Title             types.String      `tfsdk:"title"`
+	CorrelationPath   types.String      `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool        `tfsdk:"action_debug"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionJWTValidateObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"jwt":              types.StringType,
-	"output_claims":    types.StringType,
-	"issuer_claim":     types.StringType,
-	"audience_claim":   types.StringType,
-	"decrypt_crypto":   types.StringType,
-	"decrypt_jwk":      types.StringType,
-	"verify_crypto":    types.StringType,
-	"verify_jwk":       types.StringType,
-	"user_summary":     types.StringType,
-	"title":            types.StringType,
-	"correlation_path": types.StringType,
-	"action_debug":     types.BoolType,
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"jwt":                types.StringType,
+	"output_claims":      types.StringType,
+	"issuer_claim":       types.StringType,
+	"audience_claim":     types.StringType,
+	"decrypt_crypto":     types.StringType,
+	"decrypt_jwk":        types.StringType,
+	"verify_crypto":      types.StringType,
+	"verify_jwk":         types.StringType,
+	"user_summary":       types.StringType,
+	"title":              types.StringType,
+	"correlation_path":   types.StringType,
+	"action_debug":       types.BoolType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data AssemblyActionJWTValidate) GetPath() string {

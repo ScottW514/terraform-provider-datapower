@@ -56,7 +56,7 @@ type RateLimitDefinition struct {
 	AllowCacheFallback  types.Bool        `tfsdk:"allow_cache_fallback"`
 	UseCache            types.Bool        `tfsdk:"use_cache"`
 	Parameters          types.List        `tfsdk:"parameters"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var RateLimitDefinitionObjectType = map[string]attr.Type{
@@ -82,7 +82,7 @@ var RateLimitDefinitionObjectType = map[string]attr.Type{
 	"allow_cache_fallback":  types.BoolType,
 	"use_cache":             types.BoolType,
 	"parameters":            types.ListType{ElemType: types.ObjectType{AttrTypes: DmRateLimitDefinitionNameValuePairObjectType}},
-	"object_actions":        actions.ActionsListType,
+	"dependency_actions":    actions.ActionsListType,
 }
 
 func (data RateLimitDefinition) GetPath() string {

@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -55,7 +56,7 @@ func (d *UserDataSource) Metadata(_ context.Context, req datasource.MetadataRequ
 
 func (d *UserDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "User account",
+		MarkdownDescription: "User account (`default` domain only)",
 		Attributes: map[string]schema.Attribute{
 			"result": schema.ListNestedAttribute{
 				MarkdownDescription: "List of objects",
@@ -88,6 +89,7 @@ func (d *UserDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 							NestedObject:        models.DmSnmpCredMaskedDataSourceSchema,
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

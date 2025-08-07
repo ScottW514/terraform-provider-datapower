@@ -34,21 +34,21 @@ import (
 )
 
 type CryptoIdentCred struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	Key           types.String      `tfsdk:"key"`
-	Certificate   types.String      `tfsdk:"certificate"`
-	Ca            types.List        `tfsdk:"ca"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Key               types.String      `tfsdk:"key"`
+	Certificate       types.String      `tfsdk:"certificate"`
+	Ca                types.List        `tfsdk:"ca"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var CryptoIdentCredObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"key":            types.StringType,
-	"certificate":    types.StringType,
-	"ca":             types.ListType{ElemType: types.StringType},
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"key":                types.StringType,
+	"certificate":        types.StringType,
+	"ca":                 types.ListType{ElemType: types.StringType},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data CryptoIdentCred) GetPath() string {

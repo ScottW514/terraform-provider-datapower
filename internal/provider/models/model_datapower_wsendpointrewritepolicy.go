@@ -43,7 +43,7 @@ type WSEndpointRewritePolicy struct {
 	WsEndpointSubscriptionLocalRule   types.List        `tfsdk:"ws_endpoint_subscription_local_rule"`
 	WsEndpointSubscriptionRemoteRule  types.List        `tfsdk:"ws_endpoint_subscription_remote_rule"`
 	WsEndpointSubscriptionPublishRule types.List        `tfsdk:"ws_endpoint_subscription_publish_rule"`
-	ObjectActions                     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions                 []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WSEndpointRewritePolicyObjectType = map[string]attr.Type{
@@ -56,7 +56,7 @@ var WSEndpointRewritePolicyObjectType = map[string]attr.Type{
 	"ws_endpoint_subscription_local_rule":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSEndpointSubscriptionLocalRuleObjectType}},
 	"ws_endpoint_subscription_remote_rule":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSEndpointSubscriptionRemoteRuleObjectType}},
 	"ws_endpoint_subscription_publish_rule": types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSEndpointSubscriptionPublishRuleObjectType}},
-	"object_actions":                        actions.ActionsListType,
+	"dependency_actions":                    actions.ActionsListType,
 }
 
 func (data WSEndpointRewritePolicy) GetPath() string {

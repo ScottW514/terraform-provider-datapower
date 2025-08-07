@@ -40,7 +40,7 @@ type DomainSettings struct {
 	UserSummary       types.String      `tfsdk:"user_summary"`
 	PasswordTreatment types.String      `tfsdk:"password_treatment"`
 	Passphrase        types.String      `tfsdk:"passphrase"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var DomainSettingsObjectType = map[string]attr.Type{
@@ -49,7 +49,7 @@ var DomainSettingsObjectType = map[string]attr.Type{
 	"user_summary":       types.StringType,
 	"password_treatment": types.StringType,
 	"passphrase":         types.StringType,
-	"object_actions":     actions.ActionsListType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data DomainSettings) GetPath() string {

@@ -42,7 +42,7 @@ type JSONSettings struct {
 	JsonMaxValueLength  types.Int64       `tfsdk:"json_max_value_length"`
 	JsonMaxNumberLength types.Int64       `tfsdk:"json_max_number_length"`
 	JsonDocumentSize    types.Int64       `tfsdk:"json_document_size"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var JSONSettingsObjectType = map[string]attr.Type{
@@ -54,7 +54,7 @@ var JSONSettingsObjectType = map[string]attr.Type{
 	"json_max_value_length":  types.Int64Type,
 	"json_max_number_length": types.Int64Type,
 	"json_document_size":     types.Int64Type,
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data JSONSettings) GetPath() string {

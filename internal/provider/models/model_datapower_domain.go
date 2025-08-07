@@ -50,7 +50,7 @@ type Domain struct {
 	MaxChkpoints               types.Int64            `tfsdk:"max_chkpoints"`
 	ConfigPermissionsMode      types.String           `tfsdk:"config_permissions_mode"`
 	ConfigPermissionsProfile   types.String           `tfsdk:"config_permissions_profile"`
-	ObjectActions              []*actions.Action      `tfsdk:"object_actions"`
+	DependencyActions          []*actions.Action      `tfsdk:"dependency_actions"`
 }
 
 var DomainObjectType = map[string]attr.Type{
@@ -70,7 +70,7 @@ var DomainObjectType = map[string]attr.Type{
 	"max_chkpoints":                types.Int64Type,
 	"config_permissions_mode":      types.StringType,
 	"config_permissions_profile":   types.StringType,
-	"object_actions":               actions.ActionsListType,
+	"dependency_actions":           actions.ActionsListType,
 }
 
 func (data Domain) GetPath() string {

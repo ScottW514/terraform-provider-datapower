@@ -4,13 +4,14 @@ page_title: "datapower_apicollection Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
   API collection
-  CLI Alias: api-collection
+  CLI Alias: api-collectionAccepted Dependency Actions: flush_cache
 ---
 
 # datapower_apicollection (Resource)
 
 API collection
   - CLI Alias: `api-collection`
+  - Accepted Dependency Actions: `flush_cache`
 
 ## Example Usage
 
@@ -86,12 +87,12 @@ resource "datapower_apicollection" "test" {
   - Default value: `default`
 - `default_rate_limit` (Attributes List) Default rate limit
   - CLI Alias: `default-rate-limit` (see [below for nested schema](#nestedatt--default_rate_limit))
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `dev_portal_endpoint` (String) Developer Portal endpoint
   - CLI Alias: `dev-portal-endpoint`
 - `enforce_pre_assembly_rate_limits` (Boolean) Enforce preassembly rate limits
   - CLI Alias: `enforce-pre-assembly-rate-limits`
   - Default value: `true`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `parse_settings_reference` (Attributes) Parse settings
   - CLI Alias: `parse-settings-reference` (see [below for nested schema](#nestedatt--parse_settings_reference))
 - `rate_limit_group` (String) Rate limit group
@@ -245,21 +246,21 @@ Optional:
   - Default value: `1`
 
 
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
 
 Required:
 
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
 
 Optional:
 
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
 
 
 <a id="nestedatt--parse_settings_reference"></a>

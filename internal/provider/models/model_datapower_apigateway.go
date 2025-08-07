@@ -61,7 +61,7 @@ type APIGateway struct {
 	FrontPersistentTimeout         types.Int64       `tfsdk:"front_persistent_timeout"`
 	OpenTelemetry                  types.String      `tfsdk:"open_telemetry"`
 	OpenTelemetryResourceAttribute types.List        `tfsdk:"open_telemetry_resource_attribute"`
-	ObjectActions                  []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions              []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APIGatewayObjectType = map[string]attr.Type{
@@ -92,7 +92,7 @@ var APIGatewayObjectType = map[string]attr.Type{
 	"front_persistent_timeout":          types.Int64Type,
 	"open_telemetry":                    types.StringType,
 	"open_telemetry_resource_attribute": types.ListType{ElemType: types.ObjectType{AttrTypes: DmOpenTelemetryResourceAttributeObjectType}},
-	"object_actions":                    actions.ActionsListType,
+	"dependency_actions":                actions.ActionsListType,
 }
 
 func (data APIGateway) GetPath() string {

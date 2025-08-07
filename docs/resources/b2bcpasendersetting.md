@@ -43,6 +43,7 @@ resource "datapower_b2bcpasendersetting" "test" {
   - CLI Alias: `timeout`
   - Range: `3`-`7200`
   - Default value: `300`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `dest_endpoint_url` (String) Destination URL
   - CLI Alias: `dest-url`
 - `duplicate_elimination` (String) Duplicate elimination
@@ -68,7 +69,6 @@ resource "datapower_b2bcpasendersetting" "test" {
   - CLI Alias: `max-retries`
   - Range: `1`-`30`
   - Default value: `3`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `password_alias` (String) Password alias
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`
@@ -116,6 +116,23 @@ resource "datapower_b2bcpasendersetting" "test" {
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
+
 <a id="nestedatt--enabled_doc_type"></a>
 ### Nested Schema for `enabled_doc_type`
 
@@ -129,20 +146,3 @@ Optional:
   - Default value: `true`
 - `enable_xml` (Boolean) XML
   - Default value: `true`
-
-
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
-
-Required:
-
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
-
-Optional:
-
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.

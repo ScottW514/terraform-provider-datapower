@@ -22,7 +22,9 @@ package models
 
 import (
 	"context"
+	"net/url"
 	"path"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -33,6 +35,7 @@ import (
 )
 
 type APIConnectGatewayService struct {
+	AppDomain             types.String         `tfsdk:"app_domain"`
 	Enabled               types.Bool           `tfsdk:"enabled"`
 	UserSummary           types.String         `tfsdk:"user_summary"`
 	LocalAddress          types.String         `tfsdk:"local_address"`
@@ -50,10 +53,11 @@ type APIConnectGatewayService struct {
 	JwtValidationMode     types.String         `tfsdk:"jwt_validation_mode"`
 	Jwturl                types.String         `tfsdk:"jwturl"`
 	ProxyPolicy           *DmAPICGSProxyPolicy `tfsdk:"proxy_policy"`
-	ObjectActions         []*actions.Action    `tfsdk:"object_actions"`
+	DependencyActions     []*actions.Action    `tfsdk:"dependency_actions"`
 }
 
 var APIConnectGatewayServiceObjectType = map[string]attr.Type{
+	"app_domain":              types.StringType,
 	"enabled":                 types.BoolType,
 	"user_summary":            types.StringType,
 	"local_address":           types.StringType,
@@ -71,15 +75,19 @@ var APIConnectGatewayServiceObjectType = map[string]attr.Type{
 	"jwt_validation_mode":     types.StringType,
 	"jwturl":                  types.StringType,
 	"proxy_policy":            types.ObjectType{AttrTypes: DmAPICGSProxyPolicyObjectType},
-	"object_actions":          actions.ActionsListType,
+	"dependency_actions":      actions.ActionsListType,
 }
 
 func (data APIConnectGatewayService) GetPath() string {
-	rest_path := "/mgmt/config/default/APIConnectGatewayService/default"
+	rest_path := "/mgmt/config/{domain}/APIConnectGatewayService/default"
+	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
 	return rest_path
 }
 
 func (data APIConnectGatewayService) IsNull() bool {
+	if !data.AppDomain.IsNull() {
+		return false
+	}
 	if !data.Enabled.IsNull() {
 		return false
 	}
@@ -141,7 +149,7 @@ func (data APIConnectGatewayService) ToBody(ctx context.Context, pathRoot string
 		pathRoot = pathRoot + "."
 	}
 	body := ""
-	body, _ = sjson.Set(body, "APIConnectGatewayService.name", path.Base("/mgmt/config/default/APIConnectGatewayService/default"))
+	body, _ = sjson.Set(body, "APIConnectGatewayService.name", path.Base("/mgmt/config/{domain}/APIConnectGatewayService/default"))
 	if !data.Enabled.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`mAdminState`, tfutils.StringFromBool(data.Enabled, "admin"))
 	}

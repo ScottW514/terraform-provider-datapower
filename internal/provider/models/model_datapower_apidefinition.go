@@ -78,7 +78,7 @@ type APIDefinition struct {
 	EnforceAllHeadersCaseInsensitive types.Bool        `tfsdk:"enforce_all_headers_case_insensitive"`
 	EnforceFormDataParameter         types.Bool        `tfsdk:"enforce_form_data_parameter"`
 	ForceHttp500ForSoap11            types.Bool        `tfsdk:"force_http500_for_soap11"`
-	ObjectActions                    []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions                []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APIDefinitionObjectType = map[string]attr.Type{
@@ -126,7 +126,7 @@ var APIDefinitionObjectType = map[string]attr.Type{
 	"enforce_all_headers_case_insensitive": types.BoolType,
 	"enforce_form_data_parameter":          types.BoolType,
 	"force_http500_for_soap11":             types.BoolType,
-	"object_actions":                       actions.ActionsListType,
+	"dependency_actions":                   actions.ActionsListType,
 }
 
 func (data APIDefinition) GetPath() string {

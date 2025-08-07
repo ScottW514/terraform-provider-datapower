@@ -13,8 +13,12 @@ skip_test: bool(required=False) # Do not perform tests
 test_prerequisites: str(required=False) # HCL code that is included in the acceptance tests to define prerequisites
 update_computed: bool(required=False) # Set to true if model has attributes that need to be updated after a write
 ---
+actions: # Actions available for the model
+  name: str() # Name of the action
+  body: str(required=False) # Body of the API message to trigger action
+---
 attributes:
-  name: str(required=False) # Name of the attribute in the model
+  name: str() # Name of the attribute in the model
   path: str(required=False) # JSON path to the attribute. Defaults to name
   tf_name: str(required=False) # Terraform name for the attribute
   type: enum('String', 'Int64', 'Bool', 'List', required=False) # Type of the attribute

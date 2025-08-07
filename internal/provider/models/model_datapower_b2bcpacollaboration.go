@@ -45,7 +45,7 @@ type B2BCPACollaboration struct {
 	SenderMshSetting     types.String      `tfsdk:"sender_msh_setting"`
 	ReceiverMshSetting   types.String      `tfsdk:"receiver_msh_setting"`
 	Actions              types.List        `tfsdk:"actions"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var B2BCPACollaborationObjectType = map[string]attr.Type{
@@ -60,7 +60,7 @@ var B2BCPACollaborationObjectType = map[string]attr.Type{
 	"sender_msh_setting":    types.StringType,
 	"receiver_msh_setting":  types.StringType,
 	"actions":               types.ListType{ElemType: types.ObjectType{AttrTypes: DmCPACollaborationActionObjectType}},
-	"object_actions":        actions.ActionsListType,
+	"dependency_actions":    actions.ActionsListType,
 }
 
 func (data B2BCPACollaboration) GetPath() string {

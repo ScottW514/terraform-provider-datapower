@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -92,6 +93,7 @@ func (d *CryptoKerberosKeytabDataSource) Schema(ctx context.Context, req datasou
 							Computed:            true,
 						},
 						"gss_checksum_flags": models.GetDmGssChecksumFlagsDataSourceSchema("GSS-API Checksum Flags", "gss-checksum-flags", ""),
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

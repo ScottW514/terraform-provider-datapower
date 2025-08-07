@@ -34,23 +34,23 @@ import (
 )
 
 type CORSRule struct {
-	Id               types.String             `tfsdk:"id"`
-	AppDomain        types.String             `tfsdk:"app_domain"`
-	UserSummary      types.String             `tfsdk:"user_summary"`
-	AllowOrigin      types.List               `tfsdk:"allow_origin"`
-	AllowCredentials types.Bool               `tfsdk:"allow_credentials"`
-	ExposeHeaders    *DmCORSRuleExposeHeaders `tfsdk:"expose_headers"`
-	ObjectActions    []*actions.Action        `tfsdk:"object_actions"`
+	Id                types.String             `tfsdk:"id"`
+	AppDomain         types.String             `tfsdk:"app_domain"`
+	UserSummary       types.String             `tfsdk:"user_summary"`
+	AllowOrigin       types.List               `tfsdk:"allow_origin"`
+	AllowCredentials  types.Bool               `tfsdk:"allow_credentials"`
+	ExposeHeaders     *DmCORSRuleExposeHeaders `tfsdk:"expose_headers"`
+	DependencyActions []*actions.Action        `tfsdk:"dependency_actions"`
 }
 
 var CORSRuleObjectType = map[string]attr.Type{
-	"id":                types.StringType,
-	"app_domain":        types.StringType,
-	"user_summary":      types.StringType,
-	"allow_origin":      types.ListType{ElemType: types.StringType},
-	"allow_credentials": types.BoolType,
-	"expose_headers":    types.ObjectType{AttrTypes: DmCORSRuleExposeHeadersObjectType},
-	"object_actions":    actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"allow_origin":       types.ListType{ElemType: types.StringType},
+	"allow_credentials":  types.BoolType,
+	"expose_headers":     types.ObjectType{AttrTypes: DmCORSRuleExposeHeadersObjectType},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data CORSRule) GetPath() string {

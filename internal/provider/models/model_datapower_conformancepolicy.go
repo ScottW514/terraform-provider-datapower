@@ -51,7 +51,7 @@ type ConformancePolicy struct {
 	ResponseLogTarget            types.String           `tfsdk:"response_log_target"`
 	ResponseRejectLevel          types.String           `tfsdk:"response_reject_level"`
 	ResponseRejectIncludeSummary types.Bool             `tfsdk:"response_reject_include_summary"`
-	ObjectActions                []*actions.Action      `tfsdk:"object_actions"`
+	DependencyActions            []*actions.Action      `tfsdk:"dependency_actions"`
 }
 
 var ConformancePolicyObjectType = map[string]attr.Type{
@@ -72,7 +72,7 @@ var ConformancePolicyObjectType = map[string]attr.Type{
 	"response_log_target":             types.StringType,
 	"response_reject_level":           types.StringType,
 	"response_reject_include_summary": types.BoolType,
-	"object_actions":                  actions.ActionsListType,
+	"dependency_actions":              actions.ActionsListType,
 }
 
 func (data ConformancePolicy) GetPath() string {

@@ -51,7 +51,7 @@ type AMQPBroker struct {
 	LongRetryInterval types.Int64       `tfsdk:"long_retry_interval"`
 	ReportingInterval types.Int64       `tfsdk:"reporting_interval"`
 	SslClient         types.String      `tfsdk:"ssl_client"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AMQPBrokerObjectType = map[string]attr.Type{
@@ -72,7 +72,7 @@ var AMQPBrokerObjectType = map[string]attr.Type{
 	"long_retry_interval": types.Int64Type,
 	"reporting_interval":  types.Int64Type,
 	"ssl_client":          types.StringType,
-	"object_actions":      actions.ActionsListType,
+	"dependency_actions":  actions.ActionsListType,
 }
 
 func (data AMQPBroker) GetPath() string {

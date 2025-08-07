@@ -43,7 +43,7 @@ type DNSNameService struct {
 	LoadBalanceAlgorithm types.String      `tfsdk:"load_balance_algorithm"`
 	MaxRetries           types.Int64       `tfsdk:"max_retries"`
 	Timeout              types.Int64       `tfsdk:"timeout"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var DNSNameServiceObjectType = map[string]attr.Type{
@@ -57,7 +57,7 @@ var DNSNameServiceObjectType = map[string]attr.Type{
 	"load_balance_algorithm": types.StringType,
 	"max_retries":            types.Int64Type,
 	"timeout":                types.Int64Type,
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data DNSNameService) GetPath() string {

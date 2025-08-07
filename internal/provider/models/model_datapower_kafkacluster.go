@@ -49,7 +49,7 @@ type KafkaCluster struct {
 	AutoRetry          types.Bool        `tfsdk:"auto_retry"`
 	RetryInterval      types.Int64       `tfsdk:"retry_interval"`
 	Property           types.List        `tfsdk:"property"`
-	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var KafkaClusterObjectType = map[string]attr.Type{
@@ -68,7 +68,7 @@ var KafkaClusterObjectType = map[string]attr.Type{
 	"auto_retry":           types.BoolType,
 	"retry_interval":       types.Int64Type,
 	"property":             types.ListType{ElemType: types.ObjectType{AttrTypes: DmKafkaPropertyObjectType}},
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data KafkaCluster) GetPath() string {

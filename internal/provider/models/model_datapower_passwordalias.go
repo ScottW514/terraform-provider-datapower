@@ -34,33 +34,33 @@ import (
 )
 
 type PasswordAlias struct {
-	Id             types.String      `tfsdk:"id"`
-	AppDomain      types.String      `tfsdk:"app_domain"`
-	UserSummary    types.String      `tfsdk:"user_summary"`
-	Password       types.String      `tfsdk:"password"`
-	PasswordUpdate types.Bool        `tfsdk:"password_update"`
-	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Password          types.String      `tfsdk:"password"`
+	PasswordUpdate    types.Bool        `tfsdk:"password_update"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 type PasswordAliasWO struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var PasswordAliasObjectType = map[string]attr.Type{
-	"id":              types.StringType,
-	"app_domain":      types.StringType,
-	"user_summary":    types.StringType,
-	"password":        types.StringType,
-	"password_update": types.BoolType,
-	"object_actions":  actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"password":           types.StringType,
+	"password_update":    types.BoolType,
+	"dependency_actions": actions.ActionsListType,
 }
 var PasswordAliasObjectTypeWO = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data PasswordAlias) GetPath() string {

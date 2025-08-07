@@ -58,7 +58,6 @@ func (r *ProbeResource) Metadata(ctx context.Context, req resource.MetadataReque
 func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("Probe settings", "probe-settings", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -105,7 +104,7 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				MarkdownDescription: tfutils.NewAttributeDescription("Gateway peering", "gateway-peering", "gatewaypeering").String,
 				Required:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -126,19 +125,13 @@ func (r *ProbeResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `Probe`)
 	_, err := r.client.Put(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
-		return
-	}
-
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -179,15 +172,10 @@ func (r *ProbeResource) Update(ctx context.Context, req resource.UpdateRequest, 
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `Probe`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
-		return
-	}
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 

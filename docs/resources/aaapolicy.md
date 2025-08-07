@@ -4,13 +4,14 @@ page_title: "datapower_aaapolicy Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
   AAA policy
-  CLI Alias: aaapolicy
+  CLI Alias: aaapolicyAccepted Dependency Actions: flush_cache
 ---
 
 # datapower_aaapolicy (Resource)
 
 AAA policy
   - CLI Alias: `aaapolicy`
+  - Accepted Dependency Actions: `flush_cache`
 
 ## Example Usage
 
@@ -42,6 +43,7 @@ resource "datapower_aaapolicy" "test" {
   - Reference to: `datapower_countmonitor:id`
 - `azsmhttp_header` (List of String) HTTP headers
   - CLI Alias: `az-sm-http-header`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `do_s_valve` (Number) DoS flooding attack valve
   - CLI Alias: `dos-valve`
   - Range: `1`-`1000`
@@ -90,7 +92,6 @@ resource "datapower_aaapolicy" "test" {
   - CLI Alias: `map-resource` (see [below for nested schema](#nestedatt--map_resource))
 - `namespace_mapping` (Attributes List) Namespace mapping
   - CLI Alias: `namespace-mapping` (see [below for nested schema](#nestedatt--namespace_mapping))
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `ping_identity_compatibility` (Boolean) PingFederate compatibility
   - CLI Alias: `ping-identity-compatibility`
   - Default value: `false`
@@ -514,6 +515,23 @@ Optional:
 
 
 
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
+
 <a id="nestedatt--extract_identity"></a>
 ### Nested Schema for `extract_identity`
 
@@ -728,23 +746,6 @@ Optional:
 
 - `prefix` (String) Prefix
 - `uri` (String) URI
-
-
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
-
-Required:
-
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
-
-Optional:
-
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
 
 
 <a id="nestedatt--post_process"></a>

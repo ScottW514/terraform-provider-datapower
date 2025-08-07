@@ -47,20 +47,20 @@ type Action struct {
 	TargetId     types.String `tfsdk:"target_id"`
 	TargetDomain types.String `tfsdk:"target_domain"`
 	TargetType   types.String `tfsdk:"target_type"`
-	RunOnCreate  types.Bool   `tfsdk:"run_on_create"`
-	RunOnUpdate  types.Bool   `tfsdk:"run_on_update"`
-	RunOnDelete  types.Bool   `tfsdk:"run_on_delete"`
+	OnCreate     types.Bool   `tfsdk:"on_create"`
+	OnUpdate     types.Bool   `tfsdk:"on_update"`
+	OnDelete     types.Bool   `tfsdk:"on_delete"`
 	Action       types.String `tfsdk:"action"`
 }
 
 var ActionsSchema = schema.ListNestedAttribute{
-	MarkdownDescription: "List of actions to take on dependent objects",
+	MarkdownDescription: "Actions to take on other resources when operations are performed on this resource.",
 	Optional:            true,
 	NestedObject: schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"target_id": schema.StringAttribute{
-				MarkdownDescription: "Id of the action target (for `domains`, this must still be set, but the value is ignored)",
-				Required:            true,
+				MarkdownDescription: "Id of the target for the action (required for all resources except `resource_datapower_domain`)",
+				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
 					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
@@ -70,7 +70,7 @@ var ActionsSchema = schema.ListNestedAttribute{
 				},
 			},
 			"target_domain": schema.StringAttribute{
-				MarkdownDescription: "Application domain of the action target",
+				MarkdownDescription: "Application domain of the target for the action",
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
@@ -81,14 +81,14 @@ var ActionsSchema = schema.ListNestedAttribute{
 				},
 			},
 			"target_type": schema.StringAttribute{
-				MarkdownDescription: "Resource type of action target",
+				MarkdownDescription: "Resource type of the target for the action",
 				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"run_on_create": schema.BoolAttribute{
-				MarkdownDescription: "Run this action when creating this resource.",
+			"on_create": schema.BoolAttribute{
+				MarkdownDescription: "Execute this action on the target when creating this resource.",
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -96,8 +96,8 @@ var ActionsSchema = schema.ListNestedAttribute{
 					boolplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"run_on_update": schema.BoolAttribute{
-				MarkdownDescription: "Run this action when updating this resource.",
+			"on_update": schema.BoolAttribute{
+				MarkdownDescription: "Execute this action on the target when updating this resource.",
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -105,8 +105,8 @@ var ActionsSchema = schema.ListNestedAttribute{
 					boolplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"run_on_delete": schema.BoolAttribute{
-				MarkdownDescription: "Run this action when deleting this resource.",
+			"on_delete": schema.BoolAttribute{
+				MarkdownDescription: "Execute this action on the target when deleting this resource.",
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -115,7 +115,7 @@ var ActionsSchema = schema.ListNestedAttribute{
 				},
 			},
 			"action": schema.StringAttribute{
-				MarkdownDescription: "Action to take on target",
+				MarkdownDescription: "Action to take on target resource",
 				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
@@ -131,9 +131,9 @@ var ActionsListType = types.ListType{
 			"target_id":     types.StringType,
 			"target_domain": types.StringType,
 			"target_type":   types.StringType,
-			"run_on_create": types.BoolType,
-			"run_on_update": types.BoolType,
-			"run_on_delete": types.BoolType,
+			"on_create":     types.BoolType,
+			"on_update":     types.BoolType,
+			"on_delete":     types.BoolType,
 			"action":        types.StringType,
 		},
 	},
@@ -144,16 +144,21 @@ func ValidateConfig(ctx context.Context, diag *diag.Diagnostics, actions []*Acti
 		if act, ok := actionMap[target.TargetType.ValueString()]; ok {
 			if _, ok := act.ValidActions[target.Action.ValueString()]; !ok {
 				diag.AddAttributeError(
-					path.Root("object_actions"),
+					path.Root("dependency_actions"),
 					"Attribute Error",
-					fmt.Sprintf("'%s' action is not supported for target_type '%s'", target.Action.ValueString(), target.TargetType.ValueString()),
+					fmt.Sprintf("'%s' `action` is not supported for `target_type` '%s'", target.Action.ValueString(), target.TargetType.ValueString()),
 				)
+			} else {
+				if target.TargetType.ValueString() != "resource_datapower_domain" && target.TargetId.IsNull() {
+					diag.AddAttributeError(
+						path.Root("dependency_actions"), "Attribute Error", "`target_id` is required when `target_type` is not `resource_datapower_domain`")
+				}
 			}
 		} else {
 			diag.AddAttributeError(
-				path.Root("object_actions"),
+				path.Root("dependency_actions"),
 				"Attribute Error",
-				fmt.Sprintf("target_type '%s' not supported", target.TargetType.ValueString()),
+				fmt.Sprintf("`target_type` '%s' not supported", target.TargetType.ValueString()),
 			)
 		}
 	}

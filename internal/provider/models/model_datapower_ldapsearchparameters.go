@@ -42,7 +42,7 @@ type LDAPSearchParameters struct {
 	LdapFilterPrefix      types.String      `tfsdk:"ldap_filter_prefix"`
 	LdapFilterSuffix      types.String      `tfsdk:"ldap_filter_suffix"`
 	LdapScope             types.String      `tfsdk:"ldap_scope"`
-	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var LDAPSearchParametersObjectType = map[string]attr.Type{
@@ -54,7 +54,7 @@ var LDAPSearchParametersObjectType = map[string]attr.Type{
 	"ldap_filter_prefix":      types.StringType,
 	"ldap_filter_suffix":      types.StringType,
 	"ldap_scope":              types.StringType,
-	"object_actions":          actions.ActionsListType,
+	"dependency_actions":      actions.ActionsListType,
 }
 
 func (data LDAPSearchParameters) GetPath() string {

@@ -55,6 +55,9 @@ import (
 )
 
 var _ resource.Resource{{if hasWriteOnlyAttribute .Attributes}}WithModifyPlan{{end}} = &{{.Name}}Resource{}
+{{- if len .Actions}}
+var _ resource.ResourceWithValidateConfig = &{{.Name}}Resource{}
+{{- end}}
 
 func New{{.Name}}Resource() resource.Resource {
 	return &{{.Name}}Resource{}
@@ -70,8 +73,11 @@ func (r *{{.Name}}Resource) Metadata(ctx context.Context, req resource.MetadataR
 
 func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription({{quote .Description}}, {{quote .CliAlias}}, "").String,
-
+		MarkdownDescription: tfutils.NewAttributeDescription({{quote .Description}}, {{quote .CliAlias}}, "")
+		{{- if len .Actions -}}
+					.AddActions({{range .Actions}}{{quote .Name}}, {{end}})
+		{{- end -}}
+					.String,
 		Attributes: map[string]schema.Attribute{
 {{- $root := . }}
 {{- range  .Attributes}}
@@ -190,7 +196,7 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 			},
 {{- end}}
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -211,7 +217,7 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Create)
 {{- if hasWriteOnlyAttribute .Attributes}}
 
 	var config models.{{.Name}}
@@ -240,24 +246,6 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", {{if or .PutCreate .UpdateOnly}}"PUT"{{else}}"POST"{{end}}, err))
 		return
 	}
-{{- if or (hasDomainAttribute .Attributes) (eq .Name "Domain")}}
-
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
-		return
-	}
-
-{{- end}}
-{{- if eq .Name "Domain"}}
-
-	_, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
-		return
-	}
-
-{{- end}}
 {{- if updateComputed .Attributes}}
 
 	{{- if or (eq .Name "Domain") .UpdateOnly}}
@@ -324,7 +312,7 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Update)
 {{- if hasWriteOnlyAttribute .Attributes}}
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
@@ -356,22 +344,6 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 
-{{- if or (hasDomainAttribute .Attributes) (eq .Name "Domain")}}
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
-		return
-	}
-{{- end}}
-{{- if eq .Name "Domain"}}
-
-	_, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
-		return
-	}
-
-{{- end}}
 {{- if .RestartDomainOnUpdate}}
 	if data.RestartDomainOnUpdate.ValueBool() {
 		rErr := tfutils.RestartDomain(r.client, data.AppDomain.ValueString())
@@ -394,7 +366,7 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Delete)
 
 {{- if eq .Name "Domain"}}
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
@@ -423,15 +395,6 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
 		return
 	}
-{{- end}}
-{{- if eq .Name "Domain"}}
-
-	_, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
-		return
-	}
-
 {{- end}}
 
 	resp.State.RemoveResource(ctx)
@@ -471,5 +434,18 @@ func (r *{{.Name}}Resource) ModifyPlan(ctx context.Context, req resource.ModifyP
 	{{- end}}
 
 	resp.Diagnostics.Append(resp.Plan.Set(ctx, &data)...)
+}
+{{- end}}
+
+{{- if len .Actions}}
+func (r *{{.Name}}Resource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var data models.{{.Name}}
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }
 {{- end}}

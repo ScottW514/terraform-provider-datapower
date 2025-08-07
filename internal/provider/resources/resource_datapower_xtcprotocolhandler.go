@@ -44,6 +44,7 @@ import (
 )
 
 var _ resource.Resource = &XTCProtocolHandlerResource{}
+var _ resource.ResourceWithValidateConfig = &XTCProtocolHandlerResource{}
 
 func NewXTCProtocolHandlerResource() resource.Resource {
 	return &XTCProtocolHandlerResource{}
@@ -59,8 +60,7 @@ func (r *XTCProtocolHandlerResource) Metadata(ctx context.Context, req resource.
 
 func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Stateful raw XML handler", "source-stateful-tcp", "").String,
-
+		MarkdownDescription: tfutils.NewAttributeDescription("Stateful raw XML handler", "source-stateful-tcp", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -149,7 +149,7 @@ func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.Sc
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "sslsniserverprofile").String,
 				Optional:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -170,19 +170,13 @@ func (r *XTCProtocolHandlerResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `XTCProtocolHandler`)
 	_, err := r.client.Post(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "POST", err))
-		return
-	}
-
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -223,15 +217,10 @@ func (r *XTCProtocolHandlerResource) Update(ctx context.Context, req resource.Up
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `XTCProtocolHandler`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
-		return
-	}
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 
@@ -246,7 +235,7 @@ func (r *XTCProtocolHandlerResource) Delete(ctx context.Context, req resource.De
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete)
 	_, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
@@ -254,4 +243,14 @@ func (r *XTCProtocolHandlerResource) Delete(ctx context.Context, req resource.De
 	}
 
 	resp.State.RemoveResource(ctx)
+}
+func (r *XTCProtocolHandlerResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var data models.XTCProtocolHandler
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }

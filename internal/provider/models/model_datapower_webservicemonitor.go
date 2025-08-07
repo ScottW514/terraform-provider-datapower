@@ -34,29 +34,29 @@ import (
 )
 
 type WebServiceMonitor struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	Wsdlurl       types.String      `tfsdk:"wsdlurl"`
-	Operations    types.List        `tfsdk:"operations"`
-	EndpointName  types.String      `tfsdk:"endpoint_name"`
-	EndpointUrl   types.String      `tfsdk:"endpoint_url"`
-	FrontendUrl   types.String      `tfsdk:"frontend_url"`
-	Transport     types.String      `tfsdk:"transport"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Wsdlurl           types.String      `tfsdk:"wsdlurl"`
+	Operations        types.List        `tfsdk:"operations"`
+	EndpointName      types.String      `tfsdk:"endpoint_name"`
+	EndpointUrl       types.String      `tfsdk:"endpoint_url"`
+	FrontendUrl       types.String      `tfsdk:"frontend_url"`
+	Transport         types.String      `tfsdk:"transport"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WebServiceMonitorObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"wsdlurl":        types.StringType,
-	"operations":     types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSSLMOpsObjectType}},
-	"endpoint_name":  types.StringType,
-	"endpoint_url":   types.StringType,
-	"frontend_url":   types.StringType,
-	"transport":      types.StringType,
-	"user_summary":   types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"wsdlurl":            types.StringType,
+	"operations":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSSLMOpsObjectType}},
+	"endpoint_name":      types.StringType,
+	"endpoint_url":       types.StringType,
+	"frontend_url":       types.StringType,
+	"transport":          types.StringType,
+	"user_summary":       types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data WebServiceMonitor) GetPath() string {

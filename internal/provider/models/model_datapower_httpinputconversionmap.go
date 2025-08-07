@@ -39,7 +39,7 @@ type HTTPInputConversionMap struct {
 	UserSummary          types.String      `tfsdk:"user_summary"`
 	DefaultInputEncoding types.String      `tfsdk:"default_input_encoding"`
 	InputEncoding        types.List        `tfsdk:"input_encoding"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var HTTPInputConversionMapObjectType = map[string]attr.Type{
@@ -48,7 +48,7 @@ var HTTPInputConversionMapObjectType = map[string]attr.Type{
 	"user_summary":           types.StringType,
 	"default_input_encoding": types.StringType,
 	"input_encoding":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmInputEncodingObjectType}},
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data HTTPInputConversionMap) GetPath() string {

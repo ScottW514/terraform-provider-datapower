@@ -34,23 +34,23 @@ import (
 )
 
 type FilterAction struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Type          types.String      `tfsdk:"type"`
-	LogLevel      types.String      `tfsdk:"log_level"`
-	BlockInterval types.Int64       `tfsdk:"block_interval"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Type              types.String      `tfsdk:"type"`
+	LogLevel          types.String      `tfsdk:"log_level"`
+	BlockInterval     types.Int64       `tfsdk:"block_interval"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var FilterActionObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"type":           types.StringType,
-	"log_level":      types.StringType,
-	"block_interval": types.Int64Type,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"type":               types.StringType,
+	"log_level":          types.StringType,
+	"block_interval":     types.Int64Type,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data FilterAction) GetPath() string {

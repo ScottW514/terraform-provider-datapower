@@ -35,17 +35,17 @@ import (
 )
 
 type RateLimitConfiguration struct {
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	Enabled       types.Bool        `tfsdk:"enabled"`
-	Parameters    types.List        `tfsdk:"parameters"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	Parameters        types.List        `tfsdk:"parameters"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var RateLimitConfigurationObjectType = map[string]attr.Type{
-	"app_domain":     types.StringType,
-	"enabled":        types.BoolType,
-	"parameters":     types.ListType{ElemType: types.ObjectType{AttrTypes: DmRateLimitConfigurationNameValuePairObjectType}},
-	"object_actions": actions.ActionsListType,
+	"app_domain":         types.StringType,
+	"enabled":            types.BoolType,
+	"parameters":         types.ListType{ElemType: types.ObjectType{AttrTypes: DmRateLimitConfigurationNameValuePairObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data RateLimitConfiguration) GetPath() string {

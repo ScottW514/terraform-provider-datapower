@@ -54,7 +54,6 @@ func (r *NFSClientSettingsResource) Metadata(ctx context.Context, req resource.M
 func (r *NFSClientSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("NFS client settings (`default` domain only)", "nfs-client", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
@@ -76,7 +75,7 @@ func (r *NFSClientSettingsResource) Schema(ctx context.Context, req resource.Sch
 				},
 				Default: int64default.StaticInt64(10),
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -97,7 +96,7 @@ func (r *NFSClientSettingsResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `NFSClientSettings`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -144,7 +143,7 @@ func (r *NFSClientSettingsResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `NFSClientSettings`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

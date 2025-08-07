@@ -34,19 +34,19 @@ import (
 )
 
 type CryptoKey struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	Filename      types.String      `tfsdk:"filename"`
-	Alias         types.String      `tfsdk:"alias"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Filename          types.String      `tfsdk:"filename"`
+	Alias             types.String      `tfsdk:"alias"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var CryptoKeyObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"filename":       types.StringType,
-	"alias":          types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"filename":           types.StringType,
+	"alias":              types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data CryptoKey) GetPath() string {

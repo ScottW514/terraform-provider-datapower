@@ -33,19 +33,19 @@ import (
 )
 
 type AuditLog struct {
-	Enabled       types.Bool        `tfsdk:"enabled"`
-	Size          types.Int64       `tfsdk:"size"`
-	Rotate        types.Int64       `tfsdk:"rotate"`
-	AuditLevel    types.String      `tfsdk:"audit_level"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	Size              types.Int64       `tfsdk:"size"`
+	Rotate            types.Int64       `tfsdk:"rotate"`
+	AuditLevel        types.String      `tfsdk:"audit_level"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AuditLogObjectType = map[string]attr.Type{
-	"enabled":        types.BoolType,
-	"size":           types.Int64Type,
-	"rotate":         types.Int64Type,
-	"audit_level":    types.StringType,
-	"object_actions": actions.ActionsListType,
+	"enabled":            types.BoolType,
+	"size":               types.Int64Type,
+	"rotate":             types.Int64Type,
+	"audit_level":        types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data AuditLog) GetPath() string {

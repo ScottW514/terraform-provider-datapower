@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -87,7 +88,8 @@ func (d *SSHServerProfileDataSource) Schema(ctx context.Context, req datasource.
 				MarkdownDescription: "Preauthentication message",
 				Computed:            true,
 			},
-			"host_key_alg": models.GetDmHostKeyAlgorithmsDataSourceSchema("Host key algorithms", "host-key-alg", ""),
+			"host_key_alg":       models.GetDmHostKeyAlgorithmsDataSourceSchema("Host key algorithms", "host-key-alg", ""),
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

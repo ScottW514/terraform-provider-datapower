@@ -55,7 +55,6 @@ func (r *HostAliasResource) Metadata(ctx context.Context, req resource.MetadataR
 func (r *HostAliasResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("Host alias (`default` domain only)", "host-alias", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -76,7 +75,7 @@ func (r *HostAliasResource) Schema(ctx context.Context, req resource.SchemaReque
 				MarkdownDescription: tfutils.NewAttributeDescription("IP address", "ip-address", "").String,
 				Required:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -97,7 +96,7 @@ func (r *HostAliasResource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `HostAlias`)
 	_, err := r.client.Post(data.GetPath(), body)
@@ -144,7 +143,7 @@ func (r *HostAliasResource) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `HostAlias`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
@@ -162,7 +161,7 @@ func (r *HostAliasResource) Delete(ctx context.Context, req resource.DeleteReque
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Delete)
 	_, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))

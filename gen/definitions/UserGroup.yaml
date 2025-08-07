@@ -1,8 +1,9 @@
 name: UserGroup
-description: 'User group'
+description: 'User group (`default` domain only)'
 cli_alias: 'usergroup'
 cmd_group: 'usergroup'
 rest_endpoint: '/mgmt/config/default/UserGroup'
+default_domain_only: true
 attributes:
   - name: Id
     tf_name: id

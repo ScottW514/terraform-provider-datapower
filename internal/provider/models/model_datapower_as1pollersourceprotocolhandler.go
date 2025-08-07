@@ -47,7 +47,7 @@ type AS1PollerSourceProtocolHandler struct {
 	MaxMessagesPerPoll  types.Int64       `tfsdk:"max_messages_per_poll"`
 	SslClientConfigType types.String      `tfsdk:"ssl_client_config_type"`
 	SslClient           types.String      `tfsdk:"ssl_client"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AS1PollerSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -64,7 +64,7 @@ var AS1PollerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"max_messages_per_poll":  types.Int64Type,
 	"ssl_client_config_type": types.StringType,
 	"ssl_client":             types.StringType,
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data AS1PollerSourceProtocolHandler) GetPath() string {

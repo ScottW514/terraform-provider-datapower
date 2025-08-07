@@ -4,13 +4,14 @@ page_title: "datapower_apigateway Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
   API gateway
-  CLI Alias: apigw
+  CLI Alias: apigwAccepted Dependency Actions: flush_stylesheet_cache, flush_document_cache
 ---
 
 # datapower_apigateway (Resource)
 
 API gateway
   - CLI Alias: `apigw`
+  - Accepted Dependency Actions: `flush_stylesheet_cache`, `flush_document_cache`
 
 ## Example Usage
 
@@ -52,6 +53,7 @@ resource "datapower_apigateway" "test" {
   - CLI Alias: `xsl-cache-size`
   - Range: `5`-`250000`
   - Default value: `256`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `doc_cache_max_docs` (Number) Document cache count
   - CLI Alias: `maxdocs`
   - Range: `1`-`250000`
@@ -77,7 +79,6 @@ resource "datapower_apigateway" "test" {
 - `ldap_conn_pool` (String) LDAP connection pool
   - CLI Alias: `ldap-pool`
   - Reference to: `datapower_ldapconnectionpool:id`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `open_telemetry` (String) OpenTelemetry instance
   - CLI Alias: `otel`
   - Reference to: `datapower_opentelemetry:id`
@@ -200,6 +201,23 @@ Optional:
   - Default value: `1`
 
 
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
+
 <a id="nestedatt--doc_cache_policy"></a>
 ### Nested Schema for `doc_cache_policy`
 
@@ -236,23 +254,6 @@ Optional:
   - Default value: `protocol`
 - `xc10_grid` (String) Cache Grid
   - CLI Alias: `xc10-grid`
-
-
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
-
-Required:
-
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
-
-Optional:
-
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
 
 
 <a id="nestedatt--open_telemetry_resource_attribute"></a>

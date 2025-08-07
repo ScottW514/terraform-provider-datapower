@@ -48,6 +48,7 @@ resource "datapower_sslclientprofile" "test" {
   - Choices: `RSA_WITH_NULL_MD5`, `RSA_WITH_NULL_SHA`, `RSA_WITH_RC4_128_MD5`, `RSA_WITH_RC4_128_SHA`, `RSA_WITH_DES_CBC_SHA`, `RSA_WITH_3DES_EDE_CBC_SHA`, `DHE_DSS_WITH_DES_CBC_SHA`, `DHE_DSS_WITH_3DES_EDE_CBC_SHA`, `DHE_RSA_WITH_DES_CBC_SHA`, `DHE_RSA_WITH_3DES_EDE_CBC_SHA`, `RSA_WITH_AES_128_CBC_SHA`, `DHE_DSS_WITH_AES_128_CBC_SHA`, `DHE_RSA_WITH_AES_128_CBC_SHA`, `RSA_WITH_AES_256_CBC_SHA`, `DHE_DSS_WITH_AES_256_CBC_SHA`, `DHE_RSA_WITH_AES_256_CBC_SHA`, `RSA_WITH_NULL_SHA256`, `RSA_WITH_AES_128_CBC_SHA256`, `RSA_WITH_AES_256_CBC_SHA256`, `DHE_DSS_WITH_AES_128_CBC_SHA256`, `DHE_RSA_WITH_AES_128_CBC_SHA256`, `DHE_DSS_WITH_AES_256_CBC_SHA256`, `DHE_RSA_WITH_AES_256_CBC_SHA256`, `RSA_WITH_AES_128_GCM_SHA256`, `RSA_WITH_AES_256_GCM_SHA384`, `DHE_RSA_WITH_AES_128_GCM_SHA256`, `DHE_RSA_WITH_AES_256_GCM_SHA384`, `DHE_DSS_WITH_AES_128_GCM_SHA256`, `DHE_DSS_WITH_AES_256_GCM_SHA384`, `AES_128_GCM_SHA256`, `AES_256_GCM_SHA384`, `CHACHA20_POLY1305_SHA256`, `AES_128_CCM_SHA256`, `AES_128_CCM_8_SHA256`, `ECDHE_RSA_WITH_NULL_SHA`, `ECDHE_RSA_WITH_RC4_128_SHA`, `ECDHE_RSA_WITH_3DES_EDE_CBC_SHA`, `ECDHE_RSA_WITH_AES_128_CBC_SHA`, `ECDHE_RSA_WITH_AES_256_CBC_SHA`, `ECDHE_RSA_WITH_AES_128_CBC_SHA256`, `ECDHE_RSA_WITH_AES_256_CBC_SHA384`, `ECDHE_RSA_WITH_AES_128_GCM_SHA256`, `ECDHE_RSA_WITH_AES_256_GCM_SHA384`, `ECDHE_ECDSA_WITH_NULL_SHA`, `ECDHE_ECDSA_WITH_RC4_128_SHA`, `ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_128_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_256_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_128_CBC_SHA256`, `ECDHE_ECDSA_WITH_AES_256_CBC_SHA384`, `ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`, `ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
 - `custom_sni_hostname` (String) Custom SNI hostname
   - CLI Alias: `custom-sni-hostname`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `disable_renegotiation` (Boolean) Disable renegotiation
   - CLI Alias: `disable-renegotiation`
   - Default value: `true`
@@ -65,7 +66,6 @@ resource "datapower_sslclientprofile" "test" {
 - `idcred` (String) Identification credentials
   - CLI Alias: `idcred`
   - Reference to: `datapower_cryptoidentcred:id`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--protocols))
 - `require_closure_notification` (Boolean) Require closure notification
@@ -91,6 +91,23 @@ resource "datapower_sslclientprofile" "test" {
   - CLI Alias: `validate-server-cert`
   - Default value: `true`
 
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
+
 <a id="nestedatt--hostname_validation_flags"></a>
 ### Nested Schema for `hostname_validation_flags`
 
@@ -106,23 +123,6 @@ Optional:
   - Default value: `false`
 - `x509_check_flag_single_label_subdomains` (Boolean) X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS
   - Default value: `false`
-
-
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
-
-Required:
-
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
-
-Optional:
-
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
 
 
 <a id="nestedatt--protocols"></a>

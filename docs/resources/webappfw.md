@@ -4,13 +4,14 @@ page_title: "datapower_webappfw Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
   Web Application Firewall
-  CLI Alias: web-application-firewall
+  CLI Alias: web-application-firewallAccepted Dependency Actions: quiesce
 ---
 
 # datapower_webappfw (Resource)
 
 Web Application Firewall
   - CLI Alias: `web-application-firewall`
+  - Accepted Dependency Actions: `quiesce`
 
 ## Example Usage
 
@@ -75,6 +76,7 @@ resource "datapower_webappfw" "test" {
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `do_chunked_upload` (Boolean) Allow Chunked Uploads
   - CLI Alias: `chunked-uploads`
   - Default value: `false`
@@ -107,7 +109,6 @@ resource "datapower_webappfw" "test" {
 - `http_log_cor_id_label` (String) HTTP Global Transaction ID Label
   - CLI Alias: `http-global-tranID-label`
   - Default value: `X-Global-Transaction-ID`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `priority` (String) Service Priority
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
@@ -173,6 +174,23 @@ Optional:
 - `x_path` (String) XPath Expression Match
 
 
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
+
 <a id="nestedatt--front_side"></a>
 ### Nested Schema for `front_side`
 
@@ -188,20 +206,3 @@ Optional:
   - Default value: `3000`
 - `use_ssl` (Boolean) TLS
   - Default value: `false`
-
-
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
-
-Required:
-
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
-
-Optional:
-
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.

@@ -41,7 +41,7 @@ type JWERecipient struct {
 	SsKey             types.String      `tfsdk:"ss_key"`
 	Certificate       types.String      `tfsdk:"certificate"`
 	UnprotectedHeader types.List        `tfsdk:"unprotected_header"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var JWERecipientObjectType = map[string]attr.Type{
@@ -52,7 +52,7 @@ var JWERecipientObjectType = map[string]attr.Type{
 	"ss_key":             types.StringType,
 	"certificate":        types.StringType,
 	"unprotected_header": types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
-	"object_actions":     actions.ActionsListType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data JWERecipient) GetPath() string {

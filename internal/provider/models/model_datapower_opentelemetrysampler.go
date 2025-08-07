@@ -34,23 +34,23 @@ import (
 )
 
 type OpenTelemetrySampler struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	ParentBased   types.Bool        `tfsdk:"parent_based"`
-	Type          types.String      `tfsdk:"type"`
-	Ratio         types.Int64       `tfsdk:"ratio"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	ParentBased       types.Bool        `tfsdk:"parent_based"`
+	Type              types.String      `tfsdk:"type"`
+	Ratio             types.Int64       `tfsdk:"ratio"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var OpenTelemetrySamplerObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"parent_based":   types.BoolType,
-	"type":           types.StringType,
-	"ratio":          types.Int64Type,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"parent_based":       types.BoolType,
+	"type":               types.StringType,
+	"ratio":              types.Int64Type,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data OpenTelemetrySampler) GetPath() string {

@@ -35,29 +35,29 @@ import (
 )
 
 type SSHServerProfile struct {
-	AppDomain      types.String         `tfsdk:"app_domain"`
-	Enabled        types.Bool           `tfsdk:"enabled"`
-	UserSummary    types.String         `tfsdk:"user_summary"`
-	Ciphers        types.List           `tfsdk:"ciphers"`
-	KexAlg         types.List           `tfsdk:"kex_alg"`
-	MacAlg         types.List           `tfsdk:"mac_alg"`
-	SendPreAuthMsg types.Bool           `tfsdk:"send_pre_auth_msg"`
-	PreAuthMsg     types.String         `tfsdk:"pre_auth_msg"`
-	HostKeyAlg     *DmHostKeyAlgorithms `tfsdk:"host_key_alg"`
-	ObjectActions  []*actions.Action    `tfsdk:"object_actions"`
+	AppDomain         types.String         `tfsdk:"app_domain"`
+	Enabled           types.Bool           `tfsdk:"enabled"`
+	UserSummary       types.String         `tfsdk:"user_summary"`
+	Ciphers           types.List           `tfsdk:"ciphers"`
+	KexAlg            types.List           `tfsdk:"kex_alg"`
+	MacAlg            types.List           `tfsdk:"mac_alg"`
+	SendPreAuthMsg    types.Bool           `tfsdk:"send_pre_auth_msg"`
+	PreAuthMsg        types.String         `tfsdk:"pre_auth_msg"`
+	HostKeyAlg        *DmHostKeyAlgorithms `tfsdk:"host_key_alg"`
+	DependencyActions []*actions.Action    `tfsdk:"dependency_actions"`
 }
 
 var SSHServerProfileObjectType = map[string]attr.Type{
-	"app_domain":        types.StringType,
-	"enabled":           types.BoolType,
-	"user_summary":      types.StringType,
-	"ciphers":           types.ListType{ElemType: types.StringType},
-	"kex_alg":           types.ListType{ElemType: types.StringType},
-	"mac_alg":           types.ListType{ElemType: types.StringType},
-	"send_pre_auth_msg": types.BoolType,
-	"pre_auth_msg":      types.StringType,
-	"host_key_alg":      types.ObjectType{AttrTypes: DmHostKeyAlgorithmsObjectType},
-	"object_actions":    actions.ActionsListType,
+	"app_domain":         types.StringType,
+	"enabled":            types.BoolType,
+	"user_summary":       types.StringType,
+	"ciphers":            types.ListType{ElemType: types.StringType},
+	"kex_alg":            types.ListType{ElemType: types.StringType},
+	"mac_alg":            types.ListType{ElemType: types.StringType},
+	"send_pre_auth_msg":  types.BoolType,
+	"pre_auth_msg":       types.StringType,
+	"host_key_alg":       types.ObjectType{AttrTypes: DmHostKeyAlgorithmsObjectType},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data SSHServerProfile) GetPath() string {

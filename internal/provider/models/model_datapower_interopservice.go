@@ -48,7 +48,7 @@ type InteropService struct {
 	SslServerConfigType types.String      `tfsdk:"ssl_server_config_type"`
 	SslServer           types.String      `tfsdk:"ssl_server"`
 	SslsniServer        types.String      `tfsdk:"sslsni_server"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var InteropServiceObjectType = map[string]attr.Type{
@@ -67,7 +67,7 @@ var InteropServiceObjectType = map[string]attr.Type{
 	"ssl_server_config_type": types.StringType,
 	"ssl_server":             types.StringType,
 	"sslsni_server":          types.StringType,
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data InteropService) GetPath() string {

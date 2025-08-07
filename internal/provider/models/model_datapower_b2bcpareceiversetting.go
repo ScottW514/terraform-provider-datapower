@@ -48,7 +48,7 @@ type B2BCPAReceiverSetting struct {
 	SignatureRequired     types.Bool        `tfsdk:"signature_required"`
 	VerifyValCred         types.String      `tfsdk:"verify_val_cred"`
 	DefaultSignerCert     types.String      `tfsdk:"default_signer_cert"`
-	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var B2BCPAReceiverSettingObjectType = map[string]attr.Type{
@@ -66,7 +66,7 @@ var B2BCPAReceiverSettingObjectType = map[string]attr.Type{
 	"signature_required":      types.BoolType,
 	"verify_val_cred":         types.StringType,
 	"default_signer_cert":     types.StringType,
-	"object_actions":          actions.ActionsListType,
+	"dependency_actions":      actions.ActionsListType,
 }
 
 func (data B2BCPAReceiverSetting) GetPath() string {

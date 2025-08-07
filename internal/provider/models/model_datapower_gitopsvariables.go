@@ -33,17 +33,17 @@ import (
 )
 
 type GitOpsVariables struct {
-	Enabled       types.Bool        `tfsdk:"enabled"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Variables     types.List        `tfsdk:"variables"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Variables         types.List        `tfsdk:"variables"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var GitOpsVariablesObjectType = map[string]attr.Type{
-	"enabled":        types.BoolType,
-	"user_summary":   types.StringType,
-	"variables":      types.ListType{ElemType: types.ObjectType{AttrTypes: DmGitOpsVariableEntryObjectType}},
-	"object_actions": actions.ActionsListType,
+	"enabled":            types.BoolType,
+	"user_summary":       types.StringType,
+	"variables":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmGitOpsVariableEntryObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data GitOpsVariables) GetPath() string {

@@ -48,7 +48,7 @@ type WXSGrid struct {
 	EncryptAlg        types.String      `tfsdk:"encrypt_alg"`
 	KeyObfuscation    types.Bool        `tfsdk:"key_obfuscation"`
 	KeyObfuscationAlg types.String      `tfsdk:"key_obfuscation_alg"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WXSGridObjectType = map[string]attr.Type{
@@ -66,7 +66,7 @@ var WXSGridObjectType = map[string]attr.Type{
 	"encrypt_alg":         types.StringType,
 	"key_obfuscation":     types.BoolType,
 	"key_obfuscation_alg": types.StringType,
-	"object_actions":      actions.ActionsListType,
+	"dependency_actions":  actions.ActionsListType,
 }
 
 func (data WXSGrid) GetPath() string {

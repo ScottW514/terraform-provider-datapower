@@ -56,7 +56,7 @@ type CompileSettings struct {
 	WsdlStrictSoapVersion  types.Bool        `tfsdk:"wsdl_strict_soap_version"`
 	XacmlDebug             types.Bool        `tfsdk:"xacml_debug"`
 	AllowXopInclude        types.Bool        `tfsdk:"allow_xop_include"`
-	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var CompileSettingsObjectType = map[string]attr.Type{
@@ -82,7 +82,7 @@ var CompileSettingsObjectType = map[string]attr.Type{
 	"wsdl_strict_soap_version":  types.BoolType,
 	"xacml_debug":               types.BoolType,
 	"allow_xop_include":         types.BoolType,
-	"object_actions":            actions.ActionsListType,
+	"dependency_actions":        actions.ActionsListType,
 }
 
 func (data CompileSettings) GetPath() string {

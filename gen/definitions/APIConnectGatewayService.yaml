@@ -1,10 +1,20 @@
 name: APIConnectGatewayService
-description: 'API Connect gateway service (`default` domain only)'
+description: 'API Connect gateway service'
 cli_alias: 'apic-gw-service'
 cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/default/APIConnectGatewayService/default'
+rest_endpoint: '/mgmt/config/{domain}/APIConnectGatewayService/default'
 update_only: true
 attributes:
+  - name: AppDomain
+    tf_name: app_domain
+    type: String
+    required: true
+    example: 'test_domain'
+    description: 'The name of the application domain the object belongs to'
+    string_patterns:
+      - '^[a-zA-Z0-9_-]+$'
+    string_min_length: 1
+    string_max_length: 128
   - name: mAdminState
     tf_name: 'enabled'
     type: Bool

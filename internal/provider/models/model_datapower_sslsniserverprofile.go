@@ -43,7 +43,7 @@ type SSLSNIServerProfile struct {
 	SslOptions                   *DmSSLOptions             `tfsdk:"ssl_options"`
 	MaxSslDuration               types.Int64               `tfsdk:"max_ssl_duration"`
 	NumberOfRenegotiationAllowed types.Int64               `tfsdk:"number_of_renegotiation_allowed"`
-	ObjectActions                []*actions.Action         `tfsdk:"object_actions"`
+	DependencyActions            []*actions.Action         `tfsdk:"dependency_actions"`
 }
 
 var SSLSNIServerProfileObjectType = map[string]attr.Type{
@@ -56,7 +56,7 @@ var SSLSNIServerProfileObjectType = map[string]attr.Type{
 	"ssl_options":                     types.ObjectType{AttrTypes: DmSSLOptionsObjectType},
 	"max_ssl_duration":                types.Int64Type,
 	"number_of_renegotiation_allowed": types.Int64Type,
-	"object_actions":                  actions.ActionsListType,
+	"dependency_actions":              actions.ActionsListType,
 }
 
 func (data SSLSNIServerProfile) GetPath() string {

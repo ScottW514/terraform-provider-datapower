@@ -39,7 +39,7 @@ type DomainAvailability struct {
 	Enabled               types.Bool        `tfsdk:"enabled"`
 	UserSummary           types.String      `tfsdk:"user_summary"`
 	RestartDomainOnUpdate types.Bool        `tfsdk:"restart_domain_on_update"`
-	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var DomainAvailabilityObjectType = map[string]attr.Type{
@@ -47,7 +47,7 @@ var DomainAvailabilityObjectType = map[string]attr.Type{
 	"enabled":                  types.BoolType,
 	"user_summary":             types.StringType,
 	"restart_domain_on_update": types.BoolType,
-	"object_actions":           actions.ActionsListType,
+	"dependency_actions":       actions.ActionsListType,
 }
 
 func (data DomainAvailability) GetPath() string {

@@ -45,7 +45,7 @@ type WebSphereJMSSourceProtocolHandler struct {
 	PutQueue               types.String      `tfsdk:"put_queue"`
 	Selector               types.String      `tfsdk:"selector"`
 	AsyncMessageProcessing types.Bool        `tfsdk:"async_message_processing"`
-	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WebSphereJMSSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -60,7 +60,7 @@ var WebSphereJMSSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"put_queue":                types.StringType,
 	"selector":                 types.StringType,
 	"async_message_processing": types.BoolType,
-	"object_actions":           actions.ActionsListType,
+	"dependency_actions":       actions.ActionsListType,
 }
 
 func (data WebSphereJMSSourceProtocolHandler) GetPath() string {

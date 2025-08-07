@@ -34,23 +34,23 @@ import (
 )
 
 type ControlList struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	Type            types.String      `tfsdk:"type"`
-	Value           types.List        `tfsdk:"value"`
-	CaseInsensitive types.Bool        `tfsdk:"case_insensitive"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Type              types.String      `tfsdk:"type"`
+	Value             types.List        `tfsdk:"value"`
+	CaseInsensitive   types.Bool        `tfsdk:"case_insensitive"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var ControlListObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"user_summary":     types.StringType,
-	"type":             types.StringType,
-	"value":            types.ListType{ElemType: types.StringType},
-	"case_insensitive": types.BoolType,
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"type":               types.StringType,
+	"value":              types.ListType{ElemType: types.StringType},
+	"case_insensitive":   types.BoolType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data ControlList) GetPath() string {

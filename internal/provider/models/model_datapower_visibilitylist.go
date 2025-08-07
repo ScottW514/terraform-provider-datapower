@@ -34,19 +34,19 @@ import (
 )
 
 type VisibilityList struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	Type          types.String      `tfsdk:"type"`
-	Value         types.List        `tfsdk:"value"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Type              types.String      `tfsdk:"type"`
+	Value             types.List        `tfsdk:"value"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var VisibilityListObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"type":           types.StringType,
-	"value":          types.ListType{ElemType: types.StringType},
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"type":               types.StringType,
+	"value":              types.ListType{ElemType: types.StringType},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data VisibilityList) GetPath() string {

@@ -34,19 +34,19 @@ import (
 )
 
 type GraphQLSchemaOptions struct {
-	Id             types.String      `tfsdk:"id"`
-	AppDomain      types.String      `tfsdk:"app_domain"`
-	VisibilityList types.String      `tfsdk:"visibility_list"`
-	Api            types.String      `tfsdk:"api"`
-	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	VisibilityList    types.String      `tfsdk:"visibility_list"`
+	Api               types.String      `tfsdk:"api"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var GraphQLSchemaOptionsObjectType = map[string]attr.Type{
-	"id":              types.StringType,
-	"app_domain":      types.StringType,
-	"visibility_list": types.StringType,
-	"api":             types.StringType,
-	"object_actions":  actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"visibility_list":    types.StringType,
+	"api":                types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data GraphQLSchemaOptions) GetPath() string {

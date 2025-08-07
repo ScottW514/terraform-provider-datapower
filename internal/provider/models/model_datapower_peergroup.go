@@ -34,25 +34,25 @@ import (
 )
 
 type PeerGroup struct {
-	Id             types.String      `tfsdk:"id"`
-	AppDomain      types.String      `tfsdk:"app_domain"`
-	UserSummary    types.String      `tfsdk:"user_summary"`
-	Type           types.String      `tfsdk:"type"`
-	Url            types.List        `tfsdk:"url"`
-	IpMulticast    types.String      `tfsdk:"ip_multicast"`
-	UpdateInterval types.Int64       `tfsdk:"update_interval"`
-	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Type              types.String      `tfsdk:"type"`
+	Url               types.List        `tfsdk:"url"`
+	IpMulticast       types.String      `tfsdk:"ip_multicast"`
+	UpdateInterval    types.Int64       `tfsdk:"update_interval"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var PeerGroupObjectType = map[string]attr.Type{
-	"id":              types.StringType,
-	"app_domain":      types.StringType,
-	"user_summary":    types.StringType,
-	"type":            types.StringType,
-	"url":             types.ListType{ElemType: types.StringType},
-	"ip_multicast":    types.StringType,
-	"update_interval": types.Int64Type,
-	"object_actions":  actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"type":               types.StringType,
+	"url":                types.ListType{ElemType: types.StringType},
+	"ip_multicast":       types.StringType,
+	"update_interval":    types.Int64Type,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data PeerGroup) GetPath() string {

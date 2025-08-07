@@ -39,7 +39,7 @@ type SchemaExceptionMap struct {
 	OriginalSchemaUrl    types.String      `tfsdk:"original_schema_url"`
 	SchemaExceptionRules types.List        `tfsdk:"schema_exception_rules"`
 	UserSummary          types.String      `tfsdk:"user_summary"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SchemaExceptionMapObjectType = map[string]attr.Type{
@@ -48,7 +48,7 @@ var SchemaExceptionMapObjectType = map[string]attr.Type{
 	"original_schema_url":    types.StringType,
 	"schema_exception_rules": types.ListType{ElemType: types.ObjectType{AttrTypes: DmSchemaExceptionRuleObjectType}},
 	"user_summary":           types.StringType,
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data SchemaExceptionMap) GetPath() string {

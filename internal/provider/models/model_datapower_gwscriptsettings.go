@@ -39,7 +39,7 @@ type GWScriptSettings struct {
 	UntrustedCodeMitigated types.Bool        `tfsdk:"untrusted_code_mitigated"`
 	ReloadNeeded           types.Bool        `tfsdk:"reload_needed"`
 	TerminateTime          types.Int64       `tfsdk:"terminate_time"`
-	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var GWScriptSettingsObjectType = map[string]attr.Type{
@@ -49,7 +49,7 @@ var GWScriptSettingsObjectType = map[string]attr.Type{
 	"untrusted_code_mitigated": types.BoolType,
 	"reload_needed":            types.BoolType,
 	"terminate_time":           types.Int64Type,
-	"object_actions":           actions.ActionsListType,
+	"dependency_actions":       actions.ActionsListType,
 }
 
 func (data GWScriptSettings) GetPath() string {

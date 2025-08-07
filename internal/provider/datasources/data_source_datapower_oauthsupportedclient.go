@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -212,7 +213,8 @@ func (d *OAuthSupportedClientDataSource) Schema(ctx context.Context, req datasou
 							MarkdownDescription: "ID token JWT generator",
 							Computed:            true,
 						},
-						"o_auth_features": models.GetDmOAuthFeaturesDataSourceSchema("Features", "oauth-features", ""),
+						"o_auth_features":    models.GetDmOAuthFeaturesDataSourceSchema("Features", "oauth-features", ""),
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

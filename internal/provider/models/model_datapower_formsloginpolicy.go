@@ -60,7 +60,7 @@ type FormsLoginPolicy struct {
 	RedirectUrlType     types.String      `tfsdk:"redirect_url_type"`
 	FormSupportType     types.String      `tfsdk:"form_support_type"`
 	FormSupportScript   types.String      `tfsdk:"form_support_script"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var FormsLoginPolicyObjectType = map[string]attr.Type{
@@ -90,7 +90,7 @@ var FormsLoginPolicyObjectType = map[string]attr.Type{
 	"redirect_url_type":     types.StringType,
 	"form_support_type":     types.StringType,
 	"form_support_script":   types.StringType,
-	"object_actions":        actions.ActionsListType,
+	"dependency_actions":    actions.ActionsListType,
 }
 
 func (data FormsLoginPolicy) GetPath() string {

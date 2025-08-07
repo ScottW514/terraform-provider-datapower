@@ -34,19 +34,19 @@ import (
 )
 
 type MCFHttpMethod struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	HttpMethod    types.String      `tfsdk:"http_method"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	HttpMethod        types.String      `tfsdk:"http_method"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MCFHttpMethodObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"http_method":    types.StringType,
-	"user_summary":   types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"http_method":        types.StringType,
+	"user_summary":       types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data MCFHttpMethod) GetPath() string {

@@ -48,7 +48,7 @@ type NFSDynamicMounts struct {
 	Retransmissions     types.Int64       `tfsdk:"retransmissions"`
 	IdleUnmountSeconds  types.Int64       `tfsdk:"idle_unmount_seconds"`
 	MountTimeoutSeconds types.Int64       `tfsdk:"mount_timeout_seconds"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var NFSDynamicMountsObjectType = map[string]attr.Type{
@@ -65,7 +65,7 @@ var NFSDynamicMountsObjectType = map[string]attr.Type{
 	"retransmissions":       types.Int64Type,
 	"idle_unmount_seconds":  types.Int64Type,
 	"mount_timeout_seconds": types.Int64Type,
-	"object_actions":        actions.ActionsListType,
+	"dependency_actions":    actions.ActionsListType,
 }
 
 func (data NFSDynamicMounts) GetPath() string {

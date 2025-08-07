@@ -5,10 +5,8 @@ rest_endpoint: '/mgmt/config/default/Domain/{domain}'
 put_create: true
 actions:
   - name: quiesce
-    pre_body: '{"DomainQuiesce": {"name": "{domain}", "timeout": 60}}'
-    post_body: '{"DomainUnquiesce": {"name": "{domain}"}}'
   - name: restart
-    post_body: '{"RestartDomain": {"Domain": "{domain}"}}'
+    body: '{"RestartDomain": {"Domain": "{domain}"}}'
 attributes:
   - name: AppDomain
     tf_name: app_domain

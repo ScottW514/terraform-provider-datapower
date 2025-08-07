@@ -35,23 +35,23 @@ import (
 )
 
 type SSHDomainClientProfile struct {
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	Enabled       types.Bool        `tfsdk:"enabled"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Ciphers       types.List        `tfsdk:"ciphers"`
-	KexAlg        types.List        `tfsdk:"kex_alg"`
-	MacAlg        types.List        `tfsdk:"mac_alg"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Ciphers           types.List        `tfsdk:"ciphers"`
+	KexAlg            types.List        `tfsdk:"kex_alg"`
+	MacAlg            types.List        `tfsdk:"mac_alg"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SSHDomainClientProfileObjectType = map[string]attr.Type{
-	"app_domain":     types.StringType,
-	"enabled":        types.BoolType,
-	"user_summary":   types.StringType,
-	"ciphers":        types.ListType{ElemType: types.StringType},
-	"kex_alg":        types.ListType{ElemType: types.StringType},
-	"mac_alg":        types.ListType{ElemType: types.StringType},
-	"object_actions": actions.ActionsListType,
+	"app_domain":         types.StringType,
+	"enabled":            types.BoolType,
+	"user_summary":       types.StringType,
+	"ciphers":            types.ListType{ElemType: types.StringType},
+	"kex_alg":            types.ListType{ElemType: types.StringType},
+	"mac_alg":            types.ListType{ElemType: types.StringType},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data SSHDomainClientProfile) GetPath() string {

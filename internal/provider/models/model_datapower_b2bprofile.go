@@ -107,7 +107,7 @@ type B2BProfile struct {
 	Ebms3AllowDuplicateMessage          types.String      `tfsdk:"ebms3_allow_duplicate_message"`
 	Ebms3DuplicateDetectionNotification types.Bool        `tfsdk:"ebms3_duplicate_detection_notification"`
 	EbmsMessageProperties               types.List        `tfsdk:"ebms_message_properties"`
-	ObjectActions                       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions                   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var B2BProfileObjectType = map[string]attr.Type{
@@ -184,7 +184,7 @@ var B2BProfileObjectType = map[string]attr.Type{
 	"ebms3_allow_duplicate_message":            types.StringType,
 	"ebms3_duplicate_detection_notification":   types.BoolType,
 	"ebms_message_properties":                  types.ListType{ElemType: types.ObjectType{AttrTypes: DmB2BMessagePropertiesObjectType}},
-	"object_actions":                           actions.ActionsListType,
+	"dependency_actions":                       actions.ActionsListType,
 }
 
 func (data B2BProfile) GetPath() string {

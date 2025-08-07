@@ -34,31 +34,31 @@ import (
 )
 
 type AssemblyActionXSLT struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	UsePayload      types.Bool        `tfsdk:"use_payload"`
-	Stylesheet      types.String      `tfsdk:"stylesheet"`
-	SerializeOutput types.Bool        `tfsdk:"serialize_output"`
-	CompileSettings types.String      `tfsdk:"compile_settings"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	Title           types.String      `tfsdk:"title"`
-	CorrelationPath types.String      `tfsdk:"correlation_path"`
-	ActionDebug     types.Bool        `tfsdk:"action_debug"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UsePayload        types.Bool        `tfsdk:"use_payload"`
+	Stylesheet        types.String      `tfsdk:"stylesheet"`
+	SerializeOutput   types.Bool        `tfsdk:"serialize_output"`
+	CompileSettings   types.String      `tfsdk:"compile_settings"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Title             types.String      `tfsdk:"title"`
+	CorrelationPath   types.String      `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool        `tfsdk:"action_debug"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionXSLTObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"use_payload":      types.BoolType,
-	"stylesheet":       types.StringType,
-	"serialize_output": types.BoolType,
-	"compile_settings": types.StringType,
-	"user_summary":     types.StringType,
-	"title":            types.StringType,
-	"correlation_path": types.StringType,
-	"action_debug":     types.BoolType,
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"use_payload":        types.BoolType,
+	"stylesheet":         types.StringType,
+	"serialize_output":   types.BoolType,
+	"compile_settings":   types.StringType,
+	"user_summary":       types.StringType,
+	"title":              types.StringType,
+	"correlation_path":   types.StringType,
+	"action_debug":       types.BoolType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data AssemblyActionXSLT) GetPath() string {

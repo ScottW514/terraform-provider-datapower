@@ -56,7 +56,6 @@ func (r *TimeSettingsResource) Metadata(ctx context.Context, req resource.Metada
 func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("Time Settings (`default` domain only)", "timezone", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
@@ -212,7 +211,7 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 					int64validator.Between(0, 59),
 				},
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -233,7 +232,7 @@ func (r *TimeSettingsResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `TimeSettings`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -280,7 +279,7 @@ func (r *TimeSettingsResource) Update(ctx context.Context, req resource.UpdateRe
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `TimeSettings`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

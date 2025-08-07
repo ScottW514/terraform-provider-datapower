@@ -53,7 +53,7 @@ type GitOps struct {
 	GitEmail              types.String      `tfsdk:"git_email"`
 	JsonParseSettings     types.String      `tfsdk:"json_parse_settings"`
 	TemplatePolicies      types.List        `tfsdk:"template_policies"`
-	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var GitOpsObjectType = map[string]attr.Type{
@@ -75,7 +75,7 @@ var GitOpsObjectType = map[string]attr.Type{
 	"git_email":                types.StringType,
 	"json_parse_settings":      types.StringType,
 	"template_policies":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmGitOpsTemplatePolicyObjectType}},
-	"object_actions":           actions.ActionsListType,
+	"dependency_actions":       actions.ActionsListType,
 }
 
 func (data GitOps) GetPath() string {

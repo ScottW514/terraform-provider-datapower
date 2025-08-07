@@ -48,7 +48,7 @@ type AssemblyActionClientSecurity struct {
 	Title                    types.String      `tfsdk:"title"`
 	CorrelationPath          types.String      `tfsdk:"correlation_path"`
 	ActionDebug              types.Bool        `tfsdk:"action_debug"`
-	ObjectActions            []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions        []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionClientSecurityObjectType = map[string]attr.Type{
@@ -66,7 +66,7 @@ var AssemblyActionClientSecurityObjectType = map[string]attr.Type{
 	"title":                      types.StringType,
 	"correlation_path":           types.StringType,
 	"action_debug":               types.BoolType,
-	"object_actions":             actions.ActionsListType,
+	"dependency_actions":         actions.ActionsListType,
 }
 
 func (data AssemblyActionClientSecurity) GetPath() string {

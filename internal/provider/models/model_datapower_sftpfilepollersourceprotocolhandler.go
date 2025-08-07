@@ -52,7 +52,7 @@ type SFTPFilePollerSourceProtocolHandler struct {
 	ProcessingSeizePattern  types.String      `tfsdk:"processing_seize_pattern"`
 	XmlManager              types.String      `tfsdk:"xml_manager"`
 	MaxTransfersPerPoll     types.Int64       `tfsdk:"max_transfers_per_poll"`
-	ObjectActions           []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions       []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SFTPFilePollerSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -74,7 +74,7 @@ var SFTPFilePollerSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"processing_seize_pattern":  types.StringType,
 	"xml_manager":               types.StringType,
 	"max_transfers_per_poll":    types.Int64Type,
-	"object_actions":            actions.ActionsListType,
+	"dependency_actions":        actions.ActionsListType,
 }
 
 func (data SFTPFilePollerSourceProtocolHandler) GetPath() string {

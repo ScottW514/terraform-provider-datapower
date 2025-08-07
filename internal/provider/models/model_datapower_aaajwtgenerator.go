@@ -51,7 +51,7 @@ type AAAJWTGenerator struct {
 	EncryptAlgorithm   types.String      `tfsdk:"encrypt_algorithm"`
 	EncryptCertificate types.String      `tfsdk:"encrypt_certificate"`
 	EncryptSsKey       types.String      `tfsdk:"encrypt_ss_key"`
-	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AAAJWTGeneratorObjectType = map[string]attr.Type{
@@ -72,7 +72,7 @@ var AAAJWTGeneratorObjectType = map[string]attr.Type{
 	"encrypt_algorithm":   types.StringType,
 	"encrypt_certificate": types.StringType,
 	"encrypt_ss_key":      types.StringType,
-	"object_actions":      actions.ActionsListType,
+	"dependency_actions":  actions.ActionsListType,
 }
 
 func (data AAAJWTGenerator) GetPath() string {

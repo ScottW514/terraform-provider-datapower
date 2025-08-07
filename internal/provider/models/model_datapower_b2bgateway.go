@@ -67,7 +67,7 @@ type B2BGateway struct {
 	CpaEntries                       types.List          `tfsdk:"cpa_entries"`
 	SqlDataSource                    types.String        `tfsdk:"sql_data_source"`
 	FrontSideTimeout                 types.Int64         `tfsdk:"front_side_timeout"`
-	ObjectActions                    []*actions.Action   `tfsdk:"object_actions"`
+	DependencyActions                []*actions.Action   `tfsdk:"dependency_actions"`
 }
 
 var B2BGatewayObjectType = map[string]attr.Type{
@@ -104,7 +104,7 @@ var B2BGatewayObjectType = map[string]attr.Type{
 	"cpa_entries":                         types.ListType{ElemType: types.ObjectType{AttrTypes: DmB2BCPAEntryObjectType}},
 	"sql_data_source":                     types.StringType,
 	"front_side_timeout":                  types.Int64Type,
-	"object_actions":                      actions.ActionsListType,
+	"dependency_actions":                  actions.ActionsListType,
 }
 
 func (data B2BGateway) GetPath() string {

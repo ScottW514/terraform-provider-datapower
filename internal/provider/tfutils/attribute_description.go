@@ -30,12 +30,12 @@ type AttributeDescription struct {
 
 // NewAttributeDescription creates a new AttributeDescription with the given initial description.
 func NewAttributeDescription(description string, cliAlias string, referenceTo string) *AttributeDescription {
-	s := description
+	s := description + "\n"
 	if cliAlias != "" {
-		s = fmt.Sprintf("%s\n  - CLI Alias: `%s`", s, cliAlias)
+		s = fmt.Sprintf("%s  - CLI Alias: `%s`\n", s, cliAlias)
 	}
 	if referenceTo != "" {
-		s = fmt.Sprintf("%s\n  - Reference to: `datapower_%s:id`", s, referenceTo)
+		s = fmt.Sprintf("%s  - Reference to: `datapower_%s:id`\n", s, referenceTo)
 	}
 	return &AttributeDescription{s}
 }
@@ -43,24 +43,35 @@ func NewAttributeDescription(description string, cliAlias string, referenceTo st
 // AddDefault adds a default value to the attribute description.
 // It appends a formatted default value to the description and returns the updated AttributeDescription for chaining.
 func (d *AttributeDescription) AddDefaultValue(defaultValue string) *AttributeDescription {
-	d.String = fmt.Sprintf("%s\n  - Default value: `%s`", d.String, defaultValue)
+	d.String = fmt.Sprintf("%s  - Default value: `%s`\n", d.String, defaultValue)
 	return d
 }
 
 // AddIntegerRange adds the minimum and maximum values to the attribute description.
 // It appends a formatted range to the description and returns the updated AttributeDescription for chaining.
 func (d *AttributeDescription) AddIntegerRange(min, max int64) *AttributeDescription {
-	d.String = fmt.Sprintf("%s\n  - Range: `%v`-`%v`", d.String, min, max)
+	d.String = fmt.Sprintf("%s  - Range: `%v`-`%v`\n", d.String, min, max)
 	return d
 }
 
-// AddEnumValues adds a list of valid enum values to the attribute description.
+// AddStringEnum adds a list of valid enum values to the attribute description.
 // It appends a formatted list of choices to the description and returns the updated AttributeDescription for chaining.
 func (d *AttributeDescription) AddStringEnum(values ...string) *AttributeDescription {
 	v := make([]string, len(values))
 	for i, value := range values {
 		v[i] = fmt.Sprintf("`%s`", value)
 	}
-	d.String = fmt.Sprintf("%s\n  - Choices: %s", d.String, strings.Join(v, ", "))
+	d.String = fmt.Sprintf("%s  - Choices: %s\n", d.String, strings.Join(v, ", "))
+	return d
+}
+
+// AddActions adds a list of valid actions to the resource description.
+// It appends a formatted list of actions to the description and returns the updated AttributeDescription for chaining.
+func (d *AttributeDescription) AddActions(actions ...string) *AttributeDescription {
+	v := make([]string, len(actions))
+	for i, value := range actions {
+		v[i] = fmt.Sprintf("`%s`", value)
+	}
+	d.String = fmt.Sprintf("%s  - Accepted Dependency Actions: %s\n", d.String, strings.Join(v, ", "))
 	return d
 }

@@ -34,19 +34,19 @@ import (
 )
 
 type URLRefreshPolicy struct {
-	Id             types.String      `tfsdk:"id"`
-	AppDomain      types.String      `tfsdk:"app_domain"`
-	UserSummary    types.String      `tfsdk:"user_summary"`
-	UrlRefreshRule types.List        `tfsdk:"url_refresh_rule"`
-	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	UrlRefreshRule    types.List        `tfsdk:"url_refresh_rule"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var URLRefreshPolicyObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"user_summary":     types.StringType,
-	"url_refresh_rule": types.ListType{ElemType: types.ObjectType{AttrTypes: DmURLRefreshRuleObjectType}},
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"url_refresh_rule":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmURLRefreshRuleObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data URLRefreshPolicy) GetPath() string {

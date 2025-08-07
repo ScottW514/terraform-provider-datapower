@@ -34,23 +34,23 @@ import (
 )
 
 type ConfigDeploymentPolicy struct {
-	Id             types.String      `tfsdk:"id"`
-	AppDomain      types.String      `tfsdk:"app_domain"`
-	UserSummary    types.String      `tfsdk:"user_summary"`
-	AcceptedConfig types.List        `tfsdk:"accepted_config"`
-	FilteredConfig types.List        `tfsdk:"filtered_config"`
-	ModifiedConfig types.List        `tfsdk:"modified_config"`
-	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	AcceptedConfig    types.List        `tfsdk:"accepted_config"`
+	FilteredConfig    types.List        `tfsdk:"filtered_config"`
+	ModifiedConfig    types.List        `tfsdk:"modified_config"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var ConfigDeploymentPolicyObjectType = map[string]attr.Type{
-	"id":              types.StringType,
-	"app_domain":      types.StringType,
-	"user_summary":    types.StringType,
-	"accepted_config": types.ListType{ElemType: types.StringType},
-	"filtered_config": types.ListType{ElemType: types.StringType},
-	"modified_config": types.ListType{ElemType: types.ObjectType{AttrTypes: DmConfigModifyTypeObjectType}},
-	"object_actions":  actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"accepted_config":    types.ListType{ElemType: types.StringType},
+	"filtered_config":    types.ListType{ElemType: types.StringType},
+	"modified_config":    types.ListType{ElemType: types.ObjectType{AttrTypes: DmConfigModifyTypeObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data ConfigDeploymentPolicy) GetPath() string {

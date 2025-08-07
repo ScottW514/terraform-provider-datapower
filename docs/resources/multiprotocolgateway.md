@@ -4,13 +4,14 @@ page_title: "datapower_multiprotocolgateway Resource - terraform-provider-datapo
 subcategory: ""
 description: |-
   Multi-Protocol Gateway
-  CLI Alias: mpgw
+  CLI Alias: mpgwAccepted Dependency Actions: quiesce
 ---
 
 # datapower_multiprotocolgateway (Resource)
 
 Multi-Protocol Gateway
   - CLI Alias: `mpgw`
+  - Accepted Dependency Actions: `quiesce`
 
 ## Example Usage
 
@@ -84,6 +85,7 @@ resource "datapower_multiprotocolgateway" "test" {
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `do_chunked_upload` (Boolean) Allow Chunked Uploads
   - CLI Alias: `chunked-uploads`
   - Default value: `false`
@@ -164,7 +166,6 @@ resource "datapower_multiprotocolgateway" "test" {
   - CLI Alias: `monitor-processing-policy`
   - Choices: `terminate-at-first-throttle`, `terminate-at-first-match`
   - Default value: `terminate-at-first-throttle`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `parser_limits_attachment_byte_count` (Number) Attachment Byte Count Limit
   - CLI Alias: `attachment-byte-count`
   - Default value: `2000000000`
@@ -435,6 +436,23 @@ Optional:
 - `x_path` (String) XPath Expression Match
 
 
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
+
 <a id="nestedatt--header_injection"></a>
 ### Nested Schema for `header_injection`
 
@@ -470,23 +488,6 @@ Optional:
   - Default value: `false`
 - `response` (Boolean) Response rule in order
   - Default value: `false`
-
-
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
-
-Required:
-
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
-
-Optional:
-
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
 
 
 <a id="nestedatt--policy_parameter"></a>

@@ -40,7 +40,7 @@ type OpenTelemetry struct {
 	Exporter          types.String      `tfsdk:"exporter"`
 	Sampler           types.String      `tfsdk:"sampler"`
 	ResourceAttribute types.List        `tfsdk:"resource_attribute"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var OpenTelemetryObjectType = map[string]attr.Type{
@@ -50,7 +50,7 @@ var OpenTelemetryObjectType = map[string]attr.Type{
 	"exporter":           types.StringType,
 	"sampler":            types.StringType,
 	"resource_attribute": types.ListType{ElemType: types.ObjectType{AttrTypes: DmOpenTelemetryResourceAttributeObjectType}},
-	"object_actions":     actions.ActionsListType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data OpenTelemetry) GetPath() string {

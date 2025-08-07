@@ -29,6 +29,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -55,7 +56,7 @@ func (d *UserGroupDataSource) Metadata(_ context.Context, req datasource.Metadat
 
 func (d *UserGroupDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "User group",
+		MarkdownDescription: "User group (`default` domain only)",
 		Attributes: map[string]schema.Attribute{
 			"result": schema.ListNestedAttribute{
 				MarkdownDescription: "List of objects",
@@ -80,6 +81,7 @@ func (d *UserGroupDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
+						"dependency_actions": actions.ActionsSchema,
 					},
 				},
 			},

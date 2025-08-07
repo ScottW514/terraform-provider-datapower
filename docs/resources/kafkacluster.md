@@ -44,6 +44,7 @@ resource "datapower_kafkacluster" "test" {
 - `autocommit` (Boolean) Autocommit
   - CLI Alias: `autocommit`
   - Default value: `true`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `maximum_message_size` (Number) Max message size
   - CLI Alias: `maximum-message-size`
   - Range: `0`-`1073741824`
@@ -52,7 +53,6 @@ resource "datapower_kafkacluster" "test" {
   - CLI Alias: `memory-threshold`
   - Range: `10485760`-`1073741824`
   - Default value: `268435456`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `password_alias` (String) Password alias
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`
@@ -87,21 +87,21 @@ Required:
 - `port` (Number) Port
 
 
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
 
 Required:
 
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
 
 Optional:
 
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
 
 
 <a id="nestedatt--property"></a>

@@ -40,7 +40,7 @@ type IncludeConfig struct {
 	Url                types.String      `tfsdk:"url"`
 	OnStartup          types.Bool        `tfsdk:"on_startup"`
 	InterfaceDetection types.Bool        `tfsdk:"interface_detection"`
-	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var IncludeConfigObjectType = map[string]attr.Type{
@@ -50,7 +50,7 @@ var IncludeConfigObjectType = map[string]attr.Type{
 	"url":                 types.StringType,
 	"on_startup":          types.BoolType,
 	"interface_detection": types.BoolType,
-	"object_actions":      actions.ActionsListType,
+	"dependency_actions":  actions.ActionsListType,
 }
 
 func (data IncludeConfig) GetPath() string {

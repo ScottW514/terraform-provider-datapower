@@ -34,37 +34,37 @@ import (
 )
 
 type XTCProtocolHandler struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	LocalAddress  types.String      `tfsdk:"local_address"`
-	LocalPort     types.Int64       `tfsdk:"local_port"`
-	RemoteAddress types.String      `tfsdk:"remote_address"`
-	RemotePort    types.Int64       `tfsdk:"remote_port"`
-	CloseOnFault  types.Bool        `tfsdk:"close_on_fault"`
-	Acl           types.String      `tfsdk:"acl"`
-	SslConfigType types.String      `tfsdk:"ssl_config_type"`
-	SslClient     types.String      `tfsdk:"ssl_client"`
-	SslServer     types.String      `tfsdk:"ssl_server"`
-	SslsniServer  types.String      `tfsdk:"sslsni_server"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	LocalAddress      types.String      `tfsdk:"local_address"`
+	LocalPort         types.Int64       `tfsdk:"local_port"`
+	RemoteAddress     types.String      `tfsdk:"remote_address"`
+	RemotePort        types.Int64       `tfsdk:"remote_port"`
+	CloseOnFault      types.Bool        `tfsdk:"close_on_fault"`
+	Acl               types.String      `tfsdk:"acl"`
+	SslConfigType     types.String      `tfsdk:"ssl_config_type"`
+	SslClient         types.String      `tfsdk:"ssl_client"`
+	SslServer         types.String      `tfsdk:"ssl_server"`
+	SslsniServer      types.String      `tfsdk:"sslsni_server"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var XTCProtocolHandlerObjectType = map[string]attr.Type{
-	"id":              types.StringType,
-	"app_domain":      types.StringType,
-	"user_summary":    types.StringType,
-	"local_address":   types.StringType,
-	"local_port":      types.Int64Type,
-	"remote_address":  types.StringType,
-	"remote_port":     types.Int64Type,
-	"close_on_fault":  types.BoolType,
-	"acl":             types.StringType,
-	"ssl_config_type": types.StringType,
-	"ssl_client":      types.StringType,
-	"ssl_server":      types.StringType,
-	"sslsni_server":   types.StringType,
-	"object_actions":  actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"local_address":      types.StringType,
+	"local_port":         types.Int64Type,
+	"remote_address":     types.StringType,
+	"remote_port":        types.Int64Type,
+	"close_on_fault":     types.BoolType,
+	"acl":                types.StringType,
+	"ssl_config_type":    types.StringType,
+	"ssl_client":         types.StringType,
+	"ssl_server":         types.StringType,
+	"sslsni_server":      types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data XTCProtocolHandler) GetPath() string {

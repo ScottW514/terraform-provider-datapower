@@ -34,21 +34,21 @@ import (
 )
 
 type MCFHttpHeader struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	HttpName      types.String      `tfsdk:"http_name"`
-	HttpValue     types.String      `tfsdk:"http_value"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	HttpName          types.String      `tfsdk:"http_name"`
+	HttpValue         types.String      `tfsdk:"http_value"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MCFHttpHeaderObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"http_name":      types.StringType,
-	"http_value":     types.StringType,
-	"user_summary":   types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"http_name":          types.StringType,
+	"http_value":         types.StringType,
+	"user_summary":       types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data MCFHttpHeader) GetPath() string {

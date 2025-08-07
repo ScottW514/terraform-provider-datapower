@@ -34,21 +34,21 @@ import (
 )
 
 type CryptoFWCred struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	PrivateKey      types.List        `tfsdk:"private_key"`
-	SharedSecretKey types.List        `tfsdk:"shared_secret_key"`
-	Certificate     types.List        `tfsdk:"certificate"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	PrivateKey        types.List        `tfsdk:"private_key"`
+	SharedSecretKey   types.List        `tfsdk:"shared_secret_key"`
+	Certificate       types.List        `tfsdk:"certificate"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var CryptoFWCredObjectType = map[string]attr.Type{
-	"id":                types.StringType,
-	"app_domain":        types.StringType,
-	"private_key":       types.ListType{ElemType: types.StringType},
-	"shared_secret_key": types.ListType{ElemType: types.StringType},
-	"certificate":       types.ListType{ElemType: types.StringType},
-	"object_actions":    actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"private_key":        types.ListType{ElemType: types.StringType},
+	"shared_secret_key":  types.ListType{ElemType: types.StringType},
+	"certificate":        types.ListType{ElemType: types.StringType},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data CryptoFWCred) GetPath() string {

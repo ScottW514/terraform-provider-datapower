@@ -53,7 +53,6 @@ func (r *ODRResource) Metadata(ctx context.Context, req resource.MetadataRequest
 func (r *ODRResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("On Demand Router (`default` domain only)", "odr", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
@@ -81,7 +80,7 @@ func (r *ODRResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				NestedObject:        models.DmODRPropertyResourceSchema,
 				Optional:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -102,7 +101,7 @@ func (r *ODRResource) Create(ctx context.Context, req resource.CreateRequest, re
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `ODR`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -149,7 +148,7 @@ func (r *ODRResource) Update(ctx context.Context, req resource.UpdateRequest, re
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `ODR`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

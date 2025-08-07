@@ -11,8 +11,10 @@ description: |-
 - Cleaned up formatting in resource template
 - Added string validation for remote file in file resource
 - Refactored resource and datasource directory structure
+- Refactored provider/models/testconfig to models/testconfig
 - Updated github.com/hashicorp/terraform-plugin-framework from 1.15.0 to 1.15.1 (PR4)
-- Added `object_actions`
+- Added `dependency_actions` to all resources
+- Moved domain `SaveConfig` operations to provider exit
 
 ## v0.6.2
 

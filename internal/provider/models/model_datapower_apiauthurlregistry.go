@@ -34,12 +34,12 @@ import (
 )
 
 type APIAuthURLRegistry struct {
-	Id               types.String      `tfsdk:"id"`
-	AppDomain        types.String      `tfsdk:"app_domain"`
-	UserSummary      types.String      `tfsdk:"user_summary"`
-	AuthUrl          types.String      `tfsdk:"auth_url"`
-	TlsClientProfile types.String      `tfsdk:"tls_client_profile"`
-	ObjectActions    []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	AuthUrl           types.String      `tfsdk:"auth_url"`
+	TlsClientProfile  types.String      `tfsdk:"tls_client_profile"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APIAuthURLRegistryObjectType = map[string]attr.Type{
@@ -48,7 +48,7 @@ var APIAuthURLRegistryObjectType = map[string]attr.Type{
 	"user_summary":       types.StringType,
 	"auth_url":           types.StringType,
 	"tls_client_profile": types.StringType,
-	"object_actions":     actions.ActionsListType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data APIAuthURLRegistry) GetPath() string {

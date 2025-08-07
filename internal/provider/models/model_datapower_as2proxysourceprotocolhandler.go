@@ -65,7 +65,7 @@ type AS2ProxySourceProtocolHandler struct {
 	SslsniServer                  types.String            `tfsdk:"sslsni_server"`
 	SslClientConfigType           types.String            `tfsdk:"ssl_client_config_type"`
 	SslClient                     types.String            `tfsdk:"ssl_client"`
-	ObjectActions                 []*actions.Action       `tfsdk:"object_actions"`
+	DependencyActions             []*actions.Action       `tfsdk:"dependency_actions"`
 }
 
 var AS2ProxySourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -100,7 +100,7 @@ var AS2ProxySourceProtocolHandlerObjectType = map[string]attr.Type{
 	"sslsni_server":                    types.StringType,
 	"ssl_client_config_type":           types.StringType,
 	"ssl_client":                       types.StringType,
-	"object_actions":                   actions.ActionsListType,
+	"dependency_actions":               actions.ActionsListType,
 }
 
 func (data AS2ProxySourceProtocolHandler) GetPath() string {

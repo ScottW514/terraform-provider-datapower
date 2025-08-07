@@ -108,9 +108,8 @@ type YamlConfig struct {
 }
 
 type YamlActionAttribute struct {
-	Name     string `yaml:"name"`
-	PreBody  string `yaml:"pre_body"`
-	PostBody string `yaml:"post_body"`
+	Name string `yaml:"name"`
+	Body string `yaml:"body"`
 }
 
 type YamlConfigAttribute struct {

@@ -34,23 +34,23 @@ import (
 )
 
 type Matching struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	MatchRules    types.List        `tfsdk:"match_rules"`
-	MatchWithPcre types.Bool        `tfsdk:"match_with_pcre"`
-	CombineWithOr types.Bool        `tfsdk:"combine_with_or"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	MatchRules        types.List        `tfsdk:"match_rules"`
+	MatchWithPcre     types.Bool        `tfsdk:"match_with_pcre"`
+	CombineWithOr     types.Bool        `tfsdk:"combine_with_or"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MatchingObjectType = map[string]attr.Type{
-	"id":              types.StringType,
-	"app_domain":      types.StringType,
-	"user_summary":    types.StringType,
-	"match_rules":     types.ListType{ElemType: types.ObjectType{AttrTypes: DmMatchRuleObjectType}},
-	"match_with_pcre": types.BoolType,
-	"combine_with_or": types.BoolType,
-	"object_actions":  actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"match_rules":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmMatchRuleObjectType}},
+	"match_with_pcre":    types.BoolType,
+	"combine_with_or":    types.BoolType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data Matching) GetPath() string {

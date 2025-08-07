@@ -38,7 +38,7 @@ type MCFHttpURL struct {
 	AppDomain         types.String      `tfsdk:"app_domain"`
 	HttpUrlExpression types.String      `tfsdk:"http_url_expression"`
 	UserSummary       types.String      `tfsdk:"user_summary"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MCFHttpURLObjectType = map[string]attr.Type{
@@ -46,7 +46,7 @@ var MCFHttpURLObjectType = map[string]attr.Type{
 	"app_domain":          types.StringType,
 	"http_url_expression": types.StringType,
 	"user_summary":        types.StringType,
-	"object_actions":      actions.ActionsListType,
+	"dependency_actions":  actions.ActionsListType,
 }
 
 func (data MCFHttpURL) GetPath() string {

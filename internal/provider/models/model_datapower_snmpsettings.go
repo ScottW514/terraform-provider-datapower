@@ -53,7 +53,7 @@ type SNMPSettings struct {
 	StatusMibMq                    types.String      `tfsdk:"status_mib_mq"`
 	NotifMib                       types.String      `tfsdk:"notif_mib"`
 	NotifMibMq                     types.String      `tfsdk:"notif_mib_mq"`
-	ObjectActions                  []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions              []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SNMPSettingsObjectType = map[string]attr.Type{
@@ -77,7 +77,7 @@ var SNMPSettingsObjectType = map[string]attr.Type{
 	"status_mib_mq":                     types.StringType,
 	"notif_mib":                         types.StringType,
 	"notif_mib_mq":                      types.StringType,
-	"object_actions":                    actions.ActionsListType,
+	"dependency_actions":                actions.ActionsListType,
 }
 
 func (data SNMPSettings) GetPath() string {

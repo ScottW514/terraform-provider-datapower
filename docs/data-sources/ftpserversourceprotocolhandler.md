@@ -33,6 +33,10 @@ data "datapower_ftpserversourceprotocolhandler" "test" {
 <a id="nestedatt--result"></a>
 ### Nested Schema for `result`
 
+Optional:
+
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--result--dependency_actions))
+
 Read-Only:
 
 - `acl` (String) Access control list
@@ -76,6 +80,23 @@ Read-Only:
 - `use_pasv_port_range` (Boolean) Limit port range for passive connections
 - `user_summary` (String) Comments
 - `virtual_directories` (Attributes List) Virtual directories (see [below for nested schema](#nestedatt--result--virtual_directories))
+
+<a id="nestedatt--result--dependency_actions"></a>
+### Nested Schema for `result.dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
 
 <a id="nestedatt--result--virtual_directories"></a>
 ### Nested Schema for `result.virtual_directories`

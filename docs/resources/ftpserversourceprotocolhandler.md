@@ -4,13 +4,14 @@ page_title: "datapower_ftpserversourceprotocolhandler Resource - terraform-provi
 subcategory: ""
 description: |-
   FTP server handler
-  CLI Alias: source-ftp-server
+  CLI Alias: source-ftp-serverAccepted Dependency Actions: quiesce
 ---
 
 # datapower_ftpserversourceprotocolhandler (Resource)
 
 FTP server handler
   - CLI Alias: `source-ftp-server`
+  - Accepted Dependency Actions: `quiesce`
 
 ## Example Usage
 
@@ -66,6 +67,7 @@ resource "datapower_ftpserversourceprotocolhandler" "test" {
 - `default_directory` (String) Default directory
   - CLI Alias: `default-directory`
   - Default value: `/`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `disable_pasvip_check` (Boolean) Disable passive data connection (PASV) IP security check
   - CLI Alias: `passive-promiscuous`
   - Default value: `false`
@@ -91,7 +93,6 @@ resource "datapower_ftpserversourceprotocolhandler" "test" {
   - CLI Alias: `max-filename-len`
   - Range: `1`-`4000`
   - Default value: `256`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `passive` (String) Passive (PASV) command
   - CLI Alias: `passive`
   - Choices: `allow`, `disallow`, `require`
@@ -163,21 +164,21 @@ resource "datapower_ftpserversourceprotocolhandler" "test" {
 - `virtual_directories` (Attributes List) Virtual directories
   - CLI Alias: `virtual-directory` (see [below for nested schema](#nestedatt--virtual_directories))
 
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
 
 Required:
 
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
 
 Optional:
 
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
 
 
 <a id="nestedatt--virtual_directories"></a>

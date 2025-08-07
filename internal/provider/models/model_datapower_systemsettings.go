@@ -54,7 +54,7 @@ type SystemSettings struct {
 	Locale                  types.String      `tfsdk:"locale"`
 	SystemLogFixedFormat    types.Bool        `tfsdk:"system_log_fixed_format"`
 	Uuid                    types.String      `tfsdk:"uuid"`
-	ObjectActions           []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions       []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SystemSettingsObjectType = map[string]attr.Type{
@@ -79,7 +79,7 @@ var SystemSettingsObjectType = map[string]attr.Type{
 	"locale":                    types.StringType,
 	"system_log_fixed_format":   types.BoolType,
 	"uuid":                      types.StringType,
-	"object_actions":            actions.ActionsListType,
+	"dependency_actions":        actions.ActionsListType,
 }
 
 func (data SystemSettings) GetPath() string {

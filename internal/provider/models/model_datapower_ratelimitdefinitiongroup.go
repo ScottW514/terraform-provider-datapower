@@ -39,7 +39,7 @@ type RateLimitDefinitionGroup struct {
 	UserSummary          types.String      `tfsdk:"user_summary"`
 	UpdateOnExceed       types.String      `tfsdk:"update_on_exceed"`
 	RateLimitDefinitions types.List        `tfsdk:"rate_limit_definitions"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var RateLimitDefinitionGroupObjectType = map[string]attr.Type{
@@ -48,7 +48,7 @@ var RateLimitDefinitionGroupObjectType = map[string]attr.Type{
 	"user_summary":           types.StringType,
 	"update_on_exceed":       types.StringType,
 	"rate_limit_definitions": types.ListType{ElemType: types.StringType},
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data RateLimitDefinitionGroup) GetPath() string {

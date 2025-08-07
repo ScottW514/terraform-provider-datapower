@@ -56,7 +56,6 @@ func (r *MgmtInterfaceResource) Metadata(ctx context.Context, req resource.Metad
 func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("XML management interface (`default` domain only)", "xml-mgmt", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
@@ -118,7 +117,7 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -139,7 +138,7 @@ func (r *MgmtInterfaceResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `MgmtInterface`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -186,7 +185,7 @@ func (r *MgmtInterfaceResource) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `MgmtInterface`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

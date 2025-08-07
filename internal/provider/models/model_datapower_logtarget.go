@@ -83,7 +83,7 @@ type LogTarget struct {
 	LongRetryInterval   types.Int64       `tfsdk:"long_retry_interval"`
 	LogPrecision        types.String      `tfsdk:"log_precision"`
 	EventBufferSize     types.String      `tfsdk:"event_buffer_size"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var LogTargetObjectType = map[string]attr.Type{
@@ -136,7 +136,7 @@ var LogTargetObjectType = map[string]attr.Type{
 	"long_retry_interval":    types.Int64Type,
 	"log_precision":          types.StringType,
 	"event_buffer_size":      types.StringType,
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data LogTarget) GetPath() string {

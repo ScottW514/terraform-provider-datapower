@@ -72,13 +72,13 @@ resource "datapower_file" "test" {
   app_domain = "acc_test_domain"
   remote_path = "cert:///test_file.txt"
   local_path = "/workspaces/terraform-provider-datapower/testutils/test_file.txt"
-  object_actions = [
+  dependency_actions = [
     {
-      target_type = "domain",
-	    target_domain = "acc_test_domain",
-	    target_id = "ignored",
-	    action = "quiesce"
-      run_on_create = true
+      target_type = "resource_datapower_domain",
+      target_domain = "acc_test_domain",
+      target_id = "ignored",
+      action = "quiesce"
+      on_create = true
     }
   ]
 }
@@ -282,6 +282,7 @@ var APIConnectGatewayServiceTestConfig = ModelTestConfig{
 	Name: "APIConnectGatewayService",
 	Resource: `
 resource "datapower_apiconnectgatewayservice" "test" {
+  app_domain = "acc_test_domain"
   local_address = "0.0.0.0"
   local_port = 3000
   proxy_policy = {proxy_policy_enable = false, remote_address = "localhost", remote_port = 8080}
@@ -289,6 +290,7 @@ resource "datapower_apiconnectgatewayservice" "test" {
 	Data: `
 data "datapower_apiconnectgatewayservice" "test" {
   depends_on = [ datapower_apiconnectgatewayservice.test ]
+  app_domain = "acc_test_domain"
 }`,
 	ModelOnly: false,
 	Dependencies: map[string]*ModelTestConfig{

@@ -74,7 +74,7 @@ type MQManager struct {
 	OcspAuthentication     types.String      `tfsdk:"ocsp_authentication"`
 	CdpCheckExtensions     types.Bool        `tfsdk:"cdp_check_extensions"`
 	ClientRevocationChecks types.String      `tfsdk:"client_revocation_checks"`
-	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MQManagerObjectType = map[string]attr.Type{
@@ -118,7 +118,7 @@ var MQManagerObjectType = map[string]attr.Type{
 	"ocsp_authentication":      types.StringType,
 	"cdp_check_extensions":     types.BoolType,
 	"client_revocation_checks": types.StringType,
-	"object_actions":           actions.ActionsListType,
+	"dependency_actions":       actions.ActionsListType,
 }
 
 func (data MQManager) GetPath() string {

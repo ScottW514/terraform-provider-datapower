@@ -42,7 +42,7 @@ type APISecurityOAuth struct {
 	OAuthScope              types.String      `tfsdk:"o_auth_scope"`
 	OAuthAdvScopeUrl        types.String      `tfsdk:"o_auth_adv_scope_url"`
 	OAuthAdvScopeTlsProfile types.String      `tfsdk:"o_auth_adv_scope_tls_profile"`
-	ObjectActions           []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions       []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APISecurityOAuthObjectType = map[string]attr.Type{
@@ -54,7 +54,7 @@ var APISecurityOAuthObjectType = map[string]attr.Type{
 	"o_auth_scope":                 types.StringType,
 	"o_auth_adv_scope_url":         types.StringType,
 	"o_auth_adv_scope_tls_profile": types.StringType,
-	"object_actions":               actions.ActionsListType,
+	"dependency_actions":           actions.ActionsListType,
 }
 
 func (data APISecurityOAuth) GetPath() string {

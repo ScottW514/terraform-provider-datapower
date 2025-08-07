@@ -45,7 +45,7 @@ type SLMRsrcClass struct {
 	Subscription                types.String      `tfsdk:"subscription"`
 	WsrrSubscription            types.String      `tfsdk:"wsrr_subscription"`
 	WsrrSavedSearchSubscription types.String      `tfsdk:"wsrr_saved_search_subscription"`
-	ObjectActions               []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions           []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SLMRsrcClassObjectType = map[string]attr.Type{
@@ -60,7 +60,7 @@ var SLMRsrcClassObjectType = map[string]attr.Type{
 	"subscription":                   types.StringType,
 	"wsrr_subscription":              types.StringType,
 	"wsrr_saved_search_subscription": types.StringType,
-	"object_actions":                 actions.ActionsListType,
+	"dependency_actions":             actions.ActionsListType,
 }
 
 func (data SLMRsrcClass) GetPath() string {

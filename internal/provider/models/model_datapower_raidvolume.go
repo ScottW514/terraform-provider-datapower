@@ -33,17 +33,17 @@ import (
 )
 
 type RaidVolume struct {
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	ReadOnly      types.Bool        `tfsdk:"read_only"`
-	Directory     types.String      `tfsdk:"directory"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	ReadOnly          types.Bool        `tfsdk:"read_only"`
+	Directory         types.String      `tfsdk:"directory"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var RaidVolumeObjectType = map[string]attr.Type{
-	"user_summary":   types.StringType,
-	"read_only":      types.BoolType,
-	"directory":      types.StringType,
-	"object_actions": actions.ActionsListType,
+	"user_summary":       types.StringType,
+	"read_only":          types.BoolType,
+	"directory":          types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data RaidVolume) GetPath() string {

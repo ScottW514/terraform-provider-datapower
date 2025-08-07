@@ -50,7 +50,7 @@ type OpenTelemetryExporter struct {
 	ExportDelayInterval types.Int64       `tfsdk:"export_delay_interval"`
 	ProxyPolicies       types.List        `tfsdk:"proxy_policies"`
 	SslClient           types.String      `tfsdk:"ssl_client"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var OpenTelemetryExporterObjectType = map[string]attr.Type{
@@ -70,7 +70,7 @@ var OpenTelemetryExporterObjectType = map[string]attr.Type{
 	"export_delay_interval": types.Int64Type,
 	"proxy_policies":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmAPIProxyPolicyObjectType}},
 	"ssl_client":            types.StringType,
-	"object_actions":        actions.ActionsListType,
+	"dependency_actions":    actions.ActionsListType,
 }
 
 func (data OpenTelemetryExporter) GetPath() string {

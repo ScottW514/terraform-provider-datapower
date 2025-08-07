@@ -34,19 +34,19 @@ import (
 )
 
 type B2BCPA struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	CpaId         types.String      `tfsdk:"cpa_id"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	CpaId             types.String      `tfsdk:"cpa_id"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var B2BCPAObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"cpa_id":         types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"cpa_id":             types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data B2BCPA) GetPath() string {

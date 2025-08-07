@@ -39,7 +39,7 @@ type CertMonitor struct {
 	ReminderTime        types.Int64       `tfsdk:"reminder_time"`
 	LogLevel            types.String      `tfsdk:"log_level"`
 	DisableExpiredCerts types.Bool        `tfsdk:"disable_expired_certs"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var CertMonitorObjectType = map[string]attr.Type{
@@ -49,7 +49,7 @@ var CertMonitorObjectType = map[string]attr.Type{
 	"reminder_time":         types.Int64Type,
 	"log_level":             types.StringType,
 	"disable_expired_certs": types.BoolType,
-	"object_actions":        actions.ActionsListType,
+	"dependency_actions":    actions.ActionsListType,
 }
 
 func (data CertMonitor) GetPath() string {

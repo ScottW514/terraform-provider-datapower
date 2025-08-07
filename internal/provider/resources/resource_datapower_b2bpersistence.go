@@ -54,7 +54,6 @@ func (r *B2BPersistenceResource) Metadata(ctx context.Context, req resource.Meta
 func (r *B2BPersistenceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("B2B persistence (`default` domain only)", "b2b-persistence", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
@@ -101,7 +100,7 @@ func (r *B2BPersistenceResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: tfutils.NewAttributeDescription("Virtual IP address", "ha-virtual-ip", "").String,
 				Optional:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -122,7 +121,7 @@ func (r *B2BPersistenceResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `B2BPersistence`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -169,7 +168,7 @@ func (r *B2BPersistenceResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `B2BPersistence`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

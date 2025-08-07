@@ -51,7 +51,7 @@ type TimeSettings struct {
 	DaylightStopDay          types.String      `tfsdk:"daylight_stop_day"`
 	DaylightStopTimeHours    types.Int64       `tfsdk:"daylight_stop_time_hours"`
 	DaylightStopTimeMinutes  types.Int64       `tfsdk:"daylight_stop_time_minutes"`
-	ObjectActions            []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions        []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var TimeSettingsObjectType = map[string]attr.Type{
@@ -73,7 +73,7 @@ var TimeSettingsObjectType = map[string]attr.Type{
 	"daylight_stop_day":           types.StringType,
 	"daylight_stop_time_hours":    types.Int64Type,
 	"daylight_stop_time_minutes":  types.Int64Type,
-	"object_actions":              actions.ActionsListType,
+	"dependency_actions":          actions.ActionsListType,
 }
 
 func (data TimeSettings) GetPath() string {

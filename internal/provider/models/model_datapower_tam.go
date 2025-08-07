@@ -67,7 +67,7 @@ type TAM struct {
 	RetryInterval               types.Int64       `tfsdk:"retry_interval"`
 	RetryAttempts               types.Int64       `tfsdk:"retry_attempts"`
 	LongRetryInterval           types.Int64       `tfsdk:"long_retry_interval"`
-	ObjectActions               []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions           []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var TAMObjectType = map[string]attr.Type{
@@ -104,7 +104,7 @@ var TAMObjectType = map[string]attr.Type{
 	"retry_interval":                  types.Int64Type,
 	"retry_attempts":                  types.Int64Type,
 	"long_retry_interval":             types.Int64Type,
-	"object_actions":                  actions.ActionsListType,
+	"dependency_actions":              actions.ActionsListType,
 }
 
 func (data TAM) GetPath() string {

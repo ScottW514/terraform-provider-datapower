@@ -45,7 +45,7 @@ type MQv9PlusMFTSourceProtocolHandler struct {
 	RetrieveBackoutSettings types.Bool        `tfsdk:"retrieve_backout_settings"`
 	IgnoreBackoutErrors     types.Bool        `tfsdk:"ignore_backout_errors"`
 	UseQmNameInUrl          types.Bool        `tfsdk:"use_qm_name_in_url"`
-	ObjectActions           []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions       []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MQv9PlusMFTSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -60,7 +60,7 @@ var MQv9PlusMFTSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"retrieve_backout_settings": types.BoolType,
 	"ignore_backout_errors":     types.BoolType,
 	"use_qm_name_in_url":        types.BoolType,
-	"object_actions":            actions.ActionsListType,
+	"dependency_actions":        actions.ActionsListType,
 }
 
 func (data MQv9PlusMFTSourceProtocolHandler) GetPath() string {

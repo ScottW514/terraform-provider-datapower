@@ -34,19 +34,19 @@ import (
 )
 
 type MPGWErrorHandlingPolicy struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	PolicyMaps    types.List        `tfsdk:"policy_maps"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	PolicyMaps        types.List        `tfsdk:"policy_maps"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MPGWErrorHandlingPolicyObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"policy_maps":    types.ListType{ElemType: types.ObjectType{AttrTypes: DmWebGWErrorPolicyMapObjectType}},
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"policy_maps":        types.ListType{ElemType: types.ObjectType{AttrTypes: DmWebGWErrorPolicyMapObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data MPGWErrorHandlingPolicy) GetPath() string {

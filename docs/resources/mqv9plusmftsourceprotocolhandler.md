@@ -4,13 +4,14 @@ page_title: "datapower_mqv9plusmftsourceprotocolhandler Resource - terraform-pro
 subcategory: ""
 description: |-
   IBM MQ v9+ MFT handler
-  CLI Alias: source-idg-mqmft
+  CLI Alias: source-idg-mqmftAccepted Dependency Actions: quiesce
 ---
 
 # datapower_mqv9plusmftsourceprotocolhandler (Resource)
 
 IBM MQ v9+ MFT handler
   - CLI Alias: `source-idg-mqmft`
+  - Accepted Dependency Actions: `quiesce`
 
 ## Example Usage
 
@@ -41,6 +42,7 @@ resource "datapower_mqv9plusmftsourceprotocolhandler" "test" {
   - CLI Alias: `concurrent-connections`
   - Range: `1`-`65535`
   - Default value: `1`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `get_message_options` (Number) Get message options
   - CLI Alias: `get-message-options`
   - Range: `0`-`4294967295`
@@ -48,7 +50,6 @@ resource "datapower_mqv9plusmftsourceprotocolhandler" "test" {
 - `ignore_backout_errors` (Boolean) Ignore backout errors
   - CLI Alias: `ignore-backout-errors`
   - Default value: `false`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `polling_interval` (Number) Polling interval
   - CLI Alias: `polling-interval`
   - Range: `1`-`65535`
@@ -62,18 +63,18 @@ resource "datapower_mqv9plusmftsourceprotocolhandler" "test" {
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
 
 Required:
 
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
 
 Optional:
 
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)

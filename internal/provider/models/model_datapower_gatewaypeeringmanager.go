@@ -42,7 +42,7 @@ type GatewayPeeringManager struct {
 	RateLimit                types.String      `tfsdk:"rate_limit"`
 	Subscription             types.String      `tfsdk:"subscription"`
 	RatelimitModule          types.String      `tfsdk:"ratelimit_module"`
-	ObjectActions            []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions        []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var GatewayPeeringManagerObjectType = map[string]attr.Type{
@@ -53,7 +53,7 @@ var GatewayPeeringManagerObjectType = map[string]attr.Type{
 	"rate_limit":                  types.StringType,
 	"subscription":                types.StringType,
 	"ratelimit_module":            types.StringType,
-	"object_actions":              actions.ActionsListType,
+	"dependency_actions":          actions.ActionsListType,
 }
 
 func (data GatewayPeeringManager) GetPath() string {

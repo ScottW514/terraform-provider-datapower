@@ -33,33 +33,33 @@ import (
 )
 
 type MgmtInterface struct {
-	Enabled       types.Bool        `tfsdk:"enabled"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	LocalPort     types.Int64       `tfsdk:"local_port"`
-	UserAgent     types.String      `tfsdk:"user_agent"`
-	Acl           types.String      `tfsdk:"acl"`
-	SlmPeering    types.Int64       `tfsdk:"slm_peering"`
-	Mode          *DmXMLMgmtModes   `tfsdk:"mode"`
-	SslConfigType types.String      `tfsdk:"ssl_config_type"`
-	SslServer     types.String      `tfsdk:"ssl_server"`
-	SslsniServer  types.String      `tfsdk:"sslsni_server"`
-	LocalAddress  types.String      `tfsdk:"local_address"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	LocalPort         types.Int64       `tfsdk:"local_port"`
+	UserAgent         types.String      `tfsdk:"user_agent"`
+	Acl               types.String      `tfsdk:"acl"`
+	SlmPeering        types.Int64       `tfsdk:"slm_peering"`
+	Mode              *DmXMLMgmtModes   `tfsdk:"mode"`
+	SslConfigType     types.String      `tfsdk:"ssl_config_type"`
+	SslServer         types.String      `tfsdk:"ssl_server"`
+	SslsniServer      types.String      `tfsdk:"sslsni_server"`
+	LocalAddress      types.String      `tfsdk:"local_address"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MgmtInterfaceObjectType = map[string]attr.Type{
-	"enabled":         types.BoolType,
-	"user_summary":    types.StringType,
-	"local_port":      types.Int64Type,
-	"user_agent":      types.StringType,
-	"acl":             types.StringType,
-	"slm_peering":     types.Int64Type,
-	"mode":            types.ObjectType{AttrTypes: DmXMLMgmtModesObjectType},
-	"ssl_config_type": types.StringType,
-	"ssl_server":      types.StringType,
-	"sslsni_server":   types.StringType,
-	"local_address":   types.StringType,
-	"object_actions":  actions.ActionsListType,
+	"enabled":            types.BoolType,
+	"user_summary":       types.StringType,
+	"local_port":         types.Int64Type,
+	"user_agent":         types.StringType,
+	"acl":                types.StringType,
+	"slm_peering":        types.Int64Type,
+	"mode":               types.ObjectType{AttrTypes: DmXMLMgmtModesObjectType},
+	"ssl_config_type":    types.StringType,
+	"ssl_server":         types.StringType,
+	"sslsni_server":      types.StringType,
+	"local_address":      types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data MgmtInterface) GetPath() string {

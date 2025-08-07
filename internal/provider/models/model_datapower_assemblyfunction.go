@@ -34,27 +34,27 @@ import (
 )
 
 type AssemblyFunction struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Title         types.String      `tfsdk:"title"`
-	Description   types.String      `tfsdk:"description"`
-	Scope         types.String      `tfsdk:"scope"`
-	Parameter     types.List        `tfsdk:"parameter"`
-	Assembly      types.String      `tfsdk:"assembly"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Title             types.String      `tfsdk:"title"`
+	Description       types.String      `tfsdk:"description"`
+	Scope             types.String      `tfsdk:"scope"`
+	Parameter         types.List        `tfsdk:"parameter"`
+	Assembly          types.String      `tfsdk:"assembly"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AssemblyFunctionObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"title":          types.StringType,
-	"description":    types.StringType,
-	"scope":          types.StringType,
-	"parameter":      types.ListType{ElemType: types.ObjectType{AttrTypes: DmAssemblyFunctionParameterObjectType}},
-	"assembly":       types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"title":              types.StringType,
+	"description":        types.StringType,
+	"scope":              types.StringType,
+	"parameter":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmAssemblyFunctionParameterObjectType}},
+	"assembly":           types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data AssemblyFunction) GetPath() string {

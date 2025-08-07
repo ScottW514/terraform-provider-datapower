@@ -46,7 +46,7 @@ type NameValueProfile struct {
 	DefaultMapValue        types.String      `tfsdk:"default_map_value"`
 	DefaultXss             types.Bool        `tfsdk:"default_xss"`
 	NoMatchXssPatternsFile types.String      `tfsdk:"no_match_xss_patterns_file"`
-	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var NameValueProfileObjectType = map[string]attr.Type{
@@ -62,7 +62,7 @@ var NameValueProfileObjectType = map[string]attr.Type{
 	"default_map_value":          types.StringType,
 	"default_xss":                types.BoolType,
 	"no_match_xss_patterns_file": types.StringType,
-	"object_actions":             actions.ActionsListType,
+	"dependency_actions":         actions.ActionsListType,
 }
 
 func (data NameValueProfile) GetPath() string {

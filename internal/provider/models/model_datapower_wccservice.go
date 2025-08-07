@@ -43,7 +43,7 @@ type WCCService struct {
 	TimeInterval        types.Int64       `tfsdk:"time_interval"`
 	SslClientConfigType types.String      `tfsdk:"ssl_client_config_type"`
 	SslClient           types.String      `tfsdk:"ssl_client"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WCCServiceObjectType = map[string]attr.Type{
@@ -56,7 +56,7 @@ var WCCServiceObjectType = map[string]attr.Type{
 	"time_interval":          types.Int64Type,
 	"ssl_client_config_type": types.StringType,
 	"ssl_client":             types.StringType,
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data WCCService) GetPath() string {

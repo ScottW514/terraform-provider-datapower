@@ -40,7 +40,7 @@ type WSStylePolicy struct {
 	DefStylesheetForSoap types.String      `tfsdk:"def_stylesheet_for_soap"`
 	DefStylesheetForXsl  types.String      `tfsdk:"def_stylesheet_for_xsl"`
 	PolicyMaps           types.List        `tfsdk:"policy_maps"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WSStylePolicyObjectType = map[string]attr.Type{
@@ -50,7 +50,7 @@ var WSStylePolicyObjectType = map[string]attr.Type{
 	"def_stylesheet_for_soap": types.StringType,
 	"def_stylesheet_for_xsl":  types.StringType,
 	"policy_maps":             types.ListType{ElemType: types.ObjectType{AttrTypes: DmWSMPolicyMapObjectType}},
-	"object_actions":          actions.ActionsListType,
+	"dependency_actions":      actions.ActionsListType,
 }
 
 func (data WSStylePolicy) GetPath() string {

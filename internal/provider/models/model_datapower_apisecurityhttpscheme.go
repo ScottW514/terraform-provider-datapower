@@ -42,7 +42,7 @@ type APISecurityHTTPScheme struct {
 	BearerValidationMethod     types.String      `tfsdk:"bearer_validation_method"`
 	BearerValidationEndpoint   types.String      `tfsdk:"bearer_validation_endpoint"`
 	BearerValidationTlsProfile types.String      `tfsdk:"bearer_validation_tls_profile"`
-	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APISecurityHTTPSchemeObjectType = map[string]attr.Type{
@@ -54,7 +54,7 @@ var APISecurityHTTPSchemeObjectType = map[string]attr.Type{
 	"bearer_validation_method":      types.StringType,
 	"bearer_validation_endpoint":    types.StringType,
 	"bearer_validation_tls_profile": types.StringType,
-	"object_actions":                actions.ActionsListType,
+	"dependency_actions":            actions.ActionsListType,
 }
 
 func (data APISecurityHTTPScheme) GetPath() string {

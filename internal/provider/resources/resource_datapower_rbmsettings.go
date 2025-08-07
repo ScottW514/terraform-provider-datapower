@@ -41,6 +41,7 @@ import (
 )
 
 var _ resource.Resource = &RBMSettingsResource{}
+var _ resource.ResourceWithValidateConfig = &RBMSettingsResource{}
 
 func NewRBMSettingsResource() resource.Resource {
 	return &RBMSettingsResource{}
@@ -56,8 +57,7 @@ func (r *RBMSettingsResource) Metadata(ctx context.Context, req resource.Metadat
 
 func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("RBM settings (`default` domain only)", "rbm", "").String,
-
+		MarkdownDescription: tfutils.NewAttributeDescription("RBM settings (`default` domain only)", "rbm", "").AddActions("flush_cache").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
@@ -442,7 +442,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "mc-ssl-client", "sslclientprofile").String,
 				Optional:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -463,7 +463,7 @@ func (r *RBMSettingsResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `RBMSettings`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -510,7 +510,7 @@ func (r *RBMSettingsResource) Update(ctx context.Context, req resource.UpdateReq
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `RBMSettings`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
@@ -523,4 +523,14 @@ func (r *RBMSettingsResource) Update(ctx context.Context, req resource.UpdateReq
 func (r *RBMSettingsResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
 	resp.State.RemoveResource(ctx)
+}
+func (r *RBMSettingsResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var data models.RBMSettings
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }

@@ -34,23 +34,23 @@ import (
 )
 
 type LunaHAGroup struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	GroupName     types.String      `tfsdk:"group_name"`
-	Member        types.List        `tfsdk:"member"`
-	Standby       types.List        `tfsdk:"standby"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	GroupName         types.String      `tfsdk:"group_name"`
+	Member            types.List        `tfsdk:"member"`
+	Standby           types.List        `tfsdk:"standby"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var LunaHAGroupObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"group_name":     types.StringType,
-	"member":         types.ListType{ElemType: types.StringType},
-	"standby":        types.ListType{ElemType: types.StringType},
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"group_name":         types.StringType,
+	"member":             types.ListType{ElemType: types.StringType},
+	"standby":            types.ListType{ElemType: types.StringType},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data LunaHAGroup) GetPath() string {

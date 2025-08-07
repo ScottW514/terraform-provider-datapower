@@ -34,21 +34,21 @@ import (
 )
 
 type CryptoCertificate struct {
-	Id               types.String      `tfsdk:"id"`
-	AppDomain        types.String      `tfsdk:"app_domain"`
-	Filename         types.String      `tfsdk:"filename"`
-	Alias            types.String      `tfsdk:"alias"`
-	IgnoreExpiration types.Bool        `tfsdk:"ignore_expiration"`
-	ObjectActions    []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Filename          types.String      `tfsdk:"filename"`
+	Alias             types.String      `tfsdk:"alias"`
+	IgnoreExpiration  types.Bool        `tfsdk:"ignore_expiration"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var CryptoCertificateObjectType = map[string]attr.Type{
-	"id":                types.StringType,
-	"app_domain":        types.StringType,
-	"filename":          types.StringType,
-	"alias":             types.StringType,
-	"ignore_expiration": types.BoolType,
-	"object_actions":    actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"filename":           types.StringType,
+	"alias":              types.StringType,
+	"ignore_expiration":  types.BoolType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data CryptoCertificate) GetPath() string {

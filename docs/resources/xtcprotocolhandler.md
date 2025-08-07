@@ -4,13 +4,14 @@ page_title: "datapower_xtcprotocolhandler Resource - terraform-provider-datapowe
 subcategory: ""
 description: |-
   Stateful raw XML handler
-  CLI Alias: source-stateful-tcp
+  CLI Alias: source-stateful-tcpAccepted Dependency Actions: quiesce
 ---
 
 # datapower_xtcprotocolhandler (Resource)
 
 Stateful raw XML handler
   - CLI Alias: `source-stateful-tcp`
+  - Accepted Dependency Actions: `quiesce`
 
 ## Example Usage
 
@@ -43,6 +44,7 @@ resource "datapower_xtcprotocolhandler" "test" {
 - `close_on_fault` (Boolean) Close session on fault
   - CLI Alias: `close-on-fault`
   - Default value: `false`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `local_address` (String) Local IP address
   - CLI Alias: `local-address`
   - Default value: `0.0.0.0`
@@ -50,7 +52,6 @@ resource "datapower_xtcprotocolhandler" "test" {
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `3000`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `remote_port` (Number) Remote port
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`
@@ -71,18 +72,18 @@ resource "datapower_xtcprotocolhandler" "test" {
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
 
 Required:
 
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
 
 Optional:
 
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)

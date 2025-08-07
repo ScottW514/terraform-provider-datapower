@@ -34,25 +34,25 @@ import (
 )
 
 type LunaPartition struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	PartitionName   types.String      `tfsdk:"partition_name"`
-	PartitionSerial types.String      `tfsdk:"partition_serial"`
-	PasswordAlias   types.String      `tfsdk:"password_alias"`
-	LoginRole       types.String      `tfsdk:"login_role"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	PartitionName     types.String      `tfsdk:"partition_name"`
+	PartitionSerial   types.String      `tfsdk:"partition_serial"`
+	PasswordAlias     types.String      `tfsdk:"password_alias"`
+	LoginRole         types.String      `tfsdk:"login_role"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var LunaPartitionObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"user_summary":     types.StringType,
-	"partition_name":   types.StringType,
-	"partition_serial": types.StringType,
-	"password_alias":   types.StringType,
-	"login_role":       types.StringType,
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"partition_name":     types.StringType,
+	"partition_serial":   types.StringType,
+	"password_alias":     types.StringType,
+	"login_role":         types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data LunaPartition) GetPath() string {

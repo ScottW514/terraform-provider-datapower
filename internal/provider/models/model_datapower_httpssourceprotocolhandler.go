@@ -63,7 +63,7 @@ type HTTPSSourceProtocolHandler struct {
 	ChunkedEncoding               types.Bool               `tfsdk:"chunked_encoding"`
 	HeaderTimeout                 types.Int64              `tfsdk:"header_timeout"`
 	Http2IdleTimeout              types.Int64              `tfsdk:"http2_idle_timeout"`
-	ObjectActions                 []*actions.Action        `tfsdk:"object_actions"`
+	DependencyActions             []*actions.Action        `tfsdk:"dependency_actions"`
 }
 
 var HTTPSSourceProtocolHandlerObjectType = map[string]attr.Type{
@@ -96,7 +96,7 @@ var HTTPSSourceProtocolHandlerObjectType = map[string]attr.Type{
 	"chunked_encoding":                 types.BoolType,
 	"header_timeout":                   types.Int64Type,
 	"http2_idle_timeout":               types.Int64Type,
-	"object_actions":                   actions.ActionsListType,
+	"dependency_actions":               actions.ActionsListType,
 }
 
 func (data HTTPSSourceProtocolHandler) GetPath() string {

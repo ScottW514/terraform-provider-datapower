@@ -34,21 +34,21 @@ import (
 )
 
 type Luna struct {
-	Id             types.String      `tfsdk:"id"`
-	UserSummary    types.String      `tfsdk:"user_summary"`
-	RemoteAddress  types.String      `tfsdk:"remote_address"`
-	ServerCert     types.String      `tfsdk:"server_cert"`
-	SecurityOption types.String      `tfsdk:"security_option"`
-	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	RemoteAddress     types.String      `tfsdk:"remote_address"`
+	ServerCert        types.String      `tfsdk:"server_cert"`
+	SecurityOption    types.String      `tfsdk:"security_option"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var LunaObjectType = map[string]attr.Type{
-	"id":              types.StringType,
-	"user_summary":    types.StringType,
-	"remote_address":  types.StringType,
-	"server_cert":     types.StringType,
-	"security_option": types.StringType,
-	"object_actions":  actions.ActionsListType,
+	"id":                 types.StringType,
+	"user_summary":       types.StringType,
+	"remote_address":     types.StringType,
+	"server_cert":        types.StringType,
+	"security_option":    types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data Luna) GetPath() string {

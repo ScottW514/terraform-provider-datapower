@@ -62,7 +62,7 @@ type XMLManager struct {
 	UserAgent                      types.String      `tfsdk:"user_agent"`
 	JsonParserSettings             types.String      `tfsdk:"json_parser_settings"`
 	LdapConnPool                   types.String      `tfsdk:"ldap_conn_pool"`
-	ObjectActions                  []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions              []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var XMLManagerObjectType = map[string]attr.Type{
@@ -94,7 +94,7 @@ var XMLManagerObjectType = map[string]attr.Type{
 	"user_agent":                        types.StringType,
 	"json_parser_settings":              types.StringType,
 	"ldap_conn_pool":                    types.StringType,
-	"object_actions":                    actions.ActionsListType,
+	"dependency_actions":                actions.ActionsListType,
 }
 
 func (data XMLManager) GetPath() string {

@@ -34,27 +34,27 @@ import (
 )
 
 type JOSESignatureIdentifier struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	Type            types.String      `tfsdk:"type"`
-	SsKey           types.String      `tfsdk:"ss_key"`
-	Certificate     types.String      `tfsdk:"certificate"`
-	ValidAlgorithms types.List        `tfsdk:"valid_algorithms"`
-	HeaderParam     types.List        `tfsdk:"header_param"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Type              types.String      `tfsdk:"type"`
+	SsKey             types.String      `tfsdk:"ss_key"`
+	Certificate       types.String      `tfsdk:"certificate"`
+	ValidAlgorithms   types.List        `tfsdk:"valid_algorithms"`
+	HeaderParam       types.List        `tfsdk:"header_param"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var JOSESignatureIdentifierObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"user_summary":     types.StringType,
-	"type":             types.StringType,
-	"ss_key":           types.StringType,
-	"certificate":      types.StringType,
-	"valid_algorithms": types.ListType{ElemType: types.StringType},
-	"header_param":     types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"type":               types.StringType,
+	"ss_key":             types.StringType,
+	"certificate":        types.StringType,
+	"valid_algorithms":   types.ListType{ElemType: types.StringType},
+	"header_param":       types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data JOSESignatureIdentifier) GetPath() string {

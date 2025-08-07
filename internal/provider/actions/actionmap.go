@@ -20,8 +20,7 @@
 package actions
 
 type action struct {
-	PreBody  string
-	PostBody string
+	Body string
 }
 
 type target struct {
@@ -29,345 +28,254 @@ type target struct {
 	ValidActions map[string]action
 }
 
+const DomainQuiesceBody = `{"DomainQuiesce": {"name": "{domain}", "timeout": 60}}`
+const DomainUnquiesceBody = `{"DomainUnquiesce": {"name": "{domain}"}}`
+const ServiceQuiesceBody = `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`
+const ServiceUnquiesceBody = `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`
+
 var actionMap = map[string]target{
-	"aaapolicy": {
+	"resource_datapower_aaapolicy": {
 		ObjectName: "AAAPolicy",
 		ValidActions: map[string]action{
 			"flush_cache": {
-				PostBody: `{"FlushAAACache": {"PolicyName": "{name}"}}`,
+				Body: `{"FlushAAACache": {"PolicyName": "{name}"}}`,
 			},
 		},
 	},
-	"amqpsourceprotocolhandler": {
+	"resource_datapower_amqpsourceprotocolhandler": {
 		ObjectName: "AMQPSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"apicollection": {
+	"resource_datapower_apicollection": {
 		ObjectName: "APICollection",
 		ValidActions: map[string]action{
 			"flush_cache": {
-				PostBody: `{"FlushAPISubscriberCache": {"APICollection": "{name}"}}`,
+				Body: `{"FlushAPISubscriberCache": {"APICollection": "{name}"}}`,
 			},
 		},
 	},
-	"apigateway": {
+	"resource_datapower_apigateway": {
 		ObjectName: "APIGateway",
 		ValidActions: map[string]action{
 			"flush_stylesheet_cache": {
-				PostBody: `{"FlushAPIGWStylesheetCache": {"APIGateway": "{name}", "MatchPattern": "*"}}`,
+				Body: `{"FlushAPIGWStylesheetCache": {"APIGateway": "{name}", "MatchPattern": "*"}}`,
 			},
 			"flush_document_cache": {
-				PostBody: `{"FlushAPIGWDocumentCache": {"APIGateway": "{name}", "MatchPattern": "*"}}`,
+				Body: `{"FlushAPIGWDocumentCache": {"APIGateway": "{name}", "MatchPattern": "*"}}`,
 			},
 		},
 	},
-	"as1pollersourceprotocolhandler": {
+	"resource_datapower_as1pollersourceprotocolhandler": {
 		ObjectName: "AS1PollerSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"as2proxysourceprotocolhandler": {
+	"resource_datapower_as2proxysourceprotocolhandler": {
 		ObjectName: "AS2ProxySourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"as2sourceprotocolhandler": {
+	"resource_datapower_as2sourceprotocolhandler": {
 		ObjectName: "AS2SourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"as3sourceprotocolhandler": {
+	"resource_datapower_as3sourceprotocolhandler": {
 		ObjectName: "AS3SourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"b2bgateway": {
+	"resource_datapower_b2bgateway": {
 		ObjectName: "B2BGateway",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"domain": {
+	"resource_datapower_domain": {
 		ObjectName: "Domain",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"DomainQuiesce": {"name": "{domain}", "timeout": 60}}`,
-				PostBody: `{"DomainUnquiesce": {"name": "{domain}"}}`,
-			},
+			"quiesce": {},
 			"restart": {
-				PostBody: `{"RestartDomain": {"Domain": "{domain}"}}`,
+				Body: `{"RestartDomain": {"Domain": "{domain}"}}`,
 			},
 		},
 	},
-	"ebms2sourceprotocolhandler": {
+	"resource_datapower_ebms2sourceprotocolhandler": {
 		ObjectName: "EBMS2SourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"ebms3sourceprotocolhandler": {
+	"resource_datapower_ebms3sourceprotocolhandler": {
 		ObjectName: "EBMS3SourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"ftpfilepollersourceprotocolhandler": {
+	"resource_datapower_ftpfilepollersourceprotocolhandler": {
 		ObjectName: "FTPFilePollerSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"ftpserversourceprotocolhandler": {
+	"resource_datapower_ftpserversourceprotocolhandler": {
 		ObjectName: "FTPServerSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"httpssourceprotocolhandler": {
+	"resource_datapower_httpssourceprotocolhandler": {
 		ObjectName: "HTTPSSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"httpsourceprotocolhandler": {
+	"resource_datapower_httpsourceprotocolhandler": {
 		ObjectName: "HTTPSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"kafkasourceprotocolhandler": {
+	"resource_datapower_kafkasourceprotocolhandler": {
 		ObjectName: "KafkaSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"mqv9plusmftsourceprotocolhandler": {
+	"resource_datapower_mqv9plusmftsourceprotocolhandler": {
 		ObjectName: "MQv9PlusMFTSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"mqv9plussourceprotocolhandler": {
+	"resource_datapower_mqv9plussourceprotocolhandler": {
 		ObjectName: "MQv9PlusSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"multiprotocolgateway": {
+	"resource_datapower_multiprotocolgateway": {
 		ObjectName: "MultiProtocolGateway",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"nfsfilepollersourceprotocolhandler": {
+	"resource_datapower_nfsfilepollersourceprotocolhandler": {
 		ObjectName: "NFSFilePollerSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"poppollersourceprotocolhandler": {
+	"resource_datapower_poppollersourceprotocolhandler": {
 		ObjectName: "POPPollerSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"rbmsettings": {
+	"resource_datapower_rbmsettings": {
 		ObjectName: "RBMSettings",
 		ValidActions: map[string]action{
 			"flush_cache": {
-				PostBody: `{"FlushRBMCache": 0}`,
+				Body: `{"FlushRBMCache": 0}`,
 			},
 		},
 	},
-	"sftpfilepollersourceprotocolhandler": {
+	"resource_datapower_sftpfilepollersourceprotocolhandler": {
 		ObjectName: "SFTPFilePollerSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"sshserversourceprotocolhandler": {
+	"resource_datapower_sshserversourceprotocolhandler": {
 		ObjectName: "SSHServerSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"sslproxyservice": {
+	"resource_datapower_sslproxyservice": {
 		ObjectName: "SSLProxyService",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"statelesstcpsourceprotocolhandler": {
+	"resource_datapower_statelesstcpsourceprotocolhandler": {
 		ObjectName: "StatelessTCPSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"tcpproxyservice": {
+	"resource_datapower_tcpproxyservice": {
 		ObjectName: "TCPProxyService",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"wsgateway": {
+	"resource_datapower_wsgateway": {
 		ObjectName: "WSGateway",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"webappfw": {
+	"resource_datapower_webappfw": {
 		ObjectName: "WebAppFW",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"webspherejmssourceprotocolhandler": {
+	"resource_datapower_webspherejmssourceprotocolhandler": {
 		ObjectName: "WebSphereJMSSourceProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"webtokenservice": {
+	"resource_datapower_webtokenservice": {
 		ObjectName: "WebTokenService",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"xmlfirewallservice": {
+	"resource_datapower_xmlfirewallservice": {
 		ObjectName: "XMLFirewallService",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"xmlmanager": {
+	"resource_datapower_xmlmanager": {
 		ObjectName: "XMLManager",
 		ValidActions: map[string]action{
 			"flush_stylesheet_cache": {
-				PostBody: `{"FlushStylesheetCache": {"XMLManager": "{name}"}}`,
+				Body: `{"FlushStylesheetCache": {"XMLManager": "{name}"}}`,
 			},
 			"flush_document_cache": {
-				PostBody: `{"FlushDocumentCache": {"XMLManager": "{name}"}}`,
+				Body: `{"FlushDocumentCache": {"XMLManager": "{name}"}}`,
 			},
 			"flush_ldap_pool_cache": {
-				PostBody: `{"FlushLDAPPoolCache": {"XMLManager": "{name}"}}`,
+				Body: `{"FlushLDAPPoolCache": {"XMLManager": "{name}"}}`,
 			},
 		},
 	},
-	"xslcoprocservice": {
+	"resource_datapower_xslcoprocservice": {
 		ObjectName: "XSLCoprocService",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"xslproxyservice": {
+	"resource_datapower_xslproxyservice": {
 		ObjectName: "XSLProxyService",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
-	"xtcprotocolhandler": {
+	"resource_datapower_xtcprotocolhandler": {
 		ObjectName: "XTCProtocolHandler",
 		ValidActions: map[string]action{
-			"quiesce": {
-				PreBody:  `{"ServiceQuiesce": {"type": "{type}", "name": "{name}", "timeout": 60}}`,
-				PostBody: `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`,
-			},
+			"quiesce": {},
 		},
 	},
 }

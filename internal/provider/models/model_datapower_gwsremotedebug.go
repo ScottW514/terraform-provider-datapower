@@ -33,19 +33,19 @@ import (
 )
 
 type GWSRemoteDebug struct {
-	Enabled       types.Bool        `tfsdk:"enabled"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	LocalPort     types.Int64       `tfsdk:"local_port"`
-	LocalAddress  types.String      `tfsdk:"local_address"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	LocalPort         types.Int64       `tfsdk:"local_port"`
+	LocalAddress      types.String      `tfsdk:"local_address"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var GWSRemoteDebugObjectType = map[string]attr.Type{
-	"enabled":        types.BoolType,
-	"user_summary":   types.StringType,
-	"local_port":     types.Int64Type,
-	"local_address":  types.StringType,
-	"object_actions": actions.ActionsListType,
+	"enabled":            types.BoolType,
+	"user_summary":       types.StringType,
+	"local_port":         types.Int64Type,
+	"local_address":      types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data GWSRemoteDebug) GetPath() string {

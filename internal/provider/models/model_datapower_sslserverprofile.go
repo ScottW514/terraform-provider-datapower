@@ -60,7 +60,7 @@ type SSLServerProfile struct {
 	PrioritizeChaCha             types.Bool                `tfsdk:"prioritize_cha_cha"`
 	SigAlgs                      types.List                `tfsdk:"sig_algs"`
 	RequireClosureNotification   types.Bool                `tfsdk:"require_closure_notification"`
-	ObjectActions                []*actions.Action         `tfsdk:"object_actions"`
+	DependencyActions            []*actions.Action         `tfsdk:"dependency_actions"`
 }
 
 var SSLServerProfileObjectType = map[string]attr.Type{
@@ -90,7 +90,7 @@ var SSLServerProfileObjectType = map[string]attr.Type{
 	"prioritize_cha_cha":              types.BoolType,
 	"sig_algs":                        types.ListType{ElemType: types.StringType},
 	"require_closure_notification":    types.BoolType,
-	"object_actions":                  actions.ActionsListType,
+	"dependency_actions":              actions.ActionsListType,
 }
 
 func (data SSLServerProfile) GetPath() string {

@@ -1,9 +1,10 @@
 name: GWSRemoteDebug
-description: 'GatewayScript Remote Debugger'
+description: 'GatewayScript Remote Debugger (`default` domain only)'
 cli_alias: 'gatewayscript-remote-debug'
 cmd_group: 'system'
 rest_endpoint: '/mgmt/config/default/GWSRemoteDebug/GWSRemoteDebug'
 update_only: true
+default_domain_only: true
 attributes:
   - name: mAdminState
     tf_name: 'enabled'

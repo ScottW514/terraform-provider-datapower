@@ -33,17 +33,17 @@ import (
 )
 
 type SecureBackupMode struct {
-	Enabled       types.Bool        `tfsdk:"enabled"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Mode          types.String      `tfsdk:"mode"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Mode              types.String      `tfsdk:"mode"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SecureBackupModeObjectType = map[string]attr.Type{
-	"enabled":        types.BoolType,
-	"user_summary":   types.StringType,
-	"mode":           types.StringType,
-	"object_actions": actions.ActionsListType,
+	"enabled":            types.BoolType,
+	"user_summary":       types.StringType,
+	"mode":               types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data SecureBackupMode) GetPath() string {

@@ -56,7 +56,6 @@ func (r *WebB2BViewerResource) Metadata(ctx context.Context, req resource.Metada
 func (r *WebB2BViewerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("B2B viewer management service (`default` domain only)", "b2b-viewer-mgmt", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
@@ -121,7 +120,7 @@ func (r *WebB2BViewerResource) Schema(ctx context.Context, req resource.SchemaRe
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -142,7 +141,7 @@ func (r *WebB2BViewerResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `WebB2BViewer`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -189,7 +188,7 @@ func (r *WebB2BViewerResource) Update(ctx context.Context, req resource.UpdateRe
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `WebB2BViewer`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

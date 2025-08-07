@@ -55,7 +55,7 @@ type XSLCoprocService struct {
 	SslServer                 types.String      `tfsdk:"ssl_server"`
 	SslsniServer              types.String      `tfsdk:"sslsni_server"`
 	LocalAddress              types.String      `tfsdk:"local_address"`
-	ObjectActions             []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions         []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var XSLCoprocServiceObjectType = map[string]attr.Type{
@@ -80,7 +80,7 @@ var XSLCoprocServiceObjectType = map[string]attr.Type{
 	"ssl_server":                  types.StringType,
 	"sslsni_server":               types.StringType,
 	"local_address":               types.StringType,
-	"object_actions":              actions.ActionsListType,
+	"dependency_actions":          actions.ActionsListType,
 }
 
 func (data XSLCoprocService) GetPath() string {

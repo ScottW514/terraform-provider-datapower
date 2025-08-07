@@ -40,7 +40,7 @@ type APIRule struct {
 	Actions            types.List        `tfsdk:"actions"`
 	DynamicActions     types.List        `tfsdk:"dynamic_actions"`
 	UserSummary        types.String      `tfsdk:"user_summary"`
-	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APIRuleObjectType = map[string]attr.Type{
@@ -50,7 +50,7 @@ var APIRuleObjectType = map[string]attr.Type{
 	"actions":              types.ListType{ElemType: types.StringType},
 	"dynamic_actions":      types.ListType{ElemType: types.ObjectType{AttrTypes: DmDynamicStylePolicyActionBaseReferenceObjectType}},
 	"user_summary":         types.StringType,
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data APIRule) GetPath() string {

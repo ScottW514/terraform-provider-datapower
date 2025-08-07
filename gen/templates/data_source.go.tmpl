@@ -33,6 +33,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 {{- if not .UpdateOnly}}
 	"github.com/tidwall/gjson"
@@ -113,6 +114,7 @@ func (d *{{.Name}}DataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 {{- end}}
+						"dependency_actions": actions.ActionsSchema,
 					},
 {{- if not .UpdateOnly}}
 				},

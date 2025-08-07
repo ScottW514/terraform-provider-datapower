@@ -45,7 +45,7 @@ type GatewayPeeringGroup struct {
 	EnableSsl           types.Bool        `tfsdk:"enable_ssl"`
 	Idcred              types.String      `tfsdk:"idcred"`
 	Valcred             types.String      `tfsdk:"valcred"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var GatewayPeeringGroupObjectType = map[string]attr.Type{
@@ -60,7 +60,7 @@ var GatewayPeeringGroupObjectType = map[string]attr.Type{
 	"enable_ssl":            types.BoolType,
 	"idcred":                types.StringType,
 	"valcred":               types.StringType,
-	"object_actions":        actions.ActionsListType,
+	"dependency_actions":    actions.ActionsListType,
 }
 
 func (data GatewayPeeringGroup) GetPath() string {

@@ -34,19 +34,19 @@ import (
 )
 
 type UserGroup struct {
-	Id             types.String      `tfsdk:"id"`
-	UserSummary    types.String      `tfsdk:"user_summary"`
-	AccessPolicies types.List        `tfsdk:"access_policies"`
-	CommandGroup   types.List        `tfsdk:"command_group"`
-	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	AccessPolicies    types.List        `tfsdk:"access_policies"`
+	CommandGroup      types.List        `tfsdk:"command_group"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var UserGroupObjectType = map[string]attr.Type{
-	"id":              types.StringType,
-	"user_summary":    types.StringType,
-	"access_policies": types.ListType{ElemType: types.StringType},
-	"command_group":   types.ListType{ElemType: types.StringType},
-	"object_actions":  actions.ActionsListType,
+	"id":                 types.StringType,
+	"user_summary":       types.StringType,
+	"access_policies":    types.ListType{ElemType: types.StringType},
+	"command_group":      types.ListType{ElemType: types.StringType},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data UserGroup) GetPath() string {

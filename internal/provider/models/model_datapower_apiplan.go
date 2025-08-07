@@ -60,7 +60,7 @@ type APIPlan struct {
 	Override                     types.List        `tfsdk:"override"`
 	RateLimitScope               types.String      `tfsdk:"rate_limit_scope"`
 	GraphQlSchemaOptions         types.List        `tfsdk:"graph_ql_schema_options"`
-	ObjectActions                []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions            []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APIPlanObjectType = map[string]attr.Type{
@@ -90,7 +90,7 @@ var APIPlanObjectType = map[string]attr.Type{
 	"override":                        types.ListType{ElemType: types.StringType},
 	"rate_limit_scope":                types.StringType,
 	"graph_ql_schema_options":         types.ListType{ElemType: types.StringType},
-	"object_actions":                  actions.ActionsListType,
+	"dependency_actions":              actions.ActionsListType,
 }
 
 func (data APIPlan) GetPath() string {

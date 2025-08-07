@@ -34,41 +34,41 @@ import (
 )
 
 type WebAppResponse struct {
-	Id            types.String         `tfsdk:"id"`
-	AppDomain     types.String         `tfsdk:"app_domain"`
-	UserSummary   types.String         `tfsdk:"user_summary"`
-	PolicyType    types.String         `tfsdk:"policy_type"`
-	OkCodes       *DmHTTPResponseCodes `tfsdk:"ok_codes"`
-	OkVersions    *DmHTTPVersionMask   `tfsdk:"ok_versions"`
-	MinBodySize   types.Int64          `tfsdk:"min_body_size"`
-	MaxBodySize   types.Int64          `tfsdk:"max_body_size"`
-	HeaderGnvc    types.String         `tfsdk:"header_gnvc"`
-	ContentTypes  types.List           `tfsdk:"content_types"`
-	XmlPolicy     types.String         `tfsdk:"xml_policy"`
-	XmlRule       types.String         `tfsdk:"xml_rule"`
-	NonXmlPolicy  types.String         `tfsdk:"non_xml_policy"`
-	NonXmlRule    types.String         `tfsdk:"non_xml_rule"`
-	ErrorPolicy   types.String         `tfsdk:"error_policy"`
-	ObjectActions []*actions.Action    `tfsdk:"object_actions"`
+	Id                types.String         `tfsdk:"id"`
+	AppDomain         types.String         `tfsdk:"app_domain"`
+	UserSummary       types.String         `tfsdk:"user_summary"`
+	PolicyType        types.String         `tfsdk:"policy_type"`
+	OkCodes           *DmHTTPResponseCodes `tfsdk:"ok_codes"`
+	OkVersions        *DmHTTPVersionMask   `tfsdk:"ok_versions"`
+	MinBodySize       types.Int64          `tfsdk:"min_body_size"`
+	MaxBodySize       types.Int64          `tfsdk:"max_body_size"`
+	HeaderGnvc        types.String         `tfsdk:"header_gnvc"`
+	ContentTypes      types.List           `tfsdk:"content_types"`
+	XmlPolicy         types.String         `tfsdk:"xml_policy"`
+	XmlRule           types.String         `tfsdk:"xml_rule"`
+	NonXmlPolicy      types.String         `tfsdk:"non_xml_policy"`
+	NonXmlRule        types.String         `tfsdk:"non_xml_rule"`
+	ErrorPolicy       types.String         `tfsdk:"error_policy"`
+	DependencyActions []*actions.Action    `tfsdk:"dependency_actions"`
 }
 
 var WebAppResponseObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"policy_type":    types.StringType,
-	"ok_codes":       types.ObjectType{AttrTypes: DmHTTPResponseCodesObjectType},
-	"ok_versions":    types.ObjectType{AttrTypes: DmHTTPVersionMaskObjectType},
-	"min_body_size":  types.Int64Type,
-	"max_body_size":  types.Int64Type,
-	"header_gnvc":    types.StringType,
-	"content_types":  types.ListType{ElemType: types.StringType},
-	"xml_policy":     types.StringType,
-	"xml_rule":       types.StringType,
-	"non_xml_policy": types.StringType,
-	"non_xml_rule":   types.StringType,
-	"error_policy":   types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"policy_type":        types.StringType,
+	"ok_codes":           types.ObjectType{AttrTypes: DmHTTPResponseCodesObjectType},
+	"ok_versions":        types.ObjectType{AttrTypes: DmHTTPVersionMaskObjectType},
+	"min_body_size":      types.Int64Type,
+	"max_body_size":      types.Int64Type,
+	"header_gnvc":        types.StringType,
+	"content_types":      types.ListType{ElemType: types.StringType},
+	"xml_policy":         types.StringType,
+	"xml_rule":           types.StringType,
+	"non_xml_policy":     types.StringType,
+	"non_xml_rule":       types.StringType,
+	"error_policy":       types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data WebAppResponse) GetPath() string {

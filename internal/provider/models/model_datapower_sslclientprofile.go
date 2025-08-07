@@ -56,7 +56,7 @@ type SSLClientProfile struct {
 	DisableRenegotiation          types.Bool                    `tfsdk:"disable_renegotiation"`
 	SigAlgs                       types.List                    `tfsdk:"sig_algs"`
 	RequireClosureNotification    types.Bool                    `tfsdk:"require_closure_notification"`
-	ObjectActions                 []*actions.Action             `tfsdk:"object_actions"`
+	DependencyActions             []*actions.Action             `tfsdk:"dependency_actions"`
 }
 
 var SSLClientProfileObjectType = map[string]attr.Type{
@@ -82,7 +82,7 @@ var SSLClientProfileObjectType = map[string]attr.Type{
 	"disable_renegotiation":             types.BoolType,
 	"sig_algs":                          types.ListType{ElemType: types.StringType},
 	"require_closure_notification":      types.BoolType,
-	"object_actions":                    actions.ActionsListType,
+	"dependency_actions":                actions.ActionsListType,
 }
 
 func (data SSLClientProfile) GetPath() string {

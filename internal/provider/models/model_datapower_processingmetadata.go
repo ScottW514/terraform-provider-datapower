@@ -34,19 +34,19 @@ import (
 )
 
 type ProcessingMetadata struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	MetaItem      types.List        `tfsdk:"meta_item"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	MetaItem          types.List        `tfsdk:"meta_item"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var ProcessingMetadataObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"meta_item":      types.ListType{ElemType: types.ObjectType{AttrTypes: DmMetaItemObjectType}},
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"meta_item":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmMetaItemObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data ProcessingMetadata) GetPath() string {

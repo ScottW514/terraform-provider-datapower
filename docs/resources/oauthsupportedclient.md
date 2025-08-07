@@ -79,6 +79,7 @@ resource "datapower_oauthsupportedclient" "test" {
   - CLI Alias: `customized-process-url`
 - `default_scope` (String) Default Scope
   - CLI Alias: `default-scope`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `dp_state_life_time` (Number) DataPower State Lifetime
   - CLI Alias: `dp-state-lifetime`
   - Range: `1`-`600`
@@ -99,7 +100,6 @@ resource "datapower_oauthsupportedclient" "test" {
   - CLI Alias: `oauth-features` (see [below for nested schema](#nestedatt--o_auth_features))
 - `o_auth_role` (Attributes) OAuth Role
   - CLI Alias: `oauth-role` (see [below for nested schema](#nestedatt--o_auth_role))
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `oidcid_token_generator` (String) ID token JWT generator
   - CLI Alias: `idtoken-generator`
   - Reference to: `datapower_aaajwtgenerator:id`
@@ -162,6 +162,23 @@ Optional:
 - `saml20bearer` (Boolean) - Default value: `false`
 
 
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
+
 <a id="nestedatt--o_auth_features"></a>
 ### Nested Schema for `o_auth_features`
 
@@ -186,23 +203,6 @@ Optional:
   - Default value: `false`
 - `rssvr` (Boolean) Enforcement Point for Resource Server
   - Default value: `false`
-
-
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
-
-Required:
-
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
-
-Optional:
-
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
 
 
 <a id="nestedatt--rs_set_header"></a>

@@ -55,7 +55,7 @@ type AnalyticsEndpoint struct {
 	PersistentConnection   types.Bool        `tfsdk:"persistent_connection"`
 	Timeout                types.Int64       `tfsdk:"timeout"`
 	PersistentTimeout      types.Int64       `tfsdk:"persistent_timeout"`
-	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AnalyticsEndpointObjectType = map[string]attr.Type{
@@ -80,7 +80,7 @@ var AnalyticsEndpointObjectType = map[string]attr.Type{
 	"persistent_connection":     types.BoolType,
 	"timeout":                   types.Int64Type,
 	"persistent_timeout":        types.Int64Type,
-	"object_actions":            actions.ActionsListType,
+	"dependency_actions":        actions.ActionsListType,
 }
 
 func (data AnalyticsEndpoint) GetPath() string {

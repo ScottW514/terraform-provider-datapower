@@ -34,17 +34,17 @@ import (
 )
 
 type HostAlias struct {
-	Id            types.String      `tfsdk:"id"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	IpAddress     types.String      `tfsdk:"ip_address"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	IpAddress         types.String      `tfsdk:"ip_address"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var HostAliasObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"user_summary":   types.StringType,
-	"ip_address":     types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"user_summary":       types.StringType,
+	"ip_address":         types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data HostAlias) GetPath() string {

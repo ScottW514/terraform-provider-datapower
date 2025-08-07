@@ -3,6 +3,7 @@ description: 'Host alias (`default` domain only)'
 cli_alias: 'host-alias'
 cmd_group: 'network'
 rest_endpoint: '/mgmt/config/default/HostAlias'
+default_domain_only: true
 attributes:
   - name: Id
     tf_name: id

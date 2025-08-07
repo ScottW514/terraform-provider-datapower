@@ -34,16 +34,16 @@ import (
 )
 
 type AssemblyActionLog struct {
-	Id               types.String      `tfsdk:"id"`
-	AppDomain        types.String      `tfsdk:"app_domain"`
-	Mode             types.String      `tfsdk:"mode"`
-	LogLevel         types.String      `tfsdk:"log_level"`
-	RecountBytesSent types.Bool        `tfsdk:"recount_bytes_sent"`
-	UserSummary      types.String      `tfsdk:"user_summary"`
-	Title            types.String      `tfsdk:"title"`
-	CorrelationPath  types.String      `tfsdk:"correlation_path"`
-	ActionDebug      types.Bool        `tfsdk:"action_debug"`
-	ObjectActions    []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Mode              types.String      `tfsdk:"mode"`
+	LogLevel          types.String      `tfsdk:"log_level"`
+	RecountBytesSent  types.Bool        `tfsdk:"recount_bytes_sent"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Title             types.String      `tfsdk:"title"`
+	CorrelationPath   types.String      `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool        `tfsdk:"action_debug"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionLogObjectType = map[string]attr.Type{
@@ -56,7 +56,7 @@ var AssemblyActionLogObjectType = map[string]attr.Type{
 	"title":              types.StringType,
 	"correlation_path":   types.StringType,
 	"action_debug":       types.BoolType,
-	"object_actions":     actions.ActionsListType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data AssemblyActionLog) GetPath() string {

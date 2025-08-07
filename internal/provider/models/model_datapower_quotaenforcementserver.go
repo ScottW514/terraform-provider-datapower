@@ -47,7 +47,7 @@ type QuotaEnforcementServer struct {
 	Peers                types.List        `tfsdk:"peers"`
 	Priority             types.Int64       `tfsdk:"priority"`
 	StrictMode           types.Bool        `tfsdk:"strict_mode"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var QuotaEnforcementServerObjectType = map[string]attr.Type{
@@ -65,7 +65,7 @@ var QuotaEnforcementServerObjectType = map[string]attr.Type{
 	"peers":                  types.ListType{ElemType: types.StringType},
 	"priority":               types.Int64Type,
 	"strict_mode":            types.BoolType,
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data QuotaEnforcementServer) GetPath() string {

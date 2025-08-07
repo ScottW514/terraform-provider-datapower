@@ -41,7 +41,7 @@ type APISecurityTokenManager struct {
 	GatewayPeering              types.String      `tfsdk:"gateway_peering"`
 	GatewayPeeringExternal      types.String      `tfsdk:"gateway_peering_external"`
 	ExpiredTokenCleanupInterval types.Int64       `tfsdk:"expired_token_cleanup_interval"`
-	ObjectActions               []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions           []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APISecurityTokenManagerObjectType = map[string]attr.Type{
@@ -51,7 +51,7 @@ var APISecurityTokenManagerObjectType = map[string]attr.Type{
 	"gateway_peering":                types.StringType,
 	"gateway_peering_external":       types.StringType,
 	"expired_token_cleanup_interval": types.Int64Type,
-	"object_actions":                 actions.ActionsListType,
+	"dependency_actions":             actions.ActionsListType,
 }
 
 func (data APISecurityTokenManager) GetPath() string {

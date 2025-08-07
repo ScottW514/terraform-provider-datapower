@@ -108,7 +108,7 @@ type XMLFirewallService struct {
 	DebugHistory                           types.Int64                `tfsdk:"debug_history"`
 	DebugTrigger                           types.List                 `tfsdk:"debug_trigger"`
 	LocalAddress                           types.String               `tfsdk:"local_address"`
-	ObjectActions                          []*actions.Action          `tfsdk:"object_actions"`
+	DependencyActions                      []*actions.Action          `tfsdk:"dependency_actions"`
 }
 
 var XMLFirewallServiceObjectType = map[string]attr.Type{
@@ -186,7 +186,7 @@ var XMLFirewallServiceObjectType = map[string]attr.Type{
 	"debug_history":                               types.Int64Type,
 	"debug_trigger":                               types.ListType{ElemType: types.ObjectType{AttrTypes: DmMSDebugTriggerTypeObjectType}},
 	"local_address":                               types.StringType,
-	"object_actions":                              actions.ActionsListType,
+	"dependency_actions":                          actions.ActionsListType,
 }
 
 func (data XMLFirewallService) GetPath() string {

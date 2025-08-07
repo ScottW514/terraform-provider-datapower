@@ -49,7 +49,7 @@ type SocialLoginPolicy struct {
 	ProviderTokenEndpoint     types.String      `tfsdk:"provider_token_endpoint"`
 	ValidateJwtToken          types.Bool        `tfsdk:"validate_jwt_token"`
 	JwtValidator              types.String      `tfsdk:"jwt_validator"`
-	ObjectActions             []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions         []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SocialLoginPolicyObjectType = map[string]attr.Type{
@@ -68,7 +68,7 @@ var SocialLoginPolicyObjectType = map[string]attr.Type{
 	"provider_token_endpoint":      types.StringType,
 	"validate_jwt_token":           types.BoolType,
 	"jwt_validator":                types.StringType,
-	"object_actions":               actions.ActionsListType,
+	"dependency_actions":           actions.ActionsListType,
 }
 
 func (data SocialLoginPolicy) GetPath() string {

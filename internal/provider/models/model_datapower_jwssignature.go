@@ -42,7 +42,7 @@ type JWSSignature struct {
 	SsKey             types.String      `tfsdk:"ss_key"`
 	ProtectedHeader   types.List        `tfsdk:"protected_header"`
 	UnprotectedHeader types.List        `tfsdk:"unprotected_header"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var JWSSignatureObjectType = map[string]attr.Type{
@@ -54,7 +54,7 @@ var JWSSignatureObjectType = map[string]attr.Type{
 	"ss_key":             types.StringType,
 	"protected_header":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
 	"unprotected_header": types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
-	"object_actions":     actions.ActionsListType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data JWSSignature) GetPath() string {

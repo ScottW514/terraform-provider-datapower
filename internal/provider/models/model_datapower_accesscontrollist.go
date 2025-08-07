@@ -37,14 +37,14 @@ type AccessControlList struct {
 	Id                 types.String      `tfsdk:"id"`
 	AppDomain          types.String      `tfsdk:"app_domain"`
 	AccessControlEntry types.List        `tfsdk:"access_control_entry"`
-	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AccessControlListObjectType = map[string]attr.Type{
 	"id":                   types.StringType,
 	"app_domain":           types.StringType,
 	"access_control_entry": types.ListType{ElemType: types.ObjectType{AttrTypes: DmACEObjectType}},
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data AccessControlList) GetPath() string {

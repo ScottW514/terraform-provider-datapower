@@ -47,6 +47,7 @@ import (
 )
 
 var _ resource.Resource = &DomainResource{}
+var _ resource.ResourceWithValidateConfig = &DomainResource{}
 
 func NewDomainResource() resource.Resource {
 	return &DomainResource{}
@@ -62,8 +63,7 @@ func (r *DomainResource) Metadata(ctx context.Context, req resource.MetadataRequ
 
 func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Application domain", "domain", "").String,
-
+		MarkdownDescription: tfutils.NewAttributeDescription("Application domain", "domain", "").AddActions("quiesce", "restart").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -162,7 +162,7 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				MarkdownDescription: tfutils.NewAttributeDescription("Global permissions profile", "config-permissions-profile", "accessprofile").String,
 				Optional:            true,
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -183,25 +183,13 @@ func (r *DomainResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `Domain`)
 	_, err := r.client.Put(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
-		return
-	}
-
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
-		return
-	}
-
-	_, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 	getRes, getErr := r.client.Get(data.GetPath())
@@ -248,21 +236,10 @@ func (r *DomainResource) Update(ctx context.Context, req resource.UpdateRequest,
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `Domain`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
-		return
-	}
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
-		return
-	}
-
-	_, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 
@@ -277,7 +254,7 @@ func (r *DomainResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete)
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
 	auRes, auErr := r.client.Get("/mgmt/status/default/ActiveUsers")
 	if auErr != nil {
@@ -299,11 +276,15 @@ func (r *DomainResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		return
 	}
 
-	_, err = r.client.Post("/mgmt/actionqueue/default", "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
+	resp.State.RemoveResource(ctx)
+}
+func (r *DomainResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var data models.Domain
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.State.RemoveResource(ctx)
+	actions.ValidateConfig(ctx, &resp.Diagnostics, data.DependencyActions)
 }

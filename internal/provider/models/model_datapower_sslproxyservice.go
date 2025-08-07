@@ -34,43 +34,43 @@ import (
 )
 
 type SSLProxyService struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Priority      types.String      `tfsdk:"priority"`
-	LocalPort     types.Int64       `tfsdk:"local_port"`
-	RemoteAddress types.String      `tfsdk:"remote_address"`
-	RemotePort    types.Int64       `tfsdk:"remote_port"`
-	FrontTimeout  types.Int64       `tfsdk:"front_timeout"`
-	BackTimeout   types.Int64       `tfsdk:"back_timeout"`
-	ConnTimeout   types.Int64       `tfsdk:"conn_timeout"`
-	ConnLimit     types.Int64       `tfsdk:"conn_limit"`
-	SslConfigType types.String      `tfsdk:"ssl_config_type"`
-	SslServer     types.String      `tfsdk:"ssl_server"`
-	SslsniServer  types.String      `tfsdk:"sslsni_server"`
-	SslClient     types.String      `tfsdk:"ssl_client"`
-	LocalAddress  types.String      `tfsdk:"local_address"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Priority          types.String      `tfsdk:"priority"`
+	LocalPort         types.Int64       `tfsdk:"local_port"`
+	RemoteAddress     types.String      `tfsdk:"remote_address"`
+	RemotePort        types.Int64       `tfsdk:"remote_port"`
+	FrontTimeout      types.Int64       `tfsdk:"front_timeout"`
+	BackTimeout       types.Int64       `tfsdk:"back_timeout"`
+	ConnTimeout       types.Int64       `tfsdk:"conn_timeout"`
+	ConnLimit         types.Int64       `tfsdk:"conn_limit"`
+	SslConfigType     types.String      `tfsdk:"ssl_config_type"`
+	SslServer         types.String      `tfsdk:"ssl_server"`
+	SslsniServer      types.String      `tfsdk:"sslsni_server"`
+	SslClient         types.String      `tfsdk:"ssl_client"`
+	LocalAddress      types.String      `tfsdk:"local_address"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SSLProxyServiceObjectType = map[string]attr.Type{
-	"id":              types.StringType,
-	"app_domain":      types.StringType,
-	"user_summary":    types.StringType,
-	"priority":        types.StringType,
-	"local_port":      types.Int64Type,
-	"remote_address":  types.StringType,
-	"remote_port":     types.Int64Type,
-	"front_timeout":   types.Int64Type,
-	"back_timeout":    types.Int64Type,
-	"conn_timeout":    types.Int64Type,
-	"conn_limit":      types.Int64Type,
-	"ssl_config_type": types.StringType,
-	"ssl_server":      types.StringType,
-	"sslsni_server":   types.StringType,
-	"ssl_client":      types.StringType,
-	"local_address":   types.StringType,
-	"object_actions":  actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"priority":           types.StringType,
+	"local_port":         types.Int64Type,
+	"remote_address":     types.StringType,
+	"remote_port":        types.Int64Type,
+	"front_timeout":      types.Int64Type,
+	"back_timeout":       types.Int64Type,
+	"conn_timeout":       types.Int64Type,
+	"conn_limit":         types.Int64Type,
+	"ssl_config_type":    types.StringType,
+	"ssl_server":         types.StringType,
+	"sslsni_server":      types.StringType,
+	"ssl_client":         types.StringType,
+	"local_address":      types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data SSLProxyService) GetPath() string {

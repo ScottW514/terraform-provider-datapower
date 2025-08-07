@@ -60,6 +60,7 @@ resource "datapower_sqldatasource" "test" {
 - `connect_timeout` (Number) Connection timeout
   - CLI Alias: `connect-timeout`
   - Default value: `15`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `encryption_method_db2` (String) Encryption method - Db2
   - CLI Alias: `db2-encryption-method`
   - Choices: `NoEncryption`, `SSL`
@@ -94,7 +95,6 @@ resource "datapower_sqldatasource" "test" {
   - CLI Alias: `maximum-connections`
   - Range: `1`-`65535`
   - Default value: `10`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `oracle_data_source_type` (String) Data source type - Oracle
   - CLI Alias: `oracle-datasource-type`
   - Choices: `SID`, `ServiceName`
@@ -114,21 +114,21 @@ resource "datapower_sqldatasource" "test" {
   - Choices: `Disabled`, `Enabled`
   - Default value: `Enabled`
 
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
 
 Required:
 
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
 
 Optional:
 
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
 
 
 <a id="nestedatt--sql_data_source_config_nv_pairs"></a>

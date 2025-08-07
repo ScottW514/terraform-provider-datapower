@@ -28,6 +28,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -50,8 +51,12 @@ func (d *APIConnectGatewayServiceDataSource) Metadata(_ context.Context, req dat
 
 func (d *APIConnectGatewayServiceDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API Connect gateway service (`default` domain only)",
+		MarkdownDescription: "API Connect gateway service",
 		Attributes: map[string]schema.Attribute{
+			"app_domain": schema.StringAttribute{
+				MarkdownDescription: "The name of the application domain the object belongs to",
+				Required:            true,
+			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: "Administrative state",
 				Computed:            true,
@@ -117,7 +122,8 @@ func (d *APIConnectGatewayServiceDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: "JWT URL",
 				Computed:            true,
 			},
-			"proxy_policy": models.GetDmAPICGSProxyPolicyDataSourceSchema("API Manager proxy", "proxy", ""),
+			"proxy_policy":       models.GetDmAPICGSProxyPolicyDataSourceSchema("API Manager proxy", "proxy", ""),
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

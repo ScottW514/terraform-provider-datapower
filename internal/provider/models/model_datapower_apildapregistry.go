@@ -53,7 +53,7 @@ type APILDAPRegistry struct {
 	LdapGroupFilterPrefix  types.String      `tfsdk:"ldap_group_filter_prefix"`
 	LdapGroupFilterSuffix  types.String      `tfsdk:"ldap_group_filter_suffix"`
 	LdapGroupDynamicFilter types.String      `tfsdk:"ldap_group_dynamic_filter"`
-	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APILDAPRegistryObjectType = map[string]attr.Type{
@@ -76,7 +76,7 @@ var APILDAPRegistryObjectType = map[string]attr.Type{
 	"ldap_group_filter_prefix":  types.StringType,
 	"ldap_group_filter_suffix":  types.StringType,
 	"ldap_group_dynamic_filter": types.StringType,
-	"object_actions":            actions.ActionsListType,
+	"dependency_actions":        actions.ActionsListType,
 }
 
 func (data APILDAPRegistry) GetPath() string {

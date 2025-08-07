@@ -61,7 +61,6 @@ func (r *OAuthSupportedClientResource) Metadata(ctx context.Context, req resourc
 func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("OAuth Client Profile", "oauth-supported-client", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -288,8 +287,8 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 				MarkdownDescription: tfutils.NewAttributeDescription("ID token JWT generator", "idtoken-generator", "aaajwtgenerator").String,
 				Optional:            true,
 			},
-			"o_auth_features": models.GetDmOAuthFeaturesResourceSchema("Features", "oauth-features", "", false),
-			"object_actions":  actions.ActionsSchema,
+			"o_auth_features":    models.GetDmOAuthFeaturesResourceSchema("Features", "oauth-features", "", false),
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -310,19 +309,13 @@ func (r *OAuthSupportedClientResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `OAuthSupportedClient`)
 	_, err := r.client.Post(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "POST", err))
-		return
-	}
-
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -363,15 +356,10 @@ func (r *OAuthSupportedClientResource) Update(ctx context.Context, req resource.
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `OAuthSupportedClient`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
-		return
-	}
-	_, err = r.client.Post("/mgmt/actionqueue/"+data.AppDomain.ValueString(), "{\"SaveConfig\": 0}")
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to save object (%s), got error: %s", "POST", err))
 		return
 	}
 
@@ -386,7 +374,7 @@ func (r *OAuthSupportedClientResource) Delete(ctx context.Context, req resource.
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Delete)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete)
 	_, err := r.client.Delete(data.GetPath() + "/" + data.Id.ValueString())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))

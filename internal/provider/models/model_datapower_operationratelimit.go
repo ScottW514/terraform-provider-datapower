@@ -41,7 +41,7 @@ type OperationRateLimit struct {
 	UseRateLimitGroup types.Bool        `tfsdk:"use_rate_limit_group"`
 	RateLimit         types.List        `tfsdk:"rate_limit"`
 	RateLimitGroup    types.String      `tfsdk:"rate_limit_group"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var OperationRateLimitObjectType = map[string]attr.Type{
@@ -52,7 +52,7 @@ var OperationRateLimitObjectType = map[string]attr.Type{
 	"use_rate_limit_group": types.BoolType,
 	"rate_limit":           types.ListType{ElemType: types.ObjectType{AttrTypes: DmAPIRateLimitObjectType}},
 	"rate_limit_group":     types.StringType,
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data OperationRateLimit) GetPath() string {

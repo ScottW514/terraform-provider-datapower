@@ -53,7 +53,7 @@ type HTTPUserAgent struct {
 	FtpPolicies              types.List        `tfsdk:"ftp_policies"`
 	SmtpPolicies             types.List        `tfsdk:"smtp_policies"`
 	SftpPolicies             types.List        `tfsdk:"sftp_policies"`
-	ObjectActions            []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions        []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var HTTPUserAgentObjectType = map[string]attr.Type{
@@ -76,7 +76,7 @@ var HTTPUserAgentObjectType = map[string]attr.Type{
 	"ftp_policies":               types.ListType{ElemType: types.ObjectType{AttrTypes: DmFTPPolicyObjectType}},
 	"smtp_policies":              types.ListType{ElemType: types.ObjectType{AttrTypes: DmSMTPPolicyObjectType}},
 	"sftp_policies":              types.ListType{ElemType: types.ObjectType{AttrTypes: DmSFTPPolicyObjectType}},
-	"object_actions":             actions.ActionsListType,
+	"dependency_actions":         actions.ActionsListType,
 }
 
 func (data HTTPUserAgent) GetPath() string {

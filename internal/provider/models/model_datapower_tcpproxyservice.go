@@ -34,29 +34,29 @@ import (
 )
 
 type TCPProxyService struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Priority      types.String      `tfsdk:"priority"`
-	LocalPort     types.Int64       `tfsdk:"local_port"`
-	RemoteAddress types.String      `tfsdk:"remote_address"`
-	RemotePort    types.Int64       `tfsdk:"remote_port"`
-	Timeout       types.Int64       `tfsdk:"timeout"`
-	LocalAddress  types.String      `tfsdk:"local_address"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Priority          types.String      `tfsdk:"priority"`
+	LocalPort         types.Int64       `tfsdk:"local_port"`
+	RemoteAddress     types.String      `tfsdk:"remote_address"`
+	RemotePort        types.Int64       `tfsdk:"remote_port"`
+	Timeout           types.Int64       `tfsdk:"timeout"`
+	LocalAddress      types.String      `tfsdk:"local_address"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var TCPProxyServiceObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"priority":       types.StringType,
-	"local_port":     types.Int64Type,
-	"remote_address": types.StringType,
-	"remote_port":    types.Int64Type,
-	"timeout":        types.Int64Type,
-	"local_address":  types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"priority":           types.StringType,
+	"local_port":         types.Int64Type,
+	"remote_address":     types.StringType,
+	"remote_port":        types.Int64Type,
+	"timeout":            types.Int64Type,
+	"local_address":      types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data TCPProxyService) GetPath() string {

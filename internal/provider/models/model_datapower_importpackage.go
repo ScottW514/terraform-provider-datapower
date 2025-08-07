@@ -46,7 +46,7 @@ type ImportPackage struct {
 	DeploymentPolicyParameters types.String      `tfsdk:"deployment_policy_parameters"`
 	LocalIpRewrite             types.Bool        `tfsdk:"local_ip_rewrite"`
 	OnStartup                  types.Bool        `tfsdk:"on_startup"`
-	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var ImportPackageObjectType = map[string]attr.Type{
@@ -62,7 +62,7 @@ var ImportPackageObjectType = map[string]attr.Type{
 	"deployment_policy_parameters": types.StringType,
 	"local_ip_rewrite":             types.BoolType,
 	"on_startup":                   types.BoolType,
-	"object_actions":               actions.ActionsListType,
+	"dependency_actions":           actions.ActionsListType,
 }
 
 func (data ImportPackage) GetPath() string {

@@ -63,7 +63,7 @@ type {{.Name}} struct {
 	RestartDomainOnUpdate types.Bool `tfsdk:"restart_domain_on_update"`
 {{- end}}
 {{- if not .ModelOnly}}
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 {{- end}}
 }
 
@@ -80,7 +80,7 @@ type {{.Name}}WO struct {
 	RestartDomainOnUpdate types.Bool `tfsdk:"restart_domain_on_update"`
 {{- end}}
 {{- if not .ModelOnly}}
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 {{- end}}
 }
 {{- end}}
@@ -104,7 +104,7 @@ var {{.Name}}ObjectType = map[string]attr.Type{
 	"restart_domain_on_update": types.BoolType,
 {{- end}}
 {{- if not .ModelOnly}}
-	"object_actions": actions.ActionsListType,
+	"dependency_actions": actions.ActionsListType,
 {{- end}}
 }
 
@@ -127,7 +127,7 @@ var {{.Name}}ObjectTypeWO = map[string]attr.Type{
 	"restart_domain_on_update": types.BoolType,
     {{- end}}
     {{- if not .ModelOnly}}
-	"object_actions": actions.ActionsListType,
+	"dependency_actions": actions.ActionsListType,
     {{- end}}
 }
 {{- end}}

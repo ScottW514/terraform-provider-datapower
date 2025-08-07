@@ -42,7 +42,7 @@ type PolicyAttachments struct {
 	IgnoredPolicyAttachmentPoints types.List        `tfsdk:"ignored_policy_attachment_points"`
 	ExternalPolicy                types.List        `tfsdk:"external_policy"`
 	SlaEnforcementMode            types.String      `tfsdk:"sla_enforcement_mode"`
-	ObjectActions                 []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions             []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var PolicyAttachmentsObjectType = map[string]attr.Type{
@@ -54,7 +54,7 @@ var PolicyAttachmentsObjectType = map[string]attr.Type{
 	"ignored_policy_attachment_points": types.ListType{ElemType: types.ObjectType{AttrTypes: DmPolicyAttachmentPointObjectType}},
 	"external_policy":                  types.ListType{ElemType: types.ObjectType{AttrTypes: DmExternalAttachedPolicyObjectType}},
 	"sla_enforcement_mode":             types.StringType,
-	"object_actions":                   actions.ActionsListType,
+	"dependency_actions":               actions.ActionsListType,
 }
 
 func (data PolicyAttachments) GetPath() string {

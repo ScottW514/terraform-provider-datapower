@@ -4,13 +4,14 @@ page_title: "datapower_xmlmanager Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
   XML Manager
-  CLI Alias: xmlmgr
+  CLI Alias: xmlmgrAccepted Dependency Actions: flush_stylesheet_cache, flush_document_cache, flush_ldap_pool_cache
 ---
 
 # datapower_xmlmanager (Resource)
 
 XML Manager
   - CLI Alias: `xmlmgr`
+  - Accepted Dependency Actions: `flush_stylesheet_cache`, `flush_document_cache`, `flush_ldap_pool_cache`
 
 ## Example Usage
 
@@ -41,6 +42,7 @@ resource "datapower_xmlmanager" "test" {
 - `compile_options_policy` (String) Compile Options Policy
   - CLI Alias: `xslconfig`
   - Reference to: `datapower_compileoptionspolicy:id`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `doc_cache_max_docs` (Number) Document Cache Count
   - CLI Alias: `maxdocs`
   - Range: `1`-`250000`
@@ -59,7 +61,6 @@ resource "datapower_xmlmanager" "test" {
 - `ldap_conn_pool` (String) LDAP Connection Pool
   - CLI Alias: `ldap-pool`
   - Reference to: `datapower_ldapconnectionpool:id`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `parser_limits_attribute_count` (Number) XML Attribute Count
   - CLI Alias: `attribute-count`
   - Default value: `128`
@@ -115,6 +116,23 @@ resource "datapower_xmlmanager" "test" {
   - CLI Alias: `loadbalancer-group`
   - Reference to: `datapower_loadbalancergroup:id`
 
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
+
 <a id="nestedatt--doc_cache_policy"></a>
 ### Nested Schema for `doc_cache_policy`
 
@@ -151,23 +169,6 @@ Optional:
   - Default value: `protocol`
 - `xc10_grid` (String) Cache Grid
   - CLI Alias: `xc10-grid`
-
-
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
-
-Required:
-
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
-
-Optional:
-
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.
 
 
 <a id="nestedatt--scheduled_rule"></a>

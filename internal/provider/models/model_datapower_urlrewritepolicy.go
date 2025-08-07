@@ -34,19 +34,19 @@ import (
 )
 
 type URLRewritePolicy struct {
-	Id             types.String      `tfsdk:"id"`
-	AppDomain      types.String      `tfsdk:"app_domain"`
-	Direction      types.String      `tfsdk:"direction"`
-	UrlRewriteRule types.List        `tfsdk:"url_rewrite_rule"`
-	ObjectActions  []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	Direction         types.String      `tfsdk:"direction"`
+	UrlRewriteRule    types.List        `tfsdk:"url_rewrite_rule"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var URLRewritePolicyObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"direction":        types.StringType,
-	"url_rewrite_rule": types.ListType{ElemType: types.ObjectType{AttrTypes: DmURLRewriteRuleObjectType}},
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"direction":          types.StringType,
+	"url_rewrite_rule":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmURLRewriteRuleObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data URLRewritePolicy) GetPath() string {

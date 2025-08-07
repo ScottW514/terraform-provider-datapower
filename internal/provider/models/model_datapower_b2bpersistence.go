@@ -33,29 +33,29 @@ import (
 )
 
 type B2BPersistence struct {
-	Enabled       types.Bool        `tfsdk:"enabled"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	RaidVolume    types.String      `tfsdk:"raid_volume"`
-	StorageSize   types.Int64       `tfsdk:"storage_size"`
-	HaEnabled     types.Bool        `tfsdk:"ha_enabled"`
-	HaOtherHosts  *DmB2BHAHost      `tfsdk:"ha_other_hosts"`
-	HaLocalIp     types.String      `tfsdk:"ha_local_ip"`
-	HaLocalPort   types.Int64       `tfsdk:"ha_local_port"`
-	HaVirtualIp   types.String      `tfsdk:"ha_virtual_ip"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Enabled           types.Bool        `tfsdk:"enabled"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	RaidVolume        types.String      `tfsdk:"raid_volume"`
+	StorageSize       types.Int64       `tfsdk:"storage_size"`
+	HaEnabled         types.Bool        `tfsdk:"ha_enabled"`
+	HaOtherHosts      *DmB2BHAHost      `tfsdk:"ha_other_hosts"`
+	HaLocalIp         types.String      `tfsdk:"ha_local_ip"`
+	HaLocalPort       types.Int64       `tfsdk:"ha_local_port"`
+	HaVirtualIp       types.String      `tfsdk:"ha_virtual_ip"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var B2BPersistenceObjectType = map[string]attr.Type{
-	"enabled":        types.BoolType,
-	"user_summary":   types.StringType,
-	"raid_volume":    types.StringType,
-	"storage_size":   types.Int64Type,
-	"ha_enabled":     types.BoolType,
-	"ha_other_hosts": types.ObjectType{AttrTypes: DmB2BHAHostObjectType},
-	"ha_local_ip":    types.StringType,
-	"ha_local_port":  types.Int64Type,
-	"ha_virtual_ip":  types.StringType,
-	"object_actions": actions.ActionsListType,
+	"enabled":            types.BoolType,
+	"user_summary":       types.StringType,
+	"raid_volume":        types.StringType,
+	"storage_size":       types.Int64Type,
+	"ha_enabled":         types.BoolType,
+	"ha_other_hosts":     types.ObjectType{AttrTypes: DmB2BHAHostObjectType},
+	"ha_local_ip":        types.StringType,
+	"ha_local_port":      types.Int64Type,
+	"ha_virtual_ip":      types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data B2BPersistence) GetPath() string {

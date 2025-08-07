@@ -34,27 +34,27 @@ import (
 )
 
 type CookieAttributePolicy struct {
-	Id              types.String       `tfsdk:"id"`
-	AppDomain       types.String       `tfsdk:"app_domain"`
-	UserSummary     types.String       `tfsdk:"user_summary"`
-	CookieAttribute *DmCookieAttribute `tfsdk:"cookie_attribute"`
-	Domain          types.String       `tfsdk:"domain"`
-	Path            types.String       `tfsdk:"path"`
-	Interval        types.Int64        `tfsdk:"interval"`
-	CustomAttribute types.String       `tfsdk:"custom_attribute"`
-	ObjectActions   []*actions.Action  `tfsdk:"object_actions"`
+	Id                types.String       `tfsdk:"id"`
+	AppDomain         types.String       `tfsdk:"app_domain"`
+	UserSummary       types.String       `tfsdk:"user_summary"`
+	CookieAttribute   *DmCookieAttribute `tfsdk:"cookie_attribute"`
+	Domain            types.String       `tfsdk:"domain"`
+	Path              types.String       `tfsdk:"path"`
+	Interval          types.Int64        `tfsdk:"interval"`
+	CustomAttribute   types.String       `tfsdk:"custom_attribute"`
+	DependencyActions []*actions.Action  `tfsdk:"dependency_actions"`
 }
 
 var CookieAttributePolicyObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"user_summary":     types.StringType,
-	"cookie_attribute": types.ObjectType{AttrTypes: DmCookieAttributeObjectType},
-	"domain":           types.StringType,
-	"path":             types.StringType,
-	"interval":         types.Int64Type,
-	"custom_attribute": types.StringType,
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"cookie_attribute":   types.ObjectType{AttrTypes: DmCookieAttributeObjectType},
+	"domain":             types.StringType,
+	"path":               types.StringType,
+	"interval":           types.Int64Type,
+	"custom_attribute":   types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data CookieAttributePolicy) GetPath() string {

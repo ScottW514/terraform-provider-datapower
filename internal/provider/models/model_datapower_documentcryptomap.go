@@ -40,7 +40,7 @@ type DocumentCryptoMap struct {
 	XPath             types.List        `tfsdk:"x_path"`
 	NameSpaceMappings types.List        `tfsdk:"name_space_mappings"`
 	UserSummary       types.String      `tfsdk:"user_summary"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var DocumentCryptoMapObjectType = map[string]attr.Type{
@@ -50,7 +50,7 @@ var DocumentCryptoMapObjectType = map[string]attr.Type{
 	"x_path":              types.ListType{ElemType: types.StringType},
 	"name_space_mappings": types.ListType{ElemType: types.ObjectType{AttrTypes: DmNamespaceMappingObjectType}},
 	"user_summary":        types.StringType,
-	"object_actions":      actions.ActionsListType,
+	"dependency_actions":  actions.ActionsListType,
 }
 
 func (data DocumentCryptoMap) GetPath() string {

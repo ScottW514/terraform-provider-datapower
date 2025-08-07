@@ -23,6 +23,7 @@ package resources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -30,12 +31,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
@@ -55,9 +58,19 @@ func (r *APIConnectGatewayServiceResource) Metadata(ctx context.Context, req res
 
 func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API Connect gateway service (`default` domain only)", "apic-gw-service", "").String,
-
+		MarkdownDescription: tfutils.NewAttributeDescription("API Connect gateway service", "apic-gw-service", "").String,
 		Attributes: map[string]schema.Attribute{
+			"app_domain": schema.StringAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
+				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+				},
+				PlanModifiers: []planmodifier.String{
+					modifiers.ImmutableAfterSet(),
+				},
+			},
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
@@ -147,8 +160,8 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: tfutils.NewAttributeDescription("JWT URL", "jwt-url", "").String,
 				Optional:            true,
 			},
-			"proxy_policy":   models.GetDmAPICGSProxyPolicyResourceSchema("API Manager proxy", "proxy", "", false),
-			"object_actions": actions.ActionsSchema,
+			"proxy_policy":       models.GetDmAPICGSProxyPolicyResourceSchema("API Manager proxy", "proxy", "", false),
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -169,7 +182,7 @@ func (r *APIConnectGatewayServiceResource) Create(ctx context.Context, req resou
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `APIConnectGatewayService`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -216,7 +229,7 @@ func (r *APIConnectGatewayServiceResource) Update(ctx context.Context, req resou
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `APIConnectGatewayService`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

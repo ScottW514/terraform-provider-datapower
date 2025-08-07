@@ -45,7 +45,7 @@ type CryptoKerberosKDC struct {
 	CacheTickets            types.Bool        `tfsdk:"cache_tickets"`
 	MaxCachedTickets        types.Int64       `tfsdk:"max_cached_tickets"`
 	MinCachedTicketValidity types.Int64       `tfsdk:"min_cached_ticket_validity"`
-	ObjectActions           []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions       []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var CryptoKerberosKDCObjectType = map[string]attr.Type{
@@ -60,7 +60,7 @@ var CryptoKerberosKDCObjectType = map[string]attr.Type{
 	"cache_tickets":              types.BoolType,
 	"max_cached_tickets":         types.Int64Type,
 	"min_cached_ticket_validity": types.Int64Type,
-	"object_actions":             actions.ActionsListType,
+	"dependency_actions":         actions.ActionsListType,
 }
 
 func (data CryptoKerberosKDC) GetPath() string {

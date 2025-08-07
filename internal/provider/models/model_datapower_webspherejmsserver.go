@@ -55,7 +55,7 @@ type WebSphereJMSServer struct {
 	EnableLogging         types.Bool        `tfsdk:"enable_logging"`
 	SslClientConfigType   types.String      `tfsdk:"ssl_client_config_type"`
 	SslClient             types.String      `tfsdk:"ssl_client"`
-	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WebSphereJMSServerObjectType = map[string]attr.Type{
@@ -80,7 +80,7 @@ var WebSphereJMSServerObjectType = map[string]attr.Type{
 	"enable_logging":          types.BoolType,
 	"ssl_client_config_type":  types.StringType,
 	"ssl_client":              types.StringType,
-	"object_actions":          actions.ActionsListType,
+	"dependency_actions":      actions.ActionsListType,
 }
 
 func (data WebSphereJMSServer) GetPath() string {

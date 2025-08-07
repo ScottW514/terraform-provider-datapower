@@ -34,23 +34,23 @@ import (
 )
 
 type APISecurityAPIKey struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Where         types.String      `tfsdk:"where"`
-	Type          types.String      `tfsdk:"type"`
-	KeyName       types.String      `tfsdk:"key_name"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Where             types.String      `tfsdk:"where"`
+	Type              types.String      `tfsdk:"type"`
+	KeyName           types.String      `tfsdk:"key_name"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APISecurityAPIKeyObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"where":          types.StringType,
-	"type":           types.StringType,
-	"key_name":       types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"where":              types.StringType,
+	"type":               types.StringType,
+	"key_name":           types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data APISecurityAPIKey) GetPath() string {

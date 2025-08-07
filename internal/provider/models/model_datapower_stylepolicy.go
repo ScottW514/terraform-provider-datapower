@@ -41,7 +41,7 @@ type StylePolicy struct {
 	DefStylesheetForXsl  types.String      `tfsdk:"def_stylesheet_for_xsl"`
 	DefXQueryForJson     types.String      `tfsdk:"def_x_query_for_json"`
 	PolicyMaps           types.List        `tfsdk:"policy_maps"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var StylePolicyObjectType = map[string]attr.Type{
@@ -52,7 +52,7 @@ var StylePolicyObjectType = map[string]attr.Type{
 	"def_stylesheet_for_xsl":  types.StringType,
 	"def_x_query_for_json":    types.StringType,
 	"policy_maps":             types.ListType{ElemType: types.ObjectType{AttrTypes: DmPolicyMapObjectType}},
-	"object_actions":          actions.ActionsListType,
+	"dependency_actions":      actions.ActionsListType,
 }
 
 func (data StylePolicy) GetPath() string {

@@ -34,19 +34,19 @@ import (
 )
 
 type B2BProfileGroup struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	B2bProfiles   types.List        `tfsdk:"b2b_profiles"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	B2bProfiles       types.List        `tfsdk:"b2b_profiles"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var B2BProfileGroupObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"b2b_profiles":   types.ListType{ElemType: types.ObjectType{AttrTypes: DmB2BGroupedProfileObjectType}},
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"b2b_profiles":       types.ListType{ElemType: types.ObjectType{AttrTypes: DmB2BGroupedProfileObjectType}},
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data B2BProfileGroup) GetPath() string {

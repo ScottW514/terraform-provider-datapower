@@ -47,7 +47,7 @@ type APISchema struct {
 	WsdlOperationName          types.String      `tfsdk:"wsdl_operation_name"`
 	WsdlMessageDirectionOrName types.String      `tfsdk:"wsdl_message_direction_or_name"`
 	WsdlAttachmentPart         types.String      `tfsdk:"wsdl_attachment_part"`
-	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APISchemaObjectType = map[string]attr.Type{
@@ -64,7 +64,7 @@ var APISchemaObjectType = map[string]attr.Type{
 	"wsdl_operation_name":            types.StringType,
 	"wsdl_message_direction_or_name": types.StringType,
 	"wsdl_attachment_part":           types.StringType,
-	"object_actions":                 actions.ActionsListType,
+	"dependency_actions":             actions.ActionsListType,
 }
 
 func (data APISchema) GetPath() string {

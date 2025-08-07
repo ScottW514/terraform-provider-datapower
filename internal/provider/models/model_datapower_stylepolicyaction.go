@@ -123,7 +123,7 @@ type StylePolicyAction struct {
 	MethodType                 types.String                     `tfsdk:"method_type"`
 	MethodType2                types.String                     `tfsdk:"method_type2"`
 	PolicyKey                  types.String                     `tfsdk:"policy_key"`
-	ObjectActions              []*actions.Action                `tfsdk:"object_actions"`
+	DependencyActions          []*actions.Action                `tfsdk:"dependency_actions"`
 }
 
 var StylePolicyActionObjectType = map[string]attr.Type{
@@ -216,7 +216,7 @@ var StylePolicyActionObjectType = map[string]attr.Type{
 	"method_type":                    types.StringType,
 	"method_type2":                   types.StringType,
 	"policy_key":                     types.StringType,
-	"object_actions":                 actions.ActionsListType,
+	"dependency_actions":             actions.ActionsListType,
 }
 
 func (data StylePolicyAction) GetPath() string {

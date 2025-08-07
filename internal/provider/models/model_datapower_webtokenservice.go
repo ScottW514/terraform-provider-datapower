@@ -52,7 +52,7 @@ type WebTokenService struct {
 	HttpLogCorIdLabel      types.String      `tfsdk:"http_log_cor_id_label"`
 	DebugMode              types.String      `tfsdk:"debug_mode"`
 	DebugHistory           types.Int64       `tfsdk:"debug_history"`
-	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WebTokenServiceObjectType = map[string]attr.Type{
@@ -74,7 +74,7 @@ var WebTokenServiceObjectType = map[string]attr.Type{
 	"http_log_cor_id_label":    types.StringType,
 	"debug_mode":               types.StringType,
 	"debug_history":            types.Int64Type,
-	"object_actions":           actions.ActionsListType,
+	"dependency_actions":       actions.ActionsListType,
 }
 
 func (data WebTokenService) GetPath() string {

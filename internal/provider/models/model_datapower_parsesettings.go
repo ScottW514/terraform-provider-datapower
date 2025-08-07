@@ -48,7 +48,7 @@ type ParseSettings struct {
 	UniqueNames        types.Int64       `tfsdk:"unique_names"`
 	NumberLength       types.Int64       `tfsdk:"number_length"`
 	StrictUtf8Encoding types.Bool        `tfsdk:"strict_utf8_encoding"`
-	ObjectActions      []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions  []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var ParseSettingsObjectType = map[string]attr.Type{
@@ -66,7 +66,7 @@ var ParseSettingsObjectType = map[string]attr.Type{
 	"unique_names":         types.Int64Type,
 	"number_length":        types.Int64Type,
 	"strict_utf8_encoding": types.BoolType,
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data ParseSettings) GetPath() string {

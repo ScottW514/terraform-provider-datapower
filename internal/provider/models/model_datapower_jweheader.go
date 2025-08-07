@@ -40,7 +40,7 @@ type JWEHeader struct {
 	JweProtectedHeader         types.List        `tfsdk:"jwe_protected_header"`
 	JweSharedUnprotectedHeader types.List        `tfsdk:"jwe_shared_unprotected_header"`
 	Recipient                  types.String      `tfsdk:"recipient"`
-	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var JWEHeaderObjectType = map[string]attr.Type{
@@ -50,7 +50,7 @@ var JWEHeaderObjectType = map[string]attr.Type{
 	"jwe_protected_header":          types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
 	"jwe_shared_unprotected_header": types.ListType{ElemType: types.ObjectType{AttrTypes: DmJOSEHeaderObjectType}},
 	"recipient":                     types.StringType,
-	"object_actions":                actions.ActionsListType,
+	"dependency_actions":            actions.ActionsListType,
 }
 
 func (data JWEHeader) GetPath() string {

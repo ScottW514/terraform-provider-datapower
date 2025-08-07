@@ -52,7 +52,7 @@ type LoadBalancerGroup struct {
 	ApplicationRouting          types.Bool         `tfsdk:"application_routing"`
 	LbGroupAffinityConf         *DmLBGroupAffinity `tfsdk:"lb_group_affinity_conf"`
 	MonitoredCookies            types.List         `tfsdk:"monitored_cookies"`
-	ObjectActions               []*actions.Action  `tfsdk:"object_actions"`
+	DependencyActions           []*actions.Action  `tfsdk:"dependency_actions"`
 }
 
 var LoadBalancerGroupObjectType = map[string]attr.Type{
@@ -74,7 +74,7 @@ var LoadBalancerGroupObjectType = map[string]attr.Type{
 	"application_routing":             types.BoolType,
 	"lb_group_affinity_conf":          types.ObjectType{AttrTypes: DmLBGroupAffinityObjectType},
 	"monitored_cookies":               types.ListType{ElemType: types.StringType},
-	"object_actions":                  actions.ActionsListType,
+	"dependency_actions":              actions.ActionsListType,
 }
 
 func (data LoadBalancerGroup) GetPath() string {

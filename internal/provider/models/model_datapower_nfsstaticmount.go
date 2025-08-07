@@ -47,7 +47,7 @@ type NFSStaticMount struct {
 	WriteSize             types.Int64       `tfsdk:"write_size"`
 	Timeout               types.Int64       `tfsdk:"timeout"`
 	Retransmissions       types.Int64       `tfsdk:"retransmissions"`
-	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var NFSStaticMountObjectType = map[string]attr.Type{
@@ -64,7 +64,7 @@ var NFSStaticMountObjectType = map[string]attr.Type{
 	"write_size":              types.Int64Type,
 	"timeout":                 types.Int64Type,
 	"retransmissions":         types.Int64Type,
-	"object_actions":          actions.ActionsListType,
+	"dependency_actions":      actions.ActionsListType,
 }
 
 func (data NFSStaticMount) GetPath() string {

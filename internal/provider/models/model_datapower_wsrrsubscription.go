@@ -46,7 +46,7 @@ type WSRRSubscription struct {
 	ObjectVersion          types.String      `tfsdk:"object_version"`
 	FetchPolicyAttachments types.Bool        `tfsdk:"fetch_policy_attachments"`
 	UserSummary            types.String      `tfsdk:"user_summary"`
-	ObjectActions          []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions      []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WSRRSubscriptionObjectType = map[string]attr.Type{
@@ -62,7 +62,7 @@ var WSRRSubscriptionObjectType = map[string]attr.Type{
 	"object_version":           types.StringType,
 	"fetch_policy_attachments": types.BoolType,
 	"user_summary":             types.StringType,
-	"object_actions":           actions.ActionsListType,
+	"dependency_actions":       actions.ActionsListType,
 }
 
 func (data WSRRSubscription) GetPath() string {

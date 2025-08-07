@@ -41,7 +41,7 @@ type WebAppSessionPolicy struct {
 	Timeout               types.Int64       `tfsdk:"timeout"`
 	AddressAgnosticCookie types.Bool        `tfsdk:"address_agnostic_cookie"`
 	StartMatches          types.String      `tfsdk:"start_matches"`
-	ObjectActions         []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions     []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WebAppSessionPolicyObjectType = map[string]attr.Type{
@@ -52,7 +52,7 @@ var WebAppSessionPolicyObjectType = map[string]attr.Type{
 	"timeout":                 types.Int64Type,
 	"address_agnostic_cookie": types.BoolType,
 	"start_matches":           types.StringType,
-	"object_actions":          actions.ActionsListType,
+	"dependency_actions":      actions.ActionsListType,
 }
 
 func (data WebAppSessionPolicy) GetPath() string {

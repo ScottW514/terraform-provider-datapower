@@ -39,7 +39,7 @@ type MQManagerGroup struct {
 	UserSummary         types.String      `tfsdk:"user_summary"`
 	PrimaryQueueManager types.String      `tfsdk:"primary_queue_manager"`
 	BackupQueueManagers types.List        `tfsdk:"backup_queue_managers"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var MQManagerGroupObjectType = map[string]attr.Type{
@@ -48,7 +48,7 @@ var MQManagerGroupObjectType = map[string]attr.Type{
 	"user_summary":          types.StringType,
 	"primary_queue_manager": types.StringType,
 	"backup_queue_managers": types.ListType{ElemType: types.StringType},
-	"object_actions":        actions.ActionsListType,
+	"dependency_actions":    actions.ActionsListType,
 }
 
 func (data MQManagerGroup) GetPath() string {

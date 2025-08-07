@@ -4,6 +4,7 @@ cli_alias: 'odr'
 cmd_group: 'network'
 rest_endpoint: '/mgmt/config/default/ODR/ODRInstance'
 update_only: true
+default_domain_only: true
 attributes:
   - name: mAdminState
     tf_name: 'enabled'

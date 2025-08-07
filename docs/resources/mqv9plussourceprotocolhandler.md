@@ -4,13 +4,14 @@ page_title: "datapower_mqv9plussourceprotocolhandler Resource - terraform-provid
 subcategory: ""
 description: |-
   IBM MQ v9+ handler
-  CLI Alias: source-idg-mq
+  CLI Alias: source-idg-mqAccepted Dependency Actions: quiesce
 ---
 
 # datapower_mqv9plussourceprotocolhandler (Resource)
 
 IBM MQ v9+ handler
   - CLI Alias: `source-idg-mq`
+  - Accepted Dependency Actions: `quiesce`
 
 ## Example Usage
 
@@ -55,6 +56,7 @@ resource "datapower_mqv9plussourceprotocolhandler" "test" {
   - Default value: `None`
 - `content_type_x_path` (String) XPath expression to extract Content-Type from IBM MQ header
   - CLI Alias: `content-type-xpath`
+- `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `exclude_headers` (Attributes) Exclude message headers
   - CLI Alias: `exclude-headers` (see [below for nested schema](#nestedatt--exclude_headers))
 - `get_message_options` (Number) Get message options
@@ -65,7 +67,6 @@ resource "datapower_mqv9plussourceprotocolhandler" "test" {
   - CLI Alias: `get-queue`
 - `message_selector` (String) Selector
   - CLI Alias: `selector`
-- `object_actions` (Attributes List) List of actions to take on dependent objects (see [below for nested schema](#nestedatt--object_actions))
 - `parse_properties` (Boolean) Parse properties
   - CLI Alias: `parse-properties`
   - Default value: `false`
@@ -90,6 +91,23 @@ resource "datapower_mqv9plussourceprotocolhandler" "test" {
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+
+
 <a id="nestedatt--exclude_headers"></a>
 ### Nested Schema for `exclude_headers`
 
@@ -107,20 +125,3 @@ Optional:
   - Default value: `false`
 - `mqwih` (Boolean) Work Information Header (MQWIH)
   - Default value: `false`
-
-
-<a id="nestedatt--object_actions"></a>
-### Nested Schema for `object_actions`
-
-Required:
-
-- `action` (String) Action to take on target
-- `target_domain` (String) Application domain of the action target
-- `target_id` (String) Id of the action target (for `domains`, this must still be set, but the value is ignored)
-- `target_type` (String) Resource type of action target
-
-Optional:
-
-- `run_on_create` (Boolean) Run this action when creating this resource.
-- `run_on_delete` (Boolean) Run this action when deleting this resource.
-- `run_on_update` (Boolean) Run this action when updating this resource.

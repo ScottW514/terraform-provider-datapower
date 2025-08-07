@@ -39,7 +39,7 @@ type XPathRoutingMap struct {
 	XPathRoutingRules types.List        `tfsdk:"x_path_routing_rules"`
 	NameSpaceMappings types.List        `tfsdk:"name_space_mappings"`
 	UserSummary       types.String      `tfsdk:"user_summary"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var XPathRoutingMapObjectType = map[string]attr.Type{
@@ -48,7 +48,7 @@ var XPathRoutingMapObjectType = map[string]attr.Type{
 	"x_path_routing_rules": types.ListType{ElemType: types.ObjectType{AttrTypes: DmXPathRoutingRuleObjectType}},
 	"name_space_mappings":  types.ListType{ElemType: types.ObjectType{AttrTypes: DmNamespaceMappingObjectType}},
 	"user_summary":         types.StringType,
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data XPathRoutingMap) GetPath() string {

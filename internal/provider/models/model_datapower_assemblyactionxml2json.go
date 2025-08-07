@@ -34,29 +34,29 @@ import (
 )
 
 type AssemblyActionXml2Json struct {
-	Id               types.String      `tfsdk:"id"`
-	AppDomain        types.String      `tfsdk:"app_domain"`
-	ConversionFormat types.String      `tfsdk:"conversion_format"`
-	Input            types.String      `tfsdk:"input"`
-	Output           types.String      `tfsdk:"output"`
-	UserSummary      types.String      `tfsdk:"user_summary"`
-	Title            types.String      `tfsdk:"title"`
-	CorrelationPath  types.String      `tfsdk:"correlation_path"`
-	ActionDebug      types.Bool        `tfsdk:"action_debug"`
-	ObjectActions    []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	ConversionFormat  types.String      `tfsdk:"conversion_format"`
+	Input             types.String      `tfsdk:"input"`
+	Output            types.String      `tfsdk:"output"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Title             types.String      `tfsdk:"title"`
+	CorrelationPath   types.String      `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool        `tfsdk:"action_debug"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionXml2JsonObjectType = map[string]attr.Type{
-	"id":                types.StringType,
-	"app_domain":        types.StringType,
-	"conversion_format": types.StringType,
-	"input":             types.StringType,
-	"output":            types.StringType,
-	"user_summary":      types.StringType,
-	"title":             types.StringType,
-	"correlation_path":  types.StringType,
-	"action_debug":      types.BoolType,
-	"object_actions":    actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"conversion_format":  types.StringType,
+	"input":              types.StringType,
+	"output":             types.StringType,
+	"user_summary":       types.StringType,
+	"title":              types.StringType,
+	"correlation_path":   types.StringType,
+	"action_debug":       types.BoolType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data AssemblyActionXml2Json) GetPath() string {

@@ -41,7 +41,7 @@ type WebAppErrorHandlingPolicy struct {
 	Url                  types.String      `tfsdk:"url"`
 	ErrorStylePolicyRule types.String      `tfsdk:"error_style_policy_rule"`
 	ErrorMonitor         types.String      `tfsdk:"error_monitor"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WebAppErrorHandlingPolicyObjectType = map[string]attr.Type{
@@ -52,7 +52,7 @@ var WebAppErrorHandlingPolicyObjectType = map[string]attr.Type{
 	"url":                     types.StringType,
 	"error_style_policy_rule": types.StringType,
 	"error_monitor":           types.StringType,
-	"object_actions":          actions.ActionsListType,
+	"dependency_actions":      actions.ActionsListType,
 }
 
 func (data WebAppErrorHandlingPolicy) GetPath() string {

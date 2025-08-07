@@ -40,7 +40,7 @@ type LDAPConnectionPool struct {
 	IdleTimeout       types.Int64       `tfsdk:"idle_timeout"`
 	MaxPoolSize       types.Int64       `tfsdk:"max_pool_size"`
 	RejectOnPoolLimit types.Bool        `tfsdk:"reject_on_pool_limit"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var LDAPConnectionPoolObjectType = map[string]attr.Type{
@@ -50,7 +50,7 @@ var LDAPConnectionPoolObjectType = map[string]attr.Type{
 	"idle_timeout":         types.Int64Type,
 	"max_pool_size":        types.Int64Type,
 	"reject_on_pool_limit": types.BoolType,
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data LDAPConnectionPool) GetPath() string {

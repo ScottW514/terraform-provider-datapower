@@ -46,7 +46,7 @@ type Throttler struct {
 	EnvironmentalLog  types.Bool        `tfsdk:"environmental_log"`
 	BacklogSize       types.Int64       `tfsdk:"backlog_size"`
 	BacklogTimeout    types.Int64       `tfsdk:"backlog_timeout"`
-	ObjectActions     []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var ThrottlerObjectType = map[string]attr.Type{
@@ -63,7 +63,7 @@ var ThrottlerObjectType = map[string]attr.Type{
 	"environmental_log":    types.BoolType,
 	"backlog_size":         types.Int64Type,
 	"backlog_timeout":      types.Int64Type,
-	"object_actions":       actions.ActionsListType,
+	"dependency_actions":   actions.ActionsListType,
 }
 
 func (data Throttler) GetPath() string {

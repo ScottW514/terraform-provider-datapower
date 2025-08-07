@@ -34,37 +34,37 @@ import (
 )
 
 type AssemblyActionValidate struct {
-	Id              types.String      `tfsdk:"id"`
-	AppDomain       types.String      `tfsdk:"app_domain"`
-	ValidateAgainst types.String      `tfsdk:"validate_against"`
-	ErrorPolicy     types.String      `tfsdk:"error_policy"`
-	Schema          types.String      `tfsdk:"schema"`
-	Input           types.String      `tfsdk:"input"`
-	Output          types.String      `tfsdk:"output"`
-	Definition      types.String      `tfsdk:"definition"`
-	CompileSettings types.String      `tfsdk:"compile_settings"`
-	UserSummary     types.String      `tfsdk:"user_summary"`
-	Title           types.String      `tfsdk:"title"`
-	CorrelationPath types.String      `tfsdk:"correlation_path"`
-	ActionDebug     types.Bool        `tfsdk:"action_debug"`
-	ObjectActions   []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	ValidateAgainst   types.String      `tfsdk:"validate_against"`
+	ErrorPolicy       types.String      `tfsdk:"error_policy"`
+	Schema            types.String      `tfsdk:"schema"`
+	Input             types.String      `tfsdk:"input"`
+	Output            types.String      `tfsdk:"output"`
+	Definition        types.String      `tfsdk:"definition"`
+	CompileSettings   types.String      `tfsdk:"compile_settings"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Title             types.String      `tfsdk:"title"`
+	CorrelationPath   types.String      `tfsdk:"correlation_path"`
+	ActionDebug       types.Bool        `tfsdk:"action_debug"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionValidateObjectType = map[string]attr.Type{
-	"id":               types.StringType,
-	"app_domain":       types.StringType,
-	"validate_against": types.StringType,
-	"error_policy":     types.StringType,
-	"schema":           types.StringType,
-	"input":            types.StringType,
-	"output":           types.StringType,
-	"definition":       types.StringType,
-	"compile_settings": types.StringType,
-	"user_summary":     types.StringType,
-	"title":            types.StringType,
-	"correlation_path": types.StringType,
-	"action_debug":     types.BoolType,
-	"object_actions":   actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"validate_against":   types.StringType,
+	"error_policy":       types.StringType,
+	"schema":             types.StringType,
+	"input":              types.StringType,
+	"output":             types.StringType,
+	"definition":         types.StringType,
+	"compile_settings":   types.StringType,
+	"user_summary":       types.StringType,
+	"title":              types.StringType,
+	"correlation_path":   types.StringType,
+	"action_debug":       types.BoolType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data AssemblyActionValidate) GetPath() string {

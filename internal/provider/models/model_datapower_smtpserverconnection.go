@@ -45,7 +45,7 @@ type SMTPServerConnection struct {
 	AccountPasswordAlias types.String      `tfsdk:"account_password_alias"`
 	SslClientConfigType  types.String      `tfsdk:"ssl_client_config_type"`
 	SslClient            types.String      `tfsdk:"ssl_client"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SMTPServerConnectionObjectType = map[string]attr.Type{
@@ -60,7 +60,7 @@ var SMTPServerConnectionObjectType = map[string]attr.Type{
 	"account_password_alias": types.StringType,
 	"ssl_client_config_type": types.StringType,
 	"ssl_client":             types.StringType,
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data SMTPServerConnection) GetPath() string {

@@ -55,7 +55,6 @@ func (r *QuotaEnforcementServerResource) Metadata(ctx context.Context, req resou
 func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: tfutils.NewAttributeDescription("Quota Enforcement Server (`default` domain only)", "quota-enforcement-server", "").String,
-
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
@@ -132,7 +131,7 @@ func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resourc
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -153,7 +152,7 @@ func (r *QuotaEnforcementServerResource) Create(ctx context.Context, req resourc
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `QuotaEnforcementServer`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -200,7 +199,7 @@ func (r *QuotaEnforcementServerResource) Update(ctx context.Context, req resourc
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `QuotaEnforcementServer`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

@@ -54,7 +54,7 @@ type AssemblyActionWebSocketUpgrade struct {
 	Title                         types.String      `tfsdk:"title"`
 	CorrelationPath               types.String      `tfsdk:"correlation_path"`
 	ActionDebug                   types.Bool        `tfsdk:"action_debug"`
-	ObjectActions                 []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions             []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var AssemblyActionWebSocketUpgradeObjectType = map[string]attr.Type{
@@ -78,7 +78,7 @@ var AssemblyActionWebSocketUpgradeObjectType = map[string]attr.Type{
 	"title":                            types.StringType,
 	"correlation_path":                 types.StringType,
 	"action_debug":                     types.BoolType,
-	"object_actions":                   actions.ActionsListType,
+	"dependency_actions":               actions.ActionsListType,
 }
 
 func (data AssemblyActionWebSocketUpgrade) GetPath() string {

@@ -54,8 +54,7 @@ func (r *GWScriptSettingsResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *GWScriptSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("GatewayScript Settings", "gatewayscript-settings", "").String,
-
+		MarkdownDescription: tfutils.NewAttributeDescription("GatewayScript Settings (`default` domain only)", "gatewayscript-settings", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
@@ -95,7 +94,7 @@ func (r *GWScriptSettingsResource) Schema(ctx context.Context, req resource.Sche
 					int64validator.Between(0, 300),
 				},
 			},
-			"object_actions": actions.ActionsSchema,
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }
@@ -116,7 +115,7 @@ func (r *GWScriptSettingsResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create)
 
 	body := data.ToBody(ctx, `GWScriptSettings`)
 	_, err := r.client.Put(data.GetPath(), body)
@@ -169,7 +168,7 @@ func (r *GWScriptSettingsResource) Update(ctx context.Context, req resource.Upda
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.ObjectActions, actions.Update)
+	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update)
 	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `GWScriptSettings`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))

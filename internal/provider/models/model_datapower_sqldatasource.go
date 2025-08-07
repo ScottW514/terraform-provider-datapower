@@ -60,7 +60,7 @@ type SQLDataSource struct {
 	HostNameInCertificate      types.String      `tfsdk:"host_name_in_certificate"`
 	ValidateHostName           types.Bool        `tfsdk:"validate_host_name"`
 	KeystoreRef                types.String      `tfsdk:"keystore_ref"`
-	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SQLDataSourceObjectType = map[string]attr.Type{
@@ -90,7 +90,7 @@ var SQLDataSourceObjectType = map[string]attr.Type{
 	"host_name_in_certificate":        types.StringType,
 	"validate_host_name":              types.BoolType,
 	"keystore_ref":                    types.StringType,
-	"object_actions":                  actions.ActionsListType,
+	"dependency_actions":              actions.ActionsListType,
 }
 
 func (data SQLDataSource) GetPath() string {

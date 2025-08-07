@@ -34,21 +34,21 @@ import (
 )
 
 type SLMAction struct {
-	Id            types.String      `tfsdk:"id"`
-	AppDomain     types.String      `tfsdk:"app_domain"`
-	UserSummary   types.String      `tfsdk:"user_summary"`
-	Type          types.String      `tfsdk:"type"`
-	LogLevel      types.String      `tfsdk:"log_level"`
-	ObjectActions []*actions.Action `tfsdk:"object_actions"`
+	Id                types.String      `tfsdk:"id"`
+	AppDomain         types.String      `tfsdk:"app_domain"`
+	UserSummary       types.String      `tfsdk:"user_summary"`
+	Type              types.String      `tfsdk:"type"`
+	LogLevel          types.String      `tfsdk:"log_level"`
+	DependencyActions []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var SLMActionObjectType = map[string]attr.Type{
-	"id":             types.StringType,
-	"app_domain":     types.StringType,
-	"user_summary":   types.StringType,
-	"type":           types.StringType,
-	"log_level":      types.StringType,
-	"object_actions": actions.ActionsListType,
+	"id":                 types.StringType,
+	"app_domain":         types.StringType,
+	"user_summary":       types.StringType,
+	"type":               types.StringType,
+	"log_level":          types.StringType,
+	"dependency_actions": actions.ActionsListType,
 }
 
 func (data SLMAction) GetPath() string {

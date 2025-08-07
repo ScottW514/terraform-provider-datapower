@@ -45,7 +45,7 @@ type WebGUI struct {
 	SslsniServer         types.String      `tfsdk:"sslsni_server"`
 	EnableSts            types.Bool        `tfsdk:"enable_sts"`
 	LocalAddress         types.String      `tfsdk:"local_address"`
-	ObjectActions        []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions    []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var WebGUIObjectType = map[string]attr.Type{
@@ -61,7 +61,7 @@ var WebGUIObjectType = map[string]attr.Type{
 	"sslsni_server":          types.StringType,
 	"enable_sts":             types.BoolType,
 	"local_address":          types.StringType,
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data WebGUI) GetPath() string {

@@ -43,7 +43,7 @@ type FileSystemUsageMonitor struct {
 	AllQmWarningThreshold      types.Int64       `tfsdk:"all_qm_warning_threshold"`
 	AllQmCriticalThreshold     types.Int64       `tfsdk:"all_qm_critical_threshold"`
 	QueueManager               types.List        `tfsdk:"queue_manager"`
-	ObjectActions              []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions          []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var FileSystemUsageMonitorObjectType = map[string]attr.Type{
@@ -57,7 +57,7 @@ var FileSystemUsageMonitorObjectType = map[string]attr.Type{
 	"all_qm_warning_threshold":      types.Int64Type,
 	"all_qm_critical_threshold":     types.Int64Type,
 	"queue_manager":                 types.ListType{ElemType: types.ObjectType{AttrTypes: DmQMFileSystemUsageObjectType}},
-	"object_actions":                actions.ActionsListType,
+	"dependency_actions":            actions.ActionsListType,
 }
 
 func (data FileSystemUsageMonitor) GetPath() string {

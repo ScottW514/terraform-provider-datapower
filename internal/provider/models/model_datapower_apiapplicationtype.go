@@ -39,7 +39,7 @@ type APIApplicationType struct {
 	UserSummary         types.String      `tfsdk:"user_summary"`
 	Title               types.String      `tfsdk:"title"`
 	SupportedOAuthTypes types.List        `tfsdk:"supported_o_auth_types"`
-	ObjectActions       []*actions.Action `tfsdk:"object_actions"`
+	DependencyActions   []*actions.Action `tfsdk:"dependency_actions"`
 }
 
 var APIApplicationTypeObjectType = map[string]attr.Type{
@@ -48,7 +48,7 @@ var APIApplicationTypeObjectType = map[string]attr.Type{
 	"user_summary":           types.StringType,
 	"title":                  types.StringType,
 	"supported_o_auth_types": types.ListType{ElemType: types.ObjectType{AttrTypes: DmOAuthTypeObjectType}},
-	"object_actions":         actions.ActionsListType,
+	"dependency_actions":     actions.ActionsListType,
 }
 
 func (data APIApplicationType) GetPath() string {

@@ -27,6 +27,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
@@ -49,7 +50,7 @@ func (d *GWScriptSettingsDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *GWScriptSettingsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "GatewayScript Settings",
+		MarkdownDescription: "GatewayScript Settings (`default` domain only)",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
 				MarkdownDescription: "Administrative state",
@@ -75,6 +76,7 @@ func (d *GWScriptSettingsDataSource) Schema(ctx context.Context, req datasource.
 				MarkdownDescription: "Max processing duration",
 				Computed:            true,
 			},
+			"dependency_actions": actions.ActionsSchema,
 		},
 	}
 }

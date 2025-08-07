@@ -1,5 +1,6 @@
 
 resource "datapower_apiconnectgatewayservice" "test" {
+  app_domain    = "acc_test_domain"
   local_address = "0.0.0.0"
   local_port    = 3000
   proxy_policy  = { proxy_policy_enable = false, remote_address = "localhost", remote_port = 8080 }
