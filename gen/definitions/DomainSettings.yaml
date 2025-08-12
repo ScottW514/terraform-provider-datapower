@@ -32,8 +32,7 @@ attributes:
       - 'none'
       - 'masked'
     required: true
-    default: 'none'
-    test_expect_ds: '"masked"'
+    default: 'masked'
     description: 'Password treatment'
     cli_alias: password-treatment
   - name: Passphrase

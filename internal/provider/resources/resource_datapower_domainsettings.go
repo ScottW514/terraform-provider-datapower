@@ -80,13 +80,13 @@ func (r *DomainSettingsResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"password_treatment": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password treatment", "password-treatment", "").AddStringEnum("none", "masked").AddDefaultValue("none").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Password treatment", "password-treatment", "").AddStringEnum("none", "masked").AddDefaultValue("masked").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "masked"),
 				},
-				Default: stringdefault.StaticString("none"),
+				Default: stringdefault.StaticString("masked"),
 			},
 			"passphrase": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Passphrase", "passphrase", "").String,

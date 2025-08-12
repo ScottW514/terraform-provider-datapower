@@ -1527,7 +1527,6 @@ var AuditLogTestConfig = ModelTestConfig{
     Name:         "AuditLog",
     Resource: `
 resource "datapower_auditlog" "test" {
-  audit_level = "full"
 }`,
     Data: `
 data "datapower_auditlog" "test" {
@@ -4521,7 +4520,7 @@ var DomainSettingsTestConfig = ModelTestConfig{
     Resource: `
 resource "datapower_domainsettings" "test" {
   app_domain = "acceptance_test"
-  password_treatment = "none"
+  password_treatment = "masked"
 }`,
     Data: `
 data "datapower_domainsettings" "test" {
@@ -6979,8 +6978,8 @@ var ThrottlerTestConfig = ModelTestConfig{
     Name:         "Throttler",
     Resource: `
 resource "datapower_throttler" "test" {
-  throttle_at = 20
-  terminate_at = 5
+  throttle_at = 0
+  terminate_at = 0
   temp_fs_throttle_at = 0
   temp_fs_terminate_at = 0
   qname_warn_at = 10

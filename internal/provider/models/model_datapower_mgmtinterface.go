@@ -218,7 +218,7 @@ func (data *MgmtInterface) UpdateFromBody(ctx context.Context, pathRoot string, 
 	}
 	if value := res.Get(pathRoot + `mAdminState`); value.Exists() && !data.Enabled.IsNull() {
 		data.Enabled = tfutils.BoolFromString(value.String())
-	} else if !data.Enabled.ValueBool() {
+	} else if data.Enabled.ValueBool() {
 		data.Enabled = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `UserSummary`); value.Exists() && !data.UserSummary.IsNull() {

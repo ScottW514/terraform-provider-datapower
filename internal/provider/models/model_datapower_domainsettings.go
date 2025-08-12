@@ -115,7 +115,7 @@ func (data *DomainSettings) FromBody(ctx context.Context, pathRoot string, res g
 	if value := res.Get(pathRoot + `PasswordTreatment`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PasswordTreatment = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.PasswordTreatment = types.StringValue("none")
+		data.PasswordTreatment = types.StringValue("masked")
 	}
 	if value := res.Get(pathRoot + `Passphrase`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.Passphrase = tfutils.ParseStringFromGJSON(value)
@@ -140,7 +140,7 @@ func (data *DomainSettings) UpdateFromBody(ctx context.Context, pathRoot string,
 	}
 	if value := res.Get(pathRoot + `PasswordTreatment`); value.Exists() && !data.PasswordTreatment.IsNull() {
 		data.PasswordTreatment = tfutils.ParseStringFromGJSON(value)
-	} else if data.PasswordTreatment.ValueString() != "none" {
+	} else if data.PasswordTreatment.ValueString() != "masked" {
 		data.PasswordTreatment = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `Passphrase`); value.Exists() && !data.Passphrase.IsNull() {

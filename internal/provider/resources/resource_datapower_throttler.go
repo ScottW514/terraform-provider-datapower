@@ -68,24 +68,24 @@ func (r *ThrottlerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 			},
 			"throttle_at": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Memory throttle threshold", "memory-throttle", "").AddIntegerRange(0, 100).AddDefaultValue("20").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Memory throttle threshold", "memory-throttle", "").AddIntegerRange(0, 100).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 
 					int64validator.Between(0, 100),
 				},
-				Default: int64default.StaticInt64(20),
+				Default: int64default.StaticInt64(0),
 			},
 			"terminate_at": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Memory terminate threshold", "memory-terminate", "").AddIntegerRange(0, 100).AddDefaultValue("5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Memory terminate threshold", "memory-terminate", "").AddIntegerRange(0, 100).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
 
 					int64validator.Between(0, 100),
 				},
-				Default: int64default.StaticInt64(5),
+				Default: int64default.StaticInt64(0),
 			},
 			"temp_fs_throttle_at": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Temporary file space throttle threshold", "temp-fs-throttle", "").AddIntegerRange(0, 100).AddDefaultValue("0").String,

@@ -179,12 +179,12 @@ func (data *Throttler) FromBody(ctx context.Context, pathRoot string, res gjson.
 	if value := res.Get(pathRoot + `ThrottleAt`); value.Exists() {
 		data.ThrottleAt = types.Int64Value(value.Int())
 	} else {
-		data.ThrottleAt = types.Int64Value(20)
+		data.ThrottleAt = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `TerminateAt`); value.Exists() {
 		data.TerminateAt = types.Int64Value(value.Int())
 	} else {
-		data.TerminateAt = types.Int64Value(5)
+		data.TerminateAt = types.Int64Value(0)
 	}
 	if value := res.Get(pathRoot + `TempFSThrottleAt`); value.Exists() {
 		data.TempFsThrottleAt = types.Int64Value(value.Int())
@@ -249,12 +249,12 @@ func (data *Throttler) UpdateFromBody(ctx context.Context, pathRoot string, res 
 	}
 	if value := res.Get(pathRoot + `ThrottleAt`); value.Exists() && !data.ThrottleAt.IsNull() {
 		data.ThrottleAt = types.Int64Value(value.Int())
-	} else if data.ThrottleAt.ValueInt64() != 20 {
+	} else if data.ThrottleAt.ValueInt64() != 0 {
 		data.ThrottleAt = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `TerminateAt`); value.Exists() && !data.TerminateAt.IsNull() {
 		data.TerminateAt = types.Int64Value(value.Int())
-	} else if data.TerminateAt.ValueInt64() != 5 {
+	} else if data.TerminateAt.ValueInt64() != 0 {
 		data.TerminateAt = types.Int64Null()
 	}
 	if value := res.Get(pathRoot + `TempFSThrottleAt`); value.Exists() && !data.TempFsThrottleAt.IsNull() {

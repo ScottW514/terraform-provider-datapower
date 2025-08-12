@@ -16,7 +16,6 @@ Audit log settings (`default` domain only)
 
 ```terraform
 resource "datapower_auditlog" "test" {
-  audit_level = "full"
 }
 ```
 

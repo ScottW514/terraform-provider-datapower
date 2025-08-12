@@ -33,7 +33,7 @@ resource "datapower_mgmtinterface" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enabled` (Boolean) Administrative state
   - CLI Alias: `admin-state`
-  - Default value: `true`
+  - Default value: `false`
 - `local_address` (String) Local address
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`

@@ -37,7 +37,7 @@ func TestAccResourceDomainSettings(t *testing.T) {
 		Config: testutils.DomainSettingsTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_domainsettings.test", "enabled", "true"),
-			resource.TestCheckResourceAttr("datapower_domainsettings.test", "password_treatment", "none"),
+			resource.TestCheckResourceAttr("datapower_domainsettings.test", "password_treatment", "masked"),
 		}...),
 	})
 

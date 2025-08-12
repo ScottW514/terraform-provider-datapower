@@ -19,6 +19,7 @@ description: |-
 - Updated github.com/hashicorp/terraform-plugin-framework from 1.15.0 to 1.15.1 (PR4)
 - Bump golang.org/x/tools from 0.35.0 to 0.36.0 (PR5)
 - Bump golang.org/x/crypto from 0.40.0 to 0.41.0 (PR6)
+- Fixed `Sensitive` attribute property
 
 ## v0.6.2
 

@@ -10,8 +10,7 @@ attributes:
     tf_name: 'enabled'
     type: Bool
     bool_type: 'admin'
-    default: true
-    test_expect_ds: '"false"'
+    default: false
     description: 'Administrative state'
     cli_alias: admin-state
   - name: UserSummary

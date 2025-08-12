@@ -58,10 +58,10 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 		MarkdownDescription: tfutils.NewAttributeDescription("XML management interface (`default` domain only)", "xml-mgmt", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             booldefault.StaticBool(true),
+				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,

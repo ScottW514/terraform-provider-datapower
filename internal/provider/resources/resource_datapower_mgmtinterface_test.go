@@ -36,7 +36,7 @@ func TestAccResourceMgmtInterface(t *testing.T) {
 	steps = append(steps, resource.TestStep{
 		Config: testutils.MgmtInterfaceTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-			resource.TestCheckResourceAttr("datapower_mgmtinterface.test", "enabled", "true"),
+			resource.TestCheckResourceAttr("datapower_mgmtinterface.test", "enabled", "false"),
 			resource.TestCheckResourceAttr("datapower_mgmtinterface.test", "local_port", "5550"),
 			resource.TestCheckResourceAttr("datapower_mgmtinterface.test", "acl", "xml-mgmt"),
 			resource.TestCheckResourceAttr("datapower_mgmtinterface.test", "slm_peering", "10"),

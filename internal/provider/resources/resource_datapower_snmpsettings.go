@@ -129,13 +129,13 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default:             booldefault.StaticBool(true),
 			},
 			"trap_priority": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Minimum Priority", "trap-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("error").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Minimum Priority", "trap-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug"),
 				},
-				Default: stringdefault.StaticString("error"),
+				Default: stringdefault.StaticString("warn"),
 			},
 			"trap_event_code": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Event Subscriptions", "trap-code", "").String,

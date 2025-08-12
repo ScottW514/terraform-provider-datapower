@@ -42,7 +42,7 @@ func TestAccResourceSNMPSettings(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_snmpsettings.test", "security_level", "authPriv"),
 			resource.TestCheckResourceAttr("datapower_snmpsettings.test", "access_level", "read-only"),
 			resource.TestCheckResourceAttr("datapower_snmpsettings.test", "enable_default_trap_subscriptions", "true"),
-			resource.TestCheckResourceAttr("datapower_snmpsettings.test", "trap_priority", "error"),
+			resource.TestCheckResourceAttr("datapower_snmpsettings.test", "trap_priority", "warn"),
 			resource.TestCheckResourceAttr("datapower_snmpsettings.test", "config_mib", "/drConfigMIB.txt"),
 			resource.TestCheckResourceAttr("datapower_snmpsettings.test", "config_mib_mq", "/mqConfigMIB.txt"),
 			resource.TestCheckResourceAttr("datapower_snmpsettings.test", "status_mib", "/drStatusMIB.txt"),

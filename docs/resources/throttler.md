@@ -16,8 +16,8 @@ Throttle settings (`default` domain only)
 
 ```terraform
 resource "datapower_throttler" "test" {
-  throttle_at          = 20
-  terminate_at         = 5
+  throttle_at          = 0
+  terminate_at         = 0
   temp_fs_throttle_at  = 0
   temp_fs_terminate_at = 0
   qname_warn_at        = 10
@@ -66,11 +66,11 @@ resource "datapower_throttler" "test" {
 - `terminate_at` (Number) Memory terminate threshold
   - CLI Alias: `memory-terminate`
   - Range: `0`-`100`
-  - Default value: `5`
+  - Default value: `0`
 - `throttle_at` (Number) Memory throttle threshold
   - CLI Alias: `memory-throttle`
   - Range: `0`-`100`
-  - Default value: `20`
+  - Default value: `0`
 - `timeout` (Number) Timeout
   - CLI Alias: `timeout`
   - Default value: `30`

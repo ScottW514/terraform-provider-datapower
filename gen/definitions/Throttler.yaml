@@ -19,22 +19,23 @@ attributes:
     cli_alias: summary
   - name: ThrottleAt
     type: Int64
+    minimum: 0
     maximum: 100
     required: true
-    default: 20
-    test_expect_ds: '"0"'
+    default: 0
     description: 'Memory throttle threshold'
     cli_alias: memory-throttle
   - name: TerminateAt
     type: Int64
+    minimum: 0
     maximum: 100
     required: true
-    default: 5
-    test_expect_ds: '"0"'
+    default: 0
     description: 'Memory terminate threshold'
     cli_alias: memory-terminate
   - name: TempFSThrottleAt
     type: Int64
+    minimum: 0
     maximum: 100
     required: true
     default: 0
@@ -42,6 +43,7 @@ attributes:
     cli_alias: temp-fs-throttle
   - name: TempFSTerminateAt
     type: Int64
+    minimum: 0
     maximum: 100
     required: true
     default: 0
@@ -87,6 +89,7 @@ attributes:
     cli_alias: sensors-log
   - name: BacklogSize
     type: Int64
+    minimum: 0
     maximum: 500
     default: 0
     description: 'Backlog size'

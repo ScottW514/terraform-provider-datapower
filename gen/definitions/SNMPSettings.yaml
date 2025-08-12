@@ -90,8 +90,7 @@ attributes:
       - 'notice'
       - 'info'
       - 'debug'
-    default: 'error'
-    test_expect_ds: '"warn"'
+    default: 'warn'
     description: 'Minimum Priority'
     cli_alias: trap-priority
   - name: TrapEventCode

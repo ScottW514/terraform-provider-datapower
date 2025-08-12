@@ -17,7 +17,7 @@ Domain settings
 ```terraform
 resource "datapower_domainsettings" "test" {
   app_domain         = "acceptance_test"
-  password_treatment = "none"
+  password_treatment = "masked"
 }
 ```
 
@@ -39,7 +39,7 @@ resource "datapower_domainsettings" "test" {
 - `password_treatment` (String) Password treatment
   - CLI Alias: `password-treatment`
   - Choices: `none`, `masked`
-  - Default value: `none`
+  - Default value: `masked`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

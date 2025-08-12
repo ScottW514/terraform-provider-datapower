@@ -33,7 +33,5 @@ attributes:
       - 'standard'
       - 'full'
     default: 'standard'
-    test_value: '"full"'
-    test_expect_ds: '"standard"'
     description: 'Audit level'
     cli_alias: audit-level

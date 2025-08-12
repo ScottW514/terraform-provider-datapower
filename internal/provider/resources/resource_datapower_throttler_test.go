@@ -37,8 +37,8 @@ func TestAccResourceThrottler(t *testing.T) {
 		Config: testutils.ThrottlerTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_throttler.test", "enabled", "true"),
-			resource.TestCheckResourceAttr("datapower_throttler.test", "throttle_at", "20"),
-			resource.TestCheckResourceAttr("datapower_throttler.test", "terminate_at", "5"),
+			resource.TestCheckResourceAttr("datapower_throttler.test", "throttle_at", "0"),
+			resource.TestCheckResourceAttr("datapower_throttler.test", "terminate_at", "0"),
 			resource.TestCheckResourceAttr("datapower_throttler.test", "temp_fs_throttle_at", "0"),
 			resource.TestCheckResourceAttr("datapower_throttler.test", "temp_fs_terminate_at", "0"),
 			resource.TestCheckResourceAttr("datapower_throttler.test", "qname_warn_at", "10"),

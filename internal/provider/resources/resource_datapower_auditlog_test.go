@@ -39,7 +39,7 @@ func TestAccResourceAuditLog(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_auditlog.test", "enabled", "true"),
 			resource.TestCheckResourceAttr("datapower_auditlog.test", "size", "1000"),
 			resource.TestCheckResourceAttr("datapower_auditlog.test", "rotate", "3"),
-			resource.TestCheckResourceAttr("datapower_auditlog.test", "audit_level", "full"),
+			resource.TestCheckResourceAttr("datapower_auditlog.test", "audit_level", "standard"),
 		}...),
 	})
 

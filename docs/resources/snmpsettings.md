@@ -79,7 +79,7 @@ resource "datapower_snmpsettings" "test" {
 - `trap_priority` (String) Minimum Priority
   - CLI Alias: `trap-priority`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
-  - Default value: `error`
+  - Default value: `warn`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 - `users` (List of String) SNMPv3 Users

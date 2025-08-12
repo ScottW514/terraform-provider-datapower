@@ -365,7 +365,7 @@ func (data *SNMPSettings) FromBody(ctx context.Context, pathRoot string, res gjs
 	if value := res.Get(pathRoot + `TrapPriority`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.TrapPriority = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.TrapPriority = types.StringValue("error")
+		data.TrapPriority = types.StringValue("warn")
 	}
 	if value := res.Get(pathRoot + `TrapEventCode`); value.Exists() {
 		data.TrapEventCode = tfutils.ParseStringListFromGJSON(value)
@@ -518,7 +518,7 @@ func (data *SNMPSettings) UpdateFromBody(ctx context.Context, pathRoot string, r
 	}
 	if value := res.Get(pathRoot + `TrapPriority`); value.Exists() && !data.TrapPriority.IsNull() {
 		data.TrapPriority = tfutils.ParseStringFromGJSON(value)
-	} else if data.TrapPriority.ValueString() != "error" {
+	} else if data.TrapPriority.ValueString() != "warn" {
 		data.TrapPriority = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `TrapEventCode`); value.Exists() && !data.TrapEventCode.IsNull() {
