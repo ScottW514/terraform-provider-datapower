@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceFilterAction(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.FilterActionTestConfig.GetResourceConfig(),
+		Config: testutils.FilterActionTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_filteraction.test", "type", "notify"),
 			resource.TestCheckResourceAttr("datapower_filteraction.test", "log_level", "debug"),

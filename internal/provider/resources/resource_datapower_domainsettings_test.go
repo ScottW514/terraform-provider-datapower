@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceDomainSettings(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.DomainSettingsTestConfig.GetResourceConfig(),
+		Config: testutils.DomainSettingsTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_domainsettings.test", "enabled", "true"),
 			resource.TestCheckResourceAttr("datapower_domainsettings.test", "password_treatment", "none"),

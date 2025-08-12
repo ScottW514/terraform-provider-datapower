@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceLoadBalancerGroup(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.LoadBalancerGroupTestConfig.GetResourceConfig(),
+		Config: testutils.LoadBalancerGroupTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "algorithm", "round-robin"),
 			resource.TestCheckResourceAttr("datapower_loadbalancergroup.test", "retrieve_info", "false"),

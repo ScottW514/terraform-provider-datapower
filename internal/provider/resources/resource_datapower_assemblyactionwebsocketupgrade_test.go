@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceAssemblyActionWebSocketUpgrade(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.AssemblyActionWebSocketUpgradeTestConfig.GetResourceConfig(),
+		Config: testutils.AssemblyActionWebSocketUpgradeTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_assemblyactionwebsocketupgrade.test", "timeout", "60"),
 			resource.TestCheckResourceAttr("datapower_assemblyactionwebsocketupgrade.test", "follow_redirects", "false"),

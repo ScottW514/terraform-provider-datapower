@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceGWSRemoteDebug(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.GWSRemoteDebugTestConfig.GetResourceConfig(),
+		Config: testutils.GWSRemoteDebugTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_gwsremotedebug.test", "enabled", "false"),
 			resource.TestCheckResourceAttr("datapower_gwsremotedebug.test", "local_port", "9229"),

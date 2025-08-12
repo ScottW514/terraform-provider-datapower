@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceAssemblyActionFunctionCall(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.AssemblyActionFunctionCallTestConfig.GetDataConfig(),
+				Config: testutils.AssemblyActionFunctionCallTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionfunctioncall.test", "result.0.id", "AccTest_AssemblyActionFunctionCall"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionfunctioncall.test", "result.0.action_debug", "false"),

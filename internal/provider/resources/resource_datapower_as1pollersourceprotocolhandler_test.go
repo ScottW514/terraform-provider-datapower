@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceAS1PollerSourceProtocolHandler(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.AS1PollerSourceProtocolHandlerTestConfig.GetResourceConfig(),
+		Config: testutils.AS1PollerSourceProtocolHandlerTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_as1pollersourceprotocolhandler.test", "conn_security", "none"),
 			resource.TestCheckResourceAttr("datapower_as1pollersourceprotocolhandler.test", "auth_method", "basic"),

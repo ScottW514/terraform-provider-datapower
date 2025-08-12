@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceAssemblyActionJson2Xml(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.AssemblyActionJson2XmlTestConfig.GetResourceConfig(),
+		Config: testutils.AssemblyActionJson2XmlTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_assemblyactionjson2xml.test", "conversion_format", "badgerfish"),
 			resource.TestCheckResourceAttr("datapower_assemblyactionjson2xml.test", "input", "message"),

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceAssemblyActionUserSecurity(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.AssemblyActionUserSecurityTestConfig.GetDataConfig(),
+				Config: testutils.AssemblyActionUserSecurityTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionusersecurity.test", "result.0.id", "AccTest_AssemblyActionUserSecurity"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionusersecurity.test", "result.0.factor_id", "default"),

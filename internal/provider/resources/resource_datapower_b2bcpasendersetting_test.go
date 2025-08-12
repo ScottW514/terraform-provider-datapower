@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceB2BCPASenderSetting(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.B2BCPASenderSettingTestConfig.GetResourceConfig(),
+		Config: testutils.B2BCPASenderSettingTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_b2bcpasendersetting.test", "connection_timeout", "300"),
 			resource.TestCheckResourceAttr("datapower_b2bcpasendersetting.test", "sync_reply_mode", "none"),

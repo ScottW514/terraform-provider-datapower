@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceAPISecurityAPIKey(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.APISecurityAPIKeyTestConfig.GetDataConfig(),
+				Config: testutils.APISecurityAPIKeyTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_apisecurityapikey.test", "result.0.id", "AccTest_APISecurityAPIKey"),
 					resource.TestCheckResourceAttr("data.datapower_apisecurityapikey.test", "result.0.where", "header"),

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceAPIConnectGatewayService(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.APIConnectGatewayServiceTestConfig.GetResourceConfig(),
+		Config: testutils.APIConnectGatewayServiceTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_apiconnectgatewayservice.test", "enabled", "false"),
 			resource.TestCheckResourceAttr("datapower_apiconnectgatewayservice.test", "local_address", "0.0.0.0"),

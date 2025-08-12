@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceAPICORS(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.APICORSTestConfig.GetResourceConfig(),
+		Config: testutils.APICORSTestConfig.GetResourceConfig(),
 		Check:  resource.ComposeTestCheckFunc([]resource.TestCheckFunc{}...),
 	})
 

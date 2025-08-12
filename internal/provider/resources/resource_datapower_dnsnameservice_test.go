@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -36,7 +35,7 @@ func TestAccResourceDNSNameService(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.DNSNameServiceTestConfig.GetResourceConfig(),
+		Config: testutils.DNSNameServiceTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_dnsnameservice.test", "enabled", "true"),
 			resource.TestCheckResourceAttr("datapower_dnsnameservice.test", "force_ip_preference", "false"),

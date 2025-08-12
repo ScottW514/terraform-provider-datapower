@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceCryptoKerberosKDC(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.CryptoKerberosKDCTestConfig.GetResourceConfig(),
+		Config: testutils.CryptoKerberosKDCTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_cryptokerberoskdc.test", "use_tcp", "false"),
 			resource.TestCheckResourceAttr("datapower_cryptokerberoskdc.test", "server_port", "88"),

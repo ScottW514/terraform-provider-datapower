@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceWSStylePolicy(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.WSStylePolicyTestConfig.GetResourceConfig(),
+		Config: testutils.WSStylePolicyTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_wsstylepolicy.test", "def_stylesheet_for_soap", "store:///filter-reject-all.xsl"),
 			resource.TestCheckResourceAttr("datapower_wsstylepolicy.test", "def_stylesheet_for_xsl", "store:///identity.xsl"),

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceOpenTelemetrySampler(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.OpenTelemetrySamplerTestConfig.GetResourceConfig(),
+		Config: testutils.OpenTelemetrySamplerTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_opentelemetrysampler.test", "parent_based", "true"),
 			resource.TestCheckResourceAttr("datapower_opentelemetrysampler.test", "type", "always-on"),

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceFTPFilePollerSourceProtocolHandler(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.FTPFilePollerSourceProtocolHandlerTestConfig.GetResourceConfig(),
+		Config: testutils.FTPFilePollerSourceProtocolHandlerTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_ftpfilepollersourceprotocolhandler.test", "delay_between_polls", "60000"),
 			resource.TestCheckResourceAttr("datapower_ftpfilepollersourceprotocolhandler.test", "delete_on_success", "false"),

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceAAAJWTValidator(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.AAAJWTValidatorTestConfig.GetResourceConfig(),
+		Config: testutils.AAAJWTValidatorTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_aaajwtvalidator.test", "decrypt_fetch_cred_url", "http://example.com/v3/key"),
 			resource.TestCheckResourceAttr("datapower_aaajwtvalidator.test", "verify_certificate_against_val_cred", "false"),

@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceRateLimitDefinitionGroup(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.RateLimitDefinitionGroupTestConfig.GetDataConfig(),
+				Config: testutils.RateLimitDefinitionGroupTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_ratelimitdefinitiongroup.test", "result.0.id", "AccTest_RateLimitDefinitionGroup"),
 					resource.TestCheckResourceAttr("data.datapower_ratelimitdefinitiongroup.test", "result.0.update_on_exceed", "all"),

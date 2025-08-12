@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceAS3SourceProtocolHandler(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.AS3SourceProtocolHandlerTestConfig.GetResourceConfig(),
+		Config: testutils.AS3SourceProtocolHandlerTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_as3sourceprotocolhandler.test", "local_address", "0.0.0.0"),
 			resource.TestCheckResourceAttr("datapower_as3sourceprotocolhandler.test", "local_port", "21"),

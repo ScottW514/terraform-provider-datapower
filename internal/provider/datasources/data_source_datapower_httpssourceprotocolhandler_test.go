@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceHTTPSSourceProtocolHandler(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.HTTPSSourceProtocolHandlerTestConfig.GetDataConfig(),
+				Config: testutils.HTTPSSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.id", "AccTest_HTTPSSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_httpssourceprotocolhandler.test", "result.0.local_address", "0.0.0.0"),

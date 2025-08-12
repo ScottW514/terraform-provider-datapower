@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceLDAPConnectionPool(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.LDAPConnectionPoolTestConfig.GetResourceConfig(),
+		Config: testutils.LDAPConnectionPoolTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_ldapconnectionpool.test", "idle_timeout", "120"),
 			resource.TestCheckResourceAttr("datapower_ldapconnectionpool.test", "max_pool_size", "35"),

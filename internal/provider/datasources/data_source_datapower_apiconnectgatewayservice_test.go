@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceAPIConnectGatewayService(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.APIConnectGatewayServiceTestConfig.GetDataConfig(),
+				Config: testutils.APIConnectGatewayServiceTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_apiconnectgatewayservice.test", "enabled", "false"),
 					resource.TestCheckResourceAttr("data.datapower_apiconnectgatewayservice.test", "local_address", "0.0.0.0"),

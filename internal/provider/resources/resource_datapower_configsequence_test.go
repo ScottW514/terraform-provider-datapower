@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceConfigSequence(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.ConfigSequenceTestConfig.GetResourceConfig(),
+		Config: testutils.ConfigSequenceTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_configsequence.test", "match_pattern", "(.*)\\\\.cfg$"),
 			resource.TestCheckResourceAttr("datapower_configsequence.test", "result_name_pattern", "$1.log"),

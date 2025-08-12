@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceGatewayPeeringGroup(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.GatewayPeeringGroupTestConfig.GetResourceConfig(),
+		Config: testutils.GatewayPeeringGroupTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_gatewaypeeringgroup.test", "mode", "peer"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeeringgroup.test", "cluster_primary_count", "3"),

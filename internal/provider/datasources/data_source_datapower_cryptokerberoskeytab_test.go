@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceCryptoKerberosKeytab(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.CryptoKerberosKeytabTestConfig.GetDataConfig(),
+				Config: testutils.CryptoKerberosKeytabTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_cryptokerberoskeytab.test", "result.0.id", "AccTest_CryptoKerberosKeytab"),
 					resource.TestCheckResourceAttr("data.datapower_cryptokerberoskeytab.test", "result.0.use_replay_cache", "true"),

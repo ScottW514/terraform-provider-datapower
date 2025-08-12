@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceAssemblyActionJson2Xml(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.AssemblyActionJson2XmlTestConfig.GetDataConfig(),
+				Config: testutils.AssemblyActionJson2XmlTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjson2xml.test", "result.0.id", "AccTest_AssemblyActionJson2Xml"),
 					resource.TestCheckResourceAttr("data.datapower_assemblyactionjson2xml.test", "result.0.conversion_format", "badgerfish"),

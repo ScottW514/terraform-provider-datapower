@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceAnalyticsEndpoint(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.AnalyticsEndpointTestConfig.GetDataConfig(),
+				Config: testutils.AnalyticsEndpointTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.id", "AccTest_AnalyticsEndpoint"),
 					resource.TestCheckResourceAttr("data.datapower_analyticsendpoint.test", "result.0.max_records", "1024"),

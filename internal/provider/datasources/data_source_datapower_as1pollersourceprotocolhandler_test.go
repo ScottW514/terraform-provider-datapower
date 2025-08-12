@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceAS1PollerSourceProtocolHandler(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.AS1PollerSourceProtocolHandlerTestConfig.GetDataConfig(),
+				Config: testutils.AS1PollerSourceProtocolHandlerTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_as1pollersourceprotocolhandler.test", "result.0.id", "AccTest_AS1PollerSourceProtocolHandler"),
 					resource.TestCheckResourceAttr("data.datapower_as1pollersourceprotocolhandler.test", "result.0.conn_security", "none"),

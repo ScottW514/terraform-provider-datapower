@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceAPILDAPRegistry(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.APILDAPRegistryTestConfig.GetDataConfig(),
+				Config: testutils.APILDAPRegistryTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_apildapregistry.test", "result.0.id", "AccTest_APILDAPRegistry"),
 					resource.TestCheckResourceAttr("data.datapower_apildapregistry.test", "result.0.ldap_port", "636"),

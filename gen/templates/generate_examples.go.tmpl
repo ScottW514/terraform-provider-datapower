@@ -25,14 +25,14 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
+	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
-var endPoints = map[string]testconfig.ModelTestConfig{
-	"file": testconfig.FileTestConfig,
+var endPoints = map[string]testutils.ModelTestConfig{
+	"file": testutils.FileTestConfig,
 {{- range .}}
 	{{- if not .ModelOnly}}
-	"{{snakeCase .Name}}": testconfig.{{.Name}}TestConfig,
+	"{{snakeCase .Name}}": testutils.{{.Name}}TestConfig,
 	{{- end}}
 {{- end}}
 }

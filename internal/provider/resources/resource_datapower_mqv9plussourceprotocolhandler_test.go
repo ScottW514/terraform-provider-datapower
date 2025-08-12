@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceMQv9PlusSourceProtocolHandler(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.MQv9PlusSourceProtocolHandlerTestConfig.GetResourceConfig(),
+		Config: testutils.MQv9PlusSourceProtocolHandlerTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_mqv9plussourceprotocolhandler.test", "code_page", "0"),
 			resource.TestCheckResourceAttr("datapower_mqv9plussourceprotocolhandler.test", "get_message_options", "1"),

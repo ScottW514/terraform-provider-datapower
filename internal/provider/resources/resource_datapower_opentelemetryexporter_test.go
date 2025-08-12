@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceOpenTelemetryExporter(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.OpenTelemetryExporterTestConfig.GetResourceConfig(),
+		Config: testutils.OpenTelemetryExporterTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_opentelemetryexporter.test", "type", "http"),
 			resource.TestCheckResourceAttr("datapower_opentelemetryexporter.test", "traces_path", "/v1/traces"),

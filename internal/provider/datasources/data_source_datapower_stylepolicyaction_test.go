@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceStylePolicyAction(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.StylePolicyActionTestConfig.GetDataConfig(),
+				Config: testutils.StylePolicyActionTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.id", "__default-accept-service-providers-filter-action__"),
 					resource.TestCheckResourceAttr("data.datapower_stylepolicyaction.test", "result.0.type", "filter"),

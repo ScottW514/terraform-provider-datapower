@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceB2BCPAReceiverSetting(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.B2BCPAReceiverSettingTestConfig.GetDataConfig(),
+				Config: testutils.B2BCPAReceiverSettingTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_b2bcpareceiversetting.test", "result.0.id", "AccTest_B2BCPAReceiverSetting"),
 					resource.TestCheckResourceAttr("data.datapower_b2bcpareceiversetting.test", "result.0.sync_reply_mode", "none"),

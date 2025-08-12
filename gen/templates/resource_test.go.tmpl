@@ -27,7 +27,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -40,7 +39,7 @@ func TestAccResource{{.Name}}(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.{{.Name}}TestConfig.GetResourceConfig(),
+		Config: testutils.{{.Name}}TestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 {{- $name := .Name }}
 {{- range .Attributes}}

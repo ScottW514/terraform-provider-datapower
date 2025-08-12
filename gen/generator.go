@@ -51,7 +51,7 @@ const (
 	actionMapTemplate    = "./gen/templates/actionmap.go.tmpl"
 	actionMapLocation    = "./internal/provider/actions/actionmap.go"
 	testConfigTemplate   = "./gen/templates/testconfig.go.tmpl"
-	testConfigLocation   = "./internal/provider/testconfig/testconfig.go"
+	testConfigLocation   = "./testutils/config.go"
 )
 
 type templateInfo struct {

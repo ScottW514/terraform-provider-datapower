@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceWSRRSavedSearchSubscription(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.WSRRSavedSearchSubscriptionTestConfig.GetResourceConfig(),
+		Config: testutils.WSRRSavedSearchSubscriptionTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_wsrrsavedsearchsubscription.test", "method", "poll"),
 			resource.TestCheckResourceAttr("datapower_wsrrsavedsearchsubscription.test", "refresh_interval", "86400"),

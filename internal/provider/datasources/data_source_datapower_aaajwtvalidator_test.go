@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -38,7 +37,7 @@ func TestAccDataSourceAAAJWTValidator(t *testing.T) {
 		ProtoV6ProviderFactories: testutils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testconfig.AAAJWTValidatorTestConfig.GetDataConfig(),
+				Config: testutils.AAAJWTValidatorTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.id", "AccTest_AAAJWTValidator"),
 					resource.TestCheckResourceAttr("data.datapower_aaajwtvalidator.test", "result.0.decrypt_fetch_cred_url", "http://example.com/v3/key"),

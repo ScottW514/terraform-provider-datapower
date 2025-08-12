@@ -25,7 +25,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
-	"github.com/scottw514/terraform-provider-datapower/internal/provider/testconfig"
 	"github.com/scottw514/terraform-provider-datapower/testutils"
 )
 
@@ -35,7 +34,7 @@ func TestAccResourceSocialLoginPolicy(t *testing.T) {
 	}
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: testconfig.SocialLoginPolicyTestConfig.GetResourceConfig(),
+		Config: testutils.SocialLoginPolicyTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_socialloginpolicy.test", "client_redirect_uri", "URL-in/social-login-callback"),
 			resource.TestCheckResourceAttr("datapower_socialloginpolicy.test", "validate_jwt_token", "true"),
