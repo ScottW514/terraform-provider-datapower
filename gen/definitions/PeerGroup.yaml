@@ -44,6 +44,7 @@ attributes:
     type: List
     element_type: String
     description: 'URL'
+    test_value: '["http://localhost"]'
     cli_alias: url
   - name: IPMulticast
     type: String

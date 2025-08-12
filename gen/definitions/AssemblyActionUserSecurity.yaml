@@ -116,6 +116,8 @@ attributes:
   - name: UserRegistry
     type: String
     description: 'User registry'
+    test_value: '"AccTest_APIAuthURLRegistry"'
+    test_bed_value: 'datapower_apiauthurlregistry.acc_test.id'
     cli_alias: user-registry
   - name: AuthResponseHeadersPattern
     type: String

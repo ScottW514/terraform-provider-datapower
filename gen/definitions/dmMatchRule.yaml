@@ -26,6 +26,7 @@ attributes:
     description: 'URL match'
   - name: ErrorCode
     type: String
+    test_value: '"*"'
     description: 'Error code'
   - name: XPATHExpression
     type: String

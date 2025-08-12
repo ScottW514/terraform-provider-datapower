@@ -37,7 +37,7 @@ func TestAccResourceSocialLoginPolicy(t *testing.T) {
 		Config: testutils.SocialLoginPolicyTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_socialloginpolicy.test", "client_redirect_uri", "URL-in/social-login-callback"),
-			resource.TestCheckResourceAttr("datapower_socialloginpolicy.test", "validate_jwt_token", "true"),
+			resource.TestCheckResourceAttr("datapower_socialloginpolicy.test", "validate_jwt_token", "false"),
 		}...),
 	})
 

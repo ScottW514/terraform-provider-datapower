@@ -44,10 +44,12 @@ attributes:
     dm_type: DmOAuthRole
     description: 'OAuth Role'
     cli_alias: oauth-role
+    test_value: '{"azsvr": true}'
   - name: AZGrant
     dm_type: DmOAuthAZGrantType
     description: 'Supported Type'
     cli_alias: az-grant
+    test_value: '{"code": true}'
   - name: ClientType
     type: String
     enum:
@@ -83,12 +85,17 @@ attributes:
   - name: GenerateClientSecret
     type: Bool
     default: true
+    test_value: 'false'
+    test_expect_ds: '"false"'
     description: 'Generate Client Secret'
     cli_alias: generate-client-secret
   - name: ClientSecret
     type: String
+    sensitive: true
     description: 'Client Secret'
     cli_alias: client-secret
+    test_value: '"secret"'
+    write_only: true
   - name: Caching
     type: String
     enum:
@@ -140,6 +147,8 @@ attributes:
     reference_to: CryptoSSKey
     description: 'Shared Secret'
     cli_alias: token-secret
+    test_value: '"AccTest_CryptoSSKey"'
+    test_bed_value: 'datapower_cryptosskey.acc_test.id'
   - name: LocalAZPageUrl
     type: String
     default: 'store:///OAuth-Generate-HTML.xsl'

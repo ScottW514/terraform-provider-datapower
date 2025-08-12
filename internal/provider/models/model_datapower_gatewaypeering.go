@@ -43,6 +43,7 @@ type GatewayPeering struct {
 	PeerGroup           types.String                `tfsdk:"peer_group"`
 	MonitorPort         types.Int64                 `tfsdk:"monitor_port"`
 	EnablePeerGroup     types.Bool                  `tfsdk:"enable_peer_group"`
+	EnableSsl           types.Bool                  `tfsdk:"enable_ssl"`
 	PersistenceLocation types.String                `tfsdk:"persistence_location"`
 	LocalDirectory      types.String                `tfsdk:"local_directory"`
 	MaxMemory           types.Int64                 `tfsdk:"max_memory"`
@@ -59,6 +60,7 @@ var GatewayPeeringObjectType = map[string]attr.Type{
 	"peer_group":           types.StringType,
 	"monitor_port":         types.Int64Type,
 	"enable_peer_group":    types.BoolType,
+	"enable_ssl":           types.BoolType,
 	"persistence_location": types.StringType,
 	"local_directory":      types.StringType,
 	"max_memory":           types.Int64Type,
@@ -98,6 +100,9 @@ func (data GatewayPeering) IsNull() bool {
 		return false
 	}
 	if !data.EnablePeerGroup.IsNull() {
+		return false
+	}
+	if !data.EnableSsl.IsNull() {
 		return false
 	}
 	if !data.PersistenceLocation.IsNull() {
@@ -140,6 +145,9 @@ func (data GatewayPeering) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.EnablePeerGroup.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`EnablePeerGroup`, tfutils.StringFromBool(data.EnablePeerGroup, ""))
+	}
+	if !data.EnableSsl.IsNull() {
+		body, _ = sjson.Set(body, pathRoot+`EnableSSL`, tfutils.StringFromBool(data.EnableSsl, ""))
 	}
 	if !data.PersistenceLocation.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PersistenceLocation`, data.PersistenceLocation.ValueString())
@@ -196,6 +204,11 @@ func (data *GatewayPeering) FromBody(ctx context.Context, pathRoot string, res g
 		data.EnablePeerGroup = tfutils.BoolFromString(value.String())
 	} else {
 		data.EnablePeerGroup = types.BoolNull()
+	}
+	if value := res.Get(pathRoot + `EnableSSL`); value.Exists() {
+		data.EnableSsl = tfutils.BoolFromString(value.String())
+	} else {
+		data.EnableSsl = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PersistenceLocation`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PersistenceLocation = tfutils.ParseStringFromGJSON(value)
@@ -257,6 +270,11 @@ func (data *GatewayPeering) UpdateFromBody(ctx context.Context, pathRoot string,
 		data.EnablePeerGroup = tfutils.BoolFromString(value.String())
 	} else if !data.EnablePeerGroup.ValueBool() {
 		data.EnablePeerGroup = types.BoolNull()
+	}
+	if value := res.Get(pathRoot + `EnableSSL`); value.Exists() && !data.EnableSsl.IsNull() {
+		data.EnableSsl = tfutils.BoolFromString(value.String())
+	} else if data.EnableSsl.ValueBool() {
+		data.EnableSsl = types.BoolNull()
 	}
 	if value := res.Get(pathRoot + `PersistenceLocation`); value.Exists() && !data.PersistenceLocation.IsNull() {
 		data.PersistenceLocation = tfutils.ParseStringFromGJSON(value)

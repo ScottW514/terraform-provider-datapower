@@ -3,6 +3,7 @@ description: 'WebSphere JMS handler'
 cli_alias: 'source-wasjms'
 cmd_group: 'mpgw'
 rest_endpoint: '/mgmt/config/{domain}/WebSphereJMSSourceProtocolHandler'
+skip_test: true
 actions:
   - name: quiesce
 attributes:

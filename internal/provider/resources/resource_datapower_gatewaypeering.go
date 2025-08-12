@@ -117,6 +117,12 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
+			"enable_ssl": schema.BoolAttribute{
+				MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED: LEAVE SET TO FALSE", "", "").AddDefaultValue("false").String,
+				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(false),
+			},
 			"persistence_location": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Persistence location", "persistence", "").AddStringEnum("memory", "local", "raid").AddDefaultValue("memory").String,
 				Optional:            true,

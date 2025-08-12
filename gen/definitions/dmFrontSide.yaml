@@ -52,5 +52,6 @@ attributes:
       - 'sjis'
       - 'tis620'
       - 'unicode_le'
+    default: 'protocol'
     description: 'Credential Character Set'
     cli_alias: credential-charset

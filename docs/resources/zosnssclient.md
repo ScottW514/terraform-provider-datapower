@@ -47,7 +47,7 @@ resource "datapower_zosnssclient" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `password` (String) Password
+- `password` (String, Sensitive) Password
   - CLI Alias: `password`
 - `password_alias` (String) Password Alias
   - CLI Alias: `password-alias`

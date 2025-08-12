@@ -48,6 +48,49 @@ type OAuthSupportedClient struct {
 	ClientValCred              types.String                `tfsdk:"client_val_cred"`
 	GenerateClientSecret       types.Bool                  `tfsdk:"generate_client_secret"`
 	ClientSecret               types.String                `tfsdk:"client_secret"`
+	ClientSecretUpdate         types.Bool                  `tfsdk:"client_secret_update"`
+	Caching                    types.String                `tfsdk:"caching"`
+	ValidationUrl              types.String                `tfsdk:"validation_url"`
+	ValidationFeatures         *DmValidationFeatures       `tfsdk:"validation_features"`
+	RedirectUri                types.List                  `tfsdk:"redirect_uri"`
+	CustomScopeCheck           types.Bool                  `tfsdk:"custom_scope_check"`
+	Scope                      types.String                `tfsdk:"scope"`
+	ScopeUrl                   types.String                `tfsdk:"scope_url"`
+	DefaultScope               types.String                `tfsdk:"default_scope"`
+	TokenSecret                types.String                `tfsdk:"token_secret"`
+	LocalAzPageUrl             types.String                `tfsdk:"local_az_page_url"`
+	DpStateLifeTime            types.Int64                 `tfsdk:"dp_state_life_time"`
+	AuCodeLifeTime             types.Int64                 `tfsdk:"au_code_life_time"`
+	AccessTokenLifeTime        types.Int64                 `tfsdk:"access_token_life_time"`
+	RefreshTokenAllowed        types.Int64                 `tfsdk:"refresh_token_allowed"`
+	RefreshTokenLifeTime       types.Int64                 `tfsdk:"refresh_token_life_time"`
+	MaxConsentLifeTime         types.Int64                 `tfsdk:"max_consent_life_time"`
+	CustomResourceOwner        types.Bool                  `tfsdk:"custom_resource_owner"`
+	ResourceOwnerUrl           types.String                `tfsdk:"resource_owner_url"`
+	AdditionalOAuthProcessUrl  types.String                `tfsdk:"additional_o_auth_process_url"`
+	RsSetHeader                *DmOAuthRSSetHeader         `tfsdk:"rs_set_header"`
+	ValidationUrlsslClientType types.String                `tfsdk:"validation_urlssl_client_type"`
+	ValidationUrlsslClient     types.String                `tfsdk:"validation_urlssl_client"`
+	JwtGrantValidator          types.String                `tfsdk:"jwt_grant_validator"`
+	ClientJwtValidator         types.String                `tfsdk:"client_jwt_validator"`
+	OidcidTokenGenerator       types.String                `tfsdk:"oidcid_token_generator"`
+	OAuthFeatures              *DmOAuthFeatures            `tfsdk:"o_auth_features"`
+	DependencyActions          []*actions.DependencyAction `tfsdk:"dependency_actions"`
+}
+type OAuthSupportedClientWO struct {
+	Id                         types.String                `tfsdk:"id"`
+	AppDomain                  types.String                `tfsdk:"app_domain"`
+	UserSummary                types.String                `tfsdk:"user_summary"`
+	Customized                 types.Bool                  `tfsdk:"customized"`
+	CustomizedProcessUrl       types.String                `tfsdk:"customized_process_url"`
+	OAuthRole                  *DmOAuthRole                `tfsdk:"o_auth_role"`
+	AzGrant                    *DmOAuthAZGrantType         `tfsdk:"az_grant"`
+	ClientType                 types.String                `tfsdk:"client_type"`
+	CheckClientCredential      types.Bool                  `tfsdk:"check_client_credential"`
+	UseValidationUrl           types.Bool                  `tfsdk:"use_validation_url"`
+	ClientAuthenMethod         types.String                `tfsdk:"client_authen_method"`
+	ClientValCred              types.String                `tfsdk:"client_val_cred"`
+	GenerateClientSecret       types.Bool                  `tfsdk:"generate_client_secret"`
 	Caching                    types.String                `tfsdk:"caching"`
 	ValidationUrl              types.String                `tfsdk:"validation_url"`
 	ValidationFeatures         *DmValidationFeatures       `tfsdk:"validation_features"`
@@ -92,6 +135,49 @@ var OAuthSupportedClientObjectType = map[string]attr.Type{
 	"client_val_cred":               types.StringType,
 	"generate_client_secret":        types.BoolType,
 	"client_secret":                 types.StringType,
+	"client_secret_update":          types.BoolType,
+	"caching":                       types.StringType,
+	"validation_url":                types.StringType,
+	"validation_features":           types.ObjectType{AttrTypes: DmValidationFeaturesObjectType},
+	"redirect_uri":                  types.ListType{ElemType: types.StringType},
+	"custom_scope_check":            types.BoolType,
+	"scope":                         types.StringType,
+	"scope_url":                     types.StringType,
+	"default_scope":                 types.StringType,
+	"token_secret":                  types.StringType,
+	"local_az_page_url":             types.StringType,
+	"dp_state_life_time":            types.Int64Type,
+	"au_code_life_time":             types.Int64Type,
+	"access_token_life_time":        types.Int64Type,
+	"refresh_token_allowed":         types.Int64Type,
+	"refresh_token_life_time":       types.Int64Type,
+	"max_consent_life_time":         types.Int64Type,
+	"custom_resource_owner":         types.BoolType,
+	"resource_owner_url":            types.StringType,
+	"additional_o_auth_process_url": types.StringType,
+	"rs_set_header":                 types.ObjectType{AttrTypes: DmOAuthRSSetHeaderObjectType},
+	"validation_urlssl_client_type": types.StringType,
+	"validation_urlssl_client":      types.StringType,
+	"jwt_grant_validator":           types.StringType,
+	"client_jwt_validator":          types.StringType,
+	"oidcid_token_generator":        types.StringType,
+	"o_auth_features":               types.ObjectType{AttrTypes: DmOAuthFeaturesObjectType},
+	"dependency_actions":            actions.ActionsListType,
+}
+var OAuthSupportedClientObjectTypeWO = map[string]attr.Type{
+	"id":                            types.StringType,
+	"app_domain":                    types.StringType,
+	"user_summary":                  types.StringType,
+	"customized":                    types.BoolType,
+	"customized_process_url":        types.StringType,
+	"o_auth_role":                   types.ObjectType{AttrTypes: DmOAuthRoleObjectType},
+	"az_grant":                      types.ObjectType{AttrTypes: DmOAuthAZGrantTypeObjectType},
+	"client_type":                   types.StringType,
+	"check_client_credential":       types.BoolType,
+	"use_validation_url":            types.BoolType,
+	"client_authen_method":          types.StringType,
+	"client_val_cred":               types.StringType,
+	"generate_client_secret":        types.BoolType,
 	"caching":                       types.StringType,
 	"validation_url":                types.StringType,
 	"validation_features":           types.ObjectType{AttrTypes: DmValidationFeaturesObjectType},
@@ -122,6 +208,13 @@ var OAuthSupportedClientObjectType = map[string]attr.Type{
 }
 
 func (data OAuthSupportedClient) GetPath() string {
+	rest_path := "/mgmt/config/{domain}/OAuthSupportedClient"
+	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
+	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
+	return rest_path
+}
+
+func (data OAuthSupportedClientWO) GetPath() string {
 	rest_path := "/mgmt/config/{domain}/OAuthSupportedClient"
 	rest_path = strings.ReplaceAll(rest_path, "{name}", url.QueryEscape(data.Id.ValueString()))
 	rest_path = strings.ReplaceAll(rest_path, "{domain}", url.QueryEscape(data.AppDomain.ValueString()))
@@ -173,6 +266,136 @@ func (data OAuthSupportedClient) IsNull() bool {
 		return false
 	}
 	if !data.ClientSecret.IsNull() {
+		return false
+	}
+	if !data.Caching.IsNull() {
+		return false
+	}
+	if !data.ValidationUrl.IsNull() {
+		return false
+	}
+	if data.ValidationFeatures != nil {
+		if !data.ValidationFeatures.IsNull() {
+			return false
+		}
+	}
+	if !data.RedirectUri.IsNull() {
+		return false
+	}
+	if !data.CustomScopeCheck.IsNull() {
+		return false
+	}
+	if !data.Scope.IsNull() {
+		return false
+	}
+	if !data.ScopeUrl.IsNull() {
+		return false
+	}
+	if !data.DefaultScope.IsNull() {
+		return false
+	}
+	if !data.TokenSecret.IsNull() {
+		return false
+	}
+	if !data.LocalAzPageUrl.IsNull() {
+		return false
+	}
+	if !data.DpStateLifeTime.IsNull() {
+		return false
+	}
+	if !data.AuCodeLifeTime.IsNull() {
+		return false
+	}
+	if !data.AccessTokenLifeTime.IsNull() {
+		return false
+	}
+	if !data.RefreshTokenAllowed.IsNull() {
+		return false
+	}
+	if !data.RefreshTokenLifeTime.IsNull() {
+		return false
+	}
+	if !data.MaxConsentLifeTime.IsNull() {
+		return false
+	}
+	if !data.CustomResourceOwner.IsNull() {
+		return false
+	}
+	if !data.ResourceOwnerUrl.IsNull() {
+		return false
+	}
+	if !data.AdditionalOAuthProcessUrl.IsNull() {
+		return false
+	}
+	if data.RsSetHeader != nil {
+		if !data.RsSetHeader.IsNull() {
+			return false
+		}
+	}
+	if !data.ValidationUrlsslClientType.IsNull() {
+		return false
+	}
+	if !data.ValidationUrlsslClient.IsNull() {
+		return false
+	}
+	if !data.JwtGrantValidator.IsNull() {
+		return false
+	}
+	if !data.ClientJwtValidator.IsNull() {
+		return false
+	}
+	if !data.OidcidTokenGenerator.IsNull() {
+		return false
+	}
+	if data.OAuthFeatures != nil {
+		if !data.OAuthFeatures.IsNull() {
+			return false
+		}
+	}
+	return true
+}
+func (data OAuthSupportedClientWO) IsNull() bool {
+	if !data.Id.IsNull() {
+		return false
+	}
+	if !data.AppDomain.IsNull() {
+		return false
+	}
+	if !data.UserSummary.IsNull() {
+		return false
+	}
+	if !data.Customized.IsNull() {
+		return false
+	}
+	if !data.CustomizedProcessUrl.IsNull() {
+		return false
+	}
+	if data.OAuthRole != nil {
+		if !data.OAuthRole.IsNull() {
+			return false
+		}
+	}
+	if data.AzGrant != nil {
+		if !data.AzGrant.IsNull() {
+			return false
+		}
+	}
+	if !data.ClientType.IsNull() {
+		return false
+	}
+	if !data.CheckClientCredential.IsNull() {
+		return false
+	}
+	if !data.UseValidationUrl.IsNull() {
+		return false
+	}
+	if !data.ClientAuthenMethod.IsNull() {
+		return false
+	}
+	if !data.ClientValCred.IsNull() {
+		return false
+	}
+	if !data.GenerateClientSecret.IsNull() {
 		return false
 	}
 	if !data.Caching.IsNull() {
@@ -606,6 +829,206 @@ func (data *OAuthSupportedClient) FromBody(ctx context.Context, pathRoot string,
 		data.OAuthFeatures = nil
 	}
 }
+func (data *OAuthSupportedClientWO) FromBody(ctx context.Context, pathRoot string, res gjson.Result) {
+	if pathRoot != "" {
+		pathRoot = pathRoot + "."
+	}
+	if value := res.Get(pathRoot + `name`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.Id = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.Id = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `UserSummary`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.UserSummary = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.UserSummary = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `Customized`); value.Exists() {
+		data.Customized = tfutils.BoolFromString(value.String())
+	} else {
+		data.Customized = types.BoolNull()
+	}
+	if value := res.Get(pathRoot + `CustomizedProcessUrl`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.CustomizedProcessUrl = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.CustomizedProcessUrl = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `OAuthRole`); value.Exists() {
+		data.OAuthRole = &DmOAuthRole{}
+		data.OAuthRole.FromBody(ctx, "", value)
+	} else {
+		data.OAuthRole = nil
+	}
+	if value := res.Get(pathRoot + `AZGrant`); value.Exists() {
+		data.AzGrant = &DmOAuthAZGrantType{}
+		data.AzGrant.FromBody(ctx, "", value)
+	} else {
+		data.AzGrant = nil
+	}
+	if value := res.Get(pathRoot + `ClientType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.ClientType = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.ClientType = types.StringValue("confidential")
+	}
+	if value := res.Get(pathRoot + `CheckClientCredential`); value.Exists() {
+		data.CheckClientCredential = tfutils.BoolFromString(value.String())
+	} else {
+		data.CheckClientCredential = types.BoolNull()
+	}
+	if value := res.Get(pathRoot + `UseValidationUrl`); value.Exists() {
+		data.UseValidationUrl = tfutils.BoolFromString(value.String())
+	} else {
+		data.UseValidationUrl = types.BoolNull()
+	}
+	if value := res.Get(pathRoot + `ClientAuthenMethod`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.ClientAuthenMethod = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.ClientAuthenMethod = types.StringValue("secret")
+	}
+	if value := res.Get(pathRoot + `ClientValCred`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.ClientValCred = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.ClientValCred = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `GenerateClientSecret`); value.Exists() {
+		data.GenerateClientSecret = tfutils.BoolFromString(value.String())
+	} else {
+		data.GenerateClientSecret = types.BoolNull()
+	}
+	if value := res.Get(pathRoot + `Caching`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.Caching = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.Caching = types.StringValue("replay")
+	}
+	if value := res.Get(pathRoot + `ValidationURL`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.ValidationUrl = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.ValidationUrl = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `ValidationFeatures`); value.Exists() {
+		data.ValidationFeatures = &DmValidationFeatures{}
+		data.ValidationFeatures.FromBody(ctx, "", value)
+	} else {
+		data.ValidationFeatures = nil
+	}
+	if value := res.Get(pathRoot + `RedirectURI`); value.Exists() {
+		data.RedirectUri = tfutils.ParseStringListFromGJSON(value)
+	} else {
+		data.RedirectUri = types.ListNull(types.StringType)
+	}
+	if value := res.Get(pathRoot + `CustomScopeCheck`); value.Exists() {
+		data.CustomScopeCheck = tfutils.BoolFromString(value.String())
+	} else {
+		data.CustomScopeCheck = types.BoolNull()
+	}
+	if value := res.Get(pathRoot + `Scope`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.Scope = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.Scope = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `ScopeUrl`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.ScopeUrl = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.ScopeUrl = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `DefaultScope`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.DefaultScope = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.DefaultScope = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `TokenSecret`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.TokenSecret = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.TokenSecret = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `LocalAZPageUrl`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.LocalAzPageUrl = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.LocalAzPageUrl = types.StringValue("store:///OAuth-Generate-HTML.xsl")
+	}
+	if value := res.Get(pathRoot + `DPStateLifeTime`); value.Exists() {
+		data.DpStateLifeTime = types.Int64Value(value.Int())
+	} else {
+		data.DpStateLifeTime = types.Int64Value(300)
+	}
+	if value := res.Get(pathRoot + `AUCodeLifeTime`); value.Exists() {
+		data.AuCodeLifeTime = types.Int64Value(value.Int())
+	} else {
+		data.AuCodeLifeTime = types.Int64Value(300)
+	}
+	if value := res.Get(pathRoot + `AccessTokenLifeTime`); value.Exists() {
+		data.AccessTokenLifeTime = types.Int64Value(value.Int())
+	} else {
+		data.AccessTokenLifeTime = types.Int64Value(3600)
+	}
+	if value := res.Get(pathRoot + `RefreshTokenAllowed`); value.Exists() {
+		data.RefreshTokenAllowed = types.Int64Value(value.Int())
+	} else {
+		data.RefreshTokenAllowed = types.Int64Null()
+	}
+	if value := res.Get(pathRoot + `RefreshTokenLifeTime`); value.Exists() {
+		data.RefreshTokenLifeTime = types.Int64Value(value.Int())
+	} else {
+		data.RefreshTokenLifeTime = types.Int64Value(5400)
+	}
+	if value := res.Get(pathRoot + `MaxConsentLifeTime`); value.Exists() {
+		data.MaxConsentLifeTime = types.Int64Value(value.Int())
+	} else {
+		data.MaxConsentLifeTime = types.Int64Null()
+	}
+	if value := res.Get(pathRoot + `CustomResourceOwner`); value.Exists() {
+		data.CustomResourceOwner = tfutils.BoolFromString(value.String())
+	} else {
+		data.CustomResourceOwner = types.BoolNull()
+	}
+	if value := res.Get(pathRoot + `ResourceOwnerUrl`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.ResourceOwnerUrl = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.ResourceOwnerUrl = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `AdditionalOAuthProcessUrl`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.AdditionalOAuthProcessUrl = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.AdditionalOAuthProcessUrl = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `RSSetHeader`); value.Exists() {
+		data.RsSetHeader = &DmOAuthRSSetHeader{}
+		data.RsSetHeader.FromBody(ctx, "", value)
+	} else {
+		data.RsSetHeader = nil
+	}
+	if value := res.Get(pathRoot + `ValidationURLSSLClientType`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.ValidationUrlsslClientType = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.ValidationUrlsslClientType = types.StringValue("client")
+	}
+	if value := res.Get(pathRoot + `ValidationURLSSLClient`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.ValidationUrlsslClient = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.ValidationUrlsslClient = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `JWTGrantValidator`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.JwtGrantValidator = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.JwtGrantValidator = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `ClientJWTValidator`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.ClientJwtValidator = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.ClientJwtValidator = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `OIDCIDTokenGenerator`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
+		data.OidcidTokenGenerator = tfutils.ParseStringFromGJSON(value)
+	} else {
+		data.OidcidTokenGenerator = types.StringNull()
+	}
+	if value := res.Get(pathRoot + `OAuthFeatures`); value.Exists() {
+		data.OAuthFeatures = &DmOAuthFeatures{}
+		data.OAuthFeatures.FromBody(ctx, "", value)
+	} else {
+		data.OAuthFeatures = nil
+	}
+}
 
 func (data *OAuthSupportedClient) UpdateFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
 	if pathRoot != "" {
@@ -805,5 +1228,293 @@ func (data *OAuthSupportedClient) UpdateFromBody(ctx context.Context, pathRoot s
 		data.OAuthFeatures.UpdateFromBody(ctx, "", value)
 	} else {
 		data.OAuthFeatures = nil
+	}
+}
+func (data *OAuthSupportedClient) UpdateUnknownFromBody(ctx context.Context, pathRoot string, res gjson.Result) {
+	if pathRoot != "" {
+		pathRoot = pathRoot + "."
+	}
+	if data.Id.IsUnknown() {
+		if value := res.Get(pathRoot + `name`); value.Exists() && !data.Id.IsNull() {
+			data.Id = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.Id = types.StringNull()
+		}
+	}
+	if data.UserSummary.IsUnknown() {
+		if value := res.Get(pathRoot + `UserSummary`); value.Exists() && !data.UserSummary.IsNull() {
+			data.UserSummary = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.UserSummary = types.StringNull()
+		}
+	}
+	if data.Customized.IsUnknown() {
+		if value := res.Get(pathRoot + `Customized`); value.Exists() && !data.Customized.IsNull() {
+			data.Customized = tfutils.BoolFromString(value.String())
+		} else {
+			data.Customized = types.BoolNull()
+		}
+	}
+	if data.CustomizedProcessUrl.IsUnknown() {
+		if value := res.Get(pathRoot + `CustomizedProcessUrl`); value.Exists() && !data.CustomizedProcessUrl.IsNull() {
+			data.CustomizedProcessUrl = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.CustomizedProcessUrl = types.StringNull()
+		}
+	}
+	if data.OAuthRole == nil {
+		if value := res.Get(pathRoot + `OAuthRole`); value.Exists() {
+			d := DmOAuthRole{}
+			d.UpdateFromBody(ctx, "", value)
+			if !d.IsNull() {
+				data.OAuthRole = &d
+			}
+		}
+	}
+	if data.AzGrant == nil {
+		if value := res.Get(pathRoot + `AZGrant`); value.Exists() {
+			d := DmOAuthAZGrantType{}
+			d.UpdateFromBody(ctx, "", value)
+			if !d.IsNull() {
+				data.AzGrant = &d
+			}
+		}
+	}
+	if data.ClientType.IsUnknown() {
+		if value := res.Get(pathRoot + `ClientType`); value.Exists() && !data.ClientType.IsNull() {
+			data.ClientType = tfutils.ParseStringFromGJSON(value)
+		} else if data.ClientType.ValueString() != "confidential" {
+			data.ClientType = types.StringNull()
+		}
+	}
+	if data.CheckClientCredential.IsUnknown() {
+		if value := res.Get(pathRoot + `CheckClientCredential`); value.Exists() && !data.CheckClientCredential.IsNull() {
+			data.CheckClientCredential = tfutils.BoolFromString(value.String())
+		} else {
+			data.CheckClientCredential = types.BoolNull()
+		}
+	}
+	if data.UseValidationUrl.IsUnknown() {
+		if value := res.Get(pathRoot + `UseValidationUrl`); value.Exists() && !data.UseValidationUrl.IsNull() {
+			data.UseValidationUrl = tfutils.BoolFromString(value.String())
+		} else {
+			data.UseValidationUrl = types.BoolNull()
+		}
+	}
+	if data.ClientAuthenMethod.IsUnknown() {
+		if value := res.Get(pathRoot + `ClientAuthenMethod`); value.Exists() && !data.ClientAuthenMethod.IsNull() {
+			data.ClientAuthenMethod = tfutils.ParseStringFromGJSON(value)
+		} else if data.ClientAuthenMethod.ValueString() != "secret" {
+			data.ClientAuthenMethod = types.StringNull()
+		}
+	}
+	if data.ClientValCred.IsUnknown() {
+		if value := res.Get(pathRoot + `ClientValCred`); value.Exists() && !data.ClientValCred.IsNull() {
+			data.ClientValCred = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.ClientValCred = types.StringNull()
+		}
+	}
+	if data.GenerateClientSecret.IsUnknown() {
+		if value := res.Get(pathRoot + `GenerateClientSecret`); value.Exists() && !data.GenerateClientSecret.IsNull() {
+			data.GenerateClientSecret = tfutils.BoolFromString(value.String())
+		} else {
+			data.GenerateClientSecret = types.BoolNull()
+		}
+	}
+	if data.ClientSecret.IsUnknown() {
+		if value := res.Get(pathRoot + `ClientSecret`); value.Exists() && !data.ClientSecret.IsNull() {
+			data.ClientSecret = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.ClientSecret = types.StringNull()
+		}
+	}
+	if data.Caching.IsUnknown() {
+		if value := res.Get(pathRoot + `Caching`); value.Exists() && !data.Caching.IsNull() {
+			data.Caching = tfutils.ParseStringFromGJSON(value)
+		} else if data.Caching.ValueString() != "replay" {
+			data.Caching = types.StringNull()
+		}
+	}
+	if data.ValidationUrl.IsUnknown() {
+		if value := res.Get(pathRoot + `ValidationURL`); value.Exists() && !data.ValidationUrl.IsNull() {
+			data.ValidationUrl = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.ValidationUrl = types.StringNull()
+		}
+	}
+	if data.ValidationFeatures == nil {
+		if value := res.Get(pathRoot + `ValidationFeatures`); value.Exists() {
+			d := DmValidationFeatures{}
+			d.UpdateFromBody(ctx, "", value)
+			if !d.IsNull() {
+				data.ValidationFeatures = &d
+			}
+		}
+	}
+	if data.RedirectUri.IsUnknown() {
+		if value := res.Get(pathRoot + `RedirectURI`); value.Exists() && !data.RedirectUri.IsNull() {
+			data.RedirectUri = tfutils.ParseStringListFromGJSON(value)
+		} else {
+			data.RedirectUri = types.ListNull(types.StringType)
+		}
+	}
+	if data.CustomScopeCheck.IsUnknown() {
+		if value := res.Get(pathRoot + `CustomScopeCheck`); value.Exists() && !data.CustomScopeCheck.IsNull() {
+			data.CustomScopeCheck = tfutils.BoolFromString(value.String())
+		} else {
+			data.CustomScopeCheck = types.BoolNull()
+		}
+	}
+	if data.Scope.IsUnknown() {
+		if value := res.Get(pathRoot + `Scope`); value.Exists() && !data.Scope.IsNull() {
+			data.Scope = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.Scope = types.StringNull()
+		}
+	}
+	if data.ScopeUrl.IsUnknown() {
+		if value := res.Get(pathRoot + `ScopeUrl`); value.Exists() && !data.ScopeUrl.IsNull() {
+			data.ScopeUrl = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.ScopeUrl = types.StringNull()
+		}
+	}
+	if data.DefaultScope.IsUnknown() {
+		if value := res.Get(pathRoot + `DefaultScope`); value.Exists() && !data.DefaultScope.IsNull() {
+			data.DefaultScope = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.DefaultScope = types.StringNull()
+		}
+	}
+	if data.TokenSecret.IsUnknown() {
+		if value := res.Get(pathRoot + `TokenSecret`); value.Exists() && !data.TokenSecret.IsNull() {
+			data.TokenSecret = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.TokenSecret = types.StringNull()
+		}
+	}
+	if data.LocalAzPageUrl.IsUnknown() {
+		if value := res.Get(pathRoot + `LocalAZPageUrl`); value.Exists() && !data.LocalAzPageUrl.IsNull() {
+			data.LocalAzPageUrl = tfutils.ParseStringFromGJSON(value)
+		} else if data.LocalAzPageUrl.ValueString() != "store:///OAuth-Generate-HTML.xsl" {
+			data.LocalAzPageUrl = types.StringNull()
+		}
+	}
+	if data.DpStateLifeTime.IsUnknown() {
+		if value := res.Get(pathRoot + `DPStateLifeTime`); value.Exists() && !data.DpStateLifeTime.IsNull() {
+			data.DpStateLifeTime = types.Int64Value(value.Int())
+		} else if data.DpStateLifeTime.ValueInt64() != 300 {
+			data.DpStateLifeTime = types.Int64Null()
+		}
+	}
+	if data.AuCodeLifeTime.IsUnknown() {
+		if value := res.Get(pathRoot + `AUCodeLifeTime`); value.Exists() && !data.AuCodeLifeTime.IsNull() {
+			data.AuCodeLifeTime = types.Int64Value(value.Int())
+		} else if data.AuCodeLifeTime.ValueInt64() != 300 {
+			data.AuCodeLifeTime = types.Int64Null()
+		}
+	}
+	if data.AccessTokenLifeTime.IsUnknown() {
+		if value := res.Get(pathRoot + `AccessTokenLifeTime`); value.Exists() && !data.AccessTokenLifeTime.IsNull() {
+			data.AccessTokenLifeTime = types.Int64Value(value.Int())
+		} else if data.AccessTokenLifeTime.ValueInt64() != 3600 {
+			data.AccessTokenLifeTime = types.Int64Null()
+		}
+	}
+	if data.RefreshTokenAllowed.IsUnknown() {
+		if value := res.Get(pathRoot + `RefreshTokenAllowed`); value.Exists() && !data.RefreshTokenAllowed.IsNull() {
+			data.RefreshTokenAllowed = types.Int64Value(value.Int())
+		} else {
+			data.RefreshTokenAllowed = types.Int64Null()
+		}
+	}
+	if data.RefreshTokenLifeTime.IsUnknown() {
+		if value := res.Get(pathRoot + `RefreshTokenLifeTime`); value.Exists() && !data.RefreshTokenLifeTime.IsNull() {
+			data.RefreshTokenLifeTime = types.Int64Value(value.Int())
+		} else if data.RefreshTokenLifeTime.ValueInt64() != 5400 {
+			data.RefreshTokenLifeTime = types.Int64Null()
+		}
+	}
+	if data.MaxConsentLifeTime.IsUnknown() {
+		if value := res.Get(pathRoot + `MaxConsentLifeTime`); value.Exists() && !data.MaxConsentLifeTime.IsNull() {
+			data.MaxConsentLifeTime = types.Int64Value(value.Int())
+		} else {
+			data.MaxConsentLifeTime = types.Int64Null()
+		}
+	}
+	if data.CustomResourceOwner.IsUnknown() {
+		if value := res.Get(pathRoot + `CustomResourceOwner`); value.Exists() && !data.CustomResourceOwner.IsNull() {
+			data.CustomResourceOwner = tfutils.BoolFromString(value.String())
+		} else {
+			data.CustomResourceOwner = types.BoolNull()
+		}
+	}
+	if data.ResourceOwnerUrl.IsUnknown() {
+		if value := res.Get(pathRoot + `ResourceOwnerUrl`); value.Exists() && !data.ResourceOwnerUrl.IsNull() {
+			data.ResourceOwnerUrl = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.ResourceOwnerUrl = types.StringNull()
+		}
+	}
+	if data.AdditionalOAuthProcessUrl.IsUnknown() {
+		if value := res.Get(pathRoot + `AdditionalOAuthProcessUrl`); value.Exists() && !data.AdditionalOAuthProcessUrl.IsNull() {
+			data.AdditionalOAuthProcessUrl = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.AdditionalOAuthProcessUrl = types.StringNull()
+		}
+	}
+	if data.RsSetHeader == nil {
+		if value := res.Get(pathRoot + `RSSetHeader`); value.Exists() {
+			d := DmOAuthRSSetHeader{}
+			d.UpdateFromBody(ctx, "", value)
+			if !d.IsNull() {
+				data.RsSetHeader = &d
+			}
+		}
+	}
+	if data.ValidationUrlsslClientType.IsUnknown() {
+		if value := res.Get(pathRoot + `ValidationURLSSLClientType`); value.Exists() && !data.ValidationUrlsslClientType.IsNull() {
+			data.ValidationUrlsslClientType = tfutils.ParseStringFromGJSON(value)
+		} else if data.ValidationUrlsslClientType.ValueString() != "client" {
+			data.ValidationUrlsslClientType = types.StringNull()
+		}
+	}
+	if data.ValidationUrlsslClient.IsUnknown() {
+		if value := res.Get(pathRoot + `ValidationURLSSLClient`); value.Exists() && !data.ValidationUrlsslClient.IsNull() {
+			data.ValidationUrlsslClient = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.ValidationUrlsslClient = types.StringNull()
+		}
+	}
+	if data.JwtGrantValidator.IsUnknown() {
+		if value := res.Get(pathRoot + `JWTGrantValidator`); value.Exists() && !data.JwtGrantValidator.IsNull() {
+			data.JwtGrantValidator = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.JwtGrantValidator = types.StringNull()
+		}
+	}
+	if data.ClientJwtValidator.IsUnknown() {
+		if value := res.Get(pathRoot + `ClientJWTValidator`); value.Exists() && !data.ClientJwtValidator.IsNull() {
+			data.ClientJwtValidator = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.ClientJwtValidator = types.StringNull()
+		}
+	}
+	if data.OidcidTokenGenerator.IsUnknown() {
+		if value := res.Get(pathRoot + `OIDCIDTokenGenerator`); value.Exists() && !data.OidcidTokenGenerator.IsNull() {
+			data.OidcidTokenGenerator = tfutils.ParseStringFromGJSON(value)
+		} else {
+			data.OidcidTokenGenerator = types.StringNull()
+		}
+	}
+	if data.OAuthFeatures == nil {
+		if value := res.Get(pathRoot + `OAuthFeatures`); value.Exists() {
+			d := DmOAuthFeatures{}
+			d.UpdateFromBody(ctx, "", value)
+			if !d.IsNull() {
+				data.OAuthFeatures = &d
+			}
+		}
 	}
 }

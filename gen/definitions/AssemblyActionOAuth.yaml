@@ -30,6 +30,8 @@ attributes:
   - name: OAuthProviderSettingsReference
     dm_type: DmDynamicOAuthProviderSettingsReference
     description: 'OAuth token provider settings'
+    test_value: '{"Default": "AccTest_OAuthProviderSettings"}'
+    test_bed_value: '{"Default": datapower_oauthprovidersettings.acc_test.id}'
     cli_alias: oauth-provider-settings-ref
   - name: SupportedOAuthComponents
     dm_type: DmOAuthComponents

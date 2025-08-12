@@ -117,7 +117,7 @@ resource "datapower_logtarget" "test" {
   - CLI Alias: `remote-directory`
 - `remote_login` (String) Remote login
   - CLI Alias: `remote-login`
-- `remote_password` (String) Remote password
+- `remote_password` (String, Sensitive) Remote password
 - `remote_port` (Number) Remote port
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`

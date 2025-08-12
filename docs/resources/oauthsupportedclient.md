@@ -16,8 +16,13 @@ OAuth Client Profile
 
 ```terraform
 resource "datapower_oauthsupportedclient" "test" {
-  id         = "ResTestOAuthSupportedClient"
-  app_domain = "acceptance_test"
+  id                     = "ResTestOAuthSupportedClient"
+  app_domain             = "acceptance_test"
+  o_auth_role            = { "azsvr" : true }
+  az_grant               = { "code" : true }
+  generate_client_secret = false
+  client_secret          = "secret"
+  token_secret           = "AccTest_CryptoSSKey"
 }
 ```
 
@@ -30,6 +35,8 @@ resource "datapower_oauthsupportedclient" "test" {
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 
 ### Optional
+
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
 
 - `access_token_life_time` (Number) Access Token Lifetime
   - CLI Alias: `access-token-lifetime`
@@ -57,8 +64,9 @@ resource "datapower_oauthsupportedclient" "test" {
 - `client_jwt_validator` (String) Client authentication JWT validator
   - CLI Alias: `client-jwt-validator`
   - Reference to: `datapower_aaajwtvalidator:id`
-- `client_secret` (String) Client Secret
+- `client_secret` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Client Secret
   - CLI Alias: `client-secret`
+- `client_secret_update` (Boolean, Deprecated) Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.
 - `client_type` (String) Client Type
   - CLI Alias: `client-type`
   - Choices: `confidential`, `public`

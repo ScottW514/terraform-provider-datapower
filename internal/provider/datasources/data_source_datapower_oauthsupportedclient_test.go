@@ -45,7 +45,7 @@ func TestAccDataSourceOAuthSupportedClient(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.check_client_credential", "false"),
 					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.use_validation_url", "false"),
 					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.client_authen_method", "secret"),
-					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.generate_client_secret", "true"),
+					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.generate_client_secret", "false"),
 					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.caching", "replay"),
 					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.custom_scope_check", "false"),
 					resource.TestCheckResourceAttr("data.datapower_oauthsupportedclient.test", "result.0.local_az_page_url", "store:///OAuth-Generate-HTML.xsl"),

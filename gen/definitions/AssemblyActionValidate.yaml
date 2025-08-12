@@ -52,6 +52,8 @@ attributes:
     type: String
     reference_to: APISchema
     description: 'Schema'
+    test_value: '"AccTest_APISchema"'
+    test_bed_value: 'datapower_apischema.acc_test.id'
     cli_alias: schema
   - name: Input
     type: String

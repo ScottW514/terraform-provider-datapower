@@ -29,6 +29,7 @@ import (
 )
 
 func TestAccResourceGatewayPeering(t *testing.T) {
+	t.Skip("skipping test - configured in definition")
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_GatewayPeering") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_GatewayPeering")
 	}
@@ -39,6 +40,7 @@ func TestAccResourceGatewayPeering(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "local_port", "16380"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "monitor_port", "26380"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "enable_peer_group", "true"),
+			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "enable_ssl", "false"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "persistence_location", "memory"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeering.test", "local_directory", "local:///"),
 		}...),

@@ -168,6 +168,8 @@ attributes:
     type: String
     reference_to: SSLServerProfile
     description: 'TLS server profile'
+    test_value: '"AccTest_SSLServerProfile"'
+    test_bed_value: 'datapower_sslserverprofile.acc_test.id'
     cli_alias: ssl-server
   - name: SSLSNIServer
     type: String

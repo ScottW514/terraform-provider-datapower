@@ -35,6 +35,7 @@ attributes:
     type: String
     required: true
     example: 'cert:///kerberos-keytab'
+    test_bed_value: 'datapower_file.kerberos-keytab.remote_path'
     description: 'File Name'
     cli_alias: file-name
   - name: UseReplayCache

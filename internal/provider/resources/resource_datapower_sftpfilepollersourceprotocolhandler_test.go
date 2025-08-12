@@ -41,7 +41,7 @@ func TestAccResourceSFTPFilePollerSourceProtocolHandler(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_sftpfilepollersourceprotocolhandler.test", "success_rename_pattern", "$1.processed.ok"),
 			resource.TestCheckResourceAttr("datapower_sftpfilepollersourceprotocolhandler.test", "delete_on_error", "false"),
 			resource.TestCheckResourceAttr("datapower_sftpfilepollersourceprotocolhandler.test", "error_rename_pattern", "$0.processed.error"),
-			resource.TestCheckResourceAttr("datapower_sftpfilepollersourceprotocolhandler.test", "generate_result_file", "true"),
+			resource.TestCheckResourceAttr("datapower_sftpfilepollersourceprotocolhandler.test", "generate_result_file", "false"),
 			resource.TestCheckResourceAttr("datapower_sftpfilepollersourceprotocolhandler.test", "processing_seize_timeout", "0"),
 			resource.TestCheckResourceAttr("datapower_sftpfilepollersourceprotocolhandler.test", "xml_manager", "default"),
 			resource.TestCheckResourceAttr("datapower_sftpfilepollersourceprotocolhandler.test", "max_transfers_per_poll", "0"),

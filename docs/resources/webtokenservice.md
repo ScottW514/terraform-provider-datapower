@@ -17,9 +17,13 @@ Web Token Service
 
 ```terraform
 resource "datapower_webtokenservice" "test" {
-  id                       = "ResTestWebTokenService"
-  app_domain               = "acceptance_test"
-  xml_manager              = "default"
+  id          = "ResTestWebTokenService"
+  app_domain  = "acceptance_test"
+  xml_manager = "default"
+  front_side = [{
+    local_address = "0.0.0.0"
+    local_port    = 8888
+  }]
   style_policy             = "default"
   front_timeout            = 120
   front_persistent_timeout = 180
@@ -32,6 +36,8 @@ resource "datapower_webtokenservice" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
+- `front_side` (Attributes List) Source addresses
+  - CLI Alias: `listen-on` (see [below for nested schema](#nestedatt--front_side))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 
 ### Optional
@@ -60,8 +66,6 @@ resource "datapower_webtokenservice" "test" {
   - CLI Alias: `front-persistent-timeout`
   - Range: `0`-`86400`
   - Default value: `180`
-- `front_side` (Attributes List) Source addresses
-  - CLI Alias: `listen-on` (see [below for nested schema](#nestedatt--front_side))
 - `front_timeout` (Number) Front side timeout
   - CLI Alias: `front-timeout`
   - Range: `1`-`86400`
@@ -94,23 +98,6 @@ resource "datapower_webtokenservice" "test" {
   - Reference to: `datapower_xmlmanager:id`
   - Default value: `default`
 
-<a id="nestedatt--dependency_actions"></a>
-### Nested Schema for `dependency_actions`
-
-Required:
-
-- `action` (String) Action to take on target resource
-- `target_domain` (String) Application domain of the target for the action
-- `target_type` (String) Resource type of the target for the action
-
-Optional:
-
-- `on_create` (Boolean) Execute this action on the target when creating this resource.
-- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
-- `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
-
-
 <a id="nestedatt--front_side"></a>
 ### Nested Schema for `front_side`
 
@@ -142,3 +129,20 @@ Optional:
 - `use_ssl` (Boolean) TLS
   - CLI Alias: `use-ssl`
   - Default value: `false`
+
+
+<a id="nestedatt--dependency_actions"></a>
+### Nested Schema for `dependency_actions`
+
+Required:
+
+- `action` (String) Action to take on target resource
+- `target_domain` (String) Application domain of the target for the action
+- `target_type` (String) Resource type of the target for the action
+
+Optional:
+
+- `on_create` (Boolean) Execute this action on the target when creating this resource.
+- `on_delete` (Boolean) Execute this action on the target when deleting this resource.
+- `on_update` (Boolean) Execute this action on the target when updating this resource.
+- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)

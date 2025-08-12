@@ -125,6 +125,7 @@ attributes:
   - name: ValidateServerCert
     type: Bool
     default: true
+    test_value: 'false'
     description: 'Validate server certificate'
     cli_alias: validate-server-cert
   - name: Valcred

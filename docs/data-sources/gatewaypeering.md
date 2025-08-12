@@ -40,6 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `enable_peer_group` (Boolean) Use peer group
+- `enable_ssl` (Boolean) DEPRECATED: LEAVE SET TO FALSE
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `local_address` (String) Local address
 - `local_directory` (String) Local directory

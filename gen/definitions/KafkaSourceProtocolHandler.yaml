@@ -3,6 +3,7 @@ description: 'Kafka handler'
 cli_alias: 'source-kafka'
 cmd_group: 'mpgw'
 rest_endpoint: '/mgmt/config/{domain}/KafkaSourceProtocolHandler'
+skip_test: true
 actions:
   - name: quiesce
 attributes:

@@ -115,7 +115,7 @@ func (r *WebTokenServiceResource) Schema(ctx context.Context, req resource.Schem
 			"front_side": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Source addresses", "listen-on", "").String,
 				NestedObject:        models.DmSSLFrontSideResourceSchema,
-				Optional:            true,
+				Required:            true,
 			},
 			"style_policy": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Processing policy", "stylepolicy", "stylepolicy").AddDefaultValue("default").String,

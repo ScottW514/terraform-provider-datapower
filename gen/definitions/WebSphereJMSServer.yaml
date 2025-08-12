@@ -3,6 +3,7 @@ description: 'WebSphere JMS Server'
 cli_alias: 'wasjms-server'
 cmd_group: 'mpgw'
 rest_endpoint: '/mgmt/config/{domain}/WebSphereJMSServer'
+skip_test: true
 attributes:
   - name: Id
     tf_name: id

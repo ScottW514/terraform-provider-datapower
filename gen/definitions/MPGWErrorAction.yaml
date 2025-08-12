@@ -39,16 +39,17 @@ attributes:
       - 'redirect'
       - 'static'
     default: 'static'
+    test_value: '"static"'
     description: 'Mode'
     cli_alias: type
   - name: RemoteURL
     type: String
     description: 'Remote URL'
-    test_value: '"http://google.com"'
     cli_alias: remote-url
   - name: LocalURL
     type: String
     description: 'Local page location'
+    test_value: '"store:///schemas/XMLSchema.dtd"'
     cli_alias: local-url
   - name: ErrorRule
     type: String

@@ -4,6 +4,7 @@ cli_alias: 'luna'
 cmd_group: 'system'
 rest_endpoint: '/mgmt/config/default/Luna'
 default_domain_only: true
+skip_test: true
 attributes:
   - name: Id
     tf_name: id

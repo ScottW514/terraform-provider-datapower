@@ -45,6 +45,7 @@ attributes:
     maximum: 65535
     required: true
     default: 80
+    test_value: '8088'
     description: 'Port'
     cli_alias: port
   - name: HTTPVersion

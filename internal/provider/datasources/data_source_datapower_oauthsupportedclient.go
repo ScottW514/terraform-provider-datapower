@@ -33,7 +33,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 )
 
-type OAuthSupportedClientList struct {
+type OAuthSupportedClientWOList struct {
 	AppDomain types.String `tfsdk:"app_domain"`
 	Result    types.List   `tfsdk:"result"`
 }
@@ -112,10 +112,6 @@ func (d *OAuthSupportedClientDataSource) Schema(ctx context.Context, req datasou
 						},
 						"generate_client_secret": schema.BoolAttribute{
 							MarkdownDescription: "Generate Client Secret",
-							Computed:            true,
-						},
-						"client_secret": schema.StringAttribute{
-							MarkdownDescription: "Client Secret",
 							Computed:            true,
 						},
 						"caching": schema.StringAttribute{
@@ -231,13 +227,13 @@ func (d *OAuthSupportedClientDataSource) Configure(_ context.Context, req dataso
 }
 
 func (d *OAuthSupportedClientDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data OAuthSupportedClientList
+	var data OAuthSupportedClientWOList
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	o := models.OAuthSupportedClient{
+	o := models.OAuthSupportedClientWO{
 		AppDomain: data.AppDomain,
 	}
 
@@ -246,10 +242,10 @@ func (d *OAuthSupportedClientDataSource) Read(ctx context.Context, req datasourc
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return
 	}
-	l := []models.OAuthSupportedClient{}
+	l := []models.OAuthSupportedClientWO{}
 	if value := res.Get(`OAuthSupportedClient`); value.Exists() {
 		for _, v := range value.Array() {
-			item := models.OAuthSupportedClient{}
+			item := models.OAuthSupportedClientWO{}
 			item.FromBody(ctx, "", v)
 			if !item.IsNull() {
 				l = append(l, item)
@@ -258,13 +254,13 @@ func (d *OAuthSupportedClientDataSource) Read(ctx context.Context, req datasourc
 	}
 	if len(l) > 0 {
 		var diag diag.Diagnostics
-		data.Result, diag = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: models.OAuthSupportedClientObjectType}, l)
+		data.Result, diag = types.ListValueFrom(ctx, types.ObjectType{AttrTypes: models.OAuthSupportedClientObjectTypeWO}, l)
 		resp.Diagnostics.Append(diag...)
 		if resp.Diagnostics.HasError() {
 			return
 		}
 	} else {
-		data.Result = types.ListNull(types.ObjectType{AttrTypes: models.OAuthSupportedClientObjectType})
+		data.Result = types.ListNull(types.ObjectType{AttrTypes: models.OAuthSupportedClientObjectTypeWO})
 	}
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

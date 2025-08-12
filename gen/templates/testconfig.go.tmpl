@@ -138,7 +138,7 @@ data "datapower_{{snakeCase .Name}}" "test" {
 }`,
     {{- end}}
     {{- if not .UpdateOnly}}
-        {{- if not .ModelOnly}}
+        {{- if and (not .ModelOnly) (not .SkipTest)}}
     TestBed: `
 resource "datapower_{{snakeCase .Name}}" "acc_test" {
         {{- else}}

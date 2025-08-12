@@ -9,6 +9,7 @@ attributes:
     description: 'Execute'
   - name: OperationId
     type: String
+    test_value: '"operationid"'
     description: 'Operation ID'
   - name: Path
     type: String

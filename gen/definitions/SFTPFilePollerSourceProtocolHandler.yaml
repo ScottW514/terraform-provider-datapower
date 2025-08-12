@@ -88,6 +88,7 @@ attributes:
   - name: GenerateResultFile
     type: Bool
     default: true
+    test_value: 'false'
     description: 'Generate result file'
     cli_alias: result
   - name: ResultNamePattern

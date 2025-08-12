@@ -40,6 +40,7 @@ attributes:
     type: String
     description: 'Destination URL'
     cli_alias: dest-url
+    test_value: '"ebms2://somehost/url"'
   # DEPRECATED
   # - name: SSLProxy
   - name: UserName

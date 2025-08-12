@@ -31,4 +31,5 @@ attributes:
     type: String
     description: 'Value'
     example: 'value'
+    test_value: '"value"'
     cli_alias: value

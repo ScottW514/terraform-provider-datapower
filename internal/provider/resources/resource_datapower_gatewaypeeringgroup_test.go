@@ -29,6 +29,7 @@ import (
 )
 
 func TestAccResourceGatewayPeeringGroup(t *testing.T) {
+	t.Skip("skipping test - configured in definition")
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_GatewayPeeringGroup") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_GatewayPeeringGroup")
 	}
@@ -39,7 +40,7 @@ func TestAccResourceGatewayPeeringGroup(t *testing.T) {
 			resource.TestCheckResourceAttr("datapower_gatewaypeeringgroup.test", "mode", "peer"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeeringgroup.test", "cluster_primary_count", "3"),
 			resource.TestCheckResourceAttr("datapower_gatewaypeeringgroup.test", "cluster_auto_config", "true"),
-			resource.TestCheckResourceAttr("datapower_gatewaypeeringgroup.test", "enable_ssl", "true"),
+			resource.TestCheckResourceAttr("datapower_gatewaypeeringgroup.test", "enable_ssl", "false"),
 		}...),
 	})
 

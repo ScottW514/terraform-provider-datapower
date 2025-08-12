@@ -77,10 +77,12 @@ attributes:
   - name: Input
     type: String
     description: 'Input'
+    test_value: '"INPUT"'
     cli_alias: input
   - name: Transform
     type: String
     description: 'Transform file'
+    test_value: '"tfile"'
     cli_alias: transform
   - name: ParseSettingsReference
     dm_type: DmDynamicParseSettingsReference
@@ -176,6 +178,7 @@ attributes:
   - name: Output
     type: String
     description: 'Output'
+    test_value: '"OUTPUT"'
     cli_alias: output
   - name: NoTranscodeUtf8
     type: Bool

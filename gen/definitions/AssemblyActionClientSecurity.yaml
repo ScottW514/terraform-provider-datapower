@@ -52,10 +52,12 @@ attributes:
   - name: IdName
     type: String
     description: 'ID name'
+    test_value: '"idname"'
     cli_alias: id-name
   - name: SecretName
     type: String
     description: 'Secret name'
+    test_value: '"secretname"'
     cli_alias: secret-name
   - name: HTTPType
     type: String

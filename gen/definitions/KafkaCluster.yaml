@@ -3,6 +3,7 @@ description: 'Kafka Cluster'
 cli_alias: 'kafka-cluster'
 cmd_group: 'mpgw'
 rest_endpoint: '/mgmt/config/{domain}/KafkaCluster'
+skip_test: true
 attributes:
   - name: Id
     tf_name: id

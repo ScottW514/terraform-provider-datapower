@@ -8,5 +8,5 @@ resource "datapower_socialloginpolicy" "test" {
   social_provider         = "google"
   provider_az_endpoint    = "https://example.com/auth"
   provider_token_endpoint = "https://example.com/token"
-  validate_jwt_token      = true
+  validate_jwt_token      = false
 }

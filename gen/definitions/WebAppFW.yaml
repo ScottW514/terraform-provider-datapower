@@ -53,6 +53,7 @@ attributes:
     type: List
     element_type: DmFrontSide
     description: 'Source Addresses'
+    test_value: '[{"LocalAddress": "0.0.0.0"}]'
     cli_alias: listen-on
   - name: RemoteAddress
     type: String

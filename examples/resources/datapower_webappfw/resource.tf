@@ -2,6 +2,7 @@
 resource "datapower_webappfw" "test" {
   id                       = "ResTestWebAppFW"
   app_domain               = "acceptance_test"
+  front_side               = [{ "LocalAddress" : "0.0.0.0" }]
   remote_address           = "10.10.10.10"
   style_policy             = "AccTest_AppSecurityPolicy"
   xml_manager              = "default"

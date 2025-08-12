@@ -55,7 +55,7 @@ var DmFrontSideObjectDefault = map[string]attr.Value{
 	"local_address":      types.StringValue("0.0.0.0"),
 	"local_port":         types.Int64Value(3000),
 	"use_ssl":            types.BoolValue(false),
-	"credential_charset": types.StringNull(),
+	"credential_charset": types.StringValue("protocol"),
 }
 var DmFrontSideDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
@@ -72,7 +72,7 @@ var DmFrontSideDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 			Computed:            true,
 		},
 		"credential_charset": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Credential Character Set", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Credential Character Set", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
 			Computed:            true,
 		},
 	},
@@ -101,11 +101,13 @@ var DmFrontSideResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default:             booldefault.StaticBool(false),
 		},
 		"credential_charset": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Credential Character Set", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Credential Character Set", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
+			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le"),
 			},
+			Default: stringdefault.StaticString("protocol"),
 		},
 	},
 }
@@ -168,7 +170,7 @@ func (data *DmFrontSide) FromBody(ctx context.Context, pathRoot string, res gjso
 	if value := res.Get(pathRoot + `CredentialCharset`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.CredentialCharset = tfutils.ParseStringFromGJSON(value)
 	} else {
-		data.CredentialCharset = types.StringNull()
+		data.CredentialCharset = types.StringValue("protocol")
 	}
 }
 
@@ -193,7 +195,7 @@ func (data *DmFrontSide) UpdateFromBody(ctx context.Context, pathRoot string, re
 	}
 	if value := res.Get(pathRoot + `CredentialCharset`); value.Exists() && !data.CredentialCharset.IsNull() {
 		data.CredentialCharset = tfutils.ParseStringFromGJSON(value)
-	} else {
+	} else if data.CredentialCharset.ValueString() != "protocol" {
 		data.CredentialCharset = types.StringNull()
 	}
 }

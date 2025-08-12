@@ -27,6 +27,8 @@ attributes:
     type: String
     reference_to: B2BCPASenderSetting
     description: 'Sender setting'
+    test_value: '"AccTest_B2BCPASenderSetting"'
+    test_bed_value: 'datapower_b2bcpasendersetting.acc_test.id'
     cli_alias: sender-setting
   - name: ReceiverSetting
     type: String

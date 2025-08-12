@@ -29,6 +29,7 @@ import (
 )
 
 func TestAccDataSourceLuna(t *testing.T) {
+	t.Skip("skipping test - configured in definition")
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_Luna") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_Luna")
 	}

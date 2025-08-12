@@ -30,6 +30,8 @@ attributes:
   - name: Filename
     type: String
     required: true
-    example: 'cert:///acc-test-server.key'
+    example: 'cert:///shared-secret'
+    test_value: '"cert://tokensecret"'
+    test_bed_value: 'datapower_file.token-secret.remote_path'
     description: 'File name'
     cli_alias: file-name

@@ -16,13 +16,16 @@ B2B CPA collaboration
 
 ```terraform
 resource "datapower_b2bcpacollaboration" "test" {
-  id         = "ResTestB2BCPACollaboration"
-  app_domain = "acceptance_test"
-  service    = "service"
+  id            = "ResTestB2BCPACollaboration"
+  app_domain    = "acceptance_test"
+  internal_role = "internal"
+  external_role = "external"
+  service       = "service"
   actions = [{
-    name       = "cpacollaborationactionname"
-    value      = "value"
-    capability = "cansend"
+    name           = "cpacollaborationactionname"
+    value          = "value"
+    capability     = "cansend"
+    sender_setting = "AccTest_B2BCPASenderSetting"
   }]
 }
 ```

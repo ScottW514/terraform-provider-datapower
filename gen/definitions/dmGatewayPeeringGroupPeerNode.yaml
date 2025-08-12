@@ -6,6 +6,7 @@ attributes:
     type: String
     required: true
     example: 'localhost'
+    test_value: '"10.10.10.10"'
     description: 'Address'
   - name: Priority
     type: Int64

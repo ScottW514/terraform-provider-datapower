@@ -16,9 +16,11 @@ Gateway peering
 
 ```terraform
 resource "datapower_gatewaypeering" "test" {
-  id         = "ResTestGatewayPeering"
-  app_domain = "acceptance_test"
-  local_port = 16380
+  id            = "ResTestGatewayPeering"
+  app_domain    = "acceptance_test"
+  local_address = "5.5.5.5"
+  local_port    = 16380
+  enable_ssl    = false
 }
 ```
 
@@ -36,6 +38,8 @@ resource "datapower_gatewaypeering" "test" {
 - `enable_peer_group` (Boolean) Use peer group
   - CLI Alias: `enable-peer-group`
   - Default value: `true`
+- `enable_ssl` (Boolean) DEPRECATED: LEAVE SET TO FALSE
+  - Default value: `false`
 - `local_address` (String) Local address
   - CLI Alias: `local-address`
 - `local_directory` (String) Local directory

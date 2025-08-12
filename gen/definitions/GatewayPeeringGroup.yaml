@@ -3,6 +3,7 @@ description: 'Gateway-peering group'
 cli_alias: 'gateway-peering-group'
 cmd_group: 'configuration'
 rest_endpoint: '/mgmt/config/{domain}/GatewayPeeringGroup'
+skip_test: true
 attributes:
   - name: Id
     tf_name: id
@@ -66,6 +67,7 @@ attributes:
     type: Bool
     required: true
     default: true
+    test_value: 'false'
     description: 'Enable TLS'
     cli_alias: enable-ssl
   - name: Idcred

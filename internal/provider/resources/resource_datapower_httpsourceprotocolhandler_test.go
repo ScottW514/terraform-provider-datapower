@@ -37,7 +37,7 @@ func TestAccResourceHTTPSourceProtocolHandler(t *testing.T) {
 		Config: testutils.HTTPSourceProtocolHandlerTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "local_address", "0.0.0.0"),
-			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "local_port", "80"),
+			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "local_port", "8088"),
 			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "http_version", "HTTP/1.1"),
 			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "persistent_connections", "true"),
 			resource.TestCheckResourceAttr("datapower_httpsourceprotocolhandler.test", "allow_compression", "false"),

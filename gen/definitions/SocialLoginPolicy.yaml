@@ -103,6 +103,7 @@ attributes:
     type: Bool
     default: true
     required: true
+    test_value: 'false'
     description: 'Enable JWT token validation'
     cli_alias: validate-jwt-token
   - name: JWTValidator

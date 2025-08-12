@@ -70,6 +70,7 @@ attributes:
     cli_alias: request-type
   - name: FrontSide
     type: List
+    required: true
     element_type: DmSSLFrontSide
     description: 'Source addresses'
     cli_alias: listen-on

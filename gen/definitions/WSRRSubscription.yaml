@@ -38,6 +38,7 @@ attributes:
   - name: Namespace
     type: String
     description: 'Namespace'
+    test_value: '"namespace"'
     cli_alias: namespace
   - name: ObjectType
     type: String

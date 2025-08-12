@@ -34,10 +34,12 @@ attributes:
   - name: InternalRole
     type: String
     description: 'Internal role'
+    test_value: '"internal"'
     cli_alias: internal-role
   - name: ExternalRole
     type: String
     description: 'External role'
+    test_value: '"external"'
     cli_alias: external-role
   - name: ProcessSpecification
     type: String

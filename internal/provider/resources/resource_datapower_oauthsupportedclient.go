@@ -28,6 +28,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
@@ -42,9 +43,10 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/tidwall/gjson"
 )
 
-var _ resource.Resource = &OAuthSupportedClientResource{}
+var _ resource.ResourceWithModifyPlan = &OAuthSupportedClientResource{}
 
 func NewOAuthSupportedClientResource() resource.Resource {
 	return &OAuthSupportedClientResource{}
@@ -143,6 +145,15 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			"client_secret": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Client Secret", "client-secret", "").String,
 				Optional:            true,
+				WriteOnly:           true,
+				Sensitive:           true,
+			},
+			"client_secret_update": schema.BoolAttribute{
+				MarkdownDescription: "Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.",
+				Optional:            true,
+				Computed:            true,
+				Default:             booldefault.StaticBool(false),
+				DeprecationMessage:  "This attribute is for INTERNAL PROVIDER USE. Set values are ignored.",
 			},
 			"caching": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Caching", "caching", "").AddStringEnum("replay", "system", "custom", "diststore").AddDefaultValue("replay").String,
@@ -311,6 +322,15 @@ func (r *OAuthSupportedClientResource) Create(ctx context.Context, req resource.
 
 	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
 
+	var config models.OAuthSupportedClient
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	data.ClientSecret = config.ClientSecret
+	resp.Diagnostics.Append(resp.Private.SetKey(ctx, "OAuthSupportedClient.ClientSecret", []byte("{\"value\": \""+tfutils.GenerateHash(config.ClientSecret.ValueString())+"\"}"))...)
+
 	body := data.ToBody(ctx, `OAuthSupportedClient`)
 	_, err := r.client.Post(data.GetPath(), body)
 
@@ -318,6 +338,12 @@ func (r *OAuthSupportedClientResource) Create(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "POST", err))
 		return
 	}
+	getRes, getErr := r.client.Get(data.GetPath() + "/" + data.Id.ValueString())
+	if getErr != nil {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object after creation (GET), got error: %s", getErr))
+		return
+	}
+	data.UpdateUnknownFromBody(ctx, `OAuthSupportedClient`, getRes)
 	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
 		return
@@ -353,7 +379,7 @@ func (r *OAuthSupportedClientResource) Read(ctx context.Context, req resource.Re
 }
 
 func (r *OAuthSupportedClientResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data models.OAuthSupportedClient
+	var data, config models.OAuthSupportedClient
 
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
@@ -361,6 +387,17 @@ func (r *OAuthSupportedClientResource) Update(ctx context.Context, req resource.
 	}
 
 	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if data.ClientSecretUpdate.IsUnknown() {
+		data.ClientSecret = config.ClientSecret
+		data.ClientSecretUpdate = types.BoolValue(false)
+		resp.Diagnostics.Append(resp.Private.SetKey(ctx, "OAuthSupportedClient.ClientSecret", []byte("{\"value\": \""+tfutils.GenerateHash(config.ClientSecret.ValueString())+"\"}"))...)
+	}
 	_, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `OAuthSupportedClient`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
@@ -394,6 +431,33 @@ func (r *OAuthSupportedClientResource) Delete(ctx context.Context, req resource.
 	}
 
 	resp.State.RemoveResource(ctx)
+}
+func (r *OAuthSupportedClientResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
+	if req.Plan.Raw.IsNull() {
+		return
+	}
+	var data, config models.OAuthSupportedClient
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	var val []byte
+	var diags diag.Diagnostics
+	val, diags = req.Private.GetKey(ctx, "OAuthSupportedClient.ClientSecret")
+	resp.Diagnostics.Append(diags...)
+	if val != nil {
+		if hash := gjson.GetBytes(val, "value"); hash.Exists() && !tfutils.VerifyHash(config.ClientSecret.ValueString(), hash.String()) {
+			data.ClientSecretUpdate = types.BoolUnknown()
+		}
+	}
+
+	resp.Diagnostics.Append(resp.Plan.Set(ctx, &data)...)
 }
 
 func (r *OAuthSupportedClientResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {

@@ -53,7 +53,7 @@ attributes:
     type: Int64
     minimum: 1
     maximum: 65535
-    example: 8888
+    example: 4521
     required: true
     description: 'Local port'
     cli_alias: local-port
@@ -113,6 +113,8 @@ attributes:
     type: String
     reference_to: SSLServerProfile
     description: 'TLS server profile'
+    test_value: '"AccTest_SSLServerProfile"'
+    test_bed_value: 'datapower_sslserverprofile.acc_test.id'
     cli_alias: ssl-server
   - name: SSLSNIServer
     type: String

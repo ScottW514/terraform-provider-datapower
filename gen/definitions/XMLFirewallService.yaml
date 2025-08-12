@@ -348,7 +348,7 @@ attributes:
     type: Int64
     minimum: 1
     maximum: 65535
-    example: 8888
+    example: 7575
     required: true
     description: 'Port Number'
     cli_alias: port

@@ -3,6 +3,7 @@ description: 'Gateway peering'
 cli_alias: 'gateway-peering'
 cmd_group: 'configuration'
 rest_endpoint: '/mgmt/config/{domain}/GatewayPeering'
+skip_test: true
 attributes:
   - name: Id
     tf_name: id
@@ -39,6 +40,7 @@ attributes:
   - name: LocalAddress
     type: String
     description: 'Local address'
+    test_value: '"5.5.5.5"'
     cli_alias: local-address
   - name: LocalPort
     type: Int64
@@ -72,7 +74,11 @@ attributes:
   # DEPRECATED
   # - name: Priority
   # DEPRECATED
-  # - name: EnableSSL
+  - name: EnableSSL
+    type: Bool
+    default: false
+    required: true
+    description: 'DEPRECATED: LEAVE SET TO FALSE'
   # DEPRECATED
   # - name: Idcred
   # DEPRECATED

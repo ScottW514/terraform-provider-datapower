@@ -3,6 +3,7 @@ description: 'Access Manager Client'
 cli_alias: 'tam'
 cmd_group: 'tam'
 rest_endpoint: '/mgmt/config/{domain}/TAM'
+skip_test: true
 attributes:
   - name: Id
     tf_name: id

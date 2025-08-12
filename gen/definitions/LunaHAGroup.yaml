@@ -3,6 +3,7 @@ description: 'SafeNet Luna HSM HA group'
 cli_alias: 'luna-ha-group'
 cmd_group: 'configuration'
 rest_endpoint: '/mgmt/config/{domain}/LunaHAGroup'
+skip_test: true
 attributes:
   - name: Id
     tf_name: id

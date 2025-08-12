@@ -32,6 +32,8 @@ attributes:
     reference_to: StylePolicyAction
     element_type: String
     description: 'Rule Actions'
+    test_value: '["AccTest_StylePolicyAction"]'
+    test_bed_value: '[datapower_stylepolicyaction.acc_test.id]'
     cli_alias: action
   - name: Direction
     type: String

@@ -40,7 +40,7 @@ func TestAccDataSourceSSLClientProfile(t *testing.T) {
 				Config: testutils.SSLClientProfileTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_sslclientprofile.test", "result.0.id", "AccTest_SSLClientProfile"),
-					resource.TestCheckResourceAttr("data.datapower_sslclientprofile.test", "result.0.validate_server_cert", "true"),
+					resource.TestCheckResourceAttr("data.datapower_sslclientprofile.test", "result.0.validate_server_cert", "false"),
 					resource.TestCheckResourceAttr("data.datapower_sslclientprofile.test", "result.0.caching", "true"),
 					resource.TestCheckResourceAttr("data.datapower_sslclientprofile.test", "result.0.cache_timeout", "300"),
 					resource.TestCheckResourceAttr("data.datapower_sslclientprofile.test", "result.0.cache_size", "100"),

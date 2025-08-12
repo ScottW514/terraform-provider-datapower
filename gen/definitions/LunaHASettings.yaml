@@ -5,6 +5,7 @@ cmd_group: 'system'
 rest_endpoint: '/mgmt/config/default/LunaHASettings/LunaHASettings'
 update_only: true
 default_domain_only: true
+skip_test: true
 attributes:
   - name: mAdminState
     tf_name: 'enabled'

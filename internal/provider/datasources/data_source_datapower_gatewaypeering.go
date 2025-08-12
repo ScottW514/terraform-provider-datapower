@@ -104,6 +104,10 @@ func (d *GatewayPeeringDataSource) Schema(ctx context.Context, req datasource.Sc
 							MarkdownDescription: "Use peer group",
 							Computed:            true,
 						},
+						"enable_ssl": schema.BoolAttribute{
+							MarkdownDescription: "DEPRECATED: LEAVE SET TO FALSE",
+							Computed:            true,
+						},
 						"persistence_location": schema.StringAttribute{
 							MarkdownDescription: "Persistence location",
 							Computed:            true,

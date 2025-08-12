@@ -36,7 +36,7 @@ func TestAccResourceSSLClientProfile(t *testing.T) {
 	steps = append(steps, resource.TestStep{
 		Config: testutils.SSLClientProfileTestConfig.GetResourceConfig(),
 		Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
-			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "validate_server_cert", "true"),
+			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "validate_server_cert", "false"),
 			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "caching", "true"),
 			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "cache_timeout", "300"),
 			resource.TestCheckResourceAttr("datapower_sslclientprofile.test", "cache_size", "100"),

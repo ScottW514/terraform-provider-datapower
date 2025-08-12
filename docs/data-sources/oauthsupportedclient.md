@@ -48,7 +48,6 @@ Read-Only:
 - `check_client_credential` (Boolean) Verify Client Credential
 - `client_authen_method` (String) Authentication Method
 - `client_jwt_validator` (String) Client authentication JWT validator
-- `client_secret` (String) Client Secret
 - `client_type` (String) Client Type
 - `client_val_cred` (String) Client TLS Credentials
 - `custom_resource_owner` (Boolean) Custom Resource Owner Handling

@@ -35,6 +35,7 @@ attributes:
     type: String
     description: 'JSON schema URL'
     cli_alias: json-schema
+    test_value: '"http://localhost/json"'
   - name: GraphQLSchema
     type: String
     description: 'GraphQL schema URL'

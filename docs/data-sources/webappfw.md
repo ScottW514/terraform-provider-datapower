@@ -116,6 +116,7 @@ Read-Only:
 - `credential_charset` (String) Credential Character Set
   - CLI Alias: `credential-charset`
   - Choices: `protocol`, `ascii`, `utf8`, `big5`, `cp1250`, `cp1251`, `cp1252`, `cp1253`, `cp1254`, `cp1255`, `cp1256`, `cp1257`, `cp1258`, `euc_jp`, `euc_kr`, `gb18030`, `gb2312`, `iso2022_jp`, `iso2022_kr`, `iso8859_1`, `iso8859_2`, `iso8859_4`, `iso8859_5`, `iso8859_6`, `iso8859_7`, `iso8859_8`, `iso8859_9`, `iso8859_15`, `sjis`, `tis620`, `unicode_le`
+  - Default value: `protocol`
 - `local_address` (String) Local IP Address
   - Default value: `0.0.0.0`
 - `local_port` (Number) Port

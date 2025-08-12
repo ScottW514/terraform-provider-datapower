@@ -39,6 +39,7 @@ attributes:
   - name: GeneralPolicy
     type: String
     description: 'General Policy File'
+    test_value: '"http://test/uri"'
     cli_alias: general-policy
   - name: CombiningAlg
     type: String
