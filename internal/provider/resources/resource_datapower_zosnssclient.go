@@ -107,6 +107,7 @@ func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRe
 			"password": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Password", "password", "").String,
 				Optional:            true,
+				Sensitive:           true,
 			},
 			"password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Password Alias", "password-alias", "passwordalias").String,

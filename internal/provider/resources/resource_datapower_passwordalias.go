@@ -91,6 +91,7 @@ func (r *PasswordAliasResource) Schema(ctx context.Context, req resource.SchemaR
 				MarkdownDescription: tfutils.NewAttributeDescription("Password", "password", "").String,
 				Optional:            true,
 				WriteOnly:           true,
+				Sensitive:           true,
 			},
 			"password_update": schema.BoolAttribute{
 				MarkdownDescription: "Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.",

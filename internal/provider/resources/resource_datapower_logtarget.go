@@ -243,6 +243,7 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			"remote_password": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Remote password", "", "").String,
 				Optional:            true,
+				Sensitive:           true,
 			},
 			"remote_directory": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Remote directory", "remote-directory", "").String,

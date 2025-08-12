@@ -113,7 +113,7 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 		{{- if .WriteOnly}}
                 WriteOnly:           true,
 		{{- end}}
-		{{- if and .Sensitive (eq .ElementType "String")}}
+		{{- if and .Sensitive (eq .Type "String")}}
                 Sensitive:           true,
 		{{- end}}
 		{{- if and (len .Enum) (ne .Type "Object")}}
