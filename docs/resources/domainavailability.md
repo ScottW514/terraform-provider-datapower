@@ -33,7 +33,6 @@ resource "datapower_domainavailability" "test" {
 - `enabled` (Boolean) Administrative state
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `restart_domain_on_update` (Boolean) Set to true to restart the domain when changes are made to this resource.
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
 

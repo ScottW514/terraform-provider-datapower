@@ -20,6 +20,7 @@ description: |-
 - Bump golang.org/x/tools from 0.35.0 to 0.36.0 (PR5)
 - Bump golang.org/x/crypto from 0.40.0 to 0.41.0 (PR6)
 - Fixed `Sensitive` attribute property
+- BREAKING CHANGE: Removed `restart_domain_on_update` attribute from `datapower_domainavailability`. Should now use `dependency_actions`.
 
 ## v0.6.2
 

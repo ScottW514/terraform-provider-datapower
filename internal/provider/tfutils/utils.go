@@ -19,10 +19,7 @@
 package tfutils
 
 import (
-	"fmt"
-	"strings"
 	"sync"
-	"time"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -123,25 +120,4 @@ func GenerateHash(text string) string {
 // It returns true if the plaintext matches the hash, false otherwise.
 func VerifyHash(text, hash string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(text)) == nil
-}
-
-// Restarts domain
-func RestartDomain(client *client.DatapowerClient, domain string) error {
-	res, err := client.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain), fmt.Sprintf(`{"RestartDomain": {"Domain": "%s"}}`, domain))
-	if err == nil {
-		if res.StatusCode() != 202 {
-			return fmt.Errorf("client: failed to restart domain. received status %d, expected 202. %s", res.StatusCode(), res.Body())
-		}
-	}
-
-	// Wait for domain restart to complete for up to 5 seconds
-	for attempt := 1; attempt <= 10; attempt++ {
-		_, cErr := client.Get(fmt.Sprintf("/mgmt/actionqueue/%s/operations", domain))
-		if cErr != nil && !strings.Contains(cErr.Error(), "status 404") {
-			return fmt.Errorf("client: failed to restart domain. %s", cErr)
-		}
-
-		time.Sleep(time.Millisecond * 500)
-	}
-	return err
 }

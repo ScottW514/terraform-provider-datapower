@@ -30,7 +30,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
@@ -78,15 +77,6 @@ func (r *DomainAvailabilityResource) Schema(ctx context.Context, req resource.Sc
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
 				Optional:            true,
 			},
-			"restart_domain_on_update": schema.BoolAttribute{
-				MarkdownDescription: "Set to true to restart the domain when changes are made to this resource.",
-				Optional:            true,
-				Computed:            true,
-				Default:             booldefault.StaticBool(true),
-				PlanModifiers: []planmodifier.Bool{
-					boolplanmodifier.UseStateForUnknown(),
-				},
-			},
 			"dependency_actions": actions.ActionsSchema,
 		},
 	}
@@ -121,13 +111,6 @@ func (r *DomainAvailabilityResource) Create(ctx context.Context, req resource.Cr
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
 		return
-	}
-	if data.RestartDomainOnUpdate.ValueBool() {
-		rErr := tfutils.RestartDomain(r.pData.Client, data.AppDomain.ValueString())
-		if rErr != nil {
-			resp.Diagnostics.AddError("Client Error", rErr.Error())
-			return
-		}
 	}
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
@@ -183,13 +166,6 @@ func (r *DomainAvailabilityResource) Update(ctx context.Context, req resource.Up
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
-	}
-	if data.RestartDomainOnUpdate.ValueBool() {
-		rErr := tfutils.RestartDomain(r.pData.Client, data.AppDomain.ValueString())
-		if rErr != nil {
-			resp.Diagnostics.AddError("Client Error", rErr.Error())
-			return
-		}
 	}
 
 	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)

@@ -59,9 +59,6 @@ type {{.Name}} struct {
 	{{toGoName .TfName}} *{{.DmType}} `tfsdk:"{{.TfName}}"`
     {{- end}}
 {{- end}}
-{{- if .RestartDomainOnUpdate}}
-	RestartDomainOnUpdate types.Bool `tfsdk:"restart_domain_on_update"`
-{{- end}}
 {{- if not .ModelOnly}}
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
 {{- end}}
@@ -76,12 +73,9 @@ type {{.Name}}WO struct {
 	{{toGoName .TfName}} *{{.DmType}} `tfsdk:"{{.TfName}}"`
         {{- end}}
     {{- end}}
-{{- if .RestartDomainOnUpdate}}
-	RestartDomainOnUpdate types.Bool `tfsdk:"restart_domain_on_update"`
-{{- end}}
-{{- if not .ModelOnly}}
+    {{- if not .ModelOnly}}
 	DependencyActions []*actions.DependencyAction `tfsdk:"dependency_actions"`
-{{- end}}
+    {{- end}}
 }
 {{- end}}
 
@@ -99,9 +93,6 @@ var {{.Name}}ObjectType = map[string]attr.Type{
     {{- if .WriteOnly}}
 	"{{.TfName}}_update": types.BoolType,
     {{- end}}
-{{- end}}
-{{- if .RestartDomainOnUpdate}}
-	"restart_domain_on_update": types.BoolType,
 {{- end}}
 {{- if not .ModelOnly}}
 	"dependency_actions": actions.ActionsListType,
@@ -122,9 +113,6 @@ var {{.Name}}ObjectTypeWO = map[string]attr.Type{
     "{{.TfName}}": types.ObjectType{ AttrTypes: {{.DmType}}ObjectType },
             {{- end}}
         {{- end}}
-    {{- end}}
-    {{- if .RestartDomainOnUpdate}}
-	"restart_domain_on_update": types.BoolType,
     {{- end}}
     {{- if not .ModelOnly}}
 	"dependency_actions": actions.ActionsListType,
