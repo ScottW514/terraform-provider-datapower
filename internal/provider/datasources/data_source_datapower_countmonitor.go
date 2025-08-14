@@ -28,9 +28,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
 type CountMonitorList struct {
@@ -48,7 +48,7 @@ func NewCountMonitorDataSource() datasource.DataSource {
 }
 
 type CountMonitorDataSource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (d *CountMonitorDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -118,12 +118,14 @@ func (d *CountMonitorDataSource) Configure(_ context.Context, req datasource.Con
 		return
 	}
 
-	d.client = *req.ProviderData.(**client.DatapowerClient)
+	d.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (d *CountMonitorDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data CountMonitorList
+	d.pData.Mu.Lock()
+	defer d.pData.Mu.Unlock()
 
+	var data CountMonitorList
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -132,7 +134,7 @@ func (d *CountMonitorDataSource) Read(ctx context.Context, req datasource.ReadRe
 		AppDomain: data.AppDomain,
 	}
 
-	res, err := d.client.Get(o.GetPath())
+	res, err := d.pData.Client.Get(o.GetPath())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

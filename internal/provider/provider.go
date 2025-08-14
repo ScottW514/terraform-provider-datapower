@@ -22,6 +22,7 @@ package provider
 
 import (
 	"context"
+	"sync"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int32validator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -31,8 +32,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/datasources"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/resources"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
 type DatapowerProvider struct {
@@ -100,8 +103,13 @@ func (p *DatapowerProvider) Configure(ctx context.Context, req provider.Configur
 		return
 	}
 
-	resp.DataSourceData = &c
-	resp.ResourceData = &c
+	data := tfutils.ProviderData{
+		Client: c,
+		Mu:     sync.Mutex{},
+	}
+	resp.DataSourceData = &data
+	resp.ResourceData = &data
+	actions.Process.Provider = &data
 }
 
 func (p *DatapowerProvider) Resources(ctx context.Context) []func() resource.Resource {

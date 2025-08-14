@@ -28,9 +28,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
 type ODRConnectorGroupList struct {
@@ -47,7 +47,7 @@ func NewODRConnectorGroupDataSource() datasource.DataSource {
 }
 
 type ODRConnectorGroupDataSource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (d *ODRConnectorGroupDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -110,19 +110,21 @@ func (d *ODRConnectorGroupDataSource) Configure(_ context.Context, req datasourc
 		return
 	}
 
-	d.client = *req.ProviderData.(**client.DatapowerClient)
+	d.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (d *ODRConnectorGroupDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data ODRConnectorGroupList
+	d.pData.Mu.Lock()
+	defer d.pData.Mu.Unlock()
 
+	var data ODRConnectorGroupList
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 	o := models.ODRConnectorGroup{}
 
-	res, err := d.client.Get(o.GetPath())
+	res, err := d.pData.Client.Get(o.GetPath())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

@@ -26,30 +26,43 @@ import (
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-framework/diag"
-	"github.com/scottw514/terraform-provider-datapower/client"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
+	"github.com/tidwall/gjson"
 )
 
 type processData struct {
 	// [domain][objectType][objectId]{action,...}
 	saveDomains []string
-	client      *client.DatapowerClient
-	mu          sync.Mutex
+	Provider    *tfutils.ProviderData
+	stateMu     sync.Mutex
 }
 
-var process = processData{}
+var Process = processData{
+	stateMu: sync.Mutex{},
+}
+
+type qstate int
+
+const (
+	unquiesced qstate = iota
+	quiescing
+	quiesced
+	unquiescing
+	errorState
+)
 
 // Called by resources prior to create/update runs.
 // Triggers quiesce calls, and queues the rest for post-process execution. Duplicate actions on the same domain/resource are ignored.
-func PreProcess(ctx context.Context, diag *diag.Diagnostics, client *client.DatapowerClient, srcDomain string, actions []*DependencyAction, operation Operation, saveDefault bool) {
-	process.mu.Lock()
-	defer process.mu.Unlock()
-	process.client = client
-	if !slices.Contains(process.saveDomains, srcDomain) {
-		process.saveDomains = append(process.saveDomains, srcDomain)
+func PreProcess(ctx context.Context, diag *diag.Diagnostics, srcDomain string, actions []*DependencyAction, operation Operation, saveDefault bool) {
+	Process.stateMu.Lock()
+	if !slices.Contains(Process.saveDomains, srcDomain) {
+		Process.saveDomains = append(Process.saveDomains, srcDomain)
 	}
-	if saveDefault && !slices.Contains(process.saveDomains, "default") {
-		process.saveDomains = append(process.saveDomains, "default")
+	if saveDefault && !slices.Contains(Process.saveDomains, "default") {
+		Process.saveDomains = append(Process.saveDomains, "default")
 	}
+	Process.stateMu.Unlock()
+
 	for _, item := range actions {
 		var name string
 		if (operation == Create && !item.OnCreate.ValueBool()) ||
@@ -58,13 +71,14 @@ func PreProcess(ctx context.Context, diag *diag.Diagnostics, client *client.Data
 			item.Action.ValueString() != "quiesce" {
 			continue
 		}
-		if item.TargetType.ValueString() == "resource_datapower_domain" {
-			name = "default"
+
+		if item.TargetType.ValueString() == "datapower_domain" {
+			name = item.TargetDomain.ValueString()
 		} else {
 			name = item.TargetId.ValueString()
 		}
 
-		quiesceAction(diag, item.TargetDomain.ValueString(), item.TargetType.ValueString(), name, true)
+		submitAction(ctx, diag, item.TargetDomain.ValueString(), item.TargetType.ValueString(), name, item.Action.ValueString(), false)
 
 		if diag.HasError() {
 			return
@@ -74,58 +88,35 @@ func PreProcess(ctx context.Context, diag *diag.Diagnostics, client *client.Data
 }
 
 // Called prior to exit of resource Create, Update and Delete operations
-func PostProcess(ctx context.Context, diag *diag.Diagnostics, client *client.DatapowerClient, actions []*DependencyAction, operation Operation) {
-	process.mu.Lock()
-	defer process.mu.Unlock()
-	process.client = client
+func PostProcess(ctx context.Context, diag *diag.Diagnostics, actions []*DependencyAction, operation Operation) {
 	for _, item := range actions {
-		var name string
 		if (operation == Create && !item.OnCreate.ValueBool()) ||
 			(operation == Update && !item.OnUpdate.ValueBool()) ||
 			(operation == Delete && !item.OnDelete.ValueBool()) {
 			continue
 		}
-		if item.TargetType.ValueString() == "resource_datapower_domain" {
-			name = "default"
-		} else {
-			name = item.TargetId.ValueString()
-		}
 
 		domain := item.TargetDomain.ValueString()
 		targetType := item.TargetType.ValueString()
 		action := item.Action.ValueString()
+		name := item.TargetId.ValueString()
 
-		if action == "quiesce" {
-			quiesceAction(diag, domain, targetType, name, false)
-		} else {
-			res, err := process.client.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain),
-				getBody(domainUnquiesceBody, targetType, name, action, false))
-			if err == nil {
-				if res.StatusCode() != 202 {
-					diag.AddError("Action Error", fmt.Sprintf("Failed to `%s` object (%s/%s/%s), expected 202 got %d",
-						action, domain, targetType,
-						name, res.StatusCode()))
-					return
-				}
-			} else {
-				diag.AddError("Action Error", fmt.Sprintf("Failed to `%s` object (%s/%s/%s), got error: %s",
-					action, domain, targetType, name, err))
-				return
-			}
-
+		if targetType == "datapower_domain" {
+			name = domain
 		}
+
+		submitAction(ctx, diag, domain, targetType, name, action, true)
 
 		if diag.HasError() {
 			return
 		}
-
 	}
 }
 
 // Called upon exit of provider Serve method
 func SaveDomains() error {
-	for _, domain := range process.saveDomains {
-		res, err := process.client.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain), `{"SaveConfig": 0}`)
+	for _, domain := range Process.saveDomains {
+		res, err := Process.Provider.Client.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain), `{"SaveConfig": 0}`)
 		if err == nil {
 			if res.StatusCode() != 200 {
 				return fmt.Errorf("failed to save domain `%s`. status: %d body: %s", domain, res.StatusCode(), res.Body())
@@ -137,62 +128,142 @@ func SaveDomains() error {
 	return nil
 }
 
-func quiesceAction(diag *diag.Diagnostics, domain, objectType, objectId string, quiesce bool) {
-	quiesceAction := "quiesce"
-	if !quiesce {
-		quiesceAction = "unquiesce"
+func submitAction(ctx context.Context, diag *diag.Diagnostics, domain, objectType, objectId, action string, postAction bool) {
+	postStr := "pre"
+	if postAction {
+		postStr = "post"
 	}
 
-	res, err := process.client.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain), getBody(domain, objectType, objectId, "quiesce", quiesce))
+	// If object already in proper quiesce state, skip
+	if action == "quiesce" {
+		qState, err := getQuiesceState(domain, objectType, objectId)
+		if err != nil {
+			diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), got error: %s",
+				postStr, action, domain, objectType, objectId, err))
+			return
+		}
+		if (!postAction && qState == quiesced) || (postAction && qState == unquiesced) {
+			return
+		}
+	}
+
+	var cbUrl = ""
+	res, err := Process.Provider.Client.Post(fmt.Sprintf("/mgmt/actionqueue/%s", domain), getBody(domain, objectType, objectId, action, postAction))
 	if err == nil {
-		if res.StatusCode() != 202 {
-			diag.AddError("Action Error", fmt.Sprintf("Failed to %s object (%s/%s/%s), expected 202 got %d",
-				quiesceAction, domain, objectType, objectId, res.StatusCode()))
+		if res.StatusCode() == 200 {
+			return
+		} else if res.StatusCode() != 202 {
+			diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), during operation request expected 202 got %d",
+				postStr, action, domain, objectType, objectId, res.StatusCode()))
+			return
+		}
+		if ack := gjson.ParseBytes(res.Body()).Get("_links.location.href"); ack.Exists() {
+			cbUrl = ack.String()
+		} else {
+			diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), invalid response during operation request: %s",
+				postStr, action, domain, objectType, objectId, res.Body()))
+			return
 		}
 	} else {
-		diag.AddError("Action Error", fmt.Sprintf("Failed to %s object (%s/%s/%s), got error: %s",
-			quiesceAction, domain, objectType, objectId, err))
-	}
-
-	if diag.HasError() {
+		diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), got error during operation request: %s",
+			postStr, action, domain, objectType, objectId, err))
 		return
 	}
 
-	if quiesce {
-		// We wait for the object to reach quiesce state for up to 60 seconds
-		for attempt := 1; attempt <= 120; attempt++ {
-			sRes, err := process.client.Get(fmt.Sprintf("/mgmt/status/%s/%sSummary", domain, actionMap[objectType].ObjectName))
-			if err != nil {
-				diag.AddError("Action Error", fmt.Sprintf("Failed to quiesce object (%s/%s/%s), got error: %s", domain, objectType, objectId, err))
-				break
-			}
-			if summary := sRes.Get(fmt.Sprintf("%sSummary", actionMap[objectType].ObjectName)); summary.Exists() {
-				for _, obj := range summary.Array() {
-					if name := obj.Get(fmt.Sprintf("%s.value", actionMap[objectType].ObjectName)); name.Exists() {
-						if status := obj.Get("Quiesce"); status.Exists() && status.String() == "quiesced" {
-							return
-						}
-					}
-				}
-			} else {
-				diag.AddError("Action Error", fmt.Sprintf("Failed while waiting to quiesce object (%s/%s/%s), no object status returned: %s",
-					domain, objectType, objectId, sRes.Raw))
-				break
-			}
-			time.Sleep(time.Millisecond * 500)
+	var exitLoop = false
+	timer := time.NewTimer(time.Second * 90)
+	ticker := time.NewTicker(time.Millisecond * 500)
+	for {
+		if exitLoop {
+			break
 		}
-		diag.AddError("Action Error", fmt.Sprintf("Timeout reached while waiting to quiesce object (%s/%s/%s)", domain, objectType, objectId))
+		select {
+		case <-timer.C:
+			diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), timeout while waiting for action submission status",
+				postStr, action, domain, objectType, objectId))
+			return
+		case <-ctx.Done():
+			diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), context expired before completion",
+				postStr, action, domain, objectType, objectId))
+			return
+		case <-ticker.C:
+			status, resBody, err := getOperationState(diag, cbUrl)
+			if err != nil && !strings.Contains(err.Error(), "status 404") {
+				diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), error while reading action submission status: %s",
+					postStr, action, domain, objectType, objectId, err))
+				return
+			} else if err != nil && strings.Contains(err.Error(), "status 404") {
+				exitLoop = true
+			} else if status == "completed" {
+				exitLoop = true
+			} else if status != "started" {
+				diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), unexpected status (%s) while reading action submission status: %s",
+					postStr, action, domain, objectType, objectId, status, resBody))
+				return
+			}
+		}
+	}
+
+	if action == "quiesce" {
+		timer := time.NewTimer(time.Second * 90)
+		ticker := time.NewTicker(time.Millisecond * 500)
+		for {
+			select {
+			case <-timer.C:
+				diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), timeout while waiting for object to reach target state",
+					postStr, action, domain, objectType, objectId))
+				return
+			case <-ctx.Done():
+				diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), context expired before completion",
+					postStr, action, domain, objectType, objectId))
+				return
+			case <-ticker.C:
+				qState, err := getQuiesceState(domain, objectType, objectId)
+				if err != nil {
+					diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), got error: %s",
+						postStr, action, domain, objectType, objectId, err))
+					return
+				}
+				if (!postAction && qState == quiesced) || (postAction && qState == unquiesced) {
+					return
+				}
+			}
+		}
+	} else if action == "restart" && objectType == "datapower_domain" {
+		timer := time.NewTimer(time.Second * 90)
+		ticker := time.NewTicker(time.Millisecond * 500)
+		for {
+			select {
+			case <-timer.C:
+				diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), timeout while waiting for domain to restart",
+					postStr, action, domain, objectType, objectId))
+				return
+			case <-ctx.Done():
+				diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), context expired before completion",
+					postStr, action, domain, objectType, objectId))
+				return
+			case <-ticker.C:
+				_, cErr := Process.Provider.Client.Get(fmt.Sprintf("/mgmt/actionqueue/%s/operations", domain))
+				if cErr != nil && !strings.Contains(cErr.Error(), "status 404") {
+					diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), while waiting for domain to restart got error: %s",
+						postStr, action, domain, objectType, objectId, cErr))
+					return
+				} else if cErr == nil {
+					return
+				}
+			}
+		}
 	}
 }
 
-func getBody(domain, objectType, objectId, action string, pre bool) string {
+func getBody(domain, objectType, objectId, action string, postAction bool) string {
 	var body string
 	if action == "quiesce" {
-		if objectType == "resource_datapower_domain" && pre {
+		if objectType == "datapower_domain" && !postAction {
 			body = domainQuiesceBody
-		} else if objectType == "resource_datapower_domain" && !pre {
+		} else if objectType == "datapower_domain" && postAction {
 			body = domainUnquiesceBody
-		} else if objectType != "resource_datapower_domain" && pre {
+		} else if objectType != "datapower_domain" && !postAction {
 			body = serviceQuiesceBody
 		} else {
 			body = serviceUnquiesceBody
@@ -201,4 +272,66 @@ func getBody(domain, objectType, objectId, action string, pre bool) string {
 		body = actionMap[objectType].ValidActions[action].Body
 	}
 	return strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(body, "{type}", actionMap[objectType].ObjectName), "{name}", objectId), "{domain}", domain)
+}
+
+func getQuiesceState(domain, objectType, objectId string) (qstate, error) {
+	sRes, err := Process.Provider.Client.Get(fmt.Sprintf("/mgmt/status/%s/%sSummary", domain, actionMap[objectType].ObjectName))
+	if err != nil {
+		return errorState, err
+	}
+	if summary := sRes.Get(fmt.Sprintf("%sSummary", actionMap[objectType].ObjectName)); summary.Exists() {
+		// DataPower returns single objects as an object in the "{ObjectName}Summary" key, and multiple objects as an array
+		if summary.IsArray() {
+			// Mulitple objects received
+			for _, obj := range summary.Array() {
+				namePath := fmt.Sprintf("%s.value", actionMap[objectType].ObjectName)
+				if name := obj.Get(namePath); name.Exists() {
+					if name.String() != objectId {
+						continue
+					} else if status := obj.Get("Quiesce"); status.Exists() {
+						return stringToQstate(status.String()), nil
+					}
+				}
+			}
+			return errorState, fmt.Errorf("object not found in Summary")
+		} else {
+			// Single object recieved
+			namePath := fmt.Sprintf("%s.value", actionMap[objectType].ObjectName)
+			if name := summary.Get(namePath); name.Exists() {
+				if status := summary.Get("Quiesce"); status.Exists() {
+					return stringToQstate(status.String()), nil
+				}
+			}
+		}
+	}
+	return errorState, fmt.Errorf("invalid Summary response from host: %s", sRes.Raw)
+}
+
+func getOperationState(diag *diag.Diagnostics, cbUrl string) (string, string, error) {
+	cbRes, err := Process.Provider.Client.Get(cbUrl)
+	if err == nil {
+		if status := cbRes.Get("status"); status.Exists() {
+			if status.String() == "error" {
+				return "", "", fmt.Errorf("%s", cbRes.Raw)
+			} else {
+				return status.String(), cbRes.Raw, nil
+			}
+		} else {
+			return "", "", fmt.Errorf("%s", cbRes.Raw)
+		}
+	}
+	return "", "", err
+}
+
+func stringToQstate(qstring string) qstate {
+	switch qstring {
+	case "quiesced":
+		return quiesced
+	case "quiescing":
+		return quiescing
+	case "unquiescing":
+		return unquiescing
+	default:
+		return unquiesced
+	}
 }

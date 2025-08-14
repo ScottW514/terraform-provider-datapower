@@ -146,7 +146,7 @@ attributes:
     minimum: 1
     maximum: 65535
     required: true
-    example: 8899
+    example: 8922
     description: 'Port Number'
     cli_alias: port
   - name: RemoteAddress

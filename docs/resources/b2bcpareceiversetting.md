@@ -85,4 +85,4 @@ Optional:
 - `on_create` (Boolean) Execute this action on the target when creating this resource.
 - `on_delete` (Boolean) Execute this action on the target when deleting this resource.
 - `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)

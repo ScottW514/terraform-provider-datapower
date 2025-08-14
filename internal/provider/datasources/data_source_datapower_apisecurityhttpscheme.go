@@ -28,9 +28,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
 type APISecurityHTTPSchemeList struct {
@@ -48,7 +48,7 @@ func NewAPISecurityHTTPSchemeDataSource() datasource.DataSource {
 }
 
 type APISecurityHTTPSchemeDataSource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (d *APISecurityHTTPSchemeDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -113,12 +113,14 @@ func (d *APISecurityHTTPSchemeDataSource) Configure(_ context.Context, req datas
 		return
 	}
 
-	d.client = *req.ProviderData.(**client.DatapowerClient)
+	d.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (d *APISecurityHTTPSchemeDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data APISecurityHTTPSchemeList
+	d.pData.Mu.Lock()
+	defer d.pData.Mu.Unlock()
 
+	var data APISecurityHTTPSchemeList
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -127,7 +129,7 @@ func (d *APISecurityHTTPSchemeDataSource) Read(ctx context.Context, req datasour
 		AppDomain: data.AppDomain,
 	}
 
-	res, err := d.client.Get(o.GetPath())
+	res, err := d.pData.Client.Get(o.GetPath())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

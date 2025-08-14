@@ -33,7 +33,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -46,7 +45,7 @@ func NewSNMPSettingsResource() resource.Resource {
 }
 
 type SNMPSettingsResource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (r *SNMPSettingsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -188,27 +187,32 @@ func (r *SNMPSettingsResource) Configure(_ context.Context, req resource.Configu
 		return
 	}
 
-	r.client = *req.ProviderData.(**client.DatapowerClient)
+	r.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (r *SNMPSettingsResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data models.SNMPSettings
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.SNMPSettings
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Create, false)
+	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Create, false)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	body := data.ToBody(ctx, `SNMPSettings`)
-	_, err := r.client.Put(data.GetPath(), body)
+	_, err := r.pData.Client.Put(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
 		return
 	}
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -216,13 +220,15 @@ func (r *SNMPSettingsResource) Create(ctx context.Context, req resource.CreateRe
 }
 
 func (r *SNMPSettingsResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data models.SNMPSettings
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.SNMPSettings
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.client.Get(data.GetPath())
+	res, err := r.pData.Client.Get(data.GetPath())
 	if err != nil && (strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400")) {
 		resp.State.RemoveResource(ctx)
 		return
@@ -243,21 +249,26 @@ func (r *SNMPSettingsResource) Read(ctx context.Context, req resource.ReadReques
 }
 
 func (r *SNMPSettingsResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data models.SNMPSettings
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.SNMPSettings
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Update, false)
-	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `SNMPSettings`))
+	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Update, false)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `SNMPSettings`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -265,15 +276,21 @@ func (r *SNMPSettingsResource) Update(ctx context.Context, req resource.UpdateRe
 }
 
 func (r *SNMPSettingsResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data models.SNMPSettings
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.SNMPSettings
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, "default", data.DependencyActions, actions.Delete, false)
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, "default", data.DependencyActions, actions.Delete, false)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
 	if resp.Diagnostics.HasError() {
 		return
 	}

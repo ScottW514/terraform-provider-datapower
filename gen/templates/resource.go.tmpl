@@ -27,7 +27,6 @@ import (
 	"regexp"
 	"strings"
 
-
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -65,7 +64,7 @@ func New{{.Name}}Resource() resource.Resource {
 }
 
 type {{.Name}}Resource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (r *{{.Name}}Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -207,18 +206,23 @@ func (r *{{.Name}}Resource) Configure(_ context.Context, req resource.ConfigureR
 		return
 	}
 
-	r.client = *req.ProviderData.(**client.DatapowerClient)
+	r.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data models.{{.Name}}
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.{{.Name}}
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Create, {{if eq .Name "Domain"}}true{{else}}false{{end}})
+	actions.PreProcess(ctx, &resp.Diagnostics, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Create, {{if eq .Name "Domain"}}true{{else}}false{{end}})
+	if resp.Diagnostics.HasError() {
+		return
+	}
 {{- if hasWriteOnlyAttribute .Attributes}}
 
 	var config models.{{.Name}}
@@ -238,9 +242,9 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 
 	body := data.ToBody(ctx, `{{.Name}}`)
 	{{- if or .PutCreate .UpdateOnly}}
-	_, err := r.client.Put(data.GetPath(), body)
+	_, err := r.pData.Client.Put(data.GetPath(), body)
 	{{- else}}
-	_, err := r.client.Post(data.GetPath(), body)
+	_, err := r.pData.Client.Post(data.GetPath(), body)
 	{{- end}}
 	{{/* TODO: Implement better race condition handling */}}
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
@@ -250,9 +254,9 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 {{- if updateComputed .Attributes}}
 
 	{{- if or (eq .Name "Domain") .UpdateOnly}}
-	getRes, getErr := r.client.Get(data.GetPath())
+	getRes, getErr := r.pData.Client.Get(data.GetPath())
 	{{- else}}
-	getRes, getErr := r.client.Get(data.GetPath()+"/"+data.Id.ValueString())
+	getRes, getErr := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString())
 	{{- end}}
 	if getErr != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object after creation (GET), got error: %s", getErr))
@@ -263,14 +267,14 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 {{- end}}
 {{- if .RestartDomainOnUpdate}}
 	if data.RestartDomainOnUpdate.ValueBool() {
-		rErr := tfutils.RestartDomain(r.client, data.AppDomain.ValueString())
+		rErr := tfutils.RestartDomain(r.pData.Client, data.AppDomain.ValueString())
 		if rErr != nil {
 			resp.Diagnostics.AddError("Client Error", rErr.Error())
 			return
 		}
 	}
 {{- end}}
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -278,17 +282,19 @@ func (r *{{.Name}}Resource) Create(ctx context.Context, req resource.CreateReque
 }
 
 func (r *{{.Name}}Resource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data models.{{.Name}}
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.{{.Name}}
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 {{- if or (eq .Name "Domain") .UpdateOnly}}
-	res, err := r.client.Get(data.GetPath())
+	res, err := r.pData.Client.Get(data.GetPath())
 {{- else}}
-	res, err := r.client.Get(data.GetPath()+"/"+data.Id.ValueString())
+	res, err := r.pData.Client.Get(data.GetPath()+"/"+data.Id.ValueString())
 {{- end}}
 	if err != nil && (strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400")) {
 		resp.State.RemoveResource(ctx)
@@ -310,14 +316,19 @@ func (r *{{.Name}}Resource) Read(ctx context.Context, req resource.ReadRequest, 
 }
 
 func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data{{if hasWriteOnlyAttribute .Attributes}}, config{{end}} models.{{.Name}}
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data{{if hasWriteOnlyAttribute .Attributes}}, config{{end}} models.{{.Name}}
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Update, {{if eq .Name "Domain"}}true{{else}}false{{end}})
+	actions.PreProcess(ctx, &resp.Diagnostics, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Update, {{if eq .Name "Domain"}}true{{else}}false{{end}})
+	if resp.Diagnostics.HasError() {
+		return
+	}
 {{- if hasWriteOnlyAttribute .Attributes}}
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
@@ -340,9 +351,9 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 {{- end}}
 
 {{- if or (eq .Name "Domain") .UpdateOnly}}
-	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`))
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `{{.Name}}`))
 {{- else}}
-	_, err := r.client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `{{.Name}}`))
+	_, err := r.pData.Client.Put(data.GetPath()+"/"+data.Id.ValueString(), data.ToBody(ctx, `{{.Name}}`))
 {{- end}}
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
@@ -351,7 +362,7 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 
 {{- if .RestartDomainOnUpdate}}
 	if data.RestartDomainOnUpdate.ValueBool() {
-		rErr := tfutils.RestartDomain(r.client, data.AppDomain.ValueString())
+		rErr := tfutils.RestartDomain(r.pData.Client, data.AppDomain.ValueString())
 		if rErr != nil {
 			resp.Diagnostics.AddError("Client Error", rErr.Error())
 			return
@@ -359,7 +370,7 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 	}
 {{- end}}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -367,20 +378,24 @@ func (r *{{.Name}}Resource) Update(ctx context.Context, req resource.UpdateReque
 }
 
 func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data models.{{.Name}}
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.{{.Name}}
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Delete, {{if eq .Name "Domain"}}true{{else}}false{{end}})
-
+	actions.PreProcess(ctx, &resp.Diagnostics, {{if .DefaultDomainOnly}}"default"{{else}}data.AppDomain.ValueString(){{end}}, data.DependencyActions, actions.Delete, {{if eq .Name "Domain"}}true{{else}}false{{end}})
+	if resp.Diagnostics.HasError() {
+		return
+	}
 {{- if not .UpdateOnly}}
 	{{- if eq .Name "Domain"}}
 
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
-	auRes, auErr := r.client.Get("/mgmt/status/default/ActiveUsers")
+	auRes, auErr := r.pData.Client.Get("/mgmt/status/default/ActiveUsers")
 	if auErr != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get Active Users, got error: %s", auErr))
 		return
@@ -389,7 +404,7 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 		for _, session := range userList.Array() {
 			if d := session.Get("domain"); d.Exists() && d.Str == data.AppDomain.ValueString() {
 				if id := session.Get("session"); id.Exists() {
-					r.client.Post("/mgmt/actionqueue/default", fmt.Sprintf("{\"Disconnect\": {\"id\": %d}}", id.Int()))
+					r.pData.Client.Post("/mgmt/actionqueue/default", fmt.Sprintf("{\"Disconnect\": {\"id\": %d}}", id.Int()))
 				}
 			}
 		}
@@ -397,9 +412,9 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 	{{- end}}
 
 	{{- if or (eq .Name "Domain") .UpdateOnly}}
-	_, err := r.client.Delete(data.GetPath())
+	_, err := r.pData.Client.Delete(data.GetPath())
 	{{- else}}
-	_, err := r.client.Delete(data.GetPath()+"/"+data.Id.ValueString())
+	_, err := r.pData.Client.Delete(data.GetPath()+"/"+data.Id.ValueString())
 	{{- end}}
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
@@ -407,7 +422,8 @@ func (r *{{.Name}}Resource) Delete(ctx context.Context, req resource.DeleteReque
 	}
 
 {{- end}}
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
 	if resp.Diagnostics.HasError() {
 		return
 	}

@@ -21,6 +21,7 @@ package tfutils
 import (
 	"fmt"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -29,6 +30,11 @@ import (
 	"github.com/tidwall/gjson"
 	"golang.org/x/crypto/bcrypt"
 )
+
+type ProviderData struct {
+	Client *client.DatapowerClient
+	Mu     sync.Mutex
+}
 
 // BoolFromString returns a types.Bool from a string.
 // It expects a string and converts "on"/"enabled" to true, otherwise false.

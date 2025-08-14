@@ -59,7 +59,7 @@ var ActionsSchema = schema.ListNestedAttribute{
 	NestedObject: schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"target_id": schema.StringAttribute{
-				MarkdownDescription: "Id of the target for the action (required for all resources except `resource_datapower_domain`)",
+				MarkdownDescription: "Id of the target for the action (required for all resources except `datapower_domain`)",
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
@@ -100,7 +100,7 @@ var ActionsSchema = schema.ListNestedAttribute{
 				MarkdownDescription: "Execute this action on the target when updating this resource.",
 				Optional:            true,
 				Computed:            true,
-				Default:             booldefault.StaticBool(true),
+				Default:             booldefault.StaticBool(false),
 				PlanModifiers: []planmodifier.Bool{
 					boolplanmodifier.UseStateForUnknown(),
 				},
@@ -149,9 +149,9 @@ func ValidateConfig(ctx context.Context, diag *diag.Diagnostics, actions []*Depe
 					fmt.Sprintf("'%s' `action` is not supported for `target_type` '%s'", target.Action.ValueString(), target.TargetType.ValueString()),
 				)
 			} else {
-				if target.TargetType.ValueString() != "resource_datapower_domain" && target.TargetId.IsNull() {
+				if target.TargetType.ValueString() != "datapower_domain" && target.TargetId.IsNull() {
 					diag.AddAttributeError(
-						path.Root("dependency_actions"), "Attribute Error", "`target_id` is required when `target_type` is not `resource_datapower_domain`")
+						path.Root("dependency_actions"), "Attribute Error", "`target_id` is required when `target_type` is not `datapower_domain`")
 				}
 			}
 		} else {

@@ -40,18 +40,20 @@ import (
 )
 
 const (
-	modelDefinitionsPath = "./gen/definitions"
-	exGenTemplate        = "./gen/templates/generate_examples.go.tmpl"
-	exGenLocation        = "./gen/generate_examples.go"
-	providerTemplate     = "./gen/templates/provider.go.tmpl"
-	providerLocation     = "./internal/provider/provider.go"
-	changelogTemplate    = "./gen/templates/changelog.md.tmpl"
-	changelogLocation    = "./templates/guides/changelog.md.tmpl"
-	changelogOriginal    = "./CHANGELOG.md"
-	actionMapTemplate    = "./gen/templates/actionmap.go.tmpl"
-	actionMapLocation    = "./internal/provider/actions/actionmap.go"
-	testConfigTemplate   = "./gen/templates/testconfig.go.tmpl"
-	testConfigLocation   = "./testutils/config.go"
+	modelDefinitionsPath  = "./gen/definitions"
+	exGenTemplate         = "./gen/templates/generate_examples.go.tmpl"
+	exGenLocation         = "./gen/generate_examples.go"
+	providerTemplate      = "./gen/templates/provider.go.tmpl"
+	providerLocation      = "./internal/provider/provider.go"
+	changelogTemplate     = "./gen/templates/changelog.md.tmpl"
+	changelogLocation     = "./templates/guides/changelog.md.tmpl"
+	changelogOriginal     = "./CHANGELOG.md"
+	actionMapTemplate     = "./gen/templates/actionmap.go.tmpl"
+	actionMapLocation     = "./internal/provider/actions/actionmap.go"
+	actionMapTestTemplate = "./gen/templates/actionmap_test.go.tmpl"
+	actionMapTestLocation = "./internal/provider/actions/actionmap_test.go"
+	testConfigTemplate    = "./gen/templates/testconfig.go.tmpl"
+	testConfigLocation    = "./testutils/config.go"
 )
 
 type templateInfo struct {
@@ -369,6 +371,9 @@ func main() {
 
 	// Process actions.go with all configs.
 	processTemplate(actionMapTemplate, actionMapLocation, configs)
+
+	// Process actions.go with all configs.
+	processTemplate(actionMapTestTemplate, actionMapTestLocation, configs)
 
 	// Process testconfig.go with all configs.
 	processTemplate(testConfigTemplate, testConfigLocation, configs)

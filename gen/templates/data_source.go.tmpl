@@ -35,6 +35,7 @@ import (
 	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 {{- if not .UpdateOnly}}
 	"github.com/tidwall/gjson"
 {{- end}}
@@ -59,7 +60,7 @@ func New{{.Name}}DataSource() datasource.DataSource {
 }
 
 type {{.Name}}DataSource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (d *{{.Name}}DataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -129,16 +130,19 @@ func (d *{{.Name}}DataSource) Configure(_ context.Context, req datasource.Config
 		return
 	}
 
-	d.client = *req.ProviderData.(**client.DatapowerClient)
+	d.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (d *{{.Name}}DataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data {{if .UpdateOnly}}models.{{end}}{{.Name}}{{if hasWriteOnlyAttribute .Attributes}}WO{{end}}{{if not .UpdateOnly}}List{{end}}
+	d.pData.Mu.Lock()
+	defer d.pData.Mu.Unlock()
 
+	var data {{if .UpdateOnly}}models.{{end}}{{.Name}}{{if hasWriteOnlyAttribute .Attributes}}WO{{end}}{{if not .UpdateOnly}}List{{end}}
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
 {{- if not .UpdateOnly}}
 	o := models.{{.Name}}{{if hasWriteOnlyAttribute .Attributes}}WO{{end}}{
 		{{- if and (hasDomainAttribute .Attributes) (ne .Name "Domain")}}
@@ -147,7 +151,7 @@ func (d *{{.Name}}DataSource) Read(ctx context.Context, req datasource.ReadReque
 	}
 {{- end}}
 
-	res, err := d.client.Get({{if .UpdateOnly}}data{{else}}o{{end}}.GetPath())
+	res, err := d.pData.Client.Get({{if .UpdateOnly}}data{{else}}o{{end}}.GetPath())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

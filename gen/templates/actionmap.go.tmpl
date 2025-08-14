@@ -38,7 +38,7 @@ const serviceUnquiesceBody = `{"ServiceUnquiesce": {"type": "{type}", "name": "{
 var actionMap = map[string]target{
 {{- range .}}
     {{- if len .Actions}}
-	"resource_datapower_{{snakeCase .Name}}": {
+	"datapower_{{snakeCase .Name}}": {
 		ObjectName: "{{.Name}}",
 		ValidActions: map[string]action{
         {{- range .Actions}}

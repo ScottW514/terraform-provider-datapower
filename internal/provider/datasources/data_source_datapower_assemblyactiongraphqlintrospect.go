@@ -28,9 +28,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
 type AssemblyActionGraphQLIntrospectList struct {
@@ -48,7 +48,7 @@ func NewAssemblyActionGraphQLIntrospectDataSource() datasource.DataSource {
 }
 
 type AssemblyActionGraphQLIntrospectDataSource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (d *AssemblyActionGraphQLIntrospectDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -117,12 +117,14 @@ func (d *AssemblyActionGraphQLIntrospectDataSource) Configure(_ context.Context,
 		return
 	}
 
-	d.client = *req.ProviderData.(**client.DatapowerClient)
+	d.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (d *AssemblyActionGraphQLIntrospectDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data AssemblyActionGraphQLIntrospectList
+	d.pData.Mu.Lock()
+	defer d.pData.Mu.Unlock()
 
+	var data AssemblyActionGraphQLIntrospectList
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -131,7 +133,7 @@ func (d *AssemblyActionGraphQLIntrospectDataSource) Read(ctx context.Context, re
 		AppDomain: data.AppDomain,
 	}
 
-	res, err := d.client.Get(o.GetPath())
+	res, err := d.pData.Client.Get(o.GetPath())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

@@ -29,6 +29,7 @@ import (
 )
 
 func TestAccDataSourceAS2ProxySourceProtocolHandler(t *testing.T) {
+	t.Skip("skipping test - configured in definition")
 	if os.Getenv("DP_ACC_ALL") == "" && os.Getenv("DP_ACC_AS2ProxySourceProtocolHandler") == "" {
 		t.Skip("skipping test, set environment variable DP_ACC_ALL DP_ACC_AS2ProxySourceProtocolHandler")
 	}

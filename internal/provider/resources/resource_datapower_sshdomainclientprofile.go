@@ -36,7 +36,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
@@ -50,7 +49,7 @@ func NewSSHDomainClientProfileResource() resource.Resource {
 }
 
 type SSHDomainClientProfileResource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (r *SSHDomainClientProfileResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -140,27 +139,32 @@ func (r *SSHDomainClientProfileResource) Configure(_ context.Context, req resour
 		return
 	}
 
-	r.client = *req.ProviderData.(**client.DatapowerClient)
+	r.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (r *SSHDomainClientProfileResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data models.SSHDomainClientProfile
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.SSHDomainClientProfile
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	body := data.ToBody(ctx, `SSHDomainClientProfile`)
-	_, err := r.client.Put(data.GetPath(), body)
+	_, err := r.pData.Client.Put(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
 		return
 	}
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -168,13 +172,15 @@ func (r *SSHDomainClientProfileResource) Create(ctx context.Context, req resourc
 }
 
 func (r *SSHDomainClientProfileResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data models.SSHDomainClientProfile
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.SSHDomainClientProfile
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.client.Get(data.GetPath())
+	res, err := r.pData.Client.Get(data.GetPath())
 	if err != nil && (strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400")) {
 		resp.State.RemoveResource(ctx)
 		return
@@ -195,21 +201,26 @@ func (r *SSHDomainClientProfileResource) Read(ctx context.Context, req resource.
 }
 
 func (r *SSHDomainClientProfileResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data models.SSHDomainClientProfile
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.SSHDomainClientProfile
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
-	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `SSHDomainClientProfile`))
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `SSHDomainClientProfile`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -217,15 +228,21 @@ func (r *SSHDomainClientProfileResource) Update(ctx context.Context, req resourc
 }
 
 func (r *SSHDomainClientProfileResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data models.SSHDomainClientProfile
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.SSHDomainClientProfile
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
 	if resp.Diagnostics.HasError() {
 		return
 	}

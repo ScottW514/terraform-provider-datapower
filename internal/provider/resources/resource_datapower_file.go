@@ -34,7 +34,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -56,7 +55,7 @@ func NewFileResource() resource.Resource {
 }
 
 type FileResource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (r *FileResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -109,19 +108,23 @@ func (r *FileResource) Configure(_ context.Context, req resource.ConfigureReques
 	if req.ProviderData == nil {
 		return
 	}
-
-	r.client = *req.ProviderData.(**client.DatapowerClient)
+	r.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data File
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data File
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, false)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	fileData, err := r.loadLocalFile(data.LocalPath.ValueString())
 	if err != nil {
@@ -134,23 +137,29 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 
 	// Create directory, if needed
 	if len(strings.Split(dir, "/")) > 2 {
-		res, err := r.client.Post(bPath+dir, fmt.Sprintf(`{"directory": {"name": "%s"}}`, dir))
-		if err != nil && res.RawResponse.StatusCode != 409 {
+		_, err := r.pData.Client.Post(bPath+dir, fmt.Sprintf(`{"directory": {"name": "%s"}}`, dir))
+		if err != nil && !strings.Contains(err.Error(), "status 409") {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to create remote directory (%s), got error: %s", dir, err))
 			return
 		}
 	}
 
 	body := fmt.Sprintf(`{"file": {"name": "%s", "content": "%s"}}`, filepath.Base(fPath), fileData)
-	_, err = r.client.Post(bPath+dir, body)
-	if err != nil {
+	_, err = r.pData.Client.Post(bPath+dir, body)
+	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to upload remote file (%s), got error: %s", bPath+dir, err))
 		return
+	} else if err != nil {
+		_, err = r.pData.Client.Put(bPath+fPath, body)
+		if err != nil && !strings.Contains(err.Error(), "status 409") {
+			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to upload (overwrite) remote file (%s), got error: %s", bPath+dir, err))
+			return
+		}
 	}
 
 	data.Hash = types.StringValue(r.generateHash(fileData))
 
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Delete)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -158,6 +167,8 @@ func (r *FileResource) Create(ctx context.Context, req resource.CreateRequest, r
 }
 
 func (r *FileResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 	var data File
 
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -182,6 +193,8 @@ func (r *FileResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 }
 
 func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 	var data File
 
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
@@ -189,7 +202,10 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, false)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	fileData, err := r.loadLocalFile(data.LocalPath.ValueString())
 	if err != nil {
@@ -200,7 +216,7 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 	bPath := fmt.Sprintf("/mgmt/filestore/%s", data.AppDomain.ValueString())
 
 	body := fmt.Sprintf(`{"file": {"name": "%s", "content": "%s"}}`, filepath.Base(fPath), fileData)
-	_, err = r.client.Put(bPath+fPath, body)
+	_, err = r.pData.Client.Put(bPath+fPath, body)
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to update remote file (%s), got error: %s", bPath+fPath, err))
 		return
@@ -208,7 +224,7 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 
 	data.Hash = types.StringValue(r.generateHash(fileData))
 
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Delete)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -216,6 +232,8 @@ func (r *FileResource) Update(ctx context.Context, req resource.UpdateRequest, r
 }
 
 func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 	var data File
 
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -223,16 +241,19 @@ func (r *FileResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, false)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	path := fmt.Sprintf("/mgmt/filestore/%s/%s", data.AppDomain.ValueString(), strings.ReplaceAll(data.RemotePath.ValueString(), "://", ""))
-	_, err := r.client.Delete(path)
+	_, err := r.pData.Client.Delete(path)
 	if err != nil && !strings.Contains(err.Error(), "status 404") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("failed to delete remote file (%s), got error: %s", path, err))
 		return
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Delete)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -258,7 +279,7 @@ func (r *FileResource) loadLocalFile(localPath string) (string, error) {
 
 func (r *FileResource) loadRemoteFile(domain string, remotePath string) (string, error) {
 	path := fmt.Sprintf("/mgmt/filestore/%s/%s", domain, strings.ReplaceAll(remotePath, "://", ""))
-	res, err := r.client.Get(path)
+	res, err := r.pData.Client.Get(path)
 	if err != nil {
 		return "", fmt.Errorf("failed to download remote file (%s), got error: %s", path, err)
 	}

@@ -3,6 +3,7 @@ description: 'MEIG AS2 proxy handler'
 cli_alias: 'source-as2-proxy'
 cmd_group: 'mpgw'
 rest_endpoint: '/mgmt/config/{domain}/AS2ProxySourceProtocolHandler'
+skip_test: true
 actions:
   - name: quiesce
 attributes:

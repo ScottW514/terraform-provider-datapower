@@ -39,7 +39,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/modifiers"
@@ -54,7 +53,7 @@ func NewDomainResource() resource.Resource {
 }
 
 type DomainResource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (r *DomainResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -172,33 +171,38 @@ func (r *DomainResource) Configure(_ context.Context, req resource.ConfigureRequ
 		return
 	}
 
-	r.client = *req.ProviderData.(**client.DatapowerClient)
+	r.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (r *DomainResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data models.Domain
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.Domain
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, true)
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Create, true)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	body := data.ToBody(ctx, `Domain`)
-	_, err := r.client.Put(data.GetPath(), body)
+	_, err := r.pData.Client.Put(data.GetPath(), body)
 
 	if err != nil && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to create object (%s), got error: %s", "PUT", err))
 		return
 	}
-	getRes, getErr := r.client.Get(data.GetPath())
+	getRes, getErr := r.pData.Client.Get(data.GetPath())
 	if getErr != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object after creation (GET), got error: %s", getErr))
 		return
 	}
 	data.UpdateUnknownFromBody(ctx, `Domain`, getRes)
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Create)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -206,13 +210,15 @@ func (r *DomainResource) Create(ctx context.Context, req resource.CreateRequest,
 }
 
 func (r *DomainResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data models.Domain
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.Domain
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	res, err := r.client.Get(data.GetPath())
+	res, err := r.pData.Client.Get(data.GetPath())
 	if err != nil && (strings.Contains(err.Error(), "status 404") || strings.Contains(err.Error(), "status 406") || strings.Contains(err.Error(), "status 500") || strings.Contains(err.Error(), "status 400")) {
 		resp.State.RemoveResource(ctx)
 		return
@@ -233,21 +239,26 @@ func (r *DomainResource) Read(ctx context.Context, req resource.ReadRequest, res
 }
 
 func (r *DomainResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data models.Domain
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.Domain
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, true)
-	_, err := r.client.Put(data.GetPath(), data.ToBody(ctx, `Domain`))
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Update, true)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	_, err := r.pData.Client.Put(data.GetPath(), data.ToBody(ctx, `Domain`))
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to update object (PUT), got error: %s", err))
 		return
 	}
 
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Update)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -255,17 +266,22 @@ func (r *DomainResource) Update(ctx context.Context, req resource.UpdateRequest,
 }
 
 func (r *DomainResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data models.Domain
+	r.pData.Mu.Lock()
+	defer r.pData.Mu.Unlock()
 
+	var data models.Domain
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	actions.PreProcess(ctx, &resp.Diagnostics, r.client, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, true)
+	actions.PreProcess(ctx, &resp.Diagnostics, data.AppDomain.ValueString(), data.DependencyActions, actions.Delete, true)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Special case for Application Domains - we need make sure there are no active user sessions before deleting
-	auRes, auErr := r.client.Get("/mgmt/status/default/ActiveUsers")
+	auRes, auErr := r.pData.Client.Get("/mgmt/status/default/ActiveUsers")
 	if auErr != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to get Active Users, got error: %s", auErr))
 		return
@@ -274,17 +290,18 @@ func (r *DomainResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		for _, session := range userList.Array() {
 			if d := session.Get("domain"); d.Exists() && d.Str == data.AppDomain.ValueString() {
 				if id := session.Get("session"); id.Exists() {
-					r.client.Post("/mgmt/actionqueue/default", fmt.Sprintf("{\"Disconnect\": {\"id\": %d}}", id.Int()))
+					r.pData.Client.Post("/mgmt/actionqueue/default", fmt.Sprintf("{\"Disconnect\": {\"id\": %d}}", id.Int()))
 				}
 			}
 		}
 	}
-	_, err := r.client.Delete(data.GetPath())
+	_, err := r.pData.Client.Delete(data.GetPath())
 	if err != nil && !strings.Contains(err.Error(), "status 404") && !strings.Contains(err.Error(), "status 409") {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to delete object (DELETE), got error: %s", err))
 		return
 	}
-	actions.PostProcess(ctx, &resp.Diagnostics, r.client, data.DependencyActions, actions.Create)
+
+	actions.PostProcess(ctx, &resp.Diagnostics, data.DependencyActions, actions.Delete)
 	if resp.Diagnostics.HasError() {
 		return
 	}

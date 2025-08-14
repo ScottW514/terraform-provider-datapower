@@ -28,9 +28,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/scottw514/terraform-provider-datapower/client"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
+	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 )
 
 type MQManagerGroupList struct {
@@ -48,7 +48,7 @@ func NewMQManagerGroupDataSource() datasource.DataSource {
 }
 
 type MQManagerGroupDataSource struct {
-	client *client.DatapowerClient
+	pData *tfutils.ProviderData
 }
 
 func (d *MQManagerGroupDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -102,12 +102,14 @@ func (d *MQManagerGroupDataSource) Configure(_ context.Context, req datasource.C
 		return
 	}
 
-	d.client = *req.ProviderData.(**client.DatapowerClient)
+	d.pData = req.ProviderData.(*tfutils.ProviderData)
 }
 
 func (d *MQManagerGroupDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data MQManagerGroupList
+	d.pData.Mu.Lock()
+	defer d.pData.Mu.Unlock()
 
+	var data MQManagerGroupList
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -116,7 +118,7 @@ func (d *MQManagerGroupDataSource) Read(ctx context.Context, req datasource.Read
 		AppDomain: data.AppDomain,
 	}
 
-	res, err := d.client.Get(o.GetPath())
+	res, err := d.pData.Client.Get(o.GetPath())
 	if err != nil {
 		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Failed to retrieve object, got error: %s", err))
 		return

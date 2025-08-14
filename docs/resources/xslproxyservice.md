@@ -21,7 +21,7 @@ resource "datapower_xslproxyservice" "test" {
   app_domain     = "acceptance_test"
   type           = "static-backend"
   xml_manager    = "default"
-  local_port     = 8899
+  local_port     = 8922
   remote_address = "10.10.10.10"
   remote_port    = 9999
   local_address  = "0.0.0.0"
@@ -204,7 +204,7 @@ Optional:
 - `on_create` (Boolean) Execute this action on the target when creating this resource.
 - `on_delete` (Boolean) Execute this action on the target when deleting this resource.
 - `on_update` (Boolean) Execute this action on the target when updating this resource.
-- `target_id` (String) Id of the target for the action (required for all resources except `resource_datapower_domain`)
+- `target_id` (String) Id of the target for the action (required for all resources except `datapower_domain`)
 
 
 <a id="nestedatt--header_injection"></a>

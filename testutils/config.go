@@ -756,8 +756,7 @@ resource "datapower_as2proxysourceprotocolhandler" "test" {
 data "datapower_as2proxysourceprotocolhandler" "test" {
   app_domain = "acceptance_test"
 }`,
-    TestBed: `
-resource "datapower_as2proxysourceprotocolhandler" "acc_test" {
+    ModelTestBed: `{
   id = "AccTest_AS2ProxySourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
@@ -7695,7 +7694,7 @@ resource "datapower_xslproxyservice" "test" {
   app_domain = "acceptance_test"
   type = "static-backend"
   xml_manager = "default"
-  local_port = 8899
+  local_port = 8922
   remote_address = "10.10.10.10"
   remote_port = 9999
   local_address = "0.0.0.0"
@@ -7710,7 +7709,7 @@ resource "datapower_xslproxyservice" "acc_test" {
   app_domain = datapower_domain.acc_test.app_domain
   type = "static-backend"
   xml_manager = "default"
-  local_port = 8899
+  local_port = 8922
   remote_address = "10.10.10.10"
   remote_port = 9999
   local_address = "0.0.0.0"

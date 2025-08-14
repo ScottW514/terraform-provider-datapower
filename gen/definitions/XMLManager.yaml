@@ -204,4 +204,5 @@ attributes:
     type: String
     reference_to: LDAPConnectionPool
     description: 'LDAP Connection Pool'
+    test_bed_value: 'datapower_ldapconnectionpool.acc_test.id'
     cli_alias: ldap-pool
