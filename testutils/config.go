@@ -7639,6 +7639,7 @@ data "datapower_xmlmanager" "test" {
 resource "datapower_xmlmanager" "acc_test" {
   id = "AccTest_XMLManager"
   app_domain = datapower_domain.acc_test.app_domain
+  ldap_conn_pool = datapower_ldapconnectionpool.acc_test.id
 }`,
     ModelOnly:    false,
 }

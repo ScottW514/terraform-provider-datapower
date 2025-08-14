@@ -15,7 +15,7 @@ attributes:
   required: true
   example: Username
   test_value: '"ResTest_User"'
-  test_expect_ds: '"admin"'
+  test_expect_ds: '"AccTest_User"'
   description: Name of the object. Must be unique among object types in application
     domain.
   string_patterns:

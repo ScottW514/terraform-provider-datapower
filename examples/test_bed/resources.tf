@@ -1242,8 +1242,9 @@ resource "datapower_xmlfirewallservice" "acc_test" {
   local_address = "0.0.0.0"
 }
 resource "datapower_xmlmanager" "acc_test" {
-  id         = "AccTest_XMLManager"
-  app_domain = datapower_domain.acc_test.app_domain
+  id             = "AccTest_XMLManager"
+  app_domain     = datapower_domain.acc_test.app_domain
+  ldap_conn_pool = datapower_ldapconnectionpool.acc_test.id
 }
 resource "datapower_xpathroutingmap" "acc_test" {
   id         = "AccTest_XPathRoutingMap"

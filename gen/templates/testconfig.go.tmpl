@@ -154,7 +154,7 @@ resource "datapower_{{snakeCase .Name}}" "acc_test" {
                 {{- end}}
             {{- else if eq .Name "Id"}}
   id = "AccTest_{{$root.Name}}"
-    	    {{- else if or .Required .TestValue}}
+    	    {{- else if or .Required .TestValue .TestBedValue}}
                 {{- if .TestBedValue}}
   {{.TfName}} = {{.TestBedValue}}
                 {{- else if .TestValue}}

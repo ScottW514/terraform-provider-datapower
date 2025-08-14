@@ -1,3 +1,11 @@
+---
+subcategory: "Guides"
+page_title: "Dependency Actions"
+description: |-
+    Dependency actions allow you to define automated operations on other DataPower resources (targets) when performing create, update, or delete operations on the current resource. This is useful for managing dependencies, such as quiescing services before modifications or restarting domains after changes.
+
+---
+
 # Dependency Actions
 
 Dependency actions allow you to define automated operations on other DataPower resources (targets) when performing create, update, or delete operations on the current resource. This is useful for managing dependencies, such as quiescing services before modifications or restarting domains after changes.
