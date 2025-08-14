@@ -48,11 +48,11 @@ var DmGatewayPeeringGroupClusterNodeObjectDefault = map[string]attr.Value{
 var DmGatewayPeeringGroupClusterNodeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Address", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
 			Computed:            true,
 		},
 		"local_nodes": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local nodes", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a comma-separated list of the local IP addresses or host aliases of the other nodes that are in the same data center.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmGatewayPeeringGroupClusterNodeDataSourceSchema = DataSourceSchema.NestedAt
 var DmGatewayPeeringGroupClusterNodeResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Address", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
 			Required:            true,
 		},
 		"local_nodes": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local nodes", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a comma-separated list of the local IP addresses or host aliases of the other nodes that are in the same data center.", "", "").String,
 			Optional:            true,
 		},
 	},

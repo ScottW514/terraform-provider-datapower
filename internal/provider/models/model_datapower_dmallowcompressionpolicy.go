@@ -49,11 +49,11 @@ var DmAllowCompressionPolicyObjectDefault = map[string]attr.Value{
 var DmAllowCompressionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Computed:            true,
 		},
 		"allow_compression": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow Compression", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow compression.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 	},
@@ -61,11 +61,11 @@ var DmAllowCompressionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeO
 var DmAllowCompressionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Required:            true,
 		},
 		"allow_compression": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Allow Compression", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow compression.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),

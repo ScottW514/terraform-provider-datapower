@@ -35,46 +35,46 @@ resource "datapower_crlfetch" "test" {
 
 Required:
 
-- `fetch_type` (String) Protocol
+- `fetch_type` (String) Select the protocol to obtain the CRL from the authority.
   - Choices: `http`, `ldap`
-- `issuer_valcred` (String) Issuer validation credentials
+- `issuer_valcred` (String) The validation credentials to verify the authenticity of the CRL issuer and, therefor, the CRL. The certificate that the CRL issuer uses must be in the validation credentials for the CRL to be valid.
   - CLI Alias: `issuer`
   - Reference to: `datapower_cryptovalcred:id`
-- `name` (String) Policy name
+- `name` (String) Enter the name of the CRL retrieval policy.
 
 Optional:
 
-- `bind_dn` (String) LDAP bind DN
+- `bind_dn` (String) A string containing the DN to login to the LDAP server.
   - CLI Alias: `bind-dn`
-- `bind_pass_alias` (String) LDAP bind password alias
+- `bind_pass_alias` (String) A string containing the password alias of the password to login to the LDAP server.
   - CLI Alias: `bind-pass-alias`
   - Reference to: `datapower_passwordalias:id`
-- `dn` (String) LDAP read DN
+- `dn` (String) A string containing the DN of the CA that issued the target CRL.
   - CLI Alias: `read-dn`
-- `ldap_read_timeout` (Number) LDAP Read Timeout
+- `ldap_read_timeout` (Number) The number of seconds to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.
   - CLI Alias: `ldap-readtimeout`
   - Range: `0`-`86400`
   - Default value: `60`
-- `ldap_version` (String) LDAP version
+- `ldap_version` (String) The LDAP server version.
   - CLI Alias: `ldap-version`
   - Choices: `v2`, `v3`
   - Default value: `v2`
-- `refresh_interval` (Number) Refresh interval
+- `refresh_interval` (Number) The interval in minutes between CRL updates. Enter a value in the range 1 - 1440. The default value is 240.
   - CLI Alias: `refresh`
   - Range: `1`-`1440`
   - Default value: `240`
-- `remote_address` (String) LDAP server
+- `remote_address` (String) Specify the host name or IP address of the LDAP server to obtain the CRL.
   - CLI Alias: `remote-address`
-- `remote_port` (Number) LDAP port
+- `remote_port` (Number) The remote LDAP port. Enter a value in the range 1 - 65535. The default value is 389. For LDAP over TLS, the standard port is 636.
   - Default value: `389`
-- `ssl_client` (String) TLS client profile
+- `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_sslclientprofile:id`
-- `ssl_client_config_type` (String) TLS client type
+- `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
-- `url` (String) Fetch URL
+- `url` (String) A URL that specifies the location of the CRL.
   - CLI Alias: `fetch-url`
 
 

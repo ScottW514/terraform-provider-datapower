@@ -2,12 +2,20 @@ name: DmStylesheetParameter
 model_only: true
 list_item: true
 attributes:
-  - name: ParameterName
-    type: String
-    description: 'Parameter Name'
-    example: 'PARAMETER'
-  - name: ParameterValue
-    type: String
-    required: true
-    description: 'Parameter Value'
-    example: 'PARAMETER-VALUE'
+- name: ParameterName
+  type: String
+  description: '<p>Specify the name for the stylesheet parameter. The following list
+    identifies common stylesheet parameters:</p><ul><li>decrypt-key: For decryption
+    operations, the name of the Key object to be used.</li><li>keypair-key: For signing
+    operations, the name of the Key object to be used.</li><li>keypair-cert: For signing
+    operations, the name of the Certificate object to be used.</li><li>recipient:
+    For encryption operations, the name of the Certificate object for the intended
+    recipient.</li><li>valcred: For authentication, the name of the Validation Credentials
+    object to be used.</li></ul>'
+  example: PARAMETER
+- name: ParameterValue
+  type: String
+  required: true
+  description: Specify the value for the parameter. Typically, the value is the name
+    of a configuration object.
+  example: PARAMETER-VALUE

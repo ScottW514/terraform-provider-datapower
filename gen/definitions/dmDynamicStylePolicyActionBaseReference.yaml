@@ -2,16 +2,24 @@ name: DmDynamicStylePolicyActionBaseReference
 model_only: true
 list_item: true
 attributes:
-  - name: URL
-    type: String
-    description: 'URL reference'
-    cli_alias: url
-  - name: Literal
-    type: String
-    description: 'Literal configuration'
-    cli_alias: literal
-  - name: Default
-    type: String
-    description: 'Object reference'
-    example: 'default-api-route'
-    cli_alias: default
+- name: URL
+  type: String
+  description: Specifies a URL to a file that contains serialized XML or JSON properties
+    to be merged into the dynamic object. These properties override any existing literal
+    or default properties. The URL can contain variable references, and fields within
+    the associated file can also contain variable references.
+  cli_alias: url
+- name: Literal
+  type: String
+  description: Specifies a literal string that defines serialized XML or JSON properties
+    for merging into the dynamic object. These properties override the existing default
+    properties. The literal string can contain variable references.
+  cli_alias: literal
+- name: Default
+  type: String
+  description: Specifies an existing object from which to retrieve default property
+    values for the dynamic object. If an object is not specified, then the URL reference,
+    the literal configuration, or the combination of URL reference and literal configuration
+    fully define the action.
+  example: default-api-route
+  cli_alias: default

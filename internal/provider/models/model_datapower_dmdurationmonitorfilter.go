@@ -51,15 +51,15 @@ var DmDurationMonitorFilterObjectDefault = map[string]attr.Value{
 var DmDurationMonitorFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the logs when the threshold action is taken.", "", "").String,
 			Computed:            true,
 		},
 		"value": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the threshold value in milliseconds.", "", "").String,
 			Computed:            true,
 		},
 		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "", "filteraction").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy (Message Filter Action) implemented by the monitor when the target message type exceeds the threshold value. Click the + button to create a new action.", "", "filteraction").String,
 			Computed:            true,
 		},
 	},
@@ -67,15 +67,15 @@ var DmDurationMonitorFilterDataSourceSchema = DataSourceSchema.NestedAttributeOb
 var DmDurationMonitorFilterResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the logs when the threshold action is taken.", "", "").String,
 			Required:            true,
 		},
 		"value": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the threshold value in milliseconds.", "", "").String,
 			Required:            true,
 		},
 		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "", "filteraction").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy (Message Filter Action) implemented by the monitor when the target message type exceeds the threshold value. Click the + button to create a new action.", "", "filteraction").String,
 			Required:            true,
 		},
 	},

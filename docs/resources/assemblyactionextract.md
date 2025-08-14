@@ -55,12 +55,12 @@ resource "datapower_assemblyactionextract" "test" {
 
 Required:
 
-- `capture` (String) Capture
+- `capture` (String) Specify the path expression that identifies the field.
   - CLI Alias: `capture`
 
 Optional:
 
-- `transform` (String) Transform
+- `transform` (String) Specify the expression that defines how to transform the content.
   - CLI Alias: `transform`
 
 

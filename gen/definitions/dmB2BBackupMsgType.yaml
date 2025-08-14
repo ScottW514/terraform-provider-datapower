@@ -1,51 +1,51 @@
 name: DmB2BBackupMsgType
 model_only: true
 attributes:
-  - name: InMessage
-    type: Bool
-    default: true
-    description: 'AS inbound message'
-  - name: OutMessage
-    type: Bool
-    default: true
-    description: 'AS outbound message'
-  - name: InMDN
-    type: Bool
-    default: true
-    description: 'AS inbound MDN'
-  - name: OutMDN
-    type: Bool
-    default: true
-    description: 'AS outbound MDN'
-  - name: EBMSInMessage
-    type: Bool
-    default: true
-    description: 'ebMS2 inbound message'
-  - name: EBMSOutMessage
-    type: Bool
-    default: true
-    description: 'ebMS2 outbound message'
-  - name: EBMSInACK
-    type: Bool
-    default: true
-    description: 'ebMS2 inbound ACK'
-  - name: EBMSOutACK
-    type: Bool
-    default: true
-    description: 'ebMS2 outbound ACK'
-  - name: EBMS3InMessage
-    type: Bool
-    default: true
-    description: 'ebMS3 inbound message'
-  - name: EBMS3OutMessage
-    type: Bool
-    default: true
-    description: 'ebMS3 outbound message'
-  - name: EBMS3InRCPT
-    type: Bool
-    default: true
-    description: 'ebMS3 inbound receipt'
-  - name: EBMS3OutRCPT
-    type: Bool
-    default: true
-    description: 'ebMS3 outbound receipt'
+- name: InMessage
+  type: Bool
+  default: true
+  description: AS inbound message
+- name: OutMessage
+  type: Bool
+  default: true
+  description: AS outbound message
+- name: InMDN
+  type: Bool
+  default: true
+  description: AS inbound MDN
+- name: OutMDN
+  type: Bool
+  default: true
+  description: AS outbound MDN
+- name: EBMSInMessage
+  type: Bool
+  default: true
+  description: ebMS2 inbound message
+- name: EBMSOutMessage
+  type: Bool
+  default: true
+  description: ebMS2 outbound message
+- name: EBMSInACK
+  type: Bool
+  default: true
+  description: ebMS2 inbound ACK
+- name: EBMSOutACK
+  type: Bool
+  default: true
+  description: ebMS2 outbound ACK
+- name: EBMS3InMessage
+  type: Bool
+  default: true
+  description: ebMS3 inbound message
+- name: EBMS3OutMessage
+  type: Bool
+  default: true
+  description: ebMS3 outbound message
+- name: EBMS3InRCPT
+  type: Bool
+  default: true
+  description: ebMS3 inbound receipt
+- name: EBMS3OutRCPT
+  type: Bool
+  default: true
+  description: ebMS3 outbound receipt

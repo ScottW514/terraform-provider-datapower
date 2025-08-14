@@ -2,15 +2,15 @@ name: DmPolicyMap
 model_only: true
 list_item: true
 attributes:
-  - name: Match
-    type: String
-    reference_to: Matching
-    required: true
-    test_value: '"__default-accept-service-providers__"'
-    description: 'Matching Rule'
-  - name: Rule
-    type: String
-    reference_to: StylePolicyRule
-    required: true
-    test_value: '"__dp-policy-begin__"'
-    description: 'Processing Rule'
+- name: Match
+  type: String
+  reference_to: Matching
+  required: true
+  test_value: '"__default-accept-service-providers__"'
+  description: Select the Matching Rule that defines the matching criteria.
+- name: Rule
+  type: String
+  reference_to: StylePolicyRule
+  required: true
+  test_value: '"__dp-policy-begin__"'
+  description: Select the Processing Rule to run.

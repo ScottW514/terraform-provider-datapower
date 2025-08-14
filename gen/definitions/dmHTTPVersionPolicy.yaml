@@ -2,21 +2,21 @@ name: DmHTTPVersionPolicy
 model_only: true
 list_item: true
 attributes:
-  - name: RegExp
-    type: String
-    required: true
-    example: '*'
-    description: 'URL matching expression'
-  - name: Version
-    type: String
-    enum:
-      - 'HTTP/1.0'
-      - 'HTTP/1.1'
-      - 'HTTP/2'
-    required: true
-    default: 'HTTP/1.1'
-    description: 'HTTP version'
-  - name: HTTP2Required
-    type: Bool
-    default: false
-    description: 'Require HTTP/2'
+- name: RegExp
+  type: String
+  required: true
+  example: '*'
+  description: Specify the shell-style expression to define the URL set.
+- name: Version
+  type: String
+  enum:
+  - HTTP/1.0
+  - HTTP/1.1
+  - HTTP/2
+  required: true
+  default: HTTP/1.1
+  description: Specify the HTTP version to use.
+- name: HTTP2Required
+  type: Bool
+  default: false
+  description: Specify whether HTTP/2 is required when the version is HTTP/2.

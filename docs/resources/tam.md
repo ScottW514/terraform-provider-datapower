@@ -142,29 +142,29 @@ Optional:
 
 Required:
 
-- `bind_dn` (String) LDAP administrator DN
+- `bind_dn` (String) Specify the distinguished name (DN) of an LDAP administrative user to bind with the LDAP registry.
   - CLI Alias: `bind-dn`
-- `bind_pw` (String) LDAP administrator password alias
+- `bind_pw` (String) Enter the password alias of the password for the LDAP administrator that corresponds to the entered distinguished name.
   - CLI Alias: `bind-pw`
   - Reference to: `datapower_passwordalias:id`
-- `fed_name` (String) Name
+- `fed_name` (String) Specify the name of the federated directory entry to uniquely identify the entry in the federation.
   - CLI Alias: `federate-name`
-- `host` (String) LDAP host
+- `host` (String) Specify the host name or IP address of the LDAP server.
   - CLI Alias: `hostname`
-- `suffix` (String) Suffix
+- `suffix` (String) Specify a single LDAP suffix that is to be searched for users.
   - CLI Alias: `suffix`
 
 Optional:
 
-- `basic_principal_attribute` (String) Basic user principal attribute
+- `basic_principal_attribute` (String) Specify the attribute that represents a user in the LDAP registry entry. The attribute overrides the global basic user principal for the client. The attribute is optional when the basic user mode is disabled.
   - CLI Alias: `basic-principal-attribute`
   - Default value: `uid`
-- `key_file_label` (String) LDAP server TLS key file label
+- `key_file_label` (String) <p>Enter the label of the personal certificate in the key file for client authentication.</p><ul><li>When using mutual authentication with the registry server and the personal certificate is not the default personal certificate in the key file, enter the label of the personal certificate. The personal certificate allows client authentication.</li><li>For server-only authentication, do not enter a value.</li></ul>
   - CLI Alias: `key-file-label`
-- `port` (Number) LDAP port
+- `port` (Number) Specify the listening port on the LDAP server. The default value is 389.
   - CLI Alias: `port`
   - Default value: `389`
-- `use_ssl` (Boolean) Use TLS
+- `use_ssl` (Boolean) Control whether to use TLS to connect to the LDAP server.
   - CLI Alias: `UseSSL`
   - Default value: `false`
 
@@ -174,15 +174,15 @@ Optional:
 
 Required:
 
-- `tamaz_replica` (String) Host
+- `tamaz_replica` (String) Specify the TCP host name of the authorization server replica.
   - CLI Alias: `host`
 
 Optional:
 
-- `tamaz_replica_port` (Number) Port
+- `tamaz_replica_port` (Number) Specify the listening port on the authorization server replica. The default value is 7136.
   - CLI Alias: `port`
   - Default value: `7136`
-- `tamaz_replica_weight` (Number) Weight
+- `tamaz_replica_weight` (Number) Specify the weight of the authorization server replica. The greater the weight, the higher the preference. Enter a value in the range 1 - 10. The default value is 10.
   - CLI Alias: `weight`
   - Range: `1`-`10`
   - Default value: `10`
@@ -193,39 +193,39 @@ Optional:
 
 Optional:
 
-- `gs_kit_trace_enable` (Boolean) Enable Tracing for GSKit
+- `gs_kit_trace_enable` (Boolean) Indicates whether to enable GSKit tracing in the client libraries for the Access Manager client.
   - CLI Alias: `enable-gskit-trace`
   - Default value: `false`
-- `gs_kit_trace_file` (String) Trace File for GSKit
+- `gs_kit_trace_file` (String) Specifies the base name for the trace file for GSKit messages. The DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i> directory.
   - CLI Alias: `gskit-trace-file`
-- `gs_kit_trace_flush` (Boolean) Flush GSkit Trace to File
+- `gs_kit_trace_flush` (Boolean) Indicates whether to sets the NOBUFFERING flag to force the trace to be written to the file without buffering.
   - CLI Alias: `gskit-trace-flush`
   - Default value: `false`
-- `ldap_trace_enable` (Boolean) Enable Tracing for LDAP
+- `ldap_trace_enable` (Boolean) Indicates whether to enable LDAP tracing in the client libraries for the Access Manager client.
   - CLI Alias: `enable-ldap-trace`
   - Default value: `false`
-- `ldap_trace_file` (String) Trace File for LDAP
+- `ldap_trace_file` (String) Specifies the base name of the trace file for LDAP trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.
   - CLI Alias: `ldap-trace-file`
-- `ldap_trace_level` (Number) Trace Level for LDAP
+- `ldap_trace_level` (Number) Specifies the levels for the LDAP trace. Enter a value in the range 1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact IBM Support to set the value needed to help resolve your problem.
   - CLI Alias: `ldap-trace-level`
   - Range: `1`-`65535`
   - Default value: `1`
-- `ldap_trace_size` (Number) Trace File Size for LDAP
+- `ldap_trace_size` (Number) Specifies the maximum number of characters for the trace file. Enter a value in the range 10000 - 10000000. The default value is 10000.
   - CLI Alias: `ldap-trace-size`
   - Range: `10000`-`10000000`
   - Default value: `10000`
-- `tam_trace_components` (String) Trace Components
+- `tam_trace_components` (String) Specifies the components and debug level. The default value is <tt>*:*.9</tt> , which is to trace all components and subcomponents at the highest debug level. Contact IBM Support to set the value needed to help resolve your problem.
   - CLI Alias: `tam-trace-components`
   - Default value: `*:*.9`
-- `tam_trace_enable` (Boolean) Enable Access Manager Tracing
+- `tam_trace_enable` (Boolean) Indicates whether to enable tracing in the client libraries for the Access Manager client.
   - CLI Alias: `enable-tam-trace`
   - Default value: `false`
-- `tam_trace_file` (String) Trace File
+- `tam_trace_file` (String) Specifies the base name of the trace file for Access Manager trace messages. The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i> directory.
   - CLI Alias: `tam-trace-file`
-- `tam_trace_size` (Number) Trace File Entries
+- `tam_trace_size` (Number) Specifies the maximum number of log entries for the trace file. Enter a value in the range 100 - 1000000. The default value is 100.
   - CLI Alias: `tam-trace-size`
   - Range: `100`-`1000000`
   - Default value: `100`
-- `tam_trace_type` (String) Trace Format
+- `tam_trace_type` (String) Specifies the format of trace messages in the file.
   - CLI Alias: `tam-trace-type`
   - Choices: `textfile`, `utf8file`, `xmlfile`

@@ -2,16 +2,18 @@ name: DmB2BMessageProperties
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    example: 'b2bmessagepropertyname'
-    required: true
-    description: 'Name'
-  - name: Value
-    type: String
-    example: 'value'
-    required: true
-    description: 'Value'
-  - name: Type
-    type: String
-    description: 'Type'
+- name: Name
+  type: String
+  example: b2bmessagepropertyname
+  required: true
+  description: Specify the name of the eb:Property element that is agreed upon between
+    the partners.
+- name: Value
+  type: String
+  example: value
+  required: true
+  description: Specify the value of the eb:Property element.
+- name: Type
+  type: String
+  description: Specify the type of the eb:Property element for conflict resolution
+    between message properties with the same name.

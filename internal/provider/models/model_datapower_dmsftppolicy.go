@@ -52,15 +52,15 @@ var DmSFTPPolicyObjectDefault = map[string]attr.Value{
 var DmSFTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Computed:            true,
 		},
 		"ssh_client_profile": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SSH client profile", "", "sshclientprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the SSH client profile.", "", "sshclientprofile").String,
 			Computed:            true,
 		},
 		"use_unique_filenames": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use unique file names", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to generate a unique file name for files written to an SSH FTP server. When the target URL represents a directory, a unique file name is generated. When the target URL represents a file name that already exists, any transfers result into a new unique file being created and its name is modified to include a unique prolog.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 	},
@@ -68,15 +68,15 @@ var DmSFTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmSFTPPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Required:            true,
 		},
 		"ssh_client_profile": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SSH client profile", "", "sshclientprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the SSH client profile.", "", "sshclientprofile").String,
 			Required:            true,
 		},
 		"use_unique_filenames": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use unique file names", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to generate a unique file name for files written to an SSH FTP server. When the target URL represents a directory, a unique file name is generated. When the target URL represents a file name that already exists, any transfers result into a new unique file being created and its name is modified to include a unique prolog.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),

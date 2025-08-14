@@ -57,23 +57,23 @@ var DmB2BContactObjectDefault = map[string]attr.Value{
 var DmB2BContactDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"family_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Family name", "family-name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the family name of the person to contact. A family name is the surname borne by family members.", "family-name", "").String,
 			Computed:            true,
 		},
 		"given_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Given name", "given-name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the given name of the person to contact. A given name is the name used to identify an individual within a family.", "given-name", "").String,
 			Computed:            true,
 		},
 		"title": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Title", "title", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the title of the person to contact.", "title", "").String,
 			Computed:            true,
 		},
 		"phone": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Phone", "phone", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the telephone number to contact the person.", "phone", "").String,
 			Computed:            true,
 		},
 		"email": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Email", "email", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the email address to contact the person.", "email", "").String,
 			Computed:            true,
 		},
 	},
@@ -81,23 +81,23 @@ var DmB2BContactDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmB2BContactResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"family_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Family name", "family-name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the family name of the person to contact. A family name is the surname borne by family members.", "family-name", "").String,
 			Optional:            true,
 		},
 		"given_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Given name", "given-name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the given name of the person to contact. A given name is the name used to identify an individual within a family.", "given-name", "").String,
 			Optional:            true,
 		},
 		"title": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Title", "title", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the title of the person to contact.", "title", "").String,
 			Optional:            true,
 		},
 		"phone": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Phone", "phone", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the telephone number to contact the person.", "phone", "").String,
 			Optional:            true,
 		},
 		"email": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Email", "email", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the email address to contact the person.", "email", "").String,
 			Optional:            true,
 		},
 	},

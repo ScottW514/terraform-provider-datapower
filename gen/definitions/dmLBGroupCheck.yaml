@@ -1,138 +1,183 @@
 name: DmLBGroupCheck
 model_only: true
 attributes:
-  - name: Active
-    type: Bool
-    default: false
-    required: true
-    description: 'Enabled'
-    cli_alias: admin-state
-  - name: URI
-    type: String
-    default: '/'
-    description: 'URI'
-    cli_alias: target-uri
-  - name: Port
-    type: Int64
-    required: true
-    default: 80
-    description: 'Remote Port'
-    cli_alias: target-port
-  - name: SSL
-    type: String
-    enum:
-      - 'Standard'
-      - 'LDAP'
-      - 'IMSConnect'
-      - 'TCPConnection'
-      - 'on'
-      - 'off'
-    required: true
-    example: 'off'
-    description: 'Health Check Type'
-    cli_alias: type
-  - name: Post
-    type: Bool
-    default: true
-    description: 'Send SOAP Request?'
-    cli_alias: use-soap
-  - name: Input
-    type: String
-    default: 'store:///healthcheck.xml'
-    description: 'SOAP Request Document'
-    cli_alias: send-soap
-  - name: Timeout
-    type: Int64
-    minimum: 2
-    maximum: 86400
-    required: true
-    default: 10
-    description: 'Timeout'
-    cli_alias: timeout
-  - name: Frequency
-    type: Int64
-    minimum: 5
-    maximum: 86400
-    required: true
-    default: 180
-    description: 'Frequency'
-    cli_alias: frequency
-  - name: XPath
-    type: String
-    default: '/'
-    description: 'XPath Expression'
-    cli_alias: xpath
-  - name: Filter
-    type: String
-    default: 'store:///healthcheck.xsl'
-    description: 'XSL Health Check Filter'
-    cli_alias: filter
-  # DEPRECATED
-  # - name: SSLProxyProfile
-  - name: EnforceTimeout
-    type: Bool
-    default: false
-    description: 'Enforce Health Check Timeouts'
-    cli_alias: enforce-timeout
-  - name: IndependentChecks
-    type: Bool
-    default: false
-    description: 'Independent Health Checks'
-    cli_alias: independent-checks
-  - name: GatewayScriptChecks
-    type: Bool
-    default: false
-    description: 'Process with GatewayScript'
-    cli_alias: gatewayscript-checks
-  - name: GatewayScriptReqMethod
-    type: String
-    enum:
-      - 'GET'
-      - 'HEAD'
-      - 'POST'
-      - 'PUT'
-      - 'Custom'
-    description: 'HTTP Method'
-    cli_alias: request-method
-  - name: GatewayScriptCustomReqMethod
-    type: String
-    description: 'Custom Method'
-    cli_alias: request-custom-method
-  - name: GatewayScriptReqDoc
-    type: String
-    default: 'store:///healthcheck.json'
-    description: 'Request Document'
-    cli_alias: request-doc
-  - name: GatewayScriptReqContentType
-    type: String
-    default: 'application/json'
-    description: 'Content Type'
-    cli_alias: request-content-type
-  - name: GatewayScriptRspHandlerMetadata
-    type: String
-    description: 'Response Evaluator Metadata'
-    cli_alias: response-evaluator-metadata
-  - name: GatewayScriptRspHandler
-    type: String
-    default: 'store:///healthcheck.js'
-    description: 'GatewayScript Response Evaluator'
-    cli_alias: response-evaluator
-  - name: TCPConnectionType
-    type: String
-    enum:
-      - 'Full'
-      - 'Partial'
-    description: 'TCP Connection Type'
-    cli_alias: tcp-conn-type
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
+- name: Active
+  type: Bool
+  default: false
+  required: true
+  description: Enables or disables a health check. The check will not run unless enabled
+  cli_alias: admin-state
+- name: URI
+  type: String
+  default: /
+  description: The relative URI to test for each member of the group. XXX in http://www.foobar.com/XXX.
+  cli_alias: target-uri
+- name: Port
+  type: Int64
+  required: true
+  default: 80
+  description: 'Enter the TCP Port number to test. The remote port and the member
+    server health port interact differently depending on the type of the health check.
+    <ul><li>Standard: The member server health port is used if specified. If not specified,
+    the remote port in the load balancer group health check is used.</li><li>LDAP:
+    The remote port in the load balancer group health check only is used. A specification
+    of a health port for the member server is ignored.</li><li>IMS: The health port
+    of the member only is used. The remote port in the load balancer group health
+    check is ignored.</li></ul>'
+  cli_alias: target-port
+- name: SSL
+  type: String
+  enum:
+  - Standard
+  - LDAP
+  - IMSConnect
+  - TCPConnection
+  - 'on'
+  - 'off'
+  required: true
+  example: 'off'
+  description: Type of health check to perform. In TCP mode (TCP Connection health
+    check type), a health check is performed with a TCP connection request. In HTTP
+    mode (Standard health check type), a health check is performed with an HTTP GET
+    or HTTP POST.
+  cli_alias: type
+- name: Post
+  type: Bool
+  default: true
+  description: When set to on, the SOAP Request Document will be submitted to the
+    web service via an HTTP POST operation. When set to off (without a request document),
+    an HTTP Get operation is sent. The expected response is always valid XML and it
+    is then analyzed using the Xpath Expression to verify the state of health of the
+    server.
+  cli_alias: use-soap
+- name: Input
+  type: String
+  default: store:///healthcheck.xml
+  description: Enter the URL of the SOAP Request Document. This may be a file on the
+    local flash filesystem (for example, local:///healthcheck.xml). This document
+    is POSTed to the server if Send SOAP Request is on.
+  cli_alias: send-soap
+- name: Timeout
+  type: Int64
+  minimum: 2
+  maximum: 86400
+  required: true
+  default: 10
+  description: Enter an integer between 2 and 86400 to indicate the number of seconds
+    to wait for a response to a health check post. The default is 10.
+  cli_alias: timeout
+- name: Frequency
+  type: Int64
+  minimum: 5
+  maximum: 86400
+  required: true
+  default: 180
+  description: Enter an integer between 5 and 86400 to indicate the number of seconds
+    to wait between health check posts. The default is 180.
+  cli_alias: frequency
+- name: XPath
+  type: String
+  default: /
+  description: Enter an XPath Expression that verifies the health of the server. The
+    expression is applied to the server's response to the health check POST. If the
+    expression is true, the server is healthy. Otherwise, the server health state
+    is softdown until it passes a health check.
+  cli_alias: xpath
+- name: Filter
+  type: String
+  default: store:///healthcheck.xsl
+  description: Enter the URL of the stylesheet that evaluates the server response
+    using the XPath Expression entered above. The default is supplied on this DataPower
+    device.
+  cli_alias: filter
+- name: EnforceTimeout
+  type: Bool
+  default: false
+  description: Indicates whether the health check timeout value is used to interrupt
+    and end a health transaction. By default, the health check timeout only compares
+    the actual time that the request took. With the default behavior, the health check
+    timeout is not used to interrupt the transaction.
+  cli_alias: enforce-timeout
+- name: IndependentChecks
+  type: Bool
+  default: false
+  description: Indicates whether the health checks within a Load Balancer Group run
+    independently of one another. By default, health checks within a Load Balancer
+    Group run sequentially. With the default behavior, if a server hangs, all the
+    other health checks for the other members are delayed.
+  cli_alias: independent-checks
+- name: GatewayScriptChecks
+  type: Bool
+  default: false
+  description: Enables or disables GatewayScript health check processing. If enabled,
+    content of health check requests and responses can be of any type and the response
+    evaluator will be a GatewayScript file.
+  cli_alias: gatewayscript-checks
+- name: GatewayScriptReqMethod
+  type: String
+  enum:
+  - GET
+  - HEAD
+  - POST
+  - PUT
+  - Custom
+  description: The HTTP method to use for Standard health checks with GatewayScript.
+    If Custom is selected, a custom method name must also be specified.
+  cli_alias: request-method
+- name: GatewayScriptCustomReqMethod
+  type: String
+  description: The name of the custom method to use for Standard health check requests
+    when GatewayScript processing is enabled.
+  cli_alias: request-custom-method
+- name: GatewayScriptReqDoc
+  type: String
+  default: store:///healthcheck.json
+  description: Enter the URL of the Request Document. This might be a file on the
+    local flash filesystem (for example, local:///healthcheck.xml). This document
+    is included in the request to the server if the POST, PUT, or Custom method is
+    selected for Standard health checks with GatewayScript. If the HTTP method is
+    Custom, the request document is optional.
+  cli_alias: request-doc
+- name: GatewayScriptReqContentType
+  type: String
+  default: application/json
+  description: Enter the content type of the Request Document for Standard health
+    checks with GatewayScript.
+  cli_alias: request-content-type
+- name: GatewayScriptRspHandlerMetadata
+  type: String
+  description: Enter a string to be used by the GatewayScript Response Evaluator to help determine
+    the state of the server's health.
+  cli_alias: response-evaluator-metadata
+- name: GatewayScriptRspHandler
+  type: String
+  default: store:///healthcheck.js
+  description: Enter the URL of the GatewayScript file that evaluates the server response
+    using the Response Evaluator Metadata. The default GatewayScript file is supplied
+    on the DataPower Gateway.
+  cli_alias: response-evaluator
+- name: TCPConnectionType
+  type: String
+  enum:
+  - Full
+  - Partial
+  description: When set to full, a TCP Connection health check will perform a complete
+    three-way handshake to establish a connection, followed by a four-way handshake
+    to close the connection. When set to partial, a TCP Connection health check will
+    perform a half-open connection to check a member's health. The three-way handshake
+    to establish a connection will not be completed for partial connection types.
+  cli_alias: tcp-conn-type
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: The TLS profile type to secure connections between the DataPower Gateway
+    and its targets.
+  cli_alias: ssl-client-type
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: The TLS client profile to secure connections between the DataPower
+    Gateway and its targets.
+  cli_alias: ssl-client

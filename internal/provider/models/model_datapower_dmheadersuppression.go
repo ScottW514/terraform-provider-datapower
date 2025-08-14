@@ -50,11 +50,11 @@ var DmHeaderSuppressionObjectDefault = map[string]attr.Value{
 var DmHeaderSuppressionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"direction": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Direction", "", "").AddStringEnum("front", "back").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
 			Computed:            true,
 		},
 		"header_tag": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Tag", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -62,14 +62,14 @@ var DmHeaderSuppressionDataSourceSchema = DataSourceSchema.NestedAttributeObject
 var DmHeaderSuppressionResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"direction": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Direction", "", "").AddStringEnum("front", "back").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
 			Optional:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("front", "back"),
 			},
 		},
 		"header_tag": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Tag", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.", "", "").String,
 			Optional:            true,
 		},
 	},

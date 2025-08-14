@@ -48,11 +48,11 @@ var DmTableEntryObjectDefault = map[string]attr.Value{
 var DmTableEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the display name of the entry.", "", "").String,
 			Computed:            true,
 		},
 		"description": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Description", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the description of the entry.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmTableEntryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmTableEntryResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the display name of the entry.", "", "").String,
 			Required:            true,
 		},
 		"description": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Description", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the description of the entry.", "", "").String,
 			Optional:            true,
 		},
 	},

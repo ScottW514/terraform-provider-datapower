@@ -51,15 +51,15 @@ var DmB2BMessagePropertiesObjectDefault = map[string]attr.Value{
 var DmB2BMessagePropertiesDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the eb:Property element that is agreed upon between the partners.", "", "").String,
 			Computed:            true,
 		},
 		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the eb:Property element.", "", "").String,
 			Computed:            true,
 		},
 		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Type", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the eb:Property element for conflict resolution between message properties with the same name.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -67,15 +67,15 @@ var DmB2BMessagePropertiesDataSourceSchema = DataSourceSchema.NestedAttributeObj
 var DmB2BMessagePropertiesResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the eb:Property element that is agreed upon between the partners.", "", "").String,
 			Required:            true,
 		},
 		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the eb:Property element.", "", "").String,
 			Required:            true,
 		},
 		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Type", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the eb:Property element for conflict resolution between message properties with the same name.", "", "").String,
 			Optional:            true,
 		},
 	},

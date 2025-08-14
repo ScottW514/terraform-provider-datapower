@@ -67,12 +67,12 @@ resource "datapower_assemblyactionratelimit" "test" {
 
 Required:
 
-- `name` (String) Name
+- `name` (String) Specify the name of the count limit.
   - CLI Alias: `name`
 
 Optional:
 
-- `action` (String) Action
+- `action` (String) Specify the action to apply to the count limit.
   - CLI Alias: `action`
   - Choices: `inc`, `dec`
   - Default value: `inc`
@@ -100,12 +100,12 @@ Optional:
 
 Required:
 
-- `name` (String) Name
+- `name` (String) Specify the name of the rate limit.
   - CLI Alias: `name`
 
 Optional:
 
-- `action` (String) Action
+- `action` (String) Specify the action to apply to the rate limit.
   - CLI Alias: `action`
   - Choices: `consume`, `replenish`
   - Default value: `consume`
@@ -116,13 +116,13 @@ Optional:
 
 Required:
 
-- `name` (String) Name
+- `name` (String) Specify the name of the rate limit definition.
   - CLI Alias: `name`
   - Reference to: `datapower_ratelimitdefinition:id`
 
 Optional:
 
-- `action` (String) Action
+- `action` (String) Specify the action to apply to the rate limit definition.
   - CLI Alias: `action`
   - Choices: `consume`, `replenish`, `check`, `update`
   - Default value: `consume`

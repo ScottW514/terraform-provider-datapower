@@ -2,28 +2,32 @@ name: DmWSEndpointSubscriptionPublishRule
 model_only: true
 list_item: true
 attributes:
-  - name: Subscription
-    type: String
-    description: 'Subscription'
-    cli_alias: subscription
-  - name: PublishedEndpointProtocol
-    type: String
-    enum:
-      - 'default'
-      - 'http'
-      - 'https'
-    default: 'default'
-    description: 'Published Endpoint Protocol'
-    cli_alias: published-endpoint-protocol
-  - name: PublishedEndpointHostname
-    type: String
-    description: 'Published Endpoint Host'
-    cli_alias: published-endpoint-hostname
-  - name: PublishedEndpointPort
-    type: Int64
-    description: 'Published Endpoint Port'
-    cli_alias: published-endpoint-port
-  - name: PublishedEndpointURI
-    type: String
-    description: 'Published Endpoint URI'
-    cli_alias: published-endpoint-path
+- name: Subscription
+  type: String
+  description: Select the subscription and configure its endpoint.
+  cli_alias: subscription
+- name: PublishedEndpointProtocol
+  type: String
+  enum:
+  - default
+  - http
+  - https
+  default: default
+  description: Select the protocol portion of the rewritten web service binding used
+    by the publish endpoint. The protocol can be different from the one in the WSDL.
+  cli_alias: published-endpoint-protocol
+- name: PublishedEndpointHostname
+  type: String
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    the host name or IP address.
+  cli_alias: published-endpoint-hostname
+- name: PublishedEndpointPort
+  type: Int64
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    the port. If 0, uses the value from the WSDL.
+  cli_alias: published-endpoint-port
+- name: PublishedEndpointURI
+  type: String
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    the local path. If not specified, uses the value from the WSDL.
+  cli_alias: published-endpoint-path

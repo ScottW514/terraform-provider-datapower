@@ -1,81 +1,81 @@
 name: DmSourceHTTPFeatureType
 model_only: true
 attributes:
-  - name: HTTP-1.0
-    tf_name: http_1d0
-    type: Bool
-    default: true
-    description: 'HTTP/1.0'
-  - name: HTTP-1.1
-    tf_name: http_1d1
-    type: Bool
-    default: true
-    description: 'HTTP/1.1'
-  - name: HTTP-2.0
-    tf_name: http_2d0
-    type: Bool
-    default: false
-    description: 'HTTP/2'
-  - name: POST
-    type: Bool
-    default: true
-    description: 'POST method'
-  - name: GET
-    type: Bool
-    default: false
-    description: 'GET method'
-  - name: PUT
-    type: Bool
-    default: true
-    description: 'PUT method'
-  - name: PATCH
-    type: Bool
-    default: false
-    description: 'PATCH method'
-  - name: HEAD
-    type: Bool
-    default: false
-    description: 'HEAD method'
-  - name: OPTIONS
-    type: Bool
-    default: false
-    description: 'OPTIONS'
-  - name: TRACE
-    type: Bool
-    default: false
-    description: 'TRACE method'
-  - name: DELETE
-    type: Bool
-    default: false
-    description: 'DELETE method'
-  - name: CONNECT
-    type: Bool
-    default: false
-  - name: CustomMethods
-    type: Bool
-    default: false
-    description: 'Custom methods'
-  - name: QueryString
-    type: Bool
-    default: true
-    description: 'URL with ?'
-  - name: FragmentIdentifiers
-    type: Bool
-    default: true
-    description: 'URL with #'
-  - name: DotDot
-    type: Bool
-    default: false
-    description: 'URL with ..'
-  - name: DotDotInPath
-    type: Bool
-    default: false
-    description: 'URL with .. in path'
-  - name: DotDotInQueryString
-    type: Bool
-    default: false
-    description: 'URL with .. after ?'
-  - name: CmdExe
-    type: Bool
-    default: false
-    description: 'URL with cmd.exe'
+- name: HTTP-1.0
+  tf_name: http_1d0
+  type: Bool
+  default: true
+  description: Support HTTP/1.0 requests
+- name: HTTP-1.1
+  tf_name: http_1d1
+  type: Bool
+  default: true
+  description: Support HTTP/1.1 requests
+- name: HTTP-2.0
+  tf_name: http_2d0
+  type: Bool
+  default: false
+  description: Support HTTP/2 requests
+- name: POST
+  type: Bool
+  default: true
+  description: Allow POST methods in requests
+- name: GET
+  type: Bool
+  default: false
+  description: Allow GET methods in requests
+- name: PUT
+  type: Bool
+  default: true
+  description: Allow PUT methods in requests
+- name: PATCH
+  type: Bool
+  default: false
+  description: Allow PATCH methods in requests
+- name: HEAD
+  type: Bool
+  default: false
+  description: Allow HEAD methods in requests
+- name: OPTIONS
+  type: Bool
+  default: false
+  description: Allow OPTIONS methods in requests
+- name: TRACE
+  type: Bool
+  default: false
+  description: Allow TRACE methods in requests
+- name: DELETE
+  type: Bool
+  default: false
+  description: Allow DELETE methods in requests
+- name: CONNECT
+  type: Bool
+  default: false
+- name: CustomMethods
+  type: Bool
+  default: false
+  description: Allow requests with any other method, which supports protocol extensions
+- name: QueryString
+  type: Bool
+  default: true
+  description: Allow requests when the URL contains a ?
+- name: FragmentIdentifiers
+  type: Bool
+  default: true
+  description: 'Allow requests when the URL contains a #'
+- name: DotDot
+  type: Bool
+  default: false
+  description: Allow requests when the URL contains a ..
+- name: DotDotInPath
+  type: Bool
+  default: false
+  description: Allow requests when the URL path contains a ..
+- name: DotDotInQueryString
+  type: Bool
+  default: false
+  description: Allow requests when the query string contains a ..
+- name: CmdExe
+  type: Bool
+  default: false
+  description: Allow requests when the URL contains cmd.exe

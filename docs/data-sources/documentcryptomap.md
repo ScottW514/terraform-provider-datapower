@@ -67,5 +67,5 @@ Optional:
 
 Read-Only:
 
-- `prefix` (String) Prefix
-- `uri` (String) URI
+- `prefix` (String) The prefix (Prefix:) used to map namespaces that might be encountered in client requests.
+- `uri` (String) The URI (URI:) used to map namespaces that might be encountered in client requests.

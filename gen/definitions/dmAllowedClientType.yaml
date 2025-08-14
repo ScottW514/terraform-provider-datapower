@@ -1,11 +1,11 @@
 name: DmAllowedClientType
 model_only: true
 attributes:
-  - name: confidential
-    type: Bool
-    default: true
-    description: 'Confidential'
-  - name: public
-    type: Bool
-    default: false
-    description: 'Public'
+- name: confidential
+  type: Bool
+  default: true
+  description: Confidential
+- name: public
+  type: Bool
+  default: false
+  description: Public

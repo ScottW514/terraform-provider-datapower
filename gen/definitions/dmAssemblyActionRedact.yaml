@@ -2,17 +2,17 @@ name: DmAssemblyActionRedact
 model_only: true
 list_item: true
 attributes:
-  - name: Path
-    type: String
-    required: true
-    example: 'path'
-    description: 'Path'
-    cli_alias: path
-  - name: Action
-    type: String
-    enum:
-      - 'redact'
-      - 'remove'
-    default: 'redact'
-    description: 'Action'
-    cli_alias: action
+- name: Path
+  type: String
+  required: true
+  example: path
+  description: Specify the JSONata path expression to the content.
+  cli_alias: path
+- name: Action
+  type: String
+  enum:
+  - redact
+  - remove
+  default: redact
+  description: Specify whether to redact or remove the content.
+  cli_alias: action

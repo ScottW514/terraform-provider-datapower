@@ -48,11 +48,11 @@ var DmSQLDataSourceConfigNVPairObjectDefault = map[string]attr.Value{
 var DmSQLDataSourceConfigNVPairDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"param_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Parameter name", "", "").String,
 			Computed:            true,
 		},
 		"param_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Parameter value", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmSQLDataSourceConfigNVPairDataSourceSchema = DataSourceSchema.NestedAttribu
 var DmSQLDataSourceConfigNVPairResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"param_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Parameter name", "", "").String,
 			Required:            true,
 		},
 		"param_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Parameter value", "", "").String,
 			Required:            true,
 		},
 	},

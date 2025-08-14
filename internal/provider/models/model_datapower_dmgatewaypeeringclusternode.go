@@ -52,15 +52,15 @@ var DmGatewayPeeringClusterNodeObjectDefault = map[string]attr.Value{
 var DmGatewayPeeringClusterNodeDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Address", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
 			Computed:            true,
 		},
 		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Port", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local port of the node.", "", "").String,
 			Computed:            true,
 		},
 		"local_node": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local node", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the node is local to the data center.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 	},
@@ -68,15 +68,15 @@ var DmGatewayPeeringClusterNodeDataSourceSchema = DataSourceSchema.NestedAttribu
 var DmGatewayPeeringClusterNodeResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Address", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the node.", "", "").String,
 			Required:            true,
 		},
 		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Port", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local port of the node.", "", "").String,
 			Required:            true,
 		},
 		"local_node": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local node", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the node is local to the data center.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),

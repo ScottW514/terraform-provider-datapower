@@ -70,7 +70,7 @@ func TestAccDataSourceRBMSettings(t *testing.T) {
 					resource.TestCheckResourceAttr("data.datapower_rbmsettings.test", "mc_force_dnldap_order", "false"),
 					resource.TestCheckResourceAttr("data.datapower_rbmsettings.test", "password_hash_algorithm", "md5crypt"),
 					resource.TestCheckResourceAttr("data.datapower_rbmsettings.test", "ldapssl_client_config_type", "proxy"),
-					resource.TestCheckResourceAttr("data.datapower_rbmsettings.test", "mcldapssl_client_config_type", "client"),
+					resource.TestCheckResourceAttr("data.datapower_rbmsettings.test", "mcldapssl_client_config_type", "proxy"),
 				}...),
 			},
 		},

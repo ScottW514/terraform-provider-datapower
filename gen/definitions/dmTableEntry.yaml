@@ -2,11 +2,11 @@ name: DmTableEntry
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    example: 'tableentryname'
-    description: 'Name'
-  - name: Description
-    type: String
-    description: 'Description'
+- name: Name
+  type: String
+  required: true
+  example: tableentryname
+  description: Specify the display name of the entry.
+- name: Description
+  type: String
+  description: Specify the description of the entry.

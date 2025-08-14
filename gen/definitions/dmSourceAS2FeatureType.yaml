@@ -1,27 +1,27 @@
 name: DmSourceAS2FeatureType
 model_only: true
 attributes:
-  - name: HTTP-1.0
-    type: Bool
-    default: true
-    description: 'HTTP 1.0'
-  - name: HTTP-1.1
-    type: Bool
-    default: true
-    description: 'HTTP 1.1'
-  - name: QueryString
-    type: Bool
-    default: true
-    description: 'URL with Query Strings'
-  - name: FragmentIdentifiers
-    type: Bool
-    default: true
-    description: 'URL with Fragment Identifiers'
-  - name: DotDot
-    type: Bool
-    default: false
-    description: 'URL with ..'
-  - name: CmdExe
-    type: Bool
-    default: false
-    description: 'URL with cmd.exe'
+- name: HTTP-1.0
+  type: Bool
+  default: true
+  description: Supports HTTP 1.0 requests
+- name: HTTP-1.1
+  type: Bool
+  default: true
+  description: Supports HTTP 1.1 requests
+- name: QueryString
+  type: Bool
+  default: true
+  description: Allows requests when the URL contains a ? (query string)
+- name: FragmentIdentifiers
+  type: Bool
+  default: true
+  description: 'UAllows requests when the URL contains a # (fragment identifier)'
+- name: DotDot
+  type: Bool
+  default: false
+  description: Allows requests when the URL contains a .. (dotdot)
+- name: CmdExe
+  type: Bool
+  default: false
+  description: Allows requests when the URL contains cmd.exe

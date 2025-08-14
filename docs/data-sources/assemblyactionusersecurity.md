@@ -96,5 +96,5 @@ Optional:
 
 Read-Only:
 
-- `description` (String) Description
-- `name` (String) Name
+- `description` (String) Specify the description of the entry.
+- `name` (String) Specify the display name of the entry.

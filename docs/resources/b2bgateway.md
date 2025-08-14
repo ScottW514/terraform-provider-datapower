@@ -167,12 +167,12 @@ Optional:
 
 Required:
 
-- `front_protocol` (String) Front protocol (reference to front protocol handler)
+- `front_protocol` (String) Specify the protocol handler.
   - CLI Alias: `front-protocol`
 
 Optional:
 
-- `mdn_receiver` (Boolean) Set as MDN receiver
+- `mdn_receiver` (Boolean) Specify whether to set the handler as the default MDN receiver.
   - CLI Alias: `mdn-receiver`
   - Default value: `false`
 
@@ -182,10 +182,10 @@ Optional:
 
 Optional:
 
-- `group_enabled` (Boolean) Enable group
+- `group_enabled` (Boolean) Specify whether to enable the profile group. This setting does not modify the administrative state in the B2B partner profile group.
   - CLI Alias: `enabled`
   - Default value: `true`
-- `profile_group` (String) Profile group
+- `profile_group` (String) Specify the profile group.
   - CLI Alias: `group`
   - Reference to: `datapower_b2bprofilegroup:id`
 
@@ -195,15 +195,15 @@ Optional:
 
 Required:
 
-- `partner_profile` (String) Partner profile
+- `partner_profile` (String) Specify the profile
   - CLI Alias: `profile`
   - Reference to: `datapower_b2bprofile:id`
 
 Optional:
 
-- `profile_dest` (String) Profile destination
+- `profile_dest` (String) Specify the destination for the profile. The default is <tt>default</tt> , which uses the setting in the B2B partner profile. This setting overrides the setting in the B2B partner profile. This setting does not modify the destination in the B2B partner profile.
   - CLI Alias: `destination`
-- `profile_enabled` (Boolean) Enable profile
+- `profile_enabled` (Boolean) Specify whether the profile is enabled. This setting does not modify the administrative state in the B2B partner profile.
   - CLI Alias: `enabled`
   - Default value: `true`
 
@@ -213,16 +213,16 @@ Optional:
 
 Required:
 
-- `collaboration` (String) Service
+- `collaboration` (String) Specify the service to attach. A service is either a business collaboration service for exchanging business messages or an MSH signal service for exchanging MSH signals including Acknowledgment, Error, StatusRequest, StatusResponse, Ping, and Pong. The value of an MSH signal service is <tt>urn:oasis:names:tc:ebxml-msg:service</tt> . Another value represents a business collaboration service.
   - CLI Alias: `collaboration`
   - Reference to: `datapower_b2bcpacollaboration:id`
-- `cpa` (String) CPA
+- `cpa` (String) Specify the CPA.
   - CLI Alias: `cpa`
   - Reference to: `datapower_b2bcpa:id`
-- `external_partner` (String) External partner
+- `external_partner` (String) Specify the external partner.
   - CLI Alias: `external-partner`
   - Reference to: `datapower_b2bprofile:id`
-- `internal_partner` (String) Internal partner
+- `internal_partner` (String) Specify the internal partner.
   - CLI Alias: `internal-partner`
   - Reference to: `datapower_b2bprofile:id`
 

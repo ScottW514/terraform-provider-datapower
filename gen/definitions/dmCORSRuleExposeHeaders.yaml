@@ -1,19 +1,19 @@
 name: DmCORSRuleExposeHeaders
 model_only: true
 attributes:
-  - name: Predefined
-    type: Bool
-    required: true
-    default: true
-    description: 'Predefined'
-    cli_alias: predefined
-  - name: Backend
-    type: Bool
-    required: true
-    default: false
-    description: 'From response'
-    cli_alias: backend
-  - name: Custom
-    type: String
-    description: 'Custom'
-    cli_alias: custom
+- name: Predefined
+  type: Bool
+  required: true
+  default: true
+  description: Append the gateway-predefined value.
+  cli_alias: predefined
+- name: Backend
+  type: Bool
+  required: true
+  default: false
+  description: Append the value in the response from the target endpoint.
+  cli_alias: backend
+- name: Custom
+  type: String
+  description: Append a custom string as the value.
+  cli_alias: custom

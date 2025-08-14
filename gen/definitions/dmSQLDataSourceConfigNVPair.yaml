@@ -2,15 +2,15 @@ name: DmSQLDataSourceConfigNVPair
 model_only: true
 list_item: true
 attributes:
-  - name: ParamName
-    type: String
-    required: true
-    test_value: '"ResTestparam"'
-    test_expect_ds: '"AccTest_param"'
-    example: 'paramName'
-    description: 'Name'
-  - name: ParamValue
-    type: String
-    required: true
-    example: 'param_value'
-    description: 'Value'
+- name: ParamName
+  type: String
+  required: true
+  test_value: '"ResTestparam"'
+  test_expect_ds: '"AccTest_param"'
+  example: paramName
+  description: Parameter name
+- name: ParamValue
+  type: String
+  required: true
+  example: param_value
+  description: Parameter value

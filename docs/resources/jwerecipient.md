@@ -71,8 +71,8 @@ Optional:
 
 Required:
 
-- `header_value` (String) Value
+- `header_value` (String) Value of a JOSE header. If Name is 'crit', the value can be a comma separated list to have more than one value set to 'crit'. Other headers' values only accept string.
 
 Optional:
 
-- `header_name` (String) Name
+- `header_name` (String) Name of a JOSE header.

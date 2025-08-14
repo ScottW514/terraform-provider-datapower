@@ -99,7 +99,7 @@ Read-Only:
 
 Read-Only:
 
-- `encrypt` (Boolean) Encrypt
+- `encrypt` (Boolean) Encrypt the JWT
   - Default value: `false`
-- `sign` (Boolean) Sign
+- `sign` (Boolean) Sign the JWT
   - Default value: `false`

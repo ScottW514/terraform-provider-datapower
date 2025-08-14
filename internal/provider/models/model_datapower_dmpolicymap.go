@@ -48,11 +48,11 @@ var DmPolicyMapObjectDefault = map[string]attr.Value{
 var DmPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matching Rule", "", "matching").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
 			Computed:            true,
 		},
 		"rule": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Processing Rule", "", "stylepolicyrule").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Processing Rule to run.", "", "stylepolicyrule").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmPolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matching Rule", "", "matching").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
 			Required:            true,
 		},
 		"rule": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Processing Rule", "", "stylepolicyrule").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Processing Rule to run.", "", "stylepolicyrule").String,
 			Required:            true,
 		},
 	},

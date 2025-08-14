@@ -2,47 +2,64 @@ name: DmAPICountLimit
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    description: 'Name'
-  - name: Count
-    type: Int64
-    example: 1000
-    required: true
-    description: 'Count'
-  - name: HardLimit
-    type: Bool
-    default: true
-    description: 'Enable hard limit'
-  - name: CacheOnly
-    type: Bool
-    default: true
-    description: 'Cache only'
-  - name: IsClient
-    type: Bool
-    default: false
-    description: 'Is Client'
-  - name: UseApiName
-    type: Bool
-    default: false
-    description: 'Use API Name'
-  - name: UseAppId
-    type: Bool
-    default: false
-    description: 'Use Application ID'
-  - name: UseClientId
-    type: Bool
-    default: false
-    description: 'Use Client ID'
-  - name: DynamicValue
-    type: String
-    description: 'Dynamic Value'
-  - name: Weight
-    type: String
-    default: 1
-    description: 'Weight expression'
-  - name: AutoDec
-    type: Bool
-    default: true
-    description: 'Auto decrement'
+- name: Name
+  type: String
+  required: true
+  description: Indicates the name of the count limit scheme.
+- name: Count
+  type: Int64
+  example: 1000
+  required: true
+  description: Indicates the maximum count that this limit will allow.
+- name: HardLimit
+  type: Bool
+  default: true
+  description: <p>Indicates whether to reject requests when the specified count limit
+    is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the
+    limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests
+    but produces a warning message.</li></ul><p>By default, the API Gateway rejects
+    requests when the limit is exceeded.</p>
+- name: CacheOnly
+  type: Bool
+  default: true
+  description: Specifies whether to use the local cache first to enforce the count
+    limit. In peer group mode, using the local cache first can prevent transaction
+    delays if communication problems arise across the peer group. However, the transaction
+    count is less precise when this setting is enabled.
+- name: IsClient
+  type: Bool
+  default: false
+  description: Indicates whether to apply the count limit to the client or to an internal
+    component. Client count limits return a 429 error when exceeded. Non-client count
+    limits return a 503 error when exceeded. When set to <tt>off</tt> , count limit
+    information is not included in the response header.
+- name: UseApiName
+  type: Bool
+  default: false
+  description: Indicates whether to use the API name as part of the count limit key.
+- name: UseAppId
+  type: Bool
+  default: false
+  description: Indicates whether to use the application ID as part of the count limit
+    key.
+- name: UseClientId
+  type: Bool
+  default: false
+  description: Indicates whether to use the client ID as part of the count limit key.
+- name: DynamicValue
+  type: String
+  description: Indicates the dynamic value string for the count limit, which should
+    contain one or more context variables. The default value is an empty string.
+- name: Weight
+  type: String
+  default: 1
+  description: Specifies a JSONata expression that assigns a weight value to the transaction.
+    For each API call, the value computed by the weight expression is applied to the
+    count limit. The default value is 1. If the weight expression evaluates to a value
+    that is less than or equal to 0, it is set to 1. An empty string results in an
+    error.
+- name: AutoDec
+  type: Bool
+  default: true
+  description: Indicates whether to automatically decrement this count limit in each
+    transaction.

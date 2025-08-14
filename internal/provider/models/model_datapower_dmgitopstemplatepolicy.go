@@ -45,7 +45,7 @@ var DmGitOpsTemplatePolicyObjectDefault = map[string]attr.Value{
 var DmGitOpsTemplatePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"remote_policy": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote policy", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -53,7 +53,7 @@ var DmGitOpsTemplatePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObj
 var DmGitOpsTemplatePolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"remote_policy": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote policy", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("", "", "").String,
 			Optional:            true,
 		},
 	},

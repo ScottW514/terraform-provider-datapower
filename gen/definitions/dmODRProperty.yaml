@@ -2,13 +2,13 @@ name: DmODRProperty
 model_only: true
 list_item: true
 attributes:
-  - name: PropName
-    type: String
-    required: true
-    description: 'Name'
-    cli_alias: odr-prop-name
-  - name: PropValue
-    type: String
-    required: true
-    description: 'Value'
-    cli_alias: odr-prop-value
+- name: PropName
+  type: String
+  required: true
+  description: Enter the name of a property.
+  cli_alias: odr-prop-name
+- name: PropValue
+  type: String
+  required: true
+  description: Enter the value of a property.
+  cli_alias: odr-prop-value

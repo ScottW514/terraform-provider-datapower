@@ -48,11 +48,11 @@ var DmODRConnectorObjectDefault = map[string]attr.Value{
 var DmODRConnectorDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"dmgr_hostname": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Connector host", "dmgr-host", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The host name of the server where the Intelligent management service is enabled.", "dmgr-host", "").String,
 			Computed:            true,
 		},
 		"dmgr_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Connector port", "dmgr-port", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The port on the server where the Intelligent management service is enabled.", "dmgr-port", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmODRConnectorDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmODRConnectorResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"dmgr_hostname": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Connector host", "dmgr-host", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The host name of the server where the Intelligent management service is enabled.", "dmgr-host", "").String,
 			Required:            true,
 		},
 		"dmgr_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Connector port", "dmgr-port", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The port on the server where the Intelligent management service is enabled.", "dmgr-port", "").String,
 			Required:            true,
 		},
 	},

@@ -2,15 +2,15 @@ name: DmDeploymentPolicyParameter
 model_only: true
 list_item: true
 attributes:
-  - name: ParameterName
-    type: String
-    required: true
-    description: 'Variable Name'
-    test_value: '"ResTestparameter"'
-    test_expect_ds: '"AccTest_parameter"'
-    example: 'parameterName'
-  - name: ParameterValue
-    type: String
-    required: true
-    description: 'Variable Value'
-    example: 'parameter_value'
+- name: ParameterName
+  type: String
+  required: true
+  description: Specify the name of the deployment policy variable.
+  test_value: '"ResTestparameter"'
+  test_expect_ds: '"AccTest_parameter"'
+  example: parameterName
+- name: ParameterValue
+  type: String
+  required: true
+  description: Specify the corresponding value of the deployment policy variable.
+  example: parameter_value

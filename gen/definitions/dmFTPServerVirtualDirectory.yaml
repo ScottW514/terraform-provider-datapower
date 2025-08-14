@@ -2,11 +2,12 @@ name: DmFTPServerVirtualDirectory
 model_only: true
 list_item: true
 attributes:
-  - name: VirtualPath
-    type: String
-    required: true
-    example: 'virtualpath'
-    description: 'Virtual directory'
-  - name: ResponseDirectory
-    type: String
-    description: 'Response directory'
+- name: VirtualPath
+  type: String
+  required: true
+  example: virtualpath
+  description: Specify the directory in virtual file system where the FTP client can
+    find this directory.
+- name: ResponseDirectory
+  type: String
+  description: Specify the directory in the virtual file system to store responses.

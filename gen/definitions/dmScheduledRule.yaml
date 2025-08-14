@@ -2,12 +2,13 @@ name: DmScheduledRule
 model_only: true
 list_item: true
 attributes:
-  - name: Rule
-    type: String
-    reference_to: StylePolicyRule
-    required: true
-    test_value: '"__dp-policy-begin__"'
-    description: 'Rule'
-  - name: Interval
-    type: Int64
-    description: 'Interval'
+- name: Rule
+  type: String
+  reference_to: StylePolicyRule
+  required: true
+  test_value: '"__dp-policy-begin__"'
+  description: Select the rule to run.
+- name: Interval
+  type: Int64
+  description: Specify the interval between invocations in seconds. A value of 0 indicates
+    a single invocation.

@@ -113,15 +113,15 @@ Optional:
 
 Required:
 
-- `reg_exp` (String) URL matching expression
+- `reg_exp` (String) Specify the shell-style match pattern that defines a URL set. The URL set is assigned to a specific HTTP proxy.
 
 Optional:
 
-- `password` (String) Password
+- `password` (String) Specify the password alias for authentication.
   - Reference to: `datapower_passwordalias:id`
-- `remote_address` (String) Remote host
-- `remote_port` (Number) Remote port
+- `remote_address` (String) Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.
+- `remote_port` (Number) Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.
   - Range: `1`-`65535`
-- `skip` (Boolean) Skip
+- `skip` (Boolean) Specify how to treat the URL set for the match pattern. When set to on, the URL set is not forwarded to an HTTP proxy, and the remote host and remote port of a proxy are not defined. When set to off, the URL set is forwarded to the HTTP proxy designated by the remote host and remote port.
   - Default value: `false`
-- `user_name` (String) Username
+- `user_name` (String) Specify the username for authentication.

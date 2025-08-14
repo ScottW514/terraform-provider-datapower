@@ -2,20 +2,24 @@ name: DmB2BActiveProfile
 model_only: true
 list_item: true
 attributes:
-  - name: PartnerProfile
-    type: String
-    reference_to: B2BProfile
-    required: true
-    test_value: '"AccTest_B2BProfile"'
-    test_bed_value: 'datapower_b2bprofile.acc_test.id'
-    description: 'Partner profile'
-    cli_alias: profile
-  - name: ProfileEnabled
-    type: Bool
-    default: true
-    description: 'Enable profile'
-    cli_alias: enabled
-  - name: ProfileDest
-    type: String
-    description: 'Profile destination'
-    cli_alias: destination
+- name: PartnerProfile
+  type: String
+  reference_to: B2BProfile
+  required: true
+  test_value: '"AccTest_B2BProfile"'
+  test_bed_value: datapower_b2bprofile.acc_test.id
+  description: Specify the profile
+  cli_alias: profile
+- name: ProfileEnabled
+  type: Bool
+  default: true
+  description: Specify whether the profile is enabled. This setting does not modify
+    the administrative state in the B2B partner profile.
+  cli_alias: enabled
+- name: ProfileDest
+  type: String
+  description: Specify the destination for the profile. The default is <tt>default</tt>
+    , which uses the setting in the B2B partner profile. This setting overrides the
+    setting in the B2B partner profile. This setting does not modify the destination
+    in the B2B partner profile.
+  cli_alias: destination

@@ -55,15 +55,15 @@ var DmHTTPVersionPolicyObjectDefault = map[string]attr.Value{
 var DmHTTPVersionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Computed:            true,
 		},
 		"version": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP version", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1", "HTTP/2").AddDefaultValue("HTTP/1.1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP version to use.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1", "HTTP/2").AddDefaultValue("HTTP/1.1").String,
 			Computed:            true,
 		},
 		"http2_required": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Require HTTP/2", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether HTTP/2 is required when the version is HTTP/2.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 	},
@@ -71,11 +71,11 @@ var DmHTTPVersionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject
 var DmHTTPVersionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Required:            true,
 		},
 		"version": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP version", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1", "HTTP/2").AddDefaultValue("HTTP/1.1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP version to use.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1", "HTTP/2").AddDefaultValue("HTTP/1.1").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -84,7 +84,7 @@ var DmHTTPVersionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("HTTP/1.1"),
 		},
 		"http2_required": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Require HTTP/2", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether HTTP/2 is required when the version is HTTP/2.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),

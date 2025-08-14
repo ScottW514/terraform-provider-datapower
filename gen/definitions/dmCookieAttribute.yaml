@@ -1,31 +1,31 @@
 name: DmCookieAttribute
 model_only: true
 attributes:
-  - name: domain
-    type: Bool
-    default: false
-    description: 'Domain'
-  - name: path
-    type: Bool
-    default: false
-    description: 'Path'
-  - name: secure
-    type: Bool
-    default: false
-    description: 'Secure'
-  - name: httponly
-    type: Bool
-    default: false
-    description: 'HTTPOnly'
-  - name: max-age
-    type: Bool
-    default: false
-    description: 'Max-Age'
-  - name: expires
-    type: Bool
-    default: false
-    description: 'Expires'
-  - name: custom
-    type: Bool
-    default: false
-    description: 'Custom attributes'
+- name: domain
+  type: Bool
+  default: false
+  description: Domain
+- name: path
+  type: Bool
+  default: false
+  description: Path
+- name: secure
+  type: Bool
+  default: false
+  description: Secure
+- name: httponly
+  type: Bool
+  default: false
+  description: HTTPOnly
+- name: max-age
+  type: Bool
+  default: false
+  description: Max-Age
+- name: expires
+  type: Bool
+  default: false
+  description: Expires
+- name: custom
+  type: Bool
+  default: false
+  description: Custom attributes

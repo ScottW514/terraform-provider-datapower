@@ -2,86 +2,93 @@ name: DmCRLFetchConfig
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    description: 'Policy name'
-  - name: FetchType
-    type: String
-    enum:
-      - 'http'
-      - 'ldap'
-    required: true
-    description: 'Protocol'
-  - name: IssuerValcred
-    type: String
-    reference_to: CryptoValCred
-    required: true
-    test_value: '"AccTest_CryptoValCred"'
-    test_bed_value: 'datapower_cryptovalcred.acc_test.id'
-    description: 'Issuer validation credentials'
-    cli_alias: issuer
-  - name: RefreshInterval
-    type: Int64
-    minimum: 1
-    maximum: 1440
-    required: true
-    default: 240
-    description: 'Refresh interval'
-    cli_alias: refresh
-  # DEPRECATED
-  # - name: CryptographicProfile
-  - name: URL
-    type: String
-    example: 'http://foo.com/crl'
-    description: 'Fetch URL'
-    cli_alias: fetch-url
-  - name: RemoteAddress
-    type: String
-    description: 'LDAP server'
-    cli_alias: remote-address
-  - name: RemotePort
-    type: Int64
-    default: 389
-    description: 'LDAP port'
-  - name: DN
-    type: String
-    description: 'LDAP read DN'
-    cli_alias: read-dn
-  - name: BindDN
-    type: String
-    description: 'LDAP bind DN'
-    cli_alias: bind-dn
-  # DEPRECATED
-  # - name: BindPass
-  - name: BindPassAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'LDAP bind password alias'
-    cli_alias: bind-pass-alias
-  - name: LDAPVersion
-    type: String
-    enum:
-      - 'v2'
-      - 'v3'
-    default: 'v2'
-    description: 'LDAP version'
-    cli_alias: ldap-version
-  - name: LDAPReadTimeout
-    type: Int64
-    maximum: 86400
-    default: 60
-    description: 'LDAP Read Timeout'
-    cli_alias: ldap-readtimeout
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
+- name: Name
+  type: String
+  required: true
+  description: Enter the name of the CRL retrieval policy.
+- name: FetchType
+  type: String
+  enum:
+  - http
+  - ldap
+  required: true
+  description: Select the protocol to obtain the CRL from the authority.
+- name: IssuerValcred
+  type: String
+  reference_to: CryptoValCred
+  required: true
+  test_value: '"AccTest_CryptoValCred"'
+  test_bed_value: datapower_cryptovalcred.acc_test.id
+  description: The validation credentials to verify the authenticity of the CRL issuer
+    and, therefor, the CRL. The certificate that the CRL issuer uses must be in the
+    validation credentials for the CRL to be valid.
+  cli_alias: issuer
+- name: RefreshInterval
+  type: Int64
+  minimum: 1
+  maximum: 1440
+  required: true
+  default: 240
+  description: The interval in minutes between CRL updates. Enter a value in the range
+    1 - 1440. The default value is 240.
+  cli_alias: refresh
+- name: URL
+  type: String
+  example: http://foo.com/crl
+  description: A URL that specifies the location of the CRL.
+  cli_alias: fetch-url
+- name: RemoteAddress
+  type: String
+  description: Specify the host name or IP address of the LDAP server to obtain the
+    CRL.
+  cli_alias: remote-address
+- name: RemotePort
+  type: Int64
+  default: 389
+  description: The remote LDAP port. Enter a value in the range 1 - 65535. The default
+    value is 389. For LDAP over TLS, the standard port is 636.
+- name: DN
+  type: String
+  description: A string containing the DN of the CA that issued the target CRL.
+  cli_alias: read-dn
+- name: BindDN
+  type: String
+  description: A string containing the DN to login to the LDAP server.
+  cli_alias: bind-dn
+- name: BindPassAlias
+  type: String
+  reference_to: PasswordAlias
+  description: A string containing the password alias of the password to login to
+    the LDAP server.
+  cli_alias: bind-pass-alias
+- name: LDAPVersion
+  type: String
+  enum:
+  - v2
+  - v3
+  default: v2
+  description: The LDAP server version.
+  cli_alias: ldap-version
+- name: LDAPReadTimeout
+  type: Int64
+  maximum: 86400
+  default: 60
+  description: The number of seconds to wait for a response from the LDAP server before
+    the DataPower Gateway closes the LDAP connection. Enter a value in the range 0
+    - 86400. The default value is 60. A value of 0 indicates that the connection never
+    times out.
+  cli_alias: ldap-readtimeout
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: The TLS profile type to secure connections between the DataPower Gateway
+    and its targets.
+  cli_alias: ssl-client-type
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: The TLS client profile to secure connections between the DataPower
+    Gateway and its targets.
+  cli_alias: ssl-client

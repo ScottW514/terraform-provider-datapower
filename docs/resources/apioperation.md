@@ -88,21 +88,21 @@ Optional:
 
 Required:
 
-- `name` (String) Name
+- `name` (String) Specifies a name for your parameter. Parameter names are case sensitive.
 
 Optional:
 
-- `enum` (String) Enum
-- `maximum` (String) Maximum
-- `minimum` (String) Minimum
-- `pattern` (String) Pattern
-- `required` (Boolean) Required
+- `enum` (String) Specifies the allowed values of the parameter. An instance validates successfully against this keyword if its value is equal to one of the elements in this keyword's array value.
+- `maximum` (String) Specifies the upper limit of the parameter. A string instance is valid against this keyword if its length is less than, or equal to, the value of this keyword.
+- `minimum` (String) Specifies the lower limit of the parameter. A string instance is valid against this keyword if its length is greater than, or equal to, the value of this keyword.
+- `pattern` (String) Specifies the pattern of the parameter. This string should be a valid regular expression. A string instance is considered valid if the regular expression matches the instance successfully.
+- `required` (Boolean) Controls whether the parameter is required for a call to be valid. By default, a parameter is optional.
   - Default value: `false`
-- `schema_or_format` (String) Format
-- `type` (String) Type
+- `schema_or_format` (String) The extending format of the parameter type. If DataPower Gateway does not recognize the specified format, then only the type is used. The following formats are supported. <ul><li>For <tt>number</tt> parameters, <tt>float</tt> and <tt>double</tt> .</li><li>For <tt>integer</tt> parameters, <tt>int32</tt> and <tt>int64</tt> .</li><li>For <tt>string</tt> parameters, <tt>date</tt> , <tt>dateTime</tt> , and <tt>password</tt> .</li></ul>
+- `type` (String) Specifies the type of the parameter.
   - Choices: `integer`, `long`, `float`, `double`, `string`, `byte`, `binary`, `boolean`, `date`, `dateTime`, `password`, `array`, `object`, `file`, `number`
   - Default value: `string`
-- `where` (String) Where
+- `where` (String) Specifies the location of the parameter.
   - Choices: `path`, `query`, `body`, `formdata`, `header`
   - Default value: `path`
 
@@ -112,9 +112,9 @@ Optional:
 
 Required:
 
-- `status_code` (String) Status code
+- `status_code` (String) <p>Specify the HTTP status code of the response message that the schema describes. The following values are valid.</p><ul><li>Any valid HTTP status code.</li><li>An expression that defines a range of codes that represents a response class.</li><li>The string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence over a match within a range. When there is no match, the default schema is used. When a schema is not specified, a request is accepted without schema validation.</p>
 
 Optional:
 
-- `response_schema` (String) Schema
+- `response_schema` (String) Specify the API schema to describe the response message.
   - Reference to: `datapower_apischema:id`

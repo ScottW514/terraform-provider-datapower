@@ -61,19 +61,19 @@ var DmWSOperationPolicySubjectOptOutDataSourceSchema = DataSourceSchema.NestedAt
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"ignored_subjects": GetDmPolicySubjectBitmapDataSourceSchema("Ignored Subjects", "", ""),
 		"policy_subject_opt_out_wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Type", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
 			Computed:            true,
 		},
 		"policy_subject_opt_out_wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
 			Computed:            true,
 		},
 		"policy_subject_opt_out_subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
 			Computed:            true,
 		},
 		"policy_subject_opt_out_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -82,7 +82,7 @@ var DmWSOperationPolicySubjectOptOutResourceSchema = ResourceSchema.NestedAttrib
 	Attributes: map[string]ResourceSchema.Attribute{
 		"ignored_subjects": GetDmPolicySubjectBitmapResourceSchema("Ignored Subjects", "", "", false),
 		"policy_subject_opt_out_wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Type", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -91,15 +91,15 @@ var DmWSOperationPolicySubjectOptOutResourceSchema = ResourceSchema.NestedAttrib
 			Default: stringdefault.StaticString("all"),
 		},
 		"policy_subject_opt_out_wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
 			Optional:            true,
 		},
 		"policy_subject_opt_out_subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
 			Optional:            true,
 		},
 		"policy_subject_opt_out_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Optional:            true,
 		},
 	},

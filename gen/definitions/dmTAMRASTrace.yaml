@@ -1,72 +1,88 @@
 name: DmTAMRASTrace
 model_only: true
 attributes:
-  - name: TAMTraceEnable
-    type: Bool
-    default: false
-    required: true
-    description: 'Enable Access Manager Tracing'
-    cli_alias: enable-tam-trace
-  - name: TAMTraceFile
-    type: String
-    description: 'Trace File'
-    cli_alias: tam-trace-file
-  - name: TAMTraceSize
-    type: Int64
-    minimum: 100
-    maximum: 1000000
-    default: 100
-    description: 'Trace File Entries'
-    cli_alias: tam-trace-size
-  - name: TAMTraceType
-    type: String
-    enum:
-      - 'textfile'
-      - 'utf8file'
-      - 'xmlfile'
-    description: 'Trace Format'
-    cli_alias: tam-trace-type
-  - name: TAMTraceComponents
-    type: String
-    default: '*:*.9'
-    description: 'Trace Components'
-    cli_alias: tam-trace-components
-  - name: LDAPTraceEnable
-    type: Bool
-    default: false
-    required: true
-    description: 'Enable Tracing for LDAP'
-    cli_alias: enable-ldap-trace
-  - name: LDAPTraceFile
-    type: String
-    description: 'Trace File for LDAP'
-    cli_alias: ldap-trace-file
-  - name: LDAPTraceSize
-    type: Int64
-    minimum: 10000
-    maximum: 10000000
-    default: 10000
-    description: 'Trace File Size for LDAP'
-    cli_alias: ldap-trace-size
-  - name: LDAPTraceLevel
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    default: 1
-    description: 'Trace Level for LDAP'
-    cli_alias: ldap-trace-level
-  - name: GSKitTraceEnable
-    type: Bool
-    default: false
-    required: true
-    description: 'Enable Tracing for GSKit'
-    cli_alias: enable-gskit-trace
-  - name: GSKitTraceFile
-    type: String
-    description: 'Trace File for GSKit'
-    cli_alias: gskit-trace-file
-  - name: GSKitTraceFlush
-    type: Bool
-    default: false
-    description: 'Flush GSkit Trace to File'
-    cli_alias: gskit-trace-flush
+- name: TAMTraceEnable
+  type: Bool
+  default: false
+  required: true
+  description: Indicates whether to enable tracing in the client libraries for the
+    Access Manager client.
+  cli_alias: enable-tam-trace
+- name: TAMTraceFile
+  type: String
+  description: 'Specifies the base name of the trace file for Access Manager trace
+    messages. The DataPower Gateway writes events to this trace file in the temporary:
+    <i>client-name</i> directory.'
+  cli_alias: tam-trace-file
+- name: TAMTraceSize
+  type: Int64
+  minimum: 100
+  maximum: 1000000
+  default: 100
+  description: Specifies the maximum number of log entries for the trace file. Enter
+    a value in the range 100 - 1000000. The default value is 100.
+  cli_alias: tam-trace-size
+- name: TAMTraceType
+  type: String
+  enum:
+  - textfile
+  - utf8file
+  - xmlfile
+  description: Specifies the format of trace messages in the file.
+  cli_alias: tam-trace-type
+- name: TAMTraceComponents
+  type: String
+  default: '*:*.9'
+  description: Specifies the components and debug level. The default value is <tt>*:*.9</tt>
+    , which is to trace all components and subcomponents at the highest debug level.
+    Contact IBM Support to set the value needed to help resolve your problem.
+  cli_alias: tam-trace-components
+- name: LDAPTraceEnable
+  type: Bool
+  default: false
+  required: true
+  description: Indicates whether to enable LDAP tracing in the client libraries for
+    the Access Manager client.
+  cli_alias: enable-ldap-trace
+- name: LDAPTraceFile
+  type: String
+  description: 'Specifies the base name of the trace file for LDAP trace messages.
+    The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i>
+    directory.'
+  cli_alias: ldap-trace-file
+- name: LDAPTraceSize
+  type: Int64
+  minimum: 10000
+  maximum: 10000000
+  default: 10000
+  description: Specifies the maximum number of characters for the trace file. Enter
+    a value in the range 10000 - 10000000. The default value is 10000.
+  cli_alias: ldap-trace-size
+- name: LDAPTraceLevel
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  default: 1
+  description: Specifies the levels for the LDAP trace. Enter a value in the range
+    1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact
+    IBM Support to set the value needed to help resolve your problem.
+  cli_alias: ldap-trace-level
+- name: GSKitTraceEnable
+  type: Bool
+  default: false
+  required: true
+  description: Indicates whether to enable GSKit tracing in the client libraries for
+    the Access Manager client.
+  cli_alias: enable-gskit-trace
+- name: GSKitTraceFile
+  type: String
+  description: 'Specifies the base name for the trace file for GSKit messages. The
+    DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i>
+    directory.'
+  cli_alias: gskit-trace-file
+- name: GSKitTraceFlush
+  type: Bool
+  default: false
+  description: Indicates whether to sets the NOBUFFERING flag to force the trace to
+    be written to the file without buffering.
+  cli_alias: gskit-trace-flush

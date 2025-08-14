@@ -2,41 +2,49 @@ name: DmGitOpsTemplateEntry
 model_only: true
 list_item: true
 attributes:
-  - name: TemplateType
-    type: String
-    enum:
-      - 'change'
-      - 'add'
-      - 'delete'
-      - 'custom'
-    required: true
-    default: 'change'
-    description: 'Template type'
-    cli_alias: type
-  - name: ClassName
-    type: String
-    required: true
-    description: 'Class'
-    cli_alias: class
-  - name: Name
-    type: String
-    required: true
-    description: 'Name'
-    cli_alias: name
-  - name: Field
-    type: String
-    required: true
-    description: 'Property'
-    cli_alias: field
-  - name: Value
-    type: String
-    description: 'Read value'
-    cli_alias: value
-  - name: ValueInverse
-    type: String
-    description: 'Write value'
-    cli_alias: value-inverse
-  - name: ValueValidate
-    type: String
-    description: 'Value validate'
-    cli_alias: value-validate
+- name: TemplateType
+  type: String
+  enum:
+  - change
+  - add
+  - delete
+  - custom
+  required: true
+  default: change
+  description: Specify the type of template. The supported types are change and custom.
+  cli_alias: type
+- name: ClassName
+  type: String
+  required: true
+  description: Specify the the object class.
+  cli_alias: class
+- name: Name
+  type: String
+  required: true
+  description: ''
+  cli_alias: name
+- name: Field
+  type: String
+  required: true
+  description: Specify the property name.
+  cli_alias: field
+- name: Value
+  type: String
+  description: Specify the value that is specific to the template type. <ul><li>When
+    change, specify the replacement value for the identified property in this specific
+    named object instance.</li><li>When custom, specify the transform to insert a
+    template value</li></ul>
+  cli_alias: value
+- name: ValueInverse
+  type: String
+  description: Specify the value inverse. This value is the inverse transform to replace
+    the template value with the wanted value.
+  cli_alias: value-inverse
+- name: ValueValidate
+  type: String
+  description: Specify the query to validate the replaced value at the specified location.
+    The query to return <tt>true</tt> when the template value is found at the specified
+    location and <tt>false</tt> when the template value is not found at the specified
+    location. The query is in the following format. <p><code>configuration.%Class[$match(`@name`,
+    /^%Name/)]%ValueValidate</code></p>
+  cli_alias: value-validate

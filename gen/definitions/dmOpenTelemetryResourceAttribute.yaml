@@ -2,12 +2,12 @@ name: DmOpenTelemetryResourceAttribute
 model_only: true
 list_item: true
 attributes:
-  - name: Key
-    type: String
-    description: 'Key'
-    example: 'key'
-  - name: Value
-    type: String
-    required: true
-    description: 'Value'
-    example: 'value'
+- name: Key
+  type: String
+  description: Key
+  example: key
+- name: Value
+  type: String
+  required: true
+  description: Value
+  example: value

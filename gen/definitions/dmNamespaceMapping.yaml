@@ -2,9 +2,11 @@ name: DmNamespaceMapping
 model_only: true
 list_item: true
 attributes:
-  - name: Prefix
-    type: String
-    description: 'Prefix'
-  - name: URI
-    type: String
-    description: 'URI'
+- name: Prefix
+  type: String
+  description: The prefix (Prefix:) used to map namespaces that might be encountered
+    in client requests.
+- name: URI
+  type: String
+  description: The URI (URI:) used to map namespaces that might be encountered in
+    client requests.

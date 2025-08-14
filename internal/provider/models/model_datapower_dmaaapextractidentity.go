@@ -107,81 +107,81 @@ var DmAAAPExtractIdentityObjectDefault = map[string]attr.Value{
 var DmAAAPExtractIdentityDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
-		"ei_bitmap": GetDmAAAPEIBitmapDataSourceSchema("Methods", "method", ""),
+		"ei_bitmap": GetDmAAAPEIBitmapDataSourceSchema("Specify the methods to extract identifies.", "method", ""),
 		"ei_custom_url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom processing URL", "custom-url", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the processing file. This file is the stylesheet or GatewayScript that extracts identity information from the candidate XML document.", "custom-url", "").String,
 			Computed:            true,
 		},
 		"eix_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "xpath", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the message. The extracted identity uses the string value for this expression.", "xpath", "").String,
 			Computed:            true,
 		},
 		"ei_signer_dn_valcred": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Validation credentials for signing certificate", "valcred", "cryptovalcred").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the validation credentials to verify the signer certificate.", "valcred", "cryptovalcred").String,
 			Computed:            true,
 		},
 		"ei_cookie_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Cookie name", "cookie-name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie in the <tt>Cookie</tt> header to extract and use as the identity token.", "cookie-name", "").String,
 			Computed:            true,
 		},
 		"ei_basic_auth_realm": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Basic Authentication Realm", "basic-auth-realm", "").AddDefaultValue("login").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the HTTP basic authentication realm as described by RFC 2617. A web browser might display this name to help the user determine which credentials must be supplied. The default value is <tt>login</tt> .", "basic-auth-realm", "").AddDefaultValue("login").String,
 			Computed:            true,
 		},
 		"ei_use_ws_sec": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use WS-Security token first", "use-wssec-token", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use the WS-Security token first. By default, this feature is not enabled.</p><ul><li>When enabled, use the token from the appropriate WS-Security <tt>Security</tt> header. For example, use when an LTPA token is extracted from a <tt>Cookie</tt> header and you want to use the one that is available from the <tt>Security</tt> header.</li><li>When not enabled, use the token that is extracted somewhere other than the WS-Security <tt>Security</tt> header.</li></ul>", "use-wssec-token", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"ei_metadata": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata items", "metadata", "processingmetadata").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the processing metadata, which defines items such as variables and protocol headers.</p><ul><li>When specified, processing returns only the defined metadata items.</li><li>When not specified, processing returns all metadata items for the current processing rule.</li></ul>", "metadata", "processingmetadata").String,
 			Computed:            true,
 		},
 		"ei_allow_remote_token_reference": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Retrieve remote WS-Security token", "remote-token-allowed", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to contact a remote location for the final WS-Security <tt>Security</tt> token. Processing might need the final token when the message indicates that the token is at a remote location. By default, processing cannot contact a remote location.", "remote-token-allowed", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"ei_remote_token_process_service": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL to process remote token", "remote-token-url", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the URL of the service that can process the remote security token as a SOAP call and, if successful, respond with the final security token.</p><p>The remote WS-Security token can be signed, encrypted, or encoded. A service with different actions can process the remote token. For example, this token can decrypt pieces of a remote SAML assertion, run an XSLT transform, or the AAA policy can assert the token.</p>", "remote-token-url", "").String,
 			Computed:            true,
 		},
 		"ei_password_retrieval_mechanism": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password-retrieval method", "password-retrieval-method", "").AddStringEnum("xmlfile", "custom").AddDefaultValue("xmlfile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to obtain the user password. The password is needed to calculate the derived symmetric key.", "password-retrieval-method", "").AddStringEnum("xmlfile", "custom").AddDefaultValue("xmlfile").String,
 			Computed:            true,
 		},
 		"ei_password_retrieval_custom_url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password-retrieval processing URL", "password-retrieval-custom-url", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of custom file to obtain the password.", "password-retrieval-custom-url", "").String,
 			Computed:            true,
 		},
 		"ei_password_retrieval_aaa_info_url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("AAA information file URL", "password-retrieval-xmlfile-url", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of AAA information file to obtain the password.", "password-retrieval-xmlfile-url", "").String,
 			Computed:            true,
 		},
 		"ei_forms_login_policy": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTML forms-based login policy", "forms-login-policy", "formsloginpolicy").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTML forms-based login policy. This policy defines the forms that collect user and password information.", "forms-login-policy", "formsloginpolicy").String,
 			Computed:            true,
 		},
 		"eio_auth_client_group": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Registered OAuth clients", "oauth-client-group", "oauthsupportedclientgroup").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the OAuth client group.", "oauth-client-group", "oauthsupportedclientgroup").String,
 			Computed:            true,
 		},
 		"eissl_client_config_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections.", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").String,
 			Computed:            true,
 		},
 		"eissl_client_profile": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections to targets", "ssl-client", "sslclientprofile").String,
 			Computed:            true,
 		},
 		"eijwt_validator": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("JWT validator", "validate-jwt", "aaajwtvalidator").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT validator to validate the JWT.", "validate-jwt", "aaajwtvalidator").String,
 			Computed:            true,
 		},
 		"ei_social_login_policy": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Social login policy", "social-login-policy", "socialloginpolicy").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the social login policy. To choose a policy at run time, set the value with the <tt>var:///context/AAA/social-login-policy-name</tt> variable. When the value is set with a variable before the AAA action, the variable takes precedence over this value.", "social-login-policy", "socialloginpolicy").String,
 			Computed:            true,
 		},
 		"eisaml_response_val_cred": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SAML response validation credentials", "saml-response-valcred", "cryptovalcred").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the validation credentials to verify the signature of the SAML response.", "saml-response-valcred", "cryptovalcred").String,
 			Computed:            true,
 		},
 	},
@@ -193,51 +193,51 @@ var DmAAAPExtractIdentityResourceSchema = ResourceSchema.SingleNestedAttribute{
 			DmAAAPExtractIdentityObjectDefault,
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
-		"ei_bitmap": GetDmAAAPEIBitmapResourceSchema("Methods", "method", "", false),
+		"ei_bitmap": GetDmAAAPEIBitmapResourceSchema("Specify the methods to extract identifies.", "method", "", false),
 		"ei_custom_url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom processing URL", "custom-url", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the processing file. This file is the stylesheet or GatewayScript that extracts identity information from the candidate XML document.", "custom-url", "").String,
 			Optional:            true,
 		},
 		"eix_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "xpath", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the message. The extracted identity uses the string value for this expression.", "xpath", "").String,
 			Optional:            true,
 		},
 		"ei_signer_dn_valcred": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Validation credentials for signing certificate", "valcred", "cryptovalcred").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the validation credentials to verify the signer certificate.", "valcred", "cryptovalcred").String,
 			Optional:            true,
 		},
 		"ei_cookie_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Cookie name", "cookie-name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the cookie in the <tt>Cookie</tt> header to extract and use as the identity token.", "cookie-name", "").String,
 			Optional:            true,
 		},
 		"ei_basic_auth_realm": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Basic Authentication Realm", "basic-auth-realm", "").AddDefaultValue("login").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the HTTP basic authentication realm as described by RFC 2617. A web browser might display this name to help the user determine which credentials must be supplied. The default value is <tt>login</tt> .", "basic-auth-realm", "").AddDefaultValue("login").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("login"),
 		},
 		"ei_use_ws_sec": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use WS-Security token first", "use-wssec-token", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use the WS-Security token first. By default, this feature is not enabled.</p><ul><li>When enabled, use the token from the appropriate WS-Security <tt>Security</tt> header. For example, use when an LTPA token is extracted from a <tt>Cookie</tt> header and you want to use the one that is available from the <tt>Security</tt> header.</li><li>When not enabled, use the token that is extracted somewhere other than the WS-Security <tt>Security</tt> header.</li></ul>", "use-wssec-token", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"ei_metadata": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata items", "metadata", "processingmetadata").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the processing metadata, which defines items such as variables and protocol headers.</p><ul><li>When specified, processing returns only the defined metadata items.</li><li>When not specified, processing returns all metadata items for the current processing rule.</li></ul>", "metadata", "processingmetadata").String,
 			Optional:            true,
 		},
 		"ei_allow_remote_token_reference": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Retrieve remote WS-Security token", "remote-token-allowed", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to contact a remote location for the final WS-Security <tt>Security</tt> token. Processing might need the final token when the message indicates that the token is at a remote location. By default, processing cannot contact a remote location.", "remote-token-allowed", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"ei_remote_token_process_service": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL to process remote token", "remote-token-url", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the URL of the service that can process the remote security token as a SOAP call and, if successful, respond with the final security token.</p><p>The remote WS-Security token can be signed, encrypted, or encoded. A service with different actions can process the remote token. For example, this token can decrypt pieces of a remote SAML assertion, run an XSLT transform, or the AAA policy can assert the token.</p>", "remote-token-url", "").String,
 			Optional:            true,
 		},
 		"ei_password_retrieval_mechanism": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password-retrieval method", "password-retrieval-method", "").AddStringEnum("xmlfile", "custom").AddDefaultValue("xmlfile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to obtain the user password. The password is needed to calculate the derived symmetric key.", "password-retrieval-method", "").AddStringEnum("xmlfile", "custom").AddDefaultValue("xmlfile").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -246,23 +246,23 @@ var DmAAAPExtractIdentityResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Default: stringdefault.StaticString("xmlfile"),
 		},
 		"ei_password_retrieval_custom_url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password-retrieval processing URL", "password-retrieval-custom-url", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of custom file to obtain the password.", "password-retrieval-custom-url", "").String,
 			Optional:            true,
 		},
 		"ei_password_retrieval_aaa_info_url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("AAA information file URL", "password-retrieval-xmlfile-url", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of AAA information file to obtain the password.", "password-retrieval-xmlfile-url", "").String,
 			Optional:            true,
 		},
 		"ei_forms_login_policy": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTML forms-based login policy", "forms-login-policy", "formsloginpolicy").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTML forms-based login policy. This policy defines the forms that collect user and password information.", "forms-login-policy", "formsloginpolicy").String,
 			Optional:            true,
 		},
 		"eio_auth_client_group": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Registered OAuth clients", "oauth-client-group", "oauthsupportedclientgroup").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the OAuth client group.", "oauth-client-group", "oauthsupportedclientgroup").String,
 			Optional:            true,
 		},
 		"eissl_client_config_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections.", "ssl-client-type", "").AddStringEnum("proxy", "client").AddDefaultValue("proxy").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -271,19 +271,19 @@ var DmAAAPExtractIdentityResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Default: stringdefault.StaticString("proxy"),
 		},
 		"eissl_client_profile": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections to targets", "ssl-client", "sslclientprofile").String,
 			Optional:            true,
 		},
 		"eijwt_validator": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("JWT validator", "validate-jwt", "aaajwtvalidator").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT validator to validate the JWT.", "validate-jwt", "aaajwtvalidator").String,
 			Optional:            true,
 		},
 		"ei_social_login_policy": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Social login policy", "social-login-policy", "socialloginpolicy").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the social login policy. To choose a policy at run time, set the value with the <tt>var:///context/AAA/social-login-policy-name</tt> variable. When the value is set with a variable before the AAA action, the variable takes precedence over this value.", "social-login-policy", "socialloginpolicy").String,
 			Optional:            true,
 		},
 		"eisaml_response_val_cred": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SAML response validation credentials", "saml-response-valcred", "cryptovalcred").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the validation credentials to verify the signature of the SAML response.", "saml-response-valcred", "cryptovalcred").String,
 			Optional:            true,
 		},
 	},

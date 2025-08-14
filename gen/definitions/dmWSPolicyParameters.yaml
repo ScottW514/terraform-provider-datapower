@@ -2,32 +2,33 @@ name: DmWSPolicyParameters
 model_only: true
 list_item: true
 attributes:
-  - name: PolicyParamParameters
-    type: String
-    reference_to: PolicyParameters
-    required: true
-    test_value: '"AccTest_PolicyParameters"'
-    test_bed_value: 'datapower_policyparameters.acc_test.id'
-    description: 'Parameters'
-  - name: PolicyParamWSDLComponentType
-    type: String
-    enum:
-      - 'all'
-      - 'subscription'
-      - 'wsdl'
-      - 'service'
-      - 'port'
-      - 'operation'
-      - 'fragmentid'
-    required: true
-    default: 'all'
-    description: 'WSDL Component Type'
-  - name: PolicyParamWSDLComponentValue
-    type: String
-    description: 'WSDL Component Value'
-  - name: PolicyParamSubscription
-    type: String
-    description: 'Subscription'
-  - name: PolicyParamFragmentID
-    type: String
-    description: 'Fragment Identifier'
+- name: PolicyParamParameters
+  type: String
+  reference_to: PolicyParameters
+  required: true
+  test_value: '"AccTest_PolicyParameters"'
+  test_bed_value: datapower_policyparameters.acc_test.id
+  description: Reference to policy parameter object.
+- name: PolicyParamWSDLComponentType
+  type: String
+  enum:
+  - all
+  - subscription
+  - wsdl
+  - service
+  - port
+  - operation
+  - fragmentid
+  required: true
+  default: all
+  description: Select a type of WSDL Component. The default is All.
+- name: PolicyParamWSDLComponentValue
+  type: String
+  description: Enter the name of a WSDL-defined component of the type selected in
+    the WSDL Component Type field.
+- name: PolicyParamSubscription
+  type: String
+  description: Select a subscription.
+- name: PolicyParamFragmentID
+  type: String
+  description: Matches Fragment Identifier

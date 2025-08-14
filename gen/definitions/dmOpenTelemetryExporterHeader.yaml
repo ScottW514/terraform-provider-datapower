@@ -2,12 +2,12 @@ name: DmOpenTelemetryExporterHeader
 model_only: true
 list_item: true
 attributes:
-  - name: headerName
-    type: String
-    example: 'name'
-    description: 'Name'
-  - name: headerValue
-    type: String
-    required: true
-    example: 'value'
-    description: 'Value'
+- name: headerName
+  type: String
+  example: name
+  description: Name
+- name: headerValue
+  type: String
+  required: true
+  example: value
+  description: Value

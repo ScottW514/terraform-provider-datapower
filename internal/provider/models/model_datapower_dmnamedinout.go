@@ -48,11 +48,11 @@ var DmNamedInOutObjectDefault = map[string]attr.Value{
 var DmNamedInOutDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the input or output that the map expects. The name must be the same as a cardname that is identified in the map file.", "", "").String,
 			Computed:            true,
 		},
 		"context": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Context", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the DataPower context. This context contains the input data or will contain the output data that corresponds to the input or output that the maps expects. Use <tt>INPUT</tt> to designate the context that contains the original request. Use <tt>OUTPUT</tt> to designate the output context.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmNamedInOutDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmNamedInOutResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the input or output that the map expects. The name must be the same as a cardname that is identified in the map file.", "", "").String,
 			Optional:            true,
 		},
 		"context": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Context", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the DataPower context. This context contains the input data or will contain the output data that corresponds to the input or output that the maps expects. Use <tt>INPUT</tt> to designate the context that contains the original request. Use <tt>OUTPUT</tt> to designate the output context.", "", "").String,
 			Required:            true,
 		},
 	},

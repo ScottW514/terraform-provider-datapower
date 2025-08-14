@@ -59,13 +59,13 @@ Optional:
 
 Read-Only:
 
-- `critical_threshold` (Number) Critical threshold
+- `critical_threshold` (Number) Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.
   - CLI Alias: `critical`
   - Range: `0`-`100`
   - Default value: `90`
-- `name` (String) Queue manager
+- `name` (String) Specify the name of a queue manager to check.
   - CLI Alias: `name`
-- `warning_threshold` (Number) Warning threshold
+- `warning_threshold` (Number) Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.
   - CLI Alias: `warning`
   - Range: `0`-`100`
   - Default value: `75`
@@ -76,14 +76,14 @@ Read-Only:
 
 Read-Only:
 
-- `critical_threshold` (Number) Critical threshold
+- `critical_threshold` (Number) Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.
   - CLI Alias: `critical`
   - Range: `0`-`100`
   - Default value: `90`
-- `name` (String) File system
+- `name` (String) Specify the system file system to check.
   - CLI Alias: `name`
   - Choices: `system`, `raid`, `temporary`, `mqroot`, `mqbackup`, `mqdiag`, `mqerr`, `mqtrace`
-- `warning_threshold` (Number) Warning threshold
+- `warning_threshold` (Number) Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.
   - CLI Alias: `warning`
   - Range: `0`-`100`
   - Default value: `75`

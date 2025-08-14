@@ -160,13 +160,13 @@ resource "datapower_apidefinition" "test" {
 
 Optional:
 
-- `http` (Boolean) http
+- `http` (Boolean) Protocol identifier for HTTP.
   - Default value: `true`
-- `https` (Boolean) https
+- `https` (Boolean) Protocol identifier for HTTPS.
   - Default value: `true`
-- `ws` (Boolean) ws
+- `ws` (Boolean) Protocol identifier for WebSocket. When allowed, the HTTP handler must be configured to allow WebSocket upgrade requests.
   - Default value: `true`
-- `wss` (Boolean) wss
+- `wss` (Boolean) Protocol identifier for WebSocket Secure. When allowed, the HTTPS handler must be configured to allow WebSocket upgrade requests.
   - Default value: `true`
 
 
@@ -192,13 +192,13 @@ Optional:
 
 Required:
 
-- `property_name` (String) Property name
+- `property_name` (String) Specify the property name.
 
 Optional:
 
-- `catalog` (String) Catalog
+- `catalog` (String) Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.
   - Default value: `*`
-- `value` (String) Value
+- `value` (String) Specify the property value.
 
 
 <a id="nestedatt--schemas"></a>
@@ -206,6 +206,6 @@ Optional:
 
 Required:
 
-- `name` (String) Name
-- `schema` (String) Schema
+- `name` (String) Specify the name of the data type.
+- `schema` (String) Specify the API schema object.
   - Reference to: `datapower_apischema:id`

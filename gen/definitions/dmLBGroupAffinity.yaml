@@ -1,40 +1,46 @@
 name: DmLBGroupAffinity
 model_only: true
 attributes:
-  - name: EnableSA
-    type: Bool
-    default: true
-    required: true
-    description: 'Enable Session Affinity'
-    cli_alias: enable-affinity
-  - name: InsertionCookieName
-    type: String
-    default: 'DPJSESSIONID'
-    description: 'Insertion Cookie Name'
-    cli_alias: i-cookie-name
-  - name: InsertionPath
-    type: String
-    default: '/'
-    description: 'Insertion Path'
-    cli_alias: i-path
-  - name: InsertionDomain
-    type: String
-    default: 'datapower.com'
-    description: 'Insertion Domain'
-    cli_alias: i-domain
-  - name: AffinityWLMOverride
-    type: Bool
-    default: false
-    description: 'Override WebSphere Cell Session Affinity'
-    cli_alias: override-wlm-affinity
-  - name: AffinityMode
-    type: String
-    enum:
-      - 'active'
-      - 'activeConditional'
-    description: 'Mode'
-    cli_alias: affinity-mode
-  - name: InsertionAttributes
-    dm_type: DmInsertionAttributes
-    description: 'Insert cookie attributes'
-    cli_alias: i-cookie-attributes
+- name: EnableSA
+  type: Bool
+  default: true
+  required: true
+  description: Enables or disables session affinity operations.
+  cli_alias: enable-affinity
+- name: InsertionCookieName
+  type: String
+  default: DPJSESSIONID
+  description: Name of the cookie inserted into the response when active or active-conditional
+    session affinity is required.
+  cli_alias: i-cookie-name
+- name: InsertionPath
+  type: String
+  default: /
+  description: The path added to the insertion cookie in the response when active
+    or active-conditional session affinity is required.
+  cli_alias: i-path
+- name: InsertionDomain
+  type: String
+  default: datapower.com
+  description: The domain added to the insertion cookie in the response when active
+    or active-conditional session affinity is required. The domain name cannot begin
+    with a dot.
+  cli_alias: i-domain
+- name: AffinityWLMOverride
+  type: Bool
+  default: false
+  description: Overrides the WebSphere Cell Session Affinity cluster configuration
+    with the DataPower Gateway configuration information below.
+  cli_alias: override-wlm-affinity
+- name: AffinityMode
+  type: String
+  enum:
+  - active
+  - activeConditional
+  description: The mode of session affinity applied to this load balancer group.
+  cli_alias: affinity-mode
+- name: InsertionAttributes
+  dm_type: DmInsertionAttributes
+  description: Specifies the attributes to insert in the cookie in the response when
+    active or active-conditional session affinity is required.
+  cli_alias: i-cookie-attributes

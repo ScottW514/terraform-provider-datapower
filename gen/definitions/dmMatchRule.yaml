@@ -2,50 +2,51 @@ name: DmMatchRule
 model_only: true
 list_item: true
 attributes:
-  - name: Type
-    type: String
-    enum:
-      - 'url'
-      - 'http'
-      - 'errorcode'
-      - 'xpath'
-      - 'fullyqualifiedurl'
-      - 'host'
-      - 'method'
-    required: true
-    description: 'Matching type'
-    example: 'url'
-  - name: HttpTag
-    type: String
-    description: 'HTTP header'
-  - name: HttpValue
-    type: String
-    description: 'HTTP value match'
-  - name: Url
-    type: String
-    description: 'URL match'
-  - name: ErrorCode
-    type: String
-    test_value: '"*"'
-    description: 'Error code'
-  - name: XPATHExpression
-    type: String
-    description: 'XPath expression'
-  - name: Method
-    type: String
-    enum:
-      - 'GET'
-      - 'POST'
-      - 'PUT'
-      - 'PATCH'
-      - 'DELETE'
-      - 'HEAD'
-      - 'OPTIONS'
-      - 'TRACE'
-      - 'custom'
-      - 'default'
-    description: 'HTTP method'
-    default: 'default'
-  - name: CustomMethod
-    type: String
-    description: 'Custom method'
+- name: Type
+  type: String
+  enum:
+  - url
+  - http
+  - errorcode
+  - xpath
+  - fullyqualifiedurl
+  - host
+  - method
+  required: true
+  description: The match type for evaluation.
+  example: url
+- name: HttpTag
+  type: String
+  description: For HTTP matching, the name of the HTTP header to examine.
+- name: HttpValue
+  type: String
+  description: For HTTP matching, the value match for the HTTP header. Enter a match
+    pattern or a literal string.
+- name: Url
+  type: String
+  description: The URL match expression.
+- name: ErrorCode
+  type: String
+  test_value: '"*"'
+  description: The error code match expression.
+- name: XPATHExpression
+  type: String
+  description: The XPath match expression.
+- name: Method
+  type: String
+  enum:
+  - GET
+  - POST
+  - PUT
+  - PATCH
+  - DELETE
+  - HEAD
+  - OPTIONS
+  - TRACE
+  - custom
+  - default
+  description: The HTTP method.
+  default: default
+- name: CustomMethod
+  type: String
+  description: For a custom method, the custom HTTP method.

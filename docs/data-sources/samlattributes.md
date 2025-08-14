@@ -65,11 +65,11 @@ Optional:
 
 Read-Only:
 
-- `format` (String) Attribute NameSpace/Format
-- `friendly_name` (String) Friendly Name
-- `name` (String) Name
-- `source_type` (String) Data Source Type
+- `format` (String) <p>Specify the optional Namespace URI for the SAML 1.x attribute,</p><p>Optional: Specify the NameFormat value for the SAML 2.0 attribute.</p>
+- `friendly_name` (String) Specify a meaningful name for the SAML attribute.
+- `name` (String) Specify the name of the SAML attribute to be generated. <p>When the Data Source Type is variable, this setting can be an empty string. In that case, the attribute name that is carried by the variable's content is used.</p>
+- `source_type` (String) Specify the data source to retrieve the value for each SAML attribute. <p>If the Data Source Type is a variable, configure a DataPower service or context variable name with Data for Attribute Value. That variable must contain a result element with a list of attribute sub elements. Each attribute element must contain a name attribute, which is used to match the Supplementary Data setting. A sample to describe the format of the variable content:</p><p>&lt;result> &lt;attribute-value name="cn">Alice&lt;/attribute-value> &lt;attribute-value name="sn">Alice&lt;/attribute-value> &lt;attribute-value name="creatorsName"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>
   - Choices: `var`, `xpath`, `static`
-- `sub_value_data` (String) Supplementary Data
-- `value_data` (String) Data for Attribute Value
-- `x_path` (String) XPath to Input Message
+- `sub_value_data` (String) <p>When the SAML attribute value is retrieved from a variable as defined in Data for Attribute Value setting, specify the value to match the name attribute of the attribute-value elements that are carried by that variable.</p><p>&lt;result> &lt;attribute-value name="cn">Alice&lt;/attribute-value> &lt;attribute-value name="sn">Alice&lt;/attribute-value> &lt;attribute-value name="creatorsName"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p><p>When this value is empty, the value of each attribute-value element is treated as one SAML AttributeValue. Therefore, if multiple attribute-values are carried by the DataPower variable, there can be multiple SAML AttributeValues in one SAML Attribute element.</p>
+- `value_data` (String) Specify the information to get the value for the SAML attribute. <p>If the attribute contains a Static Value per each AAA Policy, specify the static string value.</p><p>If the Data Source Type is variable, specify the variable name. You can input an empty string as the variable name to use the default variable var://context/ldap/auxiliary-attributes. That variable is maintained by the LDAP authentication or authorization to query auxiliary LDAP attributes.</p><p>In any case, the variable that is being used here must contain a result element with a list of attribute sub elements. Each attribute element must contain a name attribute, which is used to match the Supplementary Data setting. The following sample describes the format of the variable content.</p><p>&lt;result> &lt;attribute-value name="cn">Alice&lt;/attribute-value> &lt;attribute-value name="sn">Alice&lt;/attribute-value> &lt;attribute-value name="creatorsName"> cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>
+- `x_path` (String) Specify the XPATH information to get the value for the SAML attribute when the attribute value is From Input Message, and specify the XPath expression to locate the value. <p>The XML nodes that the XPath expression points to is the value for the SAML attribute.</p>

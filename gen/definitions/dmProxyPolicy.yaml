@@ -2,22 +2,23 @@ name: DmProxyPolicy
 model_only: true
 list_item: true
 attributes:
-  - name: RegExp
-    type: String
-    required: true
-    example: "*"
-    description: 'URL matching expression'
-  - name: Skip
-    type: Bool
-    default: false
-    required: true
-    description: 'Skip'
-  - name: RemoteAddress
-    type: String
-    description: 'Remote host'
-    example: 'remote.host'
-  - name: RemotePort
-    type: Int64
-    required: true
-    example: 443
-    description: 'Remote port'
+- name: RegExp
+  type: String
+  required: true
+  example: '*'
+  description: Specify the shell-style expression to define the URL set.
+- name: Skip
+  type: Bool
+  default: false
+  required: true
+  description: Specify whether to forward requests to the remote HTTP server. When
+    not enabled, specify the remote host and port of the HTTP server.
+- name: RemoteAddress
+  type: String
+  description: Specify the hostname or IP address of the remote HTTP server.
+  example: remote.host
+- name: RemotePort
+  type: Int64
+  required: true
+  example: 443
+  description: Specify the port on the remote HTTP server.

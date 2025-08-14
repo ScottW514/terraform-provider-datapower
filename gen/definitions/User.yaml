@@ -47,7 +47,6 @@ attributes:
   - config-sequence
   required: true
   default: group-defined
-  test_expect_ds: '"privileged"'
   description: Access level
   cli_alias: access-level
 - name: GroupName

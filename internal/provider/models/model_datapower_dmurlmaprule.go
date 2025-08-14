@@ -45,7 +45,7 @@ var DmURLMapRuleObjectDefault = map[string]attr.Value{
 var DmURLMapRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"pattern": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Match Pattern", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("A shell-style match pattern that defines the URL set contained within the URL map. The following wildcard characters are available when constructing a match pattern. <table><tr><td valign=\"top\">asterisk (*)</td><td valign=\"top\">Matches 0 or more occurrences of any character</td></tr><tr><td valign=\"top\">question mark (?)</td><td valign=\"top\">Matches one occurrence of any single character</td></tr><tr><td valign=\"top\">brackets ( [ ] )</td><td valign=\"top\">Defines a character or numeric range. For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or xsl.</td></tr></table>", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -53,7 +53,7 @@ var DmURLMapRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmURLMapRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"pattern": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Match Pattern", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("A shell-style match pattern that defines the URL set contained within the URL map. The following wildcard characters are available when constructing a match pattern. <table><tr><td valign=\"top\">asterisk (*)</td><td valign=\"top\">Matches 0 or more occurrences of any character</td></tr><tr><td valign=\"top\">question mark (?)</td><td valign=\"top\">Matches one occurrence of any single character</td></tr><tr><td valign=\"top\">brackets ( [ ] )</td><td valign=\"top\">Defines a character or numeric range. For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or xsl.</td></tr></table>", "", "").String,
 			Required:            true,
 		},
 	},

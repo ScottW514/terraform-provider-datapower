@@ -2,14 +2,16 @@ name: DmHeaderSuppression
 model_only: true
 list_item: true
 attributes:
-  - name: Direction
-    type: String
-    enum:
-      - 'front'
-      - 'back'
-    example: 'front'
-    description: 'Direction'
-  - name: HeaderTag
-    type: String
-    description: 'Header Tag'
-    example: 'HEADER-TAG'
+- name: Direction
+  type: String
+  enum:
+  - front
+  - back
+  example: front
+  description: Select the direction of the message.
+- name: HeaderTag
+  type: String
+  description: Enter the name of the header to suppress. When these headers are defined
+    in the original request, the device removes the specified headers before forwarding
+    the request to the backend server.
+  example: HEADER-TAG

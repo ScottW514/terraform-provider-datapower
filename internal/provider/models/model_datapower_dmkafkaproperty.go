@@ -48,11 +48,11 @@ var DmKafkaPropertyObjectDefault = map[string]attr.Value{
 var DmKafkaPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the property.", "", "").String,
 			Computed:            true,
 		},
 		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the property.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmKafkaPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmKafkaPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the property.", "", "").String,
 			Required:            true,
 		},
 		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the property.", "", "").String,
 			Required:            true,
 		},
 	},

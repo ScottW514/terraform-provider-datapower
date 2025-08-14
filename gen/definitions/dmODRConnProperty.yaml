@@ -2,15 +2,15 @@ name: DmODRConnProperty
 model_only: true
 list_item: true
 attributes:
-  - name: ConnGroupPropName
-    type: String
-    required: true
-    example: 'propname'
-    description: 'Name'
-    cli_alias: odr-conn-prop-name
-  - name: ConnGroupPropValue
-    type: String
-    required: true
-    example: 'value'
-    description: 'Value'
-    cli_alias: odr-conn-prop-value
+- name: ConnGroupPropName
+  type: String
+  required: true
+  example: propname
+  description: The name for a connector group property.
+  cli_alias: odr-conn-prop-name
+- name: ConnGroupPropValue
+  type: String
+  required: true
+  example: value
+  description: The value for the connector group property.
+  cli_alias: odr-conn-prop-value

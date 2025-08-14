@@ -51,11 +51,11 @@ var DmLogEventObjectDefault = map[string]attr.Value{
 var DmLogEventDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"class": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Event category", "", "loglabel").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Sets an event category.", "", "loglabel").String,
 			Computed:            true,
 		},
 		"priority": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Minimum event priority", "", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("notice").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Sets the minimum event priority. The priorities are hierarchical.", "", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("notice").String,
 			Computed:            true,
 		},
 	},
@@ -63,11 +63,11 @@ var DmLogEventDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmLogEventResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"class": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Event category", "", "loglabel").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Sets an event category.", "", "loglabel").String,
 			Optional:            true,
 		},
 		"priority": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Minimum event priority", "", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("notice").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Sets the minimum event priority. The priorities are hierarchical.", "", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("notice").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

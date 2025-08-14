@@ -48,11 +48,11 @@ var DmStylesheetParameterObjectDefault = map[string]attr.Value{
 var DmStylesheetParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"parameter_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the name for the stylesheet parameter. The following list identifies common stylesheet parameters:</p><ul><li>decrypt-key: For decryption operations, the name of the Key object to be used.</li><li>keypair-key: For signing operations, the name of the Key object to be used.</li><li>keypair-cert: For signing operations, the name of the Certificate object to be used.</li><li>recipient: For encryption operations, the name of the Certificate object for the intended recipient.</li><li>valcred: For authentication, the name of the Validation Credentials object to be used.</li></ul>", "", "").String,
 			Computed:            true,
 		},
 		"parameter_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the parameter. Typically, the value is the name of a configuration object.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmStylesheetParameterDataSourceSchema = DataSourceSchema.NestedAttributeObje
 var DmStylesheetParameterResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"parameter_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the name for the stylesheet parameter. The following list identifies common stylesheet parameters:</p><ul><li>decrypt-key: For decryption operations, the name of the Key object to be used.</li><li>keypair-key: For signing operations, the name of the Key object to be used.</li><li>keypair-cert: For signing operations, the name of the Certificate object to be used.</li><li>recipient: For encryption operations, the name of the Certificate object for the intended recipient.</li><li>valcred: For authentication, the name of the Validation Credentials object to be used.</li></ul>", "", "").String,
 			Optional:            true,
 		},
 		"parameter_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the parameter. Typically, the value is the name of a configuration object.", "", "").String,
 			Required:            true,
 		},
 	},

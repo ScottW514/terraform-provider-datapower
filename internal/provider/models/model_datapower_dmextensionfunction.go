@@ -55,19 +55,19 @@ var DmExtensionFunctionObjectDefault = map[string]attr.Value{
 var DmExtensionFunctionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"extension_function_namespace": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Extension Namespace", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter namespace of the extension functions used in the custom stylesheets. For example, \"http://www.fredspace/extensions\".", "", "").String,
 			Computed:            true,
 		},
 		"extension_function": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Extension Function", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the extension function within the namespace to map. For example, \"nodeset()\".", "", "").String,
 			Computed:            true,
 		},
 		"local_function_namespace": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Namespace", "", "").AddDefaultValue("http://www.datapower.com/extensions").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the local namespace if it is other than the DataPower default (shown in the box).", "", "").AddDefaultValue("http://www.datapower.com/extensions").String,
 			Computed:            true,
 		},
 		"local_function": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Function", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the local function to use in place of the extension function identified above. For example, \"node-set()\".", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -75,21 +75,21 @@ var DmExtensionFunctionDataSourceSchema = DataSourceSchema.NestedAttributeObject
 var DmExtensionFunctionResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"extension_function_namespace": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Extension Namespace", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter namespace of the extension functions used in the custom stylesheets. For example, \"http://www.fredspace/extensions\".", "", "").String,
 			Required:            true,
 		},
 		"extension_function": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Extension Function", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the extension function within the namespace to map. For example, \"nodeset()\".", "", "").String,
 			Required:            true,
 		},
 		"local_function_namespace": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Namespace", "", "").AddDefaultValue("http://www.datapower.com/extensions").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the local namespace if it is other than the DataPower default (shown in the box).", "", "").AddDefaultValue("http://www.datapower.com/extensions").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("http://www.datapower.com/extensions"),
 		},
 		"local_function": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Function", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the local function to use in place of the extension function identified above. For example, \"node-set()\".", "", "").String,
 			Required:            true,
 		},
 	},

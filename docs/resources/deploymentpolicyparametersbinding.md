@@ -59,5 +59,5 @@ Optional:
 
 Required:
 
-- `parameter_name` (String) Variable Name
-- `parameter_value` (String) Variable Value
+- `parameter_name` (String) Specify the name of the deployment policy variable.
+- `parameter_value` (String) Specify the corresponding value of the deployment policy variable.

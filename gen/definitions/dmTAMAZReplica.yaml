@@ -2,23 +2,26 @@ name: DmTAMAZReplica
 model_only: true
 list_item: true
 attributes:
-  - name: TAMAZReplica
-    type: String
-    required: true
-    example: 'replica'
-    description: 'Host'
-    cli_alias: host
-  - name: TAMAZReplicaPort
-    type: Int64
-    required: true
-    default: 7136
-    description: 'Port'
-    cli_alias: port
-  - name: TAMAZReplicaWeight
-    type: Int64
-    minimum: 1
-    maximum: 10
-    required: true
-    default: 10
-    description: 'Weight'
-    cli_alias: weight
+- name: TAMAZReplica
+  type: String
+  required: true
+  example: replica
+  description: Specify the TCP host name of the authorization server replica.
+  cli_alias: host
+- name: TAMAZReplicaPort
+  type: Int64
+  required: true
+  default: 7136
+  description: Specify the listening port on the authorization server replica. The
+    default value is 7136.
+  cli_alias: port
+- name: TAMAZReplicaWeight
+  type: Int64
+  minimum: 1
+  maximum: 10
+  required: true
+  default: 10
+  description: Specify the weight of the authorization server replica. The greater
+    the weight, the higher the preference. Enter a value in the range 1 - 10. The
+    default value is 10.
+  cli_alias: weight

@@ -1,104 +1,129 @@
 name: DmAAAPExtractIdentity
 model_only: true
 attributes:
-  - name: EIBitmap
-    dm_type: DmAAAPEIBitmap
-    description: 'Methods'
-    cli_alias: method
-  - name: EICustomURL
-    type: String
-    description: 'Custom processing URL'
-    cli_alias: custom-url
-  - name: EIXPath
-    type: String
-    description: 'XPath expression'
-    cli_alias: xpath
-  - name: EISignerDNValcred
-    type: String
-    reference_to: CryptoValCred
-    description: 'Validation credentials for signing certificate'
-    cli_alias: valcred
-  - name: EICookieName
-    type: String
-    description: 'Cookie name'
-    cli_alias: cookie-name
-  - name: EIBasicAuthRealm
-    type: String
-    default: 'login'
-    description: 'HTTP Basic Authentication Realm'
-    cli_alias: basic-auth-realm
-  - name: EIUseWSSec
-    type: Bool
-    default: false
-    description: 'Use WS-Security token first'
-    cli_alias: use-wssec-token
-  - name: EIMetadata
-    type: String
-    reference_to: ProcessingMetadata
-    description: 'Processing metadata items'
-    cli_alias: metadata
-  - name: EIAllowRemoteTokenReference
-    type: Bool
-    default: false
-    description: 'Retrieve remote WS-Security token'
-    cli_alias: remote-token-allowed
-  - name: EIRemoteTokenProcessService
-    type: String
-    description: 'URL to process remote token'
-    cli_alias: remote-token-url
-  - name: EIPasswordRetrievalMechanism
-    type: String
-    enum:
-      - 'xmlfile'
-      - 'custom'
-    default: 'xmlfile'
-    description: 'Password-retrieval method'
-    cli_alias: password-retrieval-method
-  - name: EIPasswordRetrievalCustomURL
-    type: String
-    description: 'Password-retrieval processing URL'
-    cli_alias: password-retrieval-custom-url
-  - name: EIPasswordRetrievalAAAInfoURL
-    type: String
-    description: 'AAA information file URL'
-    cli_alias: password-retrieval-xmlfile-url
-  # DEPRECATED
-  # - name: EISSLProxyProfile
-  - name: EIFormsLoginPolicy
-    type: String
-    reference_to: FormsLoginPolicy
-    description: 'HTML forms-based login policy'
-    cli_alias: forms-login-policy
-  - name: EIOAuthClientGroup
-    type: String
-    reference_to: OAuthSupportedClientGroup
-    description: 'Registered OAuth clients'
-    cli_alias: oauth-client-group
-  - name: EISSLClientConfigType
-    type: String
-    enum:
-      - 'proxy'
-      - 'client'
-    default: 'proxy'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: EISSLClientProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
-  - name: EIJWTValidator
-    type: String
-    reference_to: AAAJWTValidator
-    description: 'JWT validator'
-    cli_alias: validate-jwt
-  - name: EISocialLoginPolicy
-    type: String
-    reference_to: SocialLoginPolicy
-    description: 'Social login policy'
-    cli_alias: social-login-policy
-  - name: EISAMLResponseValCred
-    type: String
-    reference_to: CryptoValCred
-    description: 'SAML response validation credentials'
-    cli_alias: saml-response-valcred
+- name: EIBitmap
+  dm_type: DmAAAPEIBitmap
+  description: Specify the methods to extract identifies.
+  cli_alias: method
+- name: EICustomURL
+  type: String
+  description: Specify the location of the processing file. This file is the stylesheet
+    or GatewayScript that extracts identity information from the candidate XML document.
+  cli_alias: custom-url
+- name: EIXPath
+  type: String
+  description: Specify the XPath expression to apply to the message. The extracted
+    identity uses the string value for this expression.
+  cli_alias: xpath
+- name: EISignerDNValcred
+  type: String
+  reference_to: CryptoValCred
+  description: Specify the validation credentials to verify the signer certificate.
+  cli_alias: valcred
+- name: EICookieName
+  type: String
+  description: Specify the cookie in the <tt>Cookie</tt> header to extract and use
+    as the identity token.
+  cli_alias: cookie-name
+- name: EIBasicAuthRealm
+  type: String
+  default: login
+  description: Specify the name of the HTTP basic authentication realm as described
+    by RFC 2617. A web browser might display this name to help the user determine
+    which credentials must be supplied. The default value is <tt>login</tt> .
+  cli_alias: basic-auth-realm
+- name: EIUseWSSec
+  type: Bool
+  default: false
+  description: <p>Specify whether to use the WS-Security token first. By default,
+    this feature is not enabled.</p><ul><li>When enabled, use the token from the appropriate
+    WS-Security <tt>Security</tt> header. For example, use when an LTPA token is extracted
+    from a <tt>Cookie</tt> header and you want to use the one that is available from
+    the <tt>Security</tt> header.</li><li>When not enabled, use the token that is
+    extracted somewhere other than the WS-Security <tt>Security</tt> header.</li></ul>
+  cli_alias: use-wssec-token
+- name: EIMetadata
+  type: String
+  reference_to: ProcessingMetadata
+  description: <p>Specify the processing metadata, which defines items such as variables
+    and protocol headers.</p><ul><li>When specified, processing returns only the defined
+    metadata items.</li><li>When not specified, processing returns all metadata items
+    for the current processing rule.</li></ul>
+  cli_alias: metadata
+- name: EIAllowRemoteTokenReference
+  type: Bool
+  default: false
+  description: Specify whether to contact a remote location for the final WS-Security
+    <tt>Security</tt> token. Processing might need the final token when the message
+    indicates that the token is at a remote location. By default, processing cannot
+    contact a remote location.
+  cli_alias: remote-token-allowed
+- name: EIRemoteTokenProcessService
+  type: String
+  description: <p>Specify the URL of the service that can process the remote security
+    token as a SOAP call and, if successful, respond with the final security token.</p><p>The
+    remote WS-Security token can be signed, encrypted, or encoded. A service with
+    different actions can process the remote token. For example, this token can decrypt
+    pieces of a remote SAML assertion, run an XSLT transform, or the AAA policy can
+    assert the token.</p>
+  cli_alias: remote-token-url
+- name: EIPasswordRetrievalMechanism
+  type: String
+  enum:
+  - xmlfile
+  - custom
+  default: xmlfile
+  description: Specify the method to obtain the user password. The password is needed
+    to calculate the derived symmetric key.
+  cli_alias: password-retrieval-method
+- name: EIPasswordRetrievalCustomURL
+  type: String
+  description: Specify the location of custom file to obtain the password.
+  cli_alias: password-retrieval-custom-url
+- name: EIPasswordRetrievalAAAInfoURL
+  type: String
+  description: Specify the location of AAA information file to obtain the password.
+  cli_alias: password-retrieval-xmlfile-url
+- name: EIFormsLoginPolicy
+  type: String
+  reference_to: FormsLoginPolicy
+  description: Specify the HTML forms-based login policy. This policy defines the
+    forms that collect user and password information.
+  cli_alias: forms-login-policy
+- name: EIOAuthClientGroup
+  type: String
+  reference_to: OAuthSupportedClientGroup
+  description: Specify the name of the OAuth client group.
+  cli_alias: oauth-client-group
+- name: EISSLClientConfigType
+  type: String
+  enum:
+  - proxy
+  - client
+  default: proxy
+  description: Specify the TLS profile type to secure connections.
+  cli_alias: ssl-client-type
+- name: EISSLClientProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: Specify the TLS client profile to secure connections to targets
+  cli_alias: ssl-client
+- name: EIJWTValidator
+  type: String
+  reference_to: AAAJWTValidator
+  description: Specify the JWT validator to validate the JWT.
+  cli_alias: validate-jwt
+- name: EISocialLoginPolicy
+  type: String
+  reference_to: SocialLoginPolicy
+  description: Specify the social login policy. To choose a policy at run time, set
+    the value with the <tt>var:///context/AAA/social-login-policy-name</tt> variable.
+    When the value is set with a variable before the AAA action, the variable takes
+    precedence over this value.
+  cli_alias: social-login-policy
+- name: EISAMLResponseValCred
+  type: String
+  reference_to: CryptoValCred
+  description: Specify the validation credentials to verify the signature of the SAML
+    response.
+  cli_alias: saml-response-valcred

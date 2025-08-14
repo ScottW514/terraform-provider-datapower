@@ -2,23 +2,25 @@ name: DmB2BContact
 model_only: true
 list_item: true
 attributes:
-  - name: FamilyName
-    type: String
-    description: 'Family name'
-    cli_alias: family-name
-  - name: GivenName
-    type: String
-    description: 'Given name'
-    cli_alias: given-name
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: Phone
-    type: String
-    description: 'Phone'
-    cli_alias: phone
-  - name: Email
-    type: String
-    description: 'Email'
-    cli_alias: email
+- name: FamilyName
+  type: String
+  description: Specify the family name of the person to contact. A family name is
+    the surname borne by family members.
+  cli_alias: family-name
+- name: GivenName
+  type: String
+  description: Specify the given name of the person to contact. A given name is the
+    name used to identify an individual within a family.
+  cli_alias: given-name
+- name: Title
+  type: String
+  description: Specify the title of the person to contact.
+  cli_alias: title
+- name: Phone
+  type: String
+  description: Specify the telephone number to contact the person.
+  cli_alias: phone
+- name: Email
+  type: String
+  description: Specify the email address to contact the person.
+  cli_alias: email

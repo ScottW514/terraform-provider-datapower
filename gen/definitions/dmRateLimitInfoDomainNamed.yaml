@@ -2,21 +2,21 @@ name: DmRateLimitInfoDomainNamed
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    reference_to: RateLimitDefinition
-    required: true
-    test_value: '"AccTest_RateLimitDefinition"'
-    test_bed_value: 'datapower_ratelimitdefinition.acc_test.id'
-    description: 'Name'
-    cli_alias: name
-  - name: Action
-    type: String
-    enum:
-      - 'consume'
-      - 'replenish'
-      - 'check'
-      - 'update'
-    default: 'consume'
-    description: 'Action'
-    cli_alias: action
+- name: Name
+  type: String
+  reference_to: RateLimitDefinition
+  required: true
+  test_value: '"AccTest_RateLimitDefinition"'
+  test_bed_value: datapower_ratelimitdefinition.acc_test.id
+  description: Specify the name of the rate limit definition.
+  cli_alias: name
+- name: Action
+  type: String
+  enum:
+  - consume
+  - replenish
+  - check
+  - update
+  default: consume
+  description: Specify the action to apply to the rate limit definition.
+  cli_alias: action

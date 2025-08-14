@@ -2,13 +2,13 @@ name: DmKafkaProperty
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    example: 'name'
-    description: 'Name'
-  - name: Value
-    type: String
-    required: true
-    example: 'value'
-    description: 'Value'
+- name: Name
+  type: String
+  required: true
+  example: name
+  description: Specify the name of the property.
+- name: Value
+  type: String
+  required: true
+  example: value
+  description: Specify the value for the property.

@@ -1,19 +1,19 @@
 name: DmConformanceProfiles
 model_only: true
 attributes:
-  - name: BP10
-    type: Bool
-    default: false
-    description: 'WS-I BP 1.0'
-  - name: BP11
-    type: Bool
-    default: true
-    description: 'WS-I BP 1.1'
-  - name: AP10
-    type: Bool
-    default: true
-    description: 'WS-I AP 1.0'
-  - name: BSP10
-    type: Bool
-    default: true
-    description: 'WS-I BSP 1.0'
+- name: BP10
+  type: Bool
+  default: false
+  description: WS-I BP 1.0
+- name: BP11
+  type: Bool
+  default: true
+  description: WS-I BP 1.1
+- name: AP10
+  type: Bool
+  default: true
+  description: WS-I AP 1.0
+- name: BSP10
+  type: Bool
+  default: true
+  description: WS-I BSP 1.0

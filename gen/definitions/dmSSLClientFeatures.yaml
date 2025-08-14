@@ -1,15 +1,15 @@
 name: DmSSLClientFeatures
 model_only: true
 attributes:
-  - name: use-sni
-    type: Bool
-    default: false
-    description: 'Use SNI'
-  - name: permit-insecure-servers
-    type: Bool
-    default: false
-    description: 'Permit connections without renegotiation'
-  - name: compression
-    type: Bool
-    default: false
-    description: 'Enable compression'
+- name: use-sni
+  type: Bool
+  default: false
+  description: Use SNI
+- name: permit-insecure-servers
+  type: Bool
+  default: false
+  description: Permit connections without renegotiation
+- name: compression
+  type: Bool
+  default: false
+  description: Enable compression

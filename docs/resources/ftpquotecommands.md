@@ -59,4 +59,4 @@ Optional:
 
 Required:
 
-- `quoted_command` (String) Quoted Command
+- `quoted_command` (String) The command to send to the remote FTP server. The command must not be one that would create an FTP data connection. Normally this will be a SITE command. This command must return a result code in the 200 series.

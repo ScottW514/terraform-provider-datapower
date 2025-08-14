@@ -2,23 +2,32 @@ name: DmXPathRoutingRule
 model_only: true
 list_item: true
 attributes:
-  - name: XPath
-    type: String
-    required: true
-    example: '*'
-    description: 'XPath Expression'
-  - name: Host
-    type: String
-    example: 'localhost'
-    required: true
-    description: 'Remote Host'
-  - name: Port
-    type: Int64
-    example: 8888
-    required: true
-    description: 'Remote Port'
-  - name: SSL
-    type: Bool
-    required: true
-    default: false
-    description: 'TLS'
+- name: XPath
+  type: String
+  required: true
+  example: '*'
+  description: <p>The XPath expression applied to submitted documents. This expression
+    evaluates to true or false. If the expression points to a particular node and
+    that node is present in the submitted document, the expression evaluates to true.</p><p>This
+    expression cannot exceed 330 characters. Use the Namespace Mapping tab to establish
+    mapping that then allow the use of qualified names in the XPath expression, shortening
+    the expression.</p>
+- name: Host
+  type: String
+  example: localhost
+  required: true
+  description: Specify the host name or IP address to which matching documents should
+    be routed.
+- name: Port
+  type: Int64
+  example: 8888
+  required: true
+  description: Specify the port to which matching documents should be routed.
+- name: SSL
+  type: Bool
+  required: true
+  default: false
+  description: Specify whether the connection to the target destination uses TLS communications.
+    The default is off. When set to on, the DataPower Gateway uses the TLS profile
+    that is specified at the service level to establish TLS communications to the
+    destination host.

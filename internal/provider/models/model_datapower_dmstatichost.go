@@ -51,15 +51,15 @@ var DmStaticHostObjectDefault = map[string]attr.Value{
 var DmStaticHostDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"hostname": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Hostname", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname of the target host.", "", "").String,
 			Computed:            true,
 		},
 		"ip_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("IP address", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address for the target host.", "", "").String,
 			Computed:            true,
 		},
 		"user_summary": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Comments", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a brief, descriptive summary for the configuration.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -67,15 +67,15 @@ var DmStaticHostDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmStaticHostResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"hostname": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Hostname", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname of the target host.", "", "").String,
 			Required:            true,
 		},
 		"ip_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("IP address", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address for the target host.", "", "").String,
 			Required:            true,
 		},
 		"user_summary": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Comments", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a brief, descriptive summary for the configuration.", "", "").String,
 			Optional:            true,
 		},
 	},

@@ -49,11 +49,11 @@ var DmConfigSequenceLocationObjectDefault = map[string]attr.Value{
 var DmConfigSequenceLocationDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"directory": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Location", "directory", "").AddDefaultValue("local:///").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to watch for changes to configuration files. Processing scans the directory for configuration files that match a given PCRE pattern and runs only the matching files. By default, this directory is also where the generated output files are stored.", "directory", "").AddDefaultValue("local:///").String,
 			Computed:            true,
 		},
 		"access_profile_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Access profile", "access-profile", "accessprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the access policies to enforce. Each policy defines permissions to a specific resource group.", "access-profile", "accessprofile").String,
 			Computed:            true,
 		},
 	},
@@ -61,13 +61,13 @@ var DmConfigSequenceLocationDataSourceSchema = DataSourceSchema.NestedAttributeO
 var DmConfigSequenceLocationResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"directory": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Location", "directory", "").AddDefaultValue("local:///").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to watch for changes to configuration files. Processing scans the directory for configuration files that match a given PCRE pattern and runs only the matching files. By default, this directory is also where the generated output files are stored.", "directory", "").AddDefaultValue("local:///").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("local:///"),
 		},
 		"access_profile_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Access profile", "access-profile", "accessprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the access policies to enforce. Each policy defines permissions to a specific resource group.", "access-profile", "accessprofile").String,
 			Optional:            true,
 		},
 	},

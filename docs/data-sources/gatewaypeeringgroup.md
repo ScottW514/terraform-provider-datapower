@@ -72,8 +72,8 @@ Optional:
 
 Read-Only:
 
-- `host` (String) Address
-- `local_nodes` (String) Local nodes
+- `host` (String) Specify the local IP address or host alias of the node.
+- `local_nodes` (String) Specify a comma-separated list of the local IP addresses or host aliases of the other nodes that are in the same data center.
 
 
 <a id="nestedatt--result--peer_nodes"></a>
@@ -81,7 +81,7 @@ Read-Only:
 
 Read-Only:
 
-- `host` (String) Address
-- `priority` (Number) Priority
+- `host` (String) Specify the local IP address or host alias of the peer.
+- `priority` (Number) Specify the priority to elect the new primary. When failover occurs, the secondary member with the lowest priority is promoted as the new primary. Enter a value in the range 0 - 255. The default value is 100. A secondary member with a priority of 0 can never be promoted.
   - Range: `0`-`255`
   - Default value: `100`

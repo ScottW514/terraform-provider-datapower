@@ -48,11 +48,11 @@ var DmJOSEHeaderObjectDefault = map[string]attr.Value{
 var DmJOSEHeaderDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"header_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Name of a JOSE header.", "", "").String,
 			Computed:            true,
 		},
 		"header_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Value of a JOSE header. If Name is 'crit', the value can be a comma separated list to have more than one value set to 'crit'. Other headers' values only accept string.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmJOSEHeaderDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmJOSEHeaderResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"header_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Name of a JOSE header.", "", "").String,
 			Optional:            true,
 		},
 		"header_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Value of a JOSE header. If Name is 'crit', the value can be a comma separated list to have more than one value set to 'crit'. Other headers' values only accept string.", "", "").String,
 			Required:            true,
 		},
 	},

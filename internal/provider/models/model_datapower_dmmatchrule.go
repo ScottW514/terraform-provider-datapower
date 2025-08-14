@@ -69,35 +69,35 @@ var DmMatchRuleObjectDefault = map[string]attr.Value{
 var DmMatchRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matching type", "", "").AddStringEnum("url", "http", "errorcode", "xpath", "fullyqualifiedurl", "host", "method").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The match type for evaluation.", "", "").AddStringEnum("url", "http", "errorcode", "xpath", "fullyqualifiedurl", "host", "method").String,
 			Computed:            true,
 		},
 		"http_tag": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP header", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the name of the HTTP header to examine.", "", "").String,
 			Computed:            true,
 		},
 		"http_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP value match", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the value match for the HTTP header. Enter a match pattern or a literal string.", "", "").String,
 			Computed:            true,
 		},
 		"url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL match", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The URL match expression.", "", "").String,
 			Computed:            true,
 		},
 		"error_code": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Error code", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The error code match expression.", "", "").String,
 			Computed:            true,
 		},
 		"xpath_expression": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The XPath match expression.", "", "").String,
 			Computed:            true,
 		},
 		"method": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP method", "", "").AddStringEnum("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "custom", "default").AddDefaultValue("default").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The HTTP method.", "", "").AddStringEnum("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "custom", "default").AddDefaultValue("default").String,
 			Computed:            true,
 		},
 		"custom_method": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom method", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("For a custom method, the custom HTTP method.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -105,34 +105,34 @@ var DmMatchRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmMatchRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matching type", "", "").AddStringEnum("url", "http", "errorcode", "xpath", "fullyqualifiedurl", "host", "method").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The match type for evaluation.", "", "").AddStringEnum("url", "http", "errorcode", "xpath", "fullyqualifiedurl", "host", "method").String,
 			Required:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("url", "http", "errorcode", "xpath", "fullyqualifiedurl", "host", "method"),
 			},
 		},
 		"http_tag": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP header", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the name of the HTTP header to examine.", "", "").String,
 			Optional:            true,
 		},
 		"http_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP value match", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("For HTTP matching, the value match for the HTTP header. Enter a match pattern or a literal string.", "", "").String,
 			Optional:            true,
 		},
 		"url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL match", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The URL match expression.", "", "").String,
 			Optional:            true,
 		},
 		"error_code": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Error code", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The error code match expression.", "", "").String,
 			Optional:            true,
 		},
 		"xpath_expression": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The XPath match expression.", "", "").String,
 			Optional:            true,
 		},
 		"method": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP method", "", "").AddStringEnum("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "custom", "default").AddDefaultValue("default").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The HTTP method.", "", "").AddStringEnum("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "TRACE", "custom", "default").AddDefaultValue("default").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -141,7 +141,7 @@ var DmMatchRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("default"),
 		},
 		"custom_method": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom method", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("For a custom method, the custom HTTP method.", "", "").String,
 			Optional:            true,
 		},
 	},

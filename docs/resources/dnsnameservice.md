@@ -76,16 +76,16 @@ Optional:
 
 Required:
 
-- `ip_address` (String) IP address
+- `ip_address` (String) Specify the IP address of DNS server.
 
 Optional:
 
-- `max_retries` (Number) Attempts
+- `max_retries` (Number) Specify the maximum number of times to send a query to the DNS server. By default, an unacknowledged resolution request is attempted 3 times. This setting is ignored with the first alive load balancing algorithm. For the first alive algorithm, define this behavior at the DNS settings level rather than the individual server level.
   - Default value: `3`
-- `tcp_port` (Number) TCP port
+- `tcp_port` (Number) Specify the TCP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.
   - Range: `1`-`65535`
   - Default value: `53`
-- `udp_port` (Number) UDP port
+- `udp_port` (Number) Specify the UDP port that the DNS server monitors. The default value is 53. This setting is ignored with the first alive load balancing algorithm.
   - Range: `1`-`65535`
   - Default value: `53`
 
@@ -95,7 +95,7 @@ Optional:
 
 Required:
 
-- `search_domain` (String) Domain name
+- `search_domain` (String) Specify the domain name.
 
 
 <a id="nestedatt--static_hosts"></a>
@@ -103,9 +103,9 @@ Required:
 
 Required:
 
-- `hostname` (String) Hostname
-- `ip_address` (String) IP address
+- `hostname` (String) Specify the hostname of the target host.
+- `ip_address` (String) Specify the IP address for the target host.
 
 Optional:
 
-- `user_summary` (String) Comments
+- `user_summary` (String) Specify a brief, descriptive summary for the configuration.

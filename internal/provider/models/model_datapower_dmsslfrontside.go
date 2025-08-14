@@ -68,31 +68,31 @@ var DmSSLFrontSideObjectDefault = map[string]attr.Value{
 var DmSSLFrontSideDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"local_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local address", "address", "").AddDefaultValue("0.0.0.0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host alias or local IP address on the appliance that the service listens on. The default value is 0.0.0.0, which denotes all local addresses.", "address", "").AddDefaultValue("0.0.0.0").String,
 			Computed:            true,
 		},
 		"local_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Port", "port", "").AddIntegerRange(1, 65535).String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique, local TCP port that the service listens on. No other service on the DataPower Gateway can use this port. Enter any value in the range 1 - 65535.", "port", "").AddIntegerRange(1, 65535).String,
 			Computed:            true,
 		},
 		"use_ssl": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS", "use-ssl", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Indicate whether to use the assigned TLS profile to control connections to this TCP port. When enabled, the service expects HTTPS requests on this port.", "use-ssl", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"credential_charset": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Credential character set", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The appliance transcodes the contents of the authorization header to UTF-8. Defaults to Protocol which is ISO-8859-1, Latin 1.", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
 			Computed:            true,
 		},
 		"ssl_server_config_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections between clients and the DataPower Gateway", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
 			Computed:            true,
 		},
 		"ssl_server": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "sslserverprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections between clients and the DataPower Gateway", "ssl-server", "sslserverprofile").String,
 			Computed:            true,
 		},
 		"sslsni_server": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "sslsniserverprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway", "ssl-sni-server", "sslsniserverprofile").String,
 			Computed:            true,
 		},
 	},
@@ -100,26 +100,26 @@ var DmSSLFrontSideDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmSSLFrontSideResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"local_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local address", "address", "").AddDefaultValue("0.0.0.0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host alias or local IP address on the appliance that the service listens on. The default value is 0.0.0.0, which denotes all local addresses.", "address", "").AddDefaultValue("0.0.0.0").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("0.0.0.0"),
 		},
 		"local_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Port", "port", "").AddIntegerRange(1, 65535).String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique, local TCP port that the service listens on. No other service on the DataPower Gateway can use this port. Enter any value in the range 1 - 65535.", "port", "").AddIntegerRange(1, 65535).String,
 			Required:            true,
 			Validators: []validator.Int64{
 				int64validator.Between(1, 65535),
 			},
 		},
 		"use_ssl": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS", "use-ssl", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Indicate whether to use the assigned TLS profile to control connections to this TCP port. When enabled, the service expects HTTPS requests on this port.", "use-ssl", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"credential_charset": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Credential character set", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The appliance transcodes the contents of the authorization header to UTF-8. Defaults to Protocol which is ISO-8859-1, Latin 1.", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -128,7 +128,7 @@ var DmSSLFrontSideResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("protocol"),
 		},
 		"ssl_server_config_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS profile type to secure connections between clients and the DataPower Gateway", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -137,11 +137,11 @@ var DmSSLFrontSideResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("server"),
 		},
 		"ssl_server": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "sslserverprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections between clients and the DataPower Gateway", "ssl-server", "sslserverprofile").String,
 			Optional:            true,
 		},
 		"sslsni_server": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "sslsniserverprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway", "ssl-sni-server", "sslsniserverprofile").String,
 			Optional:            true,
 		},
 	},

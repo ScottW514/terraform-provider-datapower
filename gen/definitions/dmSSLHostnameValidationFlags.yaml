@@ -1,23 +1,23 @@
 name: DmSSLHostnameValidationFlags
 model_only: true
 attributes:
-  - name: X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT
-    type: Bool
-    default: false
-    description: 'X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT'
-  - name: X509_CHECK_FLAG_NO_WILDCARDS
-    type: Bool
-    default: false
-    description: 'X509_CHECK_FLAG_NO_WILDCARDS'
-  - name: X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS
-    type: Bool
-    default: false
-    description: 'X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS'
-  - name: X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS
-    type: Bool
-    default: false
-    description: 'X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS'
-  - name: X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS
-    type: Bool
-    default: false
-    description: 'X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS'
+- name: X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT
+  type: Bool
+  default: false
+  description: X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT
+- name: X509_CHECK_FLAG_NO_WILDCARDS
+  type: Bool
+  default: false
+  description: X509_CHECK_FLAG_NO_WILDCARDS
+- name: X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS
+  type: Bool
+  default: false
+  description: X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS
+- name: X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS
+  type: Bool
+  default: false
+  description: X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS
+- name: X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS
+  type: Bool
+  default: false
+  description: X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS

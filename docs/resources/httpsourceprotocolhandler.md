@@ -113,42 +113,42 @@ resource "datapower_httpsourceprotocolhandler" "test" {
 
 Optional:
 
-- `cmd_exe` (Boolean) URL with cmd.exe
+- `cmd_exe` (Boolean) Allow requests when the URL contains cmd.exe
   - Default value: `false`
 - `connect` (Boolean) - Default value: `false`
-- `custom_methods` (Boolean) Custom methods
+- `custom_methods` (Boolean) Allow requests with any other method, which supports protocol extensions
   - Default value: `false`
-- `delete` (Boolean) DELETE method
+- `delete` (Boolean) Allow DELETE methods in requests
   - Default value: `false`
-- `dot_dot` (Boolean) URL with ..
+- `dot_dot` (Boolean) Allow requests when the URL contains a ..
   - Default value: `false`
-- `dot_dot_in_path` (Boolean) URL with .. in path
+- `dot_dot_in_path` (Boolean) Allow requests when the URL path contains a ..
   - Default value: `false`
-- `dot_dot_in_query_string` (Boolean) URL with .. after ?
+- `dot_dot_in_query_string` (Boolean) Allow requests when the query string contains a ..
   - Default value: `false`
-- `fragment_identifiers` (Boolean) URL with #
+- `fragment_identifiers` (Boolean) Allow requests when the URL contains a #
   - Default value: `true`
-- `get` (Boolean) GET method
+- `get` (Boolean) Allow GET methods in requests
   - Default value: `false`
-- `head` (Boolean) HEAD method
+- `head` (Boolean) Allow HEAD methods in requests
   - Default value: `false`
-- `http_1d0` (Boolean) HTTP/1.0
+- `http_1d0` (Boolean) Support HTTP/1.0 requests
   - Default value: `true`
-- `http_1d1` (Boolean) HTTP/1.1
+- `http_1d1` (Boolean) Support HTTP/1.1 requests
   - Default value: `true`
-- `http_2d0` (Boolean) HTTP/2
+- `http_2d0` (Boolean) Support HTTP/2 requests
   - Default value: `false`
-- `options` (Boolean) OPTIONS
+- `options` (Boolean) Allow OPTIONS methods in requests
   - Default value: `false`
-- `patch` (Boolean) PATCH method
+- `patch` (Boolean) Allow PATCH methods in requests
   - Default value: `false`
-- `post` (Boolean) POST method
+- `post` (Boolean) Allow POST methods in requests
   - Default value: `true`
-- `put` (Boolean) PUT method
+- `put` (Boolean) Allow PUT methods in requests
   - Default value: `true`
-- `query_string` (Boolean) URL with ?
+- `query_string` (Boolean) Allow requests when the URL contains a ?
   - Default value: `true`
-- `trace` (Boolean) TRACE method
+- `trace` (Boolean) Allow TRACE methods in requests
   - Default value: `false`
 
 

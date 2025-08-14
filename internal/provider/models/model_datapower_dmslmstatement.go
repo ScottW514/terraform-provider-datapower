@@ -99,71 +99,71 @@ var DmSLMStatementObjectDefault = map[string]attr.Value{
 var DmSLMStatementDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"slm_id": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique integer that indicates the order in which to process the statement. The policy processes statements from least to greatest. Adding a statement that duplicates the value of a previous identifier replaces the previous statement.", "", "").String,
 			Computed:            true,
 		},
 		"user_string": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("User annotation", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the string or identifier that appears in log messages for this statement.", "", "").String,
 			Computed:            true,
 		},
 		"cred_class": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Credential class", "", "slmcredclass").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the credential class that defines the users (credentials) to be subject to policy restrictions. Without a credential class, the appliance considers all messages as belonging to a single global user. Therefore, the statement applies to all messages that are identified as valid resources without respect to credential classification.", "", "slmcredclass").String,
 			Computed:            true,
 		},
 		"rsrc_class": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Resource class", "", "slmrsrcclass").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the resource class that defines a resources to be subject to policy restrictions. Without a resource class, the statement applies to all messages that pass the credential classification.", "", "slmrsrcclass").String,
 			Computed:            true,
 		},
 		"schedule": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schedule", "", "slmschedule").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the schedule that defines the timeframe to enforce the policy.", "", "slmschedule").String,
 			Computed:            true,
 		},
 		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "", "slmaction").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify action that defines the administrative sanction for messages that exceed the threshold.", "", "slmaction").String,
 			Computed:            true,
 		},
 		"thresh_interval_length": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Threshold interval length", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>", "", "").String,
 			Computed:            true,
 		},
 		"thresh_interval_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Threshold interval type", "", "").AddStringEnum("fixed", "moving", "concurrent").AddDefaultValue("fixed").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of intervals to measure. The default is a fixed interval.", "", "").AddStringEnum("fixed", "moving", "concurrent").AddDefaultValue("fixed").String,
 			Computed:            true,
 		},
 		"thresh_algorithm": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Threshold algorithm", "", "").AddStringEnum("greater-than", "less-than", "token-bucket", "high-low-thresholds").AddDefaultValue("greater-than").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the methodology that calculates the threshold in the current interval.", "", "").AddStringEnum("greater-than", "less-than", "token-bucket", "high-low-thresholds").AddDefaultValue("greater-than").String,
 			Computed:            true,
 		},
 		"threshold_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Threshold type", "", "").AddStringEnum("count-all", "count-errors", "latency-internal", "latency-backend", "latency-total", "payload-request", "payload-response", "payload-total").AddDefaultValue("count-all").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the way to apply the threshold level to the monitored count or latency. For the token-bucket algorithm, latency threshold types do not apply.", "", "").AddStringEnum("count-all", "count-errors", "latency-internal", "latency-backend", "latency-total", "payload-request", "payload-response", "payload-total").AddDefaultValue("count-all").String,
 			Computed:            true,
 		},
 		"threshold_level": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Threshold level", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold that triggers the action. The units of measure depends on the threshold type. <ul><li>If the threshold is a count, enter the aggregate count.</li><li>If the threshold is latency, enter the latency in milliseconds.</li><li>If the threshold is payload, enter the payload size in KB.</li></ul><p>The default value is 0, which has different behaviors based on algorithm, threshold type, threshold interval, and level.</p><ul><li>When algorithm type is \"less than\" or the threshold type is \"Latency\", all messages are accepted.</li><li>When threshold interval is 0, a threshold level of 0 is overridden and all messages are allowed.</li></ul>", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").String,
 			Computed:            true,
 		},
 		"release_threshold_level": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("High-low release level", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the stop point of the high-low algorithm. The stop point is the low threshold. The start point is the high threshold that is defined as the threshold level property.", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").String,
 			Computed:            true,
 		},
 		"burst_limit": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Burst limit", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>", "", "").String,
 			Computed:            true,
 		},
 		"reporting_aggregation_interval": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reporting aggregation interval", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the base aggregation level in minutes for the reporting statistics. This property is independent of the threshold interval.", "", "").String,
 			Computed:            true,
 		},
 		"maximum_total_reporting_records": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Max records across intervals", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("5000").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the total number of records for a reporting interval. A single reporting aggregation interval can contain multiple records. For example, one record per resource or credential. This property allows you to define a maximum memory-consumption threshold. The default value is 5000.", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("5000").String,
 			Computed:            true,
 		},
 		"auto_generated_by_web_gui": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Auto-generated (read-only)", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Read-only property. When enabled, the statement was created as part of a default SLM configuration.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"maximum_resources_and_credentials_for_threshold": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Max credentials-resource combinations", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("5000").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of combinations of credentials and resources. This property limits the number of combinations and allows the setting of a maximum memory-consumption threshold. The default value is 5000.", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("5000").String,
 			Computed:            true,
 		},
 	},
@@ -171,35 +171,35 @@ var DmSLMStatementDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmSLMStatementResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"slm_id": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique integer that indicates the order in which to process the statement. The policy processes statements from least to greatest. Adding a statement that duplicates the value of a previous identifier replaces the previous statement.", "", "").String,
 			Required:            true,
 		},
 		"user_string": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("User annotation", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the string or identifier that appears in log messages for this statement.", "", "").String,
 			Optional:            true,
 		},
 		"cred_class": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Credential class", "", "slmcredclass").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the credential class that defines the users (credentials) to be subject to policy restrictions. Without a credential class, the appliance considers all messages as belonging to a single global user. Therefore, the statement applies to all messages that are identified as valid resources without respect to credential classification.", "", "slmcredclass").String,
 			Optional:            true,
 		},
 		"rsrc_class": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Resource class", "", "slmrsrcclass").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the resource class that defines a resources to be subject to policy restrictions. Without a resource class, the statement applies to all messages that pass the credential classification.", "", "slmrsrcclass").String,
 			Optional:            true,
 		},
 		"schedule": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schedule", "", "slmschedule").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the schedule that defines the timeframe to enforce the policy.", "", "slmschedule").String,
 			Optional:            true,
 		},
 		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "", "slmaction").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify action that defines the administrative sanction for messages that exceed the threshold.", "", "slmaction").String,
 			Required:            true,
 		},
 		"thresh_interval_length": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Threshold interval length", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds of each interval. Enter a value in the range 0 - 65535. The default value is 0, which allows all messages and never triggers the threshold to enforce the action. <p>This property is not relevant when the interval type is concurrent. However, concurrent transactions can also be configured with the resource class type of concurrent transactions. In this case, if the interval type is set to fixed, but behaves as concurrent with an interval of 0 that allows all messages and never triggers the threshold to enforce the action.</p>", "", "").String,
 			Optional:            true,
 		},
 		"thresh_interval_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Threshold interval type", "", "").AddStringEnum("fixed", "moving", "concurrent").AddDefaultValue("fixed").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of intervals to measure. The default is a fixed interval.", "", "").AddStringEnum("fixed", "moving", "concurrent").AddDefaultValue("fixed").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -208,7 +208,7 @@ var DmSLMStatementResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("fixed"),
 		},
 		"thresh_algorithm": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Threshold algorithm", "", "").AddStringEnum("greater-than", "less-than", "token-bucket", "high-low-thresholds").AddDefaultValue("greater-than").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the methodology that calculates the threshold in the current interval.", "", "").AddStringEnum("greater-than", "less-than", "token-bucket", "high-low-thresholds").AddDefaultValue("greater-than").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -217,7 +217,7 @@ var DmSLMStatementResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("greater-than"),
 		},
 		"threshold_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Threshold type", "", "").AddStringEnum("count-all", "count-errors", "latency-internal", "latency-backend", "latency-total", "payload-request", "payload-response", "payload-total").AddDefaultValue("count-all").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the way to apply the threshold level to the monitored count or latency. For the token-bucket algorithm, latency threshold types do not apply.", "", "").AddStringEnum("count-all", "count-errors", "latency-internal", "latency-backend", "latency-total", "payload-request", "payload-response", "payload-total").AddDefaultValue("count-all").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -226,7 +226,7 @@ var DmSLMStatementResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("count-all"),
 		},
 		"threshold_level": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Threshold level", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold that triggers the action. The units of measure depends on the threshold type. <ul><li>If the threshold is a count, enter the aggregate count.</li><li>If the threshold is latency, enter the latency in milliseconds.</li><li>If the threshold is payload, enter the payload size in KB.</li></ul><p>The default value is 0, which has different behaviors based on algorithm, threshold type, threshold interval, and level.</p><ul><li>When algorithm type is \"less than\" or the threshold type is \"Latency\", all messages are accepted.</li><li>When threshold interval is 0, a threshold level of 0 is overridden and all messages are allowed.</li></ul>", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -235,7 +235,7 @@ var DmSLMStatementResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: int64default.StaticInt64(0),
 		},
 		"release_threshold_level": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("High-low release level", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the stop point of the high-low algorithm. The stop point is the low threshold. The start point is the high threshold that is defined as the threshold level property.", "", "").AddIntegerRange(0, 9007199254740991).AddDefaultValue("0").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -244,15 +244,15 @@ var DmSLMStatementResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: int64default.StaticInt64(0),
 		},
 		"burst_limit": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Burst limit", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the committed burst. The default value is 0, which throttles all messages. <p>The committed burst defines how much traffic can be sent during a reporting interval. The burst size should be at least twice the value of the threshold level. If the burst limit is less than the threshold value, the algorithm acts like the greater than algorithm.</p>", "", "").String,
 			Optional:            true,
 		},
 		"reporting_aggregation_interval": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reporting aggregation interval", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the base aggregation level in minutes for the reporting statistics. This property is independent of the threshold interval.", "", "").String,
 			Optional:            true,
 		},
 		"maximum_total_reporting_records": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Max records across intervals", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("5000").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the total number of records for a reporting interval. A single reporting aggregation interval can contain multiple records. For example, one record per resource or credential. This property allows you to define a maximum memory-consumption threshold. The default value is 5000.", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("5000").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -261,13 +261,13 @@ var DmSLMStatementResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: int64default.StaticInt64(5000),
 		},
 		"auto_generated_by_web_gui": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Auto-generated (read-only)", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Read-only property. When enabled, the statement was created as part of a default SLM configuration.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"maximum_resources_and_credentials_for_threshold": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Max credentials-resource combinations", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("5000").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of combinations of credentials and resources. This property limits the number of combinations and allows the setting of a maximum memory-consumption threshold. The default value is 5000.", "", "").AddIntegerRange(0, 4294967295).AddDefaultValue("5000").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{

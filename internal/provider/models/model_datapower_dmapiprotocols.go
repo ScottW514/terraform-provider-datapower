@@ -57,19 +57,19 @@ var DmAPIProtocolsDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"http": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("http", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for HTTP.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 		"https": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("https", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for HTTPS.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 		"ws": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("ws", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for WebSocket. When allowed, the HTTP handler must be configured to allow WebSocket upgrade requests.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 		"wss": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("wss", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for WebSocket Secure. When allowed, the HTTPS handler must be configured to allow WebSocket upgrade requests.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 	},
@@ -82,25 +82,25 @@ var DmAPIProtocolsResourceSchema = ResourceSchema.SingleNestedAttribute{
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
 		"http": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("http", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for HTTP.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),
 		},
 		"https": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("https", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for HTTPS.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),
 		},
 		"ws": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("ws", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for WebSocket. When allowed, the HTTP handler must be configured to allow WebSocket upgrade requests.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),
 		},
 		"wss": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("wss", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Protocol identifier for WebSocket Secure. When allowed, the HTTPS handler must be configured to allow WebSocket upgrade requests.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),

@@ -1,11 +1,11 @@
 name: DmInsertionAttributes
 model_only: true
 attributes:
-  - name: secure
-    type: Bool
-    default: false
-    description: 'Secure'
-  - name: httponly
-    type: Bool
-    default: false
-    description: 'HttpOnly'
+- name: secure
+  type: Bool
+  default: false
+  description: Secure
+- name: httponly
+  type: Bool
+  default: false
+  description: HttpOnly

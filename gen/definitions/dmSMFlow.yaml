@@ -1,11 +1,11 @@
 name: DmSMFlow
 model_only: true
 attributes:
-  - name: frontend
-    type: Bool
-    default: false
-    description: 'Responses'
-  - name: backend
-    type: Bool
-    default: false
-    description: 'Requests'
+- name: frontend
+  type: Bool
+  default: false
+  description: Responses
+- name: backend
+  type: Bool
+  default: false
+  description: Requests

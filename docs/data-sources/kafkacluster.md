@@ -76,8 +76,8 @@ Optional:
 
 Read-Only:
 
-- `host` (String) Host
-- `port` (Number) Port
+- `host` (String) Specify the host name or IP address of a bootstrap server.
+- `port` (Number) Specify the port that the bootstrap server monitors for incoming bootstrap requests.
 
 
 <a id="nestedatt--result--property"></a>
@@ -85,5 +85,5 @@ Read-Only:
 
 Read-Only:
 
-- `name` (String) Name
-- `value` (String) Value
+- `name` (String) Specify the name of the property.
+- `value` (String) Specify the value for the property.

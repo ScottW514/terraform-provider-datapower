@@ -103,30 +103,30 @@ resource "datapower_webtokenservice" "test" {
 
 Required:
 
-- `local_port` (Number) Port
+- `local_port` (Number) Specify the unique, local TCP port that the service listens on. No other service on the DataPower Gateway can use this port. Enter any value in the range 1 - 65535.
   - CLI Alias: `port`
   - Range: `1`-`65535`
 
 Optional:
 
-- `credential_charset` (String) Credential character set
+- `credential_charset` (String) Specifies the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The appliance transcodes the contents of the authorization header to UTF-8. Defaults to Protocol which is ISO-8859-1, Latin 1.
   - CLI Alias: `credential-charset`
   - Choices: `protocol`, `ascii`, `utf8`, `big5`, `cp1250`, `cp1251`, `cp1252`, `cp1253`, `cp1254`, `cp1255`, `cp1256`, `cp1257`, `cp1258`, `euc_jp`, `euc_kr`, `gb18030`, `gb2312`, `iso2022_jp`, `iso2022_kr`, `iso8859_1`, `iso8859_2`, `iso8859_4`, `iso8859_5`, `iso8859_6`, `iso8859_7`, `iso8859_8`, `iso8859_9`, `iso8859_15`, `sjis`, `tis620`, `unicode_le`
   - Default value: `protocol`
-- `local_address` (String) Local address
+- `local_address` (String) Specify the host alias or local IP address on the appliance that the service listens on. The default value is 0.0.0.0, which denotes all local addresses.
   - CLI Alias: `address`
   - Default value: `0.0.0.0`
-- `ssl_server` (String) TLS server profile
+- `ssl_server` (String) Specify the TLS server profile to secure connections between clients and the DataPower Gateway
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_sslserverprofile:id`
-- `ssl_server_config_type` (String) TLS server type
+- `ssl_server_config_type` (String) Specify the TLS profile type to secure connections between clients and the DataPower Gateway
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
-- `sslsni_server` (String) TLS SNI server profile
+- `sslsni_server` (String) Specify the TLS SNI server profile to secure connections between clients and the DataPower Gateway
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_sslsniserverprofile:id`
-- `use_ssl` (Boolean) TLS
+- `use_ssl` (Boolean) Indicate whether to use the assigned TLS profile to control connections to this TCP port. When enabled, the service expects HTTPS requests on this port.
   - CLI Alias: `use-ssl`
   - Default value: `false`
 

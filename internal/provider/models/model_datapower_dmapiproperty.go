@@ -52,15 +52,15 @@ var DmAPIPropertyObjectDefault = map[string]attr.Value{
 var DmAPIPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"property_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Property name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the property name.", "", "").String,
 			Computed:            true,
 		},
 		"catalog": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Catalog", "", "").AddDefaultValue("*").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.", "", "").AddDefaultValue("*").String,
 			Computed:            true,
 		},
 		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the property value.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -68,17 +68,17 @@ var DmAPIPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmAPIPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"property_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Property name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the property name.", "", "").String,
 			Required:            true,
 		},
 		"catalog": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Catalog", "", "").AddDefaultValue("*").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.", "", "").AddDefaultValue("*").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("*"),
 		},
 		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the property value.", "", "").String,
 			Optional:            true,
 		},
 	},

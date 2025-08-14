@@ -2,20 +2,24 @@ name: DmSFTPPolicy
 model_only: true
 list_item: true
 attributes:
-  - name: RegExp
-    type: String
-    required: true
-    example: '*'
-    description: 'URL matching expression'
-  - name: SSHClientProfile
-    type: String
-    reference_to: SSHClientProfile
-    required: true
-    test_value: '"AccTest_SSHClientProfile"'
-    test_bed_value: 'datapower_sshclientprofile.acc_test.id'
-    description: 'SSH client profile'
-  - name: UseUniqueFilenames
-    type: Bool
-    default: false
-    required: true
-    description: 'Use unique file names'
+- name: RegExp
+  type: String
+  required: true
+  example: '*'
+  description: Specify the shell-style expression to define the URL set.
+- name: SSHClientProfile
+  type: String
+  reference_to: SSHClientProfile
+  required: true
+  test_value: '"AccTest_SSHClientProfile"'
+  test_bed_value: datapower_sshclientprofile.acc_test.id
+  description: Specify the SSH client profile.
+- name: UseUniqueFilenames
+  type: Bool
+  default: false
+  required: true
+  description: Specifies whether to generate a unique file name for files written
+    to an SSH FTP server. When the target URL represents a directory, a unique file
+    name is generated. When the target URL represents a file name that already exists,
+    any transfers result into a new unique file being created and its name is modified
+    to include a unique prolog.

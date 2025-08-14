@@ -2,18 +2,18 @@ name: DmAddHeaderPolicy
 model_only: true
 list_item: true
 attributes:
-  - name: RegExp
-    type: String
-    required: true
-    example: '*'
-    description: 'URL matching expression'
-  - name: AddHeader
-    type: String
-    required: true
-    example: 'HEADER'
-    description: 'Name'
-  - name: AddValue
-    type: String
-    required: true
-    example: 'VALUE'
-    description: 'Value'
+- name: RegExp
+  type: String
+  required: true
+  example: '*'
+  description: Specify the shell-style expression to define the URL set.
+- name: AddHeader
+  type: String
+  required: true
+  example: HEADER
+  description: Specify the name of the header.
+- name: AddValue
+  type: String
+  required: true
+  example: VALUE
+  description: Specify the value for the header as a string.

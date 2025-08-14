@@ -54,15 +54,15 @@ var DmQMFileSystemUsageObjectDefault = map[string]attr.Value{
 var DmQMFileSystemUsageDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Queue manager", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of a queue manager to check.", "name", "").String,
 			Computed:            true,
 		},
 		"warning_threshold": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Warning threshold", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
 			Computed:            true,
 		},
 		"critical_threshold": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Critical threshold", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
 			Computed:            true,
 		},
 	},
@@ -70,11 +70,11 @@ var DmQMFileSystemUsageDataSourceSchema = DataSourceSchema.NestedAttributeObject
 var DmQMFileSystemUsageResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Queue manager", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of a queue manager to check.", "name", "").String,
 			Required:            true,
 		},
 		"warning_threshold": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Warning threshold", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -83,7 +83,7 @@ var DmQMFileSystemUsageResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: int64default.StaticInt64(75),
 		},
 		"critical_threshold": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Critical threshold", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{

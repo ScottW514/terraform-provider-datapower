@@ -124,4 +124,4 @@ Optional:
 
 Optional:
 
-- `virtual_path` (String) Virtual directory
+- `virtual_path` (String) Specify the directory in the virtual file system of the SFTP server.

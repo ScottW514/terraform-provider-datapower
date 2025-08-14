@@ -48,11 +48,11 @@ var DmWSRRSavedSearchWSDLSourceObjectDefault = map[string]attr.Value{
 var DmWSRRSavedSearchWSDLSourceDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"wsrr_saved_search_subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Saved Search Subscription", "", "wsrrsavedsearchsubscription").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a WSRR saved search subscription", "", "wsrrsavedsearchsubscription").String,
 			Computed:            true,
 		},
 		"wsrr_attachment": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Policy Attachment", "", "policyattachments").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a WS-Policy attachment", "", "policyattachments").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmWSRRSavedSearchWSDLSourceDataSourceSchema = DataSourceSchema.NestedAttribu
 var DmWSRRSavedSearchWSDLSourceResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"wsrr_saved_search_subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Saved Search Subscription", "", "wsrrsavedsearchsubscription").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a WSRR saved search subscription", "", "wsrrsavedsearchsubscription").String,
 			Optional:            true,
 		},
 		"wsrr_attachment": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Policy Attachment", "", "policyattachments").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a WS-Policy attachment", "", "policyattachments").String,
 			Optional:            true,
 		},
 	},

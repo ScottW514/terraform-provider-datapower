@@ -48,11 +48,11 @@ var DmFTPServerVirtualDirectoryObjectDefault = map[string]attr.Value{
 var DmFTPServerVirtualDirectoryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"virtual_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Virtual directory", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in virtual file system where the FTP client can find this directory.", "", "").String,
 			Computed:            true,
 		},
 		"response_directory": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Response directory", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system to store responses.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmFTPServerVirtualDirectoryDataSourceSchema = DataSourceSchema.NestedAttribu
 var DmFTPServerVirtualDirectoryResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"virtual_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Virtual directory", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in virtual file system where the FTP client can find this directory.", "", "").String,
 			Required:            true,
 		},
 		"response_directory": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Response directory", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system to store responses.", "", "").String,
 			Optional:            true,
 		},
 	},

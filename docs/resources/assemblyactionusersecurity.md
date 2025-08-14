@@ -136,11 +136,11 @@ resource "datapower_assemblyactionusersecurity" "test" {
 
 Required:
 
-- `name` (String) Name
+- `name` (String) Specify the display name of the entry.
 
 Optional:
 
-- `description` (String) Description
+- `description` (String) Specify the description of the entry.
 
 
 <a id="nestedatt--dependency_actions"></a>

@@ -2,20 +2,24 @@ name: DmInputEncoding
 model_only: true
 list_item: true
 attributes:
-  - name: InputMatch
-    type: String
-    description: 'Input Match PCRE'
-    cli_alias: input-name
-  - name: Encoding
-    type: String
-    enum:
-      - 'plain'
-      - 'urlencoded'
-      - 'xml'
-      - 'urlencoded-xml'
-      - 'base64'
-      - 'base64-text'
-      - 'base64-xml'
-      - 'json'
-    description: 'Encoding'
-    cli_alias: encoding
+- name: InputMatch
+  type: String
+  description: The PCRE pattern that will be matched against the name of an HTTP form
+    field. If the name matches this PCRE, the associated value will be processed by
+    the rules of the Encoding. If a form field has no name, an empty string is used
+    for the pattern matching.
+  cli_alias: input-name
+- name: Encoding
+  type: String
+  enum:
+  - plain
+  - urlencoded
+  - xml
+  - urlencoded-xml
+  - base64
+  - base64-text
+  - base64-xml
+  - json
+  description: Select how to translate the value of a form field to the contents of
+    the &lt;arg> element in the generated XML.
+  cli_alias: encoding

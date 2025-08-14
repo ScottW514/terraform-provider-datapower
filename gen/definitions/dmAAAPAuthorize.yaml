@@ -1,345 +1,419 @@
 name: DmAAAPAuthorize
 model_only: true
 attributes:
-  - name: AZMethod
-    type: String
-    enum:
-      - 'anyauthenticated'
-      - 'passthrough'
-      - 'tivoli'
-      - 'netegrity'
-      - 'oblix'
-      - 'cleartrust'
-      - 'custom'
-      - 'ldap'
-      - 'saml-authz'
-      - 'saml-attr'
-      - 'use-authen-attr'
-      - 'xacml'
-      - 'xmlfile'
-      - 'zosnss'
-      - 'oauth'
-    required: true
-    default: 'anyauthenticated'
-    description: 'Method'
-    cli_alias: method
-  - name: AZCustomURL
-    type: String
-    description: 'Custom URL'
-    cli_alias: custom-url
-  - name: AZMapURL
-    type: String
-    description: 'AAA information file URL'
-    cli_alias: xmlfile-url
-  - name: AZHost
-    type: String
-    description: 'Host'
-    cli_alias: remote-host
-  - name: AZPort
-    type: Int64
-    default: 0
-    description: 'Port'
-    cli_alias: remote-port
-  - name: AZLDAPGroup
-    type: String
-    description: 'LDAP Group DN'
-    cli_alias: ldap-group-dn
-  - name: AZValcred
-    type: String
-    reference_to: CryptoValCred
-  - name: AZSAMLURL
-    type: String
-    description: 'SAML server URL'
-    cli_alias: saml-server-url
-  - name: AZSAMLType
-    type: String
-    enum:
-      - 'xpath'
-      - 'any'
-      - 'all'
-      - 'any-value'
-      - 'all-values'
-    default: 'any'
-    description: 'SAML match'
-    cli_alias: saml-type
-  - name: AZSAMLXPath
-    type: String
-    description: 'SAML XPath'
-    cli_alias: saml-xpath
-  - name: AZSAMLNameQualifier
-    type: String
-    description: 'SAML NameQualifier'
-    cli_alias: saml-name-qualifier
-  - name: AZCacheAllow
-    type: String
-    enum:
-      - 'absolute'
-      - 'disabled'
-      - 'maximum'
-      - 'minimum'
-    required: true
-    default: 'absolute'
-    description: 'Cache authorization results'
-    cli_alias: cache-type
-  - name: AZCacheTTL
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    default: 3
-    description: 'Cache lifetime'
-    cli_alias: cache-ttl
-  - name: AZNetegrityBaseURI
-    type: String
-    description: 'CA Single Sign-On Base URI'
-    cli_alias: netegrity-base-uri
-  - name: AZNetegrityOpNameExtension
-    type: String
-    description: 'Operation name extension'
-    cli_alias: netegrity-opname-ext
-  - name: AZClearTrustServerURL
-    type: String
-    description: 'ClearTrust server URL'
-    cli_alias: cleartrust-server-url
-  - name: AZSAMLVersion
-    type: String
-    enum:
-      - '2.0'
-      - '1.1'
-      - '1.0'
-    default: '1.1'
-    description: 'SAML version'
-    cli_alias: saml-version
-  - name: AZLDAPLoadBalanceGroup
-    type: String
-    reference_to: LoadBalancerGroup
-    description: 'LDAP load balancer group'
-    cli_alias: ldap-lbgroup
-  - name: AZLDAPBindDN
-    type: String
-    description: 'LDAP bind DN'
-    cli_alias: ldap-bind-dn
-  # DEPRECATED
-  # - name: AZLDAPBindPassword
-  - name: AZLDAPGroupAttribute
-    type: String
-    default: 'member'
-    description: 'LDAP group attribute'
-    cli_alias: ldap-group-attr
-  # DEPRECATED
-  # - name: AZSSLProxyProfile
-  # TODO: Missing API Endpoint
-  # - name: AZNetegrityConfig
-  #   type: String
-  #   reference_to: Reserved117
-  - name: AZLDAPSearchScope
-    type: String
-    enum:
-      - 'subtree'
-      - 'one-level'
-      - 'base'
-    default: 'subtree'
-    description: 'LDAP search scope'
-    cli_alias: ldap-search-scope
-  - name: AZLDAPSearchFilter
-    type: String
-    default: '(objectClass=*)'
-    description: 'LDAP search filter'
-    cli_alias: ldap-search-filter
-  - name: AZXACMLVersion
-    type: String
-    enum:
-      - '2'
-      - '1'
-    default: '2'
-    description: 'XACML version'
-    cli_alias: xacml-version
-  - name: AZXACMLPEPType
-    type: String
-    enum:
-      - 'base'
-      - 'deny-biased'
-      - 'permit-biased'
-    default: 'deny-biased'
-    description: 'PEP type'
-    cli_alias: xacml-pep-type
-  - name: AZXACMLUseOnBoxPDP
-    type: Bool
-    default: true
-    description: 'Use on-box PDP'
-    cli_alias: xacml-use-builtin
-  - name: AZXACMLPDP
-    type: String
-    reference_to: XACMLPDP
-    description: 'Policy decision point'
-    cli_alias: xacml-pdp
-  - name: AZXACMLExternalPDPUrl
-    type: String
-    description: 'URL for external policy decision point'
-    cli_alias: xacml-url
-  - name: AZXACMLBindingMethod
-    type: String
-    enum:
-      - 'dp-pdp'
-      - 'custom'
-    default: 'custom'
-    description: 'XACML binding method'
-    cli_alias: xacml-binding-method
-  - name: AZXACMLBindingObject
-    type: String
-    description: 'XACML binding'
-    cli_alias: xacml-binding-object
-  - name: AZXACMLBindingXSL
-    type: String
-    description: 'Custom processing to bind AAA and XACML'
-    cli_alias: xacml-binding-custom-url
-  - name: AZXACMLCustomObligation
-    type: String
-    description: 'Custom obligation fulfillment processing'
-    cli_alias: xacml-obligation-custom-url
-  - name: AZXACMLUseSAML2
-    type: Bool
-    default: false
-    description: 'PDP requires SAML 2.0'
-    cli_alias: xacml-use-saml2
-  - name: AZTAMServer
-    type: String
-    reference_to: TAM
-    description: 'IBM Security Access Manager client'
-    cli_alias: tam
-  - name: AZTAMDefaultAction
-    type: String
-    enum:
-      - 'T'
-      - 'c'
-      - 'g'
-      - 'm'
-      - 'd'
-      - 'b'
-      - 's'
-      - 'v'
-      - 'a'
-      - 'BypassPOP'
-      - 'tt'
-      - 'r'
-      - 'x'
-      - 'l'
-      - 'N'
-      - 'W'
-      - 'Add'
-      - 'BypassAuthzRule'
-      - '_WebService_i'
-      - '_PDMQ_D'
-      - '_PDMQ_E'
-    default: 'T'
-    description: 'Default action'
-    cli_alias: tam-action-default
-  - name: AZTAMActionResourceMap
-    type: String
-    description: 'Resource-action map'
-    cli_alias: tam-action-map
-  - name: AZXACMLUseSOAP
-    type: Bool
-    default: false
-    description: 'SOAP enveloping'
-    cli_alias: xacml-use-soap
-  - name: AZZOSNSSConfig
-    type: String
-    reference_to: ZosNSSClient
-    description: 'z/OS NSS client configuration'
-    cli_alias: zos-nss-az
-  - name: AZSAFDefaultAction
-    type: String
-    enum:
-      - 'r'
-      - 'u'
-      - 'a'
-      - 'c'
-    default: 'r'
-    description: 'Default action'
-    cli_alias: zos-nss-default-action
-  - name: AZLDAPAttributes
-    type: String
-    description: 'User auxiliary LDAP attributes'
-    cli_alias: az-ldap-attributes
-  - name: AZSkewTime
-    type: Int64
-    default: 0
-    description: 'Skew time'
-    cli_alias: az-skew-time
-  # DEPRECATED
-  # - name: AZOAuthValidationEndpointType
-  # DEPRECATED
-  # - name: AZTFIMEndpoint
-  - name: AZOAuthEnforceScope
-    type: Bool
-    default: false
-    description: 'Enforce scope'
-    cli_alias: az-oauth-enforce-scope
-  - name: AZOAuthExportHeaders
-    type: Bool
-    default: true
-    description: 'Export response attributes'
-    cli_alias: az-oauth-export-headers
-  - name: AZTAMPACReturn
-    type: Bool
-    default: false
-    description: 'Return Privilege Attribute Certificate'
-    cli_alias: tam-pac-return
-  - name: AZTAMPACUse
-    type: Bool
-    default: false
-    description: 'Use Privilege Attribute Certificate'
-    cli_alias: use-tam-pac
-  - name: AZLDAPReadTimeout
-    type: Int64
-    maximum: 86400
-    default: 60
-    description: 'LDAP Read Timeout'
-    cli_alias: ldap-readtimeout
-  - name: AZSSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: AZSSLClientProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
-  - name: AZLDAPBindPasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'LDAP bind password alias'
-    cli_alias: ldap-bind-password-alias
-  - name: AZSMRequestType
-    type: String
-    enum:
-      - 'webagent'
-      - 'webservice'
-    default: 'webagent'
-    description: 'Request type'
-    cli_alias: sm-request-type
-  - name: AZSMCookieFlow
-    dm_type: DmSMFlow
-    description: 'Session cookie flow'
-    cli_alias: sm-cookie-flow
-  - name: AZSMHeaderFlow
-    dm_type: DmSMFlow
-    description: 'CA Single Sign-On header flow'
-    cli_alias: sm-header-flow
-  - name: AZSMCookieAttributes
-    type: String
-    reference_to: CookieAttributePolicy
-    description: 'Cookie attribute policy'
-    cli_alias: cookie-attributes
-  - name: AZCacheControl
-    type: String
-    enum:
-      - 'default'
-      - 'disable-all'
-      - 'disable-ldap-failures'
-    default: 'default'
-    description: 'Authorization caching'
-    cli_alias: cache-control
+- name: AZMethod
+  type: String
+  enum:
+  - anyauthenticated
+  - passthrough
+  - tivoli
+  - netegrity
+  - oblix
+  - cleartrust
+  - custom
+  - ldap
+  - saml-authz
+  - saml-attr
+  - use-authen-attr
+  - xacml
+  - xmlfile
+  - zosnss
+  - oauth
+  required: true
+  default: anyauthenticated
+  description: Specify the authorization method.
+  cli_alias: method
+- name: AZCustomURL
+  type: String
+  description: Specify the location of the stylesheet or GatewayScript file for custom
+    authorization.
+  cli_alias: custom-url
+- name: AZMapURL
+  type: String
+  description: Specify the location of the AAA information file.
+  cli_alias: xmlfile-url
+- name: AZHost
+  type: String
+  description: Specify the host name or IP address of the authorization server.
+  cli_alias: remote-host
+- name: AZPort
+  type: Int64
+  default: 0
+  description: Specify the listening port on the authorization server.
+  cli_alias: remote-port
+- name: AZLDAPGroup
+  type: String
+  description: Specify the DN of the required LDAP group.
+  cli_alias: ldap-group-dn
+- name: AZValcred
+  type: String
+  reference_to: CryptoValCred
+- name: AZSAMLURL
+  type: String
+  description: Specify the URL of the SAML server.
+  cli_alias: saml-server-url
+- name: AZSAMLType
+  type: String
+  enum:
+  - xpath
+  - any
+  - all
+  - any-value
+  - all-values
+  default: any
+  description: Specify how to match SAML attributes and values. The default value
+    is any.
+  cli_alias: saml-type
+- name: AZSAMLXPath
+  type: String
+  description: Specify the XPath expression to run against the SAML statement.
+  cli_alias: saml-xpath
+- name: AZSAMLNameQualifier
+  type: String
+  description: Specifies the value of the <tt>NameQualifier</tt> attribute of the
+    <tt>NameIdentifier</tt> in the generated SAML query. Although the <tt>NameQualifier</tt>
+    attribute is an optional attribute, some SAML implementations require it to be
+    present.
+  cli_alias: saml-name-qualifier
+- name: AZCacheAllow
+  type: String
+  enum:
+  - absolute
+  - disabled
+  - maximum
+  - minimum
+  required: true
+  default: absolute
+  description: Specify how to control the caching of AAA authorization results. The
+    default value is absolute. A protocol TTL is available only with SAML or OAuth
+    with a Federated Identity Manager endpoint. Federated Identity Manager integration
+    is deprecated.
+  cli_alias: cache-type
+- name: AZCacheTTL
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  default: 3
+  description: Specify the duration in seconds to cache authorization decisions. Enter
+    a value in the range 1 - 86400. The default value is 3.
+  cli_alias: cache-ttl
+- name: AZNetegrityBaseURI
+  type: String
+  description: Specify the URI sent to CA Single Sign-On (formerly Netegrity SiteMinder)
+    server. The CA Single Sign-On base URI is combined with the host, port, and CA
+    Single Sign-On operation name extension to form the URL for attempting CA Single
+    Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension
+    form, where NetegrityOpNameExtension is concatenated directly with the operation
+    name.
+  cli_alias: netegrity-base-uri
+- name: AZNetegrityOpNameExtension
+  type: String
+  description: Specify the extension for URI sent to CA Single Sign-On (formerly Netegrity
+    SiteMinder) server. The CA Single Sign-On base URI is combined with the host,
+    port, and CA Single Sign-On operation name extension to form the URL for attempting
+    CA Single Sign-On authentication. The URL is of the http://host:port/NetegrityBaseURI/operationNetegrityOpNameExtension
+    form, where NetegrityOpNameExtension is concatenated directly with the operation
+    name.
+  cli_alias: netegrity-opname-ext
+- name: AZClearTrustServerURL
+  type: String
+  description: Specify the URL to access the ClearTrust server for authorization.
+  cli_alias: cleartrust-server-url
+- name: AZSAMLVersion
+  type: String
+  enum:
+  - '2.0'
+  - '1.1'
+  - '1.0'
+  default: '1.1'
+  description: Specify the version to use for SAML messages. The default value is
+    1.1.
+  cli_alias: saml-version
+- name: AZLDAPLoadBalanceGroup
+  type: String
+  reference_to: LoadBalancerGroup
+  description: Specify the load balancer group that contains the LDAP servers.
+  cli_alias: ldap-lbgroup
+- name: AZLDAPBindDN
+  type: String
+  description: Specify the DN to bind to the LDAP server.
+  cli_alias: ldap-bind-dn
+- name: AZLDAPGroupAttribute
+  type: String
+  default: member
+  description: Specify the attribute name of the LDAP group to check for membership.
+    The authorizing identity must exist as an attribute value in the group.
+  cli_alias: ldap-group-attr
+- name: AZLDAPSearchScope
+  type: String
+  enum:
+  - subtree
+  - one-level
+  - base
+  default: subtree
+  description: Specify the scope of the search relative to the input. The default
+    value is subtree.
+  cli_alias: ldap-search-scope
+- name: AZLDAPSearchFilter
+  type: String
+  default: (objectClass=*)
+  description: Specify the LDAP search filter for the search. The default value is
+    <tt>(objectClass=*)</tt> .
+  cli_alias: ldap-search-filter
+- name: AZXACMLVersion
+  type: String
+  enum:
+  - '2'
+  - '1'
+  default: '2'
+  description: Specify the XACML version for communication between the PDP and the
+    AAA policy. The AAA policy acts as an XACML policy enforcement point (PEP). The
+    default value is 2.0.
+  cli_alias: xacml-version
+- name: AZXACMLPEPType
+  type: String
+  enum:
+  - base
+  - deny-biased
+  - permit-biased
+  default: deny-biased
+  description: Specify how the AAA policy processes the PDP authorization response.
+    The AAA policy acts as an XACML PEP. The default value is deny-based PEP.
+  cli_alias: xacml-pep-type
+- name: AZXACMLUseOnBoxPDP
+  type: Bool
+  default: true
+  description: Specify whether to use the on-box XACML policy decision point (PDP).
+    By default, the AAA policy uses the XACML PDP configuration on the DataPower Gateway.
+  cli_alias: xacml-use-builtin
+- name: AZXACMLPDP
+  type: String
+  reference_to: XACMLPDP
+  description: Specify the XACML policy decision point (PDP) configuration.
+  cli_alias: xacml-pdp
+- name: AZXACMLExternalPDPUrl
+  type: String
+  description: Specify the URL for the external XACML PDP service. The AAA policy
+    sends the authorization request to and receives the authorization response from
+    this service.
+  cli_alias: xacml-url
+- name: AZXACMLBindingMethod
+  type: String
+  enum:
+  - dp-pdp
+  - custom
+  default: custom
+  description: Specify the method to generate the XACML context request. The default
+    value is custom processing.
+  cli_alias: xacml-binding-method
+- name: AZXACMLBindingObject
+  type: String
+  description: XACML binding
+  cli_alias: xacml-binding-object
+- name: AZXACMLBindingXSL
+  type: String
+  description: Specify the location of the stylesheet or GatewayScript file that generates
+    the XACML context request. This file maps the AAA result, input message, or both
+    AAA result and input message to the XACML context request.
+  cli_alias: xacml-binding-custom-url
+- name: AZXACMLCustomObligation
+  type: String
+  description: Specify the location of the stylesheet or GatewayScript file that can
+    fulfill XACML obligations. he file must understand the obligations from the PDP
+    and take the appropriate action to fulfill the obligations that are based on the
+    request context. <ul><li>For fulfilled obligations, the output is &lt; <tt>xsl:value-of
+    select="true()"</tt> />.</li><li>For unfulfilled obligations, the output is &lt;
+    <tt>xsl:value-of select="false()"</tt> />.</li></ul>
+  cli_alias: xacml-obligation-custom-url
+- name: AZXACMLUseSAML2
+  type: Bool
+  default: false
+  description: Specify whether to use SAML2.0 Profile to communicate with the external
+    PDP service. By default, the PEP does not use SAML2.0 Profile. <ul><li>When enabled,
+    the PEP communicates with the external PDP service by using &lt; <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt>
+    > as defined by SAML2.0 Profile. You can combine this setting with SOAP enveloping
+    if <tt>xacml-samlp:XACMLAuthzDecisionQuery</tt> must be wrapped by a SOAP <tt>Body</tt>
+    element.</li><li>When disabled, the PEP does not use SAML2.0 Profile to communicate
+    with the external PDP service.</li></ul>
+  cli_alias: xacml-use-saml2
+- name: AZTAMServer
+  type: String
+  reference_to: TAM
+  description: Specify the IBM Security Access Manager client.
+  cli_alias: tam
+- name: AZTAMDefaultAction
+  type: String
+  enum:
+  - T
+  - c
+  - g
+  - m
+  - d
+  - b
+  - s
+  - v
+  - a
+  - BypassPOP
+  - tt
+  - r
+  - x
+  - l
+  - N
+  - W
+  - Add
+  - BypassAuthzRule
+  - _WebService_i
+  - _PDMQ_D
+  - _PDMQ_E
+  default: T
+  description: Specify the default Access Manager action. The default value is T (traverse).
+  cli_alias: tam-action-default
+- name: AZTAMActionResourceMap
+  type: String
+  description: Specify the location of the XML file that contains the resource-action
+    map. Each entry in the resource-action map defines a PCRE pattern to match the
+    resource, the action to run, and whether to map the action to WebSEAL. This file
+    is in the <tt>local:</tt> or <tt>store:</tt> directory.
+  cli_alias: tam-action-map
+- name: AZXACMLUseSOAP
+  type: Bool
+  default: false
+  description: Specify whether the external PDP requires a SOAP envelope. By default,
+    a SOAP envelope is not required. If the stylesheet or GatewayScript file for custom
+    binding generates the SOAP envelope, retain the default value.
+  cli_alias: xacml-use-soap
+- name: AZZOSNSSConfig
+  type: String
+  reference_to: ZosNSSClient
+  description: Specify the z/OS NSS client for SAF communication.
+  cli_alias: zos-nss-az
+- name: AZSAFDefaultAction
+  type: String
+  enum:
+  - r
+  - u
+  - a
+  - c
+  default: r
+  description: Specify the default action. The default value is r (Read).
+  cli_alias: zos-nss-default-action
+- name: AZLDAPAttributes
+  type: String
+  description: Specify the list of the extra user attributes to retrieve from the
+    LDAP registry. The attributes that are retrieved from the registry and stored
+    in the var://context/ldap/auxiliary-attributes context variable for future use,
+    such as in the AAA postprocessing phase. To specify multiple attributes, use a
+    comma as the delimiter. For example, enter <tt>email, cn, userPassword</tt> to
+    retrieve these attributes from the registry.
+  cli_alias: az-ldap-attributes
+- name: AZSkewTime
+  type: Int64
+  default: 0
+  description: <p>Specify the skew time in seconds. The skew time is the difference
+    between the clock time on the DataPower Gateway and the time on other systems.
+    The default value is 0. When defined, the expiration of the SAML assertion takes
+    the time difference into account.</p><ul><li>For <tt>NotBefore</tt> , validates
+    with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt>
+    , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>
+  cli_alias: az-skew-time
+- name: AZOAuthEnforceScope
+  type: Bool
+  default: false
+  description: Specify how to enforce the scope of the access token. The scope is
+    returned by the server as part of the validation process. By default, the scope
+    is enforced by the resource server. <ul><li>When enabled, the mapped resource
+    is enforced by the DataPower Gateway against the scope.</li><li>When disabled,
+    the remote resource server enforces the scope.</li></ul>
+  cli_alias: az-oauth-enforce-scope
+- name: AZOAuthExportHeaders
+  type: Bool
+  default: true
+  description: Specify whether to export response attributes that Federated Identity
+    Manager might return a set of response headers. AAA processing places the response
+    attributes as input to the postprocessing phase for use in a custom stylesheet
+    or GatewayScript file. To access the node in the postprocessing input, specify
+    <tt>/container/ResponseAttributes</tt> as the XPath expression. By default, all
+    response attributes are exported to HTTP headers.
+  cli_alias: az-oauth-export-headers
+- name: AZTAMPACReturn
+  type: Bool
+  default: false
+  description: <p>Specify whether to return the Access Manager privilege attribute
+    certificate (PAC) token from a successful authorization. You can use the PAC in
+    the postprocessing phase. By default, does not return a PAC token.</p><p>This
+    property is mutually exclusive to the same property in the authentication phase.
+    If you select this property for both authentication and authorization, the setting
+    is automatically cleared for authorization when applied.</p>
+  cli_alias: tam-pac-return
+- name: AZTAMPACUse
+  type: Bool
+  default: false
+  description: <p>Specify whether to use the existing identity or the PAC token for
+    authorization. By default, uses the exiting identity.</p><p>When enabled, use
+    the PAC token that was returned in the authentication or map credentials phase.
+    You can use the PAC token in the postprocessing phase.</p>
+  cli_alias: use-tam-pac
+- name: AZLDAPReadTimeout
+  type: Int64
+  maximum: 86400
+  default: 60
+  description: <p>Specify the duration in seconds to wait for a response from LDAP
+    server before the connection is closed. Enter a value in the range 0 - 86400.
+    The default value is 60. A value of 0 indicates that the connection never times
+    out.</p><p>If you configure an LDAP connection pool and assign it to the AAA policy's
+    XML manager, the AAA policy can use the connection pool. The LDAP read timer of
+    the AAA policy can work with the idle timer of the LDAP connection pool to remove
+    idle connections from the connection pool.</p>
+  cli_alias: ldap-readtimeout
+- name: AZSSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: Specify the TLS profile type to secure connections.
+  cli_alias: ssl-client-type
+- name: AZSSLClientProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: Specify the client profile type to secure connections.
+  cli_alias: ssl-client
+- name: AZLDAPBindPasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: Specify the password alias to bind to the LDAP server.
+  cli_alias: ldap-bind-password-alias
+- name: AZSMRequestType
+  type: String
+  enum:
+  - webagent
+  - webservice
+  default: webagent
+  description: Specify the type of request to make. By default, the request against
+    the CA Single Sign-On web agent.
+  cli_alias: sm-request-type
+- name: AZSMCookieFlow
+  dm_type: DmSMFlow
+  description: Specify which flows to include the authorization session cookie.
+  cli_alias: sm-cookie-flow
+- name: AZSMHeaderFlow
+  dm_type: DmSMFlow
+  description: Specify which flows to include the CA Single Sign-On HTTP headers that
+    are generated during authorization. The CA Single Sign-On HTTP headers has a prefix
+    of <tt>SM_</tt> .
+  cli_alias: sm-header-flow
+- name: AZSMCookieAttributes
+  type: String
+  reference_to: CookieAttributePolicy
+  description: Specify the cookie attribute policy that allows predefined or custom
+    attributes to be included in CA Single Sign-On cookies.
+  cli_alias: cookie-attributes
+- name: AZCacheControl
+  type: String
+  enum:
+  - default
+  - disable-all
+  - disable-ldap-failures
+  default: default
+  description: Specify how to manage the caching of authorization failures. By default,
+    all failures are cached.
+  cli_alias: cache-control

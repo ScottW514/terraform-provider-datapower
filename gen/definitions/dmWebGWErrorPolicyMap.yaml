@@ -2,16 +2,16 @@ name: DmWebGWErrorPolicyMap
 model_only: true
 list_item: true
 attributes:
-  - name: Match
-    type: String
-    reference_to: Matching
-    required: true
-    test_value: '"__default-accept-service-providers__"'
-    description: 'Matching Rule'
-  - name: Action
-    type: String
-    reference_to: MPGWErrorAction
-    required: true
-    test_value: '"AccTest_MPGWErrorAction"'
-    test_bed_value: 'datapower_mpgwerroraction.acc_test.id'
-    description: 'Error Action'
+- name: Match
+  type: String
+  reference_to: Matching
+  required: true
+  test_value: '"__default-accept-service-providers__"'
+  description: Select the matching rule that defines the matching criteria.
+- name: Action
+  type: String
+  reference_to: MPGWErrorAction
+  required: true
+  test_value: '"AccTest_MPGWErrorAction"'
+  test_bed_value: datapower_mpgwerroraction.acc_test.id
+  description: Select the error action that handles the errors and generates responses.

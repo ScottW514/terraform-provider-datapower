@@ -59,7 +59,7 @@ Optional:
 
 Read-Only:
 
-- `hostname` (String) Remote replication host
-- `port` (Number) Remote replication port
+- `hostname` (String) Specify the host name of the other system in the high availability cluster.
+- `port` (Number) Specify the listening port on the other system in the high availability cluster.
   - Range: `1`-`65535`
   - Default value: `1320`

@@ -48,11 +48,11 @@ var DmODRPropertyObjectDefault = map[string]attr.Value{
 var DmODRPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"prop_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "odr-prop-name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a property.", "odr-prop-name", "").String,
 			Computed:            true,
 		},
 		"prop_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "odr-prop-value", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value of a property.", "odr-prop-value", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmODRPropertyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmODRPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"prop_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "odr-prop-name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a property.", "odr-prop-name", "").String,
 			Required:            true,
 		},
 		"prop_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "odr-prop-value", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value of a property.", "odr-prop-value", "").String,
 			Required:            true,
 		},
 	},

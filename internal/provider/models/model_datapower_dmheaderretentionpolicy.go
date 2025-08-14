@@ -48,19 +48,19 @@ var DmHeaderRetentionPolicyObjectDefault = map[string]attr.Value{
 var DmHeaderRetentionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Computed:            true,
 		},
-		"header_retention": GetDmHeaderRetentionBitmapDataSourceSchema("Headers", "", ""),
+		"header_retention": GetDmHeaderRetentionBitmapDataSourceSchema("Specify the headers to retain in outbound traffic.", "", ""),
 	},
 }
 var DmHeaderRetentionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Required:            true,
 		},
-		"header_retention": GetDmHeaderRetentionBitmapResourceSchema("Headers", "", "", false),
+		"header_retention": GetDmHeaderRetentionBitmapResourceSchema("Specify the headers to retain in outbound traffic.", "", "", false),
 	},
 }
 

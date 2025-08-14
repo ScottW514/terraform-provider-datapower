@@ -59,5 +59,5 @@ Optional:
 
 Required:
 
-- `parameter_name` (String) Name
-- `parameter_value` (String) Value
+- `parameter_name` (String) Policy key name formated {policy-domain-ns}name
+- `parameter_value` (String) Value for corresponding policy parameter key.

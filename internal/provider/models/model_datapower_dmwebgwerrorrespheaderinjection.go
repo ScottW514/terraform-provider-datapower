@@ -48,11 +48,11 @@ var DmWebGWErrorRespHeaderInjectionObjectDefault = map[string]attr.Value{
 var DmWebGWErrorRespHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"header_tag": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. The headers are not defined in the original response. The appliance sends the headers to the client.", "", "").String,
 			Computed:            true,
 		},
 		"header_tag_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header name.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmWebGWErrorRespHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAtt
 var DmWebGWErrorRespHeaderInjectionResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"header_tag": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. The headers are not defined in the original response. The appliance sends the headers to the client.", "", "").String,
 			Optional:            true,
 		},
 		"header_tag_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header name.", "", "").String,
 			Required:            true,
 		},
 	},

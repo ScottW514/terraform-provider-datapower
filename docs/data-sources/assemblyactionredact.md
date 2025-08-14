@@ -69,9 +69,9 @@ Optional:
 
 Read-Only:
 
-- `action` (String) Action
+- `action` (String) Specify whether to redact or remove the content.
   - CLI Alias: `action`
   - Choices: `redact`, `remove`
   - Default value: `redact`
-- `path` (String) Path
+- `path` (String) Specify the JSONata path expression to the content.
   - CLI Alias: `path`

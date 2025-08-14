@@ -2,23 +2,26 @@ name: DmWebSphereJMSEndpoint
 model_only: true
 list_item: true
 attributes:
-  - name: Host
-    type: String
-    required: true
-    example: 'localhost'
-    description: 'Host'
-  - name: Port
-    type: Int64
-    required: true
-    example: 8888
-    description: 'Port'
-  - name: Transport
-    type: String
-    enum:
-      - 'TCP'
-      - 'SSL'
-      - 'HTTP'
-      - 'HTTPS'
-    default: 'TCP'
-    required: true
-    description: 'Transport chain'
+- name: Host
+  type: String
+  required: true
+  example: localhost
+  description: Specify the host name or IP address of a bootstrap server.
+- name: Port
+  type: Int64
+  required: true
+  example: 8888
+  description: Specify the listening port number of a bootstrap server.
+- name: Transport
+  type: String
+  enum:
+  - TCP
+  - SSL
+  - HTTP
+  - HTTPS
+  default: TCP
+  required: true
+  description: Specify the predefined transport chain for the bootstrap server. This
+    connection is used to exchange information between the DataPower Gateway and the
+    bootstrap server. By default, uses the predefined <tt>BootstrapBasicMessaging</tt>
+    transport chain.

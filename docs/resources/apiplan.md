@@ -98,29 +98,29 @@ resource "datapower_apiplan" "test" {
 
 Required:
 
-- `burst` (Number) Burst
-- `name` (String) Name
+- `burst` (Number) Indicates the maximum allowed burst rate. The value of 0 indicates no limit. A message is rejected when the burst limit is exceeded.
+- `name` (String) Indicates the name of the burst limit scheme.
 
 Optional:
 
-- `cache_only` (Boolean) Cache only
+- `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the burst limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
-- `dynamic_value` (String) Dynamic Value
-- `interval` (Number) Interval
+- `dynamic_value` (String) Indicates the dynamic value string for the burst limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the burst limit based on parameters other than those defined in the burst limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+- `interval` (Number) Indicates the time interval for the burst limit. Specify a value that is greater than or equal to 1. The default value is 1.
   - Range: `1`-`65535`
   - Default value: `1`
-- `is_client` (Boolean) Is Client
+- `is_client` (Boolean) Indicates whether to apply the burst limit to the client or to an internal component. Client burst limits return a 429 error when exceeded. Non-client burst limits return a 503 error when exceeded. When set to <tt>off</tt> , burst limit information is not included in the response header.
   - Default value: `true`
-- `unit` (String) Unit
+- `unit` (String) Indicates the time unit for the burst limit. The default value is second.
   - Choices: `second`, `minute`
   - Default value: `second`
-- `use_api_name` (Boolean) Use API Name
+- `use_api_name` (Boolean) Indicates whether to use the API name as part of the burst limit key.
   - Default value: `false`
-- `use_app_id` (Boolean) Use Application ID
+- `use_app_id` (Boolean) Indicates whether to use the application ID as part of the burst limit key.
   - Default value: `false`
-- `use_client_id` (Boolean) Use Client ID
+- `use_client_id` (Boolean) Indicates whether to use the client ID as part of the burst limit key.
   - Default value: `false`
-- `weight` (String) Weight expression
+- `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the burst limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
 
 
@@ -129,10 +129,10 @@ Optional:
 
 Required:
 
-- `definition` (String) Definition
+- `definition` (String) Specify the rate limit definition.
   - CLI Alias: `definition`
   - Reference to: `datapower_ratelimitdefinition:id`
-- `short_name` (String) Short name
+- `short_name` (String) Specify a short name for the rate limit definition.
   - CLI Alias: `name`
 
 
@@ -141,27 +141,27 @@ Required:
 
 Required:
 
-- `count` (Number) Count
-- `name` (String) Name
+- `count` (Number) Indicates the maximum count that this limit will allow.
+- `name` (String) Indicates the name of the count limit scheme.
 
 Optional:
 
-- `auto_dec` (Boolean) Auto decrement
+- `auto_dec` (Boolean) Indicates whether to automatically decrement this count limit in each transaction.
   - Default value: `true`
-- `cache_only` (Boolean) Cache only
+- `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the count limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
-- `dynamic_value` (String) Dynamic Value
-- `hard_limit` (Boolean) Enable hard limit
+- `dynamic_value` (String) Indicates the dynamic value string for the count limit, which should contain one or more context variables. The default value is an empty string.
+- `hard_limit` (Boolean) <p>Indicates whether to reject requests when the specified count limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway rejects requests when the limit is exceeded.</p>
   - Default value: `true`
-- `is_client` (Boolean) Is Client
+- `is_client` (Boolean) Indicates whether to apply the count limit to the client or to an internal component. Client count limits return a 429 error when exceeded. Non-client count limits return a 503 error when exceeded. When set to <tt>off</tt> , count limit information is not included in the response header.
   - Default value: `false`
-- `use_api_name` (Boolean) Use API Name
+- `use_api_name` (Boolean) Indicates whether to use the API name as part of the count limit key.
   - Default value: `false`
-- `use_app_id` (Boolean) Use Application ID
+- `use_app_id` (Boolean) Indicates whether to use the application ID as part of the count limit key.
   - Default value: `false`
-- `use_client_id` (Boolean) Use Client ID
+- `use_client_id` (Boolean) Indicates whether to use the client ID as part of the count limit key.
   - Default value: `false`
-- `weight` (String) Weight expression
+- `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the count limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
 
 
@@ -170,10 +170,10 @@ Optional:
 
 Required:
 
-- `definition` (String) Definition
+- `definition` (String) Specify the rate limit definition.
   - CLI Alias: `definition`
   - Reference to: `datapower_ratelimitdefinition:id`
-- `short_name` (String) Short name
+- `short_name` (String) Specify a short name for the rate limit definition.
   - CLI Alias: `name`
 
 
@@ -182,32 +182,32 @@ Required:
 
 Required:
 
-- `name` (String) Name
-- `rate` (Number) Rate
+- `name` (String) Indicates the name of the rate limit scheme.
+- `rate` (Number) Indicates the maximum number of requests that the API Gateway can handle within a time interval. The value of 0 indicates no limit.
   - Range: `0`-`4294967295`
 
 Optional:
 
-- `cache_only` (Boolean) Cache only
+- `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
-- `dynamic_value` (String) Dynamic Value
-- `hard_limit` (Boolean) Enable hard limit
+- `dynamic_value` (String) Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+- `hard_limit` (Boolean) <p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>
   - Default value: `false`
-- `interval` (Number) Interval
+- `interval` (Number) Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.
   - Range: `1`-`65535`
   - Default value: `1`
-- `is_client` (Boolean) Is Client
+- `is_client` (Boolean) Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.
   - Default value: `true`
-- `unit` (String) Unit
+- `unit` (String) Indicates the time unit for the rate limit. The default value is second.
   - Choices: `second`, `minute`, `hour`, `day`, `week`
   - Default value: `second`
-- `use_api_name` (Boolean) Use API Name
+- `use_api_name` (Boolean) Indicates whether to use the API name as part of the rate limit key.
   - Default value: `false`
-- `use_app_id` (Boolean) Use Application ID
+- `use_app_id` (Boolean) Indicates whether to use the application ID as part of the rate limit key.
   - Default value: `false`
-- `use_client_id` (Boolean) Use Client ID
+- `use_client_id` (Boolean) Indicates whether to use the client ID as part of the rate limit key.
   - Default value: `false`
-- `weight` (String) Weight expression
+- `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
 
 
@@ -216,10 +216,10 @@ Optional:
 
 Required:
 
-- `definition` (String) Definition
+- `definition` (String) Specify the rate limit definition.
   - CLI Alias: `definition`
   - Reference to: `datapower_ratelimitdefinition:id`
-- `short_name` (String) Short name
+- `short_name` (String) Specify a short name for the rate limit definition.
   - CLI Alias: `name`
 
 
@@ -228,29 +228,29 @@ Required:
 
 Required:
 
-- `burst` (Number) Burst
-- `name` (String) Name
+- `burst` (Number) Indicates the maximum allowed burst rate. The value of 0 indicates no limit. A message is rejected when the burst limit is exceeded.
+- `name` (String) Indicates the name of the burst limit scheme.
 
 Optional:
 
-- `cache_only` (Boolean) Cache only
+- `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the burst limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
-- `dynamic_value` (String) Dynamic Value
-- `interval` (Number) Interval
+- `dynamic_value` (String) Indicates the dynamic value string for the burst limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the burst limit based on parameters other than those defined in the burst limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+- `interval` (Number) Indicates the time interval for the burst limit. Specify a value that is greater than or equal to 1. The default value is 1.
   - Range: `1`-`65535`
   - Default value: `1`
-- `is_client` (Boolean) Is Client
+- `is_client` (Boolean) Indicates whether to apply the burst limit to the client or to an internal component. Client burst limits return a 429 error when exceeded. Non-client burst limits return a 503 error when exceeded. When set to <tt>off</tt> , burst limit information is not included in the response header.
   - Default value: `true`
-- `unit` (String) Unit
+- `unit` (String) Indicates the time unit for the burst limit. The default value is second.
   - Choices: `second`, `minute`
   - Default value: `second`
-- `use_api_name` (Boolean) Use API Name
+- `use_api_name` (Boolean) Indicates whether to use the API name as part of the burst limit key.
   - Default value: `false`
-- `use_app_id` (Boolean) Use Application ID
+- `use_app_id` (Boolean) Indicates whether to use the application ID as part of the burst limit key.
   - Default value: `false`
-- `use_client_id` (Boolean) Use Client ID
+- `use_client_id` (Boolean) Indicates whether to use the client ID as part of the burst limit key.
   - Default value: `false`
-- `weight` (String) Weight expression
+- `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the burst limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
 
 
@@ -276,30 +276,30 @@ Optional:
 
 Required:
 
-- `name` (String) Name
-- `rate` (Number) Rate
+- `name` (String) Indicates the name of the rate limit scheme.
+- `rate` (Number) Indicates the maximum number of requests that the API Gateway can handle within a time interval. The value of 0 indicates no limit.
   - Range: `0`-`4294967295`
 
 Optional:
 
-- `cache_only` (Boolean) Cache only
+- `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
-- `dynamic_value` (String) Dynamic Value
-- `hard_limit` (Boolean) Enable hard limit
+- `dynamic_value` (String) Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+- `hard_limit` (Boolean) <p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>
   - Default value: `false`
-- `interval` (Number) Interval
+- `interval` (Number) Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.
   - Range: `1`-`65535`
   - Default value: `1`
-- `is_client` (Boolean) Is Client
+- `is_client` (Boolean) Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.
   - Default value: `true`
-- `unit` (String) Unit
+- `unit` (String) Indicates the time unit for the rate limit. The default value is second.
   - Choices: `second`, `minute`, `hour`, `day`, `week`
   - Default value: `second`
-- `use_api_name` (Boolean) Use API Name
+- `use_api_name` (Boolean) Indicates whether to use the API name as part of the rate limit key.
   - Default value: `false`
-- `use_app_id` (Boolean) Use Application ID
+- `use_app_id` (Boolean) Indicates whether to use the application ID as part of the rate limit key.
   - Default value: `false`
-- `use_client_id` (Boolean) Use Client ID
+- `use_client_id` (Boolean) Indicates whether to use the client ID as part of the rate limit key.
   - Default value: `false`
-- `weight` (String) Weight expression
+- `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`

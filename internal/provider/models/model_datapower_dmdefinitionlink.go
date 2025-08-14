@@ -48,11 +48,11 @@ var DmDefinitionLinkObjectDefault = map[string]attr.Value{
 var DmDefinitionLinkDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"short_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Short name", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a short name for the rate limit definition.", "name", "").String,
 			Computed:            true,
 		},
 		"definition": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Definition", "definition", "ratelimitdefinition").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit definition.", "definition", "ratelimitdefinition").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmDefinitionLinkDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmDefinitionLinkResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"short_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Short name", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a short name for the rate limit definition.", "name", "").String,
 			Required:            true,
 		},
 		"definition": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Definition", "definition", "ratelimitdefinition").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit definition.", "definition", "ratelimitdefinition").String,
 			Required:            true,
 		},
 	},

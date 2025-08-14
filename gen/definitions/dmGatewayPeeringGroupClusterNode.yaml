@@ -2,11 +2,12 @@ name: DmGatewayPeeringGroupClusterNode
 model_only: true
 list_item: true
 attributes:
-  - name: Host
-    type: String
-    required: true
-    example: 'localhost'
-    description: 'Address'
-  - name: LocalNodes
-    type: String
-    description: 'Local nodes'
+- name: Host
+  type: String
+  required: true
+  example: localhost
+  description: Specify the local IP address or host alias of the node.
+- name: LocalNodes
+  type: String
+  description: Specify a comma-separated list of the local IP addresses or host aliases
+    of the other nodes that are in the same data center.

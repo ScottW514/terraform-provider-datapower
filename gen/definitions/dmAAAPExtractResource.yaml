@@ -1,16 +1,16 @@
 name: DmAAAPExtractResource
 model_only: true
 attributes:
-  - name: ERBitmap
-    dm_type: DmAAAPERBitmap
-    description: 'Methods'
-    cli_alias: method
-  - name: ERXPath
-    type: String
-    description: 'XPath expression'
-    cli_alias: xpath
-  - name: ERMetadata
-    type: String
-    reference_to: ProcessingMetadata
-    description: 'Processing metadata items'
-    cli_alias: metadata
+- name: ERBitmap
+  dm_type: DmAAAPERBitmap
+  description: Specify the methods to extract resource.
+  cli_alias: method
+- name: ERXPath
+  type: String
+  description: Specify the XPath expression to apply to the incoming message.
+  cli_alias: xpath
+- name: ERMetadata
+  type: String
+  reference_to: ProcessingMetadata
+  description: Specify the name of the configuration for processing metadata.
+  cli_alias: metadata

@@ -70,10 +70,10 @@ Optional:
 
 Required:
 
-- `name` (String) Name
+- `name` (String) Specify the name of the parameter.
   - CLI Alias: `name`
 
 Optional:
 
-- `value` (String) Value
+- `value` (String) Specify the default parameter value as a string. The default value is used when no value is passed in the request. When you specify a JSON value, enter the value as a JSON string. This value is required in this assembly action if no default value is specified in the assembly function.
   - CLI Alias: `value`

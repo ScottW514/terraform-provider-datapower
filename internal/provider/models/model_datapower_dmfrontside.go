@@ -60,19 +60,19 @@ var DmFrontSideObjectDefault = map[string]attr.Value{
 var DmFrontSideDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"local_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local IP Address", "", "").AddDefaultValue("0.0.0.0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The address on which the service listens. The default of 0 indicates that the service is active on all addresses. Click Select Alias to use an alias for this value. Local host aliases help to ease migration tasks between machines.", "", "").AddDefaultValue("0.0.0.0").String,
 			Computed:            true,
 		},
 		"local_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Port", "", "").AddIntegerRange(1, 65535).AddDefaultValue("3000").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the port monitored by the stateful raw XML over TCP service. Enter a value in the range 1 - 65535. The default value is 3000.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("3000").String,
 			Computed:            true,
 		},
 		"use_ssl": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Use TLS for this server. Ensure that the TLS server profile or TLS SNI server profile is configured.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"credential_charset": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Credential Character Set", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The DataPower Gateway transcodes the contents of the authorization header to UTF-8. Defaults to Protocol that is ISO-8859-1, Latin 1.", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
 			Computed:            true,
 		},
 	},
@@ -80,13 +80,13 @@ var DmFrontSideDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmFrontSideResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"local_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local IP Address", "", "").AddDefaultValue("0.0.0.0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The address on which the service listens. The default of 0 indicates that the service is active on all addresses. Click Select Alias to use an alias for this value. Local host aliases help to ease migration tasks between machines.", "", "").AddDefaultValue("0.0.0.0").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("0.0.0.0"),
 		},
 		"local_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Port", "", "").AddIntegerRange(1, 65535).AddDefaultValue("3000").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the port monitored by the stateful raw XML over TCP service. Enter a value in the range 1 - 65535. The default value is 3000.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("3000").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -95,13 +95,13 @@ var DmFrontSideResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: int64default.StaticInt64(3000),
 		},
 		"use_ssl": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Use TLS for this server. Ensure that the TLS server profile or TLS SNI server profile is configured.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"credential_charset": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Credential Character Set", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The DataPower Gateway transcodes the contents of the authorization header to UTF-8. Defaults to Protocol that is ISO-8859-1, Latin 1.", "credential-charset", "").AddStringEnum("protocol", "ascii", "utf8", "big5", "cp1250", "cp1251", "cp1252", "cp1253", "cp1254", "cp1255", "cp1256", "cp1257", "cp1258", "euc_jp", "euc_kr", "gb18030", "gb2312", "iso2022_jp", "iso2022_kr", "iso8859_1", "iso8859_2", "iso8859_4", "iso8859_5", "iso8859_6", "iso8859_7", "iso8859_8", "iso8859_9", "iso8859_15", "sjis", "tis620", "unicode_le").AddDefaultValue("protocol").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

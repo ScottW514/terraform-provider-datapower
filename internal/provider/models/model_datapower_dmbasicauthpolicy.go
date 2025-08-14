@@ -51,15 +51,15 @@ var DmBasicAuthPolicyObjectDefault = map[string]attr.Value{
 var DmBasicAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Computed:            true,
 		},
 		"user_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Username", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for basic authentication.", "", "").String,
 			Computed:            true,
 		},
 		"password_alias": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "", "passwordalias").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias that maps to the password for the username.", "", "passwordalias").String,
 			Computed:            true,
 		},
 	},
@@ -67,15 +67,15 @@ var DmBasicAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmBasicAuthPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Required:            true,
 		},
 		"user_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Username", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for basic authentication.", "", "").String,
 			Required:            true,
 		},
 		"password_alias": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "", "passwordalias").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias that maps to the password for the username.", "", "passwordalias").String,
 			Optional:            true,
 		},
 	},

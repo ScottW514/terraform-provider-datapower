@@ -45,7 +45,7 @@ var DmSFTPServerVirtualDirectoryObjectDefault = map[string]attr.Value{
 var DmSFTPServerVirtualDirectoryDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"virtual_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Virtual directory", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system of the SFTP server.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -53,7 +53,7 @@ var DmSFTPServerVirtualDirectoryDataSourceSchema = DataSourceSchema.NestedAttrib
 var DmSFTPServerVirtualDirectoryResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"virtual_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Virtual directory", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system of the SFTP server.", "", "").String,
 			Optional:            true,
 		},
 	},

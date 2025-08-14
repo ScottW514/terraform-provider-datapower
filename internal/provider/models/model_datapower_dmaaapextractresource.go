@@ -52,13 +52,13 @@ var DmAAAPExtractResourceObjectDefault = map[string]attr.Value{
 var DmAAAPExtractResourceDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
-		"er_bitmap": GetDmAAAPERBitmapDataSourceSchema("Methods", "method", ""),
+		"er_bitmap": GetDmAAAPERBitmapDataSourceSchema("Specify the methods to extract resource.", "method", ""),
 		"erx_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "xpath", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").String,
 			Computed:            true,
 		},
 		"er_metadata": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata items", "metadata", "processingmetadata").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the configuration for processing metadata.", "metadata", "processingmetadata").String,
 			Computed:            true,
 		},
 	},
@@ -70,13 +70,13 @@ var DmAAAPExtractResourceResourceSchema = ResourceSchema.SingleNestedAttribute{
 			DmAAAPExtractResourceObjectDefault,
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
-		"er_bitmap": GetDmAAAPERBitmapResourceSchema("Methods", "method", "", false),
+		"er_bitmap": GetDmAAAPERBitmapResourceSchema("Specify the methods to extract resource.", "method", "", false),
 		"erx_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "xpath", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to apply to the incoming message.", "xpath", "").String,
 			Optional:            true,
 		},
 		"er_metadata": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Processing metadata items", "metadata", "processingmetadata").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the configuration for processing metadata.", "metadata", "processingmetadata").String,
 			Optional:            true,
 		},
 	},

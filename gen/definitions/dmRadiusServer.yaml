@@ -2,19 +2,22 @@ name: DmRadiusServer
 model_only: true
 list_item: true
 attributes:
-  - name: Number
-    type: Int64
-    maximum: 2147483647
-    required: true
-    description: 'Number'
-  - name: Host
-    type: String
-    required: true
-    description: 'Server address'
-  - name: Port
-    type: Int64
-    default: 1812
-    description: 'Server port'
-  - name: Secret
-    type: String
-    description: 'Secret'
+- name: Number
+  type: Int64
+  maximum: 2147483647
+  required: true
+  description: Specify the list position of this RADIUS server within the list of
+    all RADIUS servers known to the client implementation. The lower the number, the
+    more preferred the server.
+- name: Host
+  type: String
+  required: true
+  description: Specify the IP address of the RADIUS server.
+- name: Port
+  type: Int64
+  default: 1812
+  description: Specify the listening port on the RADIUS server.
+- name: Secret
+  type: String
+  description: Specify the password login to the RADIUS server. You must confirm the
+    password for accuracy.

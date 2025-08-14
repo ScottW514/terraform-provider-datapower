@@ -2,22 +2,26 @@ name: DmLogTrigger
 model_only: true
 list_item: true
 attributes:
-  - name: MessageID
-    tf_name: 'message_id'
-    path: 'ID'
-    type: String
-    description: 'Message ID'
-  - name: Expression
-    type: String
-    description: 'Regular expression'
-  - name: OnlyOnce
-    type: Bool
-    default: true
-    description: 'Only one time'
-  - name: StopProcessing
-    type: Bool
-    default: true
-    description: 'Only this trigger'
-  - name: Command
-    type: String
-    description: 'Command'
+- name: MessageID
+  tf_name: message_id
+  path: ID
+  type: String
+  description: Message ID
+- name: Expression
+  type: String
+  description: Specify the regular expression to match against message text as trigger
+    criteria.
+- name: OnlyOnce
+  type: Bool
+  default: true
+  description: Specify whether to run only the first time that trigger criteria is
+    met.
+- name: StopProcessing
+  type: Bool
+  default: true
+  description: Specify whether to not process subsequent rules that match the trigger
+    conditions.
+- name: Command
+  type: String
+  description: Specify the sequence of CLI commands to run when the trigger criteria
+    is met.

@@ -71,5 +71,5 @@ Optional:
 
 Read-Only:
 
-- `header_tag` (String) Header Name
-- `header_tag_value` (String) Header Value
+- `header_tag` (String) Enter the name of the header to inject. The headers are not defined in the original response. The appliance sends the headers to the client.
+- `header_tag_value` (String) Enter the value for the header name.

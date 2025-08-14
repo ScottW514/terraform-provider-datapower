@@ -2,14 +2,17 @@ name: DmACE
 model_only: true
 list_item: true
 attributes:
-  - name: Access
-    type: String
-    enum:
-      - 'allow'
-      - 'deny'
-    required: true
-    description: 'Access'
-  - name: Address
-    type: String
-    required: true
-    description: 'Address range'
+- name: Access
+  type: String
+  enum:
+  - allow
+  - deny
+  required: true
+  description: Specify whether to allow or deny access. <ul><li>When allow, the range
+    of address is granted access to the service.</li><li>When deny, the range of addresses
+    is denied access to the service.</li></ul>
+- name: Address
+  type: String
+  required: true
+  description: Specify the contiguous range of IP addresses that are granted or denied
+    access. Enter the value as an IP address and network mask.

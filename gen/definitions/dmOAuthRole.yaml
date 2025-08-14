@@ -1,11 +1,11 @@
 name: DmOAuthRole
 model_only: true
 attributes:
-  - name: azsvr
-    type: Bool
-    default: false
-    description: 'Authorization and Token Endpoints'
-  - name: rssvr
-    type: Bool
-    default: false
-    description: 'Enforcement Point for Resource Server'
+- name: azsvr
+  type: Bool
+  default: false
+  description: Authorization and Token Endpoints
+- name: rssvr
+  type: Bool
+  default: false
+  description: Enforcement Point for Resource Server

@@ -46,8 +46,8 @@ resource "datapower_sslsnimapping" "test" {
 
 Required:
 
-- `host_name_wildmat` (String) Hostname match
-- `ssl_server` (String) Server profile
+- `host_name_wildmat` (String) Specify the shell-style pattern to match against the hostname.
+- `ssl_server` (String) Specify the TLS server profile to use when a hostname matches the pattern.
   - Reference to: `datapower_sslserverprofile:id`
 
 

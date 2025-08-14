@@ -59,23 +59,23 @@ var DmSchemaValidationObjectDefault = map[string]attr.Value{
 var DmSchemaValidationDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"matching": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL Match", "", "matching").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the matching rule that is applied to candidate XML documents. Documents whose URL conforms to an expression contained in the matching rule are subject to XML schema validation.", "", "matching").String,
 			Computed:            true,
 		},
 		"validation_mode": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Validation Mode", "", "").AddStringEnum("default", "schema", "schema-rewrite", "attribute-rewrite", "dynamic-schema").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the procedure to use to validate a schema.", "", "").AddStringEnum("default", "schema", "schema-rewrite", "attribute-rewrite", "dynamic-schema").String,
 			Computed:            true,
 		},
 		"schema_url": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schema URL", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the schema to use for validation. Used only when the Validation Mode is schema or schema-rewrite.", "", "").String,
 			Computed:            true,
 		},
 		"url_rewrite_policy": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL Rewrite Policy", "", "urlrewritepolicy").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a URL Rewrite Policy from the list. Used only the Validation Mode is attribute-rewrite or schema-rewrite.", "", "urlrewritepolicy").String,
 			Computed:            true,
 		},
 		"dynamic_schema": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Dynamic Schema", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a dynamic schema used to perform document validation regardless of any validation processing instructions contained within the document. Dynamic schemas used Schema Exception Maps or Document Crypto Maps.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -83,26 +83,26 @@ var DmSchemaValidationDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmSchemaValidationResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"matching": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL Match", "", "matching").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the matching rule that is applied to candidate XML documents. Documents whose URL conforms to an expression contained in the matching rule are subject to XML schema validation.", "", "matching").String,
 			Required:            true,
 		},
 		"validation_mode": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Validation Mode", "", "").AddStringEnum("default", "schema", "schema-rewrite", "attribute-rewrite", "dynamic-schema").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the procedure to use to validate a schema.", "", "").AddStringEnum("default", "schema", "schema-rewrite", "attribute-rewrite", "dynamic-schema").String,
 			Required:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("default", "schema", "schema-rewrite", "attribute-rewrite", "dynamic-schema"),
 			},
 		},
 		"schema_url": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schema URL", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the schema to use for validation. Used only when the Validation Mode is schema or schema-rewrite.", "", "").String,
 			Optional:            true,
 		},
 		"url_rewrite_policy": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL Rewrite Policy", "", "urlrewritepolicy").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a URL Rewrite Policy from the list. Used only the Validation Mode is attribute-rewrite or schema-rewrite.", "", "urlrewritepolicy").String,
 			Optional:            true,
 		},
 		"dynamic_schema": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Dynamic Schema", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a dynamic schema used to perform document validation regardless of any validation processing instructions contained within the document. Dynamic schemas used Schema Exception Maps or Document Crypto Maps.", "", "").String,
 			Optional:            true,
 		},
 	},

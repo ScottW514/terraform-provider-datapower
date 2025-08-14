@@ -48,11 +48,11 @@ var DmSoapActionPolicyObjectDefault = map[string]attr.Value{
 var DmSoapActionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Computed:            true,
 		},
 		"soap_action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAPAction", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the HTTP SOAPAction header.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmSoapActionPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmSoapActionPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Required:            true,
 		},
 		"soap_action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAPAction", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the HTTP SOAPAction header.", "", "").String,
 			Required:            true,
 		},
 	},

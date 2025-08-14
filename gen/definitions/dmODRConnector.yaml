@@ -2,15 +2,17 @@ name: DmODRConnector
 model_only: true
 list_item: true
 attributes:
-  - name: DmgrHostname
-    type: String
-    required: true
-    example: 'localhost'
-    description: 'Connector host'
-    cli_alias: dmgr-host
-  - name: DmgrPort
-    type: Int64
-    required: true
-    example: 8888
-    description: 'Connector port'
-    cli_alias: dmgr-port
+- name: DmgrHostname
+  type: String
+  required: true
+  example: localhost
+  description: The host name of the server where the Intelligent management service
+    is enabled.
+  cli_alias: dmgr-host
+- name: DmgrPort
+  type: Int64
+  required: true
+  example: 8888
+  description: The port on the server where the Intelligent management service is
+    enabled.
+  cli_alias: dmgr-port

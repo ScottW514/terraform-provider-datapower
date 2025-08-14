@@ -55,15 +55,15 @@ resource "datapower_assemblylogicoperationswitch" "test" {
 
 Required:
 
-- `execute` (String) Execute
+- `execute` (String) Specify the API rule to run when the case is matched.
 
 Optional:
 
-- `method` (String) HTTP method
+- `method` (String) Specify the HTTP method to match.
   - Choices: `GET`, `POST`, `PUT`, `DELETE`, `HEAD`, `PATCH`, `OPTIONS`, `TRACE`
   - Default value: `GET`
-- `operation_id` (String) Operation ID
-- `path` (String) API path
+- `operation_id` (String) Specify the unique operation ID to match.
+- `path` (String) Specify the relative API path to match.
 
 
 <a id="nestedatt--dependency_actions"></a>

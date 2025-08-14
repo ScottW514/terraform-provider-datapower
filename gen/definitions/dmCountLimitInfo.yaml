@@ -2,18 +2,18 @@ name: DmCountLimitInfo
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    example: 'countlimitinfoname'
-    description: 'Name'
-    cli_alias: name
-  - name: Action
-    type: String
-    enum:
-      - 'inc'
-      - 'dec'
-    default: 'inc'
-    required: true
-    description: 'Action'
-    cli_alias: action
+- name: Name
+  type: String
+  required: true
+  example: countlimitinfoname
+  description: Specify the name of the count limit.
+  cli_alias: name
+- name: Action
+  type: String
+  enum:
+  - inc
+  - dec
+  default: inc
+  required: true
+  description: Specify the action to apply to the count limit.
+  cli_alias: action

@@ -53,11 +53,11 @@ var DmHTTPClientServerVersionDataSourceSchema = DataSourceSchema.SingleNestedAtt
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"front": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Version to Client", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the client-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
 			Computed:            true,
 		},
 		"back": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Version to Server", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
 			Computed:            true,
 		},
 	},
@@ -70,7 +70,7 @@ var DmHTTPClientServerVersionResourceSchema = ResourceSchema.SingleNestedAttribu
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
 		"front": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Version to Client", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the client-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -79,7 +79,7 @@ var DmHTTPClientServerVersionResourceSchema = ResourceSchema.SingleNestedAttribu
 			Default: stringdefault.StaticString("HTTP/1.1"),
 		},
 		"back": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Version to Server", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.", "", "").AddStringEnum("HTTP/1.0", "HTTP/1.1").AddDefaultValue("HTTP/1.1").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

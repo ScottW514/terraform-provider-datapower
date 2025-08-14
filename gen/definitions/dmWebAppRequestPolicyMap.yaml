@@ -2,16 +2,16 @@ name: DmWebAppRequestPolicyMap
 model_only: true
 list_item: true
 attributes:
-  - name: Match
-    type: String
-    reference_to: Matching
-    required: true
-    test_value: '"__default-accept-service-providers__"'
-    description: 'Matching Rule'
-  - name: Rule
-    type: String
-    reference_to: WebAppRequest
-    required: true
-    test_value: '"AccTest_WebAppRequest"'
-    test_bed_value: 'datapower_webapprequest.acc_test.id'
-    description: 'Request Profile'
+- name: Match
+  type: String
+  reference_to: Matching
+  required: true
+  test_value: '"__default-accept-service-providers__"'
+  description: Select the Matching Rule that defines the matching criteria.
+- name: Rule
+  type: String
+  reference_to: WebAppRequest
+  required: true
+  test_value: '"AccTest_WebAppRequest"'
+  test_bed_value: datapower_webapprequest.acc_test.id
+  description: Select the Web Request Profile to run.

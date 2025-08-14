@@ -51,11 +51,11 @@ var DmAssemblyActionRedactObjectDefault = map[string]attr.Value{
 var DmAssemblyActionRedactDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Path", "path", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata path expression to the content.", "path", "").String,
 			Computed:            true,
 		},
 		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "action", "").AddStringEnum("redact", "remove").AddDefaultValue("redact").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to redact or remove the content.", "action", "").AddStringEnum("redact", "remove").AddDefaultValue("redact").String,
 			Computed:            true,
 		},
 	},
@@ -63,11 +63,11 @@ var DmAssemblyActionRedactDataSourceSchema = DataSourceSchema.NestedAttributeObj
 var DmAssemblyActionRedactResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Path", "path", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the JSONata path expression to the content.", "path", "").String,
 			Required:            true,
 		},
 		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "action", "").AddStringEnum("redact", "remove").AddDefaultValue("redact").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to redact or remove the content.", "action", "").AddStringEnum("redact", "remove").AddDefaultValue("redact").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

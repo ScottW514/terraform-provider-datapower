@@ -1,15 +1,15 @@
 name: DmJWTValMethod
 model_only: true
 attributes:
-  - name: decrypt
-    type: Bool
-    default: false
-    description: 'Decrypt'
-  - name: verify
-    type: Bool
-    default: false
-    description: 'Verify'
-  - name: customized
-    type: Bool
-    default: false
-    description: 'Custom processing'
+- name: decrypt
+  type: Bool
+  default: false
+  description: Decrypt the encrypted JWT
+- name: verify
+  type: Bool
+  default: false
+  description: Verify the signed JWT
+- name: customized
+  type: Bool
+  default: false
+  description: Use the custom processing mechanism to validate the JWT

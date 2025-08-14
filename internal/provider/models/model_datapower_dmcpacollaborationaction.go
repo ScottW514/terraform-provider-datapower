@@ -60,23 +60,23 @@ var DmCPACollaborationActionObjectDefault = map[string]attr.Value{
 var DmCPACollaborationActionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action ID", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies an ID for naming the action", "name", "").String,
 			Computed:            true,
 		},
 		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action value", "value", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of Action. For outbound message, the value is used in the Action element of the ebXML Message Header. For inbound transaction, the Action value is used to identify the action binding for processing the incoming message within the Service.", "value", "").String,
 			Computed:            true,
 		},
 		"capability": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Capability", "capability", "").AddStringEnum("cansend", "canreceive").AddDefaultValue("cansend").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of this action binding.", "capability", "").AddStringEnum("cansend", "canreceive").AddDefaultValue("cansend").String,
 			Computed:            true,
 		},
 		"sender_setting": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sender setting", "sender-setting", "b2bcpasendersetting").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "sender-setting", "b2bcpasendersetting").String,
 			Computed:            true,
 		},
 		"receiver_setting": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Receiver setting", "receiver-setting", "b2bcpareceiversetting").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "receiver-setting", "b2bcpareceiversetting").String,
 			Computed:            true,
 		},
 	},
@@ -84,15 +84,15 @@ var DmCPACollaborationActionDataSourceSchema = DataSourceSchema.NestedAttributeO
 var DmCPACollaborationActionResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action ID", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies an ID for naming the action", "name", "").String,
 			Required:            true,
 		},
 		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action value", "value", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of Action. For outbound message, the value is used in the Action element of the ebXML Message Header. For inbound transaction, the Action value is used to identify the action binding for processing the incoming message within the Service.", "value", "").String,
 			Required:            true,
 		},
 		"capability": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Capability", "capability", "").AddStringEnum("cansend", "canreceive").AddDefaultValue("cansend").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of this action binding.", "capability", "").AddStringEnum("cansend", "canreceive").AddDefaultValue("cansend").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -101,11 +101,11 @@ var DmCPACollaborationActionResourceSchema = ResourceSchema.NestedAttributeObjec
 			Default: stringdefault.StaticString("cansend"),
 		},
 		"sender_setting": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sender setting", "sender-setting", "b2bcpasendersetting").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "sender-setting", "b2bcpasendersetting").String,
 			Optional:            true,
 		},
 		"receiver_setting": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Receiver setting", "receiver-setting", "b2bcpareceiversetting").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.", "receiver-setting", "b2bcpareceiversetting").String,
 			Optional:            true,
 		},
 	},

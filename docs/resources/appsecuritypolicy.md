@@ -54,9 +54,9 @@ resource "datapower_appsecuritypolicy" "test" {
 
 Required:
 
-- `match` (String) Matching Rule
+- `match` (String) Select the Matching Rule that defines the matching criteria.
   - Reference to: `datapower_matching:id`
-- `rule` (String) Request Profile
+- `rule` (String) Select the Web Request Profile to run.
   - Reference to: `datapower_webapprequest:id`
 
 
@@ -65,9 +65,9 @@ Required:
 
 Required:
 
-- `match` (String) Matching Rule
+- `match` (String) Select the Matching Rule that defines the matching criteria.
   - Reference to: `datapower_matching:id`
-- `rule` (String) Response Profile
+- `rule` (String) Select the Web Response Profile to run.
   - Reference to: `datapower_webappresponse:id`
 
 
@@ -93,7 +93,7 @@ Optional:
 
 Required:
 
-- `match` (String) Matching Rule
+- `match` (String) Select the Matching Rule that defines the matching criteria.
   - Reference to: `datapower_matching:id`
-- `rule` (String) Processing Rule
+- `rule` (String) Select the Processing Rule to run.
   - Reference to: `datapower_stylepolicyrule:id`

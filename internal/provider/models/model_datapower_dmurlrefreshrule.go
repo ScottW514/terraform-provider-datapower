@@ -55,15 +55,15 @@ var DmURLRefreshRuleObjectDefault = map[string]attr.Value{
 var DmURLRefreshRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"url_map": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL Map", "urlmap", "urlmap").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("URL maps contain one or more shell-style (wildcard) match patterns. Use the values list to select the URL map that supplies the match criteria for the URL Refresh Policy.", "urlmap", "urlmap").String,
 			Computed:            true,
 		},
 		"url_refresh_policy": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Refresh Rule Type", "type", "").AddStringEnum("default", "no-cache", "no-flush", "protocol-specified").AddDefaultValue("default").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to cache a stylesheet that is obtained with a URL refresh operation. The default is default.", "type", "").AddStringEnum("default", "no-cache", "no-flush", "protocol-specified").AddDefaultValue("default").String,
 			Computed:            true,
 		},
 		"url_refresh_interval": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Refresh Interval", "interval", "").AddDefaultValue("0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Not used when the refresh rule type is no-cache, specifies the update frequency for stylesheets that fulfill the match criteria.", "interval", "").AddDefaultValue("0").String,
 			Computed:            true,
 		},
 	},
@@ -71,11 +71,11 @@ var DmURLRefreshRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmURLRefreshRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"url_map": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL Map", "urlmap", "urlmap").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("URL maps contain one or more shell-style (wildcard) match patterns. Use the values list to select the URL map that supplies the match criteria for the URL Refresh Policy.", "urlmap", "urlmap").String,
 			Required:            true,
 		},
 		"url_refresh_policy": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Refresh Rule Type", "type", "").AddStringEnum("default", "no-cache", "no-flush", "protocol-specified").AddDefaultValue("default").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify how to cache a stylesheet that is obtained with a URL refresh operation. The default is default.", "type", "").AddStringEnum("default", "no-cache", "no-flush", "protocol-specified").AddDefaultValue("default").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -84,7 +84,7 @@ var DmURLRefreshRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("default"),
 		},
 		"url_refresh_interval": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Refresh Interval", "interval", "").AddDefaultValue("0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Not used when the refresh rule type is no-cache, specifies the update frequency for stylesheets that fulfill the match criteria.", "interval", "").AddDefaultValue("0").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             int64default.StaticInt64(0),

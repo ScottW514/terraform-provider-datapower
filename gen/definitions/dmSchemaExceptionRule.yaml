@@ -2,16 +2,17 @@ name: DmSchemaExceptionRule
 model_only: true
 list_item: true
 attributes:
-  - name: XPath
-    type: String
-    required: true
-    example: '*'
-    description: 'XPath Expression'
-  - name: ExceptionType
-    type: String
-    enum:
-      - 'AllowEncrypted'
-      - 'RequireEncrypted'
-    required: true
-    default: 'AllowEncrypted'
-    description: 'Type'
+- name: XPath
+  type: String
+  required: true
+  example: '*'
+  description: This is an XPath expression that identifies elements of the Schema
+    document. These are the elements excepted from schema validation.
+- name: ExceptionType
+  type: String
+  enum:
+  - AllowEncrypted
+  - RequireEncrypted
+  required: true
+  default: AllowEncrypted
+  description: Select the Exception type for encryption.

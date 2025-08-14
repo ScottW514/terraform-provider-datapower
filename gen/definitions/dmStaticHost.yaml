@@ -2,14 +2,14 @@ name: DmStaticHost
 model_only: true
 list_item: true
 attributes:
-  - name: Hostname
-    type: String
-    required: true
-    description: 'Hostname'
-  - name: IPAddress
-    type: String
-    required: true
-    description: 'IP address'
-  - name: UserSummary
-    type: String
-    description: 'Comments'
+- name: Hostname
+  type: String
+  required: true
+  description: Specify the hostname of the target host.
+- name: IPAddress
+  type: String
+  required: true
+  description: Specify the IP address for the target host.
+- name: UserSummary
+  type: String
+  description: Specify a brief, descriptive summary for the configuration.

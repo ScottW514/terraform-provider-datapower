@@ -2,425 +2,562 @@ name: DmB2BDestination
 model_only: true
 list_item: true
 attributes:
-  - name: DestName
-    type: String
-    required: true
-    example: 'b2bdestinationname'
-    description: 'Destination name'
-    cli_alias: name
-  - name: DestURL
-    type: String
-    required: true
-    example: 'https://localhost'
-    description: 'Destination URL'
-    cli_alias: dest-url
-  - name: EnabledDocType
-    dm_type: DmB2BEnabledDocType
-    default: 'EnableXML+EnableX12+EnableEDIFACT+EnableBinary'
-    description: 'Enabled document type'
-    cli_alias: enabled-doc-type
-  - name: SMTPServerConnection
-    type: String
-    reference_to: SMTPServerConnection
-    default: 'default'
-    description: 'SMTP server connection'
-    cli_alias: smtp-server-connection
-  - name: EmailAddress
-    type: String
-    description: 'Email address'
-    cli_alias: email-address
-  - name: SSHClientConnection
-    type: String
-    reference_to: SSHClientProfile
-    description: 'SSH client connection'
-    cli_alias: ssh-client-connection
-  - name: UseUniqueFilenames
-    type: Bool
-    default: false
-    description: 'Use unique file names'
-    cli_alias: use-unique-filenames
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: OverrideTimeout
-    type: Int64
-    minimum: 3
-    maximum: 7200
-    default: 300
-    description: 'Connection timeout'
-    cli_alias: timeout
-  - name: EnableFTPSettings
-    type: Bool
-    default: false
-    description: 'Enable advanced AS3/FTP settings'
-    cli_alias: enable-ftp-settings
-  - name: UserName
-    type: String
-    description: 'Username'
-    cli_alias: username
-  # DEPRECATED
-  # - name: Password
-  - name: PasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password alias'
-    cli_alias: password-alias
-  - name: EBMSMPCAuthMethod
-    type: String
-    enum:
-      - 'username-token'
-      - 'cert'
-    default: 'username-token'
-    description: 'MPC authentication method'
-    cli_alias: embs-mpc-auth-method
-  - name: UserNameToken
-    type: String
-    description: 'Username token'
-    cli_alias: username-token
-  # DEPRECATED
-  # - name: UserNameTokenPassword
-  - name: UserNameTokenPasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Username token password alias'
-    cli_alias: username-token-password-alias
-  - name: EBMSMPCVerifyValCred
-    type: String
-    reference_to: CryptoValCred
-    description: 'MPC validation credentials'
-    cli_alias: ebms-mpc-verify-valcred
-  - name: Passive
-    type: String
-    enum:
-      - 'pasv-off'
-      - 'pasv-opt'
-      - 'pasv-req'
-    default: 'pasv-req'
-    description: 'Passive mode'
-    cli_alias: ftp-passive
-  - name: AuthTLS
-    type: String
-    enum:
-      - 'auth-off'
-      - 'auth-tls-opt'
-      - 'auth-tls-req'
-      - 'auth-tls-imp'
-    default: 'auth-off'
-    description: 'Encrypt command connection'
-    cli_alias: ftp-auth-tls
-  - name: UseCCC
-    type: String
-    enum:
-      - 'ccc-off'
-      - 'ccc-opt'
-      - 'ccc-req'
-    default: 'ccc-off'
-    description: 'Stop command encryption after authentication'
-    cli_alias: ftp-use-ccc
-  - name: EncryptData
-    type: String
-    enum:
-      - 'enc-data-off'
-      - 'enc-data-opt'
-      - 'enc-data-req'
-    default: 'enc-data-off'
-    description: 'Encrypt file transfers'
-    cli_alias: ftp-encrypt-data
-  - name: DataType
-    type: String
-    enum:
-      - 'ascii'
-      - 'binary'
-    default: 'binary'
-    description: 'Data type'
-    cli_alias: ftp-data-type
-  - name: SlashSTOU
-    type: String
-    enum:
-      - 'slash-stou-off'
-      - 'slash-stou-on'
-    default: 'slash-stou-on'
-    description: 'Write unique filename if trailing slash'
-    cli_alias: ftp-slash-stou
-  - name: QuotedCommands
-    type: String
-    reference_to: FTPQuoteCommands
-    description: 'Quoted commands'
-    cli_alias: ftp-quoted-commands
-  - name: SizeCheck
-    type: String
-    enum:
-      - 'size-check-optional'
-      - 'size-check-disabled'
-    default: 'size-check-optional'
-    description: 'Size check'
-    cli_alias: ftp-size-check
-  - name: BinaryTransferMode
-    type: String
-    enum:
-      - 'auto-detect'
-      - 'enforce'
-    default: 'auto-detect'
-    description: 'Binary transfer'
-    cli_alias: binary-transfer-mode
-  - name: ASCompress
-    type: Bool
-    default: false
-    description: 'Compress messages'
-    cli_alias: as-compress
-  - name: ASCompressBeforeSign
-    type: Bool
-    default: false
-    description: 'Compress before sign'
-    cli_alias: as-compress-before-sign
-  - name: ASSendUnsigned
-    type: Bool
-    default: false
-    description: 'Send messages unsigned'
-    cli_alias: as-send-unsigned
-  - name: ASEncrypt
-    type: Bool
-    default: false
-    description: 'Encrypt messages'
-    cli_alias: as-encrypt
-  - name: ASEncryptCert
-    type: String
-    reference_to: CryptoCertificate
-    description: 'Encryption certificate'
-    cli_alias: as-encrypt-cert
-  - name: ASMDNRequest
-    type: Bool
-    default: false
-    description: 'Request MDN'
-    cli_alias: as-mdn-request
-  - name: ASMDNRequestAsync
-    type: Bool
-    default: false
-    description: 'Request asynchronous MDN'
-    cli_alias: as-mdn-request-async
-  - name: AS1MDNRedirectEmail
-    type: String
-    description: 'AS1 MDN redirection E-mail'
-    cli_alias: as1-mdn-email
-  - name: AS2MDNRedirectURL
-    type: String
-    description: 'AS2 MDN redirection URL'
-    cli_alias: as2-mdn-url
-  - name: AS3MDNRedirectURL
-    type: String
-    description: 'AS3 MDN redirection URL'
-    cli_alias: as3-mdn-url
-  - name: ASMDNRequestSigned
-    type: Bool
-    default: false
-    description: 'Request signed MDN'
-    cli_alias: as-mdn-request-signed
-  - name: Retransmit
-    type: Bool
-    default: false
-    description: 'Attempt message retransmit'
-    cli_alias: retransmit
-  - name: ACKTime
-    type: Int64
-    minimum: 1
-    maximum: 3600
-    default: 1800
-    description: 'Time to acknowledge'
-    cli_alias: ack-time
-  - name: MaxResends
-    type: Int64
-    minimum: 1
-    maximum: 30
-    default: 3
-    description: 'Retransmit attempts'
-    cli_alias: max-resends
-  - name: ASEncryptAlg
-    type: String
-    enum:
-      - '3des'
-      - 'des'
-      - 'rc2-128'
-      - 'rc2-64'
-      - 'rc2-40'
-      - 'aes-128'
-      - 'aes-192'
-      - 'aes-256'
-    default: '3des'
-    description: 'Encryption algorithm'
-    cli_alias: as-encrypt-alg
-  - name: ASMDNRequestSignedAlgs
-    type: String
-    default: 'sha1,md5'
-    description: 'Request MDN signing algorithms'
-    cli_alias: as-mdn-request-signed-algs
-  - name: EBMSCpaId
-    type: String
-    description: 'CPA ID'
-    cli_alias: ebms-cpa-id
-  - name: EBMSService
-    type: String
-    description: 'Service'
-    cli_alias: ebms-service
-  - name: EBMSServiceType
-    type: String
-    description: 'Service type'
-    cli_alias: ebms-service-type
-  - name: EBMSAction
-    type: String
-    description: 'Action'
-    cli_alias: ebms-action
-  - name: EBMSSendUnsigned
-    type: Bool
-    default: false
-    description: 'Send messages unsigned'
-    cli_alias: ebms-send-unsigned
-  - name: EBMSEncrypt
-    type: Bool
-    default: false
-    description: 'Encrypt messages'
-    cli_alias: ebms-encrypt
-  - name: EBMSEncryptCert
-    type: String
-    reference_to: CryptoCertificate
-    description: 'Encryption certificate'
-    cli_alias: ebms-encrypt-cert
-  - name: EBMSEncryptAlg
-    type: String
-    enum:
-      - 'http://www.w3.org/2001/04/xmlenc#tripledes-cbc'
-      - 'http://www.w3.org/2001/04/xmlenc#aes128-cbc'
-      - 'http://www.w3.org/2001/04/xmlenc#aes192-cbc'
-      - 'http://www.w3.org/2001/04/xmlenc#aes256-cbc'
-      - 'http://www.w3.org/2009/xmlenc11#aes128-gcm'
-      - 'http://www.w3.org/2009/xmlenc11#aes192-gcm'
-      - 'http://www.w3.org/2009/xmlenc11#aes256-gcm'
-    default: 'http://www.w3.org/2001/04/xmlenc#tripledes-cbc'
-    description: 'Encryption algorithm'
-    cli_alias: ebms-encrypt-alg
-  - name: EBMSKeyEncryptAlg
-    type: String
-    enum:
-      - 'http://www.w3.org/2001/04/xmlenc#rsa-1_5'
-      - 'http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p'
-      - 'http://www.w3.org/2009/xmlenc11#rsa-oaep'
-    default: 'http://www.w3.org/2001/04/xmlenc#rsa-1_5'
-    description: 'Asymmetric key encryption algorithm'
-    cli_alias: ebms-key-encrypt-alg
-  - name: EBMSDuplicateEliminationRequest
-    type: Bool
-    default: true
-    description: 'Request duplicate elimination'
-    cli_alias: ebms-duplicate-elimination-request
-  - name: EBMSAckRequest
-    type: Bool
-    default: false
-    description: 'Request acknowledgment'
-    cli_alias: ebms-ack-request
-  - name: EBMSAckRequestSigned
-    type: Bool
-    default: false
-    description: 'Request signed acknowledgment'
-    cli_alias: ebms-ack-request-signed
-  - name: EBMSSyncReplyMode
-    type: String
-    enum:
-      - 'mshSignalsOnly'
-      - 'none'
-    default: 'none'
-    description: 'SyncReply mode'
-    cli_alias: ebms-syncreply-mode
-  - name: EBMSRetry
-    type: Bool
-    default: false
-    description: 'Attempt message retransmit'
-    cli_alias: ebms-retry
-  - name: EBMSMaxRetries
-    type: Int64
-    minimum: 1
-    maximum: 30
-    default: 3
-    description: 'Max retransmit attempts'
-    cli_alias: ebms-max-retries
-  - name: EBMSRetryInterval
-    type: Int64
-    minimum: 1
-    maximum: 3600
-    default: 1800
-    description: 'Retry interval'
-    cli_alias: ebms-retry-interval
-  - name: EBMSIncludeTimeToLive
-    type: Bool
-    default: true
-    description: 'Include TimeToLive element'
-    cli_alias: ebms-include-time-to-live
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
-  - name: EBMSMessageExchangePattern
-    type: String
-    enum:
-      - 'one-way-push'
-      - 'one-way-pull'
-    default: 'one-way-push'
-    description: 'Message exchange pattern'
-    cli_alias: ebms-mep
-  - name: EBMSMessagePartitionChannel
-    type: String
-    description: 'Message partition channel'
-    cli_alias: ebms-mpc
-  - name: EBMSAgreementRef
-    type: String
-    description: 'PMode AgreementRef'
-    cli_alias: ebms-agreementref
-  - name: EBMSPMode
-    type: String
-    description: 'PMode ID'
-    cli_alias: ebms-pmode
-  - name: EBMSOutboundRequestReceipt
-    type: Bool
-    default: false
-    description: 'Request receipt'
-    cli_alias: ebms-outbound-request-receipt
-  - name: EBMSOutboundRequestSignedReceipt
-    type: Bool
-    default: false
-    description: 'Request signed receipt'
-    cli_alias: ebms-outbound-request-signed-receipt
-  - name: EBMSOutboundReceiptReplyPattern
-    type: String
-    enum:
-      - 'Response'
-      - 'Callback'
-    default: 'Response'
-    description: 'Requested receipt reply pattern'
-    cli_alias: ebms-outbound-receipt-reply-pattern
-  - name: EBMSOutboundReceptionAwarenessNotification
-    type: Bool
-    default: false
-    description: 'Reception awareness error notification'
-    cli_alias: ebms-reception-awareness-notification
-  - name: EBMSOutboundReceptionAwarenessTimeout
-    type: Int64
-    minimum: 3
-    maximum: 7200
-    default: 300
-    description: 'Reception awareness timeout'
-    cli_alias: ebms-reception-awareness-timeout
-  - name: EBMSCompress
-    type: Bool
-    default: false
-    description: 'Compress messages'
-    cli_alias: ebms-compress
-  - name: EBMSSOAPBody
-    type: Bool
-    default: false
-    description: 'Messages in SOAP Body'
-    cli_alias: ebms-soapbody
+- name: DestName
+  type: String
+  required: true
+  example: b2bdestinationname
+  description: Specify the name to identify this destination in the profile.
+  cli_alias: name
+- name: DestURL
+  type: String
+  required: true
+  example: https://localhost
+  description: Specify the URL for the destination. The URL is parsed to determine
+    the protocol. For load distribution, specify the name of the load balancer instead
+    of the address-port pair. <ul><li>If the URL starts with as1:// or dpsmtp://,
+    the service uses the ESMTP protocol. These protocols require an SMTP server connection
+    and email address. Specify the URL in one of the following formats. <ul><li><tt>as1://mailExchange[:port][/queryParameters]</tt></li><li><tt>dpsmtp://mailExchange[:port][/queryParameters]</tt></li></ul></li><li>If
+    the URL starts with as2://, ebms2://, ebms3://, or http://, the service uses the
+    HTTP protocol. Specify the URL in the <tt>hostname:port/uri</tt> format.</li><li>If
+    the URL starts with as2s://, ebms2s://, ebms3s://, or https://, the service uses
+    the HTTPS protocol. Specify the URL in the <tt>hostname:port/uri</tt> format.</li><li>If
+    the URL starts with as3:// or ftp://, the service uses the FTP protocol. <ul><li>For
+    an absolute path to the root directory, specify the URL in the <tt>ftp://user:password@host/%2Fpath</tt>
+    format. %2F is the URL encoding of a forward slash.</li><li>For a relative path
+    to the login directory of the user, specify the URL in the <tt>ftp://user:password@host:port/path</tt>
+    format.</li></ul></li><li>If the URL starts with sftp://, the service uses the
+    SSH FTP protocol. <ul><li>For an absolute path to the root directory, specify
+    the URL in the <tt>sftp://host:port/path</tt> format.</li><li>For a relative path
+    to the login directory of the user, specify the URL in the <tt>sftp://host:port/~/path</tt>
+    format.</li></ul></li><li>If the URL starts with dpnfs://, the service uses the
+    NFS protocol. <ul><li>For static mounts, specify the URL in the <tt>dpnfs://MountName</tt>
+    format, where <tt>MountName</tt> is the name of an NFS mount.</li><li>For dynamic
+    mounts, specify the URL in the <tt>dpnfs://host</tt> or <tt>dpnfs://host/path</tt>
+    format.</li></ul></li><li>If the URL starts with dpims:// or dpimsssl://, the
+    service uses the IMS protocol. Specify the URL in one of the following formats.
+    <ul><li><tt>dpims://ConnectObject/?parameters</tt></li><li><tt>dpimsssl://ConnectObject/?parameters</tt></li></ul></li><li>If
+    the URL starts with dpmq://, the service uses the IBM MQ protocol. The queue manager
+    must exist in current domain. <ul><li>To send a message, specify the URL in the
+    <tt>dpmq://QueueManager/URI?RequestQueue=requestQueue;queryParameters</tt> format.</li><li>To
+    retrieve a message, specify the URL in the <tt>dpmq://QueueManager/URI?ReplyQueue=replyQueue;queryParameters</tt>
+    format.</li></ul><p>If the URL starts with mq://, the protocol is for dynamic
+    routing.</p></li><li>If the URL starts with dpmqfte://, the service uses the IBM
+    MQ FTE protocol. The queue manager must exist in current domain. <ul><li>To send
+    a message, specify the URL in the <tt>dpmqfte://QueueManager/?RequestQueue=request_queue_name;queryParameters</tt>
+    format.</li><li>To retrieve a message, specify the URL in the <tt>dpmqfte://QueueManager/?ReplyQueue=reply_queue_name;queryParameters</tt>
+    format.</li></ul><p>If the URL starts with mqfte://, the protocol is for dynamic
+    routing.</p></li><li>If the URL starts with dptibems://, the service uses the
+    TIBCO EMS protocol. The server must exist. <ul><li>To send a message, specify
+    the URL in the <tt>dptibems://Server/?RequestQueue=queue;RequestReply=queue;query-parameters</tt>
+    format.</li><li>To retrieve a message, specify the URL in the <tt>dptibems://Server/?ReplyQueue=queue;query-parameters</tt>
+    format.</li></ul><p>If the URL starts with tibems://, the protocol is for dynamic
+    routing.</p></li><li>If the URL starts with dpwasjms://, the service uses the
+    WebSphere JMS protocol. The server must exist. <ul><li>To send a message to a
+    request queue, specify the URL in the <tt>dpwasjms://Server/?RequestQueue=queue;RequestReply=queue;query-parameters</tt>
+    format.</li><li>To send a message to a request topic space, specify the URL in
+    the <tt>dpwasjms://Server/?RequestTopicSpace=topic-space;RequestReply=queue;query-parameters</tt>
+    format.</li><li>To retrieve a message from a reply queue, specify the URL in the
+    <tt>dpwasjms://Server/?ReplyQueue=queue;query-parameters</tt> format.</li><li>To
+    retrieve a message from a reply topic space, specify the URL in the <tt>dpwasjms://Server/?ReplyTopicSpace=topic-space;query-parameters</tt>
+    format.</li></ul></li></ul>
+  cli_alias: dest-url
+- name: EnabledDocType
+  dm_type: DmB2BEnabledDocType
+  default: EnableXML+EnableX12+EnableEDIFACT+EnableBinary
+  description: Specify the document types to support.
+  cli_alias: enabled-doc-type
+- name: SMTPServerConnection
+  type: String
+  reference_to: SMTPServerConnection
+  default: default
+  description: Specify the SMTP server connection to send email messages. By default,
+    the gateway uses the default SMTP server connection.
+  cli_alias: smtp-server-connection
+- name: EmailAddress
+  type: String
+  description: Specify the destination email address for messages sent to this partner.
+  cli_alias: email-address
+- name: SSHClientConnection
+  type: String
+  reference_to: SSHClientProfile
+  description: Specify the SSH profile for SSH client connections and authentication.
+  cli_alias: ssh-client-connection
+- name: UseUniqueFilenames
+  type: Bool
+  default: false
+  description: Specify whether to generate a unique file name for puts to a remote
+    directory.
+  cli_alias: use-unique-filenames
+- name: OverrideTimeout
+  type: Int64
+  minimum: 3
+  maximum: 7200
+  default: 300
+  description: Specify the duration to maintain an idle connection in seconds. Enter
+    a value in the range 3 - 7200. The default value is 300.
+  cli_alias: timeout
+- name: EnableFTPSettings
+  type: Bool
+  default: false
+  description: Specify whether to override the FTP client policy. This policy is defined
+    in user agent of the XML manager for the B2B gateway. <ul><li>When enabled, define
+    the overrides with the advanced AS3 or FTP settings.</li><li>When disabled, uses
+    the original FTP client policy.</li></ul>
+  cli_alias: enable-ftp-settings
+- name: UserName
+  type: String
+  description: Specify the username to override in the basic authentication policy
+    of the user agent.
+  cli_alias: username
+- name: PasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: Specify the password alias to override in the basic authentication
+    policy of the user agent.
+  cli_alias: password-alias
+- name: EBMSMPCAuthMethod
+  type: String
+  enum:
+  - username-token
+  - cert
+  default: username-token
+  description: Specify how the MPC authenticates the incoming pull requests. By default,
+    the MPC authenticates requests through username token.
+  cli_alias: embs-mpc-auth-method
+- name: UserNameToken
+  type: String
+  description: For ebMS3, the WS-Security UsernameToken authorizes received messages.
+    Enter the username for the wsse:UsernameToken element to package in the SOAP header
+    of the message to send. <ul><li>For one-way push exchange pattern, specify the
+    username token to package in messages to send.</li><li>For one-way pull exchange
+    pattern outbound messages, when the MPC authentication method is username token,
+    specify the username to store messages in the MPC.</li><li>For one-way pull exchange
+    pattern inbound messages, specify the username token to package in pull requests.</li></ul>
+  cli_alias: username-token
+- name: UserNameTokenPasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: Specify the password alias of the username for the wsse:UsernameToken
+    element.
+  cli_alias: username-token-password-alias
+- name: EBMSMPCVerifyValCred
+  type: String
+  reference_to: CryptoValCred
+  description: When the MPC authentication method is validation credentials, specify
+    the certificate to associate with messages that are submitted to the MPC.
+  cli_alias: ebms-mpc-verify-valcred
+- name: Passive
+  type: String
+  enum:
+  - pasv-off
+  - pasv-opt
+  - pasv-req
+  default: pasv-req
+  description: Specify the use of FTP passive mode with the FTP <tt>PASV</tt> command.
+  cli_alias: ftp-passive
+- name: AuthTLS
+  type: String
+  enum:
+  - auth-off
+  - auth-tls-opt
+  - auth-tls-req
+  - auth-tls-imp
+  default: auth-off
+  description: Specify the use of TLS to secure connections with the FTP <tt>AUTH
+    TLS</tt> command.
+  cli_alias: ftp-auth-tls
+- name: UseCCC
+  type: String
+  enum:
+  - ccc-off
+  - ccc-opt
+  - ccc-req
+  default: ccc-off
+  description: Specify the use of command encryption after authentication with the
+    FTP <tt>CCC</tt> command.
+  cli_alias: ftp-use-ccc
+- name: EncryptData
+  type: String
+  enum:
+  - enc-data-off
+  - enc-data-opt
+  - enc-data-req
+  default: enc-data-off
+  description: Specify the encryption of file transfers with the FTP <tt>PROT P</tt>
+    command.
+  cli_alias: ftp-encrypt-data
+- name: DataType
+  type: String
+  enum:
+  - ascii
+  - binary
+  default: binary
+  description: Specify the data type of file transfers.
+  cli_alias: ftp-data-type
+- name: SlashSTOU
+  type: String
+  enum:
+  - slash-stou-off
+  - slash-stou-on
+  default: slash-stou-on
+  description: Specify how to manage unique files when the name contains a trailing
+    slash with either the FTP <tt>STOU</tt> or <tt>STOR</tt> command. Some FTP servers
+    do not support the <tt>STOU</tt> command.
+  cli_alias: ftp-slash-stou
+- name: QuotedCommands
+  type: String
+  reference_to: FTPQuoteCommands
+  description: Specify the FTP quoted commands list that defines the command to send
+    to the FTP server. before each <tt>STOU</tt> , <tt>STOR</tt> , or <tt>RETR</tt>
+    command. The commands in the list cannot be data-transfer related commands.
+  cli_alias: ftp-quoted-commands
+- name: SizeCheck
+  type: String
+  enum:
+  - size-check-optional
+  - size-check-disabled
+  default: size-check-optional
+  description: Specify whether to check the size of file after transfer with the FTP
+    <tt>SIZE</tt> command. Some FTP servers, particularly vsftpd in the default configuration,
+    provide inaccurate responses for files transferred in ASCII mode. If you get such
+    errors, disable this feature or reconfigure vsftpd.
+  cli_alias: ftp-size-check
+- name: BinaryTransferMode
+  type: String
+  enum:
+  - auto-detect
+  - enforce
+  default: auto-detect
+  description: Specify whether to transfer the message payload in binary mode.
+  cli_alias: binary-transfer-mode
+- name: ASCompress
+  type: Bool
+  default: false
+  description: Specify whether to compress the body of outbound AS messages. The default
+    behavior is disabled.
+  cli_alias: as-compress
+- name: ASCompressBeforeSign
+  type: Bool
+  default: false
+  description: Specify whether to compress the body of outbound AS messages before
+    signing. The default behavior is disabled. <ul><li>If enabled, compress the message
+    body before signing.</li><li>If disabled, sign the message before compressing
+    the message body.</li></ul>
+  cli_alias: as-compress-before-sign
+- name: ASSendUnsigned
+  type: Bool
+  default: false
+  description: Specify whether to override the signing of messages to this destination.
+    Whether to sign outbound message is part of the configuration of the internal
+    partner. This property cannot be used to cause a message to be signed. The default
+    behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled,
+    sign messages when the sender has signing credentials.</li></ul>
+  cli_alias: as-send-unsigned
+- name: ASEncrypt
+  type: Bool
+  default: false
+  description: Specify whether to encrypt the body of outgoing AS messages. The default
+    behavior is disabled.
+  cli_alias: as-encrypt
+- name: ASEncryptCert
+  type: String
+  reference_to: CryptoCertificate
+  description: Specify the certificate to encrypt outbound AS messages. Use the name
+    of a certificate.
+  cli_alias: as-encrypt-cert
+- name: ASMDNRequest
+  type: Bool
+  default: false
+  description: Specify whether to request an MDN for outbound AS messages. The default
+    behavior is disabled.
+  cli_alias: as-mdn-request
+- name: ASMDNRequestAsync
+  type: Bool
+  default: false
+  description: Specify whether the MDN request for outbound AS messages is asynchronous.
+    The default behavior is disabled. <ul><li>If enabled, the MDN request is asynchronous</li><li>If
+    disabled, the MDN request is synchronous</li></ul>
+  cli_alias: as-mdn-request-async
+- name: AS1MDNRedirectEmail
+  type: String
+  description: Specify the redirection email address for the MDN to outbound AS1 messages.
+    The partner that receives the outbound AS1 message sends the MDN to this email
+    address. When blank, the redirection email in the <tt>From</tt> address of the
+    outgoing message (the default email address of the sending internal partner).
+  cli_alias: as1-mdn-email
+- name: AS2MDNRedirectURL
+  type: String
+  description: Specify the redirection URL for the MDN to outbound AS2 messages.
+  cli_alias: as2-mdn-url
+- name: AS3MDNRedirectURL
+  type: String
+  description: Specify the redirection URL for the MDN to outbound AS3 messages.
+  cli_alias: as3-mdn-url
+- name: ASMDNRequestSigned
+  type: Bool
+  default: false
+  description: Specify whether to request a signed MDN instead of an unsigned one.
+    The default behavior is an unsigned one.
+  cli_alias: as-mdn-request-signed
+- name: Retransmit
+  type: Bool
+  default: false
+  description: Specify whether to retransmit messages. The default behavior is off.
+  cli_alias: retransmit
+- name: ACKTime
+  type: Int64
+  minimum: 1
+  maximum: 3600
+  default: 1800
+  description: Specify the duration in seconds to wait for the acknowledgment before
+    a message is retransmitted. Enter a value in the range 1 - 3600. The default value
+    is 1800.
+  cli_alias: ack-time
+- name: MaxResends
+  type: Int64
+  minimum: 1
+  maximum: 30
+  default: 3
+  description: Specify the number of attempts to retransmit a message. Enter a value
+    in the range 1 - 30. The default value is 3.
+  cli_alias: max-resends
+- name: ASEncryptAlg
+  type: String
+  enum:
+  - 3des
+  - des
+  - rc2-128
+  - rc2-64
+  - rc2-40
+  - aes-128
+  - aes-192
+  - aes-256
+  default: 3des
+  description: Specify the symmetric encryption algorithm to encrypt outbound AS messages.
+  cli_alias: as-encrypt-alg
+- name: ASMDNRequestSignedAlgs
+  type: String
+  default: sha1,md5
+  description: Specify the digest algorithms to request for a signed MDN. The value
+    can be a single algorithm or any combination of algorithms that are separated
+    by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt>
+    .
+  cli_alias: as-mdn-request-signed-algs
+- name: EBMSCpaId
+  type: String
+  description: Specify the CPA ID in the message that is sent to the destination partner.
+    You can use the value to identify the sender and the recipient. This value is
+    used when the B2B gateway is not CPA-enforced.
+  cli_alias: ebms-cpa-id
+- name: EBMSService
+  type: String
+  description: Specify the value of service element in outbound ebMS2 request that
+    acts on the message. For example, <tt>urn:services:SupplierOrderProcessing</tt>
+    . This value is used when the B2B gateway is not CPA-enforced. The value can be
+    a string or a URI. If a non-URI string is specified, you must specify the value
+    of <b>Service Type</b>.
+  cli_alias: ebms-service
+- name: EBMSServiceType
+  type: String
+  description: Specify the value of the type attribute in the ebMS SOAP message. When
+    blank, ensure that the service value is a URI.
+  cli_alias: ebms-service-type
+- name: EBMSAction
+  type: String
+  description: Specify the value of action element in outbound ebMS2 request. For
+    example, <tt>NewPurchaseOrder</tt> . This value is used when the B2B gateway is
+    not CPA-enforced.
+  cli_alias: ebms-action
+- name: EBMSSendUnsigned
+  type: Bool
+  default: false
+  description: Controls whether to override the signing of messages to this destination.
+    Whether to sign outbound message is part of the configuration of the internal
+    partner. This property cannot be used to cause a message to be signed. The default
+    behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled,
+    sign messages only if the sender has signing credentials.</li></ul>
+  cli_alias: ebms-send-unsigned
+- name: EBMSEncrypt
+  type: Bool
+  default: false
+  description: Specify whether to encrypt the body of outgoing ebMS messages.
+  cli_alias: ebms-encrypt
+- name: EBMSEncryptCert
+  type: String
+  reference_to: CryptoCertificate
+  description: Specify the certificate to encrypt outbound messages.
+  cli_alias: ebms-encrypt-cert
+- name: EBMSEncryptAlg
+  type: String
+  enum:
+  - http://www.w3.org/2001/04/xmlenc#tripledes-cbc
+  - http://www.w3.org/2001/04/xmlenc#aes128-cbc
+  - http://www.w3.org/2001/04/xmlenc#aes192-cbc
+  - http://www.w3.org/2001/04/xmlenc#aes256-cbc
+  - http://www.w3.org/2009/xmlenc11#aes128-gcm
+  - http://www.w3.org/2009/xmlenc11#aes192-gcm
+  - http://www.w3.org/2009/xmlenc11#aes256-gcm
+  default: http://www.w3.org/2001/04/xmlenc#tripledes-cbc
+  description: Specify the encryption algorithm to encrypt outbound ebMS2 messages.
+  cli_alias: ebms-encrypt-alg
+- name: EBMSKeyEncryptAlg
+  type: String
+  enum:
+  - http://www.w3.org/2001/04/xmlenc#rsa-1_5
+  - http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p
+  - http://www.w3.org/2009/xmlenc11#rsa-oaep
+  default: http://www.w3.org/2001/04/xmlenc#rsa-1_5
+  description: Specify the ebMS3 asymmetric key transport algorithm to encrypt outbound
+    ebMS3 messages. By default, encrypts with RSA Version 1.5.
+  cli_alias: ebms-key-encrypt-alg
+- name: EBMSDuplicateEliminationRequest
+  type: Bool
+  default: true
+  description: Specify whether to request that the receiving partner checks for duplicates
+    of outbound messages. If enabled, the receiving business partner should ignore
+    duplicate message received. The default behavior is on.
+  cli_alias: ebms-duplicate-elimination-request
+- name: EBMSAckRequest
+  type: Bool
+  default: false
+  description: Specify whether to request an acknowledgment for outbound ebMS2 messages.
+    The default behavior is off.
+  cli_alias: ebms-ack-request
+- name: EBMSAckRequestSigned
+  type: Bool
+  default: false
+  description: Specify whether to request a signed acknowledgment. The default behavior
+    is off.
+  cli_alias: ebms-ack-request-signed
+- name: EBMSSyncReplyMode
+  type: String
+  enum:
+  - mshSignalsOnly
+  - none
+  default: none
+  description: Specify whether the response/acknowledgment is synchronous or asynchronous.
+    The syncReplyMode parameter indicates to the receiving partner whether to return
+    the business response or acknowledgment in the same connection. None means asynchronous.
+  cli_alias: ebms-syncreply-mode
+- name: EBMSRetry
+  type: Bool
+  default: false
+  description: Specify whether to retransmit unacknowledged outbound messages. The
+    default behavior is off.
+  cli_alias: ebms-retry
+- name: EBMSMaxRetries
+  type: Int64
+  minimum: 1
+  maximum: 30
+  default: 3
+  description: Specify the number of retransmit attempts. Enter a value in the range
+    1 - 30. The default value is 3.
+  cli_alias: ebms-max-retries
+- name: EBMSRetryInterval
+  type: Int64
+  minimum: 1
+  maximum: 3600
+  default: 1800
+  description: Specify the interval in seconds between retry attempts. Enter a value
+    in the range 1 - 3600. This default value is 1800.
+  cli_alias: ebms-retry-interval
+- name: EBMSIncludeTimeToLive
+  type: Bool
+  default: true
+  description: Specify whether the sending partner includes the <tt>TimeToLive</tt>
+    element in the outbound ebMS2 message header. The <tt>TimeToLive</tt> element
+    indicates when the message expires. <ul><li>If the receiving partner receives
+    the message before it expires, the receiving partner accepts the message.</li><li>If
+    the receiving partner receives the message after it expires, the receiving partner
+    rejects the message.</li></ul>
+  cli_alias: ebms-include-time-to-live
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: Specify the type of TLS profile type to secure connections with targets.
+  cli_alias: ssl-client-type
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: Specify the TLS client profile to secure connections with targets.
+  cli_alias: ssl-client
+- name: EBMSMessageExchangePattern
+  type: String
+  enum:
+  - one-way-push
+  - one-way-pull
+  default: one-way-push
+  description: Specify the message exchange pattern (MEP) to use. The MEP defines
+    how a business partner exchanges messages with another business partner. The default
+    value is one-way push.
+  cli_alias: ebms-mep
+- name: EBMSMessagePartitionChannel
+  type: String
+  description: When the MEP is one-way pull, specify the message partition channel
+    (MPC) to pull messages. In the one-way pull mode, a message remains in MPC storage
+    until the B2B gateway receives an authenticated and authorized pull request.
+  cli_alias: ebms-mpc
+- name: EBMSAgreementRef
+  type: String
+  description: Specify the reference to the agreement that governs this message exchange.
+    This value maps to <tt>eb:AgreementRef</tt> in the message header.
+  cli_alias: ebms-agreementref
+- name: EBMSPMode
+  type: String
+  description: Specify the PMode identifier for the convenience of PMode management.
+    When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in
+    associated messages.
+  cli_alias: ebms-pmode
+- name: EBMSOutboundRequestReceipt
+  type: Bool
+  default: false
+  description: Specify whether to request a receipt signal for a sent ebMS3 message.
+    The default behavior is off.
+  cli_alias: ebms-outbound-request-receipt
+- name: EBMSOutboundRequestSignedReceipt
+  type: Bool
+  default: false
+  description: Specify whether to request a signed receipt. The default behavior is
+    off.
+  cli_alias: ebms-outbound-request-signed-receipt
+- name: EBMSOutboundReceiptReplyPattern
+  type: String
+  enum:
+  - Response
+  - Callback
+  default: Response
+  description: Specifies the pattern to send the receipt signal. The default behavior
+    is response.
+  cli_alias: ebms-outbound-receipt-reply-pattern
+- name: EBMSOutboundReceptionAwarenessNotification
+  type: Bool
+  default: false
+  description: Specify whether to send a reception awareness error notification to
+    the ebMS3 message producer. The default behavior is off. The B2B gateway reports
+    a reception awareness error to the message producer if the receipt signal message
+    is not received for a sent message.
+  cli_alias: ebms-reception-awareness-notification
+- name: EBMSOutboundReceptionAwarenessTimeout
+  type: Int64
+  minimum: 3
+  maximum: 7200
+  default: 300
+  description: Specify the duration in seconds to wait for the receipt signal. Enter
+    a value in the range 3 - 7200. The default value is 300. If the B2B gateway does
+    not receive the receipt signal after this duration, the B2B gateway sends a reception
+    awareness error notification to the message producer.
+  cli_alias: ebms-reception-awareness-timeout
+- name: EBMSCompress
+  type: Bool
+  default: false
+  description: Specify whether to compress the body of outbound ebMS messages. The
+    default behavior is off.
+  cli_alias: ebms-compress
+- name: EBMSSOAPBody
+  type: Bool
+  default: false
+  description: When compression is not enabled, specify whether to send messages in
+    the SOAP <tt>Body</tt> .
+  cli_alias: ebms-soapbody

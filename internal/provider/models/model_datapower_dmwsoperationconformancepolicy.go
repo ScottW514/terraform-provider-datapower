@@ -64,19 +64,19 @@ var DmWSOperationConformancePolicyDataSourceSchema = DataSourceSchema.NestedAttr
 			Computed:            true,
 		},
 		"conformance_policy_wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Type", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
 			Computed:            true,
 		},
 		"conformance_policy_wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
 			Computed:            true,
 		},
 		"conformance_policy_subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
 			Computed:            true,
 		},
 		"conformance_policy_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -88,7 +88,7 @@ var DmWSOperationConformancePolicyResourceSchema = ResourceSchema.NestedAttribut
 			Required:            true,
 		},
 		"conformance_policy_wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Type", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -97,15 +97,15 @@ var DmWSOperationConformancePolicyResourceSchema = ResourceSchema.NestedAttribut
 			Default: stringdefault.StaticString("all"),
 		},
 		"conformance_policy_wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
 			Optional:            true,
 		},
 		"conformance_policy_subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
 			Optional:            true,
 		},
 		"conformance_policy_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Optional:            true,
 		},
 	},

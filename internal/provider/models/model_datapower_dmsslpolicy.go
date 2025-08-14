@@ -54,15 +54,15 @@ var DmSSLPolicyObjectDefault = map[string]attr.Value{
 var DmSSLPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Computed:            true,
 		},
 		"ssl_client_config_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "", "").AddStringEnum("client").AddDefaultValue("client").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile to secure connections with targets", "", "").AddStringEnum("client").AddDefaultValue("client").String,
 			Computed:            true,
 		},
 		"ssl_client": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "", "sslclientprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "sslclientprofile").String,
 			Computed:            true,
 		},
 	},
@@ -70,11 +70,11 @@ var DmSSLPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmSSLPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Required:            true,
 		},
 		"ssl_client_config_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "", "").AddStringEnum("client").AddDefaultValue("client").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile to secure connections with targets", "", "").AddStringEnum("client").AddDefaultValue("client").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -83,7 +83,7 @@ var DmSSLPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("client"),
 		},
 		"ssl_client": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "", "sslclientprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure connections with targets", "", "sslclientprofile").String,
 			Optional:            true,
 		},
 	},

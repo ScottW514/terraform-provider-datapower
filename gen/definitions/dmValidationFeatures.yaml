@@ -1,11 +1,11 @@
 name: DmValidationFeatures
 model_only: true
 attributes:
-  - name: noauthen
-    type: Bool
-    default: false
-    description: 'Unprotected'
-  - name: introspect
-    type: Bool
-    default: false
-    description: 'Introspection Format'
+- name: noauthen
+  type: Bool
+  default: false
+  description: Unprotected
+- name: introspect
+  type: Bool
+  default: false
+  description: Introspection Format

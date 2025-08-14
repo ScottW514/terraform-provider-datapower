@@ -53,15 +53,15 @@ var DmHeaderInjectionObjectDefault = map[string]attr.Value{
 var DmHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"direction": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Direction", "", "").AddStringEnum("front", "back").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
 			Computed:            true,
 		},
 		"header_tag": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.", "", "").String,
 			Computed:            true,
 		},
 		"header_tag_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header tag.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -69,18 +69,18 @@ var DmHeaderInjectionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmHeaderInjectionResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"direction": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Direction", "", "").AddStringEnum("front", "back").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the direction of the message.", "", "").AddStringEnum("front", "back").String,
 			Optional:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("front", "back"),
 			},
 		},
 		"header_tag": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.", "", "").String,
 			Optional:            true,
 		},
 		"header_tag_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the value for the header tag.", "", "").String,
 			Required:            true,
 		},
 	},

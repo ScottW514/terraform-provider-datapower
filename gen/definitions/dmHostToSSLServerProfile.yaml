@@ -2,15 +2,15 @@ name: DmHostToSSLServerProfile
 model_only: true
 list_item: true
 attributes:
-  - name: HostNameWildmat
-    type: String
-    required: true
-    example: 'hostname_wildmat'
-    description: 'Hostname match'
-  - name: SSLServer
-    type: String
-    reference_to: SSLServerProfile
-    required: true
-    test_value: '"AccTest_SSLServerProfile"'
-    test_bed_value: 'datapower_sslserverprofile.acc_test.id'
-    description: 'Server profile'
+- name: HostNameWildmat
+  type: String
+  required: true
+  example: hostname_wildmat
+  description: Specify the shell-style pattern to match against the hostname.
+- name: SSLServer
+  type: String
+  reference_to: SSLServerProfile
+  required: true
+  test_value: '"AccTest_SSLServerProfile"'
+  test_bed_value: datapower_sslserverprofile.acc_test.id
+  description: Specify the TLS server profile to use when a hostname matches the pattern.

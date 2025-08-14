@@ -70,10 +70,10 @@ Optional:
 
 Read-Only:
 
-- `action` (String) Action
+- `action` (String) Select the monitor policy implemented by the monitor when the target message type exceeds the threshold value. This is a list of Message Filter Actions. Click the + button to create a new action.
   - Reference to: `datapower_filteraction:id`
-- `burst_limit` (Number) Burst Limit
-- `interval` (Number) Interval
-- `name` (String) Name
-- `rate_limit` (Number) Rate Limit
+- `burst_limit` (Number) Specify the maximum allowed message burst. Use a value approximately twice the value of Rate Limit.
+- `interval` (Number) Enter the measurement interval in milliseconds. One second is expressed as 1000 here.
+- `name` (String) Enter the name of the threshold. This name appears in the log files when the threshold is reached.
+- `rate_limit` (Number) Specify the threshold value as a number of messages. A monitored message type that exceeds this value over the measurement interval specified by the Interval property is subject to the policy identified by the Action values list.
   - Range: `1`-`4294967295`

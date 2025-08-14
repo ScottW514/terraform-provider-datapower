@@ -103,5 +103,5 @@ Optional:
 
 Read-Only:
 
-- `response_directory` (String) Response directory
-- `virtual_path` (String) Virtual directory
+- `response_directory` (String) Specify the directory in the virtual file system to store responses.
+- `virtual_path` (String) Specify the directory in virtual file system where the FTP client can find this directory.

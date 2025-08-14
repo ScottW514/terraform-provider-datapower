@@ -2,8 +2,8 @@ name: DmSearchDomain
 model_only: true
 list_item: true
 attributes:
-  - name: SearchDomain
-    type: String
-    required: true
-    example: 'datapower.com'
-    description: 'Domain name'
+- name: SearchDomain
+  type: String
+  required: true
+  example: datapower.com
+  description: Specify the domain name.

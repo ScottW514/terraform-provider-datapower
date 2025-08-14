@@ -68,7 +68,7 @@ Optional:
 
 Required:
 
-- `match` (String) Matching Rule
+- `match` (String) Select the Matching Rule that defines the matching criteria.
   - Reference to: `datapower_matching:id`
-- `rule` (String) Processing Rule
+- `rule` (String) Select the Processing Rule to run.
   - Reference to: `datapower_stylepolicyrule:id`

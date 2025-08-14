@@ -48,11 +48,11 @@ var DmSnmpContextObjectDefault = map[string]attr.Value{
 var DmSnmpContextDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"context": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Context Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("An SNMPv3 context that will allow access to an application domain.", "", "").String,
 			Computed:            true,
 		},
 		"domain": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Application Domain", "", "domain").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The local application domain whose SNMP MIB may be accessed via this context using SNMPv3.", "", "domain").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmSnmpContextDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmSnmpContextResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"context": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Context Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("An SNMPv3 context that will allow access to an application domain.", "", "").String,
 			Required:            true,
 		},
 		"domain": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Application Domain", "", "domain").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The local application domain whose SNMP MIB may be accessed via this context using SNMPv3.", "", "domain").String,
 			Required:            true,
 		},
 	},

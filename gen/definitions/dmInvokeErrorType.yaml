@@ -1,15 +1,15 @@
 name: DmInvokeErrorType
 model_only: true
 attributes:
-  - name: ConnectionError
-    type: Bool
-    default: false
-    description: 'Connection error'
-  - name: SOAPError
-    type: Bool
-    default: false
-    description: 'SOAP error'
-  - name: OperationError
-    type: Bool
-    default: false
-    description: 'Operation error'
+- name: ConnectionError
+  type: Bool
+  default: false
+  description: Connection error
+- name: SOAPError
+  type: Bool
+  default: false
+  description: SOAP error
+- name: OperationError
+  type: Bool
+  default: false
+  description: Operation error

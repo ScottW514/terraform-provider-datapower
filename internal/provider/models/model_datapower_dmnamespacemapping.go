@@ -48,11 +48,11 @@ var DmNamespaceMappingObjectDefault = map[string]attr.Value{
 var DmNamespaceMappingDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"prefix": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Prefix", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The prefix (Prefix:) used to map namespaces that might be encountered in client requests.", "", "").String,
 			Computed:            true,
 		},
 		"uri": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URI", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The URI (URI:) used to map namespaces that might be encountered in client requests.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmNamespaceMappingDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmNamespaceMappingResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"prefix": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Prefix", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The prefix (Prefix:) used to map namespaces that might be encountered in client requests.", "", "").String,
 			Optional:            true,
 		},
 		"uri": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URI", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The URI (URI:) used to map namespaces that might be encountered in client requests.", "", "").String,
 			Optional:            true,
 		},
 	},

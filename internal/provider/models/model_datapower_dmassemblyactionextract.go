@@ -48,11 +48,11 @@ var DmAssemblyActionExtractObjectDefault = map[string]attr.Value{
 var DmAssemblyActionExtractDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"capture": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Capture", "capture", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the path expression that identifies the field.", "capture", "").String,
 			Computed:            true,
 		},
 		"transform": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Transform", "transform", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the expression that defines how to transform the content.", "transform", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmAssemblyActionExtractDataSourceSchema = DataSourceSchema.NestedAttributeOb
 var DmAssemblyActionExtractResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"capture": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Capture", "capture", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the path expression that identifies the field.", "capture", "").String,
 			Required:            true,
 		},
 		"transform": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Transform", "transform", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the expression that defines how to transform the content.", "transform", "").String,
 			Optional:            true,
 		},
 	},

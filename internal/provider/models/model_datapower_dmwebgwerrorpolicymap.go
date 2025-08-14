@@ -48,11 +48,11 @@ var DmWebGWErrorPolicyMapObjectDefault = map[string]attr.Value{
 var DmWebGWErrorPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matching Rule", "", "matching").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the matching rule that defines the matching criteria.", "", "matching").String,
 			Computed:            true,
 		},
 		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Error Action", "", "mpgwerroraction").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the error action that handles the errors and generates responses.", "", "mpgwerroraction").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmWebGWErrorPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObje
 var DmWebGWErrorPolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matching Rule", "", "matching").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the matching rule that defines the matching criteria.", "", "matching").String,
 			Required:            true,
 		},
 		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Error Action", "", "mpgwerroraction").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the error action that handles the errors and generates responses.", "", "mpgwerroraction").String,
 			Required:            true,
 		},
 	},

@@ -1,12 +1,14 @@
 name: DmB2BHAHost
 model_only: true
 attributes:
-  - name: Hostname
-    type: String
-    description: 'Remote replication host'
-  - name: Port
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    default: 1320
-    description: 'Remote replication port'
+- name: Hostname
+  type: String
+  description: Specify the host name of the other system in the high availability
+    cluster.
+- name: Port
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  default: 1320
+  description: Specify the listening port on the other system in the high availability
+    cluster.

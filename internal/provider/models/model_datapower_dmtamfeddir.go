@@ -72,39 +72,39 @@ var DmTAMFedDirObjectDefault = map[string]attr.Value{
 var DmTAMFedDirDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"fed_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "federate-name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the federated directory entry to uniquely identify the entry in the federation.", "federate-name", "").String,
 			Computed:            true,
 		},
 		"suffix": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Suffix", "suffix", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a single LDAP suffix that is to be searched for users.", "suffix", "").String,
 			Computed:            true,
 		},
 		"host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP host", "hostname", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the LDAP server.", "hostname", "").String,
 			Computed:            true,
 		},
 		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP port", "port", "").AddDefaultValue("389").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the LDAP server. The default value is 389.", "port", "").AddDefaultValue("389").String,
 			Computed:            true,
 		},
 		"bind_dn": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP administrator DN", "bind-dn", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the distinguished name (DN) of an LDAP administrative user to bind with the LDAP registry.", "bind-dn", "").String,
 			Computed:            true,
 		},
 		"bind_pw": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP administrator password alias", "bind-pw", "passwordalias").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the password alias of the password for the LDAP administrator that corresponds to the entered distinguished name.", "bind-pw", "passwordalias").String,
 			Computed:            true,
 		},
 		"use_ssl": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use TLS", "UseSSL", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Control whether to use TLS to connect to the LDAP server.", "UseSSL", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"key_file_label": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP server TLS key file label", "key-file-label", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the label of the personal certificate in the key file for client authentication.</p><ul><li>When using mutual authentication with the registry server and the personal certificate is not the default personal certificate in the key file, enter the label of the personal certificate. The personal certificate allows client authentication.</li><li>For server-only authentication, do not enter a value.</li></ul>", "key-file-label", "").String,
 			Computed:            true,
 		},
 		"basic_principal_attribute": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Basic user principal attribute", "basic-principal-attribute", "").AddDefaultValue("uid").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute that represents a user in the LDAP registry entry. The attribute overrides the global basic user principal for the client. The attribute is optional when the basic user mode is disabled.", "basic-principal-attribute", "").AddDefaultValue("uid").String,
 			Computed:            true,
 		},
 	},
@@ -112,43 +112,43 @@ var DmTAMFedDirDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmTAMFedDirResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"fed_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "federate-name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the federated directory entry to uniquely identify the entry in the federation.", "federate-name", "").String,
 			Required:            true,
 		},
 		"suffix": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Suffix", "suffix", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a single LDAP suffix that is to be searched for users.", "suffix", "").String,
 			Required:            true,
 		},
 		"host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP host", "hostname", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the LDAP server.", "hostname", "").String,
 			Required:            true,
 		},
 		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP port", "port", "").AddDefaultValue("389").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the LDAP server. The default value is 389.", "port", "").AddDefaultValue("389").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             int64default.StaticInt64(389),
 		},
 		"bind_dn": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP administrator DN", "bind-dn", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the distinguished name (DN) of an LDAP administrative user to bind with the LDAP registry.", "bind-dn", "").String,
 			Required:            true,
 		},
 		"bind_pw": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP administrator password alias", "bind-pw", "passwordalias").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the password alias of the password for the LDAP administrator that corresponds to the entered distinguished name.", "bind-pw", "passwordalias").String,
 			Required:            true,
 		},
 		"use_ssl": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use TLS", "UseSSL", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Control whether to use TLS to connect to the LDAP server.", "UseSSL", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"key_file_label": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("LDAP server TLS key file label", "key-file-label", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the label of the personal certificate in the key file for client authentication.</p><ul><li>When using mutual authentication with the registry server and the personal certificate is not the default personal certificate in the key file, enter the label of the personal certificate. The personal certificate allows client authentication.</li><li>For server-only authentication, do not enter a value.</li></ul>", "key-file-label", "").String,
 			Optional:            true,
 		},
 		"basic_principal_attribute": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Basic user principal attribute", "basic-principal-attribute", "").AddDefaultValue("uid").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the attribute that represents a user in the LDAP registry entry. The attribute overrides the global basic user principal for the client. The attribute is optional when the basic user mode is disabled.", "basic-principal-attribute", "").AddDefaultValue("uid").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("uid"),

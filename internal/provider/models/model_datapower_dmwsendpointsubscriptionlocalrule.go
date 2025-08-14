@@ -73,39 +73,39 @@ var DmWSEndpointSubscriptionLocalRuleObjectDefault = map[string]attr.Value{
 var DmWSEndpointSubscriptionLocalRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "subscription", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
 			Computed:            true,
 		},
 		"local_endpoint_protocol": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint Protocol", "local-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.", "local-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").String,
 			Computed:            true,
 		},
 		"local_endpoint_hostname": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint Host", "local-endpoint-hostname", "").AddDefaultValue("0.0.0.0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL protion of the rewritten web service binding that specifies the host name or IP address. A value of 0.0.0.0 indicates that the Web Service Proxy listens on all of the interfaces. Alternatively, you can specify a Host Alias.", "local-endpoint-hostname", "").AddDefaultValue("0.0.0.0").String,
 			Computed:            true,
 		},
 		"local_endpoint_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint Port", "local-endpoint-port", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").String,
 			Computed:            true,
 		},
 		"local_endpoint_uri": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint URI", "local-endpoint-uri", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value that is specified in the WSDL.", "local-endpoint-uri", "").String,
 			Computed:            true,
 		},
 		"front_protocol": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint Handler", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Front Side Handler to use to determine the IP address, port, and protocol.", "", "").String,
 			Computed:            true,
 		},
 		"use_front_protocol": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use Local Endpoint Handler", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Use a Front Side Handler to determine the IP address, port, and protocol for matching WSDL service port. Selecting this mode overrides these values in this rewrite rule.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"wsdl_binding_protocol": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint WSDL Binding Protocol", "", "").AddStringEnum("default", "soap-11", "soap-12", "http-get", "http-post").AddDefaultValue("default").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the WSDL binding protocol to use in the rewritten Web service.", "", "").AddStringEnum("default", "soap-11", "soap-12", "http-get", "http-post").AddDefaultValue("default").String,
 			Computed:            true,
 		},
 		"frontside_port_suffix": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint WSDL Port Name Suffix", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a suffix to add to the name of the WSDL port that will be used to represent this service endpoint in the rewritten Web service. If empty, rewrite the original port. The original port can only be rewritten once.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -113,11 +113,11 @@ var DmWSEndpointSubscriptionLocalRuleDataSourceSchema = DataSourceSchema.NestedA
 var DmWSEndpointSubscriptionLocalRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "subscription", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the subscription and configure its endpoint.", "subscription", "").String,
 			Optional:            true,
 		},
 		"local_endpoint_protocol": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint Protocol", "local-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the protocol portion of the rewritten web service binding used by the local endpoint. The protocol can be different from the one in the WSDL.", "local-endpoint-protocol", "").AddStringEnum("default", "http", "https").AddDefaultValue("default").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -126,31 +126,31 @@ var DmWSEndpointSubscriptionLocalRuleResourceSchema = ResourceSchema.NestedAttri
 			Default: stringdefault.StaticString("default"),
 		},
 		"local_endpoint_hostname": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint Host", "local-endpoint-hostname", "").AddDefaultValue("0.0.0.0").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL protion of the rewritten web service binding that specifies the host name or IP address. A value of 0.0.0.0 indicates that the Web Service Proxy listens on all of the interfaces. Alternatively, you can specify a Host Alias.", "local-endpoint-hostname", "").AddDefaultValue("0.0.0.0").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("0.0.0.0"),
 		},
 		"local_endpoint_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint Port", "local-endpoint-port", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the port. If 0, uses the value from the WSDL.", "local-endpoint-port", "").String,
 			Optional:            true,
 		},
 		"local_endpoint_uri": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint URI", "local-endpoint-uri", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL portion of the rewritten web service binding that specifies the local path. If not specified, uses the value that is specified in the WSDL.", "local-endpoint-uri", "").String,
 			Optional:            true,
 		},
 		"front_protocol": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint Handler", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Front Side Handler to use to determine the IP address, port, and protocol.", "", "").String,
 			Optional:            true,
 		},
 		"use_front_protocol": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use Local Endpoint Handler", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Use a Front Side Handler to determine the IP address, port, and protocol for matching WSDL service port. Selecting this mode overrides these values in this rewrite rule.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"wsdl_binding_protocol": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint WSDL Binding Protocol", "", "").AddStringEnum("default", "soap-11", "soap-12", "http-get", "http-post").AddDefaultValue("default").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the WSDL binding protocol to use in the rewritten Web service.", "", "").AddStringEnum("default", "soap-11", "soap-12", "http-get", "http-post").AddDefaultValue("default").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -159,7 +159,7 @@ var DmWSEndpointSubscriptionLocalRuleResourceSchema = ResourceSchema.NestedAttri
 			Default: stringdefault.StaticString("default"),
 		},
 		"frontside_port_suffix": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Local Endpoint WSDL Port Name Suffix", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify a suffix to add to the name of the WSDL port that will be used to represent this service endpoint in the rewritten Web service. If empty, rewrite the original port. The original port can only be rewritten once.", "", "").String,
 			Optional:            true,
 		},
 	},

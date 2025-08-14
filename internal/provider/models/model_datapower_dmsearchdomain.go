@@ -45,7 +45,7 @@ var DmSearchDomainObjectDefault = map[string]attr.Value{
 var DmSearchDomainDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"search_domain": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Domain name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the domain name.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -53,7 +53,7 @@ var DmSearchDomainDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmSearchDomainResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"search_domain": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Domain name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the domain name.", "", "").String,
 			Required:            true,
 		},
 	},

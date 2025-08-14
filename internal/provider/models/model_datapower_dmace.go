@@ -50,11 +50,11 @@ var DmACEObjectDefault = map[string]attr.Value{
 var DmACEDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"access": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Access", "", "").AddStringEnum("allow", "deny").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow or deny access. <ul><li>When allow, the range of address is granted access to the service.</li><li>When deny, the range of addresses is denied access to the service.</li></ul>", "", "").AddStringEnum("allow", "deny").String,
 			Computed:            true,
 		},
 		"address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Address range", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the contiguous range of IP addresses that are granted or denied access. Enter the value as an IP address and network mask.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -62,14 +62,14 @@ var DmACEDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmACEResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"access": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Access", "", "").AddStringEnum("allow", "deny").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow or deny access. <ul><li>When allow, the range of address is granted access to the service.</li><li>When deny, the range of addresses is denied access to the service.</li></ul>", "", "").AddStringEnum("allow", "deny").String,
 			Required:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("allow", "deny"),
 			},
 		},
 		"address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Address range", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the contiguous range of IP addresses that are granted or denied access. Enter the value as an IP address and network mask.", "", "").String,
 			Required:            true,
 		},
 	},

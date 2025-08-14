@@ -48,11 +48,11 @@ var DmAPIResponseSchemaObjectDefault = map[string]attr.Value{
 var DmAPIResponseSchemaDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"status_code": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Status code", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the HTTP status code of the response message that the schema describes. The following values are valid.</p><ul><li>Any valid HTTP status code.</li><li>An expression that defines a range of codes that represents a response class.</li><li>The string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence over a match within a range. When there is no match, the default schema is used. When a schema is not specified, a request is accepted without schema validation.</p>", "", "").String,
 			Computed:            true,
 		},
 		"response_schema": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schema", "", "apischema").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to describe the response message.", "", "apischema").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmAPIResponseSchemaDataSourceSchema = DataSourceSchema.NestedAttributeObject
 var DmAPIResponseSchemaResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"status_code": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Status code", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the HTTP status code of the response message that the schema describes. The following values are valid.</p><ul><li>Any valid HTTP status code.</li><li>An expression that defines a range of codes that represents a response class.</li><li>The string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence over a match within a range. When there is no match, the default schema is used. When a schema is not specified, a request is accepted without schema validation.</p>", "", "").String,
 			Required:            true,
 		},
 		"response_schema": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schema", "", "apischema").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema to describe the response message.", "", "apischema").String,
 			Optional:            true,
 		},
 	},

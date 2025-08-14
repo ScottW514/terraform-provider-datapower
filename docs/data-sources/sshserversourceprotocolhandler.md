@@ -93,4 +93,4 @@ Read-Only:
 
 Read-Only:
 
-- `virtual_path` (String) Virtual directory
+- `virtual_path` (String) Specify the directory in the virtual file system of the SFTP server.

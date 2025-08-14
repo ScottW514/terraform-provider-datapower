@@ -2,30 +2,35 @@ name: DmMCFilter
 model_only: true
 list_item: true
 attributes:
-  - name: FilterName
-    type: String
-    required: true
-    description: 'Name'
-    test_value: '"ResTestmc_filter"'
-    test_expect_ds: '"AccTest_mc_filter"'
-    example: 'mc_filterName'
-  - name: Type
-    type: String
-    enum:
-      - 'http'
-      - 'xpath'
-    required: true
-    description: 'Type'
-    example: 'http'
-  - name: HttpName
-    type: String
-    description: 'HTTP Header Name'
-  - name: HttpValue
-    type: String
-    description: 'HTTP Header Value'
-  - name: XPathExpression
-    type: String
-    description: 'XPath Expression'
-  - name: XPathValue
-    type: String
-    description: 'XPath Value'
+- name: FilterName
+  type: String
+  required: true
+  description: Specify the name for the message content filter.
+  test_value: '"ResTestmc_filter"'
+  test_expect_ds: '"AccTest_mc_filter"'
+  example: mc_filterName
+- name: Type
+  type: String
+  enum:
+  - http
+  - xpath
+  required: true
+  description: Select the type of the message content filter.
+  example: http
+- name: HttpName
+  type: String
+  description: Enter the name of the HTTP header field. Available for HTTP header-based
+    filters.
+- name: HttpValue
+  type: String
+  description: Enter the explicit, literal string value for the HTTP header field.
+    Wildcards are not supported. Available for HTTP header-based filters.
+- name: XPathExpression
+  type: String
+  description: Enter the XPath expression or use the builder to define the XPath expression
+    that is used to evaluate the messages to obtain the XPath value. Available for
+    XPath-based filters.
+- name: XPathValue
+  type: String
+  description: Enter the contents of the element for the XPath expression. Available
+    for XPath-based filters.

@@ -1,14 +1,14 @@
 name: DmMetadataFromType
 model_only: true
 attributes:
-  - name: none
-    type: Bool
-    default: false
-  - name: authentication_url
-    type: Bool
-    default: true
-    description: 'Authentication URL'
-  - name: external_url
-    type: Bool
-    default: false
-    description: 'External metadata URL'
+- name: none
+  type: Bool
+  default: false
+- name: authentication_url
+  type: Bool
+  default: true
+  description: Authentication URL
+- name: external_url
+  type: Bool
+  default: false
+  description: External metadata URL

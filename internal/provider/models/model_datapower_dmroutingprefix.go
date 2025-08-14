@@ -51,11 +51,11 @@ var DmRoutingPrefixObjectDefault = map[string]attr.Value{
 var DmRoutingPrefixDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Type", "", "").AddStringEnum("uri", "host").AddDefaultValue("uri").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type for the routing prefix.", "", "").AddStringEnum("uri", "host").AddDefaultValue("uri").String,
 			Computed:            true,
 		},
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Prefix", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -63,7 +63,7 @@ var DmRoutingPrefixDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmRoutingPrefixResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Type", "", "").AddStringEnum("uri", "host").AddDefaultValue("uri").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type for the routing prefix.", "", "").AddStringEnum("uri", "host").AddDefaultValue("uri").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -72,7 +72,7 @@ var DmRoutingPrefixResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("uri"),
 		},
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Prefix", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the routing prefix for API collection routing. <ul><li>When URI, the routing prefix is case sensitive and must begin but not end with a slash (/).</li><li>When hostname, the prefix must not start or end with period (.). Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>", "", "").String,
 			Optional:            true,
 		},
 	},

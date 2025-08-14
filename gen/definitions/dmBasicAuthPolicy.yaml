@@ -2,19 +2,17 @@ name: DmBasicAuthPolicy
 model_only: true
 list_item: true
 attributes:
-  - name: RegExp
-    type: String
-    required: true
-    example: "*"
-    description: 'URL matching expression'
-  - name: UserName
-    type: String
-    required: true
-    example: "someuser"
-    description: 'Username'
-  # DEPRECATED
-  # - name: Password
-  - name: PasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password alias'
+- name: RegExp
+  type: String
+  required: true
+  example: '*'
+  description: Specify the shell-style expression to define the URL set.
+- name: UserName
+  type: String
+  required: true
+  example: someuser
+  description: Specify the username for basic authentication.
+- name: PasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: Specify the password alias that maps to the password for the username.

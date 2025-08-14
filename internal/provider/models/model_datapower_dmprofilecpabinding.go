@@ -54,19 +54,19 @@ var DmProfileCPABindingObjectDefault = map[string]attr.Value{
 var DmProfileCPABindingDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"internal_partner": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CPA sender (internal partner profile)", "internal-partner", "b2bprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the CPA sender (internal partner profile). Outbound ebMS2 messages from an internal partner use the CPA, service, and action that are specified by the CPA binding associated with the internal partner profile.", "internal-partner", "b2bprofile").String,
 			Computed:            true,
 		},
 		"cpa": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CPA", "cpa", "b2bcpa").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the CPA ID to use. This value overrides the default CPA ID of the external partner profile configuration.", "cpa", "b2bcpa").String,
 			Computed:            true,
 		},
 		"collaboration": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Service", "collaboration", "b2bcpacollaboration").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the service to use, which is the value of <tt>Service</tt> element in outbound ebMS2 requests. This value overrides the default service of the external partner profile configuration.", "collaboration", "b2bcpacollaboration").String,
 			Computed:            true,
 		},
 		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "action", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to use. This value overrides the default action of the external partner profile configuration. When the action is not set or the action is not defined in the service of the CPA binding, the B2B gateway uses the first action in the action list of the service.", "action", "").String,
 			Computed:            true,
 		},
 	},
@@ -74,19 +74,19 @@ var DmProfileCPABindingDataSourceSchema = DataSourceSchema.NestedAttributeObject
 var DmProfileCPABindingResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"internal_partner": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CPA sender (internal partner profile)", "internal-partner", "b2bprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the CPA sender (internal partner profile). Outbound ebMS2 messages from an internal partner use the CPA, service, and action that are specified by the CPA binding associated with the internal partner profile.", "internal-partner", "b2bprofile").String,
 			Required:            true,
 		},
 		"cpa": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("CPA", "cpa", "b2bcpa").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the CPA ID to use. This value overrides the default CPA ID of the external partner profile configuration.", "cpa", "b2bcpa").String,
 			Required:            true,
 		},
 		"collaboration": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Service", "collaboration", "b2bcpacollaboration").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the service to use, which is the value of <tt>Service</tt> element in outbound ebMS2 requests. This value overrides the default service of the external partner profile configuration.", "collaboration", "b2bcpacollaboration").String,
 			Required:            true,
 		},
 		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "action", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to use. This value overrides the default action of the external partner profile configuration. When the action is not set or the action is not defined in the service of the CPA binding, the B2B gateway uses the first action in the action list of the service.", "action", "").String,
 			Optional:            true,
 		},
 	},

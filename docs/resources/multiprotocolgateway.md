@@ -426,13 +426,13 @@ resource "datapower_multiprotocolgateway" "test" {
 
 Optional:
 
-- `client_ip` (String) Client-IP Match
-- `in_url_match` (String) Inbound URL Match
-- `out_url_match` (String) Outbound URL Match
-- `rule_match` (String) Processing Rule Match
-- `rule_type` (String) Processing Type
+- `client_ip` (String) Specify a PCRE to match against client IP addresses. Requests from clients with matching IP addresses will trigger the probe. To create a match for all IP addresses, specify .* instead of * as the PCRE.
+- `in_url_match` (String) Specify a PCRE to match against the inbound URLs. Requests from clients with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.
+- `out_url_match` (String) Specify a PCRE to match against the outbound URLs. Responses from servers with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.
+- `rule_match` (String) Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.
+- `rule_type` (String) Select the rule direction or type that will trigger the probe.
   - Choices: `all`, `response`, `request`, `call`, `error`, `scheduled`, `lbhealth`
-- `x_path` (String) XPath Expression Match
+- `x_path` (String) Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.
 
 
 <a id="nestedatt--dependency_actions"></a>
@@ -457,13 +457,13 @@ Optional:
 
 Required:
 
-- `header_tag_value` (String) Header Value
+- `header_tag_value` (String) Enter the value for the header tag.
 
 Optional:
 
-- `direction` (String) Direction
+- `direction` (String) Select the direction of the message.
   - Choices: `front`, `back`
-- `header_tag` (String) Header Name
+- `header_tag` (String) Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.
 
 
 <a id="nestedatt--header_suppression"></a>
@@ -471,9 +471,9 @@ Optional:
 
 Optional:
 
-- `direction` (String) Direction
+- `direction` (String) Select the direction of the message.
   - Choices: `front`, `back`
-- `header_tag` (String) Header Tag
+- `header_tag` (String) Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.
 
 
 <a id="nestedatt--in_order_mode"></a>
@@ -494,17 +494,17 @@ Optional:
 
 Required:
 
-- `policy_param_parameters` (String) Parameters
+- `policy_param_parameters` (String) Reference to policy parameter object.
   - Reference to: `datapower_policyparameters:id`
 
 Optional:
 
-- `policy_param_fragment_id` (String) Fragment Identifier
-- `policy_param_subscription` (String) Subscription
-- `policy_param_wsdl_component_type` (String) WSDL Component Type
+- `policy_param_fragment_id` (String) Matches Fragment Identifier
+- `policy_param_subscription` (String) Select a subscription.
+- `policy_param_wsdl_component_type` (String) Select a type of WSDL Component. The default is All.
   - Choices: `all`, `subscription`, `wsdl`, `service`, `port`, `operation`, `fragmentid`
   - Default value: `all`
-- `policy_param_wsdl_component_value` (String) WSDL Component Value
+- `policy_param_wsdl_component_value` (String) Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.
 
 
 <a id="nestedatt--stylesheet_parameters"></a>
@@ -512,11 +512,11 @@ Optional:
 
 Required:
 
-- `parameter_value` (String) Parameter Value
+- `parameter_value` (String) Specify the value for the parameter. Typically, the value is the name of a configuration object.
 
 Optional:
 
-- `parameter_name` (String) Parameter Name
+- `parameter_name` (String) <p>Specify the name for the stylesheet parameter. The following list identifies common stylesheet parameters:</p><ul><li>decrypt-key: For decryption operations, the name of the Key object to be used.</li><li>keypair-key: For signing operations, the name of the Key object to be used.</li><li>keypair-cert: For signing operations, the name of the Certificate object to be used.</li><li>recipient: For encryption operations, the name of the Certificate object for the intended recipient.</li><li>valcred: For authentication, the name of the Validation Credentials object to be used.</li></ul>
 
 
 <a id="nestedatt--wsrr_saved_search_subscriptions"></a>
@@ -524,9 +524,9 @@ Optional:
 
 Optional:
 
-- `wsrr_attachment` (String) Policy Attachment
+- `wsrr_attachment` (String) Specify a WS-Policy attachment
   - Reference to: `datapower_policyattachments:id`
-- `wsrr_saved_search_subscription` (String) Saved Search Subscription
+- `wsrr_saved_search_subscription` (String) Specify a WSRR saved search subscription
   - Reference to: `datapower_wsrrsavedsearchsubscription:id`
 
 
@@ -535,7 +535,7 @@ Optional:
 
 Optional:
 
-- `wsrr_attachment` (String) Policy Attachment
+- `wsrr_attachment` (String) Select WS-Policy attachment
   - Reference to: `datapower_policyattachments:id`
-- `wsrr_subscription` (String) Subscription
+- `wsrr_subscription` (String) Select WSRR subscription
   - Reference to: `datapower_wsrrsubscription:id`

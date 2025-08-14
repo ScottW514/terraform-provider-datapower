@@ -2,53 +2,65 @@ name: DmWSEndpointRemoteRewriteRule
 model_only: true
 list_item: true
 attributes:
-  - name: ServicePortMatchRegexp
-    type: String
-    default: '.*'
-    description: 'Service Port Match Expression'
-    cli_alias: service-port-match
-  - name: RemoteEndpointProtocol
-    type: String
-    enum:
-      - 'default'
-      - 'http'
-      - 'https'
-      - 'dpmq'
-      - 'mq'
-      - 'idgmq'
-      - 'dptibems'
-      - 'tibems'
-      - 'dpwasjms'
-    default: 'default'
-    description: 'Remote Endpoint Protocol'
-    cli_alias: remote-endpoint-protocol
-  - name: RemoteEndpointHostname
-    type: String
-    description: 'Remote Endpoint Host'
-    cli_alias: remote-endpoint-hostname
-  - name: RemoteEndpointPort
-    type: Int64
-    description: 'Remote Endpoint Port'
-    cli_alias: remote-endpoint-port
-  - name: RemoteEndpointURI
-    type: String
-    description: 'Remote Endpoint URI'
-    cli_alias: remote-endpoint-uri
-  - name: RemoteMQQM
-    type: String
-    description: 'IBM MQ'
-    cli_alias: remote-mq-qm
-  - name: RemoteMQManager
-    type: String
-    description: 'IBM MQ v9+'
-    cli_alias: remote-idg-mq-qm
-  - name: RemoteTibcoEMS
-    type: String
-    reference_to: TibcoEMSServer
-    description: 'TIBCO EMS'
-    cli_alias: remote-tibems-server
-  - name: RemoteWebSphereJMS
-    type: String
-    reference_to: WebSphereJMSServer
-    description: 'WebSphere JMS'
-    cli_alias: remote-wasjms-server
+- name: ServicePortMatchRegexp
+  type: String
+  default: .*
+  description: Specify a PCRE as the match criteria to identify the web services port.
+    When the PCRE matches a Service Port in WSDL, the rewrite rules is applied.
+  cli_alias: service-port-match
+- name: RemoteEndpointProtocol
+  type: String
+  enum:
+  - default
+  - http
+  - https
+  - dpmq
+  - mq
+  - idgmq
+  - dptibems
+  - tibems
+  - dpwasjms
+  default: default
+  description: Select the protocol portion of the rewritten web service binding used
+    by the remote endpoint. The protocol can be different from the one in the WSDL.
+  cli_alias: remote-endpoint-protocol
+- name: RemoteEndpointHostname
+  type: String
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    the host name or IP address. If not specified, uses the value from the WSDL.
+  cli_alias: remote-endpoint-hostname
+- name: RemoteEndpointPort
+  type: Int64
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    the port. If 0, uses the value from the WSDL.
+  cli_alias: remote-endpoint-port
+- name: RemoteEndpointURI
+  type: String
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    the remote path. If not specified, the value from the location attribute of the
+    soap:address element in the WSDL is used. For the IBM MQ, TIBCO EMS, and WebSphere
+    JMS protocols, the URI must specify a RequestQueue parameter. For most web services,
+    the ReplyQueue parameter is required to receive the SOAP response.
+  cli_alias: remote-endpoint-uri
+- name: RemoteMQQM
+  type: String
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    IBM MQ Queue Manager. Required when remote server is IBM MQ.
+  cli_alias: remote-mq-qm
+- name: RemoteMQManager
+  type: String
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.
+  cli_alias: remote-idg-mq-qm
+- name: RemoteTibcoEMS
+  type: String
+  reference_to: TibcoEMSServer
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    TIBCO EMS. Required when remote server is TIBCO EMS.
+  cli_alias: remote-tibems-server
+- name: RemoteWebSphereJMS
+  type: String
+  reference_to: WebSphereJMSServer
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    WebSphere JMS. Required when remote server is WebSphere Application Server.
+  cli_alias: remote-wasjms-server

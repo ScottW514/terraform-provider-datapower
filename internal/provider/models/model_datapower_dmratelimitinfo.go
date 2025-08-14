@@ -51,11 +51,11 @@ var DmRateLimitInfoObjectDefault = map[string]attr.Value{
 var DmRateLimitInfoDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit.", "name", "").String,
 			Computed:            true,
 		},
 		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit.", "action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").String,
 			Computed:            true,
 		},
 	},
@@ -63,11 +63,11 @@ var DmRateLimitInfoDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmRateLimitInfoResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit.", "name", "").String,
 			Required:            true,
 		},
 		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit.", "action", "").AddStringEnum("consume", "replenish").AddDefaultValue("consume").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

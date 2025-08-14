@@ -62,19 +62,19 @@ var DmLogTriggerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 			Computed:            true,
 		},
 		"expression": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Regular expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the regular expression to match against message text as trigger criteria.", "", "").String,
 			Computed:            true,
 		},
 		"only_once": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Only one time", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to run only the first time that trigger criteria is met.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 		"stop_processing": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Only this trigger", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to not process subsequent rules that match the trigger conditions.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 		"command": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Command", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the sequence of CLI commands to run when the trigger criteria is met.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -86,23 +86,23 @@ var DmLogTriggerResourceSchema = ResourceSchema.NestedAttributeObject{
 			Optional:            true,
 		},
 		"expression": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Regular expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the regular expression to match against message text as trigger criteria.", "", "").String,
 			Optional:            true,
 		},
 		"only_once": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Only one time", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to run only the first time that trigger criteria is met.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),
 		},
 		"stop_processing": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Only this trigger", "", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to not process subsequent rules that match the trigger conditions.", "", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),
 		},
 		"command": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Command", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the sequence of CLI commands to run when the trigger criteria is met.", "", "").String,
 			Optional:            true,
 		},
 	},

@@ -2,27 +2,27 @@ name: DmSMTPPolicy
 model_only: true
 list_item: true
 attributes:
-  - name: RegExp
-    type: String
-    required: true
-    default: 'dpsmtp://*'
-    description: 'URL matching expression'
-  - name: Recipient
-    type: String
-    description: 'Recipient e-mail'
-  - name: Sender
-    type: String
-    description: 'Sender e-mail'
-  - name: Subject
-    type: String
-    description: 'Subject'
-  - name: Options
-    dm_type: DmSMTPOptions
-    description: 'Options'
-  - name: Auth
-    type: String
-    enum:
-      - 'plain'
-      - 'login'
-    default: 'plain'
-    description: 'Authentication method'
+- name: RegExp
+  type: String
+  required: true
+  default: dpsmtp://*
+  description: Specify the shell-style expression to define the URL set.
+- name: Recipient
+  type: String
+  description: Specify the e-mail address of the recipient ("To:")
+- name: Sender
+  type: String
+  description: Specify the e-mail address of the sender ("From:")
+- name: Subject
+  type: String
+  description: Specify the subject line of the e-mail.
+- name: Options
+  dm_type: DmSMTPOptions
+  description: Specify the SMTP options to enable for the client.
+- name: Auth
+  type: String
+  enum:
+  - plain
+  - login
+  default: plain
+  description: Specify the method to authenticate the SMTP client.

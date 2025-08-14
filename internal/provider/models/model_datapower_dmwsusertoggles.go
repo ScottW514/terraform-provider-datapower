@@ -73,40 +73,40 @@ var DmWSUserTogglesObjectDefault = map[string]attr.Value{
 var DmWSUserTogglesDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"wsdl_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL file", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("WSDL file name or \"*\" to match all files. This is the local name of the WSDL file, as defined on the WSDL tab.", "", "").String,
 			Computed:            true,
 		},
 		"service_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Service", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:service/@name using the format {serviceNamespace}/name. Enter \"*\" to match all bindings.", "", "").String,
 			Computed:            true,
 		},
 		"service_port_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Port", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:service/wsdl:port/@name using the format {serviceNamespace}/name. Enter \"*\" to match all ports.", "", "").String,
 			Computed:            true,
 		},
 		"port_type_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("PortType", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:portType/@name using the format {portTypeNamespace}name. Enter \"*\" to match all bindings.", "", "").String,
 			Computed:            true,
 		},
 		"binding_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Binding", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:binding/@name using the format {bindingNamespace}name. Enter \"*\" to match all bindings.", "", "").String,
 			Computed:            true,
 		},
 		"operation_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Operation", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:binding/operation/@name using the format {bindingNamespace}name or wsdl:service/wsdl:port when formatted {serviceNamespace}port-name/operation-name. Enter \"*\" to match all operations.", "", "").String,
 			Computed:            true,
 		},
-		"toggles": GetDmWSDLUserPolicyTogglesDataSourceSchema("Policy Toggles", "", ""),
+		"toggles": GetDmWSDLUserPolicyTogglesDataSourceSchema("Select the policy (availability and behavior) of the component made available by the Web Service Proxy. The established policy cascade (applies to all components that are contained by the current component).", "", ""),
 		"subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches all of the services obtained via the selected subscription. The selection may be further narrowed by configuring matches against specific wsdl components.", "", "").String,
 			Computed:            true,
 		},
 		"use_fragment_id": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use Fragment ID", "use-fragid", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Toggle to enable or disable the use of Fragment ID", "use-fragid", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -114,42 +114,42 @@ var DmWSUserTogglesDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmWSUserTogglesResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"wsdl_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL file", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("WSDL file name or \"*\" to match all files. This is the local name of the WSDL file, as defined on the WSDL tab.", "", "").String,
 			Required:            true,
 		},
 		"service_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Service", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:service/@name using the format {serviceNamespace}/name. Enter \"*\" to match all bindings.", "", "").String,
 			Required:            true,
 		},
 		"service_port_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Port", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:service/wsdl:port/@name using the format {serviceNamespace}/name. Enter \"*\" to match all ports.", "", "").String,
 			Required:            true,
 		},
 		"port_type_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("PortType", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:portType/@name using the format {portTypeNamespace}name. Enter \"*\" to match all bindings.", "", "").String,
 			Required:            true,
 		},
 		"binding_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Binding", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:binding/@name using the format {bindingNamespace}name. Enter \"*\" to match all bindings.", "", "").String,
 			Required:            true,
 		},
 		"operation_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Operation", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches wsdl:binding/operation/@name using the format {bindingNamespace}name or wsdl:service/wsdl:port when formatted {serviceNamespace}port-name/operation-name. Enter \"*\" to match all operations.", "", "").String,
 			Required:            true,
 		},
-		"toggles": GetDmWSDLUserPolicyTogglesResourceSchema("Policy Toggles", "", "", false),
+		"toggles": GetDmWSDLUserPolicyTogglesResourceSchema("Select the policy (availability and behavior) of the component made available by the Web Service Proxy. The established policy cascade (applies to all components that are contained by the current component).", "", "", false),
 		"subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches all of the services obtained via the selected subscription. The selection may be further narrowed by configuring matches against specific wsdl components.", "", "").String,
 			Optional:            true,
 		},
 		"use_fragment_id": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Use Fragment ID", "use-fragid", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Toggle to enable or disable the use of Fragment ID", "use-fragid", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Optional:            true,
 		},
 	},

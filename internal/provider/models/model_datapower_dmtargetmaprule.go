@@ -48,11 +48,11 @@ var DmTargetMapRuleObjectDefault = map[string]attr.Value{
 var DmTargetMapRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"target": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Target", "target", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the target name that is configured in the schema.", "target", "").String,
 			Computed:            true,
 		},
 		"execute": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Function call", "execute", "assemblyactionfunctioncall").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the function call assembly action to call.", "execute", "assemblyactionfunctioncall").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmTargetMapRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmTargetMapRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"target": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Target", "target", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the target name that is configured in the schema.", "target", "").String,
 			Required:            true,
 		},
 		"execute": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Function call", "execute", "assemblyactionfunctioncall").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the function call assembly action to call.", "execute", "assemblyactionfunctioncall").String,
 			Required:            true,
 		},
 	},

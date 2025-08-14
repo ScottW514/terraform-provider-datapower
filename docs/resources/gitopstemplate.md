@@ -59,22 +59,21 @@ Optional:
 
 Required:
 
-- `class_name` (String) Class
+- `class_name` (String) Specify the the object class.
   - CLI Alias: `class`
-- `field` (String) Property
+- `field` (String) Specify the property name.
   - CLI Alias: `field`
-- `name` (String) Name
-  - CLI Alias: `name`
+- `name` (String) - CLI Alias: `name`
 
 Optional:
 
-- `template_type` (String) Template type
+- `template_type` (String) Specify the type of template. The supported types are change and custom.
   - CLI Alias: `type`
   - Choices: `change`, `add`, `delete`, `custom`
   - Default value: `change`
-- `value` (String) Read value
+- `value` (String) Specify the value that is specific to the template type. <ul><li>When change, specify the replacement value for the identified property in this specific named object instance.</li><li>When custom, specify the transform to insert a template value</li></ul>
   - CLI Alias: `value`
-- `value_inverse` (String) Write value
+- `value_inverse` (String) Specify the value inverse. This value is the inverse transform to replace the template value with the wanted value.
   - CLI Alias: `value-inverse`
-- `value_validate` (String) Value validate
+- `value_validate` (String) Specify the query to validate the replaced value at the specified location. The query to return <tt>true</tt> when the template value is found at the specified location and <tt>false</tt> when the template value is not found at the specified location. The query is in the following format. <p><code>configuration.%Class[$match(`@name`, /^%Name/)]%ValueValidate</code></p>
   - CLI Alias: `value-validate`

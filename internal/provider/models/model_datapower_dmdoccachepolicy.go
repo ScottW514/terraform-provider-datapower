@@ -78,43 +78,43 @@ var DmDocCachePolicyObjectDefault = map[string]attr.Value{
 var DmDocCachePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL Match Expression", "match", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Provide a literal or wildcard expression to define a URL set included in the cache policy. The following wildcard characters are available. <table><tr><td valign=\"top\">asterisk (*)</td><td valign=\"top\">Matches 0 or more occurrences of any character.</td></tr><tr><td valign=\"top\">question mark (?)</td><td valign=\"top\">Matches one occurrence of any single character.</td></tr><tr><td valign=\"top\">brackets ( [ ] )</td><td valign=\"top\">Defines a character or numeric range. For example, <tt>[1-5]</tt> matches 1, 2, 3, 4, or 5, while <tt>xs[dl]</tt> matches xsd or xsl.</td></tr></table>", "match", "").String,
 			Computed:            true,
 		},
 		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Policy Type", "type", "").AddStringEnum("protocol", "no-cache", "fixed").AddDefaultValue("protocol").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the cache type. The cache type determines whether to cache documents and the mechanism to use to remove cached entries. The default value is Protocol-Based.", "type", "").AddStringEnum("protocol", "no-cache", "fixed").AddDefaultValue("protocol").String,
 			Computed:            true,
 		},
 		"ttl": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TTL", "ttl", "").AddIntegerRange(5, 31708800).AddDefaultValue("900").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(5, 31708800).AddDefaultValue("900").String,
 			Computed:            true,
 		},
 		"priority": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Priority", "priority", "").AddIntegerRange(1, 255).AddDefaultValue("128").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the priority of a document to add to or remove from the cache. The greater the value, the higher its priority. Enter a value in the range 1 - 255. The default value is 128.</p><ul><li>When adding documents, the cache uses the policy with the highest priority. If the document matches multiple policies with the same priority, the cache uses the first matching policy in the alphabetized list.</li><li>When removing documents, the cache removes documents that were added by policies with the lowest priority. If multiple documents have the same priority, the cache removes the document that was least recently accessed.</li></ul><p>When you define multiple policies, the DataPower Gateway retains the policies in an alphabetized list. The DataPower Gateway evaluates candidate documents against each policy. Consequently, the priority of policies is important to ensure that the DataPower Gateway caches candidate documents for the appropriate validity period.</p><ul><li>Use a high priority for policies that you want to cache.</li><li>Use a low priority for generic policies. For example, set the priority to 1 when <tt>*</tt> or <tt>*.xml</tt> is the match pattern.</li></ul>", "priority", "").AddIntegerRange(1, 255).AddDefaultValue("128").String,
 			Computed:            true,
 		},
 		"xc10_grid": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Cache Grid", "xc10-grid", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The eXtreme Scale grid configuration to use for caching documents.", "xc10-grid", "").String,
 			Computed:            true,
 		},
 		"cache_backend_responses": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Cache Back-end Responses", "cache-backend-response", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to requests from back-end servers.", "cache-backend-response", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"http_cache_validation": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Cache Validation", "http-cache-validation", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("When a requested HTTP document results in a cache hit, HTTP cache validation with the origin server is performed.", "http-cache-validation", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"return_expired": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Return Expired Document", "return-expired", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>In the following situations, whether to return expired content when a client requests it. <ul><li>The DataPower Gateway cannot establish a connection with the origin server.</li><li>The document cache is getting the newest version from the origin server.</li></ul></p><p>A document might persist in the cache after the document is expired. When enabled, the cached document is returned even though it is potentially stale. A warning header indicates that the document is stale.</p>", "return-expired", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"rest_invalidation": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("RESTful Invalidation", "rest-invalidation", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Invalidate document cache on unsafe requests. For example, HTTP GET requests are safe requests that do not change the internal state of the server. When an HTTP POST to the same URL occurs, the cache needs to be invalidated because the internal state of the server might have changed. The next GET request must contact the origin service to update the cache with any changes.", "rest-invalidation", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"cache_unsafe_response": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Cache Response to POST and PUT Requests", "cache-unsafe-response", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to POST and PUT requests when the cache policy type is set to fixed. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 	},
@@ -122,11 +122,11 @@ var DmDocCachePolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmDocCachePolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL Match Expression", "match", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Provide a literal or wildcard expression to define a URL set included in the cache policy. The following wildcard characters are available. <table><tr><td valign=\"top\">asterisk (*)</td><td valign=\"top\">Matches 0 or more occurrences of any character.</td></tr><tr><td valign=\"top\">question mark (?)</td><td valign=\"top\">Matches one occurrence of any single character.</td></tr><tr><td valign=\"top\">brackets ( [ ] )</td><td valign=\"top\">Defines a character or numeric range. For example, <tt>[1-5]</tt> matches 1, 2, 3, 4, or 5, while <tt>xs[dl]</tt> matches xsd or xsl.</td></tr></table>", "match", "").String,
 			Optional:            true,
 		},
 		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Policy Type", "type", "").AddStringEnum("protocol", "no-cache", "fixed").AddDefaultValue("protocol").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the cache type. The cache type determines whether to cache documents and the mechanism to use to remove cached entries. The default value is Protocol-Based.", "type", "").AddStringEnum("protocol", "no-cache", "fixed").AddDefaultValue("protocol").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -135,7 +135,7 @@ var DmDocCachePolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("protocol"),
 		},
 		"ttl": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TTL", "ttl", "").AddIntegerRange(5, 31708800).AddDefaultValue("900").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.", "ttl", "").AddIntegerRange(5, 31708800).AddDefaultValue("900").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -144,7 +144,7 @@ var DmDocCachePolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: int64default.StaticInt64(900),
 		},
 		"priority": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Priority", "priority", "").AddIntegerRange(1, 255).AddDefaultValue("128").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the priority of a document to add to or remove from the cache. The greater the value, the higher its priority. Enter a value in the range 1 - 255. The default value is 128.</p><ul><li>When adding documents, the cache uses the policy with the highest priority. If the document matches multiple policies with the same priority, the cache uses the first matching policy in the alphabetized list.</li><li>When removing documents, the cache removes documents that were added by policies with the lowest priority. If multiple documents have the same priority, the cache removes the document that was least recently accessed.</li></ul><p>When you define multiple policies, the DataPower Gateway retains the policies in an alphabetized list. The DataPower Gateway evaluates candidate documents against each policy. Consequently, the priority of policies is important to ensure that the DataPower Gateway caches candidate documents for the appropriate validity period.</p><ul><li>Use a high priority for policies that you want to cache.</li><li>Use a low priority for generic policies. For example, set the priority to 1 when <tt>*</tt> or <tt>*.xml</tt> is the match pattern.</li></ul>", "priority", "").AddIntegerRange(1, 255).AddDefaultValue("128").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -153,35 +153,35 @@ var DmDocCachePolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: int64default.StaticInt64(128),
 		},
 		"xc10_grid": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Cache Grid", "xc10-grid", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The eXtreme Scale grid configuration to use for caching documents.", "xc10-grid", "").String,
 			Optional:            true,
 		},
 		"cache_backend_responses": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Cache Back-end Responses", "cache-backend-response", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to requests from back-end servers.", "cache-backend-response", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"http_cache_validation": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Cache Validation", "http-cache-validation", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("When a requested HTTP document results in a cache hit, HTTP cache validation with the origin server is performed.", "http-cache-validation", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"return_expired": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Return Expired Document", "return-expired", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>In the following situations, whether to return expired content when a client requests it. <ul><li>The DataPower Gateway cannot establish a connection with the origin server.</li><li>The document cache is getting the newest version from the origin server.</li></ul></p><p>A document might persist in the cache after the document is expired. When enabled, the cached document is returned even though it is potentially stale. A warning header indicates that the document is stale.</p>", "return-expired", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"rest_invalidation": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("RESTful Invalidation", "rest-invalidation", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Invalidate document cache on unsafe requests. For example, HTTP GET requests are safe requests that do not change the internal state of the server. When an HTTP POST to the same URL occurs, the cache needs to be invalidated because the internal state of the server might have changed. The next GET request must contact the origin service to update the cache with any changes.", "rest-invalidation", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"cache_unsafe_response": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Cache Response to POST and PUT Requests", "cache-unsafe-response", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Caches responses to POST and PUT requests when the cache policy type is set to fixed. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),

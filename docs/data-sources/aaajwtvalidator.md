@@ -86,10 +86,10 @@ Optional:
 
 Read-Only:
 
-- `name` (String) Name
-- `type` (String) Type
+- `name` (String) Specify the name of the JWT claim. A claim name is always a string.
+- `type` (String) Specify the data type of the JWT claim value. The type can be string, boolean, or number.
   - Choices: `string`, `bool`, `number`
-- `value` (String) Value
+- `value` (String) Specify the value of the JWT claim.
 
 
 <a id="nestedatt--result--val_method"></a>
@@ -97,9 +97,9 @@ Read-Only:
 
 Read-Only:
 
-- `customized` (Boolean) Custom processing
+- `customized` (Boolean) Use the custom processing mechanism to validate the JWT
   - Default value: `false`
-- `decrypt` (Boolean) Decrypt
+- `decrypt` (Boolean) Decrypt the encrypted JWT
   - Default value: `false`
-- `verify` (Boolean) Verify
+- `verify` (Boolean) Verify the signed JWT
   - Default value: `false`

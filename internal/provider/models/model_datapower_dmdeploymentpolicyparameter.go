@@ -48,11 +48,11 @@ var DmDeploymentPolicyParameterObjectDefault = map[string]attr.Value{
 var DmDeploymentPolicyParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"parameter_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Variable Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the deployment policy variable.", "", "").String,
 			Computed:            true,
 		},
 		"parameter_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Variable Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the corresponding value of the deployment policy variable.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmDeploymentPolicyParameterDataSourceSchema = DataSourceSchema.NestedAttribu
 var DmDeploymentPolicyParameterResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"parameter_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Variable Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the deployment policy variable.", "", "").String,
 			Required:            true,
 		},
 		"parameter_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Variable Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the corresponding value of the deployment policy variable.", "", "").String,
 			Required:            true,
 		},
 	},

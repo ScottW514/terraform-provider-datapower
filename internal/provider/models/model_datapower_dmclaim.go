@@ -53,15 +53,15 @@ var DmClaimObjectDefault = map[string]attr.Value{
 var DmClaimDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the JWT claim. A claim name is always a string.", "", "").String,
 			Computed:            true,
 		},
 		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the JWT claim.", "", "").String,
 			Computed:            true,
 		},
 		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Type", "", "").AddStringEnum("string", "bool", "number").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").String,
 			Computed:            true,
 		},
 	},
@@ -69,15 +69,15 @@ var DmClaimDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmClaimResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the JWT claim. A claim name is always a string.", "", "").String,
 			Optional:            true,
 		},
 		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the JWT claim.", "", "").String,
 			Required:            true,
 		},
 		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Type", "", "").AddStringEnum("string", "bool", "number").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the data type of the JWT claim value. The type can be string, boolean, or number.", "", "").AddStringEnum("string", "bool", "number").String,
 			Optional:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("string", "bool", "number"),

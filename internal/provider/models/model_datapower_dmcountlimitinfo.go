@@ -51,11 +51,11 @@ var DmCountLimitInfoObjectDefault = map[string]attr.Value{
 var DmCountLimitInfoDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the count limit.", "name", "").String,
 			Computed:            true,
 		},
 		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "action", "").AddStringEnum("inc", "dec").AddDefaultValue("inc").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the count limit.", "action", "").AddStringEnum("inc", "dec").AddDefaultValue("inc").String,
 			Computed:            true,
 		},
 	},
@@ -63,11 +63,11 @@ var DmCountLimitInfoDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmCountLimitInfoResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the count limit.", "name", "").String,
 			Required:            true,
 		},
 		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "action", "").AddStringEnum("inc", "dec").AddDefaultValue("inc").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the count limit.", "action", "").AddStringEnum("inc", "dec").AddDefaultValue("inc").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

@@ -58,15 +58,15 @@ var DmSQLServerObjectDefault = map[string]attr.Value{
 var DmSQLServerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Data source host", "host", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the server.", "host", "").String,
 			Computed:            true,
 		},
 		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Data source port", "port", "").AddDefaultValue("1521").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("", "port", "").AddDefaultValue("1521").String,
 			Computed:            true,
 		},
 		"type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Type", "type", "").AddStringEnum("Unspecified", "OracleListener", "OracleONS").AddDefaultValue("OracleListener").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the server configuration.", "type", "").AddStringEnum("Unspecified", "OracleListener", "OracleONS").AddDefaultValue("OracleListener").String,
 			Computed:            true,
 		},
 		"data_source_id": DataSourceSchema.StringAttribute{
@@ -78,17 +78,17 @@ var DmSQLServerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmSQLServerResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Data source host", "host", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the server.", "host", "").String,
 			Required:            true,
 		},
 		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Data source port", "port", "").AddDefaultValue("1521").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("", "port", "").AddDefaultValue("1521").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             int64default.StaticInt64(1521),
 		},
 		"type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Type", "type", "").AddStringEnum("Unspecified", "OracleListener", "OracleONS").AddDefaultValue("OracleListener").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the server configuration.", "type", "").AddStringEnum("Unspecified", "OracleListener", "OracleONS").AddDefaultValue("OracleListener").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

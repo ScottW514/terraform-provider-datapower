@@ -67,14 +67,14 @@ Optional:
 
 Read-Only:
 
-- `custom_method` (String) Custom method
-- `error_code` (String) Error code
-- `http_tag` (String) HTTP header
-- `http_value` (String) HTTP value match
-- `method` (String) HTTP method
+- `custom_method` (String) For a custom method, the custom HTTP method.
+- `error_code` (String) The error code match expression.
+- `http_tag` (String) For HTTP matching, the name of the HTTP header to examine.
+- `http_value` (String) For HTTP matching, the value match for the HTTP header. Enter a match pattern or a literal string.
+- `method` (String) The HTTP method.
   - Choices: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `TRACE`, `custom`, `default`
   - Default value: `default`
-- `type` (String) Matching type
+- `type` (String) The match type for evaluation.
   - Choices: `url`, `http`, `errorcode`, `xpath`, `fullyqualifiedurl`, `host`, `method`
-- `url` (String) URL match
-- `xpath_expression` (String) XPath expression
+- `url` (String) The URL match expression.
+- `xpath_expression` (String) The XPath match expression.

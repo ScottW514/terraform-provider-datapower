@@ -54,15 +54,15 @@ var DmCORSRuleExposeHeadersDataSourceSchema = DataSourceSchema.SingleNestedAttri
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"predefined": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Predefined", "predefined", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Append the gateway-predefined value.", "predefined", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 		"backend": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("From response", "backend", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Append the value in the response from the target endpoint.", "backend", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"custom": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom", "custom", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Append a custom string as the value.", "custom", "").String,
 			Computed:            true,
 		},
 	},
@@ -75,19 +75,19 @@ var DmCORSRuleExposeHeadersResourceSchema = ResourceSchema.SingleNestedAttribute
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
 		"predefined": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Predefined", "predefined", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Append the gateway-predefined value.", "predefined", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),
 		},
 		"backend": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("From response", "backend", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Append the value in the response from the target endpoint.", "backend", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"custom": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom", "custom", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Append a custom string as the value.", "custom", "").String,
 			Optional:            true,
 		},
 	},

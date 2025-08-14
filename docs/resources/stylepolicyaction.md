@@ -277,8 +277,8 @@ resource "datapower_stylepolicyaction" "test" {
 
 Required:
 
-- `condition_action` (String) Action
-- `expression` (String) XPath expression
+- `condition_action` (String) The action to run when the expression is matched.
+- `expression` (String) The expression to check for the condition.
 
 
 <a id="nestedatt--dependency_actions"></a>
@@ -303,11 +303,11 @@ Optional:
 
 Required:
 
-- `context` (String) Context
+- `context` (String) Specify the name of the DataPower context. This context contains the input data or will contain the output data that corresponds to the input or output that the maps expects. Use <tt>INPUT</tt> to designate the context that contains the original request. Use <tt>OUTPUT</tt> to designate the output context.
 
 Optional:
 
-- `name` (String) Name
+- `name` (String) Specify the name of the input or output that the map expects. The name must be the same as a cardname that is identified in the map file.
 
 
 <a id="nestedatt--named_outputs"></a>
@@ -315,11 +315,11 @@ Optional:
 
 Required:
 
-- `context` (String) Context
+- `context` (String) Specify the name of the DataPower context. This context contains the input data or will contain the output data that corresponds to the input or output that the maps expects. Use <tt>INPUT</tt> to designate the context that contains the original request. Use <tt>OUTPUT</tt> to designate the output context.
 
 Optional:
 
-- `name` (String) Name
+- `name` (String) Specify the name of the input or output that the map expects. The name must be the same as a cardname that is identified in the map file.
 
 
 <a id="nestedatt--parse_settings_reference"></a>
@@ -327,12 +327,12 @@ Optional:
 
 Optional:
 
-- `default` (String) Object reference
+- `default` (String) Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.
   - CLI Alias: `default`
   - Reference to: `datapower_parsesettings:id`
-- `literal` (String) Literal configuration
+- `literal` (String) Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.
   - CLI Alias: `literal`
-- `url` (String) URL reference
+- `url` (String) Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.
   - CLI Alias: `url`
 
 
@@ -341,8 +341,8 @@ Optional:
 
 Required:
 
-- `parameter_value` (String) Parameter Value
+- `parameter_value` (String) Specify the value for the parameter. Typically, the value is the name of a configuration object.
 
 Optional:
 
-- `parameter_name` (String) Parameter Name
+- `parameter_name` (String) <p>Specify the name for the stylesheet parameter. The following list identifies common stylesheet parameters:</p><ul><li>decrypt-key: For decryption operations, the name of the Key object to be used.</li><li>keypair-key: For signing operations, the name of the Key object to be used.</li><li>keypair-cert: For signing operations, the name of the Certificate object to be used.</li><li>recipient: For encryption operations, the name of the Certificate object for the intended recipient.</li><li>valcred: For authentication, the name of the Validation Credentials object to be used.</li></ul>

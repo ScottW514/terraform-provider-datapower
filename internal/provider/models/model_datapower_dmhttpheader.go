@@ -48,11 +48,11 @@ var DmHTTPHeaderObjectDefault = map[string]attr.Value{
 var DmHTTPHeaderDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the HTTP header field to be examined.", "", "").String,
 			Computed:            true,
 		},
 		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value Match", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Provide a literal or wildcard expression to define a set of values to include in or exclude from the traffic definition. If the contents of the specified header field fulfill the defined match criterion, the match succeeds.</p><p>The following wildcard characters are available:</p><table><tr><td valign=\"top\">asterisk (*)</td><td>Matches 0 or more occurrences of any character</td></tr><tr><td valign=\"top\">question mark (?)</td><td>Matches one occurrence of any single character</td></tr><tr><td valign=\"top\">square brackets ([ ])</td><td>Defines a character or numeric range. <p>For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or xsl.</p></td></tr></table>", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmHTTPHeaderDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmHTTPHeaderResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the HTTP header field to be examined.", "", "").String,
 			Required:            true,
 		},
 		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value Match", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>Provide a literal or wildcard expression to define a set of values to include in or exclude from the traffic definition. If the contents of the specified header field fulfill the defined match criterion, the match succeeds.</p><p>The following wildcard characters are available:</p><table><tr><td valign=\"top\">asterisk (*)</td><td>Matches 0 or more occurrences of any character</td></tr><tr><td valign=\"top\">question mark (?)</td><td>Matches one occurrence of any single character</td></tr><tr><td valign=\"top\">square brackets ([ ])</td><td>Defines a character or numeric range. <p>For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or xsl.</p></td></tr></table>", "", "").String,
 			Required:            true,
 		},
 	},

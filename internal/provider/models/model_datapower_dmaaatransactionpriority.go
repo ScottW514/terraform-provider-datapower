@@ -54,15 +54,15 @@ var DmAAATransactionPriorityObjectDefault = map[string]attr.Value{
 var DmAAATransactionPriorityDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"credential": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Credential name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the output credentials.", "", "").String,
 			Computed:            true,
 		},
 		"priority": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Transaction priority", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority for scheduling or resource allocation.", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").String,
 			Computed:            true,
 		},
 		"authorization": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Require authorization", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require authorization. By default, authorization is not required.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 	},
@@ -70,18 +70,18 @@ var DmAAATransactionPriorityDataSourceSchema = DataSourceSchema.NestedAttributeO
 var DmAAATransactionPriorityResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"credential": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Credential name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the output credentials.", "", "").String,
 			Required:            true,
 		},
 		"priority": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Transaction priority", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority for scheduling or resource allocation.", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").String,
 			Required:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max"),
 			},
 		},
 		"authorization": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Require authorization", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require authorization. By default, authorization is not required.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),

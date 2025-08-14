@@ -2,13 +2,13 @@ name: DmAssemblyActionExtract
 model_only: true
 list_item: true
 attributes:
-  - name: Capture
-    type: String
-    required: true
-    example: 'capture'
-    description: 'Capture'
-    cli_alias: capture
-  - name: Transform
-    type: String
-    description: 'Transform'
-    cli_alias: transform
+- name: Capture
+  type: String
+  required: true
+  example: capture
+  description: Specify the path expression that identifies the field.
+  cli_alias: capture
+- name: Transform
+  type: String
+  description: Specify the expression that defines how to transform the content.
+  cli_alias: transform

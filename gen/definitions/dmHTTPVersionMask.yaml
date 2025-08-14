@@ -1,11 +1,11 @@
 name: DmHTTPVersionMask
 model_only: true
 attributes:
-  - name: HTTP-1.0
-    type: Bool
-    default: true
-    description: 'HTTP 1.0'
-  - name: HTTP-1.1
-    type: Bool
-    default: true
-    description: 'HTTP 1.1'
+- name: HTTP-1.0
+  type: Bool
+  default: true
+  description: HTTP 1.0
+- name: HTTP-1.1
+  type: Bool
+  default: true
+  description: HTTP 1.1

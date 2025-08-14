@@ -1,39 +1,39 @@
 name: DmHTTPRequestMethods
 model_only: true
 attributes:
-  - name: POST
-    type: Bool
-    default: true
-    description: 'POST method'
-  - name: GET
-    type: Bool
-    default: true
-    description: 'GET method'
-  - name: PUT
-    type: Bool
-    default: false
-    description: 'PUT method'
-  - name: PATCH
-    type: Bool
-    default: false
-    description: 'PATCH method'
-  - name: HEAD
-    type: Bool
-    default: true
-    description: 'HEAD method'
-  - name: OPTIONS
-    type: Bool
-    default: false
-    description: 'OPTIONS method'
-  - name: TRACE
-    type: Bool
-    default: false
-    description: 'TRACE method'
-  - name: DELETE
-    type: Bool
-    default: false
-    description: 'DELETE method'
-  - name: CONNECT
-    type: Bool
-    default: false
-    description: 'CONNECT method'
+- name: POST
+  type: Bool
+  default: true
+  description: POST method
+- name: GET
+  type: Bool
+  default: true
+  description: GET method
+- name: PUT
+  type: Bool
+  default: false
+  description: PUT method
+- name: PATCH
+  type: Bool
+  default: false
+  description: PATCH method
+- name: HEAD
+  type: Bool
+  default: true
+  description: HEAD method
+- name: OPTIONS
+  type: Bool
+  default: false
+  description: OPTIONS method
+- name: TRACE
+  type: Bool
+  default: false
+  description: TRACE method
+- name: DELETE
+  type: Bool
+  default: false
+  description: DELETE method
+- name: CONNECT
+  type: Bool
+  default: false
+  description: CONNECT method

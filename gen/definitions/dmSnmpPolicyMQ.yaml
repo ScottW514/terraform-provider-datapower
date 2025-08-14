@@ -2,19 +2,25 @@ name: DmSnmpPolicyMQ
 model_only: true
 list_item: true
 attributes:
-  - name: Community
-    type: String
-    required: true
-    description: 'Community'
-  - name: Mode
-    type: String
-    enum:
-      - 'none'
-      - 'read-only'
-      - 'read-write'
-    required: true
-    description: 'Mode'
-  - name: Host
-    type: String
-    default: '0.0.0.0/0'
-    description: 'Remote Host Address'
+- name: Community
+  type: String
+  required: true
+  description: Enter the name of a specific SNMP community. All SNMP Version 1 or
+    Version 2c managers identifying themselves as a member of this community will
+    have the Mode permissions set here for the Associated Domains selected here and
+    must originate from the Remote Host Address specified here.
+- name: Mode
+  type: String
+  enum:
+  - none
+  - read-only
+  - read-write
+  required: true
+  description: Select the access privileges accorded to SNMP managers that belong
+    to this community. Use none to disable SNMP access.
+- name: Host
+  type: String
+  default: 0.0.0.0/0
+  description: The IP address of an SNMP manager belonging to this community. The
+    default value of '0.0.0.0/0' indicates all hosts, or all SNMP managers claiming
+    membership in the community.

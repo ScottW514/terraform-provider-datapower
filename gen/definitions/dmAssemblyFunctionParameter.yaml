@@ -2,40 +2,49 @@ name: DmAssemblyFunctionParameter
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    example: 'assemblyfunctionparametername'
-    description: 'Name'
-    cli_alias: name
-  - name: Label
-    type: String
-    description: 'Label'
-    cli_alias: label
-  - name: Description
-    type: String
-    description: 'Description'
-    cli_alias: description
-  - name: Schema
-    type: String
-    reference_to: APISchema
-    description: 'API schema'
-    cli_alias: schema
-  - name: Value
-    type: String
-    description: 'Value'
-    cli_alias: value
-  - name: ValueType
-    type: String
-    enum:
-      - 'string'
-      - 'payload'
-      - 'message'
-    default: 'string'
-    description: 'Value type'
-    cli_alias: value-type
-  - name: Required
-    type: Bool
-    default: true
-    description: 'Required'
-    cli_alias: required
+- name: Name
+  type: String
+  required: true
+  example: assemblyfunctionparametername
+  description: Specify the name of the parameter.
+  cli_alias: name
+- name: Label
+  type: String
+  description: Specify the label to explain the parameter to API developers.
+  cli_alias: label
+- name: Description
+  type: String
+  description: Specify a description of the parameter to advertise the parameter to
+    API developers.
+  cli_alias: description
+- name: Schema
+  type: String
+  reference_to: APISchema
+  description: Specify the API schema to verify the parameter type.
+  cli_alias: schema
+- name: Value
+  type: String
+  description: Specify the default parameter value to pass to the assembly function
+    as a string. The default value is used when no value is passed in the request.
+    The default parameter value is required if the assembly function is called in
+    an assembly function call action and no parameter value is defined in the action.
+    <ul><li>If the default value is a JSON payload, enter the value as a JSON string.</li><li>If
+    the default value is an empty string, it is treated as not specified.</li><li>If
+    the assembly function parameter specifies an API schema, the default parameter
+    value overrides the default value defined in the schema.</li></ul>
+  cli_alias: value
+- name: ValueType
+  type: String
+  enum:
+  - string
+  - payload
+  - message
+  default: string
+  description: Specify the type of the parameter value.
+  cli_alias: value-type
+- name: Required
+  type: Bool
+  default: true
+  description: Specify whether this parameter requires a value in an assembly function
+    call.
+  cli_alias: required

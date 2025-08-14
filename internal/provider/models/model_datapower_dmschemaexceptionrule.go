@@ -51,11 +51,11 @@ var DmSchemaExceptionRuleObjectDefault = map[string]attr.Value{
 var DmSchemaExceptionRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"x_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath Expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.", "", "").String,
 			Computed:            true,
 		},
 		"exception_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Type", "", "").AddStringEnum("AllowEncrypted", "RequireEncrypted").AddDefaultValue("AllowEncrypted").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Exception type for encryption.", "", "").AddStringEnum("AllowEncrypted", "RequireEncrypted").AddDefaultValue("AllowEncrypted").String,
 			Computed:            true,
 		},
 	},
@@ -63,11 +63,11 @@ var DmSchemaExceptionRuleDataSourceSchema = DataSourceSchema.NestedAttributeObje
 var DmSchemaExceptionRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"x_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath Expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.", "", "").String,
 			Required:            true,
 		},
 		"exception_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Type", "", "").AddStringEnum("AllowEncrypted", "RequireEncrypted").AddDefaultValue("AllowEncrypted").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Exception type for encryption.", "", "").AddStringEnum("AllowEncrypted", "RequireEncrypted").AddDefaultValue("AllowEncrypted").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

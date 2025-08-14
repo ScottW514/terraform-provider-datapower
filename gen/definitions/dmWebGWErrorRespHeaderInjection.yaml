@@ -2,12 +2,13 @@ name: DmWebGWErrorRespHeaderInjection
 model_only: true
 list_item: true
 attributes:
-  - name: HeaderTag
-    type: String
-    description: 'Header Name'
-    example: 'HEADER_NAME'
-  - name: HeaderTagValue
-    type: String
-    required: true
-    description: 'Header Value'
-    example: 'HEADER_VALUE'
+- name: HeaderTag
+  type: String
+  description: Enter the name of the header to inject. The headers are not defined
+    in the original response. The appliance sends the headers to the client.
+  example: HEADER_NAME
+- name: HeaderTagValue
+  type: String
+  required: true
+  description: Enter the value for the header name.
+  example: HEADER_VALUE

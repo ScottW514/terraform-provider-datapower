@@ -2,23 +2,26 @@ name: DmSOAPHeaderDispositionItem
 model_only: true
 list_item: true
 attributes:
-  - name: Namespace
-    type: String
-    description: 'Namespace URI'
-  - name: LocalName
-    type: String
-    description: 'Header Local Name'
-  - name: ChildLocalName
-    type: String
-    description: 'Child Element Local Name'
-  - name: Action
-    type: String
-    enum:
-      - 'processed'
-      - 'unprocessed'
-      - 'keep'
-      - 'remove'
-      - 'fault'
-    default: 'processed'
-    required: true
-    description: 'Refine Action'
+- name: Namespace
+  type: String
+  description: Specify the namespace URI of the SOAP header element, the default value
+    is a blank string, which indicates no restriction.
+- name: LocalName
+  type: String
+  description: Specify the local name of the SOAP header element, the default value
+    is a blank string, which indicates no restriction.
+- name: ChildLocalName
+  type: String
+  description: Specify the local name of the SOAP header's child element, the default
+    value is a blank string, which indicates no restriction.
+- name: Action
+  type: String
+  enum:
+  - processed
+  - unprocessed
+  - keep
+  - remove
+  - fault
+  default: processed
+  required: true
+  description: Specify what action to take for this SOAP header and/or child element.

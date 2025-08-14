@@ -470,6 +470,7 @@ attributes:
   enum:
   - client
   default: client
+  test_expect_ds: '"proxy"'
   description: TLS client type
   cli_alias: mc-ssl-client-type
 - name: MCLDAPSSLClientProfile

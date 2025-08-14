@@ -69,24 +69,24 @@ Optional:
 
 Required:
 
-- `name` (String) Name
+- `name` (String) Specify the name of the parameter.
   - CLI Alias: `name`
 
 Optional:
 
-- `description` (String) Description
+- `description` (String) Specify a description of the parameter to advertise the parameter to API developers.
   - CLI Alias: `description`
-- `label` (String) Label
+- `label` (String) Specify the label to explain the parameter to API developers.
   - CLI Alias: `label`
-- `required` (Boolean) Required
+- `required` (Boolean) Specify whether this parameter requires a value in an assembly function call.
   - CLI Alias: `required`
   - Default value: `true`
-- `schema` (String) API schema
+- `schema` (String) Specify the API schema to verify the parameter type.
   - CLI Alias: `schema`
   - Reference to: `datapower_apischema:id`
-- `value` (String) Value
+- `value` (String) Specify the default parameter value to pass to the assembly function as a string. The default value is used when no value is passed in the request. The default parameter value is required if the assembly function is called in an assembly function call action and no parameter value is defined in the action. <ul><li>If the default value is a JSON payload, enter the value as a JSON string.</li><li>If the default value is an empty string, it is treated as not specified.</li><li>If the assembly function parameter specifies an API schema, the default parameter value overrides the default value defined in the schema.</li></ul>
   - CLI Alias: `value`
-- `value_type` (String) Value type
+- `value_type` (String) Specify the type of the parameter value.
   - CLI Alias: `value-type`
   - Choices: `string`, `payload`, `message`
   - Default value: `string`

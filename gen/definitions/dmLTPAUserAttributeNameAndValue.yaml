@@ -2,22 +2,25 @@ name: DmLTPAUserAttributeNameAndValue
 model_only: true
 list_item: true
 attributes:
-  - name: LTPAUserAttributeName
-    type: String
-    required: true
-    example: 'name'
-    description: 'Attribute name'
-  - name: LTPAUserAttributeType
-    type: String
-    enum:
-      - 'static'
-      - 'xpath'
-    description: 'Attribute type'
-    test_value: '"static"'
-  - name: LTPAUserAttributeStaticValue
-    type: String
-    description: 'Static attribute value'
-    test_value: '"test"'
-  - name: LTPAUserAttributeXPathValue
-    type: String
-    description: 'XPath attribute value'
+- name: LTPAUserAttributeName
+  type: String
+  required: true
+  example: name
+  description: Specify the name of the attribute.
+- name: LTPAUserAttributeType
+  type: String
+  enum:
+  - static
+  - xpath
+  description: Specify the type of attribute.
+  test_value: '"static"'
+- name: LTPAUserAttributeStaticValue
+  type: String
+  description: 'Specify the fixed value for the attribute. If the value contains <tt>$
+    : %</tt> characters, they are escaped.'
+  test_value: '"test"'
+- name: LTPAUserAttributeXPathValue
+  type: String
+  description: Specify the XPath expression to find the value for the attribute. The
+    expression is evaluated against the input message at run time. The result is the
+    value of the attribute.

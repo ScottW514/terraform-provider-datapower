@@ -51,11 +51,11 @@ var DmRateLimitInfoDomainNamedObjectDefault = map[string]attr.Value{
 var DmRateLimitInfoDomainNamedDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "name", "ratelimitdefinition").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit definition.", "name", "ratelimitdefinition").String,
 			Computed:            true,
 		},
 		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "action", "").AddStringEnum("consume", "replenish", "check", "update").AddDefaultValue("consume").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit definition.", "action", "").AddStringEnum("consume", "replenish", "check", "update").AddDefaultValue("consume").String,
 			Computed:            true,
 		},
 	},
@@ -63,11 +63,11 @@ var DmRateLimitInfoDomainNamedDataSourceSchema = DataSourceSchema.NestedAttribut
 var DmRateLimitInfoDomainNamedResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "name", "ratelimitdefinition").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the rate limit definition.", "name", "ratelimitdefinition").String,
 			Required:            true,
 		},
 		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "action", "").AddStringEnum("consume", "replenish", "check", "update").AddDefaultValue("consume").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the action to apply to the rate limit definition.", "action", "").AddStringEnum("consume", "replenish", "check", "update").AddDefaultValue("consume").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

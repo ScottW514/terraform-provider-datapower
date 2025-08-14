@@ -58,7 +58,7 @@ Optional:
 
 Required:
 
-- `name` (String) Parameter name
+- `name` (String) Specify the name of the parameter.
   - CLI Alias: `name`
-- `value` (String) Parameter value
+- `value` (String) Specify the value of the parameter.
   - CLI Alias: `value`

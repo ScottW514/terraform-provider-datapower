@@ -48,11 +48,11 @@ var DmAPIDataTypeDefinitionObjectDefault = map[string]attr.Value{
 var DmAPIDataTypeDefinitionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the data type.", "", "").String,
 			Computed:            true,
 		},
 		"schema": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schema", "", "apischema").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema object.", "", "apischema").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmAPIDataTypeDefinitionDataSourceSchema = DataSourceSchema.NestedAttributeOb
 var DmAPIDataTypeDefinitionResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the data type.", "", "").String,
 			Required:            true,
 		},
 		"schema": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Schema", "", "apischema").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the API schema object.", "", "apischema").String,
 			Required:            true,
 		},
 	},

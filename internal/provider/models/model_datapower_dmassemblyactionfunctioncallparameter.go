@@ -48,11 +48,11 @@ var DmAssemblyActionFunctionCallParameterObjectDefault = map[string]attr.Value{
 var DmAssemblyActionFunctionCallParameterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
 			Computed:            true,
 		},
 		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "value", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value as a string. The default value is used when no value is passed in the request. When you specify a JSON value, enter the value as a JSON string. This value is required in this assembly action if no default value is specified in the assembly function.", "value", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmAssemblyActionFunctionCallParameterDataSourceSchema = DataSourceSchema.Nes
 var DmAssemblyActionFunctionCallParameterResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
 			Required:            true,
 		},
 		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Value", "value", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the default parameter value as a string. The default value is used when no value is passed in the request. When you specify a JSON value, enter the value as a JSON string. This value is required in this assembly action if no default value is specified in the assembly function.", "value", "").String,
 			Optional:            true,
 		},
 	},

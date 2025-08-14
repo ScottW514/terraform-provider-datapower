@@ -73,13 +73,13 @@ Optional:
 
 Read-Only:
 
-- `fixup` (String) Failure Policy
+- `fixup` (String) Select which action should be taken when a value constraint fails to validate an input. The default is Error.
   - Choices: `passthrough`, `strip`, `error`, `set`
   - Default value: `error`
-- `map_value` (String) Map Value
-- `name` (String) Name Expression
-- `value` (String) Value Constraint
-- `xss` (Boolean) Check XSS
+- `map_value` (String) An value that fails validation is changed to this value if the failure policy is 'set'.
+- `name` (String) The regular expression that the submitted names are matched against. If they match the value must also match against the corresponding value constraint to be passed through.
+- `value` (String) The regular expression (PCRE style) that is applied to a value input to see if it is an expected input
+- `xss` (Boolean) This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.
   - Default value: `false`
-- `xss_patterns_file` (String) XSS (Cross Site Scripting) Protection Patterns File
+- `xss_patterns_file` (String) Specifies the patterns file that will be used by the XSS filter. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.
   - Default value: `store:///XSS-Patterns.xml`

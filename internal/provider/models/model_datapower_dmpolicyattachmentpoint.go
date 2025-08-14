@@ -53,15 +53,15 @@ var DmPolicyAttachmentPointObjectDefault = map[string]attr.Value{
 var DmPolicyAttachmentPointDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"policy_attach_wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Type", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
 			Computed:            true,
 		},
 		"policy_attach_wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a wsdl component formatted {ns}ncname", "", "").String,
 			Computed:            true,
 		},
 		"policy_attach_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -69,18 +69,18 @@ var DmPolicyAttachmentPointDataSourceSchema = DataSourceSchema.NestedAttributeOb
 var DmPolicyAttachmentPointResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"policy_attach_wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Type", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component", "", "").AddStringEnum("service", "port", "fragmentid", "rest").String,
 			Optional:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("service", "port", "fragmentid", "rest"),
 			},
 		},
 		"policy_attach_wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the qname of a wsdl component formatted {ns}ncname", "", "").String,
 			Optional:            true,
 		},
 		"policy_attach_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Optional:            true,
 		},
 	},

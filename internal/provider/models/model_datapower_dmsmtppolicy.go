@@ -63,24 +63,24 @@ var DmSMTPPolicyObjectDefault = map[string]attr.Value{
 var DmSMTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").AddDefaultValue("dpsmtp://*").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").AddDefaultValue("dpsmtp://*").String,
 			Computed:            true,
 		},
 		"recipient": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Recipient e-mail", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the recipient (\"To:\")", "", "").String,
 			Computed:            true,
 		},
 		"sender": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sender e-mail", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender (\"From:\")", "", "").String,
 			Computed:            true,
 		},
 		"subject": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subject", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the subject line of the e-mail.", "", "").String,
 			Computed:            true,
 		},
-		"options": GetDmSMTPOptionsDataSourceSchema("Options", "", ""),
+		"options": GetDmSMTPOptionsDataSourceSchema("Specify the SMTP options to enable for the client.", "", ""),
 		"auth": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authentication method", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
 			Computed:            true,
 		},
 	},
@@ -88,26 +88,26 @@ var DmSMTPPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmSMTPPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").AddDefaultValue("dpsmtp://*").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").AddDefaultValue("dpsmtp://*").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("dpsmtp://*"),
 		},
 		"recipient": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Recipient e-mail", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the recipient (\"To:\")", "", "").String,
 			Optional:            true,
 		},
 		"sender": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sender e-mail", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender (\"From:\")", "", "").String,
 			Optional:            true,
 		},
 		"subject": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subject", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the subject line of the e-mail.", "", "").String,
 			Optional:            true,
 		},
-		"options": GetDmSMTPOptionsResourceSchema("Options", "", "", false),
+		"options": GetDmSMTPOptionsResourceSchema("Specify the SMTP options to enable for the client.", "", "", false),
 		"auth": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Authentication method", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the SMTP client.", "", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

@@ -64,23 +64,23 @@ var DmWSOperationReliableMessagingDataSourceSchema = DataSourceSchema.NestedAttr
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"options": GetDmWSRMPolicyBitmapDataSourceSchema("Reliable Messaging Options", "", ""),
 		"delivery_assurance_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging Delivery Assurance Type", "", "").AddStringEnum("exactly-once").AddDefaultValue("exactly-once").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging", "", "").AddStringEnum("exactly-once").AddDefaultValue("exactly-once").String,
 			Computed:            true,
 		},
 		"reliable_messaging_wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Type", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
 			Computed:            true,
 		},
 		"reliable_messaging_wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
 			Computed:            true,
 		},
 		"reliable_messaging_subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
 			Computed:            true,
 		},
 		"reliable_messaging_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -89,7 +89,7 @@ var DmWSOperationReliableMessagingResourceSchema = ResourceSchema.NestedAttribut
 	Attributes: map[string]ResourceSchema.Attribute{
 		"options": GetDmWSRMPolicyBitmapResourceSchema("Reliable Messaging Options", "", "", false),
 		"delivery_assurance_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging Delivery Assurance Type", "", "").AddStringEnum("exactly-once").AddDefaultValue("exactly-once").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Reliable Messaging", "", "").AddStringEnum("exactly-once").AddDefaultValue("exactly-once").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -98,7 +98,7 @@ var DmWSOperationReliableMessagingResourceSchema = ResourceSchema.NestedAttribut
 			Default: stringdefault.StaticString("exactly-once"),
 		},
 		"reliable_messaging_wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Type", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -107,15 +107,15 @@ var DmWSOperationReliableMessagingResourceSchema = ResourceSchema.NestedAttribut
 			Default: stringdefault.StaticString("all"),
 		},
 		"reliable_messaging_wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field.", "", "").String,
 			Optional:            true,
 		},
 		"reliable_messaging_subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription.", "", "").String,
 			Optional:            true,
 		},
 		"reliable_messaging_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Optional:            true,
 		},
 	},

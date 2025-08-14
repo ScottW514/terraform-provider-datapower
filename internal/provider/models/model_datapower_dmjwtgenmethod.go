@@ -51,11 +51,11 @@ var DmJWTGenMethodDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"sign": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sign", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Sign the JWT", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"encrypt": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Encrypt", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Encrypt the JWT", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 	},
@@ -68,13 +68,13 @@ var DmJWTGenMethodResourceSchema = ResourceSchema.SingleNestedAttribute{
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
 		"sign": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Sign", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Sign the JWT", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"encrypt": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Encrypt", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Encrypt the JWT", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),

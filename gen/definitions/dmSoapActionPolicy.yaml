@@ -2,13 +2,13 @@ name: DmSoapActionPolicy
 model_only: true
 list_item: true
 attributes:
-  - name: RegExp
-    type: String
-    required: true
-    example: '*'
-    description: 'URL matching expression'
-  - name: SoapAction
-    type: String
-    required: true
-    example: '*'
-    description: 'SOAPAction'
+- name: RegExp
+  type: String
+  required: true
+  example: '*'
+  description: Specify the shell-style expression to define the URL set.
+- name: SoapAction
+  type: String
+  required: true
+  example: '*'
+  description: Specify the value for the HTTP SOAPAction header.

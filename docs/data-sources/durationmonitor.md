@@ -67,7 +67,7 @@ Optional:
 
 Read-Only:
 
-- `action` (String) Action
+- `action` (String) Select the monitor policy (Message Filter Action) implemented by the monitor when the target message type exceeds the threshold value. Click the + button to create a new action.
   - Reference to: `datapower_filteraction:id`
-- `name` (String) Name
-- `value` (Number) Value
+- `name` (String) Enter the name of the threshold. This name appears in the logs when the threshold action is taken.
+- `value` (Number) Enter the threshold value in milliseconds.

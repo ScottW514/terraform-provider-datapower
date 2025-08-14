@@ -2,25 +2,29 @@ name: DmURLRefreshRule
 model_only: true
 list_item: true
 attributes:
-  - name: URLMap
-    type: String
-    reference_to: URLMap
-    required: true
-    test_value: '"default-attempt-stream-all"'
-    description: 'URL Map'
-    cli_alias: urlmap
-  - name: URLRefreshPolicy
-    type: String
-    enum:
-      - 'default'
-      - 'no-cache'
-      - 'no-flush'
-      - 'protocol-specified'
-    description: 'Refresh Rule Type'
-    cli_alias: type
-    default: 'default'
-  - name: URLRefreshInterval
-    type: Int64
-    description: 'Refresh Interval'
-    cli_alias: interval
-    default: 0
+- name: URLMap
+  type: String
+  reference_to: URLMap
+  required: true
+  test_value: '"default-attempt-stream-all"'
+  description: URL maps contain one or more shell-style (wildcard) match patterns.
+    Use the values list to select the URL map that supplies the match criteria for
+    the URL Refresh Policy.
+  cli_alias: urlmap
+- name: URLRefreshPolicy
+  type: String
+  enum:
+  - default
+  - no-cache
+  - no-flush
+  - protocol-specified
+  description: Specify how to cache a stylesheet that is obtained with a URL refresh
+    operation. The default is default.
+  cli_alias: type
+  default: default
+- name: URLRefreshInterval
+  type: Int64
+  description: Not used when the refresh rule type is no-cache, specifies the update
+    frequency for stylesheets that fulfill the match criteria.
+  cli_alias: interval
+  default: 0

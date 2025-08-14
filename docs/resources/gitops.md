@@ -105,4 +105,4 @@ Optional:
 
 Optional:
 
-- `remote_policy` (String) Remote policy
+- `remote_policy` (String)

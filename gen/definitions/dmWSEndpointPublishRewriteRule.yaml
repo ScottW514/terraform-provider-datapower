@@ -2,29 +2,34 @@ name: DmWSEndpointPublishRewriteRule
 model_only: true
 list_item: true
 attributes:
-  - name: ServicePortMatchRegexp
-    type: String
-    default: '.*'
-    description: 'Service Port Match Expression'
-    cli_alias: service-port-match
-  - name: PublishedEndpointProtocol
-    type: String
-    enum:
-      - 'default'
-      - 'http'
-      - 'https'
-    default: 'default'
-    description: 'Published Endpoint Protocol'
-    cli_alias: published-endpoint-protocol
-  - name: PublishedEndpointHostname
-    type: String
-    description: 'Published Endpoint Host'
-    cli_alias: published-endpoint-hostname
-  - name: PublishedEndpointPort
-    type: Int64
-    description: 'Published Endpoint Port'
-    cli_alias: published-endpoint-port
-  - name: PublishedEndpointURI
-    type: String
-    description: 'Published Endpoint URI'
-    cli_alias: published-endpoint-path
+- name: ServicePortMatchRegexp
+  type: String
+  default: .*
+  description: Specify a PCRE as the match criteria to identify the web services port.
+    When the PCRE matches a Service Port in WSDL, the rewrite rules is applied.
+  cli_alias: service-port-match
+- name: PublishedEndpointProtocol
+  type: String
+  enum:
+  - default
+  - http
+  - https
+  default: default
+  description: Select the protocol portion of the rewritten web service binding used
+    by the publish endpoint. The protocol can be different from the one in the WSDL.
+  cli_alias: published-endpoint-protocol
+- name: PublishedEndpointHostname
+  type: String
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    the host name or IP address.
+  cli_alias: published-endpoint-hostname
+- name: PublishedEndpointPort
+  type: Int64
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    the port. If 0, uses the value from the WSDL.
+  cli_alias: published-endpoint-port
+- name: PublishedEndpointURI
+  type: String
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    the local path. If not specified, uses the value from the WSDL.
+  cli_alias: published-endpoint-path

@@ -53,15 +53,15 @@ var DmMetaItemObjectDefault = map[string]attr.Value{
 var DmMetaItemDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"meta_category": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Metadata Category", "", "").AddStringEnum("all", "mq", "tibco", "wasjms", "http", "CUSTOMIZABLE", "header", "variable").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the category for the Metadata Item. The Metadata Item selections change according to the selected category. To create a custom Metadata Item, select either Custom Header or Custom Variable. For a custom Metadata Item, specify the name of the metadata item and its data source.", "", "").AddStringEnum("all", "mq", "tibco", "wasjms", "http", "CUSTOMIZABLE", "header", "variable").String,
 			Computed:            true,
 		},
 		"meta_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Metadata Item", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>For all except custom items, select a Metadata Item. The list provides an alias for the actual name of a protocol header or system variable. The elements contained in the XML nodeset that is returned by the Processing Metadata object have names that correspond to the actual data source</p><p>For custom items, enter an alphanumeric string for this custom alias. The string cannot contain white space.</p>", "", "").String,
 			Computed:            true,
 		},
 		"data_source": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom Data Source", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("For custom items only, enter the name of the protocol header or the name of the variable (service, context, or system) that contains the data to be returned in the metadata XML nodeset. The provided value is the name of the element in the returned nodeset that contains the data.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -69,18 +69,18 @@ var DmMetaItemDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmMetaItemResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"meta_category": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Metadata Category", "", "").AddStringEnum("all", "mq", "tibco", "wasjms", "http", "CUSTOMIZABLE", "header", "variable").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the category for the Metadata Item. The Metadata Item selections change according to the selected category. To create a custom Metadata Item, select either Custom Header or Custom Variable. For a custom Metadata Item, specify the name of the metadata item and its data source.", "", "").AddStringEnum("all", "mq", "tibco", "wasjms", "http", "CUSTOMIZABLE", "header", "variable").String,
 			Required:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("all", "mq", "tibco", "wasjms", "http", "CUSTOMIZABLE", "header", "variable"),
 			},
 		},
 		"meta_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Metadata Item", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("<p>For all except custom items, select a Metadata Item. The list provides an alias for the actual name of a protocol header or system variable. The elements contained in the XML nodeset that is returned by the Processing Metadata object have names that correspond to the actual data source</p><p>For custom items, enter an alphanumeric string for this custom alias. The string cannot contain white space.</p>", "", "").String,
 			Required:            true,
 		},
 		"data_source": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom Data Source", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("For custom items only, enter the name of the protocol header or the name of the variable (service, context, or system) that contains the data to be returned in the metadata XML nodeset. The provided value is the name of the element in the returned nodeset that contains the data.", "", "").String,
 			Optional:            true,
 		},
 	},

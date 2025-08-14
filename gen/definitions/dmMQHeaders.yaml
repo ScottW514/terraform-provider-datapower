@@ -1,27 +1,27 @@
 name: DmMQHeaders
 model_only: true
 attributes:
-  - name: MQCIH
-    type: Bool
-    default: false
-    description: 'CICS Bridge Header (MQCIH)'
-  - name: MQDLH
-    type: Bool
-    default: false
-    description: 'Dead Letter Header (MQDLH)'
-  - name: MQIIH
-    type: Bool
-    default: false
-    description: 'IMS Information Header (MQIIH)'
-  - name: MQRFH
-    type: Bool
-    default: false
-    description: 'Rules and Formatting Header (MQRFH)'
-  - name: MQRFH2
-    type: Bool
-    default: false
-    description: 'Rules and Formatting Header (MQRFH2)'
-  - name: MQWIH
-    type: Bool
-    default: false
-    description: 'Work Information Header (MQWIH)'
+- name: MQCIH
+  type: Bool
+  default: false
+  description: CICS Bridge Header (MQCIH)
+- name: MQDLH
+  type: Bool
+  default: false
+  description: Dead Letter Header (MQDLH)
+- name: MQIIH
+  type: Bool
+  default: false
+  description: IMS Information Header (MQIIH)
+- name: MQRFH
+  type: Bool
+  default: false
+  description: Rules and Formatting Header (MQRFH)
+- name: MQRFH2
+  type: Bool
+  default: false
+  description: Rules and Formatting Header (MQRFH2)
+- name: MQWIH
+  type: Bool
+  default: false
+  description: Work Information Header (MQWIH)

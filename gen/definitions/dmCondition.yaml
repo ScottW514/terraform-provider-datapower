@@ -2,13 +2,13 @@ name: DmCondition
 model_only: true
 list_item: true
 attributes:
-  - name: Expression
-    type: String
-    required: true
-    example: '*'
-    description: 'XPath expression'
-  - name: ConditionAction
-    type: String
-    required: true
-    example: '*'
-    description: 'Action'
+- name: Expression
+  type: String
+  required: true
+  example: '*'
+  description: The expression to check for the condition.
+- name: ConditionAction
+  type: String
+  required: true
+  example: '*'
+  description: The action to run when the expression is matched.

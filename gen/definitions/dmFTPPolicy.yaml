@@ -2,72 +2,94 @@ name: DmFTPPolicy
 model_only: true
 list_item: true
 attributes:
-  - name: RegExp
-    type: String
-    required: true
-    example: '*'
-    description: 'URL matching expression'
-  - name: Passive
-    type: String
-    enum:
-      - 'pasv-off'
-      - 'pasv-opt'
-      - 'pasv-req'
-    required: true
-    default: 'pasv-req'
-    description: 'Passive mode'
-  - name: AuthTLS
-    type: String
-    enum:
-      - 'auth-off'
-      - 'auth-tls-opt'
-      - 'auth-tls-req'
-      - 'auth-tls-imp'
-    required: true
-    default: 'auth-off'
-    description: 'Encrypt command connection'
-  - name: UseCCC
-    type: String
-    enum:
-      - 'ccc-off'
-      - 'ccc-opt'
-      - 'ccc-req'
-    required: true
-    default: 'ccc-off'
-    description: 'Stop command encryption after authentication'
-  - name: EncryptData
-    type: String
-    enum:
-      - 'enc-data-off'
-      - 'enc-data-opt'
-      - 'enc-data-req'
-    required: true
-    default: 'enc-data-off'
-    description: 'Encrypt file transfers'
-  - name: DataType
-    type: String
-    enum:
-      - 'ascii'
-      - 'binary'
-    required: true
-    default: 'binary'
-    description: 'Data type'
-  - name: SlashSTOU
-    type: String
-    enum:
-      - 'slash-stou-off'
-      - 'slash-stou-on'
-    required: true
-    default: 'slash-stou-on'
-    description: 'Write unique file name if trailing slash'
-  - name: QuotedCommands
-    type: String
-    reference_to: FTPQuoteCommands
-    description: 'Quoted commands'
-  - name: SizeCheck
-    type: String
-    enum:
-      - 'size-check-optional'
-      - 'size-check-disabled'
-    default: 'size-check-optional'
-    description: 'Size check'
+- name: RegExp
+  type: String
+  required: true
+  example: '*'
+  description: Specify the shell-style expression to define the URL set.
+- name: Passive
+  type: String
+  enum:
+  - pasv-off
+  - pasv-opt
+  - pasv-req
+  required: true
+  default: pasv-req
+  description: Specify the use of FTP passive mode to control in which direction FTP
+    data connections are made.
+- name: AuthTLS
+  type: String
+  enum:
+  - auth-off
+  - auth-tls-opt
+  - auth-tls-req
+  - auth-tls-imp
+  required: true
+  default: auth-off
+  description: Specify the use of TLS to secure FTP command connections.
+- name: UseCCC
+  type: String
+  enum:
+  - ccc-off
+  - ccc-opt
+  - ccc-req
+  required: true
+  default: ccc-off
+  description: Specify the cessation of FTP command channel encryption after user
+    authentication. Encryption must be stopped for compatibility with NAT and other
+    firewall applications. Although a security risk, no other option exists when NAT
+    is in use.
+- name: EncryptData
+  type: String
+  enum:
+  - enc-data-off
+  - enc-data-opt
+  - enc-data-req
+  required: true
+  default: enc-data-off
+  description: Specify the use of encryption of file transfers. Compatible with NAT
+    in all settings.
+- name: DataType
+  type: String
+  enum:
+  - ascii
+  - binary
+  required: true
+  default: binary
+  description: Specify the default file transfer data type. In most cases, the value
+    of binary is appropriate.
+- name: SlashSTOU
+  type: String
+  enum:
+  - slash-stou-off
+  - slash-stou-on
+  required: true
+  default: slash-stou-on
+  description: Specify whether to create a unique file if the name contains a trailing
+    slash. Some FTP servers provide the STOU command. Use the command only if the
+    FTP server supports this command. The STOU command allows the server to choose
+    the unique file name in the current directory. Using the STOU command does not
+    require the client to choose a unique file name. When enabled and a URL is given
+    to write that ends in a /, the server uses the STOU command instead of the STOR
+    command.
+- name: QuotedCommands
+  type: String
+  reference_to: FTPQuoteCommands
+  description: Specify the list of FTP commands to send to the server before each
+    FTP STOR, STOU, or RETR command. Useful with "SITE" commands, such as "SITE RECFM=FB"
+    for the MVS domain on a z/OS system. These commands cannot be data-transfer related,
+    such as STOU, RETR, PORT, PASV, etc.
+- name: SizeCheck
+  type: String
+  enum:
+  - size-check-optional
+  - size-check-disabled
+  default: size-check-optional
+  description: Specify whether to check the file size after file transfer. Uses the
+    SIZE command, and compares the returned number to the number of bytes transferred
+    "over the wire" for the file transfer. If the numbers are not equal, the file
+    transfer is marked as failing. If the FTP server does not support the SIZE command,
+    no error results. Some FTP servers, particularly vsftpd in the default configuration,
+    provide inaccurate SIZE responses for files transferred in ASCII mode. If you
+    get such errors, you can disable this feature. Alternately you can reconfigure
+    vsftpd.

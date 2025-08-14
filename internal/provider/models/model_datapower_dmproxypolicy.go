@@ -55,19 +55,19 @@ var DmProxyPolicyObjectDefault = map[string]attr.Value{
 var DmProxyPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Computed:            true,
 		},
 		"skip": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Skip", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"remote_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote host", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").String,
 			Computed:            true,
 		},
 		"remote_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote port", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -75,21 +75,21 @@ var DmProxyPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmProxyPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Required:            true,
 		},
 		"skip": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Skip", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to forward requests to the remote HTTP server. When not enabled, specify the remote host and port of the HTTP server.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"remote_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote host", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the remote HTTP server.", "", "").String,
 			Optional:            true,
 		},
 		"remote_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote port", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the port on the remote HTTP server.", "", "").String,
 			Required:            true,
 		},
 	},

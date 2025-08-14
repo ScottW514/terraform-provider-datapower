@@ -54,15 +54,15 @@ var DmTAMAZReplicaObjectDefault = map[string]attr.Value{
 var DmTAMAZReplicaDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"tamaz_replica": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Host", "host", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP host name of the authorization server replica.", "host", "").String,
 			Computed:            true,
 		},
 		"tamaz_replica_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Port", "port", "").AddDefaultValue("7136").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the authorization server replica. The default value is 7136.", "port", "").AddDefaultValue("7136").String,
 			Computed:            true,
 		},
 		"tamaz_replica_weight": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Weight", "weight", "").AddIntegerRange(1, 10).AddDefaultValue("10").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the weight of the authorization server replica. The greater the weight, the higher the preference. Enter a value in the range 1 - 10. The default value is 10.", "weight", "").AddIntegerRange(1, 10).AddDefaultValue("10").String,
 			Computed:            true,
 		},
 	},
@@ -70,17 +70,17 @@ var DmTAMAZReplicaDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmTAMAZReplicaResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"tamaz_replica": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Host", "host", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP host name of the authorization server replica.", "host", "").String,
 			Required:            true,
 		},
 		"tamaz_replica_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Port", "port", "").AddDefaultValue("7136").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the authorization server replica. The default value is 7136.", "port", "").AddDefaultValue("7136").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             int64default.StaticInt64(7136),
 		},
 		"tamaz_replica_weight": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Weight", "weight", "").AddIntegerRange(1, 10).AddDefaultValue("10").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the weight of the authorization server replica. The greater the weight, the higher the preference. Enter a value in the range 1 - 10. The default value is 10.", "weight", "").AddIntegerRange(1, 10).AddDefaultValue("10").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{

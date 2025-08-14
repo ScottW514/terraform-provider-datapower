@@ -137,36 +137,36 @@ Optional:
 
 Optional:
 
-- `cache_backend_responses` (Boolean) Cache Back-end Responses
+- `cache_backend_responses` (Boolean) Caches responses to requests from back-end servers.
   - CLI Alias: `cache-backend-response`
   - Default value: `false`
-- `cache_unsafe_response` (Boolean) Cache Response to POST and PUT Requests
+- `cache_unsafe_response` (Boolean) Caches responses to POST and PUT requests when the cache policy type is set to fixed. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.
   - CLI Alias: `cache-unsafe-response`
   - Default value: `false`
-- `http_cache_validation` (Boolean) HTTP Cache Validation
+- `http_cache_validation` (Boolean) When a requested HTTP document results in a cache hit, HTTP cache validation with the origin server is performed.
   - CLI Alias: `http-cache-validation`
   - Default value: `false`
-- `match` (String) URL Match Expression
+- `match` (String) Provide a literal or wildcard expression to define a URL set included in the cache policy. The following wildcard characters are available. <table><tr><td valign="top">asterisk (*)</td><td valign="top">Matches 0 or more occurrences of any character.</td></tr><tr><td valign="top">question mark (?)</td><td valign="top">Matches one occurrence of any single character.</td></tr><tr><td valign="top">brackets ( [ ] )</td><td valign="top">Defines a character or numeric range. For example, <tt>[1-5]</tt> matches 1, 2, 3, 4, or 5, while <tt>xs[dl]</tt> matches xsd or xsl.</td></tr></table>
   - CLI Alias: `match`
-- `priority` (Number) Priority
+- `priority` (Number) <p>Specifies the priority of a document to add to or remove from the cache. The greater the value, the higher its priority. Enter a value in the range 1 - 255. The default value is 128.</p><ul><li>When adding documents, the cache uses the policy with the highest priority. If the document matches multiple policies with the same priority, the cache uses the first matching policy in the alphabetized list.</li><li>When removing documents, the cache removes documents that were added by policies with the lowest priority. If multiple documents have the same priority, the cache removes the document that was least recently accessed.</li></ul><p>When you define multiple policies, the DataPower Gateway retains the policies in an alphabetized list. The DataPower Gateway evaluates candidate documents against each policy. Consequently, the priority of policies is important to ensure that the DataPower Gateway caches candidate documents for the appropriate validity period.</p><ul><li>Use a high priority for policies that you want to cache.</li><li>Use a low priority for generic policies. For example, set the priority to 1 when <tt>*</tt> or <tt>*.xml</tt> is the match pattern.</li></ul>
   - CLI Alias: `priority`
   - Range: `1`-`255`
   - Default value: `128`
-- `rest_invalidation` (Boolean) RESTful Invalidation
+- `rest_invalidation` (Boolean) Invalidate document cache on unsafe requests. For example, HTTP GET requests are safe requests that do not change the internal state of the server. When an HTTP POST to the same URL occurs, the cache needs to be invalidated because the internal state of the server might have changed. The next GET request must contact the origin service to update the cache with any changes.
   - CLI Alias: `rest-invalidation`
   - Default value: `false`
-- `return_expired` (Boolean) Return Expired Document
+- `return_expired` (Boolean) <p>In the following situations, whether to return expired content when a client requests it. <ul><li>The DataPower Gateway cannot establish a connection with the origin server.</li><li>The document cache is getting the newest version from the origin server.</li></ul></p><p>A document might persist in the cache after the document is expired. When enabled, the cached document is returned even though it is potentially stale. A warning header indicates that the document is stale.</p>
   - CLI Alias: `return-expired`
   - Default value: `false`
-- `ttl` (Number) TTL
+- `ttl` (Number) Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.
   - CLI Alias: `ttl`
   - Range: `5`-`31708800`
   - Default value: `900`
-- `type` (String) Policy Type
+- `type` (String) Select the cache type. The cache type determines whether to cache documents and the mechanism to use to remove cached entries. The default value is Protocol-Based.
   - CLI Alias: `type`
   - Choices: `protocol`, `no-cache`, `fixed`
   - Default value: `protocol`
-- `xc10_grid` (String) Cache Grid
+- `xc10_grid` (String) The eXtreme Scale grid configuration to use for caching documents.
   - CLI Alias: `xc10-grid`
 
 
@@ -175,12 +175,12 @@ Optional:
 
 Required:
 
-- `rule` (String) Rule
+- `rule` (String) Select the rule to run.
   - Reference to: `datapower_stylepolicyrule:id`
 
 Optional:
 
-- `interval` (Number) Interval
+- `interval` (Number) Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.
 
 
 <a id="nestedatt--schema_validation"></a>
@@ -188,14 +188,14 @@ Optional:
 
 Required:
 
-- `matching` (String) URL Match
+- `matching` (String) Select the matching rule that is applied to candidate XML documents. Documents whose URL conforms to an expression contained in the matching rule are subject to XML schema validation.
   - Reference to: `datapower_matching:id`
-- `validation_mode` (String) Validation Mode
+- `validation_mode` (String) Select the procedure to use to validate a schema.
   - Choices: `default`, `schema`, `schema-rewrite`, `attribute-rewrite`, `dynamic-schema`
 
 Optional:
 
-- `dynamic_schema` (String) Dynamic Schema
-- `schema_url` (String) Schema URL
-- `url_rewrite_policy` (String) URL Rewrite Policy
+- `dynamic_schema` (String) Select a dynamic schema used to perform document validation regardless of any validation processing instructions contained within the document. Dynamic schemas used Schema Exception Maps or Document Crypto Maps.
+- `schema_url` (String) Enter the URL of the schema to use for validation. Used only when the Validation Mode is schema or schema-rewrite.
+- `url_rewrite_policy` (String) Select a URL Rewrite Policy from the list. Used only the Validation Mode is attribute-rewrite or schema-rewrite.
   - Reference to: `datapower_urlrewritepolicy:id`

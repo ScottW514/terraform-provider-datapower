@@ -88,9 +88,9 @@ Read-Only:
 
 Read-Only:
 
-- `access_profile_name` (String) Access profile
+- `access_profile_name` (String) Specify the access policies to enforce. Each policy defines permissions to a specific resource group.
   - CLI Alias: `access-profile`
   - Reference to: `datapower_accessprofile:id`
-- `directory` (String) Location
+- `directory` (String) Specify the directory to watch for changes to configuration files. Processing scans the directory for configuration files that match a given PCRE pattern and runs only the matching files. By default, this directory is also where the generated output files are stored.
   - CLI Alias: `directory`
   - Default value: `local:///`

@@ -2,19 +2,21 @@ name: DmHeaderInjection
 model_only: true
 list_item: true
 attributes:
-  - name: Direction
-    type: String
-    enum:
-      - 'front'
-      - 'back'
-    example: 'front'
-    description: 'Direction'
-  - name: HeaderTag
-    type: String
-    description: 'Header Name'
-    example: 'HEADER-TAG'
-  - name: HeaderTagValue
-    type: String
-    required: true
-    description: 'Header Value'
-    example: 'Some Header Value'
+- name: Direction
+  type: String
+  enum:
+  - front
+  - back
+  example: front
+  description: Select the direction of the message.
+- name: HeaderTag
+  type: String
+  description: Enter the name of the header to inject. Even though the headers are
+    not defined in the original request, the device provides the specified headers
+    to the backend server.
+  example: HEADER-TAG
+- name: HeaderTagValue
+  type: String
+  required: true
+  description: Enter the value for the header tag.
+  example: Some Header Value

@@ -2,51 +2,63 @@ name: DmWSEndpointLocalRewriteRule
 model_only: true
 list_item: true
 attributes:
-  - name: ServicePortMatchRegexp
-    type: String
-    default: '.*'
-    description: 'Service Port Match Expression'
-    cli_alias: service-port-match
-  - name: LocalEndpointProtocol
-    type: String
-    enum:
-      - 'default'
-      - 'http'
-      - 'https'
-    default: 'default'
-    description: 'Local Endpoint Protocol'
-    cli_alias: local-endpoint-protocol
-  - name: LocalEndpointHostname
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local Endpoint Host'
-    cli_alias: local-endpoint-hostname
-  - name: LocalEndpointPort
-    type: Int64
-    description: 'Local Endpoint Port'
-    cli_alias: local-endpoint-port
-  - name: LocalEndpointURI
-    type: String
-    description: 'Local Endpoint URI'
-    cli_alias: local-endpoint-uri
-  - name: FrontProtocol
-    type: String
-    description: 'Local Endpoint Handler'
-  - name: UseFrontProtocol
-    type: Bool
-    default: false
-    description: 'Use Local Endpoint Handler'
-  - name: WSDLBindingProtocol
-    type: String
-    enum:
-      - 'default'
-      - 'soap-11'
-      - 'soap-12'
-      - 'http-get'
-      - 'http-post'
-    default: 'default'
-    description: 'Local Endpoint WSDL Binding Protocol'
-  - name: FrontsidePortSuffix
-    type: String
-    description: 'Local Endpoint WSDL Port Name Suffix'
+- name: ServicePortMatchRegexp
+  type: String
+  default: .*
+  description: Specify a PCRE as the match criteria to identify the web services port.
+    When the PCRE matches a Service Port in WSDL, the rewrite rules is applied.
+  cli_alias: service-port-match
+- name: LocalEndpointProtocol
+  type: String
+  enum:
+  - default
+  - http
+  - https
+  default: default
+  description: Select the protocol portion of the rewritten web service binding used
+    by the local endpoint. The protocol can be different from the one in the WSDL.
+  cli_alias: local-endpoint-protocol
+- name: LocalEndpointHostname
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: Specify the URL protion of the rewritten web service binding that specifies
+    the host name or IP address. A value of 0.0.0.0 indicates that the Web Service
+    Proxy listens on all of the interfaces. Alternatively, you can specify a Host
+    Alias.
+  cli_alias: local-endpoint-hostname
+- name: LocalEndpointPort
+  type: Int64
+  description: Specify the URL portion of the rewritten web service binding that specifies
+    the port. If 0, uses the value from the WSDL.
+  cli_alias: local-endpoint-port
+- name: LocalEndpointURI
+  type: String
+  description: Specify the URL portion of the rewrriten web service binding that specifies
+    the local path. If not specified, uses the value that is specified in the WSDL.
+  cli_alias: local-endpoint-uri
+- name: FrontProtocol
+  type: String
+  description: Select the Front Side Handler to use to determine the IP address, port,
+    and protocol.
+- name: UseFrontProtocol
+  type: Bool
+  default: false
+  description: Use a Front Side Handler to determine the IP address, port, and protocol
+    for matching WSDL service port. Selecting this mode overrides these values in
+    this rewrite rule.
+- name: WSDLBindingProtocol
+  type: String
+  enum:
+  - default
+  - soap-11
+  - soap-12
+  - http-get
+  - http-post
+  default: default
+  description: Specify the WSDL binding protocol to use in the rewritten Web service.
+- name: FrontsidePortSuffix
+  type: String
+  description: Specify a suffix to add to the name of the WSDL port that will be used
+    to represent this service endpoint in the rewritten Web service. If empty, rewrite
+    the original port. The original port can only be rewritten once.

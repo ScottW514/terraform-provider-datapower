@@ -2,13 +2,14 @@ name: DmAssemblyLogicExecute
 model_only: true
 list_item: true
 attributes:
-  - name: Condition
-    type: String
-    example: 'condition'
-    required: true
-    description: 'Condition'
-  - name: Execute
-    type: String
-    example: 'default-api-rule'
-    required: true
-    description: 'Execute'
+- name: Condition
+  type: String
+  example: condition
+  required: true
+  description: Specify the JSONata expression to match against the input.
+- name: Execute
+  type: String
+  example: default-api-rule
+  required: true
+  description: Specify the name of the API rule to run when the JSONata expression
+    evaluates to true. The specified API rule can define further switch assembly actions.

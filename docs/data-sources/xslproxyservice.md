@@ -108,13 +108,13 @@ Optional:
 
 Read-Only:
 
-- `client_ip` (String) Client-IP Match
-- `in_url_match` (String) Inbound URL Match
-- `out_url_match` (String) Outbound URL Match
-- `rule_match` (String) Processing Rule Match
-- `rule_type` (String) Processing Type
+- `client_ip` (String) Specify a PCRE to match against client IP addresses. Requests from clients with matching IP addresses will trigger the probe. To create a match for all IP addresses, specify .* instead of * as the PCRE.
+- `in_url_match` (String) Specify a PCRE to match against the inbound URLs. Requests from clients with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.
+- `out_url_match` (String) Specify a PCRE to match against the outbound URLs. Responses from servers with matching URLs will trigger the probe. To create a match for all URLs, specify .* instead of * as the PCRE.
+- `rule_match` (String) Specify a PCRE to match against names of processing rules. Rules with matching names will trigger the probe. To create a match for all names, specify .* instead of * as the PCRE.
+- `rule_type` (String) Select the rule direction or type that will trigger the probe.
   - Choices: `all`, `response`, `request`, `call`, `error`, `scheduled`, `lbhealth`
-- `x_path` (String) XPath Expression Match
+- `x_path` (String) Specify an XPath expression of use the XPath Tool to define an XPath expression to match against messages. Messages that contain the expression will trigger the probe.
 
 
 <a id="nestedatt--result--header_injection"></a>
@@ -122,10 +122,10 @@ Read-Only:
 
 Read-Only:
 
-- `direction` (String) Direction
+- `direction` (String) Select the direction of the message.
   - Choices: `front`, `back`
-- `header_tag` (String) Header Name
-- `header_tag_value` (String) Header Value
+- `header_tag` (String) Enter the name of the header to inject. Even though the headers are not defined in the original request, the device provides the specified headers to the backend server.
+- `header_tag_value` (String) Enter the value for the header tag.
 
 
 <a id="nestedatt--result--header_suppression"></a>
@@ -133,9 +133,9 @@ Read-Only:
 
 Read-Only:
 
-- `direction` (String) Direction
+- `direction` (String) Select the direction of the message.
   - Choices: `front`, `back`
-- `header_tag` (String) Header Tag
+- `header_tag` (String) Enter the name of the header to suppress. When these headers are defined in the original request, the device removes the specified headers before forwarding the request to the backend server.
 
 
 <a id="nestedatt--result--http_version"></a>
@@ -143,10 +143,10 @@ Read-Only:
 
 Read-Only:
 
-- `back` (String) HTTP Version to Server
+- `back` (String) Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.
   - Choices: `HTTP/1.0`, `HTTP/1.1`
   - Default value: `HTTP/1.1`
-- `front` (String) HTTP Version to Client
+- `front` (String) Select the HTTP version to use on the client-side connection. The default is HTTP 1.1.
   - Choices: `HTTP/1.0`, `HTTP/1.1`
   - Default value: `HTTP/1.1`
 
@@ -156,5 +156,5 @@ Read-Only:
 
 Read-Only:
 
-- `parameter_name` (String) Parameter Name
-- `parameter_value` (String) Parameter Value
+- `parameter_name` (String) <p>Specify the name for the stylesheet parameter. The following list identifies common stylesheet parameters:</p><ul><li>decrypt-key: For decryption operations, the name of the Key object to be used.</li><li>keypair-key: For signing operations, the name of the Key object to be used.</li><li>keypair-cert: For signing operations, the name of the Certificate object to be used.</li><li>recipient: For encryption operations, the name of the Certificate object for the intended recipient.</li><li>valcred: For authentication, the name of the Validation Credentials object to be used.</li></ul>
+- `parameter_value` (String) Specify the value for the parameter. Typically, the value is the name of a configuration object.

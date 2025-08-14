@@ -49,11 +49,11 @@ var DmB2BActiveGroupObjectDefault = map[string]attr.Value{
 var DmB2BActiveGroupDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"profile_group": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Profile group", "group", "b2bprofilegroup").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile group.", "group", "b2bprofilegroup").String,
 			Computed:            true,
 		},
 		"group_enabled": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable group", "enabled", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the profile group. This setting does not modify the administrative state in the B2B partner profile group.", "enabled", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 	},
@@ -61,11 +61,11 @@ var DmB2BActiveGroupDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmB2BActiveGroupResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"profile_group": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Profile group", "group", "b2bprofilegroup").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the profile group.", "group", "b2bprofilegroup").String,
 			Optional:            true,
 		},
 		"group_enabled": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable group", "enabled", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the profile group. This setting does not modify the administrative state in the B2B partner profile group.", "enabled", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),

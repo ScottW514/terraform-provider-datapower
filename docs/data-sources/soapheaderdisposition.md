@@ -65,9 +65,9 @@ Optional:
 
 Read-Only:
 
-- `action` (String) Refine Action
+- `action` (String) Specify what action to take for this SOAP header and/or child element.
   - Choices: `processed`, `unprocessed`, `keep`, `remove`, `fault`
   - Default value: `processed`
-- `child_local_name` (String) Child Element Local Name
-- `local_name` (String) Header Local Name
-- `namespace` (String) Namespace URI
+- `child_local_name` (String) Specify the local name of the SOAP header's child element, the default value is a blank string, which indicates no restriction.
+- `local_name` (String) Specify the local name of the SOAP header element, the default value is a blank string, which indicates no restriction.
+- `namespace` (String) Specify the namespace URI of the SOAP header element, the default value is a blank string, which indicates no restriction.

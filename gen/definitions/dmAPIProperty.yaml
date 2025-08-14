@@ -2,17 +2,19 @@ name: DmAPIProperty
 model_only: true
 list_item: true
 attributes:
-  - name: PropertyName
-    type: String
-    required: true
-    example: 'propertyname'
-    description: 'Property name'
-  - name: Catalog
-    type: String
-    required: true
-    default: '*'
-    description: 'Catalog'
-  - name: Value
-    type: String
-    example: 'value'
-    description: 'Value'
+- name: PropertyName
+  type: String
+  required: true
+  example: propertyname
+  description: Specify the property name.
+- name: Catalog
+  type: String
+  required: true
+  default: '*'
+  description: Specify the catalog name. The name must match the name of an API catalog
+    in the API collection. The default value is <tt>*</tt> , which indicates that
+    the value applies to all catalogs.
+- name: Value
+  type: String
+  example: value
+  description: Specify the property value.

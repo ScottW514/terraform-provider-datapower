@@ -2,40 +2,47 @@ name: DmWSSLMOps
 model_only: true
 list_item: true
 attributes:
-  - name: Operation
-    type: String
-    enum:
-      - 'all'
-    required: true
-    default: 'all'
-    description: 'Operation name'
-    cli_alias: operation
-  - name: Target
-    type: String
-    enum:
-      - 'front'
-      - 'rate'
-    required: true
-    example: 'front'
-    description: 'Target to monitor'
-    cli_alias: target
-  - name: Severity
-    type: String
-    enum:
-      - 'low'
-      - 'high'
-    required: true
-    example: 'low'
-    description: 'Threshold Level'
-    cli_alias: severity
-  - name: Threshold
-    type: Int64
-    description: 'Threshold value'
-    cli_alias: threshold
-  - name: Action
-    type: String
-    enum:
-      - 'log'
-      - 'throttle'
-    description: 'Threshold action'
-    cli_alias: action
+- name: Operation
+  type: String
+  enum:
+  - all
+  required: true
+  default: all
+  description: Specify the name of the operation to monitor. The operation is defined
+    in the WSDL file. The current implementation is to monitor all operations in the
+    WSDL file.
+  cli_alias: operation
+- name: Target
+  type: String
+  enum:
+  - front
+  - rate
+  required: true
+  example: front
+  description: Specify the target activity to monitor. Define the operation for each
+    monitored activity.
+  cli_alias: target
+- name: Severity
+  type: String
+  enum:
+  - low
+  - high
+  required: true
+  example: low
+  description: Specify the action threshold with its value. For example, you can define
+    low and high thresholds as transactions rates increase. If the low threshold is
+    100 transactions/second and that limit is reached, some action is taken. Then,
+    if the high threshold is 300 transactions/second and that limit is reached, another
+    action is taken.
+  cli_alias: severity
+- name: Threshold
+  type: Int64
+  description: Specify the threshold value in TPS to trigger the action.
+  cli_alias: threshold
+- name: Action
+  type: String
+  enum:
+  - log
+  - throttle
+  description: Specify the action to take when the threshold is reached.
+  cli_alias: action

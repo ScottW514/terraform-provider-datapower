@@ -2,14 +2,14 @@ name: DmAssemblyCatch
 model_only: true
 list_item: true
 attributes:
-  - name: Error
-    type: String
-    required: true
-    example: 'errorname'
-    description: 'Error name'
-  - name: Handler
-    type: String
-    reference_to: APIRule
-    required: true
-    test_value: '"default-api-rule"'
-    description: 'Error handler'
+- name: Error
+  type: String
+  required: true
+  example: errorname
+  description: Specifies the name of a custom error.
+- name: Handler
+  type: String
+  reference_to: APIRule
+  required: true
+  test_value: '"default-api-rule"'
+  description: Specifies the name of the error handler for the custom error.

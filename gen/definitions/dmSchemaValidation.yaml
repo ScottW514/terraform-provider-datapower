@@ -2,30 +2,36 @@ name: DmSchemaValidation
 model_only: true
 list_item: true
 attributes:
-  - name: Matching
-    type: String
-    reference_to: Matching
-    required: true
-    test_value: '"__default-accept-service-providers__"'
-    description: 'URL Match'
-  - name: ValidationMode
-    type: String
-    enum:
-      - 'default'
-      - 'schema'
-      - 'schema-rewrite'
-      - 'attribute-rewrite'
-      - 'dynamic-schema'
-    required: true
-    description: 'Validation Mode'
-    example: 'default'
-  - name: SchemaURL
-    type: String
-    description: 'Schema URL'
-  - name: URLRewritePolicy
-    type: String
-    reference_to: URLRewritePolicy
-    description: 'URL Rewrite Policy'
-  - name: DynamicSchema
-    type: String
-    description: 'Dynamic Schema'
+- name: Matching
+  type: String
+  reference_to: Matching
+  required: true
+  test_value: '"__default-accept-service-providers__"'
+  description: Select the matching rule that is applied to candidate XML documents.
+    Documents whose URL conforms to an expression contained in the matching rule are
+    subject to XML schema validation.
+- name: ValidationMode
+  type: String
+  enum:
+  - default
+  - schema
+  - schema-rewrite
+  - attribute-rewrite
+  - dynamic-schema
+  required: true
+  description: Select the procedure to use to validate a schema.
+  example: default
+- name: SchemaURL
+  type: String
+  description: Enter the URL of the schema to use for validation. Used only when the
+    Validation Mode is schema or schema-rewrite.
+- name: URLRewritePolicy
+  type: String
+  reference_to: URLRewritePolicy
+  description: Select a URL Rewrite Policy from the list. Used only the Validation
+    Mode is attribute-rewrite or schema-rewrite.
+- name: DynamicSchema
+  type: String
+  description: Select a dynamic schema used to perform document validation regardless
+    of any validation processing instructions contained within the document. Dynamic
+    schemas used Schema Exception Maps or Document Crypto Maps.

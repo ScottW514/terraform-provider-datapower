@@ -2,30 +2,38 @@ name: DmAPIProxyPolicy
 model_only: true
 list_item: true
 attributes:
-  - name: RegExp
-    type: String
-    required: true
-    example: '*'
-    description: 'URL matching expression'
-  - name: Skip
-    type: Bool
-    required: true
-    default: false
-    description: 'Skip'
-  - name: RemoteAddress
-    type: String
-    example: "localhost"
-    description: 'Remote host'
-  - name: RemotePort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    example: 8888
-    description: 'Remote port'
-  - name: UserName
-    type: String
-    description: 'Username'
-  - name: Password
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password'
+- name: RegExp
+  type: String
+  required: true
+  example: '*'
+  description: Specify the shell-style match pattern that defines a URL set. The URL
+    set is assigned to a specific HTTP proxy.
+- name: Skip
+  type: Bool
+  required: true
+  default: false
+  description: Specify how to treat the URL set for the match pattern. When set to
+    on, the URL set is not forwarded to an HTTP proxy, and the remote host and remote
+    port of a proxy are not defined. When set to off, the URL set is forwarded to
+    the HTTP proxy designated by the remote host and remote port.
+- name: RemoteAddress
+  type: String
+  example: localhost
+  description: Specify the hostname or IP address of an HTTP server. With the remote
+    port, this setting designates the HTTP proxy that services the URL set for the
+    match pattern. When Skip is on, the remote host is not used.
+- name: RemotePort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  example: 8888
+  description: Specify the port on the HTTP server. With the remote host, this setting
+    designates the HTTP proxy that services the URL set for the match pattern. When
+    Skip is on, the remote port is not used.
+- name: UserName
+  type: String
+  description: Specify the username for authentication.
+- name: Password
+  type: String
+  reference_to: PasswordAlias
+  description: Specify the password alias for authentication.

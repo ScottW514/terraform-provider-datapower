@@ -60,19 +60,19 @@ var DmNetworkRetryDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"automatic_retry": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Automatic Retry", "auto-retry", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The device can automatically retry connecting to the remote host when a TCP connection failure occurs.", "auto-retry", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"retry_interval": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Retry Interval", "retry-interval", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("This sets the number of seconds to wait between attempting to retry failed connections to a remote host.", "retry-interval", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
 			Computed:            true,
 		},
 		"reporting_interval": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reporting Interval", "reporting-interval", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The number of failed retries between creation of error log messages.", "reporting-interval", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
 			Computed:            true,
 		},
 		"total_retries": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Total Retries", "total-retries", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Total number of times to retry before giving up.", "total-retries", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
 			Computed:            true,
 		},
 	},
@@ -85,13 +85,13 @@ var DmNetworkRetryResourceSchema = ResourceSchema.SingleNestedAttribute{
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
 		"automatic_retry": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Automatic Retry", "auto-retry", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The device can automatically retry connecting to the remote host when a TCP connection failure occurs.", "auto-retry", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"retry_interval": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Retry Interval", "retry-interval", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("This sets the number of seconds to wait between attempting to retry failed connections to a remote host.", "retry-interval", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -100,7 +100,7 @@ var DmNetworkRetryResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Default: int64default.StaticInt64(1),
 		},
 		"reporting_interval": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Reporting Interval", "reporting-interval", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The number of failed retries between creation of error log messages.", "reporting-interval", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -109,7 +109,7 @@ var DmNetworkRetryResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Default: int64default.StaticInt64(1),
 		},
 		"total_retries": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Total Retries", "total-retries", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Total number of times to retry before giving up.", "total-retries", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{

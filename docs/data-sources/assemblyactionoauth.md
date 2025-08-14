@@ -71,12 +71,12 @@ Optional:
 
 Read-Only:
 
-- `default` (String) Object reference
+- `default` (String) Specifies an existing object from which to retrieve default property values for the dynamic object. If an object is not specified, then the URL reference, the literal configuration, or the combination of URL reference and literal configuration fully define the action.
   - CLI Alias: `default`
   - Reference to: `datapower_oauthprovidersettings:id`
-- `literal` (String) Literal configuration
+- `literal` (String) Specifies a literal string that defines serialized XML or JSON properties for merging into the dynamic object. These properties override the existing default properties. The literal string can contain variable references.
   - CLI Alias: `literal`
-- `url` (String) URL reference
+- `url` (String) Specifies a URL to a file that contains serialized XML or JSON properties to be merged into the dynamic object. These properties override any existing literal or default properties. The URL can contain variable references, and fields within the associated file can also contain variable references.
   - CLI Alias: `url`
 
 

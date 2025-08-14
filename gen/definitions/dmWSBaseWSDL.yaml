@@ -2,15 +2,20 @@ name: DmWSBaseWSDL
 model_only: true
 list_item: true
 attributes:
-  - name: WSDLSourceLocation
-    type: String
-    required: true
-    description: 'WSDL Source Location'
-  - name: WSDLName
-    type: String
-    required: true
-    description: 'Local Name'
-  - name: PolicyAttachments
-    type: String
-    reference_to: PolicyAttachments
-    description: 'Policy Attachments'
+- name: WSDLSourceLocation
+  type: String
+  required: true
+  description: Specify the exact location (URL) of the WSDL file. The WSDL file can
+    be stored on the device or on a remote server. For example, an on-device location
+    might be "local:///searchservice.wsdl".
+- name: WSDLName
+  type: String
+  required: true
+  description: Specify a mnemonic for this WSDL file. The mnemonic can be be the filename
+    (for example "searchservice.wsdl") or an alias (for example "searchsvc").
+- name: PolicyAttachments
+  type: String
+  reference_to: PolicyAttachments
+  description: Select an existing policy attachment object to configure the handling
+    of XML element attached policies and to create external policy attachments to
+    this web service.

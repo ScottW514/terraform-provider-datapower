@@ -2,22 +2,26 @@ name: DmExtensionFunction
 model_only: true
 list_item: true
 attributes:
-  - name: ExtensionFunctionNamespace
-    type: String
-    required: true
-    description: 'Extension Namespace'
-    example: 'http://www.fredspace/extensions'
-  - name: ExtensionFunction
-    type: String
-    required: true
-    description: 'Extension Function'
-    example: 'nodeset()'
-  - name: LocalFunctionNamespace
-    type: String
-    default: 'http://www.datapower.com/extensions'
-    description: 'Local Namespace'
-  - name: LocalFunction
-    type: String
-    required: true
-    description: 'Local Function'
-    example: 'node-set()'
+- name: ExtensionFunctionNamespace
+  type: String
+  required: true
+  description: Enter namespace of the extension functions used in the custom stylesheets.
+    For example, "http://www.fredspace/extensions".
+  example: http://www.fredspace/extensions
+- name: ExtensionFunction
+  type: String
+  required: true
+  description: Enter the extension function within the namespace to map. For example,
+    "nodeset()".
+  example: nodeset()
+- name: LocalFunctionNamespace
+  type: String
+  default: http://www.datapower.com/extensions
+  description: Enter the local namespace if it is other than the DataPower default
+    (shown in the box).
+- name: LocalFunction
+  type: String
+  required: true
+  description: Enter the local function to use in place of the extension function
+    identified above. For example, "node-set()".
+  example: node-set()

@@ -88,26 +88,26 @@ Optional:
 
 Read-Only:
 
-- `burst` (Number) Burst
-- `cache_only` (Boolean) Cache only
+- `burst` (Number) Indicates the maximum allowed burst rate. The value of 0 indicates no limit. A message is rejected when the burst limit is exceeded.
+- `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the burst limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
-- `dynamic_value` (String) Dynamic Value
-- `interval` (Number) Interval
+- `dynamic_value` (String) Indicates the dynamic value string for the burst limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the burst limit based on parameters other than those defined in the burst limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+- `interval` (Number) Indicates the time interval for the burst limit. Specify a value that is greater than or equal to 1. The default value is 1.
   - Range: `1`-`65535`
   - Default value: `1`
-- `is_client` (Boolean) Is Client
+- `is_client` (Boolean) Indicates whether to apply the burst limit to the client or to an internal component. Client burst limits return a 429 error when exceeded. Non-client burst limits return a 503 error when exceeded. When set to <tt>off</tt> , burst limit information is not included in the response header.
   - Default value: `true`
-- `name` (String) Name
-- `unit` (String) Unit
+- `name` (String) Indicates the name of the burst limit scheme.
+- `unit` (String) Indicates the time unit for the burst limit. The default value is second.
   - Choices: `second`, `minute`
   - Default value: `second`
-- `use_api_name` (Boolean) Use API Name
+- `use_api_name` (Boolean) Indicates whether to use the API name as part of the burst limit key.
   - Default value: `false`
-- `use_app_id` (Boolean) Use Application ID
+- `use_app_id` (Boolean) Indicates whether to use the application ID as part of the burst limit key.
   - Default value: `false`
-- `use_client_id` (Boolean) Use Client ID
+- `use_client_id` (Boolean) Indicates whether to use the client ID as part of the burst limit key.
   - Default value: `false`
-- `weight` (String) Weight expression
+- `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the burst limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
 
 
@@ -116,24 +116,24 @@ Read-Only:
 
 Read-Only:
 
-- `auto_dec` (Boolean) Auto decrement
+- `auto_dec` (Boolean) Indicates whether to automatically decrement this count limit in each transaction.
   - Default value: `true`
-- `cache_only` (Boolean) Cache only
+- `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the count limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
-- `count` (Number) Count
-- `dynamic_value` (String) Dynamic Value
-- `hard_limit` (Boolean) Enable hard limit
+- `count` (Number) Indicates the maximum count that this limit will allow.
+- `dynamic_value` (String) Indicates the dynamic value string for the count limit, which should contain one or more context variables. The default value is an empty string.
+- `hard_limit` (Boolean) <p>Indicates whether to reject requests when the specified count limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway rejects requests when the limit is exceeded.</p>
   - Default value: `true`
-- `is_client` (Boolean) Is Client
+- `is_client` (Boolean) Indicates whether to apply the count limit to the client or to an internal component. Client count limits return a 429 error when exceeded. Non-client count limits return a 503 error when exceeded. When set to <tt>off</tt> , count limit information is not included in the response header.
   - Default value: `false`
-- `name` (String) Name
-- `use_api_name` (Boolean) Use API Name
+- `name` (String) Indicates the name of the count limit scheme.
+- `use_api_name` (Boolean) Indicates whether to use the API name as part of the count limit key.
   - Default value: `false`
-- `use_app_id` (Boolean) Use Application ID
+- `use_app_id` (Boolean) Indicates whether to use the application ID as part of the count limit key.
   - Default value: `false`
-- `use_client_id` (Boolean) Use Client ID
+- `use_client_id` (Boolean) Indicates whether to use the client ID as part of the count limit key.
   - Default value: `false`
-- `weight` (String) Weight expression
+- `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the count limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
 
 
@@ -142,29 +142,29 @@ Read-Only:
 
 Read-Only:
 
-- `cache_only` (Boolean) Cache only
+- `cache_only` (Boolean) Specifies whether to use the local cache first to enforce the rate limit. In peer group mode, using the local cache first can prevent transaction delays if communication problems arise across the peer group. However, the transaction count is less precise when this setting is enabled.
   - Default value: `true`
-- `dynamic_value` (String) Dynamic Value
-- `hard_limit` (Boolean) Enable hard limit
+- `dynamic_value` (String) Indicates the dynamic value string for the rate limit, which should contain one or more context variables. The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a user name, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value. <p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+- `hard_limit` (Boolean) <p>Indicates whether to reject requests when the specified rate limit is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests but produces a warning message.</li></ul><p>By default, the API Gateway does not reject requests when the limit is exceeded.</p>
   - Default value: `false`
-- `interval` (Number) Interval
+- `interval` (Number) Indicates the time interval for the rate limit. Specify a value that is greater than or equal to 1. The default value is 1.
   - Range: `1`-`65535`
   - Default value: `1`
-- `is_client` (Boolean) Is Client
+- `is_client` (Boolean) Indicates whether to apply the rate limit to the client or to an internal component. Client rate limits return a 429 error when exceeded. Non-client rate limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit information is not included in the response header.
   - Default value: `true`
-- `name` (String) Name
-- `rate` (Number) Rate
+- `name` (String) Indicates the name of the rate limit scheme.
+- `rate` (Number) Indicates the maximum number of requests that the API Gateway can handle within a time interval. The value of 0 indicates no limit.
   - Range: `0`-`4294967295`
-- `unit` (String) Unit
+- `unit` (String) Indicates the time unit for the rate limit. The default value is second.
   - Choices: `second`, `minute`, `hour`, `day`, `week`
   - Default value: `second`
-- `use_api_name` (Boolean) Use API Name
+- `use_api_name` (Boolean) Indicates whether to use the API name as part of the rate limit key.
   - Default value: `false`
-- `use_app_id` (Boolean) Use Application ID
+- `use_app_id` (Boolean) Indicates whether to use the application ID as part of the rate limit key.
   - Default value: `false`
-- `use_client_id` (Boolean) Use Client ID
+- `use_client_id` (Boolean) Indicates whether to use the client ID as part of the rate limit key.
   - Default value: `false`
-- `weight` (String) Weight expression
+- `weight` (String) Specifies a JSONata expression that assigns a weight value to the transaction. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
   - Default value: `1`
 
 
@@ -173,36 +173,36 @@ Read-Only:
 
 Read-Only:
 
-- `cache_backend_responses` (Boolean) Cache Back-end Responses
+- `cache_backend_responses` (Boolean) Caches responses to requests from back-end servers.
   - CLI Alias: `cache-backend-response`
   - Default value: `false`
-- `cache_unsafe_response` (Boolean) Cache Response to POST and PUT Requests
+- `cache_unsafe_response` (Boolean) Caches responses to POST and PUT requests when the cache policy type is set to fixed. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.
   - CLI Alias: `cache-unsafe-response`
   - Default value: `false`
-- `http_cache_validation` (Boolean) HTTP Cache Validation
+- `http_cache_validation` (Boolean) When a requested HTTP document results in a cache hit, HTTP cache validation with the origin server is performed.
   - CLI Alias: `http-cache-validation`
   - Default value: `false`
-- `match` (String) URL Match Expression
+- `match` (String) Provide a literal or wildcard expression to define a URL set included in the cache policy. The following wildcard characters are available. <table><tr><td valign="top">asterisk (*)</td><td valign="top">Matches 0 or more occurrences of any character.</td></tr><tr><td valign="top">question mark (?)</td><td valign="top">Matches one occurrence of any single character.</td></tr><tr><td valign="top">brackets ( [ ] )</td><td valign="top">Defines a character or numeric range. For example, <tt>[1-5]</tt> matches 1, 2, 3, 4, or 5, while <tt>xs[dl]</tt> matches xsd or xsl.</td></tr></table>
   - CLI Alias: `match`
-- `priority` (Number) Priority
+- `priority` (Number) <p>Specifies the priority of a document to add to or remove from the cache. The greater the value, the higher its priority. Enter a value in the range 1 - 255. The default value is 128.</p><ul><li>When adding documents, the cache uses the policy with the highest priority. If the document matches multiple policies with the same priority, the cache uses the first matching policy in the alphabetized list.</li><li>When removing documents, the cache removes documents that were added by policies with the lowest priority. If multiple documents have the same priority, the cache removes the document that was least recently accessed.</li></ul><p>When you define multiple policies, the DataPower Gateway retains the policies in an alphabetized list. The DataPower Gateway evaluates candidate documents against each policy. Consequently, the priority of policies is important to ensure that the DataPower Gateway caches candidate documents for the appropriate validity period.</p><ul><li>Use a high priority for policies that you want to cache.</li><li>Use a low priority for generic policies. For example, set the priority to 1 when <tt>*</tt> or <tt>*.xml</tt> is the match pattern.</li></ul>
   - CLI Alias: `priority`
   - Range: `1`-`255`
   - Default value: `128`
-- `rest_invalidation` (Boolean) RESTful Invalidation
+- `rest_invalidation` (Boolean) Invalidate document cache on unsafe requests. For example, HTTP GET requests are safe requests that do not change the internal state of the server. When an HTTP POST to the same URL occurs, the cache needs to be invalidated because the internal state of the server might have changed. The next GET request must contact the origin service to update the cache with any changes.
   - CLI Alias: `rest-invalidation`
   - Default value: `false`
-- `return_expired` (Boolean) Return Expired Document
+- `return_expired` (Boolean) <p>In the following situations, whether to return expired content when a client requests it. <ul><li>The DataPower Gateway cannot establish a connection with the origin server.</li><li>The document cache is getting the newest version from the origin server.</li></ul></p><p>A document might persist in the cache after the document is expired. When enabled, the cached document is returned even though it is potentially stale. A warning header indicates that the document is stale.</p>
   - CLI Alias: `return-expired`
   - Default value: `false`
-- `ttl` (Number) TTL
+- `ttl` (Number) Sets the validity period in seconds for documents in the cache. TTL applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 - 31708800. The default value is 900.
   - CLI Alias: `ttl`
   - Range: `5`-`31708800`
   - Default value: `900`
-- `type` (String) Policy Type
+- `type` (String) Select the cache type. The cache type determines whether to cache documents and the mechanism to use to remove cached entries. The default value is Protocol-Based.
   - CLI Alias: `type`
   - Choices: `protocol`, `no-cache`, `fixed`
   - Default value: `protocol`
-- `xc10_grid` (String) Cache Grid
+- `xc10_grid` (String) The eXtreme Scale grid configuration to use for caching documents.
   - CLI Alias: `xc10-grid`
 
 
@@ -220,15 +220,15 @@ Read-Only:
 
 Read-Only:
 
-- `password` (String) Password
+- `password` (String) Specify the password alias for authentication.
   - Reference to: `datapower_passwordalias:id`
-- `reg_exp` (String) URL matching expression
-- `remote_address` (String) Remote host
-- `remote_port` (Number) Remote port
+- `reg_exp` (String) Specify the shell-style match pattern that defines a URL set. The URL set is assigned to a specific HTTP proxy.
+- `remote_address` (String) Specify the hostname or IP address of an HTTP server. With the remote port, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote host is not used.
+- `remote_port` (Number) Specify the port on the HTTP server. With the remote host, this setting designates the HTTP proxy that services the URL set for the match pattern. When Skip is on, the remote port is not used.
   - Range: `1`-`65535`
-- `skip` (Boolean) Skip
+- `skip` (Boolean) Specify how to treat the URL set for the match pattern. When set to on, the URL set is not forwarded to an HTTP proxy, and the remote host and remote port of a proxy are not defined. When set to off, the URL set is forwarded to the HTTP proxy designated by the remote host and remote port.
   - Default value: `false`
-- `user_name` (String) Username
+- `user_name` (String) Specify the username for authentication.
 
 
 <a id="nestedatt--result--scheduled_rule"></a>
@@ -236,6 +236,6 @@ Read-Only:
 
 Read-Only:
 
-- `interval` (Number) Interval
-- `rule` (String) Rule
+- `interval` (Number) Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.
+- `rule` (String) Select the rule to run.
   - Reference to: `datapower_stylepolicyrule:id`

@@ -61,7 +61,7 @@ Optional:
 
 Required:
 
-- `prop_name` (String) Name
+- `prop_name` (String) Enter the name of a property.
   - CLI Alias: `odr-prop-name`
-- `prop_value` (String) Value
+- `prop_value` (String) Enter the value of a property.
   - CLI Alias: `odr-prop-value`

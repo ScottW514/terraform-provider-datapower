@@ -53,11 +53,11 @@ var DmB2BHAHostDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"hostname": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote replication host", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").String,
 			Computed:            true,
 		},
 		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote replication port", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").String,
 			Computed:            true,
 		},
 	},
@@ -70,11 +70,11 @@ var DmB2BHAHostResourceSchema = ResourceSchema.SingleNestedAttribute{
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
 		"hostname": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote replication host", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name of the other system in the high availability cluster.", "", "").String,
 			Optional:            true,
 		},
 		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote replication port", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the other system in the high availability cluster.", "", "").AddIntegerRange(1, 65535).AddDefaultValue("1320").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{

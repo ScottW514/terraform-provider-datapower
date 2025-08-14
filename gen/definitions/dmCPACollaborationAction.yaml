@@ -2,36 +2,43 @@ name: DmCPACollaborationAction
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    example: 'cpacollaborationactionname'
-    description: 'Action ID'
-    cli_alias: name
-  - name: Value
-    type: String
-    required: true
-    example: 'value'
-    description: 'Action value'
-    cli_alias: value
-  - name: Capability
-    type: String
-    enum:
-      - 'cansend'
-      - 'canreceive'
-    required: true
-    default: 'cansend'
-    description: 'Capability'
-    cli_alias: capability
-  - name: SenderSetting
-    type: String
-    reference_to: B2BCPASenderSetting
-    description: 'Sender setting'
-    test_value: '"AccTest_B2BCPASenderSetting"'
-    test_bed_value: 'datapower_b2bcpasendersetting.acc_test.id'
-    cli_alias: sender-setting
-  - name: ReceiverSetting
-    type: String
-    reference_to: B2BCPAReceiverSetting
-    description: 'Receiver setting'
-    cli_alias: receiver-setting
+- name: Name
+  type: String
+  required: true
+  example: cpacollaborationactionname
+  description: Specifies an ID for naming the action
+  cli_alias: name
+- name: Value
+  type: String
+  required: true
+  example: value
+  description: Specifies the value of Action. For outbound message, the value is used
+    in the Action element of the ebXML Message Header. For inbound transaction, the
+    Action value is used to identify the action binding for processing the incoming
+    message within the Service.
+  cli_alias: value
+- name: Capability
+  type: String
+  enum:
+  - cansend
+  - canreceive
+  required: true
+  default: cansend
+  description: Specifies the type of this action binding.
+  cli_alias: capability
+- name: SenderSetting
+  type: String
+  reference_to: B2BCPASenderSetting
+  description: Specifies the name of sender setting to bind. A sender setting defines
+    the Message-sending characteristics in Delivery Channels. It consists of document-exchange
+    configurations and transport configurations.
+  test_value: '"AccTest_B2BCPASenderSetting"'
+  test_bed_value: datapower_b2bcpasendersetting.acc_test.id
+  cli_alias: sender-setting
+- name: ReceiverSetting
+  type: String
+  reference_to: B2BCPAReceiverSetting
+  description: Specifies the name of receiver setting to bind. A receiver setting
+    defines the Message-receiving characteristics in Delivery Channels. It consists
+    of document-exchange configurations and transport configurations.
+  cli_alias: receiver-setting

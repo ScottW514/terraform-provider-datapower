@@ -54,15 +54,15 @@ var DmAPICGSProxyPolicyDataSourceSchema = DataSourceSchema.SingleNestedAttribute
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"proxy_policy_enable": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable API Manager proxy", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"remote_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("API Manager host", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").String,
 			Computed:            true,
 		},
 		"remote_port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("API Manager port", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -75,17 +75,17 @@ var DmAPICGSProxyPolicyResourceSchema = ResourceSchema.SingleNestedAttribute{
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
 		"proxy_policy_enable": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable API Manager proxy", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable a proxy to connect to API Manager.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"remote_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("API Manager host", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname or IP address of the proxy to connect to the API Manager endpoint.", "", "").String,
 			Required:            true,
 		},
 		"remote_port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("API Manager port", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the proxy to connect to the API Manager endpoint.", "", "").String,
 			Required:            true,
 		},
 	},

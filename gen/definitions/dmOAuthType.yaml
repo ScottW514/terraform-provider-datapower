@@ -2,21 +2,21 @@ name: DmOAuthType
 model_only: true
 list_item: true
 attributes:
-  - name: ClientType
-    type: String
-    enum:
-      - 'confidential'
-      - 'public'
-    default: 'confidential'
-    required: true
-    description: 'Client type'
-  - name: GrantType
-    type: String
-    enum:
-      - 'implicit'
-      - 'password'
-      - 'application'
-      - 'accessCode'
-    default: 'implicit'
-    required: true
-    description: 'Flow'
+- name: ClientType
+  type: String
+  enum:
+  - confidential
+  - public
+  default: confidential
+  required: true
+  description: Client type
+- name: GrantType
+  type: String
+  enum:
+  - implicit
+  - password
+  - application
+  - accessCode
+  default: implicit
+  required: true
+  description: Flow

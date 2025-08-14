@@ -2,6 +2,6 @@ name: DmSFTPServerVirtualDirectory
 model_only: true
 list_item: true
 attributes:
-  - name: VirtualPath
-    type: String
-    description: 'Virtual directory'
+- name: VirtualPath
+  type: String
+  description: Specify the directory in the virtual file system of the SFTP server.

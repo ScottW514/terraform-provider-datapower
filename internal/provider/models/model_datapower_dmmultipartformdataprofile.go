@@ -58,19 +58,19 @@ var DmMultipartFormDataProfileDataSourceSchema = DataSourceSchema.SingleNestedAt
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"max_parts": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum Number of Parts", "", "").AddDefaultValue("4").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Maximum number of parts allowed. Defaults to 4.", "", "").AddDefaultValue("4").String,
 			Computed:            true,
 		},
 		"max_size_per_part": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum Size Per Part", "", "").AddDefaultValue("5000000").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for any one part. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
 			Computed:            true,
 		},
 		"max_size": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum Aggregate Size of All Parts", "", "").AddDefaultValue("5000000").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for all parts combined. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
 			Computed:            true,
 		},
 		"content_type_restricted": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Restrict Sub-Content Types", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("If set, this forces the individual form-data content types to be matched against the general list of request acceptable content-type expressions.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 	},
@@ -83,25 +83,25 @@ var DmMultipartFormDataProfileResourceSchema = ResourceSchema.SingleNestedAttrib
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
 		"max_parts": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum Number of Parts", "", "").AddDefaultValue("4").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Maximum number of parts allowed. Defaults to 4.", "", "").AddDefaultValue("4").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             int64default.StaticInt64(4),
 		},
 		"max_size_per_part": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum Size Per Part", "", "").AddDefaultValue("5000000").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for any one part. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             int64default.StaticInt64(5000000),
 		},
 		"max_size": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Maximum Aggregate Size of All Parts", "", "").AddDefaultValue("5000000").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Maximum size allowed for all parts combined. Defaults to 5000000.", "", "").AddDefaultValue("5000000").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             int64default.StaticInt64(5000000),
 		},
 		"content_type_restricted": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Restrict Sub-Content Types", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("If set, this forces the individual form-data content types to be matched against the general list of request acceptable content-type expressions.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),

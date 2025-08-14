@@ -48,11 +48,11 @@ var DmWebAppResponsePolicyMapObjectDefault = map[string]attr.Value{
 var DmWebAppResponsePolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matching Rule", "", "matching").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
 			Computed:            true,
 		},
 		"rule": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Response Profile", "", "webappresponse").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Web Response Profile to run.", "", "webappresponse").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmWebAppResponsePolicyMapDataSourceSchema = DataSourceSchema.NestedAttribute
 var DmWebAppResponsePolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Matching Rule", "", "matching").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Matching Rule that defines the matching criteria.", "", "matching").String,
 			Required:            true,
 		},
 		"rule": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Response Profile", "", "webappresponse").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the Web Response Profile to run.", "", "webappresponse").String,
 			Required:            true,
 		},
 	},

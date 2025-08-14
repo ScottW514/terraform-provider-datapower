@@ -2,14 +2,14 @@ name: DmASFrontProtocol
 model_only: true
 list_item: true
 attributes:
-  - name: FrontProtocol
-    type: String
-    required: true
-    description: 'Front protocol (reference to front protocol handler)'
-    cli_alias: front-protocol
-  - name: MDNReceiver
-    type: Bool
-    required: true
-    default: false
-    description: 'Set as MDN receiver'
-    cli_alias: mdn-receiver
+- name: FrontProtocol
+  type: String
+  required: true
+  description: Specify the protocol handler.
+  cli_alias: front-protocol
+- name: MDNReceiver
+  type: Bool
+  required: true
+  default: false
+  description: Specify whether to set the handler as the default MDN receiver.
+  cli_alias: mdn-receiver

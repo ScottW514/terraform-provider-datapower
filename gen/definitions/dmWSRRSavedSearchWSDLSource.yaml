@@ -2,11 +2,11 @@ name: DmWSRRSavedSearchWSDLSource
 model_only: true
 list_item: true
 attributes:
-  - name: WSRRSavedSearchSubscription
-    type: String
-    reference_to: WSRRSavedSearchSubscription
-    description: 'Saved Search Subscription'
-  - name: WSRRAttachment
-    type: String
-    reference_to: PolicyAttachments
-    description: 'Policy Attachment'
+- name: WSRRSavedSearchSubscription
+  type: String
+  reference_to: WSRRSavedSearchSubscription
+  description: Specify a WSRR saved search subscription
+- name: WSRRAttachment
+  type: String
+  reference_to: PolicyAttachments
+  description: Specify a WS-Policy attachment

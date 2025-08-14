@@ -139,17 +139,17 @@ resource "datapower_as2proxysourceprotocolhandler" "test" {
 
 Optional:
 
-- `cmd_exe` (Boolean) URL with cmd.exe
+- `cmd_exe` (Boolean) Allows requests when the URL contains cmd.exe
   - Default value: `false`
-- `dot_dot` (Boolean) URL with ..
+- `dot_dot` (Boolean) Allows requests when the URL contains a .. (dotdot)
   - Default value: `false`
-- `fragment_identifiers` (Boolean) URL with Fragment Identifiers
+- `fragment_identifiers` (Boolean) UAllows requests when the URL contains a # (fragment identifier)
   - Default value: `true`
-- `http_1_0` (Boolean) HTTP 1.0
+- `http_1_0` (Boolean) Supports HTTP 1.0 requests
   - Default value: `true`
-- `http_1_1` (Boolean) HTTP 1.1
+- `http_1_1` (Boolean) Supports HTTP 1.1 requests
   - Default value: `true`
-- `query_string` (Boolean) URL with Query Strings
+- `query_string` (Boolean) Allows requests when the URL contains a ? (query string)
   - Default value: `true`
 
 

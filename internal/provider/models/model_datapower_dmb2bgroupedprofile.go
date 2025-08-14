@@ -48,11 +48,11 @@ var DmB2BGroupedProfileObjectDefault = map[string]attr.Value{
 var DmB2BGroupedProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"partner_profile": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Partner profile", "profile", "b2bprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the partner profile.", "profile", "b2bprofile").String,
 			Computed:            true,
 		},
 		"profile_dest": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Profile destination", "destination", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for this partner. Without this property, the first destination is used.", "destination", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmB2BGroupedProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject
 var DmB2BGroupedProfileResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"partner_profile": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Partner profile", "profile", "b2bprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the partner profile.", "profile", "b2bprofile").String,
 			Required:            true,
 		},
 		"profile_dest": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Profile destination", "destination", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination for this partner. Without this property, the first destination is used.", "destination", "").String,
 			Optional:            true,
 		},
 	},

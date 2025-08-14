@@ -48,11 +48,11 @@ var DmScheduledRuleObjectDefault = map[string]attr.Value{
 var DmScheduledRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"rule": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Rule", "", "stylepolicyrule").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the rule to run.", "", "stylepolicyrule").String,
 			Computed:            true,
 		},
 		"interval": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Interval", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmScheduledRuleDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmScheduledRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"rule": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Rule", "", "stylepolicyrule").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the rule to run.", "", "stylepolicyrule").String,
 			Required:            true,
 		},
 		"interval": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Interval", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between invocations in seconds. A value of 0 indicates a single invocation.", "", "").String,
 			Optional:            true,
 		},
 	},

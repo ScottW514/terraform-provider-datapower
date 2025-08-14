@@ -1,11 +1,11 @@
 name: DmRBMSSHAuthenticateType
 model_only: true
 attributes:
-  - name: certificate
-    type: Bool
-    default: false
-    description: 'CA-signed user certificate'
-  - name: password
-    type: Bool
-    default: false
-    description: 'Password'
+- name: certificate
+  type: Bool
+  default: false
+  description: CA-signed user certificate
+- name: password
+  type: Bool
+  default: false
+  description: Password

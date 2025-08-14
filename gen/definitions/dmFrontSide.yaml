@@ -2,56 +2,64 @@ name: DmFrontSide
 model_only: true
 list_item: true
 attributes:
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local IP Address'
-  - name: LocalPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 3000
-    description: 'Port'
-  - name: UseSSL
-    type: Bool
-    default: false
-    description: 'TLS'
-  - name: CredentialCharset
-    type: String
-    enum:
-      - 'protocol'
-      - 'ascii'
-      - 'utf8'
-      - 'big5'
-      - 'cp1250'
-      - 'cp1251'
-      - 'cp1252'
-      - 'cp1253'
-      - 'cp1254'
-      - 'cp1255'
-      - 'cp1256'
-      - 'cp1257'
-      - 'cp1258'
-      - 'euc_jp'
-      - 'euc_kr'
-      - 'gb18030'
-      - 'gb2312'
-      - 'iso2022_jp'
-      - 'iso2022_kr'
-      - 'iso8859_1'
-      - 'iso8859_2'
-      - 'iso8859_4'
-      - 'iso8859_5'
-      - 'iso8859_6'
-      - 'iso8859_7'
-      - 'iso8859_8'
-      - 'iso8859_9'
-      - 'iso8859_15'
-      - 'sjis'
-      - 'tis620'
-      - 'unicode_le'
-    default: 'protocol'
-    description: 'Credential Character Set'
-    cli_alias: credential-charset
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: The address on which the service listens. The default of 0 indicates
+    that the service is active on all addresses. Click Select Alias to use an alias
+    for this value. Local host aliases help to ease migration tasks between machines.
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 3000
+  description: Specifies the port monitored by the stateful raw XML over TCP service.
+    Enter a value in the range 1 - 65535. The default value is 3000.
+- name: UseSSL
+  type: Bool
+  default: false
+  description: Use TLS for this server. Ensure that the TLS server profile or TLS
+    SNI server profile is configured.
+- name: CredentialCharset
+  type: String
+  enum:
+  - protocol
+  - ascii
+  - utf8
+  - big5
+  - cp1250
+  - cp1251
+  - cp1252
+  - cp1253
+  - cp1254
+  - cp1255
+  - cp1256
+  - cp1257
+  - cp1258
+  - euc_jp
+  - euc_kr
+  - gb18030
+  - gb2312
+  - iso2022_jp
+  - iso2022_kr
+  - iso8859_1
+  - iso8859_2
+  - iso8859_4
+  - iso8859_5
+  - iso8859_6
+  - iso8859_7
+  - iso8859_8
+  - iso8859_9
+  - iso8859_15
+  - sjis
+  - tis620
+  - unicode_le
+  default: protocol
+  description: Specifies the character encoding of the original basic authentication
+    values. Basic authentication credentials are combined and base64 encoded in the
+    authorization header of the request. The DataPower Gateway transcodes the contents
+    of the authorization header to UTF-8. Defaults to Protocol that is ISO-8859-1,
+    Latin 1.
+  cli_alias: credential-charset

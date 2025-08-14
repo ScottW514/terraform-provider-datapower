@@ -2,20 +2,18 @@ name: DmSSLPolicy
 model_only: true
 list_item: true
 attributes:
-  - name: RegExp
-    type: String
-    required: true
-    example: '*'
-    description: 'URL matching expression'
-  # DEPRECATED
-  # - name: SSLProxyProfile
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
+- name: RegExp
+  type: String
+  required: true
+  example: '*'
+  description: Specify the shell-style expression to define the URL set.
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: Specify the type of TLS profile to secure connections with targets
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: Specify the TLS client profile to secure connections with targets

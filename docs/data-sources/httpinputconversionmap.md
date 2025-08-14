@@ -66,8 +66,8 @@ Optional:
 
 Read-Only:
 
-- `encoding` (String) Encoding
+- `encoding` (String) Select how to translate the value of a form field to the contents of the &lt;arg> element in the generated XML.
   - CLI Alias: `encoding`
   - Choices: `plain`, `urlencoded`, `xml`, `urlencoded-xml`, `base64`, `base64-text`, `base64-xml`, `json`
-- `input_match` (String) Input Match PCRE
+- `input_match` (String) The PCRE pattern that will be matched against the name of an HTTP form field. If the name matches this PCRE, the associated value will be processed by the rules of the Encoding. If a form field has no name, an empty string is used for the pattern matching.
   - CLI Alias: `input-name`

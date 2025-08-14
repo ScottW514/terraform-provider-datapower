@@ -45,16 +45,16 @@ resource "datapower_urlrefreshpolicy" "test" {
 
 Required:
 
-- `url_map` (String) URL Map
+- `url_map` (String) URL maps contain one or more shell-style (wildcard) match patterns. Use the values list to select the URL map that supplies the match criteria for the URL Refresh Policy.
   - CLI Alias: `urlmap`
   - Reference to: `datapower_urlmap:id`
 
 Optional:
 
-- `url_refresh_interval` (Number) Refresh Interval
+- `url_refresh_interval` (Number) Not used when the refresh rule type is no-cache, specifies the update frequency for stylesheets that fulfill the match criteria.
   - CLI Alias: `interval`
   - Default value: `0`
-- `url_refresh_policy` (String) Refresh Rule Type
+- `url_refresh_policy` (String) Specify how to cache a stylesheet that is obtained with a URL refresh operation. The default is default.
   - CLI Alias: `type`
   - Choices: `default`, `no-cache`, `no-flush`, `protocol-specified`
   - Default value: `default`

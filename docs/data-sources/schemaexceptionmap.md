@@ -66,7 +66,7 @@ Optional:
 
 Read-Only:
 
-- `exception_type` (String) Type
+- `exception_type` (String) Select the Exception type for encryption.
   - Choices: `AllowEncrypted`, `RequireEncrypted`
   - Default value: `AllowEncrypted`
-- `x_path` (String) XPath Expression
+- `x_path` (String) This is an XPath expression that identifies elements of the Schema document. These are the elements excepted from schema validation.

@@ -2,25 +2,31 @@ name: DmNameServer
 model_only: true
 list_item: true
 attributes:
-  - name: IPAddress
-    type: String
-    required: true
-    description: 'IP address'
-  - name: UDPPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 53
-    description: 'UDP port'
-  - name: TCPPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 53
-    description: 'TCP port'
-  - name: MaxRetries
-    type: Int64
-    default: 3
-    description: 'Attempts'
+- name: IPAddress
+  type: String
+  required: true
+  description: Specify the IP address of DNS server.
+- name: UDPPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 53
+  description: Specify the UDP port that the DNS server monitors. The default value
+    is 53. This setting is ignored with the first alive load balancing algorithm.
+- name: TCPPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 53
+  description: Specify the TCP port that the DNS server monitors. The default value
+    is 53. This setting is ignored with the first alive load balancing algorithm.
+- name: MaxRetries
+  type: Int64
+  default: 3
+  description: Specify the maximum number of times to send a query to the DNS server.
+    By default, an unacknowledged resolution request is attempted 3 times. This setting
+    is ignored with the first alive load balancing algorithm. For the first alive
+    algorithm, define this behavior at the DNS settings level rather than the individual
+    server level.

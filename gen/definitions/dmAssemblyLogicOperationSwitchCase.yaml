@@ -2,28 +2,28 @@ name: DmAssemblyLogicOperationSwitchCase
 model_only: true
 list_item: true
 attributes:
-  - name: Execute
-    type: String
-    required: true
-    example: 'default-api-rule'
-    description: 'Execute'
-  - name: OperationId
-    type: String
-    test_value: '"operationid"'
-    description: 'Operation ID'
-  - name: Path
-    type: String
-    description: 'API path'
-  - name: Method
-    type: String
-    enum:
-      - 'GET'
-      - 'POST'
-      - 'PUT'
-      - 'DELETE'
-      - 'HEAD'
-      - 'PATCH'
-      - 'OPTIONS'
-      - 'TRACE'
-    default: 'GET'
-    description: 'HTTP method'
+- name: Execute
+  type: String
+  required: true
+  example: default-api-rule
+  description: Specify the API rule to run when the case is matched.
+- name: OperationId
+  type: String
+  test_value: '"operationid"'
+  description: Specify the unique operation ID to match.
+- name: Path
+  type: String
+  description: Specify the relative API path to match.
+- name: Method
+  type: String
+  enum:
+  - GET
+  - POST
+  - PUT
+  - DELETE
+  - HEAD
+  - PATCH
+  - OPTIONS
+  - TRACE
+  default: GET
+  description: Specify the HTTP method to match.

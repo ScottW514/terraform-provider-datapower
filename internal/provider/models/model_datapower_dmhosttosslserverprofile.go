@@ -48,11 +48,11 @@ var DmHostToSSLServerProfileObjectDefault = map[string]attr.Value{
 var DmHostToSSLServerProfileDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"host_name_wildmat": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Hostname match", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style pattern to match against the hostname.", "", "").String,
 			Computed:            true,
 		},
 		"ssl_server": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Server profile", "", "sslserverprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to use when a hostname matches the pattern.", "", "sslserverprofile").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmHostToSSLServerProfileDataSourceSchema = DataSourceSchema.NestedAttributeO
 var DmHostToSSLServerProfileResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"host_name_wildmat": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Hostname match", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style pattern to match against the hostname.", "", "").String,
 			Required:            true,
 		},
 		"ssl_server": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Server profile", "", "sslserverprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to use when a hostname matches the pattern.", "", "sslserverprofile").String,
 			Required:            true,
 		},
 	},

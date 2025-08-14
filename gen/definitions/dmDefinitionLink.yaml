@@ -2,17 +2,17 @@ name: DmDefinitionLink
 model_only: true
 list_item: true
 attributes:
-  - name: ShortName
-    type: String
-    required: true
-    description: 'Short name'
-    example: 'shortname'
-    cli_alias: name
-  - name: Definition
-    type: String
-    reference_to: RateLimitDefinition
-    required: true
-    test_value: '"AccTest_RateLimitDefinition"'
-    test_bed_value: 'datapower_ratelimitdefinition.acc_test.id'
-    description: 'Definition'
-    cli_alias: definition
+- name: ShortName
+  type: String
+  required: true
+  description: Specify a short name for the rate limit definition.
+  example: shortname
+  cli_alias: name
+- name: Definition
+  type: String
+  reference_to: RateLimitDefinition
+  required: true
+  test_value: '"AccTest_RateLimitDefinition"'
+  test_bed_value: datapower_ratelimitdefinition.acc_test.id
+  description: Specify the rate limit definition.
+  cli_alias: definition

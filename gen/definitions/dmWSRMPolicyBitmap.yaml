@@ -1,19 +1,20 @@
 name: DmWSRMPolicyBitmap
 model_only: true
 attributes:
-  - name: Optional
-    type: Bool
-    default: false
-    description: 'Reliable Messaging is optional'
-  - name: SequenceTransportSecurity
-    type: Bool
-    default: false
-    description: 'RM Sequence must be bound to underlying transport-level security protocol'
-  - name: InOrder
-    type: Bool
-    default: false
-    description: 'RM messages must be delivered in the same order as they have been sent by the source'
-  - name: TwoWay
-    type: Bool
-    default: false
-    description: 'Response messages require RM Sequence headers'
+- name: Optional
+  type: Bool
+  default: false
+  description: Reliable Messaging is optional
+- name: SequenceTransportSecurity
+  type: Bool
+  default: false
+  description: RM Sequence must be bound to underlying transport-level security protocol
+- name: InOrder
+  type: Bool
+  default: false
+  description: RM messages must be delivered in the same order as they have been sent
+    by the source
+- name: TwoWay
+  type: Bool
+  default: false
+  description: Response messages require RM Sequence headers

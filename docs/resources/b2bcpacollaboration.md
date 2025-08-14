@@ -67,21 +67,21 @@ resource "datapower_b2bcpacollaboration" "test" {
 
 Required:
 
-- `name` (String) Action ID
+- `name` (String) Specifies an ID for naming the action
   - CLI Alias: `name`
-- `value` (String) Action value
+- `value` (String) Specifies the value of Action. For outbound message, the value is used in the Action element of the ebXML Message Header. For inbound transaction, the Action value is used to identify the action binding for processing the incoming message within the Service.
   - CLI Alias: `value`
 
 Optional:
 
-- `capability` (String) Capability
+- `capability` (String) Specifies the type of this action binding.
   - CLI Alias: `capability`
   - Choices: `cansend`, `canreceive`
   - Default value: `cansend`
-- `receiver_setting` (String) Receiver setting
+- `receiver_setting` (String) Specifies the name of receiver setting to bind. A receiver setting defines the Message-receiving characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.
   - CLI Alias: `receiver-setting`
   - Reference to: `datapower_b2bcpareceiversetting:id`
-- `sender_setting` (String) Sender setting
+- `sender_setting` (String) Specifies the name of sender setting to bind. A sender setting defines the Message-sending characteristics in Delivery Channels. It consists of document-exchange configurations and transport configurations.
   - CLI Alias: `sender-setting`
   - Reference to: `datapower_b2bcpasendersetting:id`
 

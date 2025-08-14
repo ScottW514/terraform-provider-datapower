@@ -48,11 +48,11 @@ var DmPubkeyAuthPolicyObjectDefault = map[string]attr.Value{
 var DmPubkeyAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Computed:            true,
 		},
 		"crypto_key": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Private Key", "", "cryptokey").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the private key for public key authentication.", "", "cryptokey").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmPubkeyAuthPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmPubkeyAuthPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Required:            true,
 		},
 		"crypto_key": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Private Key", "", "cryptokey").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the private key for public key authentication.", "", "cryptokey").String,
 			Required:            true,
 		},
 	},

@@ -1,11 +1,11 @@
 name: DmSMTPOptions
 model_only: true
 attributes:
-  - name: StartTLS
-    type: Bool
-    default: false
-    description: 'STARTTLS'
-  - name: Auth
-    type: Bool
-    default: false
-    description: 'Authentication'
+- name: StartTLS
+  type: Bool
+  default: false
+  description: STARTTLS
+- name: Auth
+  type: Bool
+  default: false
+  description: Authentication

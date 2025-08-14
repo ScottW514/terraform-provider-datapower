@@ -2,13 +2,13 @@ name: DmPolicyParameter
 model_only: true
 list_item: true
 attributes:
-  - name: ParameterName
-    type: String
-    required: true
-    description: 'Name'
-    example: 'PolicyParameterName'
-  - name: ParameterValue
-    type: String
-    required: true
-    description: 'Value'
-    example: 'PolicyParameterValue'
+- name: ParameterName
+  type: String
+  required: true
+  description: Policy key name formated {policy-domain-ns}name
+  example: PolicyParameterName
+- name: ParameterValue
+  type: String
+  required: true
+  description: Value for corresponding policy parameter key.
+  example: PolicyParameterValue

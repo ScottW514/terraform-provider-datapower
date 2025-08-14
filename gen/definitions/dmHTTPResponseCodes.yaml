@@ -1,131 +1,131 @@
 name: DmHTTPResponseCodes
 model_only: true
 attributes:
-  - name: HTTP-100
-    type: Bool
-    default: true
-    description: '100 Continue'
-  - name: HTTP-101
-    type: Bool
-    default: false
-    description: '101 Switching Protocols'
-  - name: HTTP-200
-    type: Bool
-    default: true
-    description: '200 OK'
-  - name: HTTP-201
-    type: Bool
-    default: true
-    description: '201 Created'
-  - name: HTTP-202
-    type: Bool
-    default: true
-    description: '202 Accepted'
-  - name: HTTP-203
-    type: Bool
-    default: false
-    description: '203 Non-Authoritative Information'
-  - name: HTTP-204
-    type: Bool
-    default: true
-    description: '204 No Content'
-  - name: HTTP-205
-    type: Bool
-    default: false
-    description: '205 Reset Content'
-  - name: HTTP-206
-    type: Bool
-    default: true
-    description: '206 Partial Content'
-  - name: HTTP-300
-    type: Bool
-    default: false
-    description: '300 Multiple Choices'
-  - name: HTTP-301
-    type: Bool
-    default: true
-    description: '301 Moved'
-  - name: HTTP-302
-    type: Bool
-    default: true
-    description: '302 Found'
-  - name: HTTP-303
-    type: Bool
-    default: false
-    description: '303 See Other'
-  - name: HTTP-304
-    type: Bool
-    default: true
-    description: '304 Not Modified'
-  - name: HTTP-305
-    type: Bool
-    default: false
-    description: '305 Use Proxy'
-  - name: HTTP-307
-    type: Bool
-    default: true
-    description: '307 Temporary Redirect'
-  - name: HTTP-400
-    type: Bool
-    default: false
-    description: '400 Bad Request'
-  - name: HTTP-401
-    type: Bool
-    default: false
-    description: '401 Unauthorized'
-  - name: HTTP-402
-    type: Bool
-    default: false
-    description: '402 Payment Required'
-  - name: HTTP-403
-    type: Bool
-    default: false
-    description: '403 Forbidden'
-  - name: HTTP-404
-    type: Bool
-    default: false
-    description: '404 Not Found'
-  - name: HTTP-405
-    type: Bool
-    default: false
-    description: '405 Method Not Allowed'
-  - name: HTTP-406
-    type: Bool
-    default: false
-    description: '406 Not Acceptable'
-  - name: HTTP-407
-    type: Bool
-    default: false
-    description: '407 Proxy Authentication Required'
-  - name: HTTP-408
-    type: Bool
-    default: false
-    description: '408 Request Timeout'
-  - name: HTTP-409
-    type: Bool
-    default: false
-    description: '409 Conflict'
-  - name: HTTP-410
-    type: Bool
-    default: false
-    description: '410 Gone'
-  - name: HTTP-411
-    type: Bool
-    default: false
-    description: '411 Length required'
-  - name: HTTP-412
-    type: Bool
-    default: false
-    description: '412 Precondition Failed'
-  - name: HTTP-413
-    type: Bool
-    default: false
-    description: '413 Request Entity Too Large'
-  - name: HTTP-500
-    type: Bool
-    default: false
-    description: '500 Server Error'
-  - name: HTTP-503
-    type: Bool
-    default: false
-    description: '503 Service Unavailable'
+- name: HTTP-100
+  type: Bool
+  default: true
+  description: 100 Continue
+- name: HTTP-101
+  type: Bool
+  default: false
+  description: 101 Switching Protocols
+- name: HTTP-200
+  type: Bool
+  default: true
+  description: 200 OK
+- name: HTTP-201
+  type: Bool
+  default: true
+  description: 201 Created
+- name: HTTP-202
+  type: Bool
+  default: true
+  description: 202 Accepted
+- name: HTTP-203
+  type: Bool
+  default: false
+  description: 203 Non-Authoritative Information
+- name: HTTP-204
+  type: Bool
+  default: true
+  description: 204 No Content
+- name: HTTP-205
+  type: Bool
+  default: false
+  description: 205 Reset Content
+- name: HTTP-206
+  type: Bool
+  default: true
+  description: 206 Partial Content
+- name: HTTP-300
+  type: Bool
+  default: false
+  description: 300 Multiple Choices
+- name: HTTP-301
+  type: Bool
+  default: true
+  description: 301 Moved
+- name: HTTP-302
+  type: Bool
+  default: true
+  description: 302 Found
+- name: HTTP-303
+  type: Bool
+  default: false
+  description: 303 See Other
+- name: HTTP-304
+  type: Bool
+  default: true
+  description: 304 Not Modified
+- name: HTTP-305
+  type: Bool
+  default: false
+  description: 305 Use Proxy
+- name: HTTP-307
+  type: Bool
+  default: true
+  description: 307 Temporary Redirect
+- name: HTTP-400
+  type: Bool
+  default: false
+  description: 400 Bad Request
+- name: HTTP-401
+  type: Bool
+  default: false
+  description: 401 Unauthorized
+- name: HTTP-402
+  type: Bool
+  default: false
+  description: 402 Payment Required
+- name: HTTP-403
+  type: Bool
+  default: false
+  description: 403 Forbidden
+- name: HTTP-404
+  type: Bool
+  default: false
+  description: 404 Not Found
+- name: HTTP-405
+  type: Bool
+  default: false
+  description: 405 Method Not Allowed
+- name: HTTP-406
+  type: Bool
+  default: false
+  description: 406 Not Acceptable
+- name: HTTP-407
+  type: Bool
+  default: false
+  description: 407 Proxy Authentication Required
+- name: HTTP-408
+  type: Bool
+  default: false
+  description: 408 Request Timeout
+- name: HTTP-409
+  type: Bool
+  default: false
+  description: 409 Conflict
+- name: HTTP-410
+  type: Bool
+  default: false
+  description: 410 Gone
+- name: HTTP-411
+  type: Bool
+  default: false
+  description: 411 Length required
+- name: HTTP-412
+  type: Bool
+  default: false
+  description: 412 Precondition Failed
+- name: HTTP-413
+  type: Bool
+  default: false
+  description: 413 Request Entity Too Large
+- name: HTTP-500
+  type: Bool
+  default: false
+  description: 500 Server Error
+- name: HTTP-503
+  type: Bool
+  default: false
+  description: 503 Service Unavailable

@@ -59,23 +59,23 @@ var DmCountMonitorFilterObjectDefault = map[string]attr.Value{
 var DmCountMonitorFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the log files when the threshold is reached.", "", "").String,
 			Computed:            true,
 		},
 		"interval": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Interval", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the measurement interval in milliseconds. One second is expressed as 1000 here.", "", "").String,
 			Computed:            true,
 		},
 		"rate_limit": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Rate Limit", "", "").AddIntegerRange(1, 4294967295).String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value as a number of messages. A monitored message type that exceeds this value over the measurement interval specified by the Interval property is subject to the policy identified by the Action values list.", "", "").AddIntegerRange(1, 4294967295).String,
 			Computed:            true,
 		},
 		"burst_limit": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Burst Limit", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum allowed message burst. Use a value approximately twice the value of Rate Limit.", "", "").String,
 			Computed:            true,
 		},
 		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "", "filteraction").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy implemented by the monitor when the target message type exceeds the threshold value. This is a list of Message Filter Actions. Click the + button to create a new action.", "", "filteraction").String,
 			Computed:            true,
 		},
 	},
@@ -83,26 +83,26 @@ var DmCountMonitorFilterDataSourceSchema = DataSourceSchema.NestedAttributeObjec
 var DmCountMonitorFilterResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the threshold. This name appears in the log files when the threshold is reached.", "", "").String,
 			Required:            true,
 		},
 		"interval": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Interval", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the measurement interval in milliseconds. One second is expressed as 1000 here.", "", "").String,
 			Required:            true,
 		},
 		"rate_limit": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Rate Limit", "", "").AddIntegerRange(1, 4294967295).String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the threshold value as a number of messages. A monitored message type that exceeds this value over the measurement interval specified by the Interval property is subject to the policy identified by the Action values list.", "", "").AddIntegerRange(1, 4294967295).String,
 			Required:            true,
 			Validators: []validator.Int64{
 				int64validator.Between(1, 4294967295),
 			},
 		},
 		"burst_limit": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Burst Limit", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum allowed message burst. Use a value approximately twice the value of Rate Limit.", "", "").String,
 			Required:            true,
 		},
 		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "", "filteraction").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select the monitor policy implemented by the monitor when the target message type exceeds the threshold value. This is a list of Message Filter Actions. Click the + button to create a new action.", "", "filteraction").String,
 			Required:            true,
 		},
 	},

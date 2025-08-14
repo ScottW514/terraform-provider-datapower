@@ -2,41 +2,52 @@ name: DmWSUserToggles
 model_only: true
 list_item: true
 attributes:
-  - name: WSDLName
-    type: String
-    required: true
-    description: 'WSDL file'
-  - name: ServiceName
-    type: String
-    required: true
-    description: 'Service'
-  - name: ServicePortName
-    type: String
-    required: true
-    description: 'Port'
-  - name: PortTypeName
-    type: String
-    required: true
-    description: 'PortType'
-  - name: BindingName
-    type: String
-    required: true
-    description: 'Binding'
-  - name: OperationName
-    type: String
-    required: true
-    description: 'Operation'
-  - name: Toggles
-    dm_type: DmWSDLUserPolicyToggles
-    description: 'Policy Toggles'
-  - name: Subscription
-    type: String
-    description: 'Subscription'
-  - name: UseFragmentID
-    type: Bool
-    default: false
-    description: 'Use Fragment ID'
-    cli_alias: use-fragid
-  - name: FragmentID
-    type: String
-    description: 'Fragment Identifier'
+- name: WSDLName
+  type: String
+  required: true
+  description: WSDL file name or "*" to match all files. This is the local name of
+    the WSDL file, as defined on the WSDL tab.
+- name: ServiceName
+  type: String
+  required: true
+  description: Matches wsdl:service/@name using the format {serviceNamespace}/name.
+    Enter "*" to match all bindings.
+- name: ServicePortName
+  type: String
+  required: true
+  description: Matches wsdl:service/wsdl:port/@name using the format {serviceNamespace}/name.
+    Enter "*" to match all ports.
+- name: PortTypeName
+  type: String
+  required: true
+  description: Matches wsdl:portType/@name using the format {portTypeNamespace}name.
+    Enter "*" to match all bindings.
+- name: BindingName
+  type: String
+  required: true
+  description: Matches wsdl:binding/@name using the format {bindingNamespace}name.
+    Enter "*" to match all bindings.
+- name: OperationName
+  type: String
+  required: true
+  description: Matches wsdl:binding/operation/@name using the format {bindingNamespace}name
+    or wsdl:service/wsdl:port when formatted {serviceNamespace}port-name/operation-name.
+    Enter "*" to match all operations.
+- name: Toggles
+  dm_type: DmWSDLUserPolicyToggles
+  description: Select the policy (availability and behavior) of the component made
+    available by the Web Service Proxy. The established policy cascade (applies to
+    all components that are contained by the current component).
+- name: Subscription
+  type: String
+  description: Matches all of the services obtained via the selected subscription.
+    The selection may be further narrowed by configuring matches against specific
+    wsdl components.
+- name: UseFragmentID
+  type: Bool
+  default: false
+  description: Toggle to enable or disable the use of Fragment ID
+  cli_alias: use-fragid
+- name: FragmentID
+  type: String
+  description: Matches Fragment Identifier

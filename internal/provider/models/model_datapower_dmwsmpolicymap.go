@@ -63,27 +63,27 @@ var DmWSMPolicyMapObjectDefault = map[string]attr.Value{
 var DmWSMPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"wsdl_component_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Type", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
 			Computed:            true,
 		},
 		"wsdl_component_value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field. The selected rule will be run only if the component named here would be used in processing the client request.", "", "").String,
 			Computed:            true,
 		},
 		"match": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Match Rule", "", "matching").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select an existing Matching Rule.", "", "matching").String,
 			Computed:            true,
 		},
 		"rule": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Stylepolicy Rule", "", "wsstylepolicyrule").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a WS-Proxy Processing Rule to run for matching transactions.", "", "wsstylepolicyrule").String,
 			Computed:            true,
 		},
 		"subscription": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription. The selected rule will be run for requests that correspond to services that belong to this subscription.", "", "").String,
 			Computed:            true,
 		},
 		"wsdl_fragment_id": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -91,7 +91,7 @@ var DmWSMPolicyMapDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmWSMPolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"wsdl_component_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Type", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a type of WSDL Component. The default is All.", "", "").AddStringEnum("all", "subscription", "wsdl", "service", "port", "operation", "fragmentid").AddDefaultValue("all").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -100,23 +100,23 @@ var DmWSMPolicyMapResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: stringdefault.StaticString("all"),
 		},
 		"wsdl_component_value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("WSDL Component Value", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of a WSDL-defined component of the type selected in the WSDL Component Type field. The selected rule will be run only if the component named here would be used in processing the client request.", "", "").String,
 			Optional:            true,
 		},
 		"match": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Match Rule", "", "matching").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select an existing Matching Rule.", "", "matching").String,
 			Required:            true,
 		},
 		"rule": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Stylepolicy Rule", "", "wsstylepolicyrule").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a WS-Proxy Processing Rule to run for matching transactions.", "", "wsstylepolicyrule").String,
 			Required:            true,
 		},
 		"subscription": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Subscription", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Select a subscription. The selected rule will be run for requests that correspond to services that belong to this subscription.", "", "").String,
 			Optional:            true,
 		},
 		"wsdl_fragment_id": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Fragment Identifier", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Matches Fragment Identifier", "", "").String,
 			Optional:            true,
 		},
 	},

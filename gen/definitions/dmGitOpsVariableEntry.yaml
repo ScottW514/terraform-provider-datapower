@@ -2,13 +2,13 @@ name: DmGitOpsVariableEntry
 model_only: true
 list_item: true
 attributes:
-  - name: VariableName
-    type: String
-    required: true
-    description: 'Variable name'
-    cli_alias: name
-  - name: VariableValue
-    type: String
-    required: true
-    description: 'Variable value'
-    cli_alias: value
+- name: VariableName
+  type: String
+  required: true
+  description: Variable name
+  cli_alias: name
+- name: VariableValue
+  type: String
+  required: true
+  description: Variable value
+  cli_alias: value

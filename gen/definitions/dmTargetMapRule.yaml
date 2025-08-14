@@ -2,16 +2,16 @@ name: DmTargetMapRule
 model_only: true
 list_item: true
 attributes:
-  - name: Target
-    type: String
-    required: true
-    example: 'target'
-    description: 'Target'
-    cli_alias: target
-  - name: Execute
-    type: String
-    reference_to: AssemblyActionFunctionCall
-    test_value: '"default-func-call-global"'
-    required: true
-    description: 'Function call'
-    cli_alias: execute
+- name: Target
+  type: String
+  required: true
+  example: target
+  description: Specify the target name that is configured in the schema.
+  cli_alias: target
+- name: Execute
+  type: String
+  reference_to: AssemblyActionFunctionCall
+  test_value: '"default-func-call-global"'
+  required: true
+  description: Specify the function call assembly action to call.
+  cli_alias: execute

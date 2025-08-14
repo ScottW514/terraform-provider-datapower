@@ -48,11 +48,11 @@ var DmRateLimitConfigurationNameValuePairObjectDefault = map[string]attr.Value{
 var DmRateLimitConfigurationNameValuePairDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter name", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
 			Computed:            true,
 		},
 		"value": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter value", "value", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the parameter.", "value", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmRateLimitConfigurationNameValuePairDataSourceSchema = DataSourceSchema.Nes
 var DmRateLimitConfigurationNameValuePairResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter name", "name", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the parameter.", "name", "").String,
 			Required:            true,
 		},
 		"value": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Parameter value", "value", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the parameter.", "value", "").String,
 			Required:            true,
 		},
 	},

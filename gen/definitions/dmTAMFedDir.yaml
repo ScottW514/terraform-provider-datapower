@@ -2,58 +2,69 @@ name: DmTAMFedDir
 model_only: true
 list_item: true
 attributes:
-  - name: FedName
-    type: String
-    required: true
-    test_value: '"ResTestfed"'
-    test_expect_ds: '"AccTest_fed"'
-    example: 'fedName'
-    description: 'Name'
-    cli_alias: federate-name
-  - name: Suffix
-    type: String
-    required: true
-    example: 'suffix'
-    description: 'Suffix'
-    cli_alias: suffix
-  - name: Host
-    type: String
-    required: true
-    example: 'ldap.host'
-    description: 'LDAP host'
-    cli_alias: hostname
-  - name: Port
-    type: Int64
-    required: true
-    default: 389
-    description: 'LDAP port'
-    cli_alias: port
-  - name: BindDN
-    type: String
-    required: true
-    example: 'dn'
-    description: 'LDAP administrator DN'
-    cli_alias: bind-dn
-  - name: BindPw
-    type: String
-    reference_to: PasswordAlias
-    required: true
-    test_value: '"AccTest_PasswordAlias"'
-    test_bed_value: 'datapower_passwordalias.acc_test.id'
-    description: 'LDAP administrator password alias'
-    cli_alias: bind-pw
-  - name: UseSSL
-    type: Bool
-    default: false
-    required: true
-    description: 'Use TLS'
-    cli_alias: UseSSL
-  - name: KeyFileLabel
-    type: String
-    description: 'LDAP server TLS key file label'
-    cli_alias: key-file-label
-  - name: BasicPrincipalAttribute
-    type: String
-    default: 'uid'
-    description: 'Basic user principal attribute'
-    cli_alias: basic-principal-attribute
+- name: FedName
+  type: String
+  required: true
+  test_value: '"ResTestfed"'
+  test_expect_ds: '"AccTest_fed"'
+  example: fedName
+  description: Specify the name of the federated directory entry to uniquely identify
+    the entry in the federation.
+  cli_alias: federate-name
+- name: Suffix
+  type: String
+  required: true
+  example: suffix
+  description: Specify a single LDAP suffix that is to be searched for users.
+  cli_alias: suffix
+- name: Host
+  type: String
+  required: true
+  example: ldap.host
+  description: Specify the host name or IP address of the LDAP server.
+  cli_alias: hostname
+- name: Port
+  type: Int64
+  required: true
+  default: 389
+  description: Specify the listening port on the LDAP server. The default value is
+    389.
+  cli_alias: port
+- name: BindDN
+  type: String
+  required: true
+  example: dn
+  description: Specify the distinguished name (DN) of an LDAP administrative user
+    to bind with the LDAP registry.
+  cli_alias: bind-dn
+- name: BindPw
+  type: String
+  reference_to: PasswordAlias
+  required: true
+  test_value: '"AccTest_PasswordAlias"'
+  test_bed_value: datapower_passwordalias.acc_test.id
+  description: Enter the password alias of the password for the LDAP administrator
+    that corresponds to the entered distinguished name.
+  cli_alias: bind-pw
+- name: UseSSL
+  type: Bool
+  default: false
+  required: true
+  description: Control whether to use TLS to connect to the LDAP server.
+  cli_alias: UseSSL
+- name: KeyFileLabel
+  type: String
+  description: <p>Enter the label of the personal certificate in the key file for
+    client authentication.</p><ul><li>When using mutual authentication with the registry
+    server and the personal certificate is not the default personal certificate in
+    the key file, enter the label of the personal certificate. The personal certificate
+    allows client authentication.</li><li>For server-only authentication, do not enter
+    a value.</li></ul>
+  cli_alias: key-file-label
+- name: BasicPrincipalAttribute
+  type: String
+  default: uid
+  description: Specify the attribute that represents a user in the LDAP registry entry.
+    The attribute overrides the global basic user principal for the client. The attribute
+    is optional when the basic user mode is disabled.
+  cli_alias: basic-principal-attribute

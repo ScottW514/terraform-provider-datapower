@@ -57,19 +57,19 @@ var DmRadiusServerObjectDefault = map[string]attr.Value{
 var DmRadiusServerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"number": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Number", "", "").AddIntegerRange(0, 2147483647).String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the list position of this RADIUS server within the list of all RADIUS servers known to the client implementation. The lower the number, the more preferred the server.", "", "").AddIntegerRange(0, 2147483647).String,
 			Computed:            true,
 		},
 		"host": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Server address", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address of the RADIUS server.", "", "").String,
 			Computed:            true,
 		},
 		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Server port", "", "").AddDefaultValue("1812").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the RADIUS server.", "", "").AddDefaultValue("1812").String,
 			Computed:            true,
 		},
 		"secret": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Secret", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password login to the RADIUS server. You must confirm the password for accuracy.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -77,24 +77,24 @@ var DmRadiusServerDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmRadiusServerResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"number": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Number", "", "").AddIntegerRange(0, 2147483647).String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the list position of this RADIUS server within the list of all RADIUS servers known to the client implementation. The lower the number, the more preferred the server.", "", "").AddIntegerRange(0, 2147483647).String,
 			Required:            true,
 			Validators: []validator.Int64{
 				int64validator.Between(0, 2147483647),
 			},
 		},
 		"host": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Server address", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address of the RADIUS server.", "", "").String,
 			Required:            true,
 		},
 		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Server port", "", "").AddDefaultValue("1812").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port on the RADIUS server.", "", "").AddDefaultValue("1812").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             int64default.StaticInt64(1812),
 		},
 		"secret": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Secret", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password login to the RADIUS server. You must confirm the password for accuracy.", "", "").String,
 			Optional:            true,
 		},
 	},

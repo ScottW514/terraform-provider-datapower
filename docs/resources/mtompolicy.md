@@ -66,12 +66,12 @@ Optional:
 
 Required:
 
-- `x_path` (String) XPath Expression
+- `x_path` (String) An XPath expression that defines which schema element or schema elements are subject to this rule. Click XPath Tool to launch the XPath expression builder. To use this tool, upload an example document. After the example document is loaded, the tool allows you to select the elements to construct the corresponding XPath expression. After selecting the elements, click Done to return to the MTOM Rules Properties window.
   - CLI Alias: `select`
 
 Optional:
 
-- `content_id` (String) Content ID
+- `content_id` (String) If not explicitly configured, content IDs are automatically generated. Using this property allows for the explicit configuration of content-id headers and their associated href values. Rules that match multiple data elements result in one attachment part for all matched elements. The resulting attachment part contains data from the last match only.
   - CLI Alias: `content-id`
-- `content_type` (String) Content Type
+- `content_type` (String) The Content Type for the extracted element data. This option overrides the value that is attained from the xmlmime:contentType attribute. If the provided XPath matches more than one element, each corresponding MIME attachment part will contain a content-type header with this value. If different content-type values are required, selective XPath expressions are required.
   - CLI Alias: `content-type`

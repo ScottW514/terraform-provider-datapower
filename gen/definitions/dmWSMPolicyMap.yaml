@@ -2,38 +2,41 @@ name: DmWSMPolicyMap
 model_only: true
 list_item: true
 attributes:
-  - name: WSDLComponentType
-    type: String
-    enum:
-      - 'all'
-      - 'subscription'
-      - 'wsdl'
-      - 'service'
-      - 'port'
-      - 'operation'
-      - 'fragmentid'
-    required: true
-    default: 'all'
-    description: 'WSDL Component Type'
-  - name: WSDLComponentValue
-    type: String
-    description: 'WSDL Component Value'
-  - name: Match
-    type: String
-    reference_to: Matching
-    required: true
-    test_value: '"__default-accept-service-providers__"'
-    description: 'Match Rule'
-  - name: Rule
-    type: String
-    reference_to: WSStylePolicyRule
-    required: true
-    test_value: '"AccTest_WSStylePolicyRule"'
-    test_bed_value: 'datapower_wsstylepolicyrule.acc_test.id'
-    description: 'Stylepolicy Rule'
-  - name: Subscription
-    type: String
-    description: 'Subscription'
-  - name: WSDLFragmentID
-    type: String
-    description: 'Fragment Identifier'
+- name: WSDLComponentType
+  type: String
+  enum:
+  - all
+  - subscription
+  - wsdl
+  - service
+  - port
+  - operation
+  - fragmentid
+  required: true
+  default: all
+  description: Select a type of WSDL Component. The default is All.
+- name: WSDLComponentValue
+  type: String
+  description: Enter the name of a WSDL-defined component of the type selected in
+    the WSDL Component Type field. The selected rule will be run only if the component
+    named here would be used in processing the client request.
+- name: Match
+  type: String
+  reference_to: Matching
+  required: true
+  test_value: '"__default-accept-service-providers__"'
+  description: Select an existing Matching Rule.
+- name: Rule
+  type: String
+  reference_to: WSStylePolicyRule
+  required: true
+  test_value: '"AccTest_WSStylePolicyRule"'
+  test_bed_value: datapower_wsstylepolicyrule.acc_test.id
+  description: Select a WS-Proxy Processing Rule to run for matching transactions.
+- name: Subscription
+  type: String
+  description: Select a subscription. The selected rule will be run for requests that
+    correspond to services that belong to this subscription.
+- name: WSDLFragmentID
+  type: String
+  description: Matches Fragment Identifier

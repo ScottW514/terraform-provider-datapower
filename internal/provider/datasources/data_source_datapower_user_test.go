@@ -40,7 +40,7 @@ func TestAccDataSourceUser(t *testing.T) {
 				Config: testutils.UserTestConfig.GetDataConfig(),
 				Check: resource.ComposeTestCheckFunc([]resource.TestCheckFunc{
 					resource.TestCheckResourceAttr("data.datapower_user.test", "result.0.id", "AccTest_User"),
-					resource.TestCheckResourceAttr("data.datapower_user.test", "result.0.access_level", "privileged"),
+					resource.TestCheckResourceAttr("data.datapower_user.test", "result.0.access_level", "group-defined"),
 				}...),
 			},
 		},

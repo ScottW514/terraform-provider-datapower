@@ -1,27 +1,27 @@
 name: DmHostKeyAlgorithms
 model_only: true
 attributes:
-  - name: SSH-ED25519
-    type: Bool
-    default: false
-    description: 'ssh-ed25519'
-  - name: ECDSA-SHA2-NISTP256
-    type: Bool
-    default: false
-    description: 'ecdsa-sha2-nistp256'
-  - name: ECDSA-SHA2-NISTP384
-    type: Bool
-    default: false
-    description: 'ecdsa-sha2-nistp384'
-  - name: ECDSA-SHA2-NISTP521
-    type: Bool
-    default: false
-    description: 'ecdsa-sha2-nistp521'
-  - name: RSA-SHA2-512
-    type: Bool
-    default: false
-    description: 'rsa-sha2-512'
-  - name: RSA-SHA2-256
-    type: Bool
-    default: false
-    description: 'rsa-sha2-256'
+- name: SSH-ED25519
+  type: Bool
+  default: false
+  description: ssh-ed25519
+- name: ECDSA-SHA2-NISTP256
+  type: Bool
+  default: false
+  description: ecdsa-sha2-nistp256
+- name: ECDSA-SHA2-NISTP384
+  type: Bool
+  default: false
+  description: ecdsa-sha2-nistp384
+- name: ECDSA-SHA2-NISTP521
+  type: Bool
+  default: false
+  description: ecdsa-sha2-nistp521
+- name: RSA-SHA2-512
+  type: Bool
+  default: false
+  description: rsa-sha2-512
+- name: RSA-SHA2-256
+  type: Bool
+  default: false
+  description: rsa-sha2-256

@@ -1,24 +1,24 @@
 name: DmConfigSequenceCapabilities
 model_only: true
 attributes:
-  - name: APIConnect
-    type: Bool
-    description: 'Optimize for API Connect processing'
-  - name: MonitorPersistence
-    type: Bool
-    description: 'Monitor changes for persistence'
-  - name: ApplyAllObjects
-    type: Bool
-    description: 'Apply to all objects'
-  - name: MarkExternal
-    type: Bool
-    description: 'Mark objects as external'
-  - name: DeleteConfig
-    type: Bool
-    description: 'Delete files after processing'
-  - name: Batch
-    type: Bool
-    description: 'Batch changes from configuration files'
-  - name: GitOpsMode
-    type: Bool
-    description: 'Process in GitOps mode'
+- name: APIConnect
+  type: Bool
+  description: Optimize for API Connect processing
+- name: MonitorPersistence
+  type: Bool
+  description: Monitor changes for persistence
+- name: ApplyAllObjects
+  type: Bool
+  description: Apply to all objects
+- name: MarkExternal
+  type: Bool
+  description: Mark objects as external
+- name: DeleteConfig
+  type: Bool
+  description: Delete files after processing
+- name: Batch
+  type: Bool
+  description: Batch changes from configuration files
+- name: GitOpsMode
+  type: Bool
+  description: Process in GitOps mode

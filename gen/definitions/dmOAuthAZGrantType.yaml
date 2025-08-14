@@ -1,35 +1,35 @@
 name: DmOAuthAZGrantType
 model_only: true
 attributes:
-  - name: code
-    type: Bool
-    default: false
-    description: 'Authorization Code Grant'
-  - name: implicit
-    type: Bool
-    default: false
-    description: 'Implicit Grant'
-  - name: password
-    type: Bool
-    default: false
-    description: 'Resource Owner Password Credential Grant'
-  - name: client
-    type: Bool
-    default: false
-    description: 'Client Credentials Grant'
-  - name: jwt
-    type: Bool
-    default: false
-    description: 'JWT Grant'
-  - name: novalidate
-    type: Bool
-    default: false
-    description: 'Disable Validation Grant'
-  - name: oidc
-    type: Bool
-    default: false
-    description: 'OpenID Connect'
-  - name: saml20bearer
-    type: Bool
-    default: false
-    required: true
+- name: code
+  type: Bool
+  default: false
+  description: Authorization Code Grant
+- name: implicit
+  type: Bool
+  default: false
+  description: Implicit Grant
+- name: password
+  type: Bool
+  default: false
+  description: Resource Owner Password Credential Grant
+- name: client
+  type: Bool
+  default: false
+  description: Client Credentials Grant
+- name: jwt
+  type: Bool
+  default: false
+  description: JWT Grant
+- name: novalidate
+  type: Bool
+  default: false
+  description: Disable Validation Grant
+- name: oidc
+  type: Bool
+  default: false
+  description: OpenID Connect
+- name: saml20bearer
+  type: Bool
+  default: false
+  required: true

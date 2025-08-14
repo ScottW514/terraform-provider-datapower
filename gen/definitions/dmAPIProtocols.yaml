@@ -1,19 +1,19 @@
 name: DmAPIProtocols
 model_only: true
 attributes:
-  - name: http
-    type: Bool
-    default: true
-    description: 'http'
-  - name: https
-    type: Bool
-    default: true
-    description: 'https'
-  - name: ws
-    type: Bool
-    default: true
-    description: 'ws'
-  - name: wss
-    type: Bool
-    default: true
-    description: 'wss'
+- name: http
+  type: Bool
+  default: true
+  description: Protocol identifier for HTTP.
+- name: https
+  type: Bool
+  default: true
+  description: Protocol identifier for HTTPS.
+- name: ws
+  type: Bool
+  default: true
+  description: Protocol identifier for WebSocket. When allowed, the HTTP handler must be configured to allow WebSocket upgrade requests.
+- name: wss
+  type: Bool
+  default: true
+  description: Protocol identifier for WebSocket Secure. When allowed, the HTTPS handler must be configured to allow WebSocket upgrade requests.

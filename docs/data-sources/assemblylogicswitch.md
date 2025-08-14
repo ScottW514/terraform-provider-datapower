@@ -69,5 +69,5 @@ Optional:
 
 Read-Only:
 
-- `condition` (String) Condition
-- `execute` (String) Execute
+- `condition` (String) Specify the JSONata expression to match against the input.
+- `execute` (String) Specify the name of the API rule to run when the JSONata expression evaluates to true. The specified API rule can define further switch assembly actions.

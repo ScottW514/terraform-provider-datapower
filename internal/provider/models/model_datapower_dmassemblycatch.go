@@ -48,11 +48,11 @@ var DmAssemblyCatchObjectDefault = map[string]attr.Value{
 var DmAssemblyCatchDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"error": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Error name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of a custom error.", "", "").String,
 			Computed:            true,
 		},
 		"handler": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Error handler", "", "apirule").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the error handler for the custom error.", "", "apirule").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmAssemblyCatchDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmAssemblyCatchResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"error": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Error name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of a custom error.", "", "").String,
 			Required:            true,
 		},
 		"handler": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Error handler", "", "apirule").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the name of the error handler for the custom error.", "", "apirule").String,
 			Required:            true,
 		},
 	},

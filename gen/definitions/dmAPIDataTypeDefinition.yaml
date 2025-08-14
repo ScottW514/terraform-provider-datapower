@@ -2,15 +2,15 @@ name: DmAPIDataTypeDefinition
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    description: 'Name'
-    example: 'dtdefname'
-  - name: Schema
-    type: String
-    reference_to: APISchema
-    test_value: '"AccTest_APISchema"'
-    test_bed_value: 'datapower_apischema.acc_test.id'
-    required: true
-    description: 'Schema'
+- name: Name
+  type: String
+  required: true
+  description: Specify the name of the data type.
+  example: dtdefname
+- name: Schema
+  type: String
+  reference_to: APISchema
+  test_value: '"AccTest_APISchema"'
+  test_bed_value: datapower_apischema.acc_test.id
+  required: true
+  description: Specify the API schema object.

@@ -2,13 +2,14 @@ name: DmB2BActiveGroup
 model_only: true
 list_item: true
 attributes:
-  - name: ProfileGroup
-    type: String
-    reference_to: B2BProfileGroup
-    description: 'Profile group'
-    cli_alias: group
-  - name: GroupEnabled
-    type: Bool
-    default: true
-    description: 'Enable group'
-    cli_alias: enabled
+- name: ProfileGroup
+  type: String
+  reference_to: B2BProfileGroup
+  description: Specify the profile group.
+  cli_alias: group
+- name: GroupEnabled
+  type: Bool
+  default: true
+  description: Specify whether to enable the profile group. This setting does not
+    modify the administrative state in the B2B partner profile group.
+  cli_alias: enabled

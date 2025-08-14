@@ -2,31 +2,39 @@ name: DmProfileCPABinding
 model_only: true
 list_item: true
 attributes:
-  - name: InternalPartner
-    type: String
-    reference_to: B2BProfile
-    required: true
-    test_value: '"AccTest_B2BProfile"'
-    test_bed_value: 'datapower_b2bprofile.acc_test.id'
-    description: 'CPA sender (internal partner profile)'
-    cli_alias: internal-partner
-  - name: CPA
-    type: String
-    reference_to: B2BCPA
-    required: true
-    test_value: '"AccTest_B2BCPA"'
-    test_bed_value: 'datapower_b2bcpa.acc_test.id'
-    description: 'CPA'
-    cli_alias: cpa
-  - name: Collaboration
-    type: String
-    reference_to: B2BCPACollaboration
-    required: true
-    test_value: '"AccTest_B2BCPACollaboration"'
-    test_bed_value: 'datapower_b2bcpacollaboration.acc_test.id'
-    description: 'Service'
-    cli_alias: collaboration
-  - name: Action
-    type: String
-    description: 'Action'
-    cli_alias: action
+- name: InternalPartner
+  type: String
+  reference_to: B2BProfile
+  required: true
+  test_value: '"AccTest_B2BProfile"'
+  test_bed_value: datapower_b2bprofile.acc_test.id
+  description: Specify the name of the CPA sender (internal partner profile). Outbound
+    ebMS2 messages from an internal partner use the CPA, service, and action that
+    are specified by the CPA binding associated with the internal partner profile.
+  cli_alias: internal-partner
+- name: CPA
+  type: String
+  reference_to: B2BCPA
+  required: true
+  test_value: '"AccTest_B2BCPA"'
+  test_bed_value: datapower_b2bcpa.acc_test.id
+  description: Specify the CPA ID to use. This value overrides the default CPA ID
+    of the external partner profile configuration.
+  cli_alias: cpa
+- name: Collaboration
+  type: String
+  reference_to: B2BCPACollaboration
+  required: true
+  test_value: '"AccTest_B2BCPACollaboration"'
+  test_bed_value: datapower_b2bcpacollaboration.acc_test.id
+  description: Specify the service to use, which is the value of <tt>Service</tt>
+    element in outbound ebMS2 requests. This value overrides the default service of
+    the external partner profile configuration.
+  cli_alias: collaboration
+- name: Action
+  type: String
+  description: Specify the action to use. This value overrides the default action
+    of the external partner profile configuration. When the action is not set or the
+    action is not defined in the service of the CPA binding, the B2B gateway uses
+    the first action in the action list of the service.
+  cli_alias: action

@@ -2,13 +2,14 @@ name: DmKafkaEndpoint
 model_only: true
 list_item: true
 attributes:
-  - name: Host
-    type: String
-    required: true
-    example: 'localhost'
-    description: 'Host'
-  - name: Port
-    type: Int64
-    required: true
-    example: 8888
-    description: 'Port'
+- name: Host
+  type: String
+  required: true
+  example: localhost
+  description: Specify the host name or IP address of a bootstrap server.
+- name: Port
+  type: Int64
+  required: true
+  example: 8888
+  description: Specify the port that the bootstrap server monitors for incoming bootstrap
+    requests.

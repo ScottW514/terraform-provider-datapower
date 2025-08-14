@@ -49,11 +49,11 @@ var DmUploadChunkedPolicyObjectDefault = map[string]attr.Value{
 var DmUploadChunkedPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"reg_exp": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Computed:            true,
 		},
 		"upload_chunked": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Chunk body of HTTP/1.1 requests", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable RFC 2616-compliant chunked encoding. The server must implement the specification to receive this encoding.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 	},
@@ -61,11 +61,11 @@ var DmUploadChunkedPolicyDataSourceSchema = DataSourceSchema.NestedAttributeObje
 var DmUploadChunkedPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"reg_exp": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URL matching expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the shell-style expression to define the URL set.", "", "").String,
 			Required:            true,
 		},
 		"upload_chunked": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Chunk body of HTTP/1.1 requests", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable RFC 2616-compliant chunked encoding. The server must implement the specification to receive this encoding.", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),

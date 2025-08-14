@@ -69,30 +69,30 @@ var DmLBGroupAffinityDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"enable_sa": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable Session Affinity", "enable-affinity", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enables or disables session affinity operations.", "enable-affinity", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 		"insertion_cookie_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Insertion Cookie Name", "i-cookie-name", "").AddDefaultValue("DPJSESSIONID").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Name of the cookie inserted into the response when active or active-conditional session affinity is required.", "i-cookie-name", "").AddDefaultValue("DPJSESSIONID").String,
 			Computed:            true,
 		},
 		"insertion_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Insertion Path", "i-path", "").AddDefaultValue("/").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The path added to the insertion cookie in the response when active or active-conditional session affinity is required.", "i-path", "").AddDefaultValue("/").String,
 			Computed:            true,
 		},
 		"insertion_domain": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Insertion Domain", "i-domain", "").AddDefaultValue("datapower.com").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The domain added to the insertion cookie in the response when active or active-conditional session affinity is required. The domain name cannot begin with a dot.", "i-domain", "").AddDefaultValue("datapower.com").String,
 			Computed:            true,
 		},
 		"affinity_wlm_override": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Override WebSphere Cell Session Affinity", "override-wlm-affinity", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Overrides the WebSphere Cell Session Affinity cluster configuration with the DataPower Gateway configuration information below.", "override-wlm-affinity", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"affinity_mode": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Mode", "affinity-mode", "").AddStringEnum("active", "activeConditional").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").String,
 			Computed:            true,
 		},
-		"insertion_attributes": GetDmInsertionAttributesDataSourceSchema("Insert cookie attributes", "i-cookie-attributes", ""),
+		"insertion_attributes": GetDmInsertionAttributesDataSourceSchema("Specifies the attributes to insert in the cookie in the response when active or active-conditional session affinity is required.", "i-cookie-attributes", ""),
 	},
 }
 var DmLBGroupAffinityResourceSchema = ResourceSchema.SingleNestedAttribute{
@@ -103,43 +103,43 @@ var DmLBGroupAffinityResourceSchema = ResourceSchema.SingleNestedAttribute{
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
 		"enable_sa": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enable Session Affinity", "enable-affinity", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enables or disables session affinity operations.", "enable-affinity", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),
 		},
 		"insertion_cookie_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Insertion Cookie Name", "i-cookie-name", "").AddDefaultValue("DPJSESSIONID").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Name of the cookie inserted into the response when active or active-conditional session affinity is required.", "i-cookie-name", "").AddDefaultValue("DPJSESSIONID").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("DPJSESSIONID"),
 		},
 		"insertion_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Insertion Path", "i-path", "").AddDefaultValue("/").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The path added to the insertion cookie in the response when active or active-conditional session affinity is required.", "i-path", "").AddDefaultValue("/").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("/"),
 		},
 		"insertion_domain": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Insertion Domain", "i-domain", "").AddDefaultValue("datapower.com").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The domain added to the insertion cookie in the response when active or active-conditional session affinity is required. The domain name cannot begin with a dot.", "i-domain", "").AddDefaultValue("datapower.com").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("datapower.com"),
 		},
 		"affinity_wlm_override": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Override WebSphere Cell Session Affinity", "override-wlm-affinity", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Overrides the WebSphere Cell Session Affinity cluster configuration with the DataPower Gateway configuration information below.", "override-wlm-affinity", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"affinity_mode": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Mode", "affinity-mode", "").AddStringEnum("active", "activeConditional").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The mode of session affinity applied to this load balancer group.", "affinity-mode", "").AddStringEnum("active", "activeConditional").String,
 			Optional:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("active", "activeConditional"),
 			},
 		},
-		"insertion_attributes": GetDmInsertionAttributesResourceSchema("Insert cookie attributes", "i-cookie-attributes", "", false),
+		"insertion_attributes": GetDmInsertionAttributesResourceSchema("Specifies the attributes to insert in the cookie in the response when active or active-conditional session affinity is required.", "i-cookie-attributes", "", false),
 	},
 }
 

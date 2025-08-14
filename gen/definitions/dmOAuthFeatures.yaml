@@ -1,19 +1,19 @@
 name: DmOAuthFeatures
 model_only: true
 attributes:
-  - name: verboseerror
-    type: Bool
-    default: false
-    description: 'Verbose'
-  - name: onetimeuse
-    type: Bool
-    default: false
-    description: 'One-time use access token'
-  - name: pkce
-    type: Bool
-    default: false
-    description: 'Require PKCE for Authorization Code'
-  - name: multipleusesrefreshtoken
-    type: Bool
-    default: false
-    description: 'Allow reuse of refresh token'
+- name: verboseerror
+  type: Bool
+  default: false
+  description: Verbose
+- name: onetimeuse
+  type: Bool
+  default: false
+  description: One-time use access token
+- name: pkce
+  type: Bool
+  default: false
+  description: Require PKCE for Authorization Code
+- name: multipleusesrefreshtoken
+  type: Bool
+  default: false
+  description: Allow reuse of refresh token

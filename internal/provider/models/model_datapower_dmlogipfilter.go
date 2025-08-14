@@ -45,7 +45,7 @@ var DmLogIPFilterObjectDefault = map[string]attr.Value{
 var DmLogIPFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"ip_address": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("IP address", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the explicit IP address.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -53,7 +53,7 @@ var DmLogIPFilterDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmLogIPFilterResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"ip_address": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("IP address", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the explicit IP address.", "", "").String,
 			Optional:            true,
 		},
 	},

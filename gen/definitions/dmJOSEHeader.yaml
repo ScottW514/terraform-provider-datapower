@@ -2,12 +2,14 @@ name: DmJOSEHeader
 model_only: true
 list_item: true
 attributes:
-  - name: HeaderName
-    type: String
-    description: 'Name'
-    example: 'HEADER'
-  - name: HeaderValue
-    type: String
-    required: true
-    example: 'VALUE'
-    description: 'Value'
+- name: HeaderName
+  type: String
+  description: Name of a JOSE header.
+  example: HEADER
+- name: HeaderValue
+  type: String
+  required: true
+  example: VALUE
+  description: Value of a JOSE header. If Name is 'crit', the value can be a comma
+    separated list to have more than one value set to 'crit'. Other headers' values
+    only accept string.

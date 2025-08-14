@@ -68,11 +68,11 @@ Optional:
 
 Read-Only:
 
-- `backend` (Boolean) From response
+- `backend` (Boolean) Append the value in the response from the target endpoint.
   - CLI Alias: `backend`
   - Default value: `false`
-- `custom` (String) Custom
+- `custom` (String) Append a custom string as the value.
   - CLI Alias: `custom`
-- `predefined` (Boolean) Predefined
+- `predefined` (Boolean) Append the gateway-predefined value.
   - CLI Alias: `predefined`
   - Default value: `true`

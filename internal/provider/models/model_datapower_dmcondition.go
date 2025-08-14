@@ -48,11 +48,11 @@ var DmConditionObjectDefault = map[string]attr.Value{
 var DmConditionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"expression": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The expression to check for the condition.", "", "").String,
 			Computed:            true,
 		},
 		"condition_action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The action to run when the expression is matched.", "", "").String,
 			Computed:            true,
 		},
 	},
@@ -60,11 +60,11 @@ var DmConditionDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmConditionResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"expression": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath expression", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The expression to check for the condition.", "", "").String,
 			Required:            true,
 		},
 		"condition_action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Action", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The action to run when the expression is matched.", "", "").String,
 			Required:            true,
 		},
 	},

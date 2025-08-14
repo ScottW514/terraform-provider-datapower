@@ -2,13 +2,17 @@ name: DmConfigSequenceLocation
 model_only: true
 list_item: true
 attributes:
-  - name: Directory
-    type: String
-    default: 'local:///'
-    description: 'Location'
-    cli_alias: directory
-  - name: AccessProfileName
-    type: String
-    reference_to: AccessProfile
-    description: 'Access profile'
-    cli_alias: access-profile
+- name: Directory
+  type: String
+  default: local:///
+  description: Specify the directory to watch for changes to configuration files.
+    Processing scans the directory for configuration files that match a given PCRE
+    pattern and runs only the matching files. By default, this directory is also where
+    the generated output files are stored.
+  cli_alias: directory
+- name: AccessProfileName
+  type: String
+  reference_to: AccessProfile
+  description: Specify the access policies to enforce. Each policy defines permissions
+    to a specific resource group.
+  cli_alias: access-profile

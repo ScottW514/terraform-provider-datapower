@@ -57,19 +57,19 @@ var DmSOAPHeaderDispositionItemObjectDefault = map[string]attr.Value{
 var DmSOAPHeaderDispositionItemDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"namespace": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Namespace URI", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the namespace URI of the SOAP header element, the default value is a blank string, which indicates no restriction.", "", "").String,
 			Computed:            true,
 		},
 		"local_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Local Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local name of the SOAP header element, the default value is a blank string, which indicates no restriction.", "", "").String,
 			Computed:            true,
 		},
 		"child_local_name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Child Element Local Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local name of the SOAP header's child element, the default value is a blank string, which indicates no restriction.", "", "").String,
 			Computed:            true,
 		},
 		"action": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Refine Action", "", "").AddStringEnum("processed", "unprocessed", "keep", "remove", "fault").AddDefaultValue("processed").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify what action to take for this SOAP header and/or child element.", "", "").AddStringEnum("processed", "unprocessed", "keep", "remove", "fault").AddDefaultValue("processed").String,
 			Computed:            true,
 		},
 	},
@@ -77,19 +77,19 @@ var DmSOAPHeaderDispositionItemDataSourceSchema = DataSourceSchema.NestedAttribu
 var DmSOAPHeaderDispositionItemResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"namespace": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Namespace URI", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the namespace URI of the SOAP header element, the default value is a blank string, which indicates no restriction.", "", "").String,
 			Optional:            true,
 		},
 		"local_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Header Local Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local name of the SOAP header element, the default value is a blank string, which indicates no restriction.", "", "").String,
 			Optional:            true,
 		},
 		"child_local_name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Child Element Local Name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local name of the SOAP header's child element, the default value is a blank string, which indicates no restriction.", "", "").String,
 			Optional:            true,
 		},
 		"action": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Refine Action", "", "").AddStringEnum("processed", "unprocessed", "keep", "remove", "fault").AddDefaultValue("processed").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify what action to take for this SOAP header and/or child element.", "", "").AddStringEnum("processed", "unprocessed", "keep", "remove", "fault").AddDefaultValue("processed").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{

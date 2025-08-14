@@ -65,8 +65,8 @@ Optional:
 
 Read-Only:
 
-- `partner_profile` (String) Partner profile
+- `partner_profile` (String) Specify the partner profile.
   - CLI Alias: `profile`
   - Reference to: `datapower_b2bprofile:id`
-- `profile_dest` (String) Profile destination
+- `profile_dest` (String) Specify the destination for this partner. Without this property, the first destination is used.
   - CLI Alias: `destination`

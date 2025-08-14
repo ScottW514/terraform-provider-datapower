@@ -55,15 +55,15 @@ var DmFileSystemUsageObjectDefault = map[string]attr.Value{
 var DmFileSystemUsageDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"name": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("File system", "name", "").AddStringEnum("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the system file system to check.", "name", "").AddStringEnum("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace").String,
 			Computed:            true,
 		},
 		"warning_threshold": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Warning threshold", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
 			Computed:            true,
 		},
 		"critical_threshold": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Critical threshold", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
 			Computed:            true,
 		},
 	},
@@ -71,14 +71,14 @@ var DmFileSystemUsageDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmFileSystemUsageResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"name": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("File system", "name", "").AddStringEnum("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the system file system to check.", "name", "").AddStringEnum("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace").String,
 			Required:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("system", "raid", "temporary", "mqroot", "mqbackup", "mqdiag", "mqerr", "mqtrace"),
 			},
 		},
 		"warning_threshold": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Warning threshold", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -87,7 +87,7 @@ var DmFileSystemUsageResourceSchema = ResourceSchema.NestedAttributeObject{
 			Default: int64default.StaticInt64(75),
 		},
 		"critical_threshold": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Critical threshold", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 90.", "critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{

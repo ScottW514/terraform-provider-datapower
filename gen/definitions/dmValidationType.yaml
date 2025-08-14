@@ -2,32 +2,47 @@ name: DmValidationType
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    description: 'Name Expression'
-  - name: Value
-    type: String
-    required: true
-    description: 'Value Constraint'
-  - name: Fixup
-    type: String
-    enum:
-      - 'passthrough'
-      - 'strip'
-      - 'error'
-      - 'set'
-    required: true
-    default: 'error'
-    description: 'Failure Policy'
-  - name: MapValue
-    type: String
-    description: 'Map Value'
-  - name: XSS
-    type: Bool
-    default: false
-    description: 'Check XSS'
-  - name: XSSPatternsFile
-    type: String
-    default: 'store:///XSS-Patterns.xml'
-    description: 'XSS (Cross Site Scripting) Protection Patterns File'
+- name: Name
+  type: String
+  required: true
+  description: The regular expression that the submitted names are matched against.
+    If they match the value must also match against the corresponding value constraint
+    to be passed through.
+- name: Value
+  type: String
+  required: true
+  description: The regular expression (PCRE style) that is applied to a value input
+    to see if it is an expected input
+- name: Fixup
+  type: String
+  enum:
+  - passthrough
+  - strip
+  - error
+  - set
+  required: true
+  default: error
+  description: Select which action should be taken when a value constraint fails to
+    validate an input. The default is Error.
+- name: MapValue
+  type: String
+  description: An value that fails validation is changed to this value if the failure
+    policy is 'set'.
+- name: XSS
+  type: Bool
+  default: false
+  description: This property allows the value to be checked for Cross Site Scripting
+    (XSS) signatures. These signatures are malicious attempts to input client-side
+    script as the input to a web application. If this client-side script is later
+    displayed in a browser, the script executes and can perform malicious activities.
+    Enable this feature to filter input for malicious content that might get stored
+    and displayed again later, such as the contents of a comment form. The check looks
+    for invalid characters and various forms of the term &lt;script that is often
+    used to engage JavaScript on a browser without the user knowing.
+- name: XSSPatternsFile
+  type: String
+  default: store:///XSS-Patterns.xml
+  description: Specifies the patterns file that will be used by the XSS filter. The
+    default file, store:///XSS-Patterns.xml, checks for invalid characters and various
+    forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns
+    to be used by the XSS filter.

@@ -2,61 +2,87 @@ name: DmAPIRateLimit
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    description: 'Name'
-  - name: Rate
-    type: Int64
-    minimum: 0
-    maximum: 4294967295
-    example: 1000
-    required: true
-    description: 'Rate'
-  - name: Interval
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    default: 1
-    description: 'Interval'
-  - name: Unit
-    type: String
-    enum:
-      - 'second'
-      - 'minute'
-      - 'hour'
-      - 'day'
-      - 'week'
-    default: 'second'
-    description: 'Unit'
-  - name: HardLimit
-    type: Bool
-    default: false
-    description: 'Enable hard limit'
-  - name: CacheOnly
-    type: Bool
-    default: true
-    description: 'Cache only'
-  - name: IsClient
-    type: Bool
-    default: true
-    description: 'Is Client'
-  - name: UseApiName
-    type: Bool
-    default: false
-    description: 'Use API Name'
-  - name: UseAppId
-    type: Bool
-    default: false
-    description: 'Use Application ID'
-  - name: UseClientId
-    type: Bool
-    default: false
-    description: 'Use Client ID'
-  - name: DynamicValue
-    type: String
-    description: 'Dynamic Value'
-  - name: Weight
-    type: String
-    default: 1
-    description: 'Weight expression'
+- name: Name
+  type: String
+  required: true
+  description: Indicates the name of the rate limit scheme.
+- name: Rate
+  type: Int64
+  minimum: 0
+  maximum: 4294967295
+  example: 1000
+  required: true
+  description: Indicates the maximum number of requests that the API Gateway can handle
+    within a time interval. The value of 0 indicates no limit.
+- name: Interval
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  default: 1
+  description: Indicates the time interval for the rate limit. Specify a value that
+    is greater than or equal to 1. The default value is 1.
+- name: Unit
+  type: String
+  enum:
+  - second
+  - minute
+  - hour
+  - day
+  - week
+  default: second
+  description: Indicates the time unit for the rate limit. The default value is second.
+- name: HardLimit
+  type: Bool
+  default: false
+  description: <p>Indicates whether to reject requests when the specified rate limit
+    is reached.</p><ul><li>When enabled, the API Gateway rejects requests when the
+    limit is exceeded.</li><li>When disabled, the API Gateway still handles the requests
+    but produces a warning message.</li></ul><p>By default, the API Gateway does not
+    reject requests when the limit is exceeded.</p>
+- name: CacheOnly
+  type: Bool
+  default: true
+  description: Specifies whether to use the local cache first to enforce the rate
+    limit. In peer group mode, using the local cache first can prevent transaction
+    delays if communication problems arise across the peer group. However, the transaction
+    count is less precise when this setting is enabled.
+- name: IsClient
+  type: Bool
+  default: true
+  description: Indicates whether to apply the rate limit to the client or to an internal
+    component. Client rate limits return a 429 error when exceeded. Non-client rate
+    limits return a 503 error when exceeded. When set to <tt>off</tt> , rate limit
+    information is not included in the response header.
+- name: UseApiName
+  type: Bool
+  default: false
+  description: Indicates whether to use the API name as part of the rate limit key.
+- name: UseAppId
+  type: Bool
+  default: false
+  description: Indicates whether to use the application ID as part of the rate limit
+    key.
+- name: UseClientId
+  type: Bool
+  default: false
+  description: Indicates whether to use the client ID as part of the rate limit key.
+- name: DynamicValue
+  type: String
+  description: Indicates the dynamic value string for the rate limit, which should
+    contain one or more context variables. The dynamic value makes it possible to
+    use a context variable to enforce the rate limit based on parameters other than
+    those defined in the rate limit scheme, such as a user name, incoming IP address,
+    or server name. The context variable can be set in a GatewayScript action and
+    then included in the dynamic value. <p>The following example uses the context
+    object in a GatewayScript action to add the <tt>my.server</tt> variable to the
+    API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic
+    value can then include the variable <tt>my.server</tt> , which resolves to the
+    server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+- name: Weight
+  type: String
+  default: 1
+  description: Specifies a JSONata expression that assigns a weight value to the transaction.
+    For each API call, the value computed by the weight expression is applied to the
+    rate limit. The default value is 1. If the weight expression evaluates to a value
+    that is less than or equal to 0, it is set to 1. An empty string results in an
+    error.

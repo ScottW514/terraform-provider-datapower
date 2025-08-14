@@ -52,15 +52,15 @@ var DmLogObjectObjectDefault = map[string]attr.Value{
 var DmLogObjectDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"class": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Object type", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.", "", "").String,
 			Computed:            true,
 		},
 		"object": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Object name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the instance name of the specified object type. <ul><li>For all instances of an object class, do not specify an object name.</li><li>For a specific instance of an object class, specify its object name.</li></ul>", "", "").String,
 			Computed:            true,
 		},
 		"follow_references": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Add referenced objects", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include log messages for objects that the specified object instance references. <ul><li>When enabled, include referenced objects.</li><li>When disabled, exclude referenced objects.</li></ul><p><b>Note:</b> Included objects are a static snapshot when you apply the object filter. If referenced objects are added after you apply the object filter, messages for these referenced objects are not logged.</p>", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 	},
@@ -68,15 +68,15 @@ var DmLogObjectDataSourceSchema = DataSourceSchema.NestedAttributeObject{
 var DmLogObjectResourceSchema = ResourceSchema.NestedAttributeObject{
 	Attributes: map[string]ResourceSchema.Attribute{
 		"class": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Object type", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the object type, which is the object class. With this filter, the log target collects log messages for only the specified object classes or for only particular instances of the specified object class.", "", "").String,
 			Optional:            true,
 		},
 		"object": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Object name", "", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify the instance name of the specified object type. <ul><li>For all instances of an object class, do not specify an object name.</li><li>For a specific instance of an object class, specify its object name.</li></ul>", "", "").String,
 			Optional:            true,
 		},
 		"follow_references": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Add referenced objects", "", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include log messages for objects that the specified object instance references. <ul><li>When enabled, include referenced objects.</li><li>When disabled, exclude referenced objects.</li></ul><p><b>Note:</b> Included objects are a static snapshot when you apply the object filter. If referenced objects are added after you apply the object filter, messages for these referenced objects are not logged.</p>", "", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),

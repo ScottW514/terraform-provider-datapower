@@ -116,91 +116,91 @@ var DmLBGroupCheckDataSourceSchema = DataSourceSchema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]DataSourceSchema.Attribute{
 		"active": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enabled", "admin-state", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enables or disables a health check. The check will not run unless enabled", "admin-state", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"uri": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URI", "target-uri", "").AddDefaultValue("/").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The relative URI to test for each member of the group. XXX in http://www.foobar.com/XXX.", "target-uri", "").AddDefaultValue("/").String,
 			Computed:            true,
 		},
 		"port": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote Port", "target-port", "").AddDefaultValue("80").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the TCP Port number to test. The remote port and the member server health port interact differently depending on the type of the health check. <ul><li>Standard: The member server health port is used if specified. If not specified, the remote port in the load balancer group health check is used.</li><li>LDAP: The remote port in the load balancer group health check only is used. A specification of a health port for the member server is ignored.</li><li>IMS: The health port of the member only is used. The remote port in the load balancer group health check is ignored.</li></ul>", "target-port", "").AddDefaultValue("80").String,
 			Computed:            true,
 		},
 		"ssl": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Health Check Type", "type", "").AddStringEnum("Standard", "LDAP", "IMSConnect", "TCPConnection", "on", "off").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Type of health check to perform. In TCP mode (TCP Connection health check type), a health check is performed with a TCP connection request. In HTTP mode (Standard health check type), a health check is performed with an HTTP GET or HTTP POST.", "type", "").AddStringEnum("Standard", "LDAP", "IMSConnect", "TCPConnection", "on", "off").String,
 			Computed:            true,
 		},
 		"post": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Send SOAP Request?", "use-soap", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("When set to on, the SOAP Request Document will be submitted to the web service via an HTTP POST operation. When set to off (without a request document), an HTTP Get operation is sent. The expected response is always valid XML and it is then analyzed using the Xpath Expression to verify the state of health of the server.", "use-soap", "").AddDefaultValue("true").String,
 			Computed:            true,
 		},
 		"input": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAP Request Document", "send-soap", "").AddDefaultValue("store:///healthcheck.xml").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the SOAP Request Document. This may be a file on the local flash filesystem (for example, local:///healthcheck.xml). This document is POSTed to the server if Send SOAP Request is on.", "send-soap", "").AddDefaultValue("store:///healthcheck.xml").String,
 			Computed:            true,
 		},
 		"timeout": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Timeout", "timeout", "").AddIntegerRange(2, 86400).AddDefaultValue("10").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer between 2 and 86400 to indicate the number of seconds to wait for a response to a health check post. The default is 10.", "timeout", "").AddIntegerRange(2, 86400).AddDefaultValue("10").String,
 			Computed:            true,
 		},
 		"frequency": DataSourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Frequency", "frequency", "").AddIntegerRange(5, 86400).AddDefaultValue("180").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer between 5 and 86400 to indicate the number of seconds to wait between health check posts. The default is 180.", "frequency", "").AddIntegerRange(5, 86400).AddDefaultValue("180").String,
 			Computed:            true,
 		},
 		"x_path": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath Expression", "xpath", "").AddDefaultValue("/").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter an XPath Expression that verifies the health of the server. The expression is applied to the server's response to the health check POST. If the expression is true, the server is healthy. Otherwise, the server health state is softdown until it passes a health check.", "xpath", "").AddDefaultValue("/").String,
 			Computed:            true,
 		},
 		"filter": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XSL Health Check Filter", "filter", "").AddDefaultValue("store:///healthcheck.xsl").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the stylesheet that evaluates the server response using the XPath Expression entered above. The default is supplied on this DataPower device.", "filter", "").AddDefaultValue("store:///healthcheck.xsl").String,
 			Computed:            true,
 		},
 		"enforce_timeout": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enforce Health Check Timeouts", "enforce-timeout", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the health check timeout value is used to interrupt and end a health transaction. By default, the health check timeout only compares the actual time that the request took. With the default behavior, the health check timeout is not used to interrupt the transaction.", "enforce-timeout", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"independent_checks": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Independent Health Checks", "independent-checks", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the health checks within a Load Balancer Group run independently of one another. By default, health checks within a Load Balancer Group run sequentially. With the default behavior, if a server hangs, all the other health checks for the other members are delayed.", "independent-checks", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"gateway_script_checks": DataSourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Process with GatewayScript", "gatewayscript-checks", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enables or disables GatewayScript health check processing. If enabled, content of health check requests and responses can be of any type and the response evaluator will be a GatewayScript file.", "gatewayscript-checks", "").AddDefaultValue("false").String,
 			Computed:            true,
 		},
 		"gateway_script_req_method": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Method", "request-method", "").AddStringEnum("GET", "HEAD", "POST", "PUT", "Custom").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The HTTP method to use for Standard health checks with GatewayScript. If Custom is selected, a custom method name must also be specified.", "request-method", "").AddStringEnum("GET", "HEAD", "POST", "PUT", "Custom").String,
 			Computed:            true,
 		},
 		"gateway_script_custom_req_method": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom Method", "request-custom-method", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The name of the custom method to use for Standard health check requests when GatewayScript processing is enabled.", "request-custom-method", "").String,
 			Computed:            true,
 		},
 		"gateway_script_req_doc": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Request Document", "request-doc", "").AddDefaultValue("store:///healthcheck.json").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the Request Document. This might be a file on the local flash filesystem (for example, local:///healthcheck.xml). This document is included in the request to the server if the POST, PUT, or Custom method is selected for Standard health checks with GatewayScript. If the HTTP method is Custom, the request document is optional.", "request-doc", "").AddDefaultValue("store:///healthcheck.json").String,
 			Computed:            true,
 		},
 		"gateway_script_req_content_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Content Type", "request-content-type", "").AddDefaultValue("application/json").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the content type of the Request Document for Standard health checks with GatewayScript.", "request-content-type", "").AddDefaultValue("application/json").String,
 			Computed:            true,
 		},
 		"gateway_script_rsp_handler_metadata": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Response Evaluator Metadata", "response-evaluator-metadata", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter a string to be used by the GatewayScript Response Evaluator to help determine the state of the server's health.", "response-evaluator-metadata", "").String,
 			Computed:            true,
 		},
 		"gateway_script_rsp_handler": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("GatewayScript Response Evaluator", "response-evaluator", "").AddDefaultValue("store:///healthcheck.js").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the GatewayScript file that evaluates the server response using the Response Evaluator Metadata. The default GatewayScript file is supplied on the DataPower Gateway.", "response-evaluator", "").AddDefaultValue("store:///healthcheck.js").String,
 			Computed:            true,
 		},
 		"tcp_connection_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TCP Connection Type", "tcp-conn-type", "").AddStringEnum("Full", "Partial").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("When set to full, a TCP Connection health check will perform a complete three-way handshake to establish a connection, followed by a four-way handshake to close the connection. When set to partial, a TCP Connection health check will perform a half-open connection to check a member's health. The three-way handshake to establish a connection will not be completed for partial connection types.", "tcp-conn-type", "").AddStringEnum("Full", "Partial").String,
 			Computed:            true,
 		},
 		"ssl_client_config_type": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 			Computed:            true,
 		},
 		"ssl_client": DataSourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "sslclientprofile").String,
 			Computed:            true,
 		},
 	},
@@ -213,44 +213,44 @@ var DmLBGroupCheckResourceSchema = ResourceSchema.SingleNestedAttribute{
 		)),
 	Attributes: map[string]ResourceSchema.Attribute{
 		"active": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enabled", "admin-state", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enables or disables a health check. The check will not run unless enabled", "admin-state", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"uri": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("URI", "target-uri", "").AddDefaultValue("/").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The relative URI to test for each member of the group. XXX in http://www.foobar.com/XXX.", "target-uri", "").AddDefaultValue("/").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("/"),
 		},
 		"port": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Remote Port", "target-port", "").AddDefaultValue("80").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the TCP Port number to test. The remote port and the member server health port interact differently depending on the type of the health check. <ul><li>Standard: The member server health port is used if specified. If not specified, the remote port in the load balancer group health check is used.</li><li>LDAP: The remote port in the load balancer group health check only is used. A specification of a health port for the member server is ignored.</li><li>IMS: The health port of the member only is used. The remote port in the load balancer group health check is ignored.</li></ul>", "target-port", "").AddDefaultValue("80").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             int64default.StaticInt64(80),
 		},
 		"ssl": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Health Check Type", "type", "").AddStringEnum("Standard", "LDAP", "IMSConnect", "TCPConnection", "on", "off").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Type of health check to perform. In TCP mode (TCP Connection health check type), a health check is performed with a TCP connection request. In HTTP mode (Standard health check type), a health check is performed with an HTTP GET or HTTP POST.", "type", "").AddStringEnum("Standard", "LDAP", "IMSConnect", "TCPConnection", "on", "off").String,
 			Required:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("Standard", "LDAP", "IMSConnect", "TCPConnection", "on", "off"),
 			},
 		},
 		"post": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Send SOAP Request?", "use-soap", "").AddDefaultValue("true").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("When set to on, the SOAP Request Document will be submitted to the web service via an HTTP POST operation. When set to off (without a request document), an HTTP Get operation is sent. The expected response is always valid XML and it is then analyzed using the Xpath Expression to verify the state of health of the server.", "use-soap", "").AddDefaultValue("true").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(true),
 		},
 		"input": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("SOAP Request Document", "send-soap", "").AddDefaultValue("store:///healthcheck.xml").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the SOAP Request Document. This may be a file on the local flash filesystem (for example, local:///healthcheck.xml). This document is POSTed to the server if Send SOAP Request is on.", "send-soap", "").AddDefaultValue("store:///healthcheck.xml").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("store:///healthcheck.xml"),
 		},
 		"timeout": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Timeout", "timeout", "").AddIntegerRange(2, 86400).AddDefaultValue("10").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer between 2 and 86400 to indicate the number of seconds to wait for a response to a health check post. The default is 10.", "timeout", "").AddIntegerRange(2, 86400).AddDefaultValue("10").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -259,7 +259,7 @@ var DmLBGroupCheckResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Default: int64default.StaticInt64(10),
 		},
 		"frequency": ResourceSchema.Int64Attribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Frequency", "frequency", "").AddIntegerRange(5, 86400).AddDefaultValue("180").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter an integer between 5 and 86400 to indicate the number of seconds to wait between health check posts. The default is 180.", "frequency", "").AddIntegerRange(5, 86400).AddDefaultValue("180").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.Int64{
@@ -268,77 +268,77 @@ var DmLBGroupCheckResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Default: int64default.StaticInt64(180),
 		},
 		"x_path": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XPath Expression", "xpath", "").AddDefaultValue("/").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter an XPath Expression that verifies the health of the server. The expression is applied to the server's response to the health check POST. If the expression is true, the server is healthy. Otherwise, the server health state is softdown until it passes a health check.", "xpath", "").AddDefaultValue("/").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("/"),
 		},
 		"filter": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("XSL Health Check Filter", "filter", "").AddDefaultValue("store:///healthcheck.xsl").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the stylesheet that evaluates the server response using the XPath Expression entered above. The default is supplied on this DataPower device.", "filter", "").AddDefaultValue("store:///healthcheck.xsl").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("store:///healthcheck.xsl"),
 		},
 		"enforce_timeout": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Enforce Health Check Timeouts", "enforce-timeout", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the health check timeout value is used to interrupt and end a health transaction. By default, the health check timeout only compares the actual time that the request took. With the default behavior, the health check timeout is not used to interrupt the transaction.", "enforce-timeout", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"independent_checks": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Independent Health Checks", "independent-checks", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the health checks within a Load Balancer Group run independently of one another. By default, health checks within a Load Balancer Group run sequentially. With the default behavior, if a server hangs, all the other health checks for the other members are delayed.", "independent-checks", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"gateway_script_checks": ResourceSchema.BoolAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Process with GatewayScript", "gatewayscript-checks", "").AddDefaultValue("false").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enables or disables GatewayScript health check processing. If enabled, content of health check requests and responses can be of any type and the response evaluator will be a GatewayScript file.", "gatewayscript-checks", "").AddDefaultValue("false").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             booldefault.StaticBool(false),
 		},
 		"gateway_script_req_method": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("HTTP Method", "request-method", "").AddStringEnum("GET", "HEAD", "POST", "PUT", "Custom").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The HTTP method to use for Standard health checks with GatewayScript. If Custom is selected, a custom method name must also be specified.", "request-method", "").AddStringEnum("GET", "HEAD", "POST", "PUT", "Custom").String,
 			Optional:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("GET", "HEAD", "POST", "PUT", "Custom"),
 			},
 		},
 		"gateway_script_custom_req_method": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Custom Method", "request-custom-method", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The name of the custom method to use for Standard health check requests when GatewayScript processing is enabled.", "request-custom-method", "").String,
 			Optional:            true,
 		},
 		"gateway_script_req_doc": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Request Document", "request-doc", "").AddDefaultValue("store:///healthcheck.json").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the Request Document. This might be a file on the local flash filesystem (for example, local:///healthcheck.xml). This document is included in the request to the server if the POST, PUT, or Custom method is selected for Standard health checks with GatewayScript. If the HTTP method is Custom, the request document is optional.", "request-doc", "").AddDefaultValue("store:///healthcheck.json").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("store:///healthcheck.json"),
 		},
 		"gateway_script_req_content_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Content Type", "request-content-type", "").AddDefaultValue("application/json").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the content type of the Request Document for Standard health checks with GatewayScript.", "request-content-type", "").AddDefaultValue("application/json").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("application/json"),
 		},
 		"gateway_script_rsp_handler_metadata": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("Response Evaluator Metadata", "response-evaluator-metadata", "").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter a string to be used by the GatewayScript Response Evaluator to help determine the state of the server's health.", "response-evaluator-metadata", "").String,
 			Optional:            true,
 		},
 		"gateway_script_rsp_handler": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("GatewayScript Response Evaluator", "response-evaluator", "").AddDefaultValue("store:///healthcheck.js").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("Enter the URL of the GatewayScript file that evaluates the server response using the Response Evaluator Metadata. The default GatewayScript file is supplied on the DataPower Gateway.", "response-evaluator", "").AddDefaultValue("store:///healthcheck.js").String,
 			Computed:            true,
 			Optional:            true,
 			Default:             stringdefault.StaticString("store:///healthcheck.js"),
 		},
 		"tcp_connection_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TCP Connection Type", "tcp-conn-type", "").AddStringEnum("Full", "Partial").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("When set to full, a TCP Connection health check will perform a complete three-way handshake to establish a connection, followed by a four-way handshake to close the connection. When set to partial, a TCP Connection health check will perform a half-open connection to check a member's health. The three-way handshake to establish a connection will not be completed for partial connection types.", "tcp-conn-type", "").AddStringEnum("Full", "Partial").String,
 			Optional:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("Full", "Partial"),
 			},
 		},
 		"ssl_client_config_type": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 			Computed:            true,
 			Optional:            true,
 			Validators: []validator.String{
@@ -347,7 +347,7 @@ var DmLBGroupCheckResourceSchema = ResourceSchema.SingleNestedAttribute{
 			Default: stringdefault.StaticString("client"),
 		},
 		"ssl_client": ResourceSchema.StringAttribute{
-			MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
+			MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "sslclientprofile").String,
 			Optional:            true,
 		},
 	},

@@ -87,5 +87,5 @@ Optional:
 
 Read-Only:
 
-- `param_name` (String) Name
-- `param_value` (String) Value
+- `param_name` (String) Parameter name
+- `param_value` (String) Parameter value

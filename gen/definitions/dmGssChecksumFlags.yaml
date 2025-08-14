@@ -1,19 +1,19 @@
 name: DmGssChecksumFlags
 model_only: true
 attributes:
-  - name: REPLAY
-    type: Bool
-    default: false
-    description: 'REPLAY'
-  - name: SEQUENCE
-    type: Bool
-    default: false
-    description: 'SEQUENCE'
-  - name: CONF
-    type: Bool
-    default: false
-    description: 'CONF'
-  - name: INTEG
-    type: Bool
-    default: false
-    description: 'INTEG'
+- name: REPLAY
+  type: Bool
+  default: false
+  description: REPLAY
+- name: SEQUENCE
+  type: Bool
+  default: false
+  description: SEQUENCE
+- name: CONF
+  type: Bool
+  default: false
+  description: CONF
+- name: INTEG
+  type: Bool
+  default: false
+  description: INTEG

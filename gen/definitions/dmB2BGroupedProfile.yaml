@@ -2,15 +2,16 @@ name: DmB2BGroupedProfile
 model_only: true
 list_item: true
 attributes:
-  - name: PartnerProfile
-    type: String
-    reference_to: B2BProfile
-    required: true
-    test_value: '"AccTest_B2BProfile"'
-    test_bed_value: 'datapower_b2bprofile.acc_test.id'
-    description: 'Partner profile'
-    cli_alias: profile
-  - name: ProfileDest
-    type: String
-    description: 'Profile destination'
-    cli_alias: destination
+- name: PartnerProfile
+  type: String
+  reference_to: B2BProfile
+  required: true
+  test_value: '"AccTest_B2BProfile"'
+  test_bed_value: datapower_b2bprofile.acc_test.id
+  description: Specify the partner profile.
+  cli_alias: profile
+- name: ProfileDest
+  type: String
+  description: Specify the destination for this partner. Without this property, the
+    first destination is used.
+  cli_alias: destination

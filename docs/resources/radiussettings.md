@@ -47,15 +47,15 @@ resource "datapower_radiussettings" "test" {
 
 Required:
 
-- `host` (String) Server address
-- `number` (Number) Number
+- `host` (String) Specify the IP address of the RADIUS server.
+- `number` (Number) Specify the list position of this RADIUS server within the list of all RADIUS servers known to the client implementation. The lower the number, the more preferred the server.
   - Range: `0`-`2147483647`
 
 Optional:
 
-- `port` (Number) Server port
+- `port` (Number) Specify the listening port on the RADIUS server.
   - Default value: `1812`
-- `secret` (String) Secret
+- `secret` (String) Specify the password login to the RADIUS server. You must confirm the password for accuracy.
 
 
 <a id="nestedatt--dependency_actions"></a>

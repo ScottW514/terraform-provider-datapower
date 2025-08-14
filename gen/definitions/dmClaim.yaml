@@ -2,18 +2,19 @@ name: DmClaim
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    description: 'Name'
-  - name: Value
-    type: String
-    required: true
-    example: 'value'
-    description: 'Value'
-  - name: Type
-    type: String
-    enum:
-      - 'string'
-      - 'bool'
-      - 'number'
-    description: 'Type'
+- name: Name
+  type: String
+  description: Specify the name of the JWT claim. A claim name is always a string.
+- name: Value
+  type: String
+  required: true
+  example: value
+  description: Specify the value of the JWT claim.
+- name: Type
+  type: String
+  enum:
+  - string
+  - bool
+  - number
+  description: Specify the data type of the JWT claim value. The type can be string,
+    boolean, or number.

@@ -1,35 +1,35 @@
 name: DmXMLMgmtModes
 model_only: true
 attributes:
-  - name: any
-    type: Bool
-    default: true
-    description: 'SOAP management URI'
-  - name: soma
-    type: Bool
-    default: true
-    description: 'SOAP configuration management'
-  - name: v2004
-    type: Bool
-    default: true
-    description: 'SOAP configuration management (v2004)'
-  - name: amp
-    type: Bool
-    default: true
-    description: 'AMP endpoint'
-  - name: slm
-    type: Bool
-    default: true
-    description: 'SLM endpoint'
-  - name: wsm
-    type: Bool
-    default: false
-    description: 'WS-Management endpoint'
-  - name: wsdm
-    type: Bool
-    default: false
-    description: 'WSDM endpoint'
-  - name: wsrr-subscription
-    type: Bool
-    default: true
-    description: 'WSRR subscription'
+- name: any
+  type: Bool
+  default: true
+  description: SOAP management URI
+- name: soma
+  type: Bool
+  default: true
+  description: SOAP configuration management
+- name: v2004
+  type: Bool
+  default: true
+  description: SOAP configuration management (v2004)
+- name: amp
+  type: Bool
+  default: true
+  description: AMP endpoint
+- name: slm
+  type: Bool
+  default: true
+  description: SLM endpoint
+- name: wsm
+  type: Bool
+  default: false
+  description: WS-Management endpoint
+- name: wsdm
+  type: Bool
+  default: false
+  description: WSDM endpoint
+- name: wsrr-subscription
+  type: Bool
+  default: true
+  description: WSRR subscription

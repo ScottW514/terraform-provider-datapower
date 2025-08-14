@@ -2,16 +2,19 @@ name: DmGatewayPeeringGroupPeerNode
 model_only: true
 list_item: true
 attributes:
-  - name: Host
-    type: String
-    required: true
-    example: 'localhost'
-    test_value: '"10.10.10.10"'
-    description: 'Address'
-  - name: Priority
-    type: Int64
-    minimum: 0
-    maximum: 255
-    required: true
-    default: 100
-    description: 'Priority'
+- name: Host
+  type: String
+  required: true
+  example: localhost
+  test_value: '"10.10.10.10"'
+  description: Specify the local IP address or host alias of the peer.
+- name: Priority
+  type: Int64
+  minimum: 0
+  maximum: 255
+  required: true
+  default: 100
+  description: Specify the priority to elect the new primary. When failover occurs,
+    the secondary member with the lowest priority is promoted as the new primary.
+    Enter a value in the range 0 - 255. The default value is 100. A secondary member
+    with a priority of 0 can never be promoted.

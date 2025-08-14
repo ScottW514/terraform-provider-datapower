@@ -253,224 +253,224 @@ resource "datapower_b2bprofile" "test" {
 
 Required:
 
-- `dest_name` (String) Destination name
+- `dest_name` (String) Specify the name to identify this destination in the profile.
   - CLI Alias: `name`
-- `dest_url` (String) Destination URL
+- `dest_url` (String) Specify the URL for the destination. The URL is parsed to determine the protocol. For load distribution, specify the name of the load balancer instead of the address-port pair. <ul><li>If the URL starts with as1:// or dpsmtp://, the service uses the ESMTP protocol. These protocols require an SMTP server connection and email address. Specify the URL in one of the following formats. <ul><li><tt>as1://mailExchange[:port][/queryParameters]</tt></li><li><tt>dpsmtp://mailExchange[:port][/queryParameters]</tt></li></ul></li><li>If the URL starts with as2://, ebms2://, ebms3://, or http://, the service uses the HTTP protocol. Specify the URL in the <tt>hostname:port/uri</tt> format.</li><li>If the URL starts with as2s://, ebms2s://, ebms3s://, or https://, the service uses the HTTPS protocol. Specify the URL in the <tt>hostname:port/uri</tt> format.</li><li>If the URL starts with as3:// or ftp://, the service uses the FTP protocol. <ul><li>For an absolute path to the root directory, specify the URL in the <tt>ftp://user:password@host/%2Fpath</tt> format. %2F is the URL encoding of a forward slash.</li><li>For a relative path to the login directory of the user, specify the URL in the <tt>ftp://user:password@host:port/path</tt> format.</li></ul></li><li>If the URL starts with sftp://, the service uses the SSH FTP protocol. <ul><li>For an absolute path to the root directory, specify the URL in the <tt>sftp://host:port/path</tt> format.</li><li>For a relative path to the login directory of the user, specify the URL in the <tt>sftp://host:port/~/path</tt> format.</li></ul></li><li>If the URL starts with dpnfs://, the service uses the NFS protocol. <ul><li>For static mounts, specify the URL in the <tt>dpnfs://MountName</tt> format, where <tt>MountName</tt> is the name of an NFS mount.</li><li>For dynamic mounts, specify the URL in the <tt>dpnfs://host</tt> or <tt>dpnfs://host/path</tt> format.</li></ul></li><li>If the URL starts with dpims:// or dpimsssl://, the service uses the IMS protocol. Specify the URL in one of the following formats. <ul><li><tt>dpims://ConnectObject/?parameters</tt></li><li><tt>dpimsssl://ConnectObject/?parameters</tt></li></ul></li><li>If the URL starts with dpmq://, the service uses the IBM MQ protocol. The queue manager must exist in current domain. <ul><li>To send a message, specify the URL in the <tt>dpmq://QueueManager/URI?RequestQueue=requestQueue;queryParameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dpmq://QueueManager/URI?ReplyQueue=replyQueue;queryParameters</tt> format.</li></ul><p>If the URL starts with mq://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dpmqfte://, the service uses the IBM MQ FTE protocol. The queue manager must exist in current domain. <ul><li>To send a message, specify the URL in the <tt>dpmqfte://QueueManager/?RequestQueue=request_queue_name;queryParameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dpmqfte://QueueManager/?ReplyQueue=reply_queue_name;queryParameters</tt> format.</li></ul><p>If the URL starts with mqfte://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dptibems://, the service uses the TIBCO EMS protocol. The server must exist. <ul><li>To send a message, specify the URL in the <tt>dptibems://Server/?RequestQueue=queue;RequestReply=queue;query-parameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dptibems://Server/?ReplyQueue=queue;query-parameters</tt> format.</li></ul><p>If the URL starts with tibems://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dpwasjms://, the service uses the WebSphere JMS protocol. The server must exist. <ul><li>To send a message to a request queue, specify the URL in the <tt>dpwasjms://Server/?RequestQueue=queue;RequestReply=queue;query-parameters</tt> format.</li><li>To send a message to a request topic space, specify the URL in the <tt>dpwasjms://Server/?RequestTopicSpace=topic-space;RequestReply=queue;query-parameters</tt> format.</li><li>To retrieve a message from a reply queue, specify the URL in the <tt>dpwasjms://Server/?ReplyQueue=queue;query-parameters</tt> format.</li><li>To retrieve a message from a reply topic space, specify the URL in the <tt>dpwasjms://Server/?ReplyTopicSpace=topic-space;query-parameters</tt> format.</li></ul></li></ul>
   - CLI Alias: `dest-url`
 
 Optional:
 
-- `ack_time` (Number) Time to acknowledge
+- `ack_time` (Number) Specify the duration in seconds to wait for the acknowledgment before a message is retransmitted. Enter a value in the range 1 - 3600. The default value is 1800.
   - CLI Alias: `ack-time`
   - Range: `1`-`3600`
   - Default value: `1800`
-- `as1mdn_redirect_email` (String) AS1 MDN redirection E-mail
+- `as1mdn_redirect_email` (String) Specify the redirection email address for the MDN to outbound AS1 messages. The partner that receives the outbound AS1 message sends the MDN to this email address. When blank, the redirection email in the <tt>From</tt> address of the outgoing message (the default email address of the sending internal partner).
   - CLI Alias: `as1-mdn-email`
-- `as2mdn_redirect_url` (String) AS2 MDN redirection URL
+- `as2mdn_redirect_url` (String) Specify the redirection URL for the MDN to outbound AS2 messages.
   - CLI Alias: `as2-mdn-url`
-- `as3mdn_redirect_url` (String) AS3 MDN redirection URL
+- `as3mdn_redirect_url` (String) Specify the redirection URL for the MDN to outbound AS3 messages.
   - CLI Alias: `as3-mdn-url`
-- `as_compress` (Boolean) Compress messages
+- `as_compress` (Boolean) Specify whether to compress the body of outbound AS messages. The default behavior is disabled.
   - CLI Alias: `as-compress`
   - Default value: `false`
-- `as_compress_before_sign` (Boolean) Compress before sign
+- `as_compress_before_sign` (Boolean) Specify whether to compress the body of outbound AS messages before signing. The default behavior is disabled. <ul><li>If enabled, compress the message body before signing.</li><li>If disabled, sign the message before compressing the message body.</li></ul>
   - CLI Alias: `as-compress-before-sign`
   - Default value: `false`
-- `as_encrypt` (Boolean) Encrypt messages
+- `as_encrypt` (Boolean) Specify whether to encrypt the body of outgoing AS messages. The default behavior is disabled.
   - CLI Alias: `as-encrypt`
   - Default value: `false`
-- `as_encrypt_alg` (String) Encryption algorithm
+- `as_encrypt_alg` (String) Specify the symmetric encryption algorithm to encrypt outbound AS messages.
   - CLI Alias: `as-encrypt-alg`
   - Choices: `3des`, `des`, `rc2-128`, `rc2-64`, `rc2-40`, `aes-128`, `aes-192`, `aes-256`
   - Default value: `3des`
-- `as_encrypt_cert` (String) Encryption certificate
+- `as_encrypt_cert` (String) Specify the certificate to encrypt outbound AS messages. Use the name of a certificate.
   - CLI Alias: `as-encrypt-cert`
   - Reference to: `datapower_cryptocertificate:id`
-- `as_send_unsigned` (Boolean) Send messages unsigned
+- `as_send_unsigned` (Boolean) Specify whether to override the signing of messages to this destination. Whether to sign outbound message is part of the configuration of the internal partner. This property cannot be used to cause a message to be signed. The default behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled, sign messages when the sender has signing credentials.</li></ul>
   - CLI Alias: `as-send-unsigned`
   - Default value: `false`
-- `asmdn_request` (Boolean) Request MDN
+- `asmdn_request` (Boolean) Specify whether to request an MDN for outbound AS messages. The default behavior is disabled.
   - CLI Alias: `as-mdn-request`
   - Default value: `false`
-- `asmdn_request_async` (Boolean) Request asynchronous MDN
+- `asmdn_request_async` (Boolean) Specify whether the MDN request for outbound AS messages is asynchronous. The default behavior is disabled. <ul><li>If enabled, the MDN request is asynchronous</li><li>If disabled, the MDN request is synchronous</li></ul>
   - CLI Alias: `as-mdn-request-async`
   - Default value: `false`
-- `asmdn_request_signed` (Boolean) Request signed MDN
+- `asmdn_request_signed` (Boolean) Specify whether to request a signed MDN instead of an unsigned one. The default behavior is an unsigned one.
   - CLI Alias: `as-mdn-request-signed`
   - Default value: `false`
-- `asmdn_request_signed_algs` (String) Request MDN signing algorithms
+- `asmdn_request_signed_algs` (String) Specify the digest algorithms to request for a signed MDN. The value can be a single algorithm or any combination of algorithms that are separated by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt> .
   - CLI Alias: `as-mdn-request-signed-algs`
   - Default value: `sha1,md5`
-- `auth_tls` (String) Encrypt command connection
+- `auth_tls` (String) Specify the use of TLS to secure connections with the FTP <tt>AUTH TLS</tt> command.
   - CLI Alias: `ftp-auth-tls`
   - Choices: `auth-off`, `auth-tls-opt`, `auth-tls-req`, `auth-tls-imp`
   - Default value: `auth-off`
-- `binary_transfer_mode` (String) Binary transfer
+- `binary_transfer_mode` (String) Specify whether to transfer the message payload in binary mode.
   - CLI Alias: `binary-transfer-mode`
   - Choices: `auto-detect`, `enforce`
   - Default value: `auto-detect`
-- `data_type` (String) Data type
+- `data_type` (String) Specify the data type of file transfers.
   - CLI Alias: `ftp-data-type`
   - Choices: `ascii`, `binary`
   - Default value: `binary`
-- `ebms_ack_request` (Boolean) Request acknowledgment
+- `ebms_ack_request` (Boolean) Specify whether to request an acknowledgment for outbound ebMS2 messages. The default behavior is off.
   - CLI Alias: `ebms-ack-request`
   - Default value: `false`
-- `ebms_ack_request_signed` (Boolean) Request signed acknowledgment
+- `ebms_ack_request_signed` (Boolean) Specify whether to request a signed acknowledgment. The default behavior is off.
   - CLI Alias: `ebms-ack-request-signed`
   - Default value: `false`
-- `ebms_action` (String) Action
+- `ebms_action` (String) Specify the value of action element in outbound ebMS2 request. For example, <tt>NewPurchaseOrder</tt> . This value is used when the B2B gateway is not CPA-enforced.
   - CLI Alias: `ebms-action`
-- `ebms_agreement_ref` (String) PMode AgreementRef
+- `ebms_agreement_ref` (String) Specify the reference to the agreement that governs this message exchange. This value maps to <tt>eb:AgreementRef</tt> in the message header.
   - CLI Alias: `ebms-agreementref`
-- `ebms_compress` (Boolean) Compress messages
+- `ebms_compress` (Boolean) Specify whether to compress the body of outbound ebMS messages. The default behavior is off.
   - CLI Alias: `ebms-compress`
   - Default value: `false`
-- `ebms_cpa_id` (String) CPA ID
+- `ebms_cpa_id` (String) Specify the CPA ID in the message that is sent to the destination partner. You can use the value to identify the sender and the recipient. This value is used when the B2B gateway is not CPA-enforced.
   - CLI Alias: `ebms-cpa-id`
-- `ebms_duplicate_elimination_request` (Boolean) Request duplicate elimination
+- `ebms_duplicate_elimination_request` (Boolean) Specify whether to request that the receiving partner checks for duplicates of outbound messages. If enabled, the receiving business partner should ignore duplicate message received. The default behavior is on.
   - CLI Alias: `ebms-duplicate-elimination-request`
   - Default value: `true`
-- `ebms_encrypt` (Boolean) Encrypt messages
+- `ebms_encrypt` (Boolean) Specify whether to encrypt the body of outgoing ebMS messages.
   - CLI Alias: `ebms-encrypt`
   - Default value: `false`
-- `ebms_encrypt_alg` (String) Encryption algorithm
+- `ebms_encrypt_alg` (String) Specify the encryption algorithm to encrypt outbound ebMS2 messages.
   - CLI Alias: `ebms-encrypt-alg`
   - Choices: `http://www.w3.org/2001/04/xmlenc#tripledes-cbc`, `http://www.w3.org/2001/04/xmlenc#aes128-cbc`, `http://www.w3.org/2001/04/xmlenc#aes192-cbc`, `http://www.w3.org/2001/04/xmlenc#aes256-cbc`, `http://www.w3.org/2009/xmlenc11#aes128-gcm`, `http://www.w3.org/2009/xmlenc11#aes192-gcm`, `http://www.w3.org/2009/xmlenc11#aes256-gcm`
   - Default value: `http://www.w3.org/2001/04/xmlenc#tripledes-cbc`
-- `ebms_encrypt_cert` (String) Encryption certificate
+- `ebms_encrypt_cert` (String) Specify the certificate to encrypt outbound messages.
   - CLI Alias: `ebms-encrypt-cert`
   - Reference to: `datapower_cryptocertificate:id`
-- `ebms_include_time_to_live` (Boolean) Include TimeToLive element
+- `ebms_include_time_to_live` (Boolean) Specify whether the sending partner includes the <tt>TimeToLive</tt> element in the outbound ebMS2 message header. The <tt>TimeToLive</tt> element indicates when the message expires. <ul><li>If the receiving partner receives the message before it expires, the receiving partner accepts the message.</li><li>If the receiving partner receives the message after it expires, the receiving partner rejects the message.</li></ul>
   - CLI Alias: `ebms-include-time-to-live`
   - Default value: `true`
-- `ebms_key_encrypt_alg` (String) Asymmetric key encryption algorithm
+- `ebms_key_encrypt_alg` (String) Specify the ebMS3 asymmetric key transport algorithm to encrypt outbound ebMS3 messages. By default, encrypts with RSA Version 1.5.
   - CLI Alias: `ebms-key-encrypt-alg`
   - Choices: `http://www.w3.org/2001/04/xmlenc#rsa-1_5`, `http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p`, `http://www.w3.org/2009/xmlenc11#rsa-oaep`
   - Default value: `http://www.w3.org/2001/04/xmlenc#rsa-1_5`
-- `ebms_max_retries` (Number) Max retransmit attempts
+- `ebms_max_retries` (Number) Specify the number of retransmit attempts. Enter a value in the range 1 - 30. The default value is 3.
   - CLI Alias: `ebms-max-retries`
   - Range: `1`-`30`
   - Default value: `3`
-- `ebms_message_exchange_pattern` (String) Message exchange pattern
+- `ebms_message_exchange_pattern` (String) Specify the message exchange pattern (MEP) to use. The MEP defines how a business partner exchanges messages with another business partner. The default value is one-way push.
   - CLI Alias: `ebms-mep`
   - Choices: `one-way-push`, `one-way-pull`
   - Default value: `one-way-push`
-- `ebms_message_partition_channel` (String) Message partition channel
+- `ebms_message_partition_channel` (String) When the MEP is one-way pull, specify the message partition channel (MPC) to pull messages. In the one-way pull mode, a message remains in MPC storage until the B2B gateway receives an authenticated and authorized pull request.
   - CLI Alias: `ebms-mpc`
-- `ebms_outbound_receipt_reply_pattern` (String) Requested receipt reply pattern
+- `ebms_outbound_receipt_reply_pattern` (String) Specifies the pattern to send the receipt signal. The default behavior is response.
   - CLI Alias: `ebms-outbound-receipt-reply-pattern`
   - Choices: `Response`, `Callback`
   - Default value: `Response`
-- `ebms_outbound_reception_awareness_notification` (Boolean) Reception awareness error notification
+- `ebms_outbound_reception_awareness_notification` (Boolean) Specify whether to send a reception awareness error notification to the ebMS3 message producer. The default behavior is off. The B2B gateway reports a reception awareness error to the message producer if the receipt signal message is not received for a sent message.
   - CLI Alias: `ebms-reception-awareness-notification`
   - Default value: `false`
-- `ebms_outbound_reception_awareness_timeout` (Number) Reception awareness timeout
+- `ebms_outbound_reception_awareness_timeout` (Number) Specify the duration in seconds to wait for the receipt signal. Enter a value in the range 3 - 7200. The default value is 300. If the B2B gateway does not receive the receipt signal after this duration, the B2B gateway sends a reception awareness error notification to the message producer.
   - CLI Alias: `ebms-reception-awareness-timeout`
   - Range: `3`-`7200`
   - Default value: `300`
-- `ebms_outbound_request_receipt` (Boolean) Request receipt
+- `ebms_outbound_request_receipt` (Boolean) Specify whether to request a receipt signal for a sent ebMS3 message. The default behavior is off.
   - CLI Alias: `ebms-outbound-request-receipt`
   - Default value: `false`
-- `ebms_outbound_request_signed_receipt` (Boolean) Request signed receipt
+- `ebms_outbound_request_signed_receipt` (Boolean) Specify whether to request a signed receipt. The default behavior is off.
   - CLI Alias: `ebms-outbound-request-signed-receipt`
   - Default value: `false`
-- `ebms_retry` (Boolean) Attempt message retransmit
+- `ebms_retry` (Boolean) Specify whether to retransmit unacknowledged outbound messages. The default behavior is off.
   - CLI Alias: `ebms-retry`
   - Default value: `false`
-- `ebms_retry_interval` (Number) Retry interval
+- `ebms_retry_interval` (Number) Specify the interval in seconds between retry attempts. Enter a value in the range 1 - 3600. This default value is 1800.
   - CLI Alias: `ebms-retry-interval`
   - Range: `1`-`3600`
   - Default value: `1800`
-- `ebms_send_unsigned` (Boolean) Send messages unsigned
+- `ebms_send_unsigned` (Boolean) Controls whether to override the signing of messages to this destination. Whether to sign outbound message is part of the configuration of the internal partner. This property cannot be used to cause a message to be signed. The default behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled, sign messages only if the sender has signing credentials.</li></ul>
   - CLI Alias: `ebms-send-unsigned`
   - Default value: `false`
-- `ebms_service` (String) Service
+- `ebms_service` (String) Specify the value of service element in outbound ebMS2 request that acts on the message. For example, <tt>urn:services:SupplierOrderProcessing</tt> . This value is used when the B2B gateway is not CPA-enforced. The value can be a string or a URI. If a non-URI string is specified, you must specify the value of <b>Service Type</b>.
   - CLI Alias: `ebms-service`
-- `ebms_service_type` (String) Service type
+- `ebms_service_type` (String) Specify the value of the type attribute in the ebMS SOAP message. When blank, ensure that the service value is a URI.
   - CLI Alias: `ebms-service-type`
-- `ebms_sync_reply_mode` (String) SyncReply mode
+- `ebms_sync_reply_mode` (String) Specify whether the response/acknowledgment is synchronous or asynchronous. The syncReplyMode parameter indicates to the receiving partner whether to return the business response or acknowledgment in the same connection. None means asynchronous.
   - CLI Alias: `ebms-syncreply-mode`
   - Choices: `mshSignalsOnly`, `none`
   - Default value: `none`
-- `ebmsmpc_auth_method` (String) MPC authentication method
+- `ebmsmpc_auth_method` (String) Specify how the MPC authenticates the incoming pull requests. By default, the MPC authenticates requests through username token.
   - CLI Alias: `embs-mpc-auth-method`
   - Choices: `username-token`, `cert`
   - Default value: `username-token`
-- `ebmsmpc_verify_val_cred` (String) MPC validation credentials
+- `ebmsmpc_verify_val_cred` (String) When the MPC authentication method is validation credentials, specify the certificate to associate with messages that are submitted to the MPC.
   - CLI Alias: `ebms-mpc-verify-valcred`
   - Reference to: `datapower_cryptovalcred:id`
-- `ebmsp_mode` (String) PMode ID
+- `ebmsp_mode` (String) Specify the PMode identifier for the convenience of PMode management. When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in associated messages.
   - CLI Alias: `ebms-pmode`
-- `ebmssoap_body` (Boolean) Messages in SOAP Body
+- `ebmssoap_body` (Boolean) When compression is not enabled, specify whether to send messages in the SOAP <tt>Body</tt> .
   - CLI Alias: `ebms-soapbody`
   - Default value: `false`
-- `email_address` (String) Email address
+- `email_address` (String) Specify the destination email address for messages sent to this partner.
   - CLI Alias: `email-address`
-- `enable_ftp_settings` (Boolean) Enable advanced AS3/FTP settings
+- `enable_ftp_settings` (Boolean) Specify whether to override the FTP client policy. This policy is defined in user agent of the XML manager for the B2B gateway. <ul><li>When enabled, define the overrides with the advanced AS3 or FTP settings.</li><li>When disabled, uses the original FTP client policy.</li></ul>
   - CLI Alias: `enable-ftp-settings`
   - Default value: `false`
-- `enabled_doc_type` (Attributes) Enabled document type
+- `enabled_doc_type` (Attributes) Specify the document types to support.
   - CLI Alias: `enabled-doc-type` (see [below for nested schema](#nestedatt--destinations--enabled_doc_type))
-- `encrypt_data` (String) Encrypt file transfers
+- `encrypt_data` (String) Specify the encryption of file transfers with the FTP <tt>PROT P</tt> command.
   - CLI Alias: `ftp-encrypt-data`
   - Choices: `enc-data-off`, `enc-data-opt`, `enc-data-req`
   - Default value: `enc-data-off`
-- `max_resends` (Number) Retransmit attempts
+- `max_resends` (Number) Specify the number of attempts to retransmit a message. Enter a value in the range 1 - 30. The default value is 3.
   - CLI Alias: `max-resends`
   - Range: `1`-`30`
   - Default value: `3`
-- `override_timeout` (Number) Connection timeout
+- `override_timeout` (Number) Specify the duration to maintain an idle connection in seconds. Enter a value in the range 3 - 7200. The default value is 300.
   - CLI Alias: `timeout`
   - Range: `3`-`7200`
   - Default value: `300`
-- `passive` (String) Passive mode
+- `passive` (String) Specify the use of FTP passive mode with the FTP <tt>PASV</tt> command.
   - CLI Alias: `ftp-passive`
   - Choices: `pasv-off`, `pasv-opt`, `pasv-req`
   - Default value: `pasv-req`
-- `password_alias` (String) Password alias
+- `password_alias` (String) Specify the password alias to override in the basic authentication policy of the user agent.
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`
-- `quoted_commands` (String) Quoted commands
+- `quoted_commands` (String) Specify the FTP quoted commands list that defines the command to send to the FTP server. before each <tt>STOU</tt> , <tt>STOR</tt> , or <tt>RETR</tt> command. The commands in the list cannot be data-transfer related commands.
   - CLI Alias: `ftp-quoted-commands`
   - Reference to: `datapower_ftpquotecommands:id`
-- `retransmit` (Boolean) Attempt message retransmit
+- `retransmit` (Boolean) Specify whether to retransmit messages. The default behavior is off.
   - CLI Alias: `retransmit`
   - Default value: `false`
-- `size_check` (String) Size check
+- `size_check` (String) Specify whether to check the size of file after transfer with the FTP <tt>SIZE</tt> command. Some FTP servers, particularly vsftpd in the default configuration, provide inaccurate responses for files transferred in ASCII mode. If you get such errors, disable this feature or reconfigure vsftpd.
   - CLI Alias: `ftp-size-check`
   - Choices: `size-check-optional`, `size-check-disabled`
   - Default value: `size-check-optional`
-- `slash_stou` (String) Write unique filename if trailing slash
+- `slash_stou` (String) Specify how to manage unique files when the name contains a trailing slash with either the FTP <tt>STOU</tt> or <tt>STOR</tt> command. Some FTP servers do not support the <tt>STOU</tt> command.
   - CLI Alias: `ftp-slash-stou`
   - Choices: `slash-stou-off`, `slash-stou-on`
   - Default value: `slash-stou-on`
-- `smtp_server_connection` (String) SMTP server connection
+- `smtp_server_connection` (String) Specify the SMTP server connection to send email messages. By default, the gateway uses the default SMTP server connection.
   - CLI Alias: `smtp-server-connection`
   - Reference to: `datapower_smtpserverconnection:id`
   - Default value: `default`
-- `ssh_client_connection` (String) SSH client connection
+- `ssh_client_connection` (String) Specify the SSH profile for SSH client connections and authentication.
   - CLI Alias: `ssh-client-connection`
   - Reference to: `datapower_sshclientprofile:id`
-- `ssl_client` (String) TLS client profile
+- `ssl_client` (String) Specify the TLS client profile to secure connections with targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_sslclientprofile:id`
-- `ssl_client_config_type` (String) TLS client type
+- `ssl_client_config_type` (String) Specify the type of TLS profile type to secure connections with targets.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
-- `use_ccc` (String) Stop command encryption after authentication
+- `use_ccc` (String) Specify the use of command encryption after authentication with the FTP <tt>CCC</tt> command.
   - CLI Alias: `ftp-use-ccc`
   - Choices: `ccc-off`, `ccc-opt`, `ccc-req`
   - Default value: `ccc-off`
-- `use_unique_filenames` (Boolean) Use unique file names
+- `use_unique_filenames` (Boolean) Specify whether to generate a unique file name for puts to a remote directory.
   - CLI Alias: `use-unique-filenames`
   - Default value: `false`
-- `user_name` (String) Username
+- `user_name` (String) Specify the username to override in the basic authentication policy of the user agent.
   - CLI Alias: `username`
-- `user_name_token` (String) Username token
+- `user_name_token` (String) For ebMS3, the WS-Security UsernameToken authorizes received messages. Enter the username for the wsse:UsernameToken element to package in the SOAP header of the message to send. <ul><li>For one-way push exchange pattern, specify the username token to package in messages to send.</li><li>For one-way pull exchange pattern outbound messages, when the MPC authentication method is username token, specify the username to store messages in the MPC.</li><li>For one-way pull exchange pattern inbound messages, specify the username token to package in pull requests.</li></ul>
   - CLI Alias: `username-token`
-- `user_name_token_password_alias` (String) Username token password alias
+- `user_name_token_password_alias` (String) Specify the password alias of the username for the wsse:UsernameToken element.
   - CLI Alias: `username-token-password-alias`
   - Reference to: `datapower_passwordalias:id`
 
@@ -495,15 +495,15 @@ Optional:
 
 Optional:
 
-- `email` (String) Email
+- `email` (String) Specify the email address to contact the person.
   - CLI Alias: `email`
-- `family_name` (String) Family name
+- `family_name` (String) Specify the family name of the person to contact. A family name is the surname borne by family members.
   - CLI Alias: `family-name`
-- `given_name` (String) Given name
+- `given_name` (String) Specify the given name of the person to contact. A given name is the name used to identify an individual within a family.
   - CLI Alias: `given-name`
-- `phone` (String) Phone
+- `phone` (String) Specify the telephone number to contact the person.
   - CLI Alias: `phone`
-- `title` (String) Title
+- `title` (String) Specify the title of the person to contact.
   - CLI Alias: `title`
 
 
@@ -529,12 +529,12 @@ Optional:
 
 Required:
 
-- `name` (String) Name
-- `value` (String) Value
+- `name` (String) Specify the name of the eb:Property element that is agreed upon between the partners.
+- `value` (String) Specify the value of the eb:Property element.
 
 Optional:
 
-- `type` (String) Type
+- `type` (String) Specify the type of the eb:Property element for conflict resolution between message properties with the same name.
 
 
 <a id="nestedatt--ebms_profile_cpa_bindings"></a>
@@ -542,17 +542,17 @@ Optional:
 
 Required:
 
-- `collaboration` (String) Service
+- `collaboration` (String) Specify the service to use, which is the value of <tt>Service</tt> element in outbound ebMS2 requests. This value overrides the default service of the external partner profile configuration.
   - CLI Alias: `collaboration`
   - Reference to: `datapower_b2bcpacollaboration:id`
-- `cpa` (String) CPA
+- `cpa` (String) Specify the CPA ID to use. This value overrides the default CPA ID of the external partner profile configuration.
   - CLI Alias: `cpa`
   - Reference to: `datapower_b2bcpa:id`
-- `internal_partner` (String) CPA sender (internal partner profile)
+- `internal_partner` (String) Specify the name of the CPA sender (internal partner profile). Outbound ebMS2 messages from an internal partner use the CPA, service, and action that are specified by the CPA binding associated with the internal partner profile.
   - CLI Alias: `internal-partner`
   - Reference to: `datapower_b2bprofile:id`
 
 Optional:
 
-- `action` (String) Action
+- `action` (String) Specify the action to use. This value overrides the default action of the external partner profile configuration. When the action is not set or the action is not defined in the service of the CPA binding, the B2B gateway uses the first action in the action list of the service.
   - CLI Alias: `action`

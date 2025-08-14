@@ -2,11 +2,11 @@ name: DmWSRRWSDLSource
 model_only: true
 list_item: true
 attributes:
-  - name: WSRRSubscription
-    type: String
-    reference_to: WSRRSubscription
-    description: 'Subscription'
-  - name: WSRRAttachment
-    type: String
-    reference_to: PolicyAttachments
-    description: 'Policy Attachment'
+- name: WSRRSubscription
+  type: String
+  reference_to: WSRRSubscription
+  description: Select WSRR subscription
+- name: WSRRAttachment
+  type: String
+  reference_to: PolicyAttachments
+  description: Select WS-Policy attachment

@@ -2,12 +2,17 @@ name: DmAPIResponseSchema
 model_only: true
 list_item: true
 attributes:
-  - name: StatusCode
-    type: String
-    required: true
-    example: '200'
-    description: 'Status code'
-  - name: ResponseSchema
-    type: String
-    reference_to: APISchema
-    description: 'Schema'
+- name: StatusCode
+  type: String
+  required: true
+  example: '200'
+  description: <p>Specify the HTTP status code of the response message that the schema
+    describes. The following values are valid.</p><ul><li>Any valid HTTP status code.</li><li>An
+    expression that defines a range of codes that represents a response class.</li><li>The
+    string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence
+    over a match within a range. When there is no match, the default schema is used.
+    When a schema is not specified, a request is accepted without schema validation.</p>
+- name: ResponseSchema
+  type: String
+  reference_to: APISchema
+  description: Specify the API schema to describe the response message.

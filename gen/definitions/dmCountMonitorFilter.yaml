@@ -2,32 +2,39 @@ name: DmCountMonitorFilter
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    description: 'Name'
-    example: 'Filter1'
-  - name: Interval
-    type: Int64
-    required: true
-    description: 'Interval'
-    example: 1000
-  - name: RateLimit
-    type: Int64
-    minimum: 1
-    maximum: 4294967295
-    required: true
-    description: 'Rate Limit'
-    example: 50
-  - name: BurstLimit
-    type: Int64
-    required: true
-    description: 'Burst Limit'
-    example: 100
-  - name: Action
-    type: String
-    reference_to: FilterAction
-    required: true
-    test_value: '"AccTest_FilterAction"'
-    test_bed_value: 'datapower_filteraction.acc_test.id'
-    description: 'Action'
+- name: Name
+  type: String
+  required: true
+  description: Enter the name of the threshold. This name appears in the log files
+    when the threshold is reached.
+  example: Filter1
+- name: Interval
+  type: Int64
+  required: true
+  description: Enter the measurement interval in milliseconds. One second is expressed
+    as 1000 here.
+  example: 1000
+- name: RateLimit
+  type: Int64
+  minimum: 1
+  maximum: 4294967295
+  required: true
+  description: Specify the threshold value as a number of messages. A monitored message
+    type that exceeds this value over the measurement interval specified by the Interval
+    property is subject to the policy identified by the Action values list.
+  example: 50
+- name: BurstLimit
+  type: Int64
+  required: true
+  description: Specify the maximum allowed message burst. Use a value approximately
+    twice the value of Rate Limit.
+  example: 100
+- name: Action
+  type: String
+  reference_to: FilterAction
+  required: true
+  test_value: '"AccTest_FilterAction"'
+  test_bed_value: datapower_filteraction.acc_test.id
+  description: Select the monitor policy implemented by the monitor when the target
+    message type exceeds the threshold value. This is a list of Message Filter Actions.
+    Click the + button to create a new action.

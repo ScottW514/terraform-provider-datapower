@@ -2,17 +2,17 @@ name: DmRateLimitInfo
 model_only: true
 list_item: true
 attributes:
-  - name: Name
-    type: String
-    required: true
-    example: 'ratelimitinfoname'
-    description: 'Name'
-    cli_alias: name
-  - name: Action
-    type: String
-    enum:
-      - 'consume'
-      - 'replenish'
-    default: 'consume'
-    description: 'Action'
-    cli_alias: action
+- name: Name
+  type: String
+  required: true
+  example: ratelimitinfoname
+  description: Specify the name of the rate limit.
+  cli_alias: name
+- name: Action
+  type: String
+  enum:
+  - consume
+  - replenish
+  default: consume
+  description: Specify the action to apply to the rate limit.
+  cli_alias: action
