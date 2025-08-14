@@ -1,4 +1,4 @@
-## Unreleased
+## v0.7.0
 
 - Cleaned up formatting in resource template
 - Added string validation for remote file in file resource
@@ -13,6 +13,7 @@
 - Fixed `Sensitive` attribute property
 - BREAKING CHANGE: Removed `restart_domain_on_update` attribute from `datapower_domainavailability`. Should now use `dependency_actions`.
 - Enhanced attribute descriptions
+- Bump actions/checkout from 4.2.2 to 5.0.0 in the github-actions group (PR7)
 
 ## v0.6.2
 
