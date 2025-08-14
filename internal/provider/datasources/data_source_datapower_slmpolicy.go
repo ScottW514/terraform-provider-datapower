@@ -57,7 +57,7 @@ func (d *SLMPolicyDataSource) Metadata(_ context.Context, req datasource.Metadat
 
 func (d *SLMPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SLM policy",
+		MarkdownDescription: "<p>An SLM policy counts messages or measures latency for messages that match a set of select criteria and that pass through the appliance during a configured interval. The policy can take action when configured thresholds are reached.</p><p>Messages can be selected based on credential class, resource class, or both. If neither, all messages are selected.</p><p>A policy consists of one or more statements. Each statement establishes the credential class, resource class, thresholds, and actions to take when thresholds are met during an interval.</p><p>Examples:</p><ul><li>A policy that throttles all traffic that arrives at a rate faster than 1000 messages per second.</li><li>A policy that generates a log message for all messages that arrive during the last elapsed second that originated from a specific IP address and requested use of a specific resource.</li></ul>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,16 +81,16 @@ func (d *SLMPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"execution_policy": schema.StringAttribute{
-							MarkdownDescription: "Evaluation method",
+							MarkdownDescription: "Specify the operational behavior of the policy. The default behavior is to process all policy statements.",
 							Computed:            true,
 						},
 						"statement": schema.ListNestedAttribute{
-							MarkdownDescription: "Statement",
+							MarkdownDescription: "Specify the policy statement that establishes criteria to select messages, to set a measurement interval, to set thresholds, and to determine the action to take when the threshold is met. A policy can have multiple statements that run in the sequence defined by the statement identifier.",
 							NestedObject:        models.DmSLMStatementDataSourceSchema,
 							Computed:            true,
 						},
 						"peer_group": schema.StringAttribute{
-							MarkdownDescription: "Peer group",
+							MarkdownDescription: "Specify the peer group that share in load distribution of traffic that is destined for the same resources. A peer group establishes a data-sharing protocol among members where each member has the data to determine whether a threshold is reached.",
 							Computed:            true,
 						},
 						"api_mgmt": schema.BoolAttribute{

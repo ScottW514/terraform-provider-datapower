@@ -1,40 +1,53 @@
 name: AccessProfile
-description: 'Access profile'
-cli_alias: 'access-profile'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/AccessProfile'
+description: Create or edit an access profile.
+cli_alias: access-profile
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/AccessProfile
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAccessProfile"'
-    test_expect_ds: '"AccTest_AccessProfile"'
-    example: 'AccessProfileName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: AccessPolicies
-    type: List
-    element_type: String
-    list_example:
-      - '10.10.1.1/domainA/services/xslproxy?Access=r+w&Name=foo.*'
-    description: 'Access policies'
-    cli_alias: access-policy
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAccessProfile"'
+  test_expect_ds: '"AccTest_AccessProfile"'
+  example: AccessProfileName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: AccessPolicies
+  type: List
+  element_type: String
+  list_example:
+  - 10.10.1.1/domainA/services/xslproxy?Access=r+w&Name=foo.*
+  description: Specify the access policies that define privileges for the access profile.
+    When more than one policy applies to a resource, the most specific policy is used.
+    To create access policies, enter a policy statement in the following format. <p><tt><i>address</i>
+    / <i>domain</i> / <i>resource</i> ?Access= <i>privileges</i> &amp; <i>field</i>
+    = <i>value</i></tt></p><dl><dt><i>address</i></dt><dd>The complete local IP address
+    or host alias. Use the * character to designate all addresses.</dd><dt><i>domain</i></dt><dd>The
+    complete domain name. Use the * character to designate all domains.</dd><dt>resource</dt><dd>The
+    complete value for the resource type. Use the * character to designate all resource
+    types.</dd><dt><i>privileges</i></dt><dd>The privileges to apply. Separate permissions
+    with the + character. For example, <tt>a+d+x+r+w</tt> defines add, delete, execute,
+    read, and write privileges.</dd><dt><i>field</i></dt><dd>The complete name of
+    a specific property in the configuration; for example, <tt>Name</tt> .</dd><dt><i>value</i></dt><dd>The
+    PCRE match for the property value; For example, <tt>foo(.*)bar</tt> .</dd></dl>
+  cli_alias: access-policy

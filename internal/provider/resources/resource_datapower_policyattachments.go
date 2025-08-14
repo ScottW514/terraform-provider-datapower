@@ -56,7 +56,7 @@ func (r *PolicyAttachmentsResource) Metadata(ctx context.Context, req resource.M
 
 func (r *PolicyAttachmentsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Policy Attachment", "policy-attachments", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Create and configure ws-policy attachments for WSDLs", "policy-attachments", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,7 +85,7 @@ func (r *PolicyAttachmentsResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 			},
 			"enforcement_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Policy Enforcement Mode", "enforcement-mode", "").AddStringEnum("filter", "enforce").AddDefaultValue("enforce").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enforcement Mode defines how the service uses WS-Policy to ensure that messages meet security requirements. The default behavior is enforce.", "enforcement-mode", "").AddStringEnum("filter", "enforce").AddDefaultValue("enforce").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -94,23 +94,23 @@ func (r *PolicyAttachmentsResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("enforce"),
 			},
 			"policy_references": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Policy References", "policy-references", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable policies attached to WSDL using PolicyURI attributes and PolicyReference elements. These attachments are sometimes called XML element attachments. If 'off', all PolicyURI attributes and PolicyReference elements are ignored and only external policies are enforced.", "policy-references", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ignored_policy_attachment_points": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Ignore Embedded Policy", "ignore-attachment-point", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Disable all policies attached by policy references at a configured attachment point leaving other policy references intact.", "ignore-attachment-point", "").String,
 				NestedObject:        models.DmPolicyAttachmentPointResourceSchema,
 				Optional:            true,
 			},
 			"external_policy": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("External Policy", "external-policy", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Associate an external policy with a service.", "external-policy", "").String,
 				NestedObject:        models.DmExternalAttachedPolicyResourceSchema,
 				Optional:            true,
 			},
 			"sla_enforcement_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SLA Enforcement Mode", "sla-enforcement-mode", "").AddStringEnum("allow-if-no-sla", "reject-if-no-sla").AddDefaultValue("allow-if-no-sla").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("SLA Enforcement Mode controls the application of SLA Policies to transactions. Transactions are either allowed or rejected based on whether an SLA rule is applied to the transaction.", "sla-enforcement-mode", "").AddStringEnum("allow-if-no-sla", "reject-if-no-sla").AddDefaultValue("allow-if-no-sla").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

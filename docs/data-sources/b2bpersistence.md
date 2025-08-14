@@ -3,12 +3,12 @@
 page_title: "datapower_b2bpersistence Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  B2B persistence (default domain only)
+  Define the data storage for B2B transaction data.
 ---
 
 # datapower_b2bpersistence (Data Source)
 
-B2B persistence (`default` domain only)
+Define the data storage for B2B transaction data.
 
 ## Example Usage
 
@@ -26,15 +26,15 @@ data "datapower_b2bpersistence" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
-- `ha_enabled` (Boolean) Enable high availability
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `ha_enabled` (Boolean) When on, the appliance is in active-passive high availability mode with the configured 'Alternate Host'.
 - `ha_local_ip` (String) Replication address
 - `ha_local_port` (Number) Replication port
 - `ha_other_hosts` (Attributes) Alternate host
   - CLI Alias: `ha-other-hosts` (see [below for nested schema](#nestedatt--ha_other_hosts))
 - `ha_virtual_ip` (String) Virtual IP address
-- `raid_volume` (String) RAID volume
-- `storage_size` (Number) Storage size
+- `raid_volume` (String) Specify the location of the data store. The location must be the <tt>raid0</tt> RAID volume. During firmware initialization, the <tt>raid0</tt> volume is associated with persistent storage.
+- `storage_size` (Number) Specify the maximum size for the data store in MB. Enter a value in the range 1024 - 65536. The default is 1024. <p>This data store is for all B2B gateway services. These services store transaction metadata on the unencrypted partition of the RAID volume. These services store copies of the messages on the encrypted portion of the RAID volume.</p><p>The storage location for messages is defined on a service-by-service basis during the configuration of the B2B gateway.</p><p><b>Attention:</b> The maximum size for the persistent data store cannot be changed to a smaller value. Changing to a larger value might interrupt transactions that are in flight.</p>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

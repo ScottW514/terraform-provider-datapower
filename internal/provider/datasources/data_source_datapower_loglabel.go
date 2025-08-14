@@ -57,7 +57,7 @@ func (d *LogLabelDataSource) Metadata(_ context.Context, req datasource.Metadata
 
 func (d *LogLabelDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Log category",
+		MarkdownDescription: "Configuration of custom log categories.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

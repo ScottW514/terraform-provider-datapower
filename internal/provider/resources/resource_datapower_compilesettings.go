@@ -58,7 +58,7 @@ func (r *CompileSettingsResource) Metadata(ctx context.Context, req resource.Met
 
 func (r *CompileSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Compile Settings", "compile-settings", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure customized compile settings.", "compile-settings", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -87,7 +87,7 @@ func (r *CompileSettingsResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 			},
 			"xslt_version": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XSLT version", "xslt-version", "").AddStringEnum("XSLT10", "XSLT10_IT23272", "XSLT20", "StylesheetSpecified").AddDefaultValue("XSLT10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the XSLT processor version. The default value is XSLT10.", "xslt-version", "").AddStringEnum("XSLT10", "XSLT10_IT23272", "XSLT20", "StylesheetSpecified").AddDefaultValue("XSLT10").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -96,43 +96,43 @@ func (r *CompileSettingsResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("XSLT10"),
 			},
 			"strict": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Strict", "strict", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to enable strict XSLT error checking. Non-strict operations attempt to recover from certain errors, such as use of undeclared variables, calling undeclared templates, and so forth. By default, strict XSLT error checking is enabled.", "strict", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"profile": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Profile rule", "profile", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to enable stylesheet profiling. This option should not be used in production environments. By default, stylesheet profiling is disabled.", "profile", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"debug": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Debug rule", "debug", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to run the stylesheet, XQuery script, and JSONiq script in debug mode. When a stylesheet, XQuery script, or JSONiq script is run in debug mode, it generates a custom web page instead of displaying its normal output. The web page details exactly what occurred during execution, including the values of variables and where particular pieces of the output came from. This option should not be used in production environments. By default, debug mode is disabled.", "debug", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"stream": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Streaming rule", "stream", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether the stylesheet must be run in streaming mode. Transformation of the document begins before the input is fully parsed. Not all stylesheets can be streamed. If the stylesheet cannot be streamed, an error is generated and the input is not processed. By default, streaming mode is disabled.", "stream", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"try_stream": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Attempt streaming rule", "try-stream", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to attempt to run the stylesheet in streaming mode. Transformation of the document begins before the input is fully parsed. Not all stylesheets can be streamed. If the stylesheet cannot be streamed, a warning is generated during compilation and the stylesheet is read in the entire input as normal at execution time. By default, attempting to run the stylesheet in streaming mode is disabled.", "try-stream", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"minimum_escaping": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Minimum output escaping rule", "minesc", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to escape output produced from the stylesheet during processing. Minimal escaping is particularly useful when handling non-English character sets. By default, minimum escaping is disabled.", "minesc", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"stack_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum stack size", "stack-size", "").AddIntegerRange(10240, 104857600).AddDefaultValue("1048576").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the maximum number of bytes that the stack is allowed to use while executing a stylesheet or other compiled content. This setting is used to block infinite recursion. The minimum value is 10 kilobytes, or 10,240 bytes. The maximum value is 100 megabytes, or 104,857,600 bytes. The default value is 1 megabyte, or 1,048,576 bytes.", "stack-size", "").AddIntegerRange(10240, 104857600).AddDefaultValue("1048576").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -142,7 +142,7 @@ func (r *CompileSettingsResource) Schema(ctx context.Context, req resource.Schem
 				Default: int64default.StaticInt64(1048576),
 			},
 			"wsi_validation": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WS-I Basic Profile validation", "wsi-validate", "").AddStringEnum("ignore", "warn", "fail").AddDefaultValue("warn").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default setting is Warn.", "wsi-validate", "").AddStringEnum("ignore", "warn", "fail").AddDefaultValue("warn").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -151,7 +151,7 @@ func (r *CompileSettingsResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("warn"),
 			},
 			"wsdl_validate_body": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validate message body", "wsdl-validate-body", "").AddStringEnum("strict", "lax", "skip").AddDefaultValue("strict").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the validation behavior for the soap:Body. The default setting is Strict.", "wsdl-validate-body", "").AddStringEnum("strict", "lax", "skip").AddDefaultValue("strict").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -160,7 +160,7 @@ func (r *CompileSettingsResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("strict"),
 			},
 			"wsdl_validate_headers": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validate message headers", "wsdl-validate-headers", "").AddStringEnum("strict", "lax", "skip").AddDefaultValue("lax").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the validation behavior for the soap:Header. The default setting is Lax.", "wsdl-validate-headers", "").AddStringEnum("strict", "lax", "skip").AddDefaultValue("lax").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -169,7 +169,7 @@ func (r *CompileSettingsResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("lax"),
 			},
 			"wsdl_validate_faults": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validate message fault details", "wsdl-validate-faults", "").AddStringEnum("strict", "lax", "skip").AddDefaultValue("strict").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the validation behavior for the fault detail. The default setting is Strict.", "wsdl-validate-faults", "").AddStringEnum("strict", "lax", "skip").AddDefaultValue("strict").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -178,43 +178,43 @@ func (r *CompileSettingsResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("strict"),
 			},
 			"wsdl_wrapped_faults": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Require wrappers on fault details specified by type", "wsdl-wrapped-faults", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to require compatibility with RPC-style wrappers. By default, RPC-style wrappers are not required.", "wsdl-wrapped-faults", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_soap_enc_array": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifically allow xsi:type='SOAP-ENC:Array' rule", "allow-soap-enc-array", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to allow the schema to accept most uses of elements with xsi:type='SOAP-ENC:Array' consistent with SOAP 1.1 Section 5, even when these attributes violate the XML Schema specification. Normally the xsi:type attribute must name a type equal to or derived from the actual type of the element. For schemas compiled with this option, xsi:type is accepted specifically for the SOAP 1.1 Encoding 'Array' complex type if the element type is derived from SOAP-ENC:Array. The opposite is the normal allowable case. By default, elements with xsi:type='SOAP-ENC:Array' are not accepted.", "allow-soap-enc-array", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"validate_soap_enc_array": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validate SOAP 1.1 encoding rule", "validate-soap-enc-array", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to perform extra schema validation following the encoding rules in SOAP 1.1 Section 5. When enabled, members of SOAP arrays are validated, attributes such as @id and @href are allowed even if they are not allowed by the schema, and @href values are checked to ensure that they have a corresponding @id element. By default, the extra validation is not performed.", "validate-soap-enc-array", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"wildcards_ignore_xsi_type": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Wildcards ignore xsi:type rule", "wildcards-ignore-xsi-type", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether xs:any elements in the schema validate only child elements by name. The XML Schema specification requires that, if a wildcard matches an element but that element does not have an element declaration, the element is instead validated according to an xsi:type attribute on it. This option ignores those xsi:type attributes. It should be used for cases such as SOAP envelope validation where a further validation step will validate the contents matching the wildcard, possibly using the SOAP 1.1 encoding rules. By default, xsi:type attributes are not ignored.", "wildcards-ignore-xsi-type", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"wsdl_strict_soap_version": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Strict SOAP envelope version", "wsdl-strict-soap-version", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to strictly follow the SOAP binding in the WSDL. When enabled, only messages bound to SOAP 1.2 appear in SOAP 1.2 envelopes and only messages bound to SOAP 1.1 appear in SOAP 1.1 envelopes. By default, strict SOAP binding is disabled.", "wsdl-strict-soap-version", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"xacml_debug": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Debug XACML policy", "xacml-debug", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether to compile XACML policies with debug information. Note that the XACML debugging messages are also controlled by the log event in the XACML category. Use the debug log level to view the full XACML debugging messages. By default, XACML policies are not compiled with debug information.", "xacml-debug", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_xop_include": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Accept MTOM/XOP optimized messages", "allow-xop-include", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies whether the schema or WSDL document accepts messages where base64-encoded binary content was optimized according to the MTOM/XOP specifications. XOP binary-optimization replaces base64-encoded binary data with an xop:Include reference element that references the unencoded binary data located in an attachment. By default, MTOM/XOP optimized messages are disabled.</p><ul><li>When disabled, such optimized messages are rejected by validation of the optimized form. Rejection occurs because the schema specifies a simple type that accepts base64-encoded data, such as xs:base64Binary or xs:string, but the message contains an xop:Include element instead.</li><li>When enabled, an xop:Include element can optionally appear in place of content for any XML Schema simple type that validates base64-encoded binary data. The xop:Include element itself will be validated according to the built-in schema in store:///schemas/xop.xsd.</li></ul>", "allow-xop-include", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

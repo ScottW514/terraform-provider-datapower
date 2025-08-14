@@ -1,53 +1,58 @@
 name: B2BXPathRoutingPolicy
-description: 'B2B XPath routing policy'
-cli_alias: 'b2b-xpath-routing'
-cmd_group: 'b2b'
-rest_endpoint: '/mgmt/config/{domain}/B2BXPathRoutingPolicy'
+description: B2B XPath routing policy
+cli_alias: b2b-xpath-routing
+cmd_group: b2b
+rest_endpoint: /mgmt/config/{domain}/B2BXPathRoutingPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestB2BXPathRoutingPolicy"'
-    test_expect_ds: '"AccTest_B2BXPathRoutingPolicy"'
-    example: 'B2BXPathRoutingPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: SenderXPath
-    type: String
-    required: true
-    example: 'senderpath'
-    description: 'Sender XPath'
-    cli_alias: sender-xpath
-  - name: ReceiverXPath
-    type: String
-    required: true
-    description: 'Receiver XPath'
-    example: 'senderpath'
-    cli_alias: receiver-xpath
-  - name: DocumentIDXPath
-    type: String
-    description: 'Document ID XPath'
-    cli_alias: document-id-xpath
-  - name: DateTimeXPath
-    type: String
-    description: 'Transaction Timestamp XPath'
-    cli_alias: transaction-time-xpath
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestB2BXPathRoutingPolicy"'
+  test_expect_ds: '"AccTest_B2BXPathRoutingPolicy"'
+  example: B2BXPathRoutingPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: SenderXPath
+  type: String
+  required: true
+  example: senderpath
+  description: Sender XPath
+  cli_alias: sender-xpath
+- name: ReceiverXPath
+  type: String
+  required: true
+  description: Receiver XPath
+  example: senderpath
+  cli_alias: receiver-xpath
+- name: DocumentIDXPath
+  type: String
+  description: Specify the XPath expression for the unique identifier of the exchange.
+    With the partner IDs, the XPath expression uniquely identifies a specific XML
+    EDI message.
+  cli_alias: document-id-xpath
+- name: DateTimeXPath
+  type: String
+  description: Specify the XPath expression to select the timestamp from the message.
+    The results of this expression must be in the form of an <tt>xs:dateTime</tt>
+    type.
+  cli_alias: transaction-time-xpath

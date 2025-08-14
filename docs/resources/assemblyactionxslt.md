@@ -3,13 +3,13 @@
 page_title: "datapower_assemblyactionxslt Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XSLT assembly action
+  XSLT assembly action runs an XSLT stylesheet. This action is not supported in IBM Cloud. Any assembly that includes this action fails.
   CLI Alias: assembly-xslt
 ---
 
 # datapower_assemblyactionxslt (Resource)
 
-XSLT assembly action
+XSLT assembly action runs an XSLT stylesheet. This action is not supported in IBM Cloud. Any assembly that includes this action fails.
   - CLI Alias: `assembly-xslt`
 
 ## Example Usage
@@ -34,21 +34,21 @@ resource "datapower_assemblyactionxslt" "test" {
 
 ### Optional
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
   - CLI Alias: `debug`
   - Default value: `false`
 - `compile_settings` (String) Compile settings
   - CLI Alias: `compile-settings-xslt`
   - Reference to: `datapower_compilesettings:id`
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
   - CLI Alias: `correlation-path`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `serialize_output` (Boolean) Serialize output
+- `serialize_output` (Boolean) Specify whether to serialize the output into binary data. The serialized output is not accessible as XML unless it is re-parsed. To access the output as XML after serialization, the API rule must contain a parse assembly action after the XSLT assembly action.
   - CLI Alias: `serialize-output`
   - Default value: `false`
 - `title` (String) Title
   - CLI Alias: `title`
-- `use_payload` (Boolean) Use current payload as input
+- `use_payload` (Boolean) Specify whether to use the current payload as input. When enabled, the input document uses the current payload. When not enabled, there is no input.
   - CLI Alias: `payload`
   - Default value: `false`
 - `user_summary` (String) Comments

@@ -1,219 +1,270 @@
 name: AssemblyActionInvoke
-description: 'Invoke assembly action'
-cli_alias: 'assembly-invoke'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/AssemblyActionInvoke'
+description: The invoke assembly action call a service from your assembly.
+cli_alias: assembly-invoke
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/AssemblyActionInvoke
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAssemblyActionInvoke"'
-    test_expect_ds: '"AccTest_AssemblyActionInvoke"'
-    example: 'AssemblyActionInvokeName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Url
-    type: String
-    required: true
-    example: 'https://localhost'
-    description: 'URL'
-    cli_alias: url
-  - name: SSLClient
-    type: String
-    description: 'TLS client profile'
-    cli_alias: ssl-client
-  - name: Timeout
-    type: Int64
-    default: 60
-    description: 'Timeout'
-    cli_alias: timeout
-  - name: UserName
-    type: String
-    description: 'Username'
-    cli_alias: username
-  - name: Password
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password'
-    cli_alias: password
-  - name: Method
-    type: String
-    enum:
-      - 'Keep'
-      - 'GET'
-      - 'POST'
-      - 'PUT'
-      - 'DELETE'
-      - 'PATCH'
-      - 'HEAD'
-      - 'OPTIONS'
-      - 'TRACE'
-    required: true
-    default: 'Keep'
-    description: 'HTTP method'
-    cli_alias: method
-  # DEPRECATED
-  # - name: AllowWebSocketUpgrade
-  - name: BackendType
-    type: String
-    enum:
-      - 'detect'
-      - 'xml'
-      - 'json'
-      - 'binary'
-      - 'graphql'
-    required: true
-    default: 'detect'
-    description: 'Backend type'
-    cli_alias: backend-type
-  - name: GraphQLSendType
-    type: String
-    enum:
-      - 'detect'
-      - 'graphql'
-      - 'json'
-    description: 'GraphQL send type'
-    cli_alias: graphql-send-type
-  - name: Compression
-    type: Bool
-    default: false
-    description: 'Enable compression'
-    cli_alias: compression
-  - name: CacheType
-    type: String
-    enum:
-      - 'Protocol'
-      - 'NoCache'
-      - 'TimeToLive'
-    required: true
-    default: 'Protocol'
-    description: 'Cache type'
-    cli_alias: cache-type
-  - name: TimeToLive
-    type: Int64
-    default: 900
-    description: 'Time to live'
-    cli_alias: ttl
-  - name: CacheUnsafeResponse
-    type: Bool
-    default: false
-    description: 'Cache response to POST and PUT requests'
-    cli_alias: cache-unsafe-response
-  - name: CacheKey
-    type: String
-    description: 'Cache key'
-    cli_alias: cache-key
-  - name: FollowRedirects
-    type: Bool
-    default: false
-    description: 'Follow redirects'
-    cli_alias: follow-redirects
-  # DEPRECATED
-  # - name: UseHTTP10
-  - name: HTTPVersion
-    type: String
-    enum:
-      - 'HTTP/1.0'
-      - 'HTTP/1.1'
-      - 'HTTP/2'
-    default: 'HTTP/1.1'
-    description: 'HTTP version to server'
-    cli_alias: http-version
-  - name: HTTP2Required
-    type: Bool
-    default: false
-    description: 'HTTP/2 required'
-    cli_alias: http2-required
-  - name: DoChunkedUpload
-    type: Bool
-    default: true
-    description: 'Allow chunked uploads'
-    cli_alias: chunked-uploads
-  - name: PersistentConnection
-    type: Bool
-    default: true
-    description: 'Persistent connection'
-    cli_alias: persistent-connection
-  - name: StopOnError
-    type: Bool
-    default: false
-    description: 'Stop on error'
-    cli_alias: stop-on-error
-  - name: ErrorTypes
-    dm_type: DmInvokeErrorType
-    description: 'Error types'
-    cli_alias: error-types
-  - name: Output
-    type: String
-    default: 'message'
-    description: 'Output'
-    cli_alias: output
-  - name: DecodeRequestParams
-    type: Bool
-    default: false
-    description: 'Decode request parameters'
-    cli_alias: decode-request-params
-  - name: EncodePlusChar
-    type: Bool
-    default: false
-    description: 'Encode + characters in query'
-    cli_alias: encode-plus-char
-  - name: KeepPayload
-    type: Bool
-    default: false
-    description: 'Keep payload'
-    cli_alias: keep-payload
-  - name: InjectUserAgentHeader
-    type: Bool
-    default: true
-    description: 'Inject User-Agent header'
-    cli_alias: inject-user-agent
-  - name: InjectProxyHeaders
-    type: Bool
-    default: false
-    description: 'Inject proxy headers'
-    cli_alias: inject-proxy-headers
-  - name: HeaderControlList
-    type: String
-    reference_to: ControlList
-    default: 'default-accept-all'
-    description: 'Header control list'
-    cli_alias: header-control-list
-  - name: ParameterControlList
-    type: String
-    reference_to: ControlList
-    default: 'default-reject-all'
-    description: 'Parameter control list'
-    cli_alias: parameter-control-list
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: CorrelationPath
-    type: String
-    description: 'Correlation path'
-    cli_alias: correlation-path
-  - name: ActionDebug
-    type: Bool
-    default: false
-    description: 'Enable debugging'
-    cli_alias: debug
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAssemblyActionInvoke"'
+  test_expect_ds: '"AccTest_AssemblyActionInvoke"'
+  example: AssemblyActionInvokeName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Url
+  type: String
+  required: true
+  example: https://localhost
+  description: Specify the URL of the target. You can reference a custom API property
+    that resolves as the value. To reference an API property, use the <tt>$(api.properties.
+    <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the
+    name of the property to reference. You can use the short <tt>$( <i>property_name</i>
+    )</tt> format when the assembly action does not have a property with the same
+    name.
+  cli_alias: url
+- name: SSLClient
+  type: String
+  description: TLS client profile
+  cli_alias: ssl-client
+- name: Timeout
+  type: Int64
+  default: 60
+  description: Specify the duration in seconds to wait for a reply from the target.
+    The default value is 60.
+  cli_alias: timeout
+- name: UserName
+  type: String
+  description: Username
+  cli_alias: username
+- name: Password
+  type: String
+  reference_to: PasswordAlias
+  description: Password
+  cli_alias: password
+- name: Method
+  type: String
+  enum:
+  - Keep
+  - GET
+  - POST
+  - PUT
+  - DELETE
+  - PATCH
+  - HEAD
+  - OPTIONS
+  - TRACE
+  required: true
+  default: Keep
+  description: HTTP method
+  cli_alias: method
+- name: BackendType
+  type: String
+  enum:
+  - detect
+  - xml
+  - json
+  - binary
+  - graphql
+  required: true
+  default: detect
+  description: Backend type
+  cli_alias: backend-type
+- name: GraphQLSendType
+  type: String
+  enum:
+  - detect
+  - graphql
+  - json
+  description: Specify the type of payload to send for GraphQL POST requests. When
+    GraphQL or JSON, this setting overrides the message type of the payload.
+  cli_alias: graphql-send-type
+- name: Compression
+  type: Bool
+  default: false
+  description: Enable compression
+  cli_alias: compression
+- name: CacheType
+  type: String
+  enum:
+  - Protocol
+  - NoCache
+  - TimeToLive
+  required: true
+  default: Protocol
+  description: Specify how to cache documents.
+  cli_alias: cache-type
+- name: TimeToLive
+  type: Int64
+  default: 900
+  description: Specify the validity period in seconds for documents in the cache.
+    The default value is 900.
+  cli_alias: ttl
+- name: CacheUnsafeResponse
+  type: Bool
+  default: false
+  description: 'Specify whether to cache responses to POST and PUT requests when the
+    cache policy type is set to time to live. The response to these requests is the
+    result of an action on the server that might change its resource state. You might
+    want to cache responses to these requests when you know that the action (for example:
+    HTTP POST) will not change the server state.'
+  cli_alias: cache-unsafe-response
+- name: CacheKey
+  type: String
+  description: Specify the string for the cache key. If omitted, the entire URL is
+    used as the key.
+  cli_alias: cache-key
+- name: FollowRedirects
+  type: Bool
+  default: false
+  description: Specify whether to follow redirects. Some protocols generate redirects.
+    When enabled, the action attempts to resolve redirects transparently.
+  cli_alias: follow-redirects
+- name: HTTPVersion
+  type: String
+  enum:
+  - HTTP/1.0
+  - HTTP/1.1
+  - HTTP/2
+  default: HTTP/1.1
+  description: Specify the HTTP version for server-side connections. The default value
+    is HTTP/1.1.
+  cli_alias: http-version
+- name: HTTP2Required
+  type: Bool
+  default: false
+  description: Specify whether an HTTP/2 connection is required when connecting to
+    the server. Only applicable when the HTTP version to the server is set to HTTP/2
+    and the connection uses TLS. The default value is off.
+  cli_alias: http2-required
+- name: DoChunkedUpload
+  type: Bool
+  default: true
+  description: Specify whether to enable uploading of HTTP/1.1 chunked-encoded documents.
+    For HTTP/1.1, the document body can be delimited by either <tt>Content-Length</tt>
+    or chunked encoding. While all servers understand <tt>Content-Length</tt> , many
+    servers fail to understand chunked encoding. For this reason, <tt>Content-Length</tt>
+    is the standard method. However, the use of <tt>Content-Length</tt> can interfere
+    with streaming. To stream full documents to an RFC 2616 compatible server, enable
+    this property. Unlike other HTTP/1.1 features, you must know that the target server
+    is RFC 2616 compatible.
+  cli_alias: chunked-uploads
+- name: PersistentConnection
+  type: Bool
+  default: true
+  description: Persistent connection
+  cli_alias: persistent-connection
+- name: StopOnError
+  type: Bool
+  default: false
+  description: Stop on error
+  cli_alias: stop-on-error
+- name: ErrorTypes
+  dm_type: DmInvokeErrorType
+  description: Error types
+  cli_alias: error-types
+- name: Output
+  type: String
+  default: message
+  description: Specify the variable to store results. By default, results are stored
+    in the <tt>message.body</tt> , <tt>message.headers</tt> , <tt>message.statuscode</tt>
+    variables.
+  cli_alias: output
+- name: DecodeRequestParams
+  type: Bool
+  default: false
+  description: Specify whether to decode the request parameters in the target URL.
+    When enabled, request parameters are decoded. By default, request parameters are
+    not decoded.
+  cli_alias: decode-request-params
+- name: EncodePlusChar
+  type: Bool
+  default: false
+  description: Specify whether to encode + characters in query strings. When enabled,
+    + characters are encoded to <tt>%2F</tt> . By default, + characters are not encoded.
+  cli_alias: encode-plus-char
+- name: KeepPayload
+  type: Bool
+  default: false
+  description: Specify whether to include the payload for DELETE requests. When enabled,
+    DELETE requests include the payload. By default, DELETE requests do not include
+    the payload.
+  cli_alias: keep-payload
+- name: InjectUserAgentHeader
+  type: Bool
+  default: true
+  description: Specify whether to inject the default <tt>User-Agent</tt> header. When
+    the <tt>User-Agent</tt> header is not in the request, inject this header to the
+    request.
+  cli_alias: inject-user-agent
+- name: InjectProxyHeaders
+  type: Bool
+  default: false
+  description: Specify whether to inject proxy-related headers. When the <tt>X-Forwarded-For</tt>
+    , <tt>X-Forwarded-Host</tt> , and <tt>X-Forwarded-Port</tt> headers are not found
+    in the request, inject theses headers to the request.
+  cli_alias: inject-proxy-headers
+- name: HeaderControlList
+  type: String
+  reference_to: ControlList
+  default: default-accept-all
+  description: Specify the control list that uses headers to accept or reject requests.
+    By default, accepts all requests with headers.
+  cli_alias: header-control-list
+- name: ParameterControlList
+  type: String
+  reference_to: ControlList
+  default: default-reject-all
+  description: Specify the control list that uses URL parameters to accept or reject
+    requests. By default, rejects all requests with URL parameters.
+  cli_alias: parameter-control-list
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Title
+  type: String
+  description: Title
+  cli_alias: title
+- name: CorrelationPath
+  type: String
+  description: Specify the path that correlates the API action to a specific part
+    of the API specification. The correlation path specifies the part of the API definition
+    that correlates with the API action. This path is exposed in the debug data by
+    the API gateway for use by debugging tools. For example, for an API configuration
+    that is retrieved from API Connect and specified in an OpenAPI document with IBM
+    extensions, this path is the JSON path to the assembly policy in the IBM extensions
+    section of the document. The path can be expressed in any form that the debugging
+    tool can correlate to the API definition.
+  cli_alias: correlation-path
+- name: ActionDebug
+  type: Bool
+  default: false
+  description: <p>Specify whether to enable the GatewayScript debugger to troubleshoot
+    the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript
+    file that is called from the GatewayScript assembly action.</li><li>Troubleshoot
+    a GatewayScript file that is called from an XSLT assembly action that uses the
+    <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript
+    script that is called through the <tt>value</tt> or <tt>default</tt> property
+    in the JSON file from the map assembly action.</li></ul><p>To debug a file or
+    script, the following conditions must be met.</p><ul><li>The file contains one
+    or more <tt>debugger;</tt> statements at the points in your script where you want
+    to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You
+    run the <tt>debug-action</tt> command.</p>
+  cli_alias: debug

@@ -1,37 +1,43 @@
 name: AuditLog
-description: 'Audit log settings (`default` domain only)'
-cli_alias: 'audit-log-settings'
-cmd_group: 'system'
-rest_endpoint: '/mgmt/config/default/AuditLog/AuditLog-Settings'
+description: <p>The audit log settings control the configuration of the system audit
+  log. These settings controls the level of audit. When set to full, connection information
+  is logged. When the system is in Common Criteria Compliance mode, more information
+  is logged.</p>
+cli_alias: audit-log-settings
+cmd_group: system
+rest_endpoint: /mgmt/config/default/AuditLog/AuditLog-Settings
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: Size
-    type: Int64
-    minimum: 250
-    maximum: 500000
-    default: 1000
-    description: 'Log size'
-    cli_alias: size
-  - name: Rotate
-    type: Int64
-    minimum: 1
-    maximum: 100
-    default: 3
-    description: 'Number of rotations'
-    cli_alias: rotate
-  - name: AuditLevel
-    type: String
-    enum:
-      - 'standard'
-      - 'full'
-    default: 'standard'
-    description: 'Audit level'
-    cli_alias: audit-level
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: Size
+  type: Int64
+  minimum: 250
+  maximum: 500000
+  default: 1000
+  description: Specify the maximum size of audit log rotations in KB. Enter a value
+    in the range 250 - 500000. The default value is 1000.
+  cli_alias: size
+- name: Rotate
+  type: Int64
+  minimum: 1
+  maximum: 100
+  default: 3
+  description: Specify the maximum number of rotations. Enter a value in the range
+    1 - 100. The default value is 3.
+  cli_alias: rotate
+- name: AuditLevel
+  type: String
+  enum:
+  - standard
+  - full
+  default: standard
+  description: Specify the audit level. The default value is for standard logging.
+  cli_alias: audit-level

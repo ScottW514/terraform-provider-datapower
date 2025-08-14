@@ -1,29 +1,31 @@
 name: RateLimitConfiguration
-description: 'Rate limit configuration'
-cli_alias: 'rate-limit-config'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/RateLimitConfiguration/default'
+description: A rate limit configuration defines domain-scoped tuning parameters for
+  the rate limit algorithm.
+cli_alias: rate-limit-config
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/RateLimitConfiguration/default
 update_only: true
 attributes:
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: Parameters
-    type: List
-    element_type: DmRateLimitConfigurationNameValuePair
-    description: 'Parameters'
-    cli_alias: parameter
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: Parameters
+  type: List
+  element_type: DmRateLimitConfigurationNameValuePair
+  description: Parameters
+  cli_alias: parameter

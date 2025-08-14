@@ -58,7 +58,7 @@ func (r *PeerGroupResource) Metadata(ctx context.Context, req resource.MetadataR
 
 func (r *PeerGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Peer group", "peer-group", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A collection of systems that automatically update each other with real time data of the selected type. For example, members in the group exchange data to allow the enforcement of a policy across the collection.", "peer-group", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -96,7 +96,7 @@ func (r *PeerGroupResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default: stringdefault.StaticString("slm"),
 			},
 			"url": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL", "url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of each peer in the <tt>protocol://address:port</tt> format for an Ethernet interface or a VLAN interface. For unicast peering, peers exchange SLM data over the XML management interface as SOAP over HTTPS. Multicast peering shares the initial SLM state using SOAP over HTTPS; the data transfers are done using multicast. <p>The default port for the XML Management Interface is 5550. If this port is changed on any peer, the URL must reflect the correct port.</p><p>Define all peers, which includes the local system.</p>", "url", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
@@ -105,7 +105,7 @@ func (r *PeerGroupResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 			},
 			"update_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Update interval", "update-interval", "").AddIntegerRange(1, 10000).AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the update interval in milliseconds that data is transmitted among peers.", "update-interval", "").AddIntegerRange(1, 10000).AddDefaultValue("10").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

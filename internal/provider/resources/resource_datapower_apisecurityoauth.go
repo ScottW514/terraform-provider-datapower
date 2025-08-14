@@ -55,7 +55,7 @@ func (r *APISecurityOAuthResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *APISecurityOAuthResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API security OAuth", "api-sec-oauth", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An API OAuth security definition defines the applicable settings for an OAuth provider.", "api-sec-oauth", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -88,7 +88,7 @@ func (r *APISecurityOAuthResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"o_auth_flow": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("OAuth flow", "oauth-flow", "").AddStringEnum("implicit", "password", "application", "accessCode").AddDefaultValue("implicit").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the OAuth flow to enforce to protect the target. The value must be among the supported grant types that are defined by the referenced OAuth provider.", "oauth-flow", "").AddStringEnum("implicit", "password", "application", "accessCode").AddDefaultValue("implicit").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -97,11 +97,11 @@ func (r *APISecurityOAuthResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("implicit"),
 			},
 			"o_auth_scope": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("OAuth scopes", "oauth-scope", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <ul><li>The allowed scopes for this configuration must be a subset of the allowed scopes set for the API OAuth security definition.</li><li>The allowed scopes for the API OAuth security definition must be a subset of the allowed scopes set for the OAuth provider settings.</li></ul><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>", "oauth-scope", "").String,
 				Optional:            true,
 			},
 			"o_auth_adv_scope_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("OAuth advanced scope URL", "oauth-advanced-scope-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL that overrides the advanced scope URL in the OAuth provider settings. The value must be a properly formatted URL.", "oauth-advanced-scope-url", "").String,
 				Optional:            true,
 			},
 			"o_auth_adv_scope_tls_profile": schema.StringAttribute{

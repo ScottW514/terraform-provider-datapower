@@ -3,13 +3,13 @@
 page_title: "datapower_wsendpointrewritepolicy Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WS-Proxy Endpoint Rewrite
+  Create or edit WS Endpoint Rewrite Policy
   CLI Alias: wsm-endpointrewrite
 ---
 
 # datapower_wsendpointrewritepolicy (Resource)
 
-WS-Proxy Endpoint Rewrite
+Create or edit WS Endpoint Rewrite Policy
   - CLI Alias: `wsm-endpointrewrite`
 
 ## Example Usage
@@ -34,17 +34,17 @@ resource "datapower_wsendpointrewritepolicy" "test" {
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `ws_endpoint_local_rewrite_rule` (Attributes List) Local Rewrite Rules
+- `ws_endpoint_local_rewrite_rule` (Attributes List) Add, edit, or delete a local endpoint rewrite rule. These rules evaluate services in a deployed WSDL file and specify the URL the appliance should use locally for matched services. They convert addresses in WSDL files to local endpoints.
   - CLI Alias: `listener-rule` (see [below for nested schema](#nestedatt--ws_endpoint_local_rewrite_rule))
-- `ws_endpoint_publish_rewrite_rule` (Attributes List) Publish Rewrite Rules
+- `ws_endpoint_publish_rewrite_rule` (Attributes List) Add, edit, or delete a publish endpoint rewrite rule. These rules evaluate services in deployed WSDL file and specify the URL the appliance should publish when producing its own WSDL files. Use this if you wish to publish an address different from the local address, for example the address of a load balancer in front of appliance.
   - CLI Alias: `publisher-rule` (see [below for nested schema](#nestedatt--ws_endpoint_publish_rewrite_rule))
-- `ws_endpoint_remote_rewrite_rule` (Attributes List) Remote Rewrite Rules
+- `ws_endpoint_remote_rewrite_rule` (Attributes List) Add, edit, or delete a remote endpoint rewrite rule. These rules evaluate services in deployed WSDL file and specify the URL the appliance should use remotely for matched services. They convert address in WSDL files to remote endpoints.
   - CLI Alias: `backend-rule` (see [below for nested schema](#nestedatt--ws_endpoint_remote_rewrite_rule))
-- `ws_endpoint_subscription_local_rule` (Attributes List) Subscription Local Rewrite Rule
+- `ws_endpoint_subscription_local_rule` (Attributes List) Add, edit, or delete a subscription rewrite rule.
   - CLI Alias: `subscription-listener-rule` (see [below for nested schema](#nestedatt--ws_endpoint_subscription_local_rule))
-- `ws_endpoint_subscription_publish_rule` (Attributes List) Subscription Publish Rewrite Rule
+- `ws_endpoint_subscription_publish_rule` (Attributes List) Add, edit, or delete a subscription rewrite rule.
   - CLI Alias: `subscription-publisher-rule` (see [below for nested schema](#nestedatt--ws_endpoint_subscription_publish_rule))
-- `ws_endpoint_subscription_remote_rule` (Attributes List) Subscription Remote Rewrite Rule
+- `ws_endpoint_subscription_remote_rule` (Attributes List) Add, edit, or delete a subscription rewrite rule.
   - CLI Alias: `subscription-backend-rule` (see [below for nested schema](#nestedatt--ws_endpoint_subscription_remote_rule))
 
 <a id="nestedatt--dependency_actions"></a>

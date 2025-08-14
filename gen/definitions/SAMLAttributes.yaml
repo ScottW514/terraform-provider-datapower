@@ -1,38 +1,40 @@
 name: SAMLAttributes
-description: 'SAML Attributes'
-cli_alias: 'samlattrs'
-cmd_group: 'aaapolicy'
-rest_endpoint: '/mgmt/config/{domain}/SAMLAttributes'
+description: Define a list of SAML attributes for the SAML Assertion generator.
+cli_alias: samlattrs
+cmd_group: aaapolicy
+rest_endpoint: /mgmt/config/{domain}/SAMLAttributes
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestSAMLAttributes"'
-    test_expect_ds: '"AccTest_SAMLAttributes"'
-    example: 'SAMLAttributesName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: SAMLAttribute
-    type: List
-    element_type: DmSAMLAttribute
-    description: 'SAML Attribute Definition'
-    cli_alias: attribute
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestSAMLAttributes"'
+  test_expect_ds: '"AccTest_SAMLAttributes"'
+  example: SAMLAttributesName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: SAMLAttribute
+  type: List
+  element_type: DmSAMLAttribute
+  description: Define an attribute by selecting the source type and specifying the
+    data source and SAML attribute name.
+  cli_alias: attribute

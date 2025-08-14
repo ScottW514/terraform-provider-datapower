@@ -57,7 +57,7 @@ func (d *JWEHeaderDataSource) Metadata(_ context.Context, req datasource.Metadat
 
 func (d *JWEHeaderDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "JWE Header",
+		MarkdownDescription: "JWE header object.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,21 +77,21 @@ func (d *JWEHeaderDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A descriptive summary for the configuration.",
 							Computed:            true,
 						},
 						"jwe_protected_header": schema.ListNestedAttribute{
-							MarkdownDescription: "Protected Header",
+							MarkdownDescription: "Add a JWE protected header to a JWE encrypt action.",
 							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
 							Computed:            true,
 						},
 						"jwe_shared_unprotected_header": schema.ListNestedAttribute{
-							MarkdownDescription: "Shared Unprotected Header",
+							MarkdownDescription: "Add a JWE shared unprotected header to a JWE encrypt action.",
 							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
 							Computed:            true,
 						},
 						"recipient": schema.StringAttribute{
-							MarkdownDescription: "Recipient",
+							MarkdownDescription: "Add a JWE recipient object to a JWE encrypt action.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

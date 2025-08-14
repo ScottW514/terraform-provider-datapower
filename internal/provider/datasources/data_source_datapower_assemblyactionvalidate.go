@@ -57,7 +57,7 @@ func (d *AssemblyActionValidateDataSource) Metadata(_ context.Context, req datas
 
 func (d *AssemblyActionValidateDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Validate assembly action",
+		MarkdownDescription: "The validate assembly action validates JSON and XML payloads against a schema.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -89,15 +89,15 @@ func (d *AssemblyActionValidateDataSource) Schema(ctx context.Context, req datas
 							Computed:            true,
 						},
 						"input": schema.StringAttribute{
-							MarkdownDescription: "Input message",
+							MarkdownDescription: "Specify the variable in the API context that contains the data to validate. The content of the <tt>body</tt> field is the input to validate. The default variable is <tt>message</tt> .",
 							Computed:            true,
 						},
 						"output": schema.StringAttribute{
-							MarkdownDescription: "Output message",
+							MarkdownDescription: "<p>Specify the variable in the API context to store the results. For a JSON schema, adds any default values that are missing from the payload.</p><p>Without an output variable, the results are not stored. By default, no output variable is specified.</p><p>If the validation fails, no output is stored.</p>",
 							Computed:            true,
 						},
 						"definition": schema.StringAttribute{
-							MarkdownDescription: "Definition",
+							MarkdownDescription: "Specify the path to a schema in the API definition. Use the format <tt>#/definitions/mySchema</tt> or <tt>mySchema</tt> to specify a previously defined schema.",
 							Computed:            true,
 						},
 						"compile_settings": schema.StringAttribute{
@@ -113,11 +113,11 @@ func (d *AssemblyActionValidateDataSource) Schema(ctx context.Context, req datas
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

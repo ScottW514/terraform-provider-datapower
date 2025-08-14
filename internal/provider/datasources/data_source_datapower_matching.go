@@ -77,20 +77,20 @@ func (d *MatchingDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A descriptive summary for the configuration.",
 							Computed:            true,
 						},
 						"match_rules": schema.ListNestedAttribute{
-							MarkdownDescription: "Rules",
+							MarkdownDescription: "The rules in the matching rule.",
 							NestedObject:        models.DmMatchRuleDataSourceSchema,
 							Computed:            true,
 						},
 						"match_with_pcre": schema.BoolAttribute{
-							MarkdownDescription: "Match with PCRE",
+							MarkdownDescription: "Whether the evaluation uses shell style expressions or PCREs. This setting does not apply to XPath or HTTP method evaluations.",
 							Computed:            true,
 						},
 						"combine_with_or": schema.BoolAttribute{
-							MarkdownDescription: "Combine with Boolean OR",
+							MarkdownDescription: "<p>Whether to use Boolean OR or AND operations during evaluation.</p><ul><li>When enabled, combine with OR semantics. Only one match must evaluate to true for success.</li><li>When disabled, combine with AND semantics. All matches must evaluate to true for success.</li></ul>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

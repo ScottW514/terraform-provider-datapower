@@ -3,12 +3,12 @@
 page_title: "datapower_assemblyactionvalidate Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Validate assembly action
+  The validate assembly action validates JSON and XML payloads against a schema.
 ---
 
 # datapower_assemblyactionvalidate (Data Source)
 
-Validate assembly action
+The validate assembly action validates JSON and XML payloads against a schema.
 
 ## Example Usage
 
@@ -38,15 +38,15 @@ Optional:
 
 Read-Only:
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
 - `app_domain` (String) The name of the application domain the object belongs to
 - `compile_settings` (String) Compile settings
-- `correlation_path` (String) Correlation path
-- `definition` (String) Definition
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
+- `definition` (String) Specify the path to a schema in the API definition. Use the format <tt>#/definitions/mySchema</tt> or <tt>mySchema</tt> to specify a previously defined schema.
 - `error_policy` (String) GraphQL error policy
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `input` (String) Input message
-- `output` (String) Output message
+- `input` (String) Specify the variable in the API context that contains the data to validate. The content of the <tt>body</tt> field is the input to validate. The default variable is <tt>message</tt> .
+- `output` (String) <p>Specify the variable in the API context to store the results. For a JSON schema, adds any default values that are missing from the payload.</p><p>Without an output variable, the results are not stored. By default, no output variable is specified.</p><p>If the validation fails, no output is stored.</p>
 - `schema` (String) Schema
 - `title` (String) Title
 - `user_summary` (String) Comments

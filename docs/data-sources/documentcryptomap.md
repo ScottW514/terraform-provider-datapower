@@ -3,12 +3,12 @@
 page_title: "datapower_documentcryptomap Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Document Crypto Map
+  A Document Crypto Map indicates which elements, of a complete schema, to encrypt or decrypt. The indicated element or elements may also be signed.
 ---
 
 # datapower_documentcryptomap (Data Source)
 
-Document Crypto Map
+A Document Crypto Map indicates which elements, of a complete schema, to encrypt or decrypt. The indicated element or elements may also be signed.
 
 ## Example Usage
 
@@ -40,10 +40,10 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `name_space_mappings` (Attributes List) Namespace Mappings (see [below for nested schema](#nestedatt--result--name_space_mappings))
-- `operation` (String) Operation
+- `name_space_mappings` (Attributes List) The prefix and URI for namespaces that might be encountered in requests. (see [below for nested schema](#nestedatt--result--name_space_mappings))
+- `operation` (String) Select the operation to perform on the selected document nodes.
 - `user_summary` (String) Comments
-- `x_path` (List of String) XPath Expression
+- `x_path` (List of String) <p>Enter the XPath expression identifying the elements on which to operate in the blank field in front of the Add button. Click Add to add the expression to those included in the map.</p><p>Click the XPath Tool button to use the graphically oriented XPath Tool to construct the message. You will need to upload an example document to use this tool. Note that this example should be the encrypted document when the operation is decrypt.</p>
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

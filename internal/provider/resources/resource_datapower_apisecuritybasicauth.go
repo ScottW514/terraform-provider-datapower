@@ -54,7 +54,7 @@ func (r *APISecurityBasicAuthResource) Metadata(ctx context.Context, req resourc
 
 func (r *APISecurityBasicAuthResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API security basic authentication", "api-sec-basic-auth", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An API basic authentication security definition selects a user registry to authenticate accesses to the API. When you use basic authentication, API users must provide a valid username and password in the requests to access API operations that require basic authentication. <b>Note:</b> You cannot apply more than one basic authentication security definition to an API.", "api-sec-basic-auth", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *APISecurityBasicAuthResource) Schema(ctx context.Context, req resource.
 				Optional:            true,
 			},
 			"user_registry": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("User registry (reference to APIAuthenticationURLRegistry or APILDAPRegistry)", "user-registry", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API user registry configuration to authenticate API requests. The supported registries are API authentication URL and API LDAP registry.", "user-registry", "").String,
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

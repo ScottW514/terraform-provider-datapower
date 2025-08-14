@@ -3,13 +3,13 @@
 page_title: "datapower_ratelimitconfiguration Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Rate limit configuration
+  A rate limit configuration defines domain-scoped tuning parameters for the rate limit algorithm.
   CLI Alias: rate-limit-config
 ---
 
 # datapower_ratelimitconfiguration (Resource)
 
-Rate limit configuration
+A rate limit configuration defines domain-scoped tuning parameters for the rate limit algorithm.
   - CLI Alias: `rate-limit-config`
 
 ## Example Usage
@@ -30,7 +30,7 @@ resource "datapower_ratelimitconfiguration" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
 - `parameters` (Attributes List) Parameters

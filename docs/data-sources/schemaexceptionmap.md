@@ -3,12 +3,12 @@
 page_title: "datapower_schemaexceptionmap Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Schema Exception Map
+  This object describes exceptions to an XML Schema by identifying elements of the schema that may be encrypted in an instance document. When Schema Validation is performed on the document using this Exception Map, encrypted elements are considered valid when they appear in place of the specified elements.
 ---
 
 # datapower_schemaexceptionmap (Data Source)
 
-Schema Exception Map
+This object describes exceptions to an XML Schema by identifying elements of the schema that may be encrypted in an instance document. When Schema Validation is performed on the document using this Exception Map, encrypted elements are considered valid when they appear in place of the specified elements.
 
 ## Example Usage
 
@@ -40,8 +40,8 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `original_schema_url` (String) Original Schema URL
-- `schema_exception_rules` (Attributes List) Rules (see [below for nested schema](#nestedatt--result--schema_exception_rules))
+- `original_schema_url` (String) This is the location of the full original schema document. This is required. This may reside on or off the device.
+- `schema_exception_rules` (Attributes List) Rules describe what elements may be excepted from the schema validation when the Original Schema is used for Schema Validation. (see [below for nested schema](#nestedatt--result--schema_exception_rules))
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

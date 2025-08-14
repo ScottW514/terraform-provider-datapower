@@ -1,215 +1,254 @@
 name: WebAppRequest
-description: 'Web Request Profile'
-cli_alias: 'webapp-request-profile'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/WebAppRequest'
+description: The web request profile specifies various properties about the request
+  side of the transaction that must be satisfied.
+cli_alias: webapp-request-profile
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/WebAppRequest
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTest_WebAppRequest"'
-    test_expect_ds: '"AccTest_WebAppRequest"'
-    example: 'WebAppRequestName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: PolicyType
-    type: String
-    enum:
-      - 'pre-requisite'
-      - 'admission'
-    default: 'admission'
-    description: 'Style'
-    cli_alias: policy-type
-  - name: SSLPolicy
-    type: String
-    enum:
-      - 'allow'
-      - 'require'
-      - 'deny'
-    default: 'allow'
-    description: 'Allow SSL'
-    cli_alias: request-ssl-policy
-  - name: AAA
-    type: String
-    reference_to: AAAPolicy
-    description: 'AAA Policy'
-    cli_alias: aaa-policy
-  - name: SSKey
-    type: String
-    reference_to: CryptoSSKey
-    description: 'Shared Secret Key'
-    cli_alias: ss-key
-  - name: RateLimiter
-    type: String
-    reference_to: SimpleCountMonitor
-    description: 'Rate Limiting'
-    cli_alias: ratelimiter-policy
-  - name: ACL
-    type: String
-    reference_to: AccessControlList
-    description: 'Access Control List'
-    cli_alias: acl
-  - name: OKMethods
-    dm_type: DmHTTPRequestMethods
-    default: '0x000B'
-    description: 'Methods'
-    cli_alias: request-methods
-  - name: OKVersions
-    dm_type: DmHTTPVersionMask
-    default: '0x03'
-    description: 'Versions'
-    cli_alias: request-versions
-  - name: MinBodySize
-    type: Int64
-    description: 'Minimum Size'
-    cli_alias: request-body-min
-  - name: MaxBodySize
-    type: Int64
-    default: 128000000
-    description: 'Maximum Size'
-    cli_alias: request-body-max
-  - name: XMLPolicy
-    type: String
-    enum:
-      - 'nothing'
-      - 'xml'
-      - 'soap'
-    default: 'nothing'
-    description: 'XML Processing'
-    cli_alias: request-xml-policy
-  - name: XMLRule
-    type: String
-    reference_to: StylePolicyRule
-    description: 'XML Transformation Rule'
-    cli_alias: request-xml-rule
-  - name: NonXMLPolicy
-    type: String
-    enum:
-      - 'nothing'
-      - 'side'
-      - 'binary'
-    default: 'nothing'
-    description: 'Non-XML Processing'
-    cli_alias: request-nonxml-policy
-  - name: NonXMLRule
-    type: String
-    reference_to: StylePolicyRule
-    description: 'Non-XML Processing Rule'
-    cli_alias: request-nonxml-rule
-  - name: ErrorPolicy
-    type: String
-    reference_to: WebAppErrorHandlingPolicy
-    description: 'Error Policy'
-    cli_alias: error-policy-override
-  - name: SessionManagementProfile
-    type: String
-    reference_to: WebAppSessionPolicy
-    description: 'Session Policy'
-    cli_alias: session-policy
-  - name: HeaderGNVC
-    type: String
-    reference_to: NameValueProfile
-    description: 'Header Name-Value Profile'
-    cli_alias: request-header-profile
-  - name: UrlEncodedGNVC
-    type: String
-    reference_to: NameValueProfile
-    description: 'URL-Encoded Body Name-Value Profile'
-    cli_alias: request-body-profile
-  - name: QueryStringPolicy
-    type: String
-    enum:
-      - 'allow'
-      - 'require'
-      - 'deny'
-    default: 'allow'
-    description: 'Allow Query String'
-    cli_alias: request-qs-policy
-  - name: QueryStringGNVC
-    type: String
-    reference_to: NameValueProfile
-    description: 'QueryString Name-Value Profile'
-    cli_alias: request-qs-profile
-  - name: SQLInjection
-    type: Bool
-    default: false
-    description: 'SQL Injection Filter'
-    cli_alias: request-sql-policy
-  - name: MaxURISize
-    type: Int64
-    default: 1024
-    description: 'Maximum URI Length'
-    cli_alias: request-uri-max
-  - name: URIFilterUnicode
-    type: Bool
-    default: true
-    description: 'Filter Unicode'
-    cli_alias: request-uri-filter-unicode
-  - name: URIFilterDotDot
-    type: Bool
-    default: true
-    description: 'Filter Dot Dot'
-    cli_alias: request-uri-filter-dotdot
-  - name: URIFilterExe
-    type: Bool
-    default: true
-    description: 'Filter .exe'
-    cli_alias: request-uri-filter-exe
-  - name: URIFilterFragment
-    type: String
-    enum:
-      - 'allow'
-      - 'reject'
-      - 'truncate'
-    default: 'truncate'
-    description: 'Fragmented URI Policy'
-    cli_alias: request-uri-filter-fragment
-  - name: ContentTypes
-    type: List
-    element_type: String
-    list_default:
-      - 'application/www-url-encoded'
-    description: 'Content-Type List'
-    cli_alias: request-content-type
-  - name: MultipartFormData
-    dm_type: DmMultipartFormDataProfile
-    description: 'Multipart/Form-Data Profile'
-    cli_alias: multipart-form-data
-  - name: CookieProfile
-    dm_type: DmCookieProfile
-    description: 'Cookie Profile'
-    cli_alias: cookie-policy
-  - name: ProcessAllCookie
-    type: Bool
-    default: true
-    description: 'Sign or Encrypt All Cookies'
-    cli_alias: process-all-cookie
-  - name: CookieNameVector
-    type: List
-    element_type: String
-    description: 'Cookie Names'
-    cli_alias: cookie-namelist
-  - name: SQLInjectionPatternsFile
-    type: String
-    default: 'store:///SQL-Injection-Patterns.xml'
-    description: 'SQL Injection Patterns File'
-    cli_alias: sql-injection-patterns-file
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTest_WebAppRequest"'
+  test_expect_ds: '"AccTest_WebAppRequest"'
+  example: WebAppRequestName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: PolicyType
+  type: String
+  enum:
+  - pre-requisite
+  - admission
+  default: admission
+  description: Select the satisfaction policy for the profile. The default value is
+    Admission.
+  cli_alias: policy-type
+- name: SSLPolicy
+  type: String
+  enum:
+  - allow
+  - require
+  - deny
+  default: allow
+  description: Select how the client side of the inspected transaction handles SSL.
+    The default value is Allow.
+  cli_alias: request-ssl-policy
+- name: AAA
+  type: String
+  reference_to: AAAPolicy
+  description: If this property references a AAA policy, then that AAA policy will
+    be run as a filter on this transaction and the success of that AAA run will be
+    required to continue processing. Any input to this transaction as XML, application/www-url-encoded,
+    or multipart/form-data MIME types will be automatically provided to the AAA processing
+    policy.
+  cli_alias: aaa-policy
+- name: SSKey
+  type: String
+  reference_to: CryptoSSKey
+  description: Select the Shared Secret Key for both signing or encrypting.
+  cli_alias: ss-key
+- name: RateLimiter
+  type: String
+  reference_to: SimpleCountMonitor
+  description: A rate limiting policy restricts identities (as determined by AAA or
+    the client IP address if AAA is not available) to a specific number of transactions
+    per second.
+  cli_alias: ratelimiter-policy
+- name: ACL
+  type: String
+  reference_to: AccessControlList
+  description: This Access Control List will be used to allow or deny access to this
+    service based on the IP address of the client. When attached to a service, an
+    Access Control List (ACL) denies all access by default. To deny access to only
+    selected addresses, first grant access to all addresses (allow 0.0.0.0) and then
+    create deny entries for the desired hosts.
+  cli_alias: acl
+- name: OKMethods
+  dm_type: DmHTTPRequestMethods
+  default: '0x000B'
+  description: Specify which HTTP methods are acceptable from the client acceptable.
+  cli_alias: request-methods
+- name: OKVersions
+  dm_type: DmHTTPVersionMask
+  default: '0x03'
+  description: Specify which HTTP versions are acceptable from the client.
+  cli_alias: request-versions
+- name: MinBodySize
+  type: Int64
+  description: Specify the minimum size of the request body.
+  cli_alias: request-body-min
+- name: MaxBodySize
+  type: Int64
+  default: 128000000
+  description: Specify the maximum size of the request body.
+  cli_alias: request-body-max
+- name: XMLPolicy
+  type: String
+  enum:
+  - nothing
+  - xml
+  - soap
+  default: nothing
+  description: Specify how the device handles requests that contain an XML MIME type.
+  cli_alias: request-xml-policy
+- name: XMLRule
+  type: String
+  reference_to: StylePolicyRule
+  description: This is the transformation rule that is run when the request contains
+    an XML MIME type and the XML processing policy is set to XML or SOAP.
+  cli_alias: request-xml-rule
+- name: NonXMLPolicy
+  type: String
+  enum:
+  - nothing
+  - side
+  - binary
+  default: nothing
+  description: Specify how the device handles requests that do not contain an XML
+    MIME type.
+  cli_alias: request-nonxml-policy
+- name: NonXMLRule
+  type: String
+  reference_to: StylePolicyRule
+  description: This is the transformation rule that is run when the request does not
+    contain an XML MIME type and the Non-XML processing policy is set to binary or
+    side-effect.
+  cli_alias: request-nonxml-rule
+- name: ErrorPolicy
+  type: String
+  reference_to: WebAppErrorHandlingPolicy
+  description: If this request policy is violated the firewall error policy will be
+    invoked unless this more specific error policy is provided, in which case this
+    policy takes precedence.
+  cli_alias: error-policy-override
+- name: SessionManagementProfile
+  type: String
+  reference_to: WebAppSessionPolicy
+  description: The session management policy enforces the start pages acceptable for
+    requests that match this security profile. If no policy is referenced, any page
+    is an acceptable start page.
+  cli_alias: session-policy
+- name: HeaderGNVC
+  type: String
+  reference_to: NameValueProfile
+  description: The name-value profile allows you to specify what headers are expected,
+    what headers should be stripped, and what headers should be mapped to known values.
+    If no profile is specified, any header is allowed.
+  cli_alias: request-header-profile
+- name: UrlEncodedGNVC
+  type: String
+  reference_to: NameValueProfile
+  description: The name-value profile allows you to specify what form elements are
+    expected, what form elements should be stripped, and what form elements should
+    be mapped to known values. If no profile is specified, any set of pairs is allowed.
+  cli_alias: request-body-profile
+- name: QueryStringPolicy
+  type: String
+  enum:
+  - allow
+  - require
+  - deny
+  default: allow
+  description: Select how the client URL handles query strings. The default is Allow.
+  cli_alias: request-qs-policy
+- name: QueryStringGNVC
+  type: String
+  reference_to: NameValueProfile
+  description: The name-value profile for query-string. If not present, no profile
+    is enforced. The profile allows you to validate data members of the query string,
+    filter out unknown ones, or map certain names to known values.
+  cli_alias: request-qs-profile
+- name: SQLInjection
+  type: Bool
+  default: false
+  description: Data parameters from the query string, application/www-urlencoded requests,
+    and multipart/form-data requests will be passed through the standard SQL Injection
+    filter if this property is enabled.
+  cli_alias: request-sql-policy
+- name: MaxURISize
+  type: Int64
+  default: 1024
+  description: The URI may be no longer than the value specified here.
+  cli_alias: request-uri-max
+- name: URIFilterUnicode
+  type: Bool
+  default: true
+  description: If Unicode is detected in the URI and this property is enabled then
+    the transaction will be rejected
+  cli_alias: request-uri-filter-unicode
+- name: URIFilterDotDot
+  type: Bool
+  default: true
+  description: Filter Requests with .. in the URI after URI normalization
+  cli_alias: request-uri-filter-dotdot
+- name: URIFilterExe
+  type: Bool
+  default: true
+  description: Filter Requests with .exe in the URI after URI normalization
+  cli_alias: request-uri-filter-exe
+- name: URIFilterFragment
+  type: String
+  enum:
+  - allow
+  - reject
+  - truncate
+  default: truncate
+  description: 'Select how to handle URI fragments in requests. A URI fragment is
+    the portion of a URI after the # symbol. The default is Truncate'
+  cli_alias: request-uri-filter-fragment
+- name: ContentTypes
+  type: List
+  element_type: String
+  list_default:
+  - application/www-url-encoded
+  description: A list of PCRE regular expressions that indicate acceptable content-type
+    MIME headers on the request. If this list is empty, any content-type is acceptable.
+    If the request does not have a content type that will be represented as an empty
+    string for matching purposes. Requests without a body (GET, HEAD, and so forth)
+    are not subject to this constraint. An empty list will match all content types.
+  cli_alias: request-content-type
+- name: MultipartFormData
+  dm_type: DmMultipartFormDataProfile
+  description: Multipart/Form-Data Profile
+  cli_alias: multipart-form-data
+- name: CookieProfile
+  dm_type: DmCookieProfile
+  description: The cookie management profile allows you to specify validation profiles
+    for incoming cookies, whether cookies should be allowed at all, and the signature
+    and encryption policies for cookies.
+  cli_alias: cookie-policy
+- name: ProcessAllCookie
+  type: Bool
+  default: true
+  description: The process will sign or encrypt all cookies when enabled. The default
+    is enabled.
+  cli_alias: process-all-cookie
+- name: CookieNameVector
+  type: List
+  element_type: String
+  description: The list of cookies, by name, that the process signs and encrypts.
+  cli_alias: cookie-namelist
+- name: SQLInjectionPatternsFile
+  type: String
+  default: store:///SQL-Injection-Patterns.xml
+  description: The patterns file that the SQL injection filter uses.
+  cli_alias: sql-injection-patterns-file

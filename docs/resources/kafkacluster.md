@@ -3,13 +3,13 @@
 page_title: "datapower_kafkacluster Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Kafka Cluster
+  Define the Kafka cluster that is responsible for the messaging services. The Kafka cluster periodically monitors and polls topics. The Kafka cluster ensures that sent messages are directed to the correct response topic or are routed to another server.
   CLI Alias: kafka-cluster
 ---
 
 # datapower_kafkacluster (Resource)
 
-Kafka Cluster
+Define the Kafka cluster that is responsible for the messaging services. The Kafka cluster periodically monitors and polls topics. The Kafka cluster ensures that sent messages are directed to the correct response topic or are routed to another server.
   - CLI Alias: `kafka-cluster`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_kafkacluster" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `endpoint` (Attributes List) Endpoints
+- `endpoint` (Attributes List) Specify the endpoints for the bootstrap process. A bootstrap server uses a host name or IP address and a port to define an endpoint address. You can add multiple nondefault bootstrap servers. For failover capability, the endpoints must be members of the same cluster.
   - CLI Alias: `endpoint` (see [below for nested schema](#nestedatt--endpoint))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 
@@ -41,32 +41,32 @@ resource "datapower_kafkacluster" "test" {
 - `auto_retry` (Boolean) Automatic retry
   - CLI Alias: `auto-retry`
   - Default value: `true`
-- `autocommit` (Boolean) Autocommit
+- `autocommit` (Boolean) Specify whether to commit offsets at the defined interval or at process-completion. <ul><li>When enabled, commits offsets at the defined interval. The default interval is 5 seconds. To change the interval, set the <tt>auto.commit.interval.ms</tt> property.</li><li>When disabled, commits offsets at process-completion. You can use the batch size setting for the Kafka handle to define the number of messages to attempt to receive from the consumer.</li></ul>
   - CLI Alias: `autocommit`
   - Default value: `true`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `maximum_message_size` (Number) Max message size
+- `maximum_message_size` (Number) Specify the maximum message size in bytes. Enter a value in the range 0 - 1073741824. The default value is 1048576. A value of 0 disables the enforcement of a maximum message size.
   - CLI Alias: `maximum-message-size`
   - Range: `0`-`1073741824`
   - Default value: `1048576`
-- `memory_threshold` (Number) Memory threshold
+- `memory_threshold` (Number) Specify the maximum memory to allocate in bytes. Enter a value in the range 10485760 - 1073741824. The default value is 268435456.
   - CLI Alias: `memory-threshold`
   - Range: `10485760`-`1073741824`
   - Default value: `268435456`
 - `password_alias` (String) Password alias
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`
-- `property` (Attributes List) Properties
+- `property` (Attributes List) Specify extra property to configure the connection to the Kafka server. Use this property for each extra property that is required. Some properties are unsupported and will cause a configuration failure.
   - CLI Alias: `property` (see [below for nested schema](#nestedatt--property))
-- `protocol` (String) Protocol
+- `protocol` (String) Specify the transport protocol for the Kafka bootstrap connection. The selected protocol is used for the exchange of information between the Kafka server and the bootstrap server. By default, uses a non-encrypted transport.
   - CLI Alias: `protocol`
   - Choices: `plaintext`, `ssl`, `sasl_plaintext`, `sasl_ssl`
   - Default value: `plaintext`
-- `retry_interval` (Number) Retry interval
+- `retry_interval` (Number) Specify the interval between attempts to reestablish a connection in seconds. Enter a value in the range 1 - 65535. The default value is 10.
   - CLI Alias: `retry-interval`
   - Range: `1`-`65535`
   - Default value: `10`
-- `sasl_mechanism` (String) SASL mechanism
+- `sasl_mechanism` (String) Specify the Simple Authentication and Security Layer (SASL) mechanism to communicate with the Kafka cluster. By default, uses a clear text password.
   - CLI Alias: `sasl-mechanism`
   - Choices: `plain`, `scram-sha-256`, `scram-sha-512`
   - Default value: `plain`

@@ -56,7 +56,7 @@ func (r *CORSRuleResource) Metadata(ctx context.Context, req resource.MetadataRe
 
 func (r *CORSRuleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("CORS rule", "cors-rule", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A CORS rule defines allowed origins and other CORS properties.", "cors-rule", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,17 +85,17 @@ func (r *CORSRuleResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 			},
 			"allow_origin": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allowed origins", "allow-origin", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the accepted values for the <tt>Origin</tt> request header for cross-origin requests. This rule does not apply to a CORS request when the value for the <tt>Origin</tt> header does not match any value in the list.", "allow-origin", "").String,
 				ElementType:         types.StringType,
 				Required:            true,
 			},
 			"allow_credentials": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow credentials", "allow-credentials", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the CORS request returns the <tt>Access-Control-Allow-Credentials</tt> response header. By default, this header is not returned in response to a CORS request. When enabled, the CORS request returns this header with a value of <tt>true</tt> .", "allow-credentials", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"expose_headers":     models.GetDmCORSRuleExposeHeadersResourceSchema("Expose headers", "expose-headers", "", false),
+			"expose_headers":     models.GetDmCORSRuleExposeHeadersResourceSchema("Specify the values to append to the value of the <tt>Access-Control-Expose-Headers</tt> response header. When undefined, appends the gateway-predefined value.", "expose-headers", "", false),
 			"dependency_actions": actions.ActionsSchema,
 		},
 	}

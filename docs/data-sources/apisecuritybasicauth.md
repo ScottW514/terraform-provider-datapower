@@ -3,12 +3,12 @@
 page_title: "datapower_apisecuritybasicauth Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API security basic authentication
+  An API basic authentication security definition selects a user registry to authenticate accesses to the API. When you use basic authentication, API users must provide a valid username and password in the requests to access API operations that require basic authentication. Note: You cannot apply more than one basic authentication security definition to an API.
 ---
 
 # datapower_apisecuritybasicauth (Data Source)
 
-API security basic authentication
+An API basic authentication security definition selects a user registry to authenticate accesses to the API. When you use basic authentication, API users must provide a valid username and password in the requests to access API operations that require basic authentication. <b>Note:</b> You cannot apply more than one basic authentication security definition to an API.
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `user_registry` (String) User registry (reference to APIAuthenticationURLRegistry or APILDAPRegistry)
+- `user_registry` (String) Specify the API user registry configuration to authenticate API requests. The supported registries are API authentication URL and API LDAP registry.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

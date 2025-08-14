@@ -1,43 +1,46 @@
 name: URLRewritePolicy
-description: 'URL Rewrite Policy'
-cli_alias: 'urlrewrite'
-cmd_group: 'urlrewrite'
-rest_endpoint: '/mgmt/config/{domain}/URLRewritePolicy'
+description: Configure/Edit URL Rewrite Policies
+cli_alias: urlrewrite
+cmd_group: urlrewrite
+rest_endpoint: /mgmt/config/{domain}/URLRewritePolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestURLRewritePolicy"'
-    test_expect_ds: '"AccTest_URLRewritePolicy"'
-    example: 'URLRewritePolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Direction
-    type: String
-    enum:
-      - 'all'
-      - 'request'
-      - 'response'
-    default: 'all'
-    description: 'URL Rewrite Direction'
-    cli_alias: direction
-  - name: URLRewriteRule
-    type: List
-    element_type: DmURLRewriteRule
-    description: 'URL Rewrite Rule'
-    cli_alias: rule
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestURLRewritePolicy"'
+  test_expect_ds: '"AccTest_URLRewritePolicy"'
+  example: URLRewritePolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Direction
+  type: String
+  enum:
+  - all
+  - request
+  - response
+  default: all
+  description: Restricts the URL Rewrite Policy to a specified direction. Direction
+    is applied at the service object level and has no effect on policies used from
+    multistep or elsewhere.
+  cli_alias: direction
+- name: URLRewriteRule
+  type: List
+  element_type: DmURLRewriteRule
+  description: Add, edit, or delete a URL rewrite rule
+  cli_alias: rule

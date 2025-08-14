@@ -50,14 +50,14 @@ func (d *GatewayPeeringManagerDataSource) Metadata(_ context.Context, req dataso
 
 func (d *GatewayPeeringManagerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Gateway-peering manager",
+		MarkdownDescription: "<p>The gateway-peering manager defines the gateway-peering instances that store data for synchronization across a peer group. With the gateway-peering manager, you specify the gateway-peering instance to use the feature-specific data store. The gateway-peering instance are for API rate limits, API subscribers, API probe data, and the GatweayScript <tt>ratelimit</tt> module.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
 				Required:            true,
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{

@@ -55,7 +55,7 @@ func (r *DomainSettingsResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *DomainSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Domain settings", "domain-settings", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Domain settings provide properties to define domain-specific characteristics when you save changes to the persisted configuration.", "domain-settings", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -69,7 +69,7 @@ func (r *DomainSettingsResource) Schema(ctx context.Context, req resource.Schema
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),

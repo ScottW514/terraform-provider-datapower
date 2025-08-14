@@ -54,7 +54,7 @@ func (r *MCFXPathResource) Metadata(ctx context.Context, req resource.MetadataRe
 
 func (r *MCFXPathResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("XPath Message Content Filter", "mcf-xpath", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Filter based on specific data in the message. An XPath expression defines a data element to be matched in the request message.", "mcf-xpath", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

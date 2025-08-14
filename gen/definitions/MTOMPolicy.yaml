@@ -1,51 +1,71 @@
 name: MTOMPolicy
-description: 'MTOM Policy'
-cli_alias: 'mtom'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/MTOMPolicy'
+description: An MTOM policy provides a mechanism for optimizing the transmission and
+  wire format of an XML/SOAP message. Optimization is performed by selecting elements
+  with base64-encoded character data. The selected elements are decoded and attached
+  as MIME attachment parts before transmission. Decoding before transmission reduces
+  the overhead that is associated with base64-encoded data.
+cli_alias: mtom
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/MTOMPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestMTOMPolicy"'
-    test_expect_ds: '"AccTest_MTOMPolicy"'
-    example: 'MTOMPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Mode
-    type: String
-    enum:
-      - 'encode'
-      - 'decode'
-    default: 'encode'
-    description: 'MTOM Mode'
-    cli_alias: mode
-  - name: IncludeContentType
-    type: Bool
-    default: true
-    description: 'Include Content Type'
-    cli_alias: include-content-type
-  - name: Rule
-    type: List
-    element_type: DmMtomRule
-    description: 'MTOM Rules'
-    cli_alias: rule
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestMTOMPolicy"'
+  test_expect_ds: '"AccTest_MTOMPolicy"'
+  example: MTOMPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Mode
+  type: String
+  enum:
+  - encode
+  - decode
+  default: encode
+  description: Specify the optimization mode. <p>The encode option optimizes (serializes)
+    input messages. For serialization, provide an XPath expression or a list of XPath
+    expressions to identify the content to extract. Optionally, per XPath expression,
+    exercise control over the Content Type and Content ID values. These two values
+    can be determined automatically using the xmlmime:contentType declaration and
+    namespace declaration.</p><p>The decode option decodes (deserializes) attachment
+    parts of an optimized message. Deserialization, by default, reassembles the original
+    infoset, which results in either a SOAP document or MIME document depending on
+    whether all attachments were referenced by &lt;Include/> elements. Optionally,
+    you can specify a Content ID to select individual attachment parts to reassemble.</p>
+  cli_alias: mode
+- name: IncludeContentType
+  type: Bool
+  default: true
+  description: <p>Select whether to include the xmlmine:contentType declaration in
+    output messages when the input message does not contain this declaration. If the
+    input message contains this declaration, the MTOM policy passes through the attribute
+    regardless of the setting for this property.</p><ul><li>Select "on", the default
+    value, to add the contentType declaration to the output message.</li><li>Select
+    "off" to not add the contentType declaration to the output message.</li></ul>
+  cli_alias: include-content-type
+- name: Rule
+  type: List
+  element_type: DmMtomRule
+  description: Each MTOM rule describes which message elements to optimize. A single
+    XPath expression selects one or more elements for optimization.
+  cli_alias: rule

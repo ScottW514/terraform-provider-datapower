@@ -3,13 +3,13 @@
 page_title: "datapower_luna Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SafeNet Luna HSM (default domain only)
+  You can use a network-attached SafeNet Luna Network HSM appliance as the HSM to provide secure storage for RSA keys and accelerate RSA operations remotely. The configuration of the Luna HSM sets up the connection with the Luna HSM.
   CLI Alias: luna
 ---
 
 # datapower_luna (Resource)
 
-SafeNet Luna HSM (`default` domain only)
+You can use a network-attached SafeNet Luna Network HSM appliance as the HSM to provide secure storage for RSA keys and accelerate RSA operations remotely. The configuration of the Luna HSM sets up the connection with the Luna HSM.
   - CLI Alias: `luna`
 
 ## Example Usage
@@ -37,7 +37,7 @@ resource "datapower_luna" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `security_option` (String) Security option
+- `security_option` (String) Specify the security option for connection.
   - CLI Alias: `option`
   - Choices: `none`, `htl`
   - Default value: `none`

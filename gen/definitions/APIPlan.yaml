@@ -1,153 +1,195 @@
 name: APIPlan
-description: 'API plan'
-cli_alias: 'api-plan'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APIPlan'
+description: An API plan packages a list of APIs to expose. An API is not exposed
+  unless you add the API to a plan. When you configure an API plan, define the rate
+  limit schemes to enforce against APIs. By default, the rate limit scheme in the
+  plan applies to all operations. You can override plan-level rate limit schemes with
+  operation-specific rate limit schemes.
+cli_alias: api-plan
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APIPlan
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPIPlan"'
-    test_expect_ds: '"AccTest_APIPlan"'
-    example: 'APIPlanName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Name
-    type: String
-    description: 'Plan name'
-    cli_alias: name
-  - name: ProductID
-    type: String
-    description: 'Product ID'
-    cli_alias: product-id
-  - name: ProductName
-    type: String
-    description: 'Product name'
-    cli_alias: product-name
-  - name: ProductVersion
-    type: String
-    default: '1.0.0'
-    description: 'Product version'
-    cli_alias: product-version
-  - name: ProductTitle
-    type: String
-    description: 'Product title'
-    cli_alias: product-title
-  - name: UseRateLimitGroup
-    type: Bool
-    default: false
-    description: 'Use rate limit group'
-    cli_alias: use-rate-limit-group
-  - name: RateLimit
-    type: List
-    element_type: DmAPIRateLimit
-    description: 'Rate limit'
-    cli_alias: rate-limit
-  - name: BurstLimit
-    type: List
-    element_type: DmAPIBurstLimit
-    description: 'Burst limit'
-    cli_alias: burst-limit
-  - name: RateLimitGroup
-    type: String
-    reference_to: RateLimitDefinitionGroup
-    description: 'Rate limit group'
-    cli_alias: rate-limit-group
-  - name: UseLimitDefinitions
-    type: Bool
-    default: false
-    description: 'Use limit definitions'
-    cli_alias: use-definitions
-  - name: AssemblyBurstLimit
-    type: List
-    element_type: DmAPIBurstLimit
-    description: 'Assembly burst limit'
-    cli_alias: assembly-burst-limit
-  - name: AssemblyBurstLimitDefinition
-    type: List
-    element_type: DmDefinitionLink
-    description: 'Assembly burst limit definition'
-    cli_alias: assembly-burst-limit-def
-  - name: AssemblyRateLimit
-    type: List
-    element_type: DmAPIRateLimit
-    description: 'Assembly rate limit'
-    cli_alias: assembly-rate-limit
-  - name: AssemblyRateLimitDefinition
-    type: List
-    element_type: DmDefinitionLink
-    description: 'Assembly rate limit definition'
-    cli_alias: assembly-rate-limit-def
-  - name: AssemblyCountLimit
-    type: List
-    element_type: DmAPICountLimit
-    description: 'Assembly count limit'
-    cli_alias: assembly-count-limit
-  - name: AssemblyCountLimitDefinition
-    type: List
-    element_type: DmDefinitionLink
-    description: 'Assembly count limit definition'
-    cli_alias: assembly-count-limit-def
-  - name: SpaceID
-    type: String
-    description: 'Space ID'
-    cli_alias: space-id
-  - name: SpaceName
-    type: String
-    description: 'Space name'
-    cli_alias: space-name
-  - name: API
-    type: List
-    reference_to: APIDefinition
-    element_type: String
-    required: true
-    test_value: '["AccTest_APIDefinition"]'
-    test_bed_value: '[datapower_apidefinition.acc_test.id]'
-    description: 'API'
-    cli_alias: api
-  - name: ExcludeOperation
-    type: List
-    reference_to: APIOperation
-    element_type: String
-    description: 'Exclude operation'
-    cli_alias: exclude
-  - name: Override
-    type: List
-    reference_to: OperationRateLimit
-    element_type: String
-    description: 'Operation rate limit'
-    cli_alias: override
-  - name: RateLimitScope
-    type: String
-    enum:
-      - 'per-application'
-      - 'per-client-id'
-    required: true
-    default: 'per-application'
-    description: 'Rate limit scope'
-    cli_alias: rate-limit-scope
-  - name: GraphQLSchemaOptions
-    type: List
-    reference_to: GraphQLSchemaOptions
-    element_type: String
-    description: 'GraphQL schema options'
-    cli_alias: graphql-schema-options
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPIPlan"'
+  test_expect_ds: '"AccTest_APIPlan"'
+  example: APIPlanName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Name
+  type: String
+  description: Plan name
+  cli_alias: name
+- name: ProductID
+  type: String
+  description: Specify the product ID for the plan. A product makes a set of APIs
+    and plans into one offering to make available to API developers.
+  cli_alias: product-id
+- name: ProductName
+  type: String
+  description: Product name
+  cli_alias: product-name
+- name: ProductVersion
+  type: String
+  default: 1.0.0
+  description: Product version
+  cli_alias: product-version
+- name: ProductTitle
+  type: String
+  description: Product title
+  cli_alias: product-title
+- name: UseRateLimitGroup
+  type: Bool
+  default: false
+  description: Use rate limit group
+  cli_alias: use-rate-limit-group
+- name: RateLimit
+  type: List
+  element_type: DmAPIRateLimit
+  description: Specify the rate limit scheme to enforce. This scheme defines the maximum
+    rate to allow during a specified interval and the actions to take when the limit
+    is exceeded.
+  cli_alias: rate-limit
+- name: BurstLimit
+  type: List
+  element_type: DmAPIBurstLimit
+  description: Specify the burst limit scheme to enforce. This scheme defines the
+    maximum burst rate to allow during a specified interval. The burst limit helps
+    to prevent spikes that might damage the infrastructure. When a message arrives
+    within an interval, the burst limit takes priority over the rate limit. In other
+    words, a message is first checked against the burst limit scheme and then against
+    the rate limit scheme.
+  cli_alias: burst-limit
+- name: RateLimitGroup
+  type: String
+  reference_to: RateLimitDefinitionGroup
+  description: Rate limit group
+  cli_alias: rate-limit-group
+- name: UseLimitDefinitions
+  type: Bool
+  default: false
+  description: Use limit definitions
+  cli_alias: use-definitions
+- name: AssemblyBurstLimit
+  type: List
+  element_type: DmAPIBurstLimit
+  description: Specify the burst limit scheme that the rate limit assembly action
+    enforces. This scheme defines the maximum burst rate to allow during a specified
+    interval. This scheme helps to prevent spikes that might damage the infrastructure.
+    When a message arrives within an interval, the burst limit takes priority over
+    the rate limit. In other words, a message is first checked against the burst limit
+    scheme and then against the rate limit scheme.
+  cli_alias: assembly-burst-limit
+- name: AssemblyBurstLimitDefinition
+  type: List
+  element_type: DmDefinitionLink
+  description: Specify a burst limit definition that the rate limit assembly action
+    enforces. A burst limit definition defines the maximum burst rate to allow during
+    a specified interval. This scheme helps to prevent spikes that might damage infrastructure.
+    When a message arrives within an interval, the burst limit takes priority over
+    the rate limit. A message is first checked against the burst limit scheme and
+    then against the rate limit scheme.
+  cli_alias: assembly-burst-limit-def
+- name: AssemblyRateLimit
+  type: List
+  element_type: DmAPIRateLimit
+  description: Specify the rate limit scheme that the rate limit assembly action enforces.
+    This scheme defines the maximum rate to allow during a specified interval and
+    the actions to take when the limit is exceeded.
+  cli_alias: assembly-rate-limit
+- name: AssemblyRateLimitDefinition
+  type: List
+  element_type: DmDefinitionLink
+  description: Specify a rate limit definition that the rate limit assembly action
+    enforces. A rate limit definition defines the maximum rate that is allowed in
+    a specified interval and the actions to take when the limit is exceeded.
+  cli_alias: assembly-rate-limit-def
+- name: AssemblyCountLimit
+  type: List
+  element_type: DmAPICountLimit
+  description: Specify the count limit scheme that the rate limit assembly action
+    enforces. This scheme defines the maximum count to allow and the actions to take
+    when the limit is exceeded.
+  cli_alias: assembly-count-limit
+- name: AssemblyCountLimitDefinition
+  type: List
+  element_type: DmDefinitionLink
+  description: Specify a count limit definition that the rate limit assembly action
+    enforces. A count limit definition defines the maximum count that is allowed and
+    the actions to take when the limit is exceeded.
+  cli_alias: assembly-count-limit-def
+- name: SpaceID
+  type: String
+  description: Specify the space ID for the product in the catalog. When space is
+    enabled for a catalog, the catalog can be partitioned to spaces. Spaces enable
+    each team to manage their APIs independently.
+  cli_alias: space-id
+- name: SpaceName
+  type: String
+  description: Specify the space name for the product in the catalog. When space is
+    enabled for a catalog, the catalog can be partitioned to spaces. Spaces enable
+    each team to manage their APIs independently.
+  cli_alias: space-name
+- name: API
+  type: List
+  reference_to: APIDefinition
+  element_type: String
+  required: true
+  test_value: '["AccTest_APIDefinition"]'
+  test_bed_value: '[datapower_apidefinition.acc_test.id]'
+  description: Specify the APIs to package for the plan. An API is exposed through
+    a plan by associating the API to the plan.
+  cli_alias: api
+- name: ExcludeOperation
+  type: List
+  reference_to: APIOperation
+  element_type: String
+  description: Exclude operation
+  cli_alias: exclude
+- name: Override
+  type: List
+  reference_to: OperationRateLimit
+  element_type: String
+  description: Operation rate limit
+  cli_alias: override
+- name: RateLimitScope
+  type: String
+  enum:
+  - per-application
+  - per-client-id
+  required: true
+  default: per-application
+  description: Specify the scope to apply the rate limit schemes to. You can apply
+    schemes against the application or client ID. For example, <tt>application1</tt>
+    has <tt>client1</tt> and <tt>client2</tt> , and the rate limit is 10 calls per
+    hour. <ul><li>When against the application, <tt>application1</tt> limits 10 calls
+    per hour from either <tt>client1</tt> or <tt>client2.</tt></li><li>When against
+    the client ID, <tt>application1</tt> limits 10 calls per hour from each <tt>client1</tt>
+    and <tt>client2</tt> .</li></ul>
+  cli_alias: rate-limit-scope
+- name: GraphQLSchemaOptions
+  type: List
+  reference_to: GraphQLSchemaOptions
+  element_type: String
+  description: GraphQL schema options
+  cli_alias: graphql-schema-options

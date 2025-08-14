@@ -57,7 +57,7 @@ func (d *AssemblyActionGatewayScriptDataSource) Metadata(_ context.Context, req 
 
 func (d *AssemblyActionGatewayScriptDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "GatewayScript assembly action",
+		MarkdownDescription: "The GatewayScript assembly action runs a GatewayScript file. This action is not supported in IBM Cloud. Any assembly that includes this action fails.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,7 +77,7 @@ func (d *AssemblyActionGatewayScriptDataSource) Schema(ctx context.Context, req 
 							Computed:            true,
 						},
 						"source": schema.StringAttribute{
-							MarkdownDescription: "GatewayScript file",
+							MarkdownDescription: "Specify the name and location of the GatewayScript file to process. <p>You can specify the location with a URL or by referencing the variable in the API context with the <tt>$(variable)</tt> format, such as <tt>$(request.headers.URL)</tt> .</p><p>The URL must start with <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt> . For example, <tt>local:///test.js</tt> .</p>",
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
@@ -89,11 +89,11 @@ func (d *AssemblyActionGatewayScriptDataSource) Schema(ctx context.Context, req 
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

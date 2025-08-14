@@ -54,7 +54,7 @@ func (r *XPathRoutingMapResource) Metadata(ctx context.Context, req resource.Met
 
 func (r *XPathRoutingMapResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("XPath Routing Map", "xpath-routing", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>An XPath Routing Map matches XPath expressions with corresponding destination URLs. When the XPath expression evaluates to true when applied to the message submitted, the target destination for the message is set to the corresponding URL.</p><p>Use the Rules tab to establish these mappings. Use the Namespace Mapping tab to determine Namespace URIs for namespaces used in the XPath Expressions.</p>", "xpath-routing", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *XPathRoutingMapResource) Schema(ctx context.Context, req resource.Schem
 				Required:            true,
 			},
 			"name_space_mappings": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Namespace Mappings", "namespace-mapping", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The prefix and URI for namespaces that might be encountered in requests.", "namespace-mapping", "").String,
 				NestedObject:        models.DmNamespaceMappingResourceSchema,
 				Optional:            true,
 			},

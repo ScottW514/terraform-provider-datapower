@@ -55,7 +55,7 @@ func (r *CryptoIdentCredResource) Metadata(ctx context.Context, req resource.Met
 
 func (r *CryptoIdentCredResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Identification credentials", "idcred", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Identification credentials consist of a key and a certificate. Identification credentials identify the matched public key cryptography to the public and private keys that an object uses for TLS authentication. You use identification credentials for document encryption, document decryption, and digital signature operations.", "idcred", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -88,7 +88,7 @@ func (r *CryptoIdentCredResource) Schema(ctx context.Context, req resource.Schem
 				Required:            true,
 			},
 			"ca": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Intermediate CA certificates", "ca", "cryptocertificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list to manage intermediate certificates. Intermediate certificate authority (CA) certificates might be necessary when the CA that is signing this certificate is not widely recognized. If the intermediate CA certificate is also signed by a less recognized CA, another intermediate CA certificate might be necessary for that CA. You can specify up to 10 intermediate certificates. <p>If necessary, use the list of available certificate aliases to establish a verifiable trust chain. A trust chain consists of one or more CA certificates. A trust chain provides a linked path from certificates in the identification credentials to a CA that is trusted by a remote DataPower&#174; Gateway. The trust chain enables the DataPower Gateway to authenticate the certificate.</p>", "ca", "cryptocertificate").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

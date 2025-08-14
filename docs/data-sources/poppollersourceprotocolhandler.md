@@ -3,12 +3,12 @@
 page_title: "datapower_poppollersourceprotocolhandler Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  POP poller handler
+  The Post Office Protocol (POP) handler manages the polling of a mailbox on a mail server. The mailbox receives mail messages from external partners. The handler retrieves and deletes mail messages on each polling cycle. Each mail message that The handler retrieves results in one transaction.
 ---
 
 # datapower_poppollersourceprotocolhandler (Data Source)
 
-POP poller handler
+The Post Office Protocol (POP) handler manages the polling of a mailbox on a mail server. The mailbox receives mail messages from external partners. The handler retrieves and deletes mail messages on each polling cycle. Each mail message that The handler retrieves results in one transaction.
 
 ## Example Usage
 
@@ -38,18 +38,18 @@ Optional:
 
 Read-Only:
 
-- `account` (String) Account name
+- `account` (String) The name to access the mailbox on the server; for example, user@example.com.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `auth_method` (String) Authentication method
-- `conn_security` (String) Connection security
-- `delay_between_polls` (Number) Delay between polls
+- `auth_method` (String) The type of authentication to use. If authentication fails, no connection is made.
+- `conn_security` (String)
+- `delay_between_polls` (Number) Specify the interval in seconds between polling sequences. A <em>polling sequence</em> is the time to retrieve the messages plus the time to complete their processing. Enter a value in the range 1 - 65535. The default value is 300. <p><b>Note:</b> Some mail servers restrict the number of times an account can establish a connection during a specific time period. Ensure that the configured interval complies with any restriction.</p>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `mail_server` (String) Mail server
-- `max_messages_per_poll` (Number) Max messages per poll
-- `password_alias` (String) Password alias
-- `port` (Number) Port
-- `ssl_client` (String) TLS client profile
-- `ssl_client_config_type` (String) TLS client type
+- `mail_server` (String) The host name or IP address of the mail server.
+- `max_messages_per_poll` (Number) Specify the maximum number of messages to retrieve in each polling cycle. Enter a value in the range 1 - 100. The default value is 5.
+- `password_alias` (String) The password alias of the password for the account that accesses the mailbox on the server.
+- `port` (Number) The listening port on the mail server. STARTTLS negotiation and an unsecured connection generally use port 110. An implicit, secured connection generally uses port 995.
+- `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
+- `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

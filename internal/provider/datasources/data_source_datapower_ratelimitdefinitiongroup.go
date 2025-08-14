@@ -57,7 +57,7 @@ func (d *RateLimitDefinitionGroupDataSource) Metadata(_ context.Context, req dat
 
 func (d *RateLimitDefinitionGroupDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Rate limit definition group",
+		MarkdownDescription: "A rate limit definition group contains a list of rate limit definitions to enforce.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

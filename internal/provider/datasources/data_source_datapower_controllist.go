@@ -57,7 +57,7 @@ func (d *ControlListDataSource) Metadata(_ context.Context, req datasource.Metad
 
 func (d *ControlListDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Control List",
+		MarkdownDescription: "<p>A control list uses a value-matching pattern to determine whether values are on the allowlist or blocklist.</p><p>The value-matching pattern is defined by a PCRE. When you define the control list, you can indicates whether evaluation is case-sensitive or case-insensitive.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,20 +77,20 @@ func (d *ControlListDataSource) Schema(ctx context.Context, req datasource.Schem
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A descriptive summary for the configuration.",
 							Computed:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: "Type",
+							MarkdownDescription: "Specifies whether values are accepted or rejected.",
 							Computed:            true,
 						},
 						"value": schema.ListAttribute{
-							MarkdownDescription: "Value",
+							MarkdownDescription: "<p>Specifies the PCRE to evaluate values.</p><ul><li>An entry of <tt>^foo</tt> indicates a match against only values that start with <tt>foo</tt> .</li><li>An empty list indicates no match against any value.</li><li>A list with only <tt>.*</tt> indicates a match against all values.</li></ul>",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"case_insensitive": schema.BoolAttribute{
-							MarkdownDescription: "Case-insensitive",
+							MarkdownDescription: "Indicates whether the specified values are case-sensitive or case-insensitive.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

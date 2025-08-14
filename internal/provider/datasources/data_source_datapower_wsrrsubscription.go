@@ -57,7 +57,7 @@ func (d *WSRRSubscriptionDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *WSRRSubscriptionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "WSRR subscription",
+		MarkdownDescription: "The WSRR (WebSphere Service Registry and Repository) subscription is useful when you want to deploy web services with a direct reference to a service document. The configuration references a WSRR server, the name of the WSRR resource, and its namespace. If more than one version of the service document exists, you must specify the version to reference. <p>The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *WSRRSubscriptionDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"namespace": schema.StringAttribute{
-							MarkdownDescription: "Namespace",
+							MarkdownDescription: "Specify the namespace to unambiguously identify the WSRR resource. This property is used with the object name.",
 							Computed:            true,
 						},
 						"object_type": schema.StringAttribute{
@@ -89,7 +89,7 @@ func (d *WSRRSubscriptionDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"object_name": schema.StringAttribute{
-							MarkdownDescription: "Object name",
+							MarkdownDescription: "Specify the object name to unambiguously identify the WSRR resource. This property is used with the namespace.",
 							Computed:            true,
 						},
 						"method": schema.StringAttribute{
@@ -97,11 +97,11 @@ func (d *WSRRSubscriptionDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"refresh_interval": schema.Int64Attribute{
-							MarkdownDescription: "Refresh interval",
+							MarkdownDescription: "Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.",
 							Computed:            true,
 						},
 						"use_version": schema.BoolAttribute{
-							MarkdownDescription: "Use object version",
+							MarkdownDescription: "Specify whether to query the registry for a specific object version. Set this property when the registry contains more than one version of an object.",
 							Computed:            true,
 						},
 						"object_version": schema.StringAttribute{
@@ -109,7 +109,7 @@ func (d *WSRRSubscriptionDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"fetch_policy_attachments": schema.BoolAttribute{
-							MarkdownDescription: "Fetch policy attachments",
+							MarkdownDescription: "Specify whether to fetch external policy attachments. When enabled, the registry is queried for external policy attachments for retrieved resources. These policies are processed when the service allow external policy attachments.",
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

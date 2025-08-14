@@ -1,98 +1,138 @@
 name: AssemblyActionClientSecurity
-description: 'Client security assembly action'
-cli_alias: 'assembly-client-security'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/AssemblyActionClientSecurity'
+description: Client security assembly action
+cli_alias: assembly-client-security
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/AssemblyActionClientSecurity
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAssemblyActionClientSecurity"'
-    test_expect_ds: '"AccTest_AssemblyActionClientSecurity"'
-    example: 'AssemblyActionClientSecurityName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: StopOnError
-    type: Bool
-    default: true
-    description: 'Stop on error'
-    cli_alias: stop-on-error
-  - name: SecretRequired
-    type: Bool
-    default: true
-    description: 'Secret required'
-    cli_alias: secret-required
-  - name: ExtractCredentialMethod
-    type: String
-    enum:
-      - 'header'
-      - 'query'
-      - 'form'
-      - 'cookie'
-      - 'http'
-      - 'context-var'
-    default: 'header'
-    description: 'Credentials extraction method'
-    cli_alias: extract-credential-method
-  - name: IdName
-    type: String
-    description: 'ID name'
-    test_value: '"idname"'
-    cli_alias: id-name
-  - name: SecretName
-    type: String
-    description: 'Secret name'
-    test_value: '"secretname"'
-    cli_alias: secret-name
-  - name: HTTPType
-    type: String
-    enum:
-      - 'basic'
-    default: 'basic'
-    description: 'HTTP type'
-    cli_alias: http-type
-  - name: AuthenticateClientMethod
-    type: String
-    enum:
-      - 'native'
-      - 'third-party'
-    required: true
-    default: 'native'
-    description: 'Authenticate client method'
-    cli_alias: client-auth-method
-  - name: UserRegistry
-    type: String
-    description: 'User registry'
-    cli_alias: user-registry
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: CorrelationPath
-    type: String
-    description: 'Correlation path'
-    cli_alias: correlation-path
-  - name: ActionDebug
-    type: Bool
-    default: false
-    description: 'Enable debugging'
-    cli_alias: debug
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAssemblyActionClientSecurity"'
+  test_expect_ds: '"AccTest_AssemblyActionClientSecurity"'
+  example: AssemblyActionClientSecurityName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: StopOnError
+  type: Bool
+  default: true
+  description: Specify whether to stop processing if client security fails. If failed,
+    stops the assembly and return an error.
+  cli_alias: stop-on-error
+- name: SecretRequired
+  type: Bool
+  default: true
+  description: Specify whether to require the client secret. When required, the secret
+    is compared to the registered secret on the application that is identified by
+    the client ID.
+  cli_alias: secret-required
+- name: ExtractCredentialMethod
+  type: String
+  enum:
+  - header
+  - query
+  - form
+  - cookie
+  - http
+  - context-var
+  default: header
+  description: <p>Specify the method to extract client credentials from the request.</p><ul><li>For
+    all methods except HTTP, use the ID name and the secret name to specify the locations
+    that contains the ID and the location that contain the secret. <ul><li>When cookie,
+    specify which cookie.</li><li>When context variable, specify which runtime context
+    variable.</li><li>When form data, specify the form data.</li><li>When header,
+    specify which header.</li><li>When query parameter, specify which query parameter.</li></ul></li><li>For
+    the HTTP method, use the HTTP type to specify the format of the <tt>Authorization</tt>
+    header, which expects the basic form in the <tt>Basic <i>base64_id:secret</i></tt>
+    format.</li></ul>
+  cli_alias: extract-credential-method
+- name: IdName
+  type: String
+  description: <p>Specify the location where to find the client ID to extract.</p><ul><li>When
+    cookie, specify which cookie.</li><li>When context variable, specify which runtime
+    context variable.</li><li>When form data, specify the form data.</li><li>When
+    header, specify which header.</li><li>When query parameter, specify which query
+    parameter.</li></ul>
+  test_value: '"idname"'
+  cli_alias: id-name
+- name: SecretName
+  type: String
+  description: <p>Specify the location where to find the secret to extract.</p><ul><li>When
+    cookie, specify which cookie.</li><li>When context variable, specify which runtime
+    context variable.</li><li>When form data, specify the form data.</li><li>When
+    header, specify which header.</li><li>When query parameter, specify which query
+    parameter.</li></ul>
+  test_value: '"secretname"'
+  cli_alias: secret-name
+- name: HTTPType
+  type: String
+  enum:
+  - basic
+  default: basic
+  description: HTTP type
+  cli_alias: http-type
+- name: AuthenticateClientMethod
+  type: String
+  enum:
+  - native
+  - third-party
+  required: true
+  default: native
+  description: Specify the method to authenticate the extracted client credentials.
+    When third-party, specify the user-registry to authenticate the extracted client
+    credentials.
+  cli_alias: client-auth-method
+- name: UserRegistry
+  type: String
+  description: Specify the API registry to authenticate the extracted client credentials.
+    The supported registries are API authentication URL and API LDAP.
+  cli_alias: user-registry
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Title
+  type: String
+  description: Title
+  cli_alias: title
+- name: CorrelationPath
+  type: String
+  description: Specify the path that correlates the API action to a specific part
+    of the API specification. The correlation path specifies the part of the API definition
+    that correlates with the API action. This path is exposed in the debug data by
+    the API gateway for use by debugging tools. For example, for an API configuration
+    that is retrieved from API Connect and specified in an OpenAPI document with IBM
+    extensions, this path is the JSON path to the assembly policy in the IBM extensions
+    section of the document. The path can be expressed in any form that the debugging
+    tool can correlate to the API definition.
+  cli_alias: correlation-path
+- name: ActionDebug
+  type: Bool
+  default: false
+  description: <p>Specify whether to enable the GatewayScript debugger to troubleshoot
+    the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript
+    file that is called from the GatewayScript assembly action.</li><li>Troubleshoot
+    a GatewayScript file that is called from an XSLT assembly action that uses the
+    <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript
+    script that is called through the <tt>value</tt> or <tt>default</tt> property
+    in the JSON file from the map assembly action.</li></ul><p>To debug a file or
+    script, the following conditions must be met.</p><ul><li>The file contains one
+    or more <tt>debugger;</tt> statements at the points in your script where you want
+    to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You
+    run the <tt>debug-action</tt> command.</p>
+  cli_alias: debug

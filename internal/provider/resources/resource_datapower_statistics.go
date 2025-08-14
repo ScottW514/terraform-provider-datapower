@@ -56,7 +56,7 @@ func (r *StatisticsResource) Metadata(ctx context.Context, req resource.Metadata
 
 func (r *StatisticsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Statistic settings", "statistics", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Manages whether the system collects and presents statistics to help you determine whether the system correctly processes the transactions.", "statistics", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -70,13 +70,13 @@ func (r *StatisticsResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"load_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Load interval (can only be set in `default` domain)", "load-interval", "").AddIntegerRange(500, 5000).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the measurement interval for load estimation in milliseconds. Enter a value in the range 500 - 5000. The default value is 1000. During this interval, the system load reported by the <tt>show load</tt> command is estimated and expressed as a percentage. <p><b>Note:</b> You can modify this property in only the <tt>default</tt> domain. In application domains, this property is read-only.</p>", "load-interval", "").AddIntegerRange(500, 5000).AddDefaultValue("1000").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

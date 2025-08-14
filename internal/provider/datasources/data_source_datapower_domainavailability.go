@@ -50,14 +50,14 @@ func (d *DomainAvailabilityDataSource) Metadata(_ context.Context, req datasourc
 
 func (d *DomainAvailabilityDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Domain availability (updates restart domain)",
+		MarkdownDescription: "Domain availability monitors each multiprotocol gateway and web service proxy in the domain. When the operational state of any service in the domain is in the down state, the operational state for domain availability is down to indicate that these services are not ready to accept traffic. At startup, domain availability maintains all handlers in a quiesced state until their associated services are fully configured. When these services are ready to accept traffic, an event is written to the log that indicates that the domain is ready to process traffic.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
 				Required:            true,
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{

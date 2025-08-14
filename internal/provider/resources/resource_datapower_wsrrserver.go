@@ -55,7 +55,7 @@ func (r *WSRRServerResource) Metadata(ctx context.Context, req resource.Metadata
 
 func (r *WSRRServerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("WSRR server", "wsrr-server", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configuration required to locate and access WSRR (WebSphere Service Registry and Repository).", "wsrr-server", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *WSRRServerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 			},
 			"soap_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SOAP URL", "soap-url", "").AddDefaultValue("https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of SOAP API endpoint on the WSRR server. The port in the URL depends on whether the server has enabled global security. A typical default URL is similar to <tt>https://192.18.1.120:9443/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> or <tt>http://192.18.1.120:9080/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> .", "soap-url", "").AddDefaultValue("https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort"),
@@ -94,11 +94,11 @@ func (r *WSRRServerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 			},
 			"username": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Username", "username", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication with the server. Leave blank when authentication is not required.", "username", "").String,
 				Optional:            true,
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "passwordalias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication with the server. The password alias references the password. Leave blank when authentication is not required.", "password-alias", "passwordalias").String,
 				Optional:            true,
 			},
 			"ssl_client_config_type": schema.StringAttribute{

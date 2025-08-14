@@ -3,12 +3,12 @@
 page_title: "datapower_sshservice Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SSH service (default domain only)
+  Modify the configuration of the SSH server.
 ---
 
 # datapower_sshservice (Data Source)
 
-SSH service (`default` domain only)
+Modify the configuration of the SSH server.
 
 ## Example Usage
 
@@ -26,11 +26,11 @@ data "datapower_sshservice" "test" {
 
 ### Read-Only
 
-- `acl` (String) Access control list
-- `connection_limit` (Number) Concurrent connections
-- `enabled` (Boolean) Administrative state
-- `local_address` (String) Local address
-- `local_port` (Number) Port number
+- `acl` (String) Edit the <tt>ssh</tt> access control list to define IP addresses to allow or deny.
+- `connection_limit` (Number) Specify the maximum number of concurrent SSH CLI connections. Enter a value in the range 0 - 1000. The default value is 0, which means no limit.
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
+- `local_port` (Number) Specify the TCP port that the service monitors. The default value is 22.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

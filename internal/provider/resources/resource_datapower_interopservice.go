@@ -54,10 +54,10 @@ func (r *InteropServiceResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *InteropServiceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Interoperability test service (`default` domain only)", "iop-mgmt", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure and use the interoperability test service to test stylesheets or maps. The service is available over HTTP or HTTPS and is disabled by default.", "iop-mgmt", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -81,7 +81,7 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 				Default:             booldefault.StaticBool(true),
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local IP address", "http-ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.", "http-ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
@@ -107,7 +107,7 @@ func (r *InteropServiceResource) Schema(ctx context.Context, req resource.Schema
 				Default:             booldefault.StaticBool(false),
 			},
 			"https_local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local IP address", "https-ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.", "https-ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),

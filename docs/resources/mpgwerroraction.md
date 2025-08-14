@@ -3,13 +3,13 @@
 page_title: "datapower_mpgwerroraction Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Multi-Protocol Gateway Error Action
+  Define how the Multi-Protocol gateway handles errors and generates error responses to the client.
   CLI Alias: mpgw-error-action
 ---
 
 # datapower_mpgwerroraction (Resource)
 
-Multi-Protocol Gateway Error Action
+Define how the Multi-Protocol gateway handles errors and generates error responses to the client.
   - CLI Alias: `mpgw-error-action`
 
 ## Example Usage
@@ -34,21 +34,21 @@ resource "datapower_mpgwerroraction" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `error_rule` (String) Error Rule
+- `error_rule` (String) Specify the custom error rule that the appliance runs to handle errors.
   - CLI Alias: `rule`
   - Reference to: `datapower_stylepolicyrule:id`
-- `header_injection` (Attributes List) HTTP Header Injection
+- `header_injection` (Attributes List) Specify the name and the value for the HTTP header that the appliance injects.
   - CLI Alias: `header-inject` (see [below for nested schema](#nestedatt--header_injection))
-- `local_url` (String) Local page location
+- `local_url` (String) Specify the URL of the local error page.
   - CLI Alias: `local-url`
-- `reason_phrase` (String) Reason Phrase
+- `reason_phrase` (String) Specify the HTTP reason phrase that the appliance returns to the client. For a proxy mode, the specified reason phrase overrides the fetched value.
   - CLI Alias: `reason-phrase`
-- `remote_url` (String) Remote URL
+- `remote_url` (String) Specify the URL of the remote error page.
   - CLI Alias: `remote-url`
-- `status_code` (Number) Response Code
+- `status_code` (Number) Specify the HTTP status code that the appliance returns to the client. Enter a value in the range 0 - 999.
   - CLI Alias: `status-code`
   - Range: `100`-`999`
-- `type` (String) Mode
+- `type` (String) Select which mode to handle the errors and generate the responses. The default mode is "Static (Local)".
   - CLI Alias: `type`
   - Choices: `error-rule`, `proxy`, `redirect`, `static`
   - Default value: `static`

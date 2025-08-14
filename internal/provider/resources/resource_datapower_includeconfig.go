@@ -55,7 +55,7 @@ func (r *IncludeConfigResource) Metadata(ctx context.Context, req resource.Metad
 
 func (r *IncludeConfigResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Include configuration file", "include-config", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An include configuration file defines external configuration data to process on startup. The included configuration files can reside locally or on a remote host.", "include-config", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,17 +84,17 @@ func (r *IncludeConfigResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL", "config-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the configuration file. The file must be a configuration file of type <tt>.cfg</tt> . The URL takes the form 'protocol://username:password@host/path' when a username and password are needed to retrieve the file.", "config-url", "").String,
 				Required:            true,
 			},
 			"on_startup": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Import on startup", "auto-execute", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to import the configuration file on startup. The default behavior is to import on startup. <ul><li>When enabled, the configuration file is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>", "auto-execute", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"interface_detection": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Interface detection", "interface-detection", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to wait for the associated IP interface to be operational. This setting only affects configuration files from remote servers. When enabled, remote files are processed asynchronously after the associated IP interface is operational.", "interface-detection", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

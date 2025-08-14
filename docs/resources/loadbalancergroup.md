@@ -3,13 +3,12 @@
 page_title: "datapower_loadbalancergroup Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Load Balancer Group
-  CLI Alias: loadbalancer-group
+  
 ---
 
 # datapower_loadbalancergroup (Resource)
 
-Load Balancer Group
+<p>The DataPower device distributes traffic to members of a Load Balancer Group. These are back end servers and not additional DataPower devices. A Load Balancer Group lists members of a virtual server group and sets the algorithm for balancing them. Periodic health checks can be performed. Load Balancers may also be used to provide redundant LDAP server access.</p><p>When created, a DataPower service can use a Load Balancer Group by associating it with an XML manager that is associated with this service.</p><p>The back end destination URL is set to the name of the Load Balancer Group (example: "BackEndServers").</p>
   - CLI Alias: `loadbalancer-group`
 
 ## Example Usage
@@ -34,50 +33,50 @@ resource "datapower_loadbalancergroup" "test" {
 
 ### Optional
 
-- `algorithm` (String) Algorithm
+- `algorithm` (String) Select the algorithm to use to balance the real servers.
   - CLI Alias: `algorithm`
   - Choices: `round-robin`, `weighted-round-robin`, `hash`, `least-connections`, `first-alive`, `weighted-least-connections`
   - Default value: `round-robin`
-- `application_routing` (Boolean) Enable Application Routing
+- `application_routing` (Boolean) <p>If set to on, the load balancer group will route to the back end cluster depending on the following conditions.</p><ul><li>the application for which this request is targeted</li><li>the application status on the back end servers</li></ul><p>Application Routing is required for Application Edition (group or atomic) rollout. If you need Application Edition support, set the Update Type to Subscribe in the WebSphere Cell object.</p>
   - CLI Alias: `appl-routing`
   - Default value: `false`
-- `damp` (Number) Damp Time
+- `damp` (Number) When a real server is observed to be non-functioning, it is temporarily disabled. When the damp time has elapsed, it is re-enabled. Allowable values are in the range 1 - 86400.
   - CLI Alias: `damp`
   - Range: `1`-`86400`
   - Default value: `120`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `lb_group_affinity_conf` (Attributes) Session Affinity
+- `lb_group_affinity_conf` (Attributes) Session affinity allows applications to maintain sessions with clients.
   - CLI Alias: `session-affinity` (see [below for nested schema](#nestedatt--lb_group_affinity_conf))
-- `lb_group_checks` (Attributes) Health Checks
+- `lb_group_checks` (Attributes) The members of a Load Balancer Group can be periodically polled to verify the health of the server. If the server is found to be unresponsive, it is removed from the list of actively available servers until the unresponsive server passes a health check.
   - CLI Alias: `health-check` (see [below for nested schema](#nestedatt--lb_group_checks))
 - `lb_group_members` (Attributes List) Members
   - CLI Alias: `server` (see [below for nested schema](#nestedatt--lb_group_members))
-- `masquerade_member` (Boolean) Masquerade As Group Name
+- `masquerade_member` (Boolean) If you set this value, the host name presented to the server will be the name of the group instead of the name of the member being used for that specific transaction.
   - CLI Alias: `masquerade`
   - Default value: `false`
-- `monitored_cookies` (List of String) Monitored Cookies
+- `monitored_cookies` (List of String) The DataPower Gateway enforces session affinity when the application server attempts to establish session affinity using one of these cookie names.
   - CLI Alias: `monitored-cookie`
-- `never_return_sick_member` (Boolean) Do not Bypass Down State
+- `never_return_sick_member` (Boolean) During normal operation, when all members of the load-balancing group are down and a new request for that group is made, the first member of the group is automatically selected. If this property is turned on, no attempt will be made to connect under these circumstances.
   - CLI Alias: `giveup-when-all-members-down`
   - Default value: `false`
-- `retrieve_info` (Boolean) Retrieve Workload Management Information
+- `retrieve_info` (Boolean) Use this setting to control whether this Load Balancer Group has membership and weight information automatically retrieved from the work load management repository WebSphere Cell. When disabled, the static configuration is used.
   - CLI Alias: `retrieve-wlm-info`
   - Default value: `false`
-- `try_every_server_before_failing` (Boolean) Try Every Server Before Failing
+- `try_every_server_before_failing` (Boolean) This property applies only when none of the group members are in the "up" state. If this value is set, every server in the group is tried before failing the connection attempt. It is a "last best-effort" attempt.
   - CLI Alias: `try-every-server`
   - Default value: `false`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `web_sphere_cell_config` (String) WebSphere Cell
+- `web_sphere_cell_config` (String) If you selected 'WebSphere Cell' for Workload Management Retrieval, you need to select a WebSphere Cell object that retrieves this information. If no objects are available in the pull down, you must create one.
   - CLI Alias: `websphere-cell`
   - Reference to: `datapower_wccservice:id`
-- `wlm_group` (String) Workload Management Group Name
+- `wlm_group` (String) The Workload Management Group Name is used to define a group. In a WebSphere Application Server environment, the back end group is a cluster name. Once specified, the Load Balancer Group will be populated with the members and weights retrieved from the back end.
   - CLI Alias: `wlm-group`
-- `wlm_retrieval` (String) Workload Management Retrieval
+- `wlm_retrieval` (String) Contains the back end work load management repository selection type. Select 'WebSphere Cell' if your back-end is a WebSphere Application Server (WAS) Network Deployment (ND) or WAS Virtual Enterprise (VE).
   - CLI Alias: `wlm-type`
   - Choices: `use-websphere`
   - Default value: `use-websphere`
-- `wlm_transport` (String) Protocol
+- `wlm_transport` (String) Specify either HTTP or HTTPS for the Load Balancer Group protocol. This protocol is used to forward traffic between the DataPower Gateway and the members of the Load Balancer Group.
   - CLI Alias: `wlm-transport`
   - Choices: `http`, `https`
   - Default value: `http`

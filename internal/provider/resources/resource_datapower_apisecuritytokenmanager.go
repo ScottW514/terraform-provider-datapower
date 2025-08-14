@@ -56,7 +56,7 @@ func (r *APISecurityTokenManagerResource) Metadata(ctx context.Context, req reso
 
 func (r *APISecurityTokenManagerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API security token manager", "api-security-token-manager", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>The API security token manager provides the storage configuration for security objects, which include OAuth providers and user security. Each domain has the <tt>default</tt> API security token manager. This instance is used by the domain to store and manage API details.</p><p>The API security token service uses gateway-peering instances for the internal and external token stores.</p>", "api-security-token-manager", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -70,7 +70,7 @@ func (r *APISecurityTokenManagerResource) Schema(ctx context.Context, req resour
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -80,11 +80,11 @@ func (r *APISecurityTokenManagerResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 			},
 			"gateway_peering": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Internal token store", "gateway-peering", "gatewaypeering").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering instance to store and manage internal OAuth token data in this domain. Native OAuth tokens that are managed by an external token management service are not stored in this gateway-peering instance. This gateway-peering instance must be configured to persist data across a restart.", "gateway-peering", "gatewaypeering").String,
 				Optional:            true,
 			},
 			"gateway_peering_external": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("External token store", "gateway-peering-external", "gatewaypeering").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering instance to store and manage responses from external OAuth token management services in this domain. This gateway-peering instance does not require that data persist across a restart.", "gateway-peering-external", "gatewaypeering").String,
 				Optional:            true,
 			},
 			"expired_token_cleanup_interval": schema.Int64Attribute{

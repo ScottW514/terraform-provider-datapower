@@ -57,7 +57,7 @@ func (d *URLRewritePolicyDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *URLRewritePolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "URL Rewrite Policy",
+		MarkdownDescription: "Configure/Edit URL Rewrite Policies",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,11 +77,11 @@ func (d *URLRewritePolicyDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"direction": schema.StringAttribute{
-							MarkdownDescription: "URL Rewrite Direction",
+							MarkdownDescription: "Restricts the URL Rewrite Policy to a specified direction. Direction is applied at the service object level and has no effect on policies used from multistep or elsewhere.",
 							Computed:            true,
 						},
 						"url_rewrite_rule": schema.ListNestedAttribute{
-							MarkdownDescription: "URL Rewrite Rule",
+							MarkdownDescription: "Add, edit, or delete a URL rewrite rule",
 							NestedObject:        models.DmURLRewriteRuleDataSourceSchema,
 							Computed:            true,
 						},

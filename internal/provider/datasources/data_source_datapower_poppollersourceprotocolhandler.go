@@ -57,7 +57,7 @@ func (d *POPPollerSourceProtocolHandlerDataSource) Metadata(_ context.Context, r
 
 func (d *POPPollerSourceProtocolHandlerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "POP poller handler",
+		MarkdownDescription: "The Post Office Protocol (POP) handler manages the polling of a mailbox on a mail server. The mailbox receives mail messages from external partners. The handler retrieves and deletes mail messages on each polling cycle. Each mail message that The handler retrieves results in one transaction.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,43 +81,43 @@ func (d *POPPollerSourceProtocolHandlerDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"mail_server": schema.StringAttribute{
-							MarkdownDescription: "Mail server",
+							MarkdownDescription: "The host name or IP address of the mail server.",
 							Computed:            true,
 						},
 						"port": schema.Int64Attribute{
-							MarkdownDescription: "Port",
+							MarkdownDescription: "The listening port on the mail server. STARTTLS negotiation and an unsecured connection generally use port 110. An implicit, secured connection generally uses port 995.",
 							Computed:            true,
 						},
 						"conn_security": schema.StringAttribute{
-							MarkdownDescription: "Connection security",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"auth_method": schema.StringAttribute{
-							MarkdownDescription: "Authentication method",
+							MarkdownDescription: "The type of authentication to use. If authentication fails, no connection is made.",
 							Computed:            true,
 						},
 						"account": schema.StringAttribute{
-							MarkdownDescription: "Account name",
+							MarkdownDescription: "The name to access the mailbox on the server; for example, user@example.com.",
 							Computed:            true,
 						},
 						"password_alias": schema.StringAttribute{
-							MarkdownDescription: "Password alias",
+							MarkdownDescription: "The password alias of the password for the account that accesses the mailbox on the server.",
 							Computed:            true,
 						},
 						"delay_between_polls": schema.Int64Attribute{
-							MarkdownDescription: "Delay between polls",
+							MarkdownDescription: "Specify the interval in seconds between polling sequences. A <em>polling sequence</em> is the time to retrieve the messages plus the time to complete their processing. Enter a value in the range 1 - 65535. The default value is 300. <p><b>Note:</b> Some mail servers restrict the number of times an account can establish a connection during a specific time period. Ensure that the configured interval complies with any restriction.</p>",
 							Computed:            true,
 						},
 						"max_messages_per_poll": schema.Int64Attribute{
-							MarkdownDescription: "Max messages per poll",
+							MarkdownDescription: "Specify the maximum number of messages to retrieve in each polling cycle. Enter a value in the range 1 - 100. The default value is 5.",
 							Computed:            true,
 						},
 						"ssl_client_config_type": schema.StringAttribute{
-							MarkdownDescription: "TLS client type",
+							MarkdownDescription: "The TLS profile type to secure connections between the DataPower Gateway and its targets.",
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{
-							MarkdownDescription: "TLS client profile",
+							MarkdownDescription: "The TLS client profile to secure connections between the DataPower Gateway and its targets.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

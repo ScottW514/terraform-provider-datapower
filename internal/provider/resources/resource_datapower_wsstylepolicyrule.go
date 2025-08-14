@@ -57,7 +57,7 @@ func (r *WSStylePolicyRuleResource) Metadata(ctx context.Context, req resource.M
 
 func (r *WSStylePolicyRuleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("WS-Proxy Processing Rule", "wsm-rule", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Create, edit, or delete processing policy rules. Rules can also be created and edited using a drag and drop interface by opening the Services menu area on the left-hand navigation bar. Click the appropriate Policy link which will then present an opportunity to create both Rules and Actions.", "wsm-rule", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -82,12 +82,12 @@ func (r *WSStylePolicyRuleResource) Schema(ctx context.Context, req resource.Sch
 				},
 			},
 			"actions": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rule Actions", "action", "stylepolicyaction").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The full action pipeline that includes the actions generated from the WSDL as well as the rules configured by the user.", "action", "stylepolicyaction").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"direction": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rule Direction", "type", "").AddStringEnum("rule", "request-rule", "response-rule", "error-rule").AddDefaultValue("rule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a rule type. The default is Rule.", "type", "").AddStringEnum("rule", "request-rule", "response-rule", "error-rule").AddDefaultValue("rule").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -96,7 +96,7 @@ func (r *WSStylePolicyRuleResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("rule"),
 			},
 			"input_format": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Input Filter", "input-filter", "").AddStringEnum("none", "gzip", "pkzip").AddDefaultValue("none").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a decompression algorithm to apply to all messages before any other processing occurs (a preprocess step). All messages are decompressed using the selected algorithm. If the message is not compressed with this algorithm, an error is raised. This setting is independent of transport-level decompression. The default is None.", "input-filter", "").AddStringEnum("none", "gzip", "pkzip").AddDefaultValue("none").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -105,7 +105,7 @@ func (r *WSStylePolicyRuleResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("none"),
 			},
 			"output_format": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Output Filter", "output-filter", "").AddStringEnum("none", "gzip", "pkzip").AddDefaultValue("none").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a compression algorithm to apply to all messages after any other processing occurs (a post-process step). All messages are compressed using the selected algorithm. The resulting archive contains only one file. This setting is independent of transport-level compression. The default is None.", "output-filter", "").AddStringEnum("none", "gzip", "pkzip").AddDefaultValue("none").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -114,13 +114,13 @@ func (r *WSStylePolicyRuleResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("none"),
 			},
 			"non_xml_processing": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Non-XML Processing", "non-xml-processing", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Normally, processing is only performed on XML content. This option allows processing actions to be performed on Non-XML content as well.", "non-xml-processing", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"unprocessed": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Unprocessed", "unprocessed", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Permit rule to pass-through data unprocessed", "unprocessed", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

@@ -57,7 +57,7 @@ func (d *APIClientIdentificationDataSource) Metadata(_ context.Context, req data
 
 func (d *APIClientIdentificationDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Client identification API action",
+		MarkdownDescription: "The client identification API action examines the API key credentials that are carried in the API request and validates the subscription of the client.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -85,7 +85,7 @@ func (d *APIClientIdentificationDataSource) Schema(ctx context.Context, req data
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

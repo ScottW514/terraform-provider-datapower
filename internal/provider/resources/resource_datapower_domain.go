@@ -62,7 +62,7 @@ func (r *DomainResource) Metadata(ctx context.Context, req resource.MetadataRequ
 
 func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Application domain", "domain", "").AddActions("quiesce", "restart").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An application domain contains the resources that support DataPower services. The DataPower Gateway supports multiple domains. Domains can share read access to files in their <tt>local:</tt> directory. All domains share the contents of the <tt>store:</tt> directory. <p>After a user logs in to a domain, everything the user does applies to only this domain.</p><p>Except for the <tt>default</tt> domain, all domains can be restarted independently. For the <tt>default</tt> domain, you must restart the DataPower Gateway. When an domain or the DataPower Gateway is restarted, the persisted configuration is used. The persisted configuration can differ from the running configuration.</p><p>The configuration of a domain can be locally stored or can be retrieved from a remote server. The use of a remote configuration file enables centralized management of domains.</p>", "domain", "").AddActions("quiesce", "restart").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -80,14 +80,14 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"config_dir": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Configuration directory", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify where the configuration file for this domain is stored. This property is read-only because it is configured in domain settings.", "", "").String,
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"neighbor_domain": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Visible domains", "visible-domain", "domain").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify which domains have their <tt>local:</tt> directory visible to this domain. <p>References to visible domains are explicit, not bidirectional. If domain <tt>domainB</tt> is made visible to domain <tt>domainA</tt> , the following conditions apply.</p><ul><li>Domain <tt>domainA</tt> has read-only access to the <tt>local:</tt> directory of domain <tt>domainB</tt> .</li><li>Domain <tt>domainB</tt> cannot see domain <tt>domainA</tt> .</li></ul><p>In this case, you cannot make domain <tt>domainA</tt> visible to domain <tt>domainB</tt> . References to visible domains cannot be circular.</p>", "visible-domain", "domain").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Computed:            true,
@@ -96,11 +96,11 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				})),
 			},
 			"domain_user": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CLI user access", "domain-user", "user").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the set of CLI users who can access this domain. These users can log into this domain through the CLI. This setting can be superseded by an existing access policy of the user.", "domain-user", "user").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"file_map":       models.GetDmDomainFileMapResourceSchema("File permission to the local: directory", "file-permissions", "", false),
+			"file_map":       models.GetDmDomainFileMapResourceSchema("Specify the file permissions to apply to the <tt>local:</tt> directory. When access permissions are defined and with role-based management, users are granted the lesser privilege.", "file-permissions", "", false),
 			"monitoring_map": models.GetDmDomainMonitoringMapResourceSchema("File-monitoring of the local: directory", "file-monitoring", "", false),
 			"config_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Configuration mode", "config-mode", "").AddStringEnum("local", "import").AddDefaultValue("local").String,
@@ -133,7 +133,7 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"local_ip_rewrite": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rewrite local IP addresses", "local-ip-rewrite", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to rewrite local IP addresses during import. When enabled, local IP addresses in the import package are rewritten to match the local IP address on the DataPower Gateway. In other words, a service that binds to <tt>eth10</tt> in the import package is rewritten to bind to the local IP address of <tt>eth10</tt> on the DataPower Gateway.", "local-ip-rewrite", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),

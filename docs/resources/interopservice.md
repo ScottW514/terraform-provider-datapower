@@ -3,13 +3,13 @@
 page_title: "datapower_interopservice Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Interoperability test service (default domain only)
+  Configure and use the interoperability test service to test stylesheets or maps. The service is available over HTTP or HTTPS and is disabled by default.
   CLI Alias: iop-mgmt
 ---
 
 # datapower_interopservice (Resource)
 
-Interoperability test service (`default` domain only)
+Configure and use the interoperability test service to test stylesheets or maps. The service is available over HTTP or HTTPS and is disabled by default.
   - CLI Alias: `iop-mgmt`
 
 ## Example Usage
@@ -31,7 +31,7 @@ resource "datapower_interopservice" "test" {
   - CLI Alias: `http-acl`
   - Reference to: `datapower_accesscontrollist:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
 - `http_service` (Boolean) Enable over HTTP
@@ -40,7 +40,7 @@ resource "datapower_interopservice" "test" {
 - `https_acl` (String) Access control list
   - CLI Alias: `https-acl`
   - Reference to: `datapower_accesscontrollist:id`
-- `https_local_address` (String) Local IP address
+- `https_local_address` (String) Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.
   - CLI Alias: `https-ip-address`
   - Default value: `0.0.0.0`
 - `https_local_port` (Number) Local port
@@ -50,7 +50,7 @@ resource "datapower_interopservice" "test" {
 - `https_service` (Boolean) Enable over HTTPS
   - CLI Alias: `https-service`
   - Default value: `false`
-- `local_address` (String) Local IP address
+- `local_address` (String) Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.
   - CLI Alias: `http-ip-address`
   - Default value: `0.0.0.0`
 - `local_port` (Number) Local port

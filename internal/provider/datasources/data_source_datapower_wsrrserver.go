@@ -57,7 +57,7 @@ func (d *WSRRServerDataSource) Metadata(_ context.Context, req datasource.Metada
 
 func (d *WSRRServerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "WSRR server",
+		MarkdownDescription: "Configuration required to locate and access WSRR (WebSphere Service Registry and Repository).",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *WSRRServerDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"soap_url": schema.StringAttribute{
-							MarkdownDescription: "SOAP URL",
+							MarkdownDescription: "Specify the URL of SOAP API endpoint on the WSRR server. The port in the URL depends on whether the server has enabled global security. A typical default URL is similar to <tt>https://192.18.1.120:9443/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> or <tt>http://192.18.1.120:9080/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> .",
 							Computed:            true,
 						},
 						"server_prefix": schema.StringAttribute{
@@ -89,11 +89,11 @@ func (d *WSRRServerDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"username": schema.StringAttribute{
-							MarkdownDescription: "Username",
+							MarkdownDescription: "Specify the username for authentication with the server. Leave blank when authentication is not required.",
 							Computed:            true,
 						},
 						"password_alias": schema.StringAttribute{
-							MarkdownDescription: "Password alias",
+							MarkdownDescription: "Specify the password alias for authentication with the server. The password alias references the password. Leave blank when authentication is not required.",
 							Computed:            true,
 						},
 						"ssl_client_config_type": schema.StringAttribute{

@@ -3,12 +3,12 @@
 page_title: "datapower_deploymentpolicyparametersbinding Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Deployment Policy Variables
+  Configuration to persist the values of the deployment policy variables.
 ---
 
 # datapower_deploymentpolicyparametersbinding (Data Source)
 
-Deployment Policy Variables
+Configuration to persist the values of the deployment policy variables.
 
 ## Example Usage
 
@@ -39,7 +39,7 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `deployment_policy_parameter` (Attributes List) Deployment Policy Variables (see [below for nested schema](#nestedatt--result--deployment_policy_parameter))
+- `deployment_policy_parameter` (Attributes List) A list of name-value pairs. The name specifies a variable in a deployment policy, which will be replaced by its associated value before applying the policy to a configuration import. (see [below for nested schema](#nestedatt--result--deployment_policy_parameter))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
 

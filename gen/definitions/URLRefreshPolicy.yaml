@@ -1,39 +1,40 @@
 name: URLRefreshPolicy
-description: 'URL Refresh Policy'
-cli_alias: 'urlrefresh'
-cmd_group: 'urlrefresh'
-rest_endpoint: '/mgmt/config/{domain}/URLRefreshPolicy'
+description: Configure/Edit URL Refresh Policies
+cli_alias: urlrefresh
+cmd_group: urlrefresh
+rest_endpoint: /mgmt/config/{domain}/URLRefreshPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestURLRefreshPolicy"'
-    test_expect_ds: '"AccTest_URLRefreshPolicy"'
-    example: 'URLRefreshPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: URLRefreshRule
-    type: List
-    element_type: DmURLRefreshRule
-    required: true
-    description: 'URL Refresh Rule'
-    cli_alias: rule
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestURLRefreshPolicy"'
+  test_expect_ds: '"AccTest_URLRefreshPolicy"'
+  example: URLRefreshPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: URLRefreshRule
+  type: List
+  element_type: DmURLRefreshRule
+  required: true
+  description: Add, edit or delete a refresh rule
+  cli_alias: rule

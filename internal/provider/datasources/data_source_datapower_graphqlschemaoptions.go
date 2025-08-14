@@ -57,7 +57,7 @@ func (d *GraphQLSchemaOptionsDataSource) Metadata(_ context.Context, req datasou
 
 func (d *GraphQLSchemaOptionsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "GraphQL schema options",
+		MarkdownDescription: "GraphQL schema options define a list of schema elements to remove during validation and introspection.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

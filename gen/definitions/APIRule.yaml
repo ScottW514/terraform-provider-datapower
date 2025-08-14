@@ -1,48 +1,56 @@
 name: APIRule
-description: 'API rule'
-cli_alias: 'api-rule'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APIRule'
+description: An API rule completes the processing of API requests or completes the
+  operations that are required by the API requests.
+cli_alias: api-rule
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APIRule
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPIRule"'
-    test_expect_ds: '"AccTest_APIRule"'
-    example: 'APIRuleName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: DynamicActionsMode
-    type: Bool
-    default: false
-    description: 'Use dynamic actions'
-    cli_alias: dynamic-actions-mode
-  - name: Actions
-    type: List
-    element_type: String
-    description: 'API actions'
-    cli_alias: action
-  - name: DynamicActions
-    type: List
-    element_type: DmDynamicStylePolicyActionBaseReference
-    description: 'API dynamic actions'
-    cli_alias: dynamic-action
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPIRule"'
+  test_expect_ds: '"AccTest_APIRule"'
+  example: APIRuleName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: DynamicActionsMode
+  type: Bool
+  default: false
+  description: Specify whether to use dynamic actions instead of explicit actions.
+    Dynamic actions take configuration values at run time and override the default
+    properties in API actions. API rules that contain dynamic actions can be included
+    in user-defined policies that API Connect advertises and makes available in the
+    API Connect assembly editor.
+  cli_alias: dynamic-actions-mode
+- name: Actions
+  type: List
+  element_type: String
+  description: Specify the processing actions for the rule. With multiple actions,
+    ensure that the actions are in the correct processing sequence.
+  cli_alias: action
+- name: DynamicActions
+  type: List
+  element_type: DmDynamicStylePolicyActionBaseReference
+  description: Specify the dynamic actions for the rule. With multiple actions, ensure
+    that the actions are in the correct processing sequence.
+  cli_alias: dynamic-action
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary

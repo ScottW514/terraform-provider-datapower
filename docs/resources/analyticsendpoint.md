@@ -3,13 +3,13 @@
 page_title: "datapower_analyticsendpoint Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Analytics endpoint
+  An analytics endpoint buffers API event data and offloads the collected data as a bulk activity log to a remote server. When offloaded, you can use this data for display and analysis.
   CLI Alias: analytics-endpoint
 ---
 
 # datapower_analyticsendpoint (Resource)
 
-Analytics endpoint
+An analytics endpoint buffers API event data and offloads the collected data as a bulk activity log to a remote server. When offloaded, you can use this data for display and analysis.
   - CLI Alias: `analytics-endpoint`
 
 ## Example Usage
@@ -31,7 +31,7 @@ resource "datapower_analyticsendpoint" "test" {
 
 ### Required
 
-- `analytics_server_url` (String) Analytics server URL
+- `analytics_server_url` (String) Specify the URL to offload the collected API event data. The URL can start with <tt>http</tt> or <tt>https</tt> for an Elasticsearch server or start with <tt>dpkafka</tt> for a Kafka server. <ul><li>For an Elasticsearch server, specify the full URL to the endpoint starting with the <tt>http</tt> or <tt>https</tt> protocol identifier. With HTTPS, you must assign a TLS client profile.</li><li>For a Kafka server, specify only the name of the existing Kafka cluster configuration after the <tt>dpkafka</tt> protocol identifier. To complete the URL, you must specify which request topic to offload analytics data.</li></ul>
   - CLI Alias: `analytics-server-url`
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
@@ -43,53 +43,53 @@ resource "datapower_analyticsendpoint" "test" {
 - `client_secret_alias` (String) Client secret
   - CLI Alias: `client-secret-alias`
   - Reference to: `datapower_passwordalias:id`
-- `delivery_connections` (Number) Connections per delivery
+- `delivery_connections` (Number) Specify the number of connections to establish per delivery to the remote server to offload analytics data. Each connection can carry a bulk activity log. Enter a value in the range 1 - 100. The default value is 1.
   - CLI Alias: `delivery-connections`
   - Range: `1`-`100`
   - Default value: `1`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enable_jwt` (Boolean) Enable JWT
+- `enable_jwt` (Boolean) Enable JWT feature sending logs to analytics server.
   - CLI Alias: `enable-jwt`
   - Default value: `false`
-- `grant_type` (String) Grant type
+- `grant_type` (String) Specify the grant type for requesting JWT tokens. Only the client credentials grant type is supported.
   - CLI Alias: `grant-type`
   - Choices: `implicit`, `password`, `application`, `accessCode`
-- `interval` (Number) Interval
+- `interval` (Number) Specify the interval in seconds between offloads. Data is offloaded at this interval or when an API gateway reaches 80% of the value set for maximum records. Enter a value in the range 1 - 3600. The default value is 600
   - CLI Alias: `interval`
   - Range: `1`-`3600`
   - Default value: `600`
-- `management_url` (String) Management platform endpoint
+- `management_url` (String) Specify the URL of management platform endpoint to retrieve a JWT. The URL must use the <tt>http</tt> or <tt>https</tt> protocol.
   - CLI Alias: `management-url`
 - `management_url_ssl_client` (String) Management platform TLS client profile
   - CLI Alias: `management-ssl-client`
   - Reference to: `datapower_sslclientprofile:id`
-- `max_delivery_memory_mb` (Number) Maximum size for each delivery
+- `max_delivery_memory_mb` (Number) Specify the maximum size for each delivery in MB. Enter a value in the range 1 - 1024. The default value is 512.
   - CLI Alias: `max-delivery-size`
   - Range: `1`-`1024`
   - Default value: `512`
-- `max_records` (Number) Maximum records
+- `max_records` (Number) Specify the maximum number of records that can be buffered for each API gateway. The collected analytics data for an API gateway is offloaded when 80% of this value or the defined interval is reached. The value must be a power of 2. Enter a value in the range 256 - 65536. The default value is 1024.
   - CLI Alias: `max-records`
   - Range: `256`-`65536`
   - Default value: `1024`
-- `max_records_memory_kb` (Number) Maximum size for each record
+- `max_records_memory_kb` (Number) Specify the maximum size for each record in KB. Enter a value in the range 4 - 1024. The default value is 512.
   - CLI Alias: `max-record-size`
   - Range: `4`-`1024`
   - Default value: `512`
-- `persistent_connection` (Boolean) Negotiate persistent connections
+- `persistent_connection` (Boolean) Specify whether to negotiate persistent connections. By default, persistent connections are enabled. The HTTP/2 protocol controls persistent connections and reuse. Therefore, these settings are ignored.
   - CLI Alias: `persistent-connection`
   - Default value: `true`
-- `persistent_timeout` (Number) Persistent timeout
+- `persistent_timeout` (Number) Specify the inter-transaction timeout for connections, which is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 60.
   - CLI Alias: `persistent-timeout`
   - Range: `1`-`86400`
   - Default value: `60`
 - `request_topic` (String) Request topic
   - CLI Alias: `request-topic`
-- `scope` (String) Scope
+- `scope` (String) Specify the scope for requesting JWT tokens. The value is in the <tt>openid analytics_subsystem_ID/name</tt> format.
   - CLI Alias: `scope`
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_sslclientprofile:id`
-- `timeout` (Number) Timeout
+- `timeout` (Number) Specify the intra-transaction timeout for connections, which is the maximum idle time to allow in a transaction. This timer monitors idle time in the data transfer process. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 90.
   - CLI Alias: `timeout`
   - Range: `1`-`86400`
   - Default value: `90`

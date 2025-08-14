@@ -3,13 +3,13 @@
 page_title: "datapower_domainsettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Domain settings
+  Domain settings provide properties to define domain-specific characteristics when you save changes to the persisted configuration.
   CLI Alias: domain-settings
 ---
 
 # datapower_domainsettings (Resource)
 
-Domain settings
+Domain settings provide properties to define domain-specific characteristics when you save changes to the persisted configuration.
   - CLI Alias: `domain-settings`
 
 ## Example Usage
@@ -31,7 +31,7 @@ resource "datapower_domainsettings" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
 - `passphrase` (String) Passphrase

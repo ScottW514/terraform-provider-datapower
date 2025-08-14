@@ -3,12 +3,12 @@
 page_title: "datapower_interopservice Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Interoperability test service (default domain only)
+  Configure and use the interoperability test service to test stylesheets or maps. The service is available over HTTP or HTTPS and is disabled by default.
 ---
 
 # datapower_interopservice (Data Source)
 
-Interoperability test service (`default` domain only)
+Configure and use the interoperability test service to test stylesheets or maps. The service is available over HTTP or HTTPS and is disabled by default.
 
 ## Example Usage
 
@@ -28,13 +28,13 @@ data "datapower_interopservice" "test" {
 
 - `aaa_policy` (String) AAA policy
 - `acl` (String) Access control list
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `http_service` (Boolean) Enable over HTTP
 - `https_acl` (String) Access control list
-- `https_local_address` (String) Local IP address
+- `https_local_address` (String) Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.
 - `https_local_port` (Number) Local port
 - `https_service` (Boolean) Enable over HTTPS
-- `local_address` (String) Local IP address
+- `local_address` (String) Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.
 - `local_port` (Number) Local port
 - `ssl_server` (String) TLS server profile
 - `ssl_server_config_type` (String) TLS server type

@@ -58,7 +58,7 @@ func (r *TCPProxyServiceResource) Metadata(ctx context.Context, req resource.Met
 
 func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("TCP Proxy Service", "tcpproxy", "").AddActions("quiesce").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Creates a TCP Proxy service.", "tcpproxy", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,11 +83,11 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"priority": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Service Priority", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Control the service scheduling priority. When system resources are in high demand, \"high\" priority services will be favored over lower priority services.", "", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -96,7 +96,7 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("normal"),
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Port Number", "", "").AddIntegerRange(1, 65535).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("An integer (within the range 1 through 65535) that specifies the port monitored by the TCP proxy", "", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
 
@@ -104,11 +104,11 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"remote_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Remote Host", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote host for which this proxy is accepting TCP traffic. TCP traffic sent to the proxy will in turn be sent to this host. Click Ping to verify connectivity.", "", "").String,
 				Required:            true,
 			},
 			"remote_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Remote Port", "", "").AddIntegerRange(1, 65535).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port number of the remote host, specify with Remote Host, for which this proxy is accepting TCP traffic.", "", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
 
@@ -116,7 +116,7 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Idle timeout", "", "").AddIntegerRange(0, 86400).AddDefaultValue("360").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time that is allowed for the front side connection and the server side connection. After the time is reached, the idle connections are terminated. Enter a value in the range 0 - 86400. The default value is 360. A value of 0 disables the idle timer.", "", "").AddIntegerRange(0, 86400).AddDefaultValue("360").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -126,7 +126,7 @@ func (r *TCPProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Default: int64default.StaticInt64(360),
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),

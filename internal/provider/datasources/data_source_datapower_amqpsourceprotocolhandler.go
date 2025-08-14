@@ -57,7 +57,7 @@ func (d *AMQPSourceProtocolHandlerDataSource) Metadata(_ context.Context, req da
 
 func (d *AMQPSourceProtocolHandlerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "AMQP handler",
+		MarkdownDescription: "In AMQP, distributed source and target termini are managed by a broker. The broker periodically monitors and polls termini. The broker ensures that sent messages are directed to the correct target terminus or are routed to another server. The AMQP broker configuration corresponds to an AMQP broker that is running on another host in the network.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -93,11 +93,11 @@ func (d *AMQPSourceProtocolHandlerDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"credit": schema.Int64Attribute{
-							MarkdownDescription: "Credit",
+							MarkdownDescription: "Specify the number of concurrent messages that a receiver can handle. The minimum value is 1. The default value is 100.",
 							Computed:            true,
 						},
 						"ignore_reply_to": schema.BoolAttribute{
-							MarkdownDescription: "Ignore reply-to",
+							MarkdownDescription: "<p>Specify whether to ignore the AMQP <tt>reply-to</tt> property. The default behavior is to ignore the property. <ul><li>When enabled, ignore the <tt>reply-to</tt> address when sending an AMQP response message.</li><li>When disabled, use the <tt>reply-to</tt> address instead of the address of the target terminus.</li></ul></p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

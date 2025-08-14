@@ -58,7 +58,7 @@ func (r *AAAJWTGeneratorResource) Metadata(ctx context.Context, req resource.Met
 
 func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("JWT Generator", "jwt-generator", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>The JSON Web Token (JWT) Generator specifies the JWT content and the cryptographic methods, such as signing and encryption methods, used for generating a JWT during the AAA postprocessing phase.</p>", "jwt-generator", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,17 +83,17 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A descriptive summary for the JWT Generator configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"issuer": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Issuer", "iss", "").AddDefaultValue("idg").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The issuer claim, \"iss\", identifies the principal that issues the JWT. The maximum length is 256 characters. The default value is <tt>idg</tt> .", "iss", "").AddDefaultValue("idg").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("idg"),
 			},
 			"duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validity period", "duration", "").AddIntegerRange(1, 31622400).AddDefaultValue("3600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The validity period identifies the expiration time, \"exp\" claim. Enter a value in the range 1 - 31622400. The default value is 3600.", "duration", "").AddIntegerRange(1, 31622400).AddDefaultValue("3600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -102,14 +102,14 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 				},
 				Default: int64default.StaticInt64(3600),
 			},
-			"additional_claims": models.GetDmJWTClaimsResourceSchema("Additional claims", "add-claims", "", false),
+			"additional_claims": models.GetDmJWTClaimsResourceSchema("<p>Additional JWT claims, such as audience \"aud\" claim, not before \"nbf\" claim, issued at \"iat\" claim, JWT ID \"jit\" claim, \"nonce\" claim, and custom claim, can be added for JWT.</p><p>The subject, \"sub\" claim is added by default. You can override the subject claim value by specifying the \"sub\" claim in the Custom claims field.</p>", "add-claims", "", false),
 			"audience": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Audience claim", "aud", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The audience, \"aud\", claim identifies the recipients that the JWT is intended for. The maximum length of the Audience claim is 256 characters.", "aud", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"not_before": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Delta for not before claim", "nbf", "").AddIntegerRange(0, 480).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The not before claim, \"nbf\", indicates the time before which the JWT must not be accepted for processing. Enter a value in the range 0 - 480. The default value is 0.", "nbf", "").AddIntegerRange(0, 480).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 
@@ -117,12 +117,12 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"custom_claims": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom claims", "custom-claims", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The GatewayScript or XSLT file is processed to specify the custom claim. The GatewayScript or XSLT file must be stored in the <tt>local:</tt> or <tt>store:</tt> directory.", "custom-claims", "").String,
 				Optional:            true,
 			},
-			"gen_method": models.GetDmJWTGenMethodResourceSchema("JWT generation method", "generate-method", "", false),
+			"gen_method": models.GetDmJWTGenMethodResourceSchema("The signing and encryption methods can be used to secure and generate a JWT.", "generate-method", "", false),
 			"sign_algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Signing algorithm", "sign-alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").AddDefaultValue("RS256").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Various signing algorithms can be used to generate the JWT signature, such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.", "sign-alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").AddDefaultValue("RS256").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -131,15 +131,15 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("RS256"),
 			},
 			"sign_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Signing key", "sign-key", "cryptokey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The key alias can be used to sign the JWT. You can get a key alias by configuring the Crypto Key.", "sign-key", "cryptokey").String,
 				Optional:            true,
 			},
 			"sign_ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Signing shared secret", "sign-sskey", "cryptosskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.", "sign-sskey", "cryptosskey").String,
 				Optional:            true,
 			},
 			"enc_algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encryption algorithm", "enc", "").AddStringEnum("A128CBC-HS256", "A192CBC-HS384", "A256CBC-HS512", "A128GCM", "A192GCM", "A256GCM").AddDefaultValue("A128CBC-HS256").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Various encryption algorithms can be used to encrypt the JWT, such as A128CBC-HS256, A192CBC-HS384, A256CBC-HS512, A128GCM, A192GCM, and A256GCM. The default value is A128CBC-HS256.", "enc", "").AddStringEnum("A128CBC-HS256", "A192CBC-HS384", "A256CBC-HS512", "A128GCM", "A192GCM", "A256GCM").AddDefaultValue("A128CBC-HS256").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -148,7 +148,7 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("A128CBC-HS256"),
 			},
 			"encrypt_algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key management algorithm", "enc-alg", "").AddStringEnum("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir").AddDefaultValue("RSA1_5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Various key management algorithms can be used to encrypt the JWT, such as RSA1_5, RSA-OAEP, RSA-OAEP-256, A128KW, A192KW, A256KW, and dir. The default value is RSA1_5.", "enc-alg", "").AddStringEnum("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir").AddDefaultValue("RSA1_5").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -157,11 +157,11 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("RSA1_5"),
 			},
 			"encrypt_certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encryption certificate", "enc-cert", "cryptocertificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The certificate alias can be used to encrypt the JWT. You can get the certificate alias by configuring the Crypto Certificate.", "enc-cert", "cryptocertificate").String,
 				Optional:            true,
 			},
 			"encrypt_ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encryption key", "enc-sskey", "cryptosskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.", "enc-sskey", "cryptosskey").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

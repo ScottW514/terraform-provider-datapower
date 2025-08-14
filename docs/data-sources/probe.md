@@ -3,12 +3,12 @@
 page_title: "datapower_probe Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Probe settings
+  The domain-specific configuration that define the settings for the probe that you can use to troubleshoot the processing of transactions by services.
 ---
 
 # datapower_probe (Data Source)
 
-Probe settings
+The domain-specific configuration that define the settings for the probe that you can use to troubleshoot the processing of transactions by services.
 
 ## Example Usage
 
@@ -31,10 +31,10 @@ data "datapower_probe" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
-- `expiration` (Number) Expiration
-- `gateway_peering` (String) Gateway peering
-- `max_records` (Number) Max records
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `expiration` (Number) Specify the duration in seconds to retain the troubleshooting data. Enter a value in the range 60 - 86400. The default value is 3600.
+- `gateway_peering` (String) Specify the gateway-peering instance for the probe. This instance synchronizes the captured data across the members. If you do not want to persist data across a restart, store the data in memory.
+- `max_records` (Number) Specify the maximum number of records to allow. Enter a value in the range 1 - 10000. The default value is 1000.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

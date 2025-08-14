@@ -54,7 +54,7 @@ func (r *DistributedVariableResource) Metadata(ctx context.Context, req resource
 
 func (r *DistributedVariableResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Distributed variable settings", "distributed-variable-settings", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The domain-specific configuration that define the settings for using distributed variables.", "distributed-variable-settings", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -68,7 +68,7 @@ func (r *DistributedVariableResource) Schema(ctx context.Context, req resource.S
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -78,7 +78,7 @@ func (r *DistributedVariableResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 			},
 			"gateway_peering": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Gateway peering", "gateway-peering", "gatewaypeering").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering instance for distributed variable. This instance synchronizes the variables among the configured members. If you do not want to persist variable values across a restart, store the data in memory.", "gateway-peering", "gatewaypeering").String,
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

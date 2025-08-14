@@ -3,13 +3,13 @@
 page_title: "datapower_xmlmanager Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XML Manager
+  An XML Manager manages the compilation and caching of stylesheets, the caching of documents, and provides configuration constraints on the size and parsing depth of documents. You can enable streaming operation by configuring an XML Manager to use a Streaming Compile Option Policy. More than one firewall can use the same XML Manager.
   CLI Alias: xmlmgrAccepted Dependency Actions: flush_stylesheet_cache, flush_document_cache, flush_ldap_pool_cache
 ---
 
 # datapower_xmlmanager (Resource)
 
-XML Manager
+An XML Manager manages the compilation and caching of stylesheets, the caching of documents, and provides configuration constraints on the size and parsing depth of documents. You can enable streaming operation by configuring an XML Manager to use a Streaming Compile Option Policy. More than one firewall can use the same XML Manager.
   - CLI Alias: `xmlmgr`
   - Accepted Dependency Actions: `flush_stylesheet_cache`, `flush_document_cache`, `flush_ldap_pool_cache`
 
@@ -32,87 +32,86 @@ resource "datapower_xmlmanager" "test" {
 
 ### Optional
 
-- `cache_memory_size` (Number) Stylesheet cache size
+- `cache_memory_size` (Number) Enter the maximum size of the stylesheet cache. The default value is 2147483647. A value of 0 disables caching. Stylesheets are purged when either the cache size or the cache count is reached.
   - CLI Alias: `xsl cache memorysize`
   - Default value: `2147483647`
-- `cache_size` (Number) Stylesheet cache count
+- `cache_size` (Number) Enter the maximum number of stylesheets to cache. Enter a value in the range 5 - 250000. The default value is 256. Stylesheets are purged when either the cache size or the cache count is reached.
   - CLI Alias: `xsl cache size`
   - Range: `5`-`250000`
   - Default value: `256`
-- `compile_options_policy` (String) Compile Options Policy
+- `compile_options_policy` (String) <p>Optionally, assigns a Compilation Options Policy to the XML Manager. Stylesheets cached by this manager are compiled in accordance with policy rules. Compile Options allow the administrator to manage profiling and debug modes, which are helpful during development and troubleshooting sessions. Profiling and debug modes should not be left on for production purposes.</p><p>Compile Options Policy also enables streaming mode, which might be a valid choice for production environments that regularly encounter very large documents.</p>
   - CLI Alias: `xslconfig`
   - Reference to: `datapower_compileoptionspolicy:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `doc_cache_max_docs` (Number) Document Cache Count
+- `doc_cache_max_docs` (Number) Enter the maximum number of documents to cache. Enter a value in the range 1 - 250000. The default value is 5000.
   - CLI Alias: `maxdocs`
   - Range: `1`-`250000`
   - Default value: `5000`
-- `doc_cache_policy` (Attributes List) Document Cache Policy
+- `doc_cache_policy` (Attributes List) A document cache policy allows the administrator to determine how documents are cached by the XML manager. The policy offers time-to-live, priority, and type configuration values. This document cache is distinct from the stylesheet cache for the XML manager. Documents and stylesheets that the XML manager retrieves can be cached.
   - CLI Alias: `policy` (see [below for nested schema](#nestedatt--doc_cache_policy))
-- `doc_cache_size` (Number) Document Cache Size
+- `doc_cache_size` (Number) Enter the maximum size of the document cache. Regardless of the specified size, no document that is greater than 1073741824 bytes is cached. This restriction applies even if the cache has available space.
   - CLI Alias: `size`
-- `doc_max_writes` (Number) Maximum concurrent writes
+- `doc_max_writes` (Number) Enter the maximum number of concurrent write requests to create documents or refresh expired documents in the document cache. Enter a value in the range 1 - 32768. The default value is 32768. After the maximum number is reached, requests are forwarded to the target server and the response is not written to the cache.
   - CLI Alias: `max-writes`
   - Range: `1`-`32768`
   - Default value: `32768`
-- `json_parser_settings` (String) JSON Settings
+- `json_parser_settings` (String) Identifies the JSON Settings used by the XML manager when processing a JSON body. If no JSON Settings are specified, the default limits are enforced.
   - CLI Alias: `json-parser-settings`
   - Reference to: `datapower_jsonsettings:id`
-- `ldap_conn_pool` (String) LDAP Connection Pool
+- `ldap_conn_pool` (String) Identifies the LDAP connection pool to be used by the XML Manager when contacting LDAP
   - CLI Alias: `ldap-pool`
   - Reference to: `datapower_ldapconnectionpool:id`
-- `parser_limits_attribute_count` (Number) XML Attribute Count
+- `parser_limits_attribute_count` (Number) Enter the maximum number of attributes of a given element. The default value is 128.
   - CLI Alias: `attribute-count`
   - Default value: `128`
-- `parser_limits_bytes_scanned` (Number) XML Bytes Scanned
+- `parser_limits_bytes_scanned` (Number) Enter the maximum number of bytes scanned in one message. This property applies to any XML document that is parsed. If the value is 0, no limit is enforced. The default value is 4194304.
   - CLI Alias: `bytes-scanned`
   - Default value: `4194304`
-- `parser_limits_element_depth` (Number) XML Element Depth
+- `parser_limits_element_depth` (Number) Enter the maximum depth of element nesting in XML parser. The default value is 512.
   - CLI Alias: `element-depth`
   - Default value: `512`
-- `parser_limits_external_references` (String) XML External Reference Handling
+- `parser_limits_external_references` (String) Select the special handling for input documents that contain external references, such as an external entity or external DTD definition.
   - CLI Alias: `external-references`
   - Choices: `forbid`, `ignore`, `allow`
   - Default value: `forbid`
-- `parser_limits_max_local_names` (Number) XML Maximum Distinct Local Names
+- `parser_limits_max_local_names` (Number) Enter the maximum number of distinct XML local names in a document. This limit counts all local names, independent of the namespaces they are associated with. Enter a value in the range 0 - 1048575. The default value is 60000. A value of 0 indicates that the limit is 60000.
   - CLI Alias: `max-local-names`
   - Range: `0`-`1048575`
   - Default value: `60000`
-- `parser_limits_max_namespaces` (Number) XML Maximum Distinct Namespaces
+- `parser_limits_max_namespaces` (Number) Enter the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.
   - CLI Alias: `max-namespaces`
   - Range: `0`-`65535`
   - Default value: `1024`
-- `parser_limits_max_node_size` (Number) XML Maximum Node Size
+- `parser_limits_max_node_size` (Number) Enter the maximum size that any one node can consume. Enter a value in the range 1024 - 4294967295. The default value is 33554432. Sizes which are powers of two result in the best performance. Although you define a value, the DataPower Gateway uses a value that is the rounded-down to the largest power of two that is smaller than the defined value.
   - CLI Alias: `max-node-size`
   - Range: `1024`-`4294967295`
   - Default value: `33554432`
-- `parser_limits_max_prefixes` (Number) XML Maximum Distinct Prefixes
+- `parser_limits_max_prefixes` (Number) Enter the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the range 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.
   - CLI Alias: `max-prefixes`
   - Range: `0`-`262143`
   - Default value: `1024`
-- `scheduled_rule` (Attributes List) Scheduled Processing Policy Rule
+- `scheduled_rule` (Attributes List) Certain applications might require the running of a scheduled processing rule. Integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager.
   - CLI Alias: `schedule-rule` (see [below for nested schema](#nestedatt--scheduled_rule))
-- `schema_validation` (Attributes List) Schema Validation Rules
-  - CLI Alias: `validate` (see [below for nested schema](#nestedatt--schema_validation))
-- `search_results` (Boolean) XSLT Expression Optimization
+- `schema_validation` (Attributes List) - CLI Alias: `validate` (see [below for nested schema](#nestedatt--schema_validation))
+- `search_results` (Boolean) Configures optimization of '//' in XPath expressions
   - CLI Alias: `search results`
   - Default value: `true`
-- `sha1_caching` (Boolean) SHA1 Caching
+- `sha1_caching` (Boolean) Enables/disables SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
   - CLI Alias: `xsl checksummed cache`
   - Default value: `true`
-- `static_document_calls` (Boolean) Static Document Call
+- `static_document_calls` (Boolean) The latest XSLT specifications require that multiple document calls in the same transformation return the same result. Disable to allow all document calls to operate independently.
   - CLI Alias: `static-document-calls`
   - Default value: `true`
-- `url_refresh_policy` (String) URL Refresh Policy
+- `url_refresh_policy` (String) Optionally, assigns a Stylesheet Refresh Policy to the XML manager. Stylesheets cached by this manager are refreshed in accordance with policy rules.
   - CLI Alias: `xslrefresh`
   - Reference to: `datapower_urlrefreshpolicy:id`
-- `user_agent` (String) User Agent Configuration
+- `user_agent` (String) Identifies the User Agent configuration the XML manager uses to connect to external servers to retrieve resources.
   - CLI Alias: `user-agent`
   - Reference to: `datapower_httpuseragent:id`
   - Default value: `default`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `virtual_servers` (List of String) Load Balancer Groups
+- `virtual_servers` (List of String) Select a Load Balancer Group and assign that group to this XML manager. A Load Balancer Group, or server pool, provides redundancy among backside resources.
   - CLI Alias: `loadbalancer-group`
   - Reference to: `datapower_loadbalancergroup:id`
 

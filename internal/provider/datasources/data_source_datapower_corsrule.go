@@ -57,7 +57,7 @@ func (d *CORSRuleDataSource) Metadata(_ context.Context, req datasource.Metadata
 
 func (d *CORSRuleDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "CORS rule",
+		MarkdownDescription: "A CORS rule defines allowed origins and other CORS properties.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,15 +81,15 @@ func (d *CORSRuleDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							Computed:            true,
 						},
 						"allow_origin": schema.ListAttribute{
-							MarkdownDescription: "Allowed origins",
+							MarkdownDescription: "Specify the accepted values for the <tt>Origin</tt> request header for cross-origin requests. This rule does not apply to a CORS request when the value for the <tt>Origin</tt> header does not match any value in the list.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"allow_credentials": schema.BoolAttribute{
-							MarkdownDescription: "Allow credentials",
+							MarkdownDescription: "Specify whether the CORS request returns the <tt>Access-Control-Allow-Credentials</tt> response header. By default, this header is not returned in response to a CORS request. When enabled, the CORS request returns this header with a value of <tt>true</tt> .",
 							Computed:            true,
 						},
-						"expose_headers":     models.GetDmCORSRuleExposeHeadersDataSourceSchema("Expose headers", "expose-headers", ""),
+						"expose_headers":     models.GetDmCORSRuleExposeHeadersDataSourceSchema("Specify the values to append to the value of the <tt>Access-Control-Expose-Headers</tt> response header. When undefined, appends the gateway-predefined value.", "expose-headers", ""),
 						"dependency_actions": actions.ActionsSchema,
 					},
 				},

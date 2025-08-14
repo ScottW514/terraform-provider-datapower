@@ -54,7 +54,7 @@ func (r *DeploymentPolicyParametersBindingResource) Metadata(ctx context.Context
 
 func (r *DeploymentPolicyParametersBindingResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Deployment Policy Variables", "deployment-policy-variables", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configuration to persist the values of the deployment policy variables.", "deployment-policy-variables", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *DeploymentPolicyParametersBindingResource) Schema(ctx context.Context, 
 				Optional:            true,
 			},
 			"deployment_policy_parameter": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Deployment Policy Variables", "variable", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A list of name-value pairs. The name specifies a variable in a deployment policy, which will be replaced by its associated value before applying the policy to a configuration import.", "variable", "").String,
 				NestedObject:        models.DmDeploymentPolicyParameterResourceSchema,
 				Optional:            true,
 			},

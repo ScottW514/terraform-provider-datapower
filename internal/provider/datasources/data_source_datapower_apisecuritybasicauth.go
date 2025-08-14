@@ -57,7 +57,7 @@ func (d *APISecurityBasicAuthDataSource) Metadata(_ context.Context, req datasou
 
 func (d *APISecurityBasicAuthDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API security basic authentication",
+		MarkdownDescription: "An API basic authentication security definition selects a user registry to authenticate accesses to the API. When you use basic authentication, API users must provide a valid username and password in the requests to access API operations that require basic authentication. <b>Note:</b> You cannot apply more than one basic authentication security definition to an API.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *APISecurityBasicAuthDataSource) Schema(ctx context.Context, req datasou
 							Computed:            true,
 						},
 						"user_registry": schema.StringAttribute{
-							MarkdownDescription: "User registry (reference to APIAuthenticationURLRegistry or APILDAPRegistry)",
+							MarkdownDescription: "Specify the API user registry configuration to authenticate API requests. The supported registries are API authentication URL and API LDAP registry.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -54,7 +54,7 @@ func (r *HTTPInputConversionMapResource) Metadata(ctx context.Context, req resou
 
 func (r *HTTPInputConversionMapResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("HTTP Input Conversion Map", "input-conversion-map", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("This defines the rules for handling HTTP to XML conversion of form values in an HTTP GET or POST of a form. There are different conversion (Encoding) rules for the values. They control how the value is mapped to the contents of its &lt;arg> element in the resulting XML. There is a default Encoding, which is all that is required. There can also be specific Encodings applied to values based on the name associated with a value, which is done using an ordered list of PCREs.", "input-conversion-map", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,14 +83,14 @@ func (r *HTTPInputConversionMapResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"default_input_encoding": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Default Encoding", "default-encoding", "").AddStringEnum("plain", "urlencoded", "xml", "urlencoded-xml", "base64", "base64-text", "base64-xml", "json").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the default encoding to use for any name-value pair in an HTTP form where the name does not match any of the patterns in the Encoding Map.", "default-encoding", "").AddStringEnum("plain", "urlencoded", "xml", "urlencoded-xml", "base64", "base64-text", "base64-xml", "json").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("plain", "urlencoded", "xml", "urlencoded-xml", "base64", "base64-text", "base64-xml", "json"),
 				},
 			},
 			"input_encoding": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encoding Map", "rule", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This allows selecting the Encoding for values based on their name. The names are matched by PCREs. Each PCRE is associated with an Encoding that controls how the value is mapped to the contents of an &lt;arg> element in the resulting XML. This is an ordered list, comparision of the name proceeds until the first match. If there is no match, the Encoding will be selected by the Default Encoding of this HTTP Input Conversion Map.", "rule", "").String,
 				NestedObject:        models.DmInputEncodingResourceSchema,
 				Optional:            true,
 			},

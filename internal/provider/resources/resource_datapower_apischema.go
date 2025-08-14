@@ -54,7 +54,7 @@ func (r *APISchemaResource) Metadata(ctx context.Context, req resource.MetadataR
 
 func (r *APISchemaResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API schema", "api-schema", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An API schema defines the schemas to validate JSON, XML, WSDL, or SOAP messages.", "api-schema", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,11 +83,11 @@ func (r *APISchemaResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 			},
 			"json_schema": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("JSON schema URL", "json-schema", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the schema URL for JSON message validation. For example, <tt>local:///petstore.json#/definitions/Pet</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.", "json-schema", "").String,
 				Optional:            true,
 			},
 			"graph_ql_schema": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("GraphQL schema URL", "graphql-schema", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the schema URL for GraphQL message validation. For example, <tt>local:///petstore-Pet.graphql</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.", "graphql-schema", "").String,
 				Optional:            true,
 			},
 			"xml_type": schema.StringAttribute{
@@ -105,27 +105,27 @@ func (r *APISchemaResource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 			},
 			"xml_schema_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML schema URL", "xml-schema-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the schema URL for XML message validation. For example, <tt>local:///petstore-Pet.xsd</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.", "xml-schema-url", "").String,
 				Optional:            true,
 			},
 			"wsdl_schema_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSDL schema URL", "wsdl-schema-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the schema URL for WSDL message validation. For example, <tt>local:///petstore-Pet.wsdl</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.", "wsdl-schema-url", "").String,
 				Optional:            true,
 			},
 			"wsdl_port_q_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSDL port", "wsdl-port", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the <tt>wsdl:port</tt> for the traffic to validate. The value should be a QName in the form <tt>{namespace-uri}local-part</tt> or <tt>*</tt> for all ports in the WSDL file. When specified and not <tt>*</tt> , only messages for the named port are valid.", "wsdl-port", "").String,
 				Optional:            true,
 			},
 			"wsdl_operation_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSDL operation", "wsdl-operation", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the <tt>wsdl:operation</tt> for the traffic to validate. The value should be the unqualified name of the operation or <tt>*</tt> for all operations in the WSDL file. When specified and not <tt>*</tt> , only messages for the named operation are valid.", "wsdl-operation", "").String,
 				Optional:            true,
 			},
 			"wsdl_message_direction_or_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSDL direction or name", "wsdl-message-direction-or-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the <tt>wsdl:input</tt> , <tt>wsdl:output</tt> , or <tt>wsdl:fault</tt> for the traffic to validate. The value must be the name of one or more WSDL input, output, or fault components, or <tt>#input</tt> or <tt>#output</tt> for the request and response directions respectively, or <tt>*</tt> for all inputs, outputs, and faults in the WSDL file. When specified and not <tt>*</tt> , only messages that match the specified direction or name are valid. Faults are valid for the response direction.", "wsdl-message-direction-or-name", "").String,
 				Optional:            true,
 			},
 			"wsdl_attachment_part": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSDL attachment part", "wsdl-attachment-part", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the mime:content to validate in the format <tt>mime:content/@part</tt> . The value must be the unqualified name of the message part. The name is the same as the part attribute on the corresponding <tt>mime:content</tt> component in the WSDL file. When not specified or <tt>*</tt> , the root MIME part is validated. The root MIME part is bound to a <tt>soap:Body</tt> .", "wsdl-attachment-part", "").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

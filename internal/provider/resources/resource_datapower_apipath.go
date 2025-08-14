@@ -56,7 +56,7 @@ func (r *APIPathResource) Metadata(ctx context.Context, req resource.MetadataReq
 
 func (r *APIPathResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API path", "api-path", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An API Path configuration describes the operations that are available on a single path.", "api-path", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,13 +85,13 @@ func (r *APIPathResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Optional:            true,
 			},
 			"path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Path", "path", "").AddDefaultValue("/").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the relative path to access the REST APIs. The path is appended to the base path to construct the full URI. The path must start with a / character. When the path contains a parameter, ensure that you define the path parameter at either or both the path and operation levels. <ul><li>A parameter at the end of the path can contain a + qualifier to match one or more levels as in the following example. <p><tt>/petstore/{type}/{+category}</tt></p><p>The <tt>{type}</tt> parameter matches one path level. The <tt>{+category}</tt> parameter matches multiple levels. The following paths match this path template.</p><ul><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li><li>A parameter at the end of the path can contain a * qualifier to match zero or more levels as in the following example. <p><tt>/petstore/{type}/{*category}</tt></p><p>The <tt>{type}</tt> parameter matches one path level. The <tt>{*category}</tt> parameter matches multiple levels. The following paths match this path template.</p><ul><li><tt>/petstore/cats/</tt></li><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li></ul>", "path", "").AddDefaultValue("/").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("/"),
 			},
 			"operation": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Operation", "operation", "apioperation").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the available operations for the path. Without a defined operation, all operations are accepted.", "operation", "apioperation").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
@@ -100,7 +100,7 @@ func (r *APIPathResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Optional:            true,
 			},
 			"parameter": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Parameters", "parameter", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the applicable parameters for all operations. The setting can be overridden for the same parameter by the setting in the API operation configuration.", "parameter", "").String,
 				NestedObject:        models.DmAPIParameterResourceSchema,
 				Optional:            true,
 			},

@@ -57,7 +57,7 @@ func (r *WCCServiceResource) Metadata(ctx context.Context, req resource.Metadata
 
 func (r *WCCServiceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("WebSphere Cell", "wcc-service", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Use the WebSphere Cell configuration to retrieve configuration information and runtime information from a Network Deployment or Virtual Enterprise product. Load balancer groups use this information to automate configuration and updates.", "wcc-service", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -86,15 +86,15 @@ func (r *WCCServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 			},
 			"odc_info_hostname": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Deployment Manager Host", "odc-info-hostname", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Host name or IP address of the Deployment Manager. It is used to communicate with the ODCInfo servlet. The ODCInfo servlet must be installed in a WebSphere Application Server environment.", "odc-info-hostname", "").String,
 				Required:            true,
 			},
 			"odc_info_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Deployment Manager Port number", "odc-info-port", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the listening port of the ODCInfo servlet on the deployment manager. To determine the listening port number, log in to the WebSphere Application Server administrative console and click System Administration > Deployment Manager > ports. From the list, use the port associated with WC_adminhost for HTTP or the port associated with WC_adminhost_secure for HTTPS.", "odc-info-port", "").String,
 				Required:            true,
 			},
 			"update_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Update Method", "update-method", "").AddStringEnum("poll", "subscribe").AddDefaultValue("poll").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the method for retrieving WebSphere information. The method defines the responsiveness of the updates received by the DataPower Gateway. The method also affects the amount of system resource used for providing those updates. The default is poll.", "update-method", "").AddStringEnum("poll", "subscribe").AddDefaultValue("poll").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -103,7 +103,7 @@ func (r *WCCServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: stringdefault.StaticString("poll"),
 			},
 			"time_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Time Interval", "time-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>If the update method is poll, the time interval specifies the amount of time in seconds between poll requests.</p><p>If the update method is subscribe, the time interval specifies the maximum duration of the request in seconds.</p><p>Use any value of 1 - 86400. The default is 10.</p>", "time-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("10").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -113,7 +113,7 @@ func (r *WCCServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: int64default.StaticInt64(10),
 			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -122,7 +122,7 @@ func (r *WCCServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "sslclientprofile").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

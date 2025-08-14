@@ -1,67 +1,84 @@
 name: XACMLPDP
-description: 'XACML Policy Decision Point'
-cli_alias: 'xacml-pdp'
-cmd_group: 'aaapolicy'
-rest_endpoint: '/mgmt/config/{domain}/XACMLPDP'
+description: The XACML policies can be evaluated on a DataPower device, This on-box
+  XACML Policy Decision Point (PDP) allows customers to define the necessary information
+  so that it can evaluate the corresponding XACML policies against a XACML request
+  for an XACML Policy Enforcement Point (PEP). The DataPower PEP is implemented with
+  AAA action.
+cli_alias: xacml-pdp
+cmd_group: aaapolicy
+rest_endpoint: /mgmt/config/{domain}/XACMLPDP
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestXACMLPDP"'
-    test_expect_ds: '"AccTest_XACMLPDP"'
-    example: 'XACMLPDPName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: EqualPolicies
-    type: Bool
-    default: false
-    description: 'Evaluate Individual Policies Equally'
-    cli_alias: equal-policies
-  - name: GeneralPolicy
-    type: String
-    description: 'General Policy File'
-    test_value: '"http://test/uri"'
-    cli_alias: general-policy
-  - name: CombiningAlg
-    type: String
-    enum:
-      - 'first-applicable'
-      - 'deny-overrides'
-      - 'permit-overrides'
-      - 'only-one-applicable'
-    description: 'Dependent Policies Combining'
-    cli_alias: combining-alg
-  - name: DependentPolicy
-    type: List
-    element_type: String
-    description: 'Dependent Policy Files'
-    cli_alias: dependent-policy
-  - name: Directory
-    type: List
-    element_type: String
-    description: 'Other Policy Files from Directory'
-    cli_alias: directory
-  - name: CacheTTL
-    type: Int64
-    maximum: 2678400
-    description: 'XACML Policies Cache Lifetime'
-    cli_alias: cache-ttl
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestXACMLPDP"'
+  test_expect_ds: '"AccTest_XACMLPDP"'
+  example: XACMLPDPName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: EqualPolicies
+  type: Bool
+  default: false
+  description: In case of a top level policy-set is undefined, all policies are evaluated
+    equally, PDP will use the PolicyCombiningAlg for the final decision.
+  cli_alias: equal-policies
+- name: GeneralPolicy
+  type: String
+  description: The URL of top level XACML policy/policy-set file, if there is one.
+    This file may reside on the local device (typically as local:///file) or on a
+    remote server. Attempts to retrieve this file from remote servers may be governed
+    by the User Agent in use by the XML Manager of the service. This may be useful
+    for TLS connections, for example.
+  test_value: '"http://test/uri"'
+  cli_alias: general-policy
+- name: CombiningAlg
+  type: String
+  enum:
+  - first-applicable
+  - deny-overrides
+  - permit-overrides
+  - only-one-applicable
+  description: Select the policy-combining algorithm when not using a top-level comprehensive
+    XACML policy file. The default is First Applicable.
+  cli_alias: combining-alg
+- name: DependentPolicy
+  type: List
+  element_type: String
+  description: Some of the XACML Policies/Policy-Sets are indirectly needed when the
+    PDP evaluates a request. They are called Dependent Policy Files. Specify their
+    URLs with this setting.
+  cli_alias: dependent-policy
+- name: Directory
+  type: List
+  element_type: String
+  description: List directories that contain dependent files. In these directories,
+    all files with the xml or xacml extension are available to the XACML PDP. Use
+    this option when there are too many policy files to identify independently.
+  cli_alias: directory
+- name: CacheTTL
+  type: Int64
+  maximum: 2678400
+  description: This sets the explicit time to live (TTL) for cached XACML policies,
+    either raw or compiled. The default value 0 means the cache never expire unless
+    PDP explicitly refreshes the policies. The maximum TTL is 31 days (2,678,400 seconds).
+  cli_alias: cache-ttl

@@ -57,7 +57,7 @@ func (d *HTTPSourceProtocolHandlerDataSource) Metadata(_ context.Context, req da
 
 func (d *HTTPSourceProtocolHandlerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "HTTP handler",
+		MarkdownDescription: "An HTTP handler receives HTTP requests that are not over TLS and forwards them to the appropriate DataPower service. HTTP handlers conform to RFC 2616.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *HTTPSourceProtocolHandlerDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"local_address": schema.StringAttribute{
-							MarkdownDescription: "Local IP address",
+							MarkdownDescription: "Specify the IP address or host alias that the handler listens. The default value indicates that The handler listens on all IPv4 addresses.",
 							Computed:            true,
 						},
 						"local_port": schema.Int64Attribute{
@@ -89,52 +89,52 @@ func (d *HTTPSourceProtocolHandlerDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"http_version": schema.StringAttribute{
-							MarkdownDescription: "HTTP version to client",
+							MarkdownDescription: "Specify the HTTP version for client connections. The default value is HTTP/1.1. For the HTTP/2 protocol, requests and responses are always HTTP/2. When HTTP/2, this setting is ignored.",
 							Computed:            true,
 						},
 						"allowed_features": models.GetDmSourceHTTPFeatureTypeDataSourceSchema("Allowed methods and versions", "allowed-features", ""),
 						"persistent_connections": schema.BoolAttribute{
-							MarkdownDescription: "Negotiate persistent connections",
+							MarkdownDescription: "Specify whether to negotiate persistent connections with clients. The HTTP/2 protocol controls persistent connections and reuse. Therefore, this setting is ignored for the HTTP/2 protocol.",
 							Computed:            true,
 						},
 						"max_persistent_connections_reuse": schema.Int64Attribute{
-							MarkdownDescription: "Maximum persistent reuse",
+							MarkdownDescription: "Specify the maximum number of times that a client can reuse a persistent connection. When this count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response, and the TCP connection is closed. The default value is 0, which means unlimited reuse.",
 							Computed:            true,
 						},
 						"allow_compression": schema.BoolAttribute{
-							MarkdownDescription: "Enable compression",
+							MarkdownDescription: "Specify whether to negotiate GZIP compression for client connections. When enabled and the <tt>Accept-Encoding</tt> HTTP header indicates that compressed documents can be processed, the service uses GZIP to compress HTTP transmissions. The <tt>Transfer-Encoding</tt> HTTP header indicates compression.",
 							Computed:            true,
 						},
 						"allow_web_socket_upgrade": schema.BoolAttribute{
-							MarkdownDescription: "Allow WebSocket upgrade",
+							MarkdownDescription: "Specify whether to allow WebSocket upgrade requests from clients. The default value is disabled. This request is to switch the existing connection to use the WebSocket protocol. WebSocket upgrade requests require that The handler allows GET methods.",
 							Computed:            true,
 						},
 						"web_socket_idle_timeout": schema.Int64Attribute{
-							MarkdownDescription: "WebSocket idle timeout",
+							MarkdownDescription: "Specify the maximum idle time for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.",
 							Computed:            true,
 						},
 						"max_url_len": schema.Int64Attribute{
-							MarkdownDescription: "Maximum URL length",
+							MarkdownDescription: "Specify the length in bytes of the longest incoming URL to accept. The length includes any query string or fragment identifier. Enter a value in the range 1 - 128000. The default value is 16384.",
 							Computed:            true,
 						},
 						"max_total_hdr_len": schema.Int64Attribute{
-							MarkdownDescription: "Maximum total header length",
+							MarkdownDescription: "Specify the maximum aggregate length of HTTP headers in bytes to allow. Enter a value in the range 5 - 128000. The default value is 128000.",
 							Computed:            true,
 						},
 						"max_hdr_count": schema.Int64Attribute{
-							MarkdownDescription: "Maximum request headers",
+							MarkdownDescription: "Specify the maximum number of headers to allow in client requests. The default value is 0, which indicates no limit.",
 							Computed:            true,
 						},
 						"max_name_hdr_len": schema.Int64Attribute{
-							MarkdownDescription: "Maximum header name length",
+							MarkdownDescription: "Specify the maximum length of a header name in bytes to allow in client requests. Each HTTP header is expressed as a name-value pair. This setting sets the maximum length of the name portion of a header. The default value is 0, which indicates no limit.",
 							Computed:            true,
 						},
 						"max_value_hdr_len": schema.Int64Attribute{
-							MarkdownDescription: "Maximum header value length",
+							MarkdownDescription: "Specify the maximum length of a header value in bytes to allow in client requests. Each HTTP header is expressed as a name-value pair. This setting sets the maximum length of the value portion of a header. The default value is 0, which indicates no limit.",
 							Computed:            true,
 						},
 						"max_query_string_len": schema.Int64Attribute{
-							MarkdownDescription: "Maximum query string length",
+							MarkdownDescription: "Specify the maximum length of the query string to allow in client requests. The query string is the portion of the URL after the ? character. The default value is 0, which indicates no limit.",
 							Computed:            true,
 						},
 						"acl": schema.StringAttribute{
@@ -142,31 +142,31 @@ func (d *HTTPSourceProtocolHandlerDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"credential_charset": schema.StringAttribute{
-							MarkdownDescription: "Credential character set",
+							MarkdownDescription: "Specify the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The contents of the <tt>Authorization</tt> header are transcoded to UTF-8. The default value represents ISO-8859-1 Latin 1.",
 							Computed:            true,
 						},
 						"http2_max_streams": schema.Int64Attribute{
-							MarkdownDescription: "HTTP/2 maximum streams",
+							MarkdownDescription: "Specify the maximum number of concurrent streams that the client can have outstanding at the same time. Enter a value in the range 1 - 500. The default value is 100. <p>The limit applies to the number of streams that the client allows the target to create. The greater the number of streams in use, the more resources the client uses. Resources include memory and the network connections to the destination.</p>",
 							Computed:            true,
 						},
 						"http2_max_frame_size": schema.Int64Attribute{
-							MarkdownDescription: "HTTP/2 max frame size",
+							MarkdownDescription: "Specify the largest payload frame size that the client can send. Enter a value in the range 16384 - 16777215. The default value is 16384.",
 							Computed:            true,
 						},
 						"http2_stream_header": schema.BoolAttribute{
-							MarkdownDescription: "Enable HTTP/2 stream header",
+							MarkdownDescription: "Specify whether to enable the HTTP/2 stream identifier header in the request or response. When enabled, the HTTP/2 stream identifier is included in the <tt>X-DP-http2-stream</tt> header. With this header, you can correlate the HTTP/2 stream. The default behavior is disabled.",
 							Computed:            true,
 						},
 						"chunked_encoding": schema.BoolAttribute{
-							MarkdownDescription: "Enable chunked encoding responses",
+							MarkdownDescription: "Specify whether to enable responses to use chunked transfer-encoding. By default, HTTP responses use <tt>Transfer-Encoding: chunked</tt> .",
 							Computed:            true,
 						},
 						"header_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Request headers processing timeout",
+							MarkdownDescription: "Specify the maximum duration in milliseconds to allow for request headers processing. When the value is greater than 0, request header processing must complete before the duration elapses. Enter a value in the range 0 - 3600000, where a value of 0 disables the timer. The default value is 30000.",
 							Computed:            true,
 						},
 						"http2_idle_timeout": schema.Int64Attribute{
-							MarkdownDescription: "HTTP/2 idle timeout",
+							MarkdownDescription: "Specify the maximum idle duration in milliseconds to allow before closing the HTTP/2 connection. Enter a value in the range 0 - 3600000, where a value of 0 disables the timer. The default value is 0.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -1,82 +1,105 @@
 name: GatewayPeeringGroup
-description: 'Gateway-peering group'
-cli_alias: 'gateway-peering-group'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/GatewayPeeringGroup'
+description: A gateway-peering group defines members as a group to synchronize data
+  across members. When a group can work in stand-alone mode, peer-based mode, or cluster-based
+  mode. <ul><li>For stand-alone, no peers defined. This mode is for only development
+  or testing purposes.</li><li>For a peer group, add peers and configure the connection
+  among the peers.</li><li>For a cluster, add cluster nodes and the other nodes that
+  are in the same data center.</li></ul>
+cli_alias: gateway-peering-group
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/GatewayPeeringGroup
 skip_test: true
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestGatewayPeeringGroup"'
-    test_expect_ds: '"AccTest_GatewayPeeringGroup"'
-    example: 'GatewayPeeringGroupName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Mode
-    type: String
-    enum:
-      - 'peer'
-      - 'cluster'
-    required: true
-    default: 'peer'
-    description: 'Mode'
-    cli_alias: mode
-  - name: PeerNodes
-    type: List
-    element_type: DmGatewayPeeringGroupPeerNode
-    description: 'Peers'
-    cli_alias: peer-node
-  - name: ClusterPrimaryCount
-    type: String
-    enum:
-      - '3'
-    default: '3'
-    description: 'Primary count'
-    cli_alias: cluster-primary-count
-  - name: ClusterNodes
-    type: List
-    element_type: DmGatewayPeeringGroupClusterNode
-    description: 'Cluster nodes'
-    cli_alias: cluster-node
-  - name: ClusterAutoConfig
-    type: Bool
-    default: true
-    description: 'Auto manage cluster configuration'
-    cli_alias: cluster-auto-config
-  - name: EnableSSL
-    type: Bool
-    required: true
-    default: true
-    test_value: 'false'
-    description: 'Enable TLS'
-    cli_alias: enable-ssl
-  - name: Idcred
-    type: String
-    reference_to: CryptoIdentCred
-    description: 'Identification credentials'
-    cli_alias: idcred
-  - name: Valcred
-    type: String
-    reference_to: CryptoValCred
-    description: 'Validation credentials'
-    cli_alias: valcred
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestGatewayPeeringGroup"'
+  test_expect_ds: '"AccTest_GatewayPeeringGroup"'
+  example: GatewayPeeringGroupName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Mode
+  type: String
+  enum:
+  - peer
+  - cluster
+  required: true
+  default: peer
+  description: Mode
+  cli_alias: mode
+- name: PeerNodes
+  type: List
+  element_type: DmGatewayPeeringGroupPeerNode
+  description: Specify peers for the the group. To add a peer, enter its local IP
+    address or host alias and its priority.
+  cli_alias: peer-node
+- name: ClusterPrimaryCount
+  type: String
+  enum:
+  - '3'
+  default: '3'
+  description: Primary count
+  cli_alias: cluster-primary-count
+- name: ClusterNodes
+  type: List
+  element_type: DmGatewayPeeringGroupClusterNode
+  description: Specify nodes for the cluster group. To add a node, enter its local
+    IP address or host alias and the comma-separated list of local IP addresses or
+    host aliases of the other nodes that are in the same data center. <p>Because the
+    primary count is 3, the configuration requires a minimum of 6 nodes that are generally
+    in 2 data centers. Each node is defined on a different DataPower Gateway. The
+    minimal configuration is 3 primary-secondary pairs. Each pair is a shard that
+    manages a subset of slots.</p><p>Each primary node can have more than one secondary
+    node, but each primary node requires the same number of secondary nodes. In other
+    words, you can define an environment of 9 nodes, which is a configuration of 3
+    primary nodes and 6 secondary nodes. In this configuration, each primary node
+    has 2 secondary nodes.</p>
+  cli_alias: cluster-node
+- name: ClusterAutoConfig
+  type: Bool
+  default: true
+  description: Specify whether the cluster configuration is managed automatically.
+    By default, cluster configuration is managed automatically. Unless directed by
+    IBM Support, do not change this setting.
+  cli_alias: cluster-auto-config
+- name: EnableSSL
+  type: Bool
+  required: true
+  default: true
+  test_value: 'false'
+  description: Specify whether to use TLS to secure the connection among the members.
+    By default, TLS is enabled. When enabled, ensure that all members use the same
+    TLS configuration.
+  cli_alias: enable-ssl
+- name: Idcred
+  type: String
+  reference_to: CryptoIdentCred
+  description: Specify the identification credentials that contains the credentials
+    that the current member uses to identify itself to other peers. Client authentication
+    uses mutual TLS.
+  cli_alias: idcred
+- name: Valcred
+  type: String
+  reference_to: CryptoValCred
+  description: Validation credentials
+  cli_alias: valcred

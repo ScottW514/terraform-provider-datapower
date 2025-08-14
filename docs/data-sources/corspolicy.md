@@ -3,12 +3,12 @@
 page_title: "datapower_corspolicy Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  CORS policy
+  A CORS policy contains one or more CORS rules where you can configure CORS behavior.
 ---
 
 # datapower_corspolicy (Data Source)
 
-CORS policy
+A CORS policy contains one or more CORS rules where you can configure CORS behavior.
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `rule` (List of String) CORS rules
+- `rule` (List of String) Specify the CORS rules to to apply to the CORS policy. A CORS rule defines allowed origins and other CORS properties. The first rule that is valid is applied to the inbound CORS request. If no rule applies, the CORS request is rejected.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

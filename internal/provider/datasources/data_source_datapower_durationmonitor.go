@@ -57,7 +57,7 @@ func (d *DurationMonitorDataSource) Metadata(_ context.Context, req datasource.M
 
 func (d *DurationMonitorDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Message Duration Monitor",
+		MarkdownDescription: "On-Line Help for Message-Duration Monitors. Duration Monitors observe the duration, or amount of time, taken to process submissions.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,20 +77,20 @@ func (d *DurationMonitorDataSource) Schema(ctx context.Context, req datasource.S
 							Computed:            true,
 						},
 						"measure": schema.StringAttribute{
-							MarkdownDescription: "Measure",
+							MarkdownDescription: "Select which portion of the transaction cycle to monitor. The default is Messages.",
 							Computed:            true,
 						},
 						"filter": schema.ListNestedAttribute{
-							MarkdownDescription: "Thresholds/Filters",
+							MarkdownDescription: "Click this tab to define a message-duration monitor threshold and assign an action taken when the threshold is reached.",
 							NestedObject:        models.DmDurationMonitorFilterDataSourceSchema,
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).",
 							Computed:            true,
 						},
 						"message_type": schema.StringAttribute{
-							MarkdownDescription: "Message Type",
+							MarkdownDescription: "Select the message type monitored by this message-count monitor.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -3,12 +3,12 @@
 page_title: "datapower_loglabel Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Log category
+  Configuration of custom log categories.
 ---
 
 # datapower_loglabel (Data Source)
 
-Log category
+Configuration of custom log categories.
 
 ## Example Usage
 

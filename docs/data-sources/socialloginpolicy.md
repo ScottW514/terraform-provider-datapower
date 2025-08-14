@@ -3,12 +3,12 @@
 page_title: "datapower_socialloginpolicy Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Social Login Policy
+  DataPower can act as an OpenID Connect client. In this case, a social login policy enables DataPower to redirect the user to a social login provider like Google for user authentication and consent for authorization.
 ---
 
 # datapower_socialloginpolicy (Data Source)
 
-Social Login Policy
+DataPower can act as an OpenID Connect client. In this case, a social login policy enables DataPower to redirect the user to a social login provider like Google for user authentication and consent for authorization.
 
 ## Example Usage
 
@@ -39,20 +39,20 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `client_grant` (String) Client grant type
-- `client_id` (String) Client ID
-- `client_optional_query_params` (String) Client Optional Query Parameters
-- `client_redirect_uri` (String) Client redirection URI
-- `client_scope` (String) Scope
-- `client_secret` (String) Client secret
-- `client_ssl_profile` (String) TLS client profile
+- `client_grant` (String) Controls how DataPower generates the client request to the social login provider.
+- `client_id` (String) Specify the ID of DataPower that is registered with the social login provider.
+- `client_optional_query_params` (String) Specifies the optional query parameters to include in the initial OAuth/OIDC request that DataPower sends to the social login provider. Enter the optional query parameters as name=value pairs and separate each pair with an ampersand. For example, prompt=consent&amp;login_hint=jsmith@example.com&amp;openid.realm=example.comi&amp;hd=example.com.
+- `client_redirect_uri` (String) <p>Specifies the URI that the social login policy redirects the client to after the client obtains a code or an access token. The URI must match with what is registered at the social login provider for DataPower as the OAuth/OIDC client. The URI is included in the OAuth/OIDC client request that DataPower generates.</p><p>Note that the social login provider Google mandates that the redirect URI must be a fully qualified host name instead of an IP address.</p><p>Note that the redirect URI should end with the suffix '/social-login-callback' in the pathname in order to differentiate between the callback requests and other types of requests coming into the service.</p><p>You can specify the value of this redirect URI in the following forms.</p><ul><li>Static string. Enter a static string as the redirect URI. Must end with the suffix '/social-login-callback'.</li><li>URL-in/suffix. In this case, it takes the value from the inbound URL service variable var://service/URL-in and then suffixes the value with whatever is specified after <tt>URL-in</tt> as the redirect URI. For example, the value of this property is 'URL-in/social-login-callback' and the incoming URL is 'https://datapower.ibm.com:10087/getresources', then the redirect URI is constructed as 'https://datapower.ibm.com:10087/getresources/social-login-callback'.</li><li>Context variable. You can set a context variable before you invoke this AAA action and specify the context variable name for this value. For example, var://context/AAA/social-login-redirect-uri</li></ul>
+- `client_scope` (String) Specifies the scope value that defines what access privileges are requested for access tokens, ID tokens, or both. Use space separated strings. For example, <tt>openid email</tt> .
+- `client_secret` (String) Specify the secret of DataPower that is registered with the social login provider.
+- `client_ssl_profile` (String) Specifies the TLS client profile to secure connections when DataPower obtains an access token from the social login provider.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `jwt_validator` (String) JWT Validator
-- `provider_az_endpoint` (String) Authorization endpoint URL
-- `provider_token_endpoint` (String) Token endpoint URL
-- `social_provider` (String) Social login provider
-- `user_summary` (String) Comments
-- `validate_jwt_token` (Boolean) Enable JWT token validation
+- `jwt_validator` (String) Specify the JWT Validator configuration that defines how to validate and verify the ID token.
+- `provider_az_endpoint` (String) Specify the provider's endpoint URL that accepts an authorization request from a client to perform social login with the provider. When the provider is Google, you can retrieve the authorization endpoint URL from the Discovery document for Google's OpenID Connect service.
+- `provider_token_endpoint` (String) Specify the provider's endpoint URL that accepts an authorization grant, or code, from a client in exchange for an access token from the social login provider. When the provider is Google, you can retrieve the token endpoint URL from the Discovery document for Google's OpenID Connect service.
+- `social_provider` (String) Controls which social login provider to use.
+- `user_summary` (String) Enter a descriptive summary for the configuration.
+- `validate_jwt_token` (Boolean) <p>Controls whether to validate the JWT token (ID token)from the provider. If yes, it is recommended that you validate the ID token that is obtained from Google by defining the following settings in the JWT Validator configuration.</p><p><ol><li>Verify the signature by fetching the certs from https://www.googleapis.com/oauth2/v3/certs</li><li>Verify that the <tt>aud</tt> claim matches the client ID of DataPower.</li><li>Verify that the <tt>iss</tt> claim matches accounts.google.com or https://accounts.google.com</li></ol></p><p>For other recommendations on validating the ID token from Google, see https://developers.google.com/identity/protocols/OpenIDConnect.</p>
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

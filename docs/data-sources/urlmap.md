@@ -3,12 +3,12 @@
 page_title: "datapower_urlmap Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  URL Map
+  Configure/Edit URL maps. URL Maps are used by Processing Actions and by XML Manager Compile Options Policies.
 ---
 
 # datapower_urlmap (Data Source)
 
-URL Map
+Configure/Edit URL maps. URL Maps are used by Processing Actions and by XML Manager Compile Options Policies.
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `url_map_rule` (Attributes List) URL Map Rule (see [below for nested schema](#nestedatt--result--url_map_rule))
+- `url_map_rule` (Attributes List) Add, edit or delete a URL map match pattern (see [below for nested schema](#nestedatt--result--url_map_rule))
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

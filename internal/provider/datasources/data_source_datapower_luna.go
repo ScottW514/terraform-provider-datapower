@@ -56,7 +56,7 @@ func (d *LunaDataSource) Metadata(_ context.Context, req datasource.MetadataRequ
 
 func (d *LunaDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SafeNet Luna HSM (`default` domain only)",
+		MarkdownDescription: "You can use a network-attached SafeNet Luna Network HSM appliance as the HSM to provide secure storage for RSA keys and accelerate RSA operations remotely. The configuration of the Luna HSM sets up the connection with the Luna HSM.",
 		Attributes: map[string]schema.Attribute{
 			"result": schema.ListNestedAttribute{
 				MarkdownDescription: "List of objects",
@@ -80,7 +80,7 @@ func (d *LunaDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 							Computed:            true,
 						},
 						"security_option": schema.StringAttribute{
-							MarkdownDescription: "Security option",
+							MarkdownDescription: "Specify the security option for connection.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

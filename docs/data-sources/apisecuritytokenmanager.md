@@ -3,12 +3,12 @@
 page_title: "datapower_apisecuritytokenmanager Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API security token manager
+  
 ---
 
 # datapower_apisecuritytokenmanager (Data Source)
 
-API security token manager
+<p>The API security token manager provides the storage configuration for security objects, which include OAuth providers and user security. Each domain has the <tt>default</tt> API security token manager. This instance is used by the domain to store and manage API details.</p><p>The API security token service uses gateway-peering instances for the internal and external token stores.</p>
 
 ## Example Usage
 
@@ -31,10 +31,10 @@ data "datapower_apisecuritytokenmanager" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `expired_token_cleanup_interval` (Number) Cleanup interval
-- `gateway_peering` (String) Internal token store
-- `gateway_peering_external` (String) External token store
+- `gateway_peering` (String) Specify the gateway-peering instance to store and manage internal OAuth token data in this domain. Native OAuth tokens that are managed by an external token management service are not stored in this gateway-peering instance. This gateway-peering instance must be configured to persist data across a restart.
+- `gateway_peering_external` (String) Specify the gateway-peering instance to store and manage responses from external OAuth token management services in this domain. This gateway-peering instance does not require that data persist across a restart.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

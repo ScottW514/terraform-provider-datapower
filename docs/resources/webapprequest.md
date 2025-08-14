@@ -3,13 +3,13 @@
 page_title: "datapower_webapprequest Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web Request Profile
+  The web request profile specifies various properties about the request side of the transaction that must be satisfied.
   CLI Alias: webapp-request-profile
 ---
 
 # datapower_webapprequest (Resource)
 
-Web Request Profile
+The web request profile specifies various properties about the request side of the transaction that must be satisfied.
   - CLI Alias: `webapp-request-profile`
 
 ## Example Usage
@@ -31,102 +31,102 @@ resource "datapower_webapprequest" "test" {
 
 ### Optional
 
-- `aaa` (String) AAA Policy
+- `aaa` (String) If this property references a AAA policy, then that AAA policy will be run as a filter on this transaction and the success of that AAA run will be required to continue processing. Any input to this transaction as XML, application/www-url-encoded, or multipart/form-data MIME types will be automatically provided to the AAA processing policy.
   - CLI Alias: `aaa-policy`
   - Reference to: `datapower_aaapolicy:id`
-- `acl` (String) Access Control List
+- `acl` (String) This Access Control List will be used to allow or deny access to this service based on the IP address of the client. When attached to a service, an Access Control List (ACL) denies all access by default. To deny access to only selected addresses, first grant access to all addresses (allow 0.0.0.0) and then create deny entries for the desired hosts.
   - CLI Alias: `acl`
   - Reference to: `datapower_accesscontrollist:id`
-- `content_types` (List of String) Content-Type List
+- `content_types` (List of String) A list of PCRE regular expressions that indicate acceptable content-type MIME headers on the request. If this list is empty, any content-type is acceptable. If the request does not have a content type that will be represented as an empty string for matching purposes. Requests without a body (GET, HEAD, and so forth) are not subject to this constraint. An empty list will match all content types.
   - CLI Alias: `request-content-type`
-- `cookie_name_vector` (List of String) Cookie Names
+- `cookie_name_vector` (List of String) The list of cookies, by name, that the process signs and encrypts.
   - CLI Alias: `cookie-namelist`
-- `cookie_profile` (Attributes) Cookie Profile
+- `cookie_profile` (Attributes) The cookie management profile allows you to specify validation profiles for incoming cookies, whether cookies should be allowed at all, and the signature and encryption policies for cookies.
   - CLI Alias: `cookie-policy` (see [below for nested schema](#nestedatt--cookie_profile))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `error_policy` (String) Error Policy
+- `error_policy` (String) If this request policy is violated the firewall error policy will be invoked unless this more specific error policy is provided, in which case this policy takes precedence.
   - CLI Alias: `error-policy-override`
   - Reference to: `datapower_webapperrorhandlingpolicy:id`
-- `header_gnvc` (String) Header Name-Value Profile
+- `header_gnvc` (String) The name-value profile allows you to specify what headers are expected, what headers should be stripped, and what headers should be mapped to known values. If no profile is specified, any header is allowed.
   - CLI Alias: `request-header-profile`
   - Reference to: `datapower_namevalueprofile:id`
-- `max_body_size` (Number) Maximum Size
+- `max_body_size` (Number) Specify the maximum size of the request body.
   - CLI Alias: `request-body-max`
   - Default value: `128000000`
-- `max_uri_size` (Number) Maximum URI Length
+- `max_uri_size` (Number) The URI may be no longer than the value specified here.
   - CLI Alias: `request-uri-max`
   - Default value: `1024`
-- `min_body_size` (Number) Minimum Size
+- `min_body_size` (Number) Specify the minimum size of the request body.
   - CLI Alias: `request-body-min`
 - `multipart_form_data` (Attributes) Multipart/Form-Data Profile
   - CLI Alias: `multipart-form-data` (see [below for nested schema](#nestedatt--multipart_form_data))
-- `non_xml_policy` (String) Non-XML Processing
+- `non_xml_policy` (String) Specify how the device handles requests that do not contain an XML MIME type.
   - CLI Alias: `request-nonxml-policy`
   - Choices: `nothing`, `side`, `binary`
   - Default value: `nothing`
-- `non_xml_rule` (String) Non-XML Processing Rule
+- `non_xml_rule` (String) This is the transformation rule that is run when the request does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.
   - CLI Alias: `request-nonxml-rule`
   - Reference to: `datapower_stylepolicyrule:id`
-- `ok_methods` (Attributes) Methods
+- `ok_methods` (Attributes) Specify which HTTP methods are acceptable from the client acceptable.
   - CLI Alias: `request-methods` (see [below for nested schema](#nestedatt--ok_methods))
-- `ok_versions` (Attributes) Versions
+- `ok_versions` (Attributes) Specify which HTTP versions are acceptable from the client.
   - CLI Alias: `request-versions` (see [below for nested schema](#nestedatt--ok_versions))
-- `policy_type` (String) Style
+- `policy_type` (String) Select the satisfaction policy for the profile. The default value is Admission.
   - CLI Alias: `policy-type`
   - Choices: `pre-requisite`, `admission`
   - Default value: `admission`
-- `process_all_cookie` (Boolean) Sign or Encrypt All Cookies
+- `process_all_cookie` (Boolean) The process will sign or encrypt all cookies when enabled. The default is enabled.
   - CLI Alias: `process-all-cookie`
   - Default value: `true`
-- `query_string_gnvc` (String) QueryString Name-Value Profile
+- `query_string_gnvc` (String) The name-value profile for query-string. If not present, no profile is enforced. The profile allows you to validate data members of the query string, filter out unknown ones, or map certain names to known values.
   - CLI Alias: `request-qs-profile`
   - Reference to: `datapower_namevalueprofile:id`
-- `query_string_policy` (String) Allow Query String
+- `query_string_policy` (String) Select how the client URL handles query strings. The default is Allow.
   - CLI Alias: `request-qs-policy`
   - Choices: `allow`, `require`, `deny`
   - Default value: `allow`
-- `rate_limiter` (String) Rate Limiting
+- `rate_limiter` (String) A rate limiting policy restricts identities (as determined by AAA or the client IP address if AAA is not available) to a specific number of transactions per second.
   - CLI Alias: `ratelimiter-policy`
   - Reference to: `datapower_simplecountmonitor:id`
-- `session_management_profile` (String) Session Policy
+- `session_management_profile` (String) The session management policy enforces the start pages acceptable for requests that match this security profile. If no policy is referenced, any page is an acceptable start page.
   - CLI Alias: `session-policy`
   - Reference to: `datapower_webappsessionpolicy:id`
-- `sql_injection` (Boolean) SQL Injection Filter
+- `sql_injection` (Boolean) Data parameters from the query string, application/www-urlencoded requests, and multipart/form-data requests will be passed through the standard SQL Injection filter if this property is enabled.
   - CLI Alias: `request-sql-policy`
   - Default value: `false`
-- `sql_injection_patterns_file` (String) SQL Injection Patterns File
+- `sql_injection_patterns_file` (String) The patterns file that the SQL injection filter uses.
   - CLI Alias: `sql-injection-patterns-file`
   - Default value: `store:///SQL-Injection-Patterns.xml`
-- `ss_key` (String) Shared Secret Key
+- `ss_key` (String) Select the Shared Secret Key for both signing or encrypting.
   - CLI Alias: `ss-key`
   - Reference to: `datapower_cryptosskey:id`
-- `ssl_policy` (String) Allow SSL
+- `ssl_policy` (String) Select how the client side of the inspected transaction handles SSL. The default value is Allow.
   - CLI Alias: `request-ssl-policy`
   - Choices: `allow`, `require`, `deny`
   - Default value: `allow`
-- `uri_filter_dot_dot` (Boolean) Filter Dot Dot
+- `uri_filter_dot_dot` (Boolean) Filter Requests with .. in the URI after URI normalization
   - CLI Alias: `request-uri-filter-dotdot`
   - Default value: `true`
-- `uri_filter_exe` (Boolean) Filter .exe
+- `uri_filter_exe` (Boolean) Filter Requests with .exe in the URI after URI normalization
   - CLI Alias: `request-uri-filter-exe`
   - Default value: `true`
-- `uri_filter_fragment` (String) Fragmented URI Policy
+- `uri_filter_fragment` (String) Select how to handle URI fragments in requests. A URI fragment is the portion of a URI after the # symbol. The default is Truncate
   - CLI Alias: `request-uri-filter-fragment`
   - Choices: `allow`, `reject`, `truncate`
   - Default value: `truncate`
-- `uri_filter_unicode` (Boolean) Filter Unicode
+- `uri_filter_unicode` (Boolean) If Unicode is detected in the URI and this property is enabled then the transaction will be rejected
   - CLI Alias: `request-uri-filter-unicode`
   - Default value: `true`
-- `url_encoded_gnvc` (String) URL-Encoded Body Name-Value Profile
+- `url_encoded_gnvc` (String) The name-value profile allows you to specify what form elements are expected, what form elements should be stripped, and what form elements should be mapped to known values. If no profile is specified, any set of pairs is allowed.
   - CLI Alias: `request-body-profile`
   - Reference to: `datapower_namevalueprofile:id`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `xml_policy` (String) XML Processing
+- `xml_policy` (String) Specify how the device handles requests that contain an XML MIME type.
   - CLI Alias: `request-xml-policy`
   - Choices: `nothing`, `xml`, `soap`
   - Default value: `nothing`
-- `xml_rule` (String) XML Transformation Rule
+- `xml_rule` (String) This is the transformation rule that is run when the request contains an XML MIME type and the XML processing policy is set to XML or SOAP.
   - CLI Alias: `request-xml-rule`
   - Reference to: `datapower_stylepolicyrule:id`
 

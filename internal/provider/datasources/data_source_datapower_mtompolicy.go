@@ -57,7 +57,7 @@ func (d *MTOMPolicyDataSource) Metadata(_ context.Context, req datasource.Metada
 
 func (d *MTOMPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "MTOM Policy",
+		MarkdownDescription: "An MTOM policy provides a mechanism for optimizing the transmission and wire format of an XML/SOAP message. Optimization is performed by selecting elements with base64-encoded character data. The selected elements are decoded and attached as MIME attachment parts before transmission. Decoding before transmission reduces the overhead that is associated with base64-encoded data.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,15 +81,15 @@ func (d *MTOMPolicyDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"mode": schema.StringAttribute{
-							MarkdownDescription: "MTOM Mode",
+							MarkdownDescription: "Specify the optimization mode. <p>The encode option optimizes (serializes) input messages. For serialization, provide an XPath expression or a list of XPath expressions to identify the content to extract. Optionally, per XPath expression, exercise control over the Content Type and Content ID values. These two values can be determined automatically using the xmlmime:contentType declaration and namespace declaration.</p><p>The decode option decodes (deserializes) attachment parts of an optimized message. Deserialization, by default, reassembles the original infoset, which results in either a SOAP document or MIME document depending on whether all attachments were referenced by &lt;Include/> elements. Optionally, you can specify a Content ID to select individual attachment parts to reassemble.</p>",
 							Computed:            true,
 						},
 						"include_content_type": schema.BoolAttribute{
-							MarkdownDescription: "Include Content Type",
+							MarkdownDescription: "<p>Select whether to include the xmlmine:contentType declaration in output messages when the input message does not contain this declaration. If the input message contains this declaration, the MTOM policy passes through the attribute regardless of the setting for this property.</p><ul><li>Select \"on\", the default value, to add the contentType declaration to the output message.</li><li>Select \"off\" to not add the contentType declaration to the output message.</li></ul>",
 							Computed:            true,
 						},
 						"rule": schema.ListNestedAttribute{
-							MarkdownDescription: "MTOM Rules",
+							MarkdownDescription: "Each MTOM rule describes which message elements to optimize. A single XPath expression selects one or more elements for optimization.",
 							NestedObject:        models.DmMtomRuleDataSourceSchema,
 							Computed:            true,
 						},

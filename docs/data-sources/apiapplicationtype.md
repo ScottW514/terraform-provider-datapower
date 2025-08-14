@@ -3,12 +3,12 @@
 page_title: "datapower_apiapplicationtype Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API application type
+  An API application type for an application to support. An application type provides configurable properties.
 ---
 
 # datapower_apiapplicationtype (Data Source)
 
-API application type
+An API application type for an application to support. An application type provides configurable properties.
 
 ## Example Usage
 

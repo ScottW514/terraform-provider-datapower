@@ -57,7 +57,7 @@ func (d *PolicyAttachmentsDataSource) Metadata(_ context.Context, req datasource
 
 func (d *PolicyAttachmentsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Policy Attachment",
+		MarkdownDescription: "Create and configure ws-policy attachments for WSDLs",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,25 +81,25 @@ func (d *PolicyAttachmentsDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"enforcement_mode": schema.StringAttribute{
-							MarkdownDescription: "Policy Enforcement Mode",
+							MarkdownDescription: "Enforcement Mode defines how the service uses WS-Policy to ensure that messages meet security requirements. The default behavior is enforce.",
 							Computed:            true,
 						},
 						"policy_references": schema.BoolAttribute{
-							MarkdownDescription: "Policy References",
+							MarkdownDescription: "Enable policies attached to WSDL using PolicyURI attributes and PolicyReference elements. These attachments are sometimes called XML element attachments. If 'off', all PolicyURI attributes and PolicyReference elements are ignored and only external policies are enforced.",
 							Computed:            true,
 						},
 						"ignored_policy_attachment_points": schema.ListNestedAttribute{
-							MarkdownDescription: "Ignore Embedded Policy",
+							MarkdownDescription: "Disable all policies attached by policy references at a configured attachment point leaving other policy references intact.",
 							NestedObject:        models.DmPolicyAttachmentPointDataSourceSchema,
 							Computed:            true,
 						},
 						"external_policy": schema.ListNestedAttribute{
-							MarkdownDescription: "External Policy",
+							MarkdownDescription: "Associate an external policy with a service.",
 							NestedObject:        models.DmExternalAttachedPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"sla_enforcement_mode": schema.StringAttribute{
-							MarkdownDescription: "SLA Enforcement Mode",
+							MarkdownDescription: "SLA Enforcement Mode controls the application of SLA Policies to transactions. Transactions are either allowed or rejected based on whether an SLA rule is applied to the transaction.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

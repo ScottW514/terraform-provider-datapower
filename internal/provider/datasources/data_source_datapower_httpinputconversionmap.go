@@ -57,7 +57,7 @@ func (d *HTTPInputConversionMapDataSource) Metadata(_ context.Context, req datas
 
 func (d *HTTPInputConversionMapDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "HTTP Input Conversion Map",
+		MarkdownDescription: "This defines the rules for handling HTTP to XML conversion of form values in an HTTP GET or POST of a form. There are different conversion (Encoding) rules for the values. They control how the value is mapped to the contents of its &lt;arg> element in the resulting XML. There is a default Encoding, which is all that is required. There can also be specific Encodings applied to values based on the name associated with a value, which is done using an ordered list of PCREs.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,11 +81,11 @@ func (d *HTTPInputConversionMapDataSource) Schema(ctx context.Context, req datas
 							Computed:            true,
 						},
 						"default_input_encoding": schema.StringAttribute{
-							MarkdownDescription: "Default Encoding",
+							MarkdownDescription: "Select the default encoding to use for any name-value pair in an HTTP form where the name does not match any of the patterns in the Encoding Map.",
 							Computed:            true,
 						},
 						"input_encoding": schema.ListNestedAttribute{
-							MarkdownDescription: "Encoding Map",
+							MarkdownDescription: "This allows selecting the Encoding for values based on their name. The names are matched by PCREs. Each PCRE is associated with an Encoding that controls how the value is mapped to the contents of an &lt;arg> element in the resulting XML. This is an ordered list, comparision of the name proceeds until the first match. If there is no match, the Encoding will be selected by the Default Encoding of this HTTP Input Conversion Map.",
 							NestedObject:        models.DmInputEncodingDataSourceSchema,
 							Computed:            true,
 						},

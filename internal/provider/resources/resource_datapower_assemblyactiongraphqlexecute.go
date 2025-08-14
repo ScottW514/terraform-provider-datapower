@@ -56,7 +56,7 @@ func (r *AssemblyActionGraphQLExecuteResource) Metadata(ctx context.Context, req
 
 func (r *AssemblyActionGraphQLExecuteResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("GraphQL execute assembly action", "assembly-graphql-execute", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The GraphQL execute assembly action processes a GraphQL schema.", "assembly-graphql-execute", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,13 +85,13 @@ func (r *AssemblyActionGraphQLExecuteResource) Schema(ctx context.Context, req r
 				Optional:            true,
 			},
 			"input": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Input message", "input", "").AddDefaultValue("message").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable in the API context that contains the input to process. The content of the <tt>body</tt> field is the input and is the GraphQL query to process. The default variable is <tt>message</tt> .", "input", "").AddDefaultValue("message").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("message"),
 			},
 			"output": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Output message", "output", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable in the API context to contain the results. The content of the <tt>body</tt> field contains the results. By default, the variable is the same as the variable for the input message. Therefore, by default, the input message is overwritten by the output message.", "output", "").String,
 				Optional:            true,
 			},
 			"target_map_rule": schema.ListNestedAttribute{
@@ -114,11 +114,11 @@ func (r *AssemblyActionGraphQLExecuteResource) Schema(ctx context.Context, req r
 				Optional:            true,
 			},
 			"correlation_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Correlation path", "correlation-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.", "correlation-path", "").String,
 				Optional:            true,
 			},
 			"action_debug": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable debugging", "debug", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

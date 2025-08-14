@@ -55,7 +55,7 @@ func (r *SLMActionResource) Metadata(ctx context.Context, req resource.MetadataR
 
 func (r *SLMActionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SLM action", "slm-action", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An SLM action defines the control procedure to trigger for transactions in excess of the threshold. As part of any control procedure, the monitor writes an event to the log for each transaction that exceeds a threshold.", "slm-action", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *SLMActionResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 			},
 			"type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Type", "type", "").AddStringEnum("log-only", "reject", "shape").AddDefaultValue("log-only").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the administrative sanction to trigger for transactions in excess of the threshold. This action is beyond the generation of a log message.", "type", "").AddStringEnum("log-only", "reject", "shape").AddDefaultValue("log-only").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

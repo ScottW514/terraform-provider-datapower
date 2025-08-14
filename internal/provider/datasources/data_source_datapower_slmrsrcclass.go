@@ -57,7 +57,7 @@ func (d *SLMRsrcClassDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *SLMRsrcClassDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SLM resource class",
+		MarkdownDescription: "<p>An SLM resource class identifies a set of resources to be subject to an SLM policy. A resource class consists of the following types and properties.</p><ul><li>A resource type that specifies the manner to identify resources.</li><li>A match type that determines the resources to apply the policy.</li><li>Depending on the resource and match type, properties that identify specific instances of resources.</li></ul>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

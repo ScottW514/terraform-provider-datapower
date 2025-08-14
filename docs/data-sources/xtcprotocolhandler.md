@@ -3,12 +3,12 @@
 page_title: "datapower_xtcprotocolhandler Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Stateful raw XML handler
+  The configuration for the stateful TCP protocol handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed. The source protocol also specifies the destination address and any single TCP connection will use the same TCP session on the backside for all of its transactions (one transaction per document). Any gateway that employs one of these handlers must use a dynamic backend.
 ---
 
 # datapower_xtcprotocolhandler (Data Source)
 
-Stateful raw XML handler
+The configuration for the stateful TCP protocol handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed. The source protocol also specifies the destination address and any single TCP connection will use the same TCP session on the backside for all of its transactions (one transaction per document). <p>Any gateway that employs one of these handlers must use a dynamic backend.</p>
 
 ## Example Usage
 
@@ -40,10 +40,10 @@ Read-Only:
 
 - `acl` (String) Access control list
 - `app_domain` (String) The name of the application domain the object belongs to
-- `close_on_fault` (Boolean) Close session on fault
+- `close_on_fault` (Boolean) Specify whether to close the session on fault. When enabled, TCP connections between clients and servers are closed when the system generates a fault. Otherwise, the session is closed at only connection termination, timeout, or error.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_address` (String) Local IP address
-- `local_port` (Number) Local port
+- `local_address` (String) Specify the local IP address that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses. You can use a local host alias to help ease migration.
+- `local_port` (Number) Specifies the port that this service monitors. Enter a value in the range 1 - 65535. The default value is 3000.
 - `remote_address` (String) Remote host
 - `remote_port` (Number) Remote port
 - `ssl_client` (String) TLS client profile

@@ -57,7 +57,7 @@ func (d *SSLClientProfileDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *SSLClientProfileDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "TLS client profile",
+		MarkdownDescription: "A TLS client profile define how to secure a connection remote endpoint.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -82,7 +82,7 @@ func (d *SSLClientProfileDataSource) Schema(ctx context.Context, req datasource.
 						},
 						"protocols": models.GetDmSSLProtoVersionsBitmapDataSourceSchema("Protocols", "protocols", ""),
 						"ciphers": schema.ListAttribute{
-							MarkdownDescription: "Ciphers",
+							MarkdownDescription: "Specify the list of cipher suites to support in preference order. Ensure that the displayed order of cipher suites are in preference order. Otherwise, change the sequence to meet your preference.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
@@ -103,11 +103,11 @@ func (d *SSLClientProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"cache_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Session cache timeout",
+							MarkdownDescription: "Specify the duration in seconds that TLS sessions remain in the session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.",
 							Computed:            true,
 						},
 						"cache_size": schema.Int64Attribute{
-							MarkdownDescription: "Session cache size",
+							MarkdownDescription: "Specify the maximum number of entries of the session cache. Enter a value in the range 1 - 500000. The default value is 100.",
 							Computed:            true,
 						},
 						"ssl_client_features": models.GetDmSSLClientFeaturesDataSourceSchema("Features", "ssl-client-features", ""),
@@ -117,7 +117,7 @@ func (d *SSLClientProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"use_custom_sni_hostname": schema.BoolAttribute{
-							MarkdownDescription: "Use custom SNI host name",
+							MarkdownDescription: "Specify whether to use a custom server name in the SNI extension in the TLS client <tt>hello</tt> message. By default, the hostname of the target is used in the SNI extension.",
 							Computed:            true,
 						},
 						"custom_sni_hostname": schema.StringAttribute{
@@ -128,13 +128,13 @@ func (d *SSLClientProfileDataSource) Schema(ctx context.Context, req datasource.
 							MarkdownDescription: "Validate server hostname",
 							Computed:            true,
 						},
-						"hostname_validation_flags": models.GetDmSSLHostnameValidationFlagsDataSourceSchema("Hostname validation flags", "hostname-validation-flags", ""),
+						"hostname_validation_flags": models.GetDmSSLHostnameValidationFlagsDataSourceSchema("Specify the flags that fine tune the validation methods and settings during the handshake. The default behavior uses the subject DN only when the <tt>Subject Alternative Name</tt> (SAN) extension contains no DNS name.", "hostname-validation-flags", ""),
 						"hostname_validation_fail_on_error": schema.BoolAttribute{
-							MarkdownDescription: "Hostname validation fail on error",
+							MarkdownDescription: "Specify whether to terminate the handshake when hostname validation fails or to ignore the failure, log an event, and continue with server certificate validation. The default behavior is to ignore the failure, log an event, and continue with any configured server certificate validation.",
 							Computed:            true,
 						},
 						"enable_tls13_compat": schema.BoolAttribute{
-							MarkdownDescription: "Enable TLSv1.3 compatibility",
+							MarkdownDescription: "Specify whether to send extra TLS messages to look more like TLSv1.2. Some network middleboxes might not recognize TLSv1.3 and drop the connection. Enable this option to send dummy Change Cipher Spec messages, which makes TLSv1.3 look more like TLSv1.2.",
 							Computed:            true,
 						},
 						"disable_renegotiation": schema.BoolAttribute{
@@ -142,7 +142,7 @@ func (d *SSLClientProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"sig_algs": schema.ListAttribute{
-							MarkdownDescription: "Signature algorithms",
+							MarkdownDescription: "Specify the list of signature algorithms to advertise and support. An empty list implies the use of all of the default algorithms.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

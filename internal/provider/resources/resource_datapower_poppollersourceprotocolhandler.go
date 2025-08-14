@@ -58,7 +58,7 @@ func (r *POPPollerSourceProtocolHandlerResource) Metadata(ctx context.Context, r
 
 func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("POP poller handler", "source-pop-poller", "").AddActions("quiesce").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The Post Office Protocol (POP) handler manages the polling of a mailbox on a mail server. The mailbox receives mail messages from external partners. The handler retrieves and deletes mail messages on each polling cycle. Each mail message that The handler retrieves results in one transaction.", "source-pop-poller", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -87,15 +87,15 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 			},
 			"mail_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Mail server", "mail-server", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The host name or IP address of the mail server.", "mail-server", "").String,
 				Required:            true,
 			},
 			"port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Port", "port", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The listening port on the mail server. STARTTLS negotiation and an unsecured connection generally use port 110. An implicit, secured connection generally uses port 995.", "port", "").String,
 				Required:            true,
 			},
 			"conn_security": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Connection security", "connection-security", "").AddStringEnum("none", "stls", "ssl").AddDefaultValue("none").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "connection-security", "").AddStringEnum("none", "stls", "ssl").AddDefaultValue("none").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -104,7 +104,7 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: stringdefault.StaticString("none"),
 			},
 			"auth_method": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authentication method", "auth-method", "").AddStringEnum("basic", "apop").AddDefaultValue("basic").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The type of authentication to use. If authentication fails, no connection is made.", "auth-method", "").AddStringEnum("basic", "apop").AddDefaultValue("basic").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -113,15 +113,15 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: stringdefault.StaticString("basic"),
 			},
 			"account": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Account name", "account", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name to access the mailbox on the server; for example, user@example.com.", "account", "").String,
 				Required:            true,
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "passwordalias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The password alias of the password for the account that accesses the mailbox on the server.", "password-alias", "passwordalias").String,
 				Optional:            true,
 			},
 			"delay_between_polls": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Delay between polls", "delay-time", "").AddIntegerRange(1, 65535).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between polling sequences. A <em>polling sequence</em> is the time to retrieve the messages plus the time to complete their processing. Enter a value in the range 1 - 65535. The default value is 300. <p><b>Note:</b> Some mail servers restrict the number of times an account can establish a connection during a specific time period. Ensure that the configured interval complies with any restriction.</p>", "delay-time", "").AddIntegerRange(1, 65535).AddDefaultValue("300").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -131,7 +131,7 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: int64default.StaticInt64(300),
 			},
 			"max_messages_per_poll": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max messages per poll", "max-messages-per-poll", "").AddIntegerRange(1, 100).AddDefaultValue("5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of messages to retrieve in each polling cycle. Enter a value in the range 1 - 100. The default value is 5.", "max-messages-per-poll", "").AddIntegerRange(1, 100).AddDefaultValue("5").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -141,7 +141,7 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: int64default.StaticInt64(5),
 			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -150,7 +150,7 @@ func (r *POPPollerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "sslclientprofile").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -3,13 +3,13 @@
 page_title: "datapower_urlrewritepolicy Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  URL Rewrite Policy
+  Configure/Edit URL Rewrite Policies
   CLI Alias: urlrewrite
 ---
 
 # datapower_urlrewritepolicy (Resource)
 
-URL Rewrite Policy
+Configure/Edit URL Rewrite Policies
   - CLI Alias: `urlrewrite`
 
 ## Example Usage
@@ -32,11 +32,11 @@ resource "datapower_urlrewritepolicy" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `direction` (String) URL Rewrite Direction
+- `direction` (String) Restricts the URL Rewrite Policy to a specified direction. Direction is applied at the service object level and has no effect on policies used from multistep or elsewhere.
   - CLI Alias: `direction`
   - Choices: `all`, `request`, `response`
   - Default value: `all`
-- `url_rewrite_rule` (Attributes List) URL Rewrite Rule
+- `url_rewrite_rule` (Attributes List) Add, edit, or delete a URL rewrite rule
   - CLI Alias: `rule` (see [below for nested schema](#nestedatt--url_rewrite_rule))
 
 <a id="nestedatt--dependency_actions"></a>

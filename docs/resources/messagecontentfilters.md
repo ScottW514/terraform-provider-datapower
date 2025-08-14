@@ -3,13 +3,13 @@
 page_title: "datapower_messagecontentfilters Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Content Filters
+  A Message Content Filters is a group of HTTP header-based and XPath-based filters. For HTTP header-based filters, the filter succeeds when the name and value of an HTTP header field match.For XPath-based filters, the filter succeeds when a document matches the element structure and content of the XPath expression and value.
   CLI Alias: mcfilters
 ---
 
 # datapower_messagecontentfilters (Resource)
 
-Message Content Filters
+A Message Content Filters is a group of HTTP header-based and XPath-based filters. <ul><li>For HTTP header-based filters, the filter succeeds when the name and value of an HTTP header field match.</li><li>For XPath-based filters, the filter succeeds when a document matches the element structure and content of the XPath expression and value.</li></ul>
   - CLI Alias: `mcfilters`
 
 ## Example Usage
@@ -32,9 +32,9 @@ resource "datapower_messagecontentfilters" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `filter_refs` (List of String) Message Content Filter
+- `filter_refs` (List of String) Defines the group of message content filter objects.
   - CLI Alias: `filter`
-- `filters` (Attributes List) Message Content Filter
+- `filters` (Attributes List) Defines the group of message content filters.
   - CLI Alias: `mcfilter` (see [below for nested schema](#nestedatt--filters))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

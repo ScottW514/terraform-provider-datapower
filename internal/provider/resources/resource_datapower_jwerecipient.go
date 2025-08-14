@@ -55,7 +55,7 @@ func (r *JWERecipientResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *JWERecipientResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("JWE Recipient", "jwe-recipient", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("JWE recipient object includes several values required by the JWE JSON Serialization object.", "jwe-recipient", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -80,11 +80,11 @@ func (r *JWERecipientResource) Schema(ctx context.Context, req resource.SchemaRe
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Algorithm", "alg", "").AddStringEnum("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir").AddDefaultValue("RSA1_5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("JWE key management algorithm for the JWE recipient.", "alg", "").AddStringEnum("RSA1_5", "RSA-OAEP", "RSA-OAEP-256", "A128KW", "A192KW", "A256KW", "dir").AddDefaultValue("RSA1_5").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -93,15 +93,15 @@ func (r *JWERecipientResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("RSA1_5"),
 			},
 			"ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Shared Secret Key", "sskey", "cryptosskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "cryptosskey").String,
 				Optional:            true,
 			},
 			"certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Certificate", "cert", "cryptocertificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Certificate.", "cert", "cryptocertificate").String,
 				Optional:            true,
 			},
 			"unprotected_header": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Unprotected Header", "unprotected-header", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Unprotected header for the JWE recipient.", "unprotected-header", "").String,
 				NestedObject:        models.DmJOSEHeaderResourceSchema,
 				Optional:            true,
 			},

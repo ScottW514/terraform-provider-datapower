@@ -57,7 +57,7 @@ func (d *PeerGroupDataSource) Metadata(_ context.Context, req datasource.Metadat
 
 func (d *PeerGroupDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Peer group",
+		MarkdownDescription: "A collection of systems that automatically update each other with real time data of the selected type. For example, members in the group exchange data to allow the enforcement of a policy across the collection.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -85,7 +85,7 @@ func (d *PeerGroupDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"url": schema.ListAttribute{
-							MarkdownDescription: "URL",
+							MarkdownDescription: "Specify the URL of each peer in the <tt>protocol://address:port</tt> format for an Ethernet interface or a VLAN interface. For unicast peering, peers exchange SLM data over the XML management interface as SOAP over HTTPS. Multicast peering shares the initial SLM state using SOAP over HTTPS; the data transfers are done using multicast. <p>The default port for the XML Management Interface is 5550. If this port is changed on any peer, the URL must reflect the correct port.</p><p>Define all peers, which includes the local system.</p>",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
@@ -94,7 +94,7 @@ func (d *PeerGroupDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"update_interval": schema.Int64Attribute{
-							MarkdownDescription: "Update interval",
+							MarkdownDescription: "Specify the update interval in milliseconds that data is transmitted among peers.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -3,13 +3,13 @@
 page_title: "datapower_josesignatureidentifier Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Signature Identifier
+  JOSE Signature Identifier object for the JSON Web Verify.
   CLI Alias: jose-signature-identifier
 ---
 
 # datapower_josesignatureidentifier (Resource)
 
-Signature Identifier
+JOSE Signature Identifier object for the JSON Web Verify.
   - CLI Alias: `jose-signature-identifier`
 
 ## Example Usage
@@ -32,25 +32,25 @@ resource "datapower_josesignatureidentifier" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `header_param` (Attributes List) Header Parameters
+- `header_param` (Attributes List) The JOSE header parameters used to identify the signature.
   - CLI Alias: `header-param` (see [below for nested schema](#nestedatt--header_param))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 
 ### Optional
 
-- `certificate` (String) Key Material
+- `certificate` (String) Use the certificate to verify the signature.
   - CLI Alias: `cert`
   - Reference to: `datapower_cryptocertificate:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `ss_key` (String) Key Material
+- `ss_key` (String) Use the shared secret key to verify the signature.
   - CLI Alias: `sskey`
   - Reference to: `datapower_cryptosskey:id`
-- `type` (String) Key Material Type
+- `type` (String) Key material type used to verify the signature.
   - CLI Alias: `type`
   - Choices: `certificate`, `sskey`
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
-- `valid_algorithms` (List of String) Valid algorithms
+- `valid_algorithms` (List of String) Specifies an array of algorithm values that are valid for signature verification. When specified, the JWS <tt>alg</tt> header parameter value must match a value in this set. By default, all allowed JWS <tt>alg</tt> header parameters values are valid.
   - CLI Alias: `alg`
   - Choices: `HS256`, `HS384`, `HS512`, `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512`, `PS256`, `PS384`, `PS512`
 

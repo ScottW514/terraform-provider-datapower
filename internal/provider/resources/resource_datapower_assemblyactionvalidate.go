@@ -56,7 +56,7 @@ func (r *AssemblyActionValidateResource) Metadata(ctx context.Context, req resou
 
 func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Validate assembly action", "assembly-validate", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The validate assembly action validates JSON and XML payloads against a schema.", "assembly-validate", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -103,17 +103,17 @@ func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"input": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Input message", "input", "").AddDefaultValue("message").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable in the API context that contains the data to validate. The content of the <tt>body</tt> field is the input to validate. The default variable is <tt>message</tt> .", "input", "").AddDefaultValue("message").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("message"),
 			},
 			"output": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Output message", "output", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the variable in the API context to store the results. For a JSON schema, adds any default values that are missing from the payload.</p><p>Without an output variable, the results are not stored. By default, no output variable is specified.</p><p>If the validation fails, no output is stored.</p>", "output", "").String,
 				Optional:            true,
 			},
 			"definition": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Definition", "definition", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path to a schema in the API definition. Use the format <tt>#/definitions/mySchema</tt> or <tt>mySchema</tt> to specify a previously defined schema.", "definition", "").String,
 				Optional:            true,
 			},
 			"compile_settings": schema.StringAttribute{
@@ -129,11 +129,11 @@ func (r *AssemblyActionValidateResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"correlation_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Correlation path", "correlation-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.", "correlation-path", "").String,
 				Optional:            true,
 			},
 			"action_debug": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable debugging", "debug", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

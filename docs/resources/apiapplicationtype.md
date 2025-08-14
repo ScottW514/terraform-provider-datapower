@@ -3,13 +3,13 @@
 page_title: "datapower_apiapplicationtype Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API application type
+  An API application type for an application to support. An application type provides configurable properties.
   CLI Alias: api-application-type
 ---
 
 # datapower_apiapplicationtype (Resource)
 
-API application type
+An API application type for an application to support. An application type provides configurable properties.
   - CLI Alias: `api-application-type`
 
 ## Example Usage

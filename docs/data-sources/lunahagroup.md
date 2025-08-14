@@ -3,12 +3,12 @@
 page_title: "datapower_lunahagroup Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SafeNet Luna HSM HA group
+  An HA group on the SafeNet Luna Network HSM appliance allows you to define multiple Luna HSM partitions as a group for load balancing and failover.
 ---
 
 # datapower_lunahagroup (Data Source)
 
-SafeNet Luna HSM HA group
+An HA group on the SafeNet Luna Network HSM appliance allows you to define multiple Luna HSM partitions as a group for load balancing and failover.
 
 ## Example Usage
 
@@ -39,10 +39,10 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `group_name` (String) Label
+- `group_name` (String) Specify the label that identifies the HA group on the Luna HSM. The HA group appears as one single logical partition that is identified by the label on the Luna HSM. The minimum length of the label is one character. The maximum length is 32 characters. The group name must be unique across domains.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `member` (List of String) Members
-- `standby` (List of String) Standby members
+- `member` (List of String) Specify the members for HA group. An HA group member is an HSM partition that the system can access. The first member is the primary member. The Luna HSM balances cryptographic requests across the members in the HA group.
+- `standby` (List of String) Specify the standby HSM partition. Standby members are not active for load balancing until all non-standby members fail. You must add the HSM partition as a member of the HA group before you can specify the partition as standby.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

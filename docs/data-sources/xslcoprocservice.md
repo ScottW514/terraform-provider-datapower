@@ -3,12 +3,12 @@
 page_title: "datapower_xslcoprocservice Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XSL Coprocessor
+  
 ---
 
 # datapower_xslcoprocservice (Data Source)
 
-XSL Coprocessor
+<p>The XSL Coprocessor is obsolete.</p>
 
 ## Example Usage
 
@@ -39,26 +39,26 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `cache_relative_url` (Boolean) Cache Relative URL
-- `connection_timeout` (Number) Connection Timeout
-- `crypto_extensions` (Boolean) Crypto Extensions
-- `debug_history` (Number) Transaction History
-- `debug_mode` (String) Probe setting
-- `debug_trigger` (Attributes List) Probe Triggers (see [below for nested schema](#nestedatt--result--debug_trigger))
-- `default_param_namespace` (String) Default parameter namespace
+- `cache_relative_url` (Boolean)
+- `connection_timeout` (Number)
+- `crypto_extensions` (Boolean)
+- `debug_history` (Number)
+- `debug_mode` (String)
+- `debug_trigger` (Attributes List) (see [below for nested schema](#nestedatt--result--debug_trigger))
+- `default_param_namespace` (String)
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `intermediate_result_timeout` (Number) Intermediate Result Timeout
-- `local_address` (String) Local address
-- `local_port` (Number) Port Number
-- `priority` (String) Service Priority
-- `ssl_server` (String) TLS server profile
-- `ssl_server_config_type` (String) TLS type
-- `sslsni_server` (String) TLS SNI server profile
-- `style_policy_rule` (String) Processing Rule
-- `url_rewrite_policy` (String) URL Rewrite Policy
-- `use_client_uri_resolver` (Boolean) Use URI Resolver
-- `user_summary` (String) Comments
-- `xml_manager` (String) XML Manager
+- `intermediate_result_timeout` (Number)
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
+- `local_port` (Number)
+- `priority` (String)
+- `ssl_server` (String)
+- `ssl_server_config_type` (String)
+- `sslsni_server` (String)
+- `style_policy_rule` (String)
+- `url_rewrite_policy` (String)
+- `use_client_uri_resolver` (Boolean)
+- `user_summary` (String)
+- `xml_manager` (String)
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

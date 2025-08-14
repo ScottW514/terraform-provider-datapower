@@ -3,12 +3,12 @@
 page_title: "datapower_durationmonitor Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Duration Monitor
+  On-Line Help for Message-Duration Monitors. Duration Monitors observe the duration, or amount of time, taken to process submissions.
 ---
 
 # datapower_durationmonitor (Data Source)
 
-Message Duration Monitor
+On-Line Help for Message-Duration Monitors. Duration Monitors observe the duration, or amount of time, taken to process submissions.
 
 ## Example Usage
 
@@ -39,11 +39,11 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `filter` (Attributes List) Thresholds/Filters (see [below for nested schema](#nestedatt--result--filter))
+- `filter` (Attributes List) Click this tab to define a message-duration monitor threshold and assign an action taken when the threshold is reached. (see [below for nested schema](#nestedatt--result--filter))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `measure` (String) Measure
-- `message_type` (String) Message Type
-- `user_summary` (String) Comments
+- `measure` (String) Select which portion of the transaction cycle to monitor. The default is Messages.
+- `message_type` (String) Select the message type monitored by this message-count monitor.
+- `user_summary` (String) A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

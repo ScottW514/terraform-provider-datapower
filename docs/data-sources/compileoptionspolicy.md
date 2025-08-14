@@ -3,12 +3,12 @@
 page_title: "datapower_compileoptionspolicy Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Compile Options Policy
+  Configure/Edit Compile Option Policies
 ---
 
 # datapower_compileoptionspolicy (Data Source)
 
-Compile Options Policy
+Configure/Edit Compile Option Policies
 
 ## Example Usage
 
@@ -38,30 +38,30 @@ Optional:
 
 Read-Only:
 
-- `allow_soap_enc_array` (String) Specifically Allow xsi:type='SOAP-ENC:Array' Rule
-- `allow_xop_include` (String) Accept MTOM/XOP Optimized Messages
+- `allow_soap_enc_array` (String) Designates a set of schemas that will accept most uses of elements with xsi:type='SOAP-ENC:Array' consistent with SOAP 1.1 Section 5, even when these attributes violate the XML Schema specification. Normally the xsi:type attribute must name a type equal to or derived from the actual type of the element. For schemas compiled with this option, xsi:type is accepted specifically for the SOAP 1.1 Encoding 'Array' complex type if the element's type is derived from SOAP-ENC:Array; this is the opposite of the normal allowable case.
+- `allow_xop_include` (String) <p>Designates a set of schema or WSDL documents that accept messages where base64-encoded binary content was optimized according to the MTOM/XOP specifications. XOP binary-optimization replaces base64-encoded binary data with an xop:Include reference element that references the unencoded binary data located in an attachment.</p><ul><li>When disabled, such optimized messages are rejected by validation of the optimized form. Rejection occurs because the schema specifies a simple type that accepts base64-encoded data, such as xs:base64Binary or xs:string, but the message contains an xop:Include element instead.</li><li>When enabled, an xop:Include element can optionally appear in place of content for any XML Schema simple type that validates base64-encoded binary data. The xop:Include element itself will be validated according to the built-in schema in store:///schemas/xop.xsd.</li></ul>
 - `app_domain` (String) The name of the application domain the object belongs to
-- `debug` (String) Debug Rule
-- `disallow_xg4` (String) XML Hardware Acceleration Disallowed Rule
+- `debug` (String) Designates a set of stylesheets, XQuery scripts, and JSONiq scripts to be run in debug mode. When a stylesheet, XQuery script, or JSONiq script is run in debug mode, it generates a custom web page instead of displaying its normal output. The web page details exactly what occurred during execution, including the values of variables and where particular pieces of the output came from. This should not be used in production environments.
+- `disallow_xg4` (String) <p>Designates a set of stylesheets or schemas that will never use XML hardware acceleration. XML hardware acceleration will be used only if the first action in a processing policy is a schema validation against a fixed schema. Any schemas specified here will not use XML hardware acceleration even if hardware resources are available.</p><p>When XML hardware acceleration is disabled in the Systems Settings, the XML Hardware Acceleration Disallowed Rule has no effect.</p>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `minimum_escaping` (String) Minimum Output Escaping Rule
-- `prefer_xg4` (String) XML Hardware Acceleration Preferred Rule
-- `profile` (String) Profile Rule
-- `stack_size` (Number) Maximum Stack Size
-- `stream` (String) Streaming Rule
-- `strict` (Boolean) Strict
-- `try_stream` (String) Attempt Streaming Rule
+- `minimum_escaping` (String) Select a URL Map from the list. Output produced from stylesheets that meet the URL map criteria are not escaped during processing. Escaping is enabled by default. Minimal escaping is particularly useful when handling non-English character sets.
+- `prefer_xg4` (String) <p>Designates a set of stylesheets or schemas that must use XML hardware acceleration when possible. XML hardware acceleration will be used only if the first action in a processing policy is a schema validation against a fixed schema. Any schemas specified here will use XML hardware acceleration if hardware resources are available. Schemas not specified here may also use XML hardware acceleration, but those schemas will be displaced in favor of schemas specified here.</p><p>When XML hardware acceleration is disabled in the Systems Settings, the XML Hardware Acceleration Preferred Rule has no effect.</p>
+- `profile` (String) Designates a set of stylesheets to be profiled based on their URL. This should not be used in production environments.
+- `stack_size` (Number) Indicates the maximum number of bytes the stack is allowed to use while executing a stylesheet or other compiled content. This blocks infinite recursion. The minimum value is 10 kilobytes, or 10,240 bytes. The default is half a megabyte, or 524,288 bytes.
+- `stream` (String) Designates a set of stylesheets which must be run in streaming mode. Transformation of the document begins before the input is fully parsed. Not all stylesheets can be streamed; if a stylesheet cannot be streamed, an error will be issued and the input will not be processed. See the DataPower manual for suggestions on producing streamable stylesheets.
+- `strict` (Boolean) Enable strict XSLT error-checking; non-strict operation attempts to recover from certain errors such as use of undeclared variables, calling undeclared templates, and so forth.
+- `try_stream` (String) Designates a set of stylesheets to attempt to run in streaming mode. Transformation of the document begins before the input is fully parsed. Not all stylesheets can be streamed; if a stylesheet cannot be streamed, a warning will be issued during compilation and the stylesheet will read in the entire input as normal at execution time. See the DataPower manual for suggestions on producing streamable stylesheets.
 - `user_summary` (String) Comments
-- `validate_soap_enc_array` (String) Validate SOAP 1.1 Encoding Rule
-- `wildcards_ignore_xsi_type` (String) Wildcards Ignore xsi:type Rule
-- `wsdl_strict_soap_version` (Boolean) Strict SOAP Envelope Version
-- `wsdl_validate_body` (String) Validate Message Body
-- `wsdl_validate_faults` (String) Validate Message Fault details
-- `wsdl_validate_headers` (String) Validate Message Headers
-- `wsdl_wrapped_faults` (Boolean) Require wrappers on fault-details specified by type
-- `wsi_validation` (String) WS-I Basic Profile Validation
-- `xacml_debug` (Boolean) Debug XACML Policy
-- `xslt_version` (String) XSLT Version
+- `validate_soap_enc_array` (String) Designates a set of schemas that will do extra validation following the encoding rules in SOAP 1.1 Section 5. This validates members of SOAP arrays, allows attributes such as @id and @href even if not allowed by the schema, and checks that @href values have a corresponding @id element.
+- `wildcards_ignore_xsi_type` (String) Designates a set of schemas where wildcards (xs:any elements) only validate children by element name. The XML Schema specification requires that, if a wildcard matches an element but that element does not have an element declaration, the element is instead validated according to an xsi:type attribute on it. This option ignores those xsi:type attributes. It should be used for cases such as SOAP envelope validation where a further validation step will validate the contents matching the wildcard, possibly using the SOAP 1.1 encoding rules.
+- `wsdl_strict_soap_version` (Boolean) When on, follow the version of the SOAP Binding in the WSDL, allowing only messages bound to SOAP 1.2 to appear in SOAP 1.2 envelopes and messages bound to SOAP 1.1 to appear in SOAP 1.1 envelopes. The default is off.
+- `wsdl_validate_body` (String) Select the validation behavior for the soap:Body. The default is Strict.
+- `wsdl_validate_faults` (String) Select the validation behavior for the fault detail. The default is Strict.
+- `wsdl_validate_headers` (String) Select the validation behavior for the soap:Header. The default is Lax.
+- `wsdl_wrapped_faults` (Boolean) For compatibility, require a rpc-style wrapper around fault details that are specified by type.
+- `wsi_validation` (String) Select the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default is Ignore.
+- `xacml_debug` (Boolean) Setting to "on" to make the XACML compiler to put more debugging information when evaluate a policy. Note that the XACML debugging messages are also controlled by the log event in the 'XACML' category. Use the "debug" log level to view the full XACML debugging messages.
+- `xslt_version` (String) Select the XSLT processor version.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

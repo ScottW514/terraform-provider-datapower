@@ -54,7 +54,7 @@ func (r *APIExecuteResource) Metadata(ctx context.Context, req resource.Metadata
 
 func (r *APIExecuteResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Execute API action", "api-execute", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The execute API action runs the assembly rule that is identified at the runtime for the incoming API request.", "api-execute", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -87,7 +87,7 @@ func (r *APIExecuteResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 			},
 			"correlation_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Correlation path", "correlation-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.", "correlation-path", "").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

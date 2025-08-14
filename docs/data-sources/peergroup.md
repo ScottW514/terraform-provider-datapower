@@ -3,12 +3,12 @@
 page_title: "datapower_peergroup Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Peer group
+  A collection of systems that automatically update each other with real time data of the selected type. For example, members in the group exchange data to allow the enforcement of a policy across the collection.
 ---
 
 # datapower_peergroup (Data Source)
 
-Peer group
+A collection of systems that automatically update each other with real time data of the selected type. For example, members in the group exchange data to allow the enforcement of a policy across the collection.
 
 ## Example Usage
 
@@ -42,8 +42,8 @@ Read-Only:
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `ip_multicast` (String) IP multicast
 - `type` (String) Type
-- `update_interval` (Number) Update interval
-- `url` (List of String) URL
+- `update_interval` (Number) Specify the update interval in milliseconds that data is transmitted among peers.
+- `url` (List of String) Specify the URL of each peer in the <tt>protocol://address:port</tt> format for an Ethernet interface or a VLAN interface. For unicast peering, peers exchange SLM data over the XML management interface as SOAP over HTTPS. Multicast peering shares the initial SLM state using SOAP over HTTPS; the data transfers are done using multicast. <p>The default port for the XML Management Interface is 5550. If this port is changed on any peer, the URL must reflect the correct port.</p><p>Define all peers, which includes the local system.</p>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

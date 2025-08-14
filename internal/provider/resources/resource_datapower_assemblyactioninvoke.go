@@ -57,7 +57,7 @@ func (r *AssemblyActionInvokeResource) Metadata(ctx context.Context, req resourc
 
 func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Invoke assembly action", "assembly-invoke", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The invoke assembly action call a service from your assembly.", "assembly-invoke", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -82,7 +82,7 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				},
 			},
 			"url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL", "url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the target. You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short <tt>$( <i>property_name</i> )</tt> format when the assembly action does not have a property with the same name.", "url", "").String,
 				Required:            true,
 			},
 			"ssl_client": schema.StringAttribute{
@@ -90,7 +90,7 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Optional:            true,
 			},
 			"timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Timeout", "timeout", "").AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait for a reply from the target. The default value is 60.", "timeout", "").AddDefaultValue("60").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(60),
@@ -122,7 +122,7 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("detect"),
 			},
 			"graph_ql_send_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("GraphQL send type", "graphql-send-type", "").AddStringEnum("detect", "graphql", "json").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.", "graphql-send-type", "").AddStringEnum("detect", "graphql", "json").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("detect", "graphql", "json"),
@@ -135,7 +135,7 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Default:             booldefault.StaticBool(false),
 			},
 			"cache_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Cache type", "cache-type", "").AddStringEnum("Protocol", "NoCache", "TimeToLive").AddDefaultValue("Protocol").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to cache documents.", "cache-type", "").AddStringEnum("Protocol", "NoCache", "TimeToLive").AddDefaultValue("Protocol").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -144,29 +144,29 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("Protocol"),
 			},
 			"time_to_live": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Time to live", "ttl", "").AddDefaultValue("900").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity period in seconds for documents in the cache. The default value is 900.", "ttl", "").AddDefaultValue("900").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(900),
 			},
 			"cache_unsafe_response": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Cache response to POST and PUT requests", "cache-unsafe-response", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to cache responses to POST and PUT requests when the cache policy type is set to time to live. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.", "cache-unsafe-response", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"cache_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Cache key", "cache-key", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the string for the cache key. If omitted, the entire URL is used as the key.", "cache-key", "").String,
 				Optional:            true,
 			},
 			"follow_redirects": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Follow redirects", "follow-redirects", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to follow redirects. Some protocols generate redirects. When enabled, the action attempts to resolve redirects transparently.", "follow-redirects", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"http_version": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTP version to server", "http-version", "").AddStringEnum("HTTP/1.0", "HTTP/1.1", "HTTP/2").AddDefaultValue("HTTP/1.1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP version for server-side connections. The default value is HTTP/1.1.", "http-version", "").AddStringEnum("HTTP/1.0", "HTTP/1.1", "HTTP/2").AddDefaultValue("HTTP/1.1").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -175,13 +175,13 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("HTTP/1.1"),
 			},
 			"http2_required": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTP/2 required", "http2-required", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether an HTTP/2 connection is required when connecting to the server. Only applicable when the HTTP version to the server is set to HTTP/2 and the connection uses TLS. The default value is off.", "http2-required", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"do_chunked_upload": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow chunked uploads", "chunked-uploads", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable uploading of HTTP/1.1 chunked-encoded documents. For HTTP/1.1, the document body can be delimited by either <tt>Content-Length</tt> or chunked encoding. While all servers understand <tt>Content-Length</tt> , many servers fail to understand chunked encoding. For this reason, <tt>Content-Length</tt> is the standard method. However, the use of <tt>Content-Length</tt> can interfere with streaming. To stream full documents to an RFC 2616 compatible server, enable this property. Unlike other HTTP/1.1 features, you must know that the target server is RFC 2616 compatible.", "chunked-uploads", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -200,49 +200,49 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 			},
 			"error_types": models.GetDmInvokeErrorTypeResourceSchema("Error types", "error-types", "", false),
 			"output": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Output", "output", "").AddDefaultValue("message").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable to store results. By default, results are stored in the <tt>message.body</tt> , <tt>message.headers</tt> , <tt>message.statuscode</tt> variables.", "output", "").AddDefaultValue("message").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("message"),
 			},
 			"decode_request_params": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Decode request parameters", "decode-request-params", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to decode the request parameters in the target URL. When enabled, request parameters are decoded. By default, request parameters are not decoded.", "decode-request-params", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"encode_plus_char": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encode + characters in query", "encode-plus-char", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to encode + characters in query strings. When enabled, + characters are encoded to <tt>%2F</tt> . By default, + characters are not encoded.", "encode-plus-char", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"keep_payload": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Keep payload", "keep-payload", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include the payload for DELETE requests. When enabled, DELETE requests include the payload. By default, DELETE requests do not include the payload.", "keep-payload", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"inject_user_agent_header": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Inject User-Agent header", "inject-user-agent", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to inject the default <tt>User-Agent</tt> header. When the <tt>User-Agent</tt> header is not in the request, inject this header to the request.", "inject-user-agent", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"inject_proxy_headers": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Inject proxy headers", "inject-proxy-headers", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to inject proxy-related headers. When the <tt>X-Forwarded-For</tt> , <tt>X-Forwarded-Host</tt> , and <tt>X-Forwarded-Port</tt> headers are not found in the request, inject theses headers to the request.", "inject-proxy-headers", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"header_control_list": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Header control list", "header-control-list", "controllist").AddDefaultValue("default-accept-all").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the control list that uses headers to accept or reject requests. By default, accepts all requests with headers.", "header-control-list", "controllist").AddDefaultValue("default-accept-all").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("default-accept-all"),
 			},
 			"parameter_control_list": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Parameter control list", "parameter-control-list", "controllist").AddDefaultValue("default-reject-all").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the control list that uses URL parameters to accept or reject requests. By default, rejects all requests with URL parameters.", "parameter-control-list", "controllist").AddDefaultValue("default-reject-all").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("default-reject-all"),
@@ -256,11 +256,11 @@ func (r *AssemblyActionInvokeResource) Schema(ctx context.Context, req resource.
 				Optional:            true,
 			},
 			"correlation_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Correlation path", "correlation-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.", "correlation-path", "").String,
 				Optional:            true,
 			},
 			"action_debug": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable debugging", "debug", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

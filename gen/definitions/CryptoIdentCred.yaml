@@ -1,51 +1,64 @@
 name: CryptoIdentCred
-description: 'Identification credentials'
-cli_alias: 'idcred'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/CryptoIdentCred'
+description: Identification credentials consist of a key and a certificate. Identification
+  credentials identify the matched public key cryptography to the public and private
+  keys that an object uses for TLS authentication. You use identification credentials
+  for document encryption, document decryption, and digital signature operations.
+cli_alias: idcred
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/CryptoIdentCred
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestCryptoIdentCred"'
-    test_expect_ds: '"AccTest_CryptoIdentCred"'
-    example: 'CryptoIdentCredName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Key
-    type: String
-    reference_to: CryptoKey
-    required: true
-    test_value: '"AccTest_CryptoKey"'
-    test_bed_value: 'datapower_cryptokey.acc_test.id'
-    description: 'Key'
-    cli_alias: key
-  - name: Certificate
-    type: String
-    reference_to: CryptoCertificate
-    test_value: '"AccTest_CryptoCertificate"'
-    test_bed_value: 'datapower_cryptocertificate.acc_test.id'
-    required: true
-    description: 'Certificate'
-    cli_alias: certificate
-  - name: CA
-    type: List
-    reference_to: CryptoCertificate
-    element_type: String
-    description: 'Intermediate CA certificates'
-    cli_alias: ca
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestCryptoIdentCred"'
+  test_expect_ds: '"AccTest_CryptoIdentCred"'
+  example: CryptoIdentCredName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Key
+  type: String
+  reference_to: CryptoKey
+  required: true
+  test_value: '"AccTest_CryptoKey"'
+  test_bed_value: datapower_cryptokey.acc_test.id
+  description: Key
+  cli_alias: key
+- name: Certificate
+  type: String
+  reference_to: CryptoCertificate
+  test_value: '"AccTest_CryptoCertificate"'
+  test_bed_value: datapower_cryptocertificate.acc_test.id
+  required: true
+  description: Certificate
+  cli_alias: certificate
+- name: CA
+  type: List
+  reference_to: CryptoCertificate
+  element_type: String
+  description: Specify the list to manage intermediate certificates. Intermediate
+    certificate authority (CA) certificates might be necessary when the CA that is
+    signing this certificate is not widely recognized. If the intermediate CA certificate
+    is also signed by a less recognized CA, another intermediate CA certificate might
+    be necessary for that CA. You can specify up to 10 intermediate certificates.
+    <p>If necessary, use the list of available certificate aliases to establish a
+    verifiable trust chain. A trust chain consists of one or more CA certificates.
+    A trust chain provides a linked path from certificates in the identification credentials
+    to a CA that is trusted by a remote DataPower&#174; Gateway. The trust chain enables
+    the DataPower Gateway to authenticate the certificate.</p>
+  cli_alias: ca

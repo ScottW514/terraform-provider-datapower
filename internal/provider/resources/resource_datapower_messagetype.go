@@ -55,7 +55,7 @@ func (r *MessageTypeResource) Metadata(ctx context.Context, req resource.Metadat
 
 func (r *MessageTypeResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Message Type", "message-type", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("On-Line Help for Message Types", "message-type", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *MessageTypeResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"matching": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Message Matchings", "message-matching", "messagematching").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the values list (a list of traffic definitions), in conjunction with the Add and Delete buttons, to add one or more traffic definitions to this message type. Click the + button to create a new traffic definition (Message Matching object). Select an object and click ... to edit it.", "message-matching", "messagematching").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

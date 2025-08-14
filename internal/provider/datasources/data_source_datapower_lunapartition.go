@@ -57,7 +57,7 @@ func (d *LunaPartitionDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *LunaPartitionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SafeNet Luna HSM partition",
+		MarkdownDescription: "The SafeNet Luna Network HSM appliance stores the RSA keys in independent partitions. The configuration of the Luna HSM partition specifies the partition that the system accesses in the Luna HSM.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *LunaPartitionDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"partition_name": schema.StringAttribute{
-							MarkdownDescription: "Partition name",
+							MarkdownDescription: "Specify the partition name for key storage. The name identifies the Luna partition. The minimum length is 1 character. The maximum length is 32 characters.",
 							Computed:            true,
 						},
 						"partition_serial": schema.StringAttribute{

@@ -1,69 +1,74 @@
 name: WebServiceMonitor
-description: 'Web service monitor'
-cli_alias: 'service-monitor'
-cmd_group: 'service-monitor'
-rest_endpoint: '/mgmt/config/{domain}/WebServiceMonitor'
+description: A service level monitor (SLM) for a web service watches web services
+  traffic to a specific endpoint.
+cli_alias: service-monitor
+cmd_group: service-monitor
+rest_endpoint: /mgmt/config/{domain}/WebServiceMonitor
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestWebServiceMonitor"'
-    test_expect_ds: '"AccTest_WebServiceMonitor"'
-    example: 'WebServiceMonitorName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: WSDLURL
-    type: String
-    required: true
-    example: 'wsdlurl'
-    description: 'WSDL URL'
-    cli_alias: wsdl
-  - name: Operations
-    type: List
-    element_type: DmWSSLMOps
-    description: 'Operations to monitor'
-    cli_alias: operation
-  - name: EndpointName
-    type: String
-    description: 'Endpoint'
-    cli_alias: endpoint-name
-  - name: EndpointURL
-    type: String
-    required: true
-    example: 'endpointurl'
-    description: 'Endpoint URL'
-    cli_alias: endpoint-url
-  - name: FrontendURL
-    type: String
-    required: true
-    example: 'frontendurl'
-    description: 'Front URL'
-    cli_alias: frontend-url
-  - name: Transport
-    type: String
-    enum:
-      - 'http-get'
-      - 'http-post'
-      - 'soap-doc'
-      - 'soap-rpc'
-    description: 'Transport type'
-    cli_alias: transport
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestWebServiceMonitor"'
+  test_expect_ds: '"AccTest_WebServiceMonitor"'
+  example: WebServiceMonitorName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: WSDLURL
+  type: String
+  required: true
+  example: wsdlurl
+  description: Specify the URL of the WSDL file that defines the endpoints, transport
+    type and operations to monitor. The WSDL file can be in the file system or remote.
+  cli_alias: wsdl
+- name: Operations
+  type: List
+  element_type: DmWSSLMOps
+  description: Operations to monitor
+  cli_alias: operation
+- name: EndpointName
+  type: String
+  description: Endpoint
+  cli_alias: endpoint-name
+- name: EndpointURL
+  type: String
+  required: true
+  example: endpointurl
+  description: Endpoint URL
+  cli_alias: endpoint-url
+- name: FrontendURL
+  type: String
+  required: true
+  example: frontendurl
+  description: Specify the URL that clients use to access the web service. This value
+    cannot be the same value as the endpoint URL.. Wildcards are supported.
+  cli_alias: frontend-url
+- name: Transport
+  type: String
+  enum:
+  - http-get
+  - http-post
+  - soap-doc
+  - soap-rpc
+  description: Specify the transport type for the endpoint. The transport type must
+    agree with the transport type in the WSDL file.
+  cli_alias: transport
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary

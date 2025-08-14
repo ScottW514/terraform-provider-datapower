@@ -3,13 +3,13 @@
 page_title: "datapower_accesscontrollist Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Access control list
+  An access control list (ACL) consists of a sequence of allow and deny clauses. Each clause identifies an IP address or range of addresses that grants or denies access to a service. Candidate addresses are sequentially evaluated against each clause. A candidate address is granted or denied access in accordance with the first clause that matches. Consequently, the order of the clauses is vital.An ACL with only deny clauses effectively disables the service. To complete the configuration, include an allow clause to ensure that all addresses that are not explicitly denied access are granted access.
   CLI Alias: acl
 ---
 
 # datapower_accesscontrollist (Resource)
 
-Access control list
+An access control list (ACL) consists of a sequence of allow and deny clauses. Each clause identifies an IP address or range of addresses that grants or denies access to a service. <p>Candidate addresses are sequentially evaluated against each clause. A candidate address is granted or denied access in accordance with the first clause that matches. Consequently, the order of the clauses is vital.</p><p>An ACL with only deny clauses effectively disables the service. To complete the configuration, include an allow clause to ensure that all addresses that are not explicitly denied access are granted access.</p>
   - CLI Alias: `acl`
 
 ## Example Usage
@@ -31,7 +31,7 @@ resource "datapower_accesscontrollist" "test" {
 
 ### Optional
 
-- `access_control_entry` (Attributes List) Entry
+- `access_control_entry` (Attributes List) Specify allow and deny clauses.
   - CLI Alias: `entry` (see [below for nested schema](#nestedatt--access_control_entry))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 

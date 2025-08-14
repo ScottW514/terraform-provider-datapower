@@ -3,13 +3,13 @@
 page_title: "datapower_radiussettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  RADIUS settings (default domain only)
+  RADIUS settings define RADIUS servers. You can use RADIUS servers to authenticate access with RBM or in a AAA policy. The DataPower Gateway is a client to RADIUS servers.
   CLI Alias: radius
 ---
 
 # datapower_radiussettings (Resource)
 
-RADIUS settings (`default` domain only)
+RADIUS settings define RADIUS servers. You can use RADIUS servers to authenticate access with RBM or in a AAA policy. The DataPower Gateway is a client to RADIUS servers.
   - CLI Alias: `radius`
 
 ## Example Usage
@@ -27,15 +27,15 @@ resource "datapower_radiussettings" "test" {
 - `aaa_servers` (Attributes List) AAA and RBM
   - CLI Alias: `aaaserver` (see [below for nested schema](#nestedatt--aaa_servers))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
 - `id` (String)
-- `retries` (Number) Retries
+- `retries` (Number) Specify the maximum number of times that the RADIUS client can retransmit an unacknowledged request to a server. Enter a value in the range 1 - 10. The default value is 3.
   - CLI Alias: `retries`
   - Range: `1`-`10`
   - Default value: `3`
-- `timeout` (Number) Timeout
+- `timeout` (Number) Specify the RADIUS retransmit interval in milliseconds. This timeout is the duration that the RADIUS client waits before an unacknowledged request is retransmitted. Enter a value in the range of 1 - 30000. The default value is 1000.
   - CLI Alias: `timeout`
   - Range: `1`-`30000`
   - Default value: `1000`

@@ -3,12 +3,12 @@
 page_title: "datapower_securebackupmode Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Backup Mode (default domain only)
+  Sets the backup operational mode. This mode controls whether a secure-backup is allowed. After this mode is set, it cannot be changed. Operational modes are set the first time the DataPower Gateway is started.
 ---
 
 # datapower_securebackupmode (Data Source)
 
-Backup Mode (`default` domain only)
+Sets the backup operational mode. This mode controls whether a secure-backup is allowed. After this mode is set, it cannot be changed. Operational modes are set the first time the DataPower Gateway is started.
 
 ## Example Usage
 
@@ -26,9 +26,9 @@ data "datapower_securebackupmode" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
-- `mode` (String) Backup mode
-- `user_summary` (String) Comments
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `mode` (String) <p>Sets the backup mode to support, when this operational mode is not previously set.</p><p>The creation of a secure backup is available only when secure backup mode is enabled. Unlike a standard backup, a secure backup contains private data (certificates, keys, and user data), which the DataPower Gateway encrypts with a customer-provided and a DataPower certificate.</p>
+- `user_summary` (String) A descriptive summary for the configuration.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

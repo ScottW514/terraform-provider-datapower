@@ -57,7 +57,7 @@ func (d *AssemblyActionLogDataSource) Metadata(_ context.Context, req datasource
 
 func (d *AssemblyActionLogDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Log assembly action",
+		MarkdownDescription: "The log assembly action writes transaction data to the <tt>log</tt> variable and can send the data to the analytics server. At the end of the transaction, the API gateway updates the log according to the content type that is specified in the last log action in the assembly. When the content type is not specified in the log action, the API gateway uses the content type specified in the API definition. <p>This action is not supported in IBM Cloud. Any assembly that includes it will fail.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,15 +77,15 @@ func (d *AssemblyActionLogDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"mode": schema.StringAttribute{
-							MarkdownDescription: "Mode",
+							MarkdownDescription: "Specify how to manage transaction data. <p>Analytics data must strictly conform to the format required by your analytics server. If you modify the format, you must use gather only mode.</p><p>When you use the IBM API Connect analytics server without offloading data to a third-party log server, the format is correct. If you redact the input and output payloads, ensure that you do not modify the format.</p><p>When you offload data to a third-party analytics server, you can redact any aspect of the event data. When you use API Connect analytics, you can redact only the input and output payloads.</p>",
 							Computed:            true,
 						},
 						"log_level": schema.StringAttribute{
-							MarkdownDescription: "Log level",
+							MarkdownDescription: "Specify the type of content to log. The value can be one of none, activity, header, payload, default, or an inline parameter in the format $(value) to retrieve a value from the API context.",
 							Computed:            true,
 						},
 						"recount_bytes_sent": schema.BoolAttribute{
-							MarkdownDescription: "Enable recounting",
+							MarkdownDescription: "<p>Specify whether to recount the bytes of the response payload. By default, the bytes is the value of the <tt>Content-Length</tt> header. When enabled, the bytes in the response payload are calculated. Recalculation can impact performance.</p>",
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
@@ -97,11 +97,11 @@ func (d *AssemblyActionLogDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

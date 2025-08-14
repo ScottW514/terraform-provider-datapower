@@ -57,7 +57,7 @@ func (d *SLMScheduleDataSource) Metadata(_ context.Context, req datasource.Metad
 
 func (d *SLMScheduleDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SLM schedule",
+		MarkdownDescription: "An SLM schedule defines the time period (hours and days) to enforce the statements in an SLM policy. Schedules allow the application of different statements during different time periods.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -80,13 +80,13 @@ func (d *SLMScheduleDataSource) Schema(ctx context.Context, req datasource.Schem
 							MarkdownDescription: "Comments",
 							Computed:            true,
 						},
-						"days_of_week": models.GetDmWeekdayBitmapDataSourceSchema("Week Days", "days", ""),
+						"days_of_week": models.GetDmWeekdayBitmapDataSourceSchema("Specify the days to enforce the schedule. The time and duration apply to all selected days.", "days", ""),
 						"start_time": schema.StringAttribute{
 							MarkdownDescription: "Start Time",
 							Computed:            true,
 						},
 						"duration": schema.Int64Attribute{
-							MarkdownDescription: "Duration",
+							MarkdownDescription: "Specify the duration in minutes to enforce the schedule. Enter any value of 1 - 1440. The default value is 1440.",
 							Computed:            true,
 						},
 						"start_date": schema.StringAttribute{
@@ -94,11 +94,11 @@ func (d *SLMScheduleDataSource) Schema(ctx context.Context, req datasource.Schem
 							Computed:            true,
 						},
 						"stop_date": schema.StringAttribute{
-							MarkdownDescription: "Stop date",
+							MarkdownDescription: "Specify the stop date to enforce the schedule. The enforcement period does not include the stop date.",
 							Computed:            true,
 						},
 						"time_zone": schema.StringAttribute{
-							MarkdownDescription: "Time zone",
+							MarkdownDescription: "Specify the time zone to enforce the schedule. The default is the device local time zone.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

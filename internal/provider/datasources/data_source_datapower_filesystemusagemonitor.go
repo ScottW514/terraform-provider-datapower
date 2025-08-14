@@ -50,10 +50,10 @@ func (d *FileSystemUsageMonitorDataSource) Metadata(_ context.Context, req datas
 
 func (d *FileSystemUsageMonitorDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "File system usage monitor (`default` domain only)",
+		MarkdownDescription: "The file system usage monitor is a utility that checks file systems to determine how much space is available and generates log events to report the usage of each file system. When initially enabled, the monitor immediately checks the file systems.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -61,36 +61,36 @@ func (d *FileSystemUsageMonitorDataSource) Schema(ctx context.Context, req datas
 				Computed:            true,
 			},
 			"polling_interval": schema.Int64Attribute{
-				MarkdownDescription: "Polling interval",
+				MarkdownDescription: "Specify the interval in minutes between file system checks for their usage. Enter a value in the range 15 - 65535. The default value is 60.",
 				Computed:            true,
 			},
 			"all_system": schema.BoolAttribute{
-				MarkdownDescription: "Monitor all system file systems",
+				MarkdownDescription: "Specify whether the utility checks all or only a subset of system file systems. By default, all file systems are scanned. <ul><li>When enabled, you can define specific file systems that override their default thresholds.</li><li>When not enabled, define the file systems to check with their thresholds.</li></ul>",
 				Computed:            true,
 			},
 			"all_system_warning_threshold": schema.Int64Attribute{
-				MarkdownDescription: "Warning threshold for all system file systems",
+				MarkdownDescription: "Specify the usage threshold to generate a warning event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.",
 				Computed:            true,
 			},
 			"all_system_critical_threshold": schema.Int64Attribute{
-				MarkdownDescription: "Critical threshold for all system file systems",
+				MarkdownDescription: "Specify the usage threshold to generate a critical event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.",
 				Computed:            true,
 			},
 			"system": schema.ListNestedAttribute{
-				MarkdownDescription: "System file systems",
+				MarkdownDescription: "Specify the system file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all system file systems.",
 				NestedObject:        models.DmFileSystemUsageDataSourceSchema,
 				Computed:            true,
 			},
 			"all_qm_warning_threshold": schema.Int64Attribute{
-				MarkdownDescription: "Warning threshold for queue manager file systems",
+				MarkdownDescription: "Specify the usage threshold to generate a warning event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.",
 				Computed:            true,
 			},
 			"all_qm_critical_threshold": schema.Int64Attribute{
-				MarkdownDescription: "Critical threshold for queue manager file systems",
+				MarkdownDescription: "Specify the usage threshold to generate a critical event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.",
 				Computed:            true,
 			},
 			"queue_manager": schema.ListNestedAttribute{
-				MarkdownDescription: "Queue manager file systems",
+				MarkdownDescription: "Specify the queue manager file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all queue manager file systems.",
 				NestedObject:        models.DmQMFileSystemUsageDataSourceSchema,
 				Computed:            true,
 			},

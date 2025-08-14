@@ -3,12 +3,12 @@
 page_title: "datapower_snmpsettings Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SNMP Settings (default domain only)
+  Use this page to establish SNMP connectivity to the device, and to set values used by SNMP.
 ---
 
 # datapower_snmpsettings (Data Source)
 
-SNMP Settings (`default` domain only)
+Use this page to establish SNMP connectivity to the device, and to set values used by SNMP.
 
 ## Example Usage
 
@@ -26,26 +26,26 @@ data "datapower_snmpsettings" "test" {
 
 ### Read-Only
 
-- `access_level` (String) SNMPv3 Access Level
+- `access_level` (String) The type of access allowed to MIB objects for incoming SNMPv3 Get and Set requests.
 - `config_mib` (String) Configuration
 - `config_mib_mq` (String) Configuration
-- `contexts` (Attributes List) SNMPv3 Contexts (see [below for nested schema](#nestedatt--contexts))
-- `enable_default_trap_subscriptions` (Boolean) Enable Default Event Subscriptions
-- `enabled` (Boolean) Administrative state
-- `local_address` (String) Local IP Address
-- `local_port` (Number) Local Port
+- `contexts` (Attributes List) SNMPv3 context definitions, which provide SNMPv3 access to non-default application domains. (see [below for nested schema](#nestedatt--contexts))
+- `enable_default_trap_subscriptions` (Boolean) Enable or Disable the default list of event codes that generate traps. The default is Enable Trap Subscriptions.
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `local_address` (String) A specific IP address monitored by the SNMP agent or engine for incoming SNMP requests. The default value of 0.0.0.0 allows the agent or engine to listen on all interfaces. Selecting the address of one interface restricts SNMP to that interface.
+- `local_port` (Number) A specific UDP port monitored by the SNMP agent or engine for incoming SNMP requests. By default, the agent or engine monitors port 161.
 - `notif_mib` (String) Notifications
 - `notif_mib_mq` (String) Notifications
 - `policies` (Attributes List) SNMPv1/v2c Communities (see [below for nested schema](#nestedatt--policies))
 - `policies_mq` (Attributes List) SNMPv1/v2c Communities (see [below for nested schema](#nestedatt--policies_mq))
-- `security_level` (String) SNMPv3 Security Level
+- `security_level` (String) The minimum security level required for incoming SNMPv3 Get and Set requests. The default is Authentication, Privacy.
 - `status_mib` (String) Status
 - `status_mib_mq` (String) Status
 - `targets` (Attributes List) Trap and Notification Targets (see [below for nested schema](#nestedatt--targets))
-- `trap_event_code` (List of String) Event Subscriptions
-- `trap_priority` (String) Minimum Priority
+- `trap_event_code` (List of String) The list of event codes generating traps. You can add event codes which will be triggering traps send to the configured trap targets.
+- `trap_priority` (String) Select a minimum trap event priority. The priorities are hierarchical. The lowest is listed last. Set to the minimum that is required for your trap events.
 - `user_summary` (String) Comments
-- `users` (List of String) SNMPv3 Users
+- `users` (List of String) The name of a user (which must have SNMP credential parameters) which is authorized to use SNMPv3 to access the MIBs on this system.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

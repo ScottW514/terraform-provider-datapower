@@ -60,7 +60,7 @@ func (r *SSHServerSourceProtocolHandlerResource) Metadata(ctx context.Context, r
 
 func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SFTP server handler", "source-ssh-server", "").AddActions("quiesce").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>The SFTP server handler provides an SSH SFTP server that can be used to submit files for processing by the system. Each file that is written results in one transaction.</p><p>There can be multiple SFTP servers, but only one server can be configured to listen on the default SSH port 22 on a given interface. There can be multiple simultaneous connections from SFTP clients to the same SFTP server.</p><p><b>Note:</b> Changes in the configuration affect only new connections to this SFTP server. Existing connections continue to use their current configuration until they disconnect.</p>", "source-ssh-server", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -89,13 +89,13 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local IP address", "address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the address on which the SFTP server service listens. The default of 0.0.0.0 indicates that the service is active on all addresses. An alias name can be used to specify the address. Local host aliases can help ease migration tasks among machines.", "address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Port", "port", "").AddIntegerRange(1, 65534).AddDefaultValue("22").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the port that is monitored by the SFTP server service. This port is the port on which SFTP connections can be established. This port does not control the TCP port that is used for the data connections. Enter a value in the range 1 - 65535. The default value is 22.", "port", "").AddIntegerRange(1, 65534).AddDefaultValue("22").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -105,47 +105,47 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: int64default.StaticInt64(22),
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "acl", "accesscontrollist").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies an Access Control List to apply. The ACL allows or denies access to the SFTP server based on the IP address of the SFTP client. When attached to a server, the default for an ACL is to deny all access. To deny access to only select IP addresses, first grant access to all addresses (allow 0.0.0.0). Then, create deny entries for the desired hosts.</p><p>If an ACL with the same name as this handler exists, the system DataPower Gateway might inadvertently use that ACL rather than the one specified here.</p>", "acl", "accesscontrollist").String,
 				Optional:            true,
 			},
 			"host_private_keys": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Host private keys", "host-private-key", "cryptokey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the private keys to use for Host authentication. Keys used as host private keys cannot be password protected.", "host-private-key", "cryptokey").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
-			"ssh_user_authentication": models.GetDmSSHUserAuthenticationMethodsResourceSchema("User authentication", "user-auth", "", false),
+			"ssh_user_authentication": models.GetDmSSHUserAuthenticationMethodsResourceSchema("Specifies the type(s) of SSH user authentication available for use by the client.", "user-auth", "", false),
 			"allow_backend_listings": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow back-end listings", "allow-backend-listings", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not SFTP directory listing (SSH_FXP_READDIR) requests to remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-listings", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"allow_backend_delete": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow file deletes", "allow-backend-delete", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to delete files (SSH_FXP_REMOVE) to remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-delete", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_backend_stat": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow stat operations", "allow-backend-stat", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not SFTP directory listings requests to remote servers would query the remote server to obtain file attributes (SSH_FXP_STAT/SSH_FXP_LSTAT/SSH_FXP_FSTAT), or use default values. Querying the remote server may reduce performance, but is necessary for SFTP clients that do not follow the DataPower SFTP URL naming conventions. Requires a remote FTP or SFTP server.", "allow-backend-stat", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_backend_mkdir": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow directory creates", "allow-backend-mkdir", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to create directories (SSH_FXP_MKDIR) on remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-mkdir", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_backend_rmdir": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow directory deletes", "allow-backend-rmdir", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to delete directories (SSH_FXP_RMDIR) from remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-rmdir", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_backend_rename": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow file/directory renames", "allow-backend-rename", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In transparent mode, determines whether or not requests to rename files or directories (SSH_FXP_RENAME) on remote servers are allowed. Requires a remote FTP or SFTP server.", "allow-backend-rename", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -170,7 +170,7 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default:             stringdefault.StaticString("/"),
 			},
 			"idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Idle timeout", "idle-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that the SFTP connection can be idle. After the specified duration, the SFTP server closes the control connection. Enter a value in the range 0 - 65535. The default value is 0, which disables the timeout.", "idle-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -180,7 +180,7 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: int64default.StaticInt64(0),
 			},
 			"persistent_filesystem_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Persistent file system timeout", "persistent-filesystem-timeout", "").AddIntegerRange(1, 43200).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that a connection to a virtual persistent file system is retained after all SFTP control connections from user identities are disconnected. When the timeout expires, the virtual file system object is destroyed. Enter a value in the range 1- 43200. The default value is 600.", "persistent-filesystem-timeout", "").AddIntegerRange(1, 43200).AddDefaultValue("600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -190,7 +190,7 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Default: int64default.StaticInt64(600),
 			},
 			"virtual_directories": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Virtual directories", "virtual-directory", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In virtual mode, create a directory in the virtual file system that is presented by this SFTP server. The SFTP client can use all of these directories to write file to be processed. The root directory (/) is always present and cannot be created.", "virtual-directory", "").String,
 				NestedObject:        models.DmSFTPServerVirtualDirectoryResourceSchema,
 				Optional:            true,
 			},

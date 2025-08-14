@@ -57,7 +57,7 @@ func (d *AssemblyActionOAuthDataSource) Metadata(_ context.Context, req datasour
 
 func (d *AssemblyActionOAuthDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "OAuth assembly action",
+		MarkdownDescription: "The OAuth assembly action processes the requested OAuth flow based on the defined OAuth provider settings.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -76,8 +76,8 @@ func (d *AssemblyActionOAuthDataSource) Schema(ctx context.Context, req datasour
 							MarkdownDescription: "The name of the application domain the object belongs to",
 							Computed:            true,
 						},
-						"o_auth_provider_settings_reference": models.GetDmDynamicOAuthProviderSettingsReferenceDataSourceSchema("OAuth token provider settings", "oauth-provider-settings-ref", ""),
-						"supported_o_auth_components":        models.GetDmOAuthComponentsDataSourceSchema("Supported OAuth components", "supported-oauth-components", ""),
+						"o_auth_provider_settings_reference": models.GetDmDynamicOAuthProviderSettingsReferenceDataSourceSchema("Specify the OAuth token provider settings to use for OAuth action. You can use one or more methods. Precedence rules apply when you configure the same aspect of the OAuth provider settings through multiple methods.", "oauth-provider-settings-ref", ""),
+						"supported_o_auth_components":        models.GetDmOAuthComponentsDataSourceSchema("Specify the OAuth components that the action supports. When the action does not support a component but that component is requested, the unsupported component is not run.", "supported-oauth-components", ""),
 						"user_summary": schema.StringAttribute{
 							MarkdownDescription: "Comments",
 							Computed:            true,
@@ -87,11 +87,11 @@ func (d *AssemblyActionOAuthDataSource) Schema(ctx context.Context, req datasour
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

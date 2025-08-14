@@ -3,12 +3,12 @@
 page_title: "datapower_apisecurityrequirement Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API security requirement
+  The API security requirement defines the required security schemes that an API request must pass to process an API operation. You must specify the security schemes that are declared in the security definitions. When multiple security schemes are specified, the API request must pass all security checks.
 ---
 
 # datapower_apisecurityrequirement (Data Source)
 
-API security requirement
+The API security requirement defines the required security schemes that an API request must pass to process an API operation. You must specify the security schemes that are declared in the security definitions. When multiple security schemes are specified, the API request must pass all security checks.
 
 ## Example Usage
 

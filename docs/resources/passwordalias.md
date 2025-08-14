@@ -3,13 +3,13 @@
 page_title: "datapower_passwordalias Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Password map alias
+  The password map alias provides the mapping of an alias to a plaintext password. The alias is a publicly known reference that is included in configuration files and exports. With an alias you keep the real password secret because the plaintext value for the password is stored in an encrypted file. The password for the alias cannot be viewed or accessed by anyone. Only the system can extract the password that it uses internally. No aliased passwords are written to configuration files. The mapping is not part of a backup or export operation. The mapping is part of the secure backup-restore operations.
   CLI Alias: password-alias
 ---
 
 # datapower_passwordalias (Resource)
 
-Password map alias
+The password map alias provides the mapping of an alias to a plaintext password. The alias is a publicly known reference that is included in configuration files and exports. With an alias you keep the real password secret because the plaintext value for the password is stored in an encrypted file. The password for the alias cannot be viewed or accessed by anyone. Only the system can extract the password that it uses internally. <p>No aliased passwords are written to configuration files. The mapping is not part of a backup or export operation. The mapping is part of the secure backup-restore operations.</p>
   - CLI Alias: `password-alias`
 
 ## Example Usage

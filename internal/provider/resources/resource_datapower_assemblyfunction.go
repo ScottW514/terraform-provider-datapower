@@ -54,7 +54,7 @@ func (r *AssemblyFunctionResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *AssemblyFunctionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Assembly function", "assembly-function", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An assembly function augments the assembly actions that the API gateway uses during processing. You can implement an assembly function in one of the following ways. <ul><li>Define an assembly function to add custom logic to an assembly. After you define the assembly function, you can add it to a function call assembly action.</li><li>When you configure the API Connect gateway service as not V5 compatible, use an assembly function to specify a user-defined policy (UDP) that API Connect advertises and makes available in the API Connect assembly editor. A UDP provides custom processing control of APIs in the gateway server.</li></ul>", "assembly-function", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,11 +83,11 @@ func (r *AssemblyFunctionResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"title": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Title", "title", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the title of the assembly function to advertise to API developers. When not provided, the DataPower Gateway provides the title to advertise to API Connect.", "title", "").String,
 				Optional:            true,
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Description", "description", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the description of the assembly function to advertise to API developers. When not provided, the DataPower Gateway provides the description to advertise to API Connect.", "description", "").String,
 				Optional:            true,
 			},
 			"scope": schema.StringAttribute{
@@ -103,7 +103,7 @@ func (r *AssemblyFunctionResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"assembly": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Assembly", "assembly", "assembly").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the assembly to apply to calls to the assembly function. An assembly comprises a rule that defines the actions to run against the call and how to handle errors during processing.", "assembly", "assembly").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -1,50 +1,56 @@
 name: Probe
-description: 'Probe settings'
-cli_alias: 'probe-settings'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/Probe/default'
+description: The domain-specific configuration that define the settings for the probe
+  that you can use to troubleshoot the processing of transactions by services.
+cli_alias: probe-settings
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/Probe/default
 update_only: true
 attributes:
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: MaxRecords
-    type: Int64
-    minimum: 1
-    maximum: 10000
-    required: true
-    default: 1000
-    description: 'Max records'
-    cli_alias: max-records
-  - name: Expiration
-    type: Int64
-    minimum: 60
-    maximum: 86400
-    default: 3600
-    description: 'Expiration'
-    cli_alias: expiration
-  - name: GatewayPeering
-    type: String
-    reference_to: GatewayPeering
-    required: true
-    test_value: '"default-gateway-peering"'
-    description: 'Gateway peering'
-    cli_alias: gateway-peering
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: MaxRecords
+  type: Int64
+  minimum: 1
+  maximum: 10000
+  required: true
+  default: 1000
+  description: Specify the maximum number of records to allow. Enter a value in the
+    range 1 - 10000. The default value is 1000.
+  cli_alias: max-records
+- name: Expiration
+  type: Int64
+  minimum: 60
+  maximum: 86400
+  default: 3600
+  description: Specify the duration in seconds to retain the troubleshooting data.
+    Enter a value in the range 60 - 86400. The default value is 3600.
+  cli_alias: expiration
+- name: GatewayPeering
+  type: String
+  reference_to: GatewayPeering
+  required: true
+  test_value: '"default-gateway-peering"'
+  description: Specify the gateway-peering instance for the probe. This instance synchronizes
+    the captured data across the members. If you do not want to persist data across
+    a restart, store the data in memory.
+  cli_alias: gateway-peering

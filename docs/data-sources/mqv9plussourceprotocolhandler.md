@@ -3,12 +3,12 @@
 page_title: "datapower_mqv9plussourceprotocolhandler Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  IBM MQ v9+ handler
+  Configure the IBM MQ v9+ handler to manage IBM MQ protocol communications.
 ---
 
 # datapower_mqv9plussourceprotocolhandler (Data Source)
 
-IBM MQ v9+ handler
+Configure the IBM MQ v9+ handler to manage IBM MQ protocol communications.
 
 ## Example Usage
 
@@ -39,27 +39,27 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `async_put` (Boolean) Async put
-- `batch_size` (Number) Batch size
-- `code_page` (Number) CCSI
-- `concurrent_connections` (Number) Concurrent conversations
+- `async_put` (Boolean) Specify whether to asynchronously put a message to a queue without waiting for a response from the queue manager.
+- `batch_size` (Number) Specify the number of messages to process as a batch. The handler gathers the specified number of messages and processes them as a batch.
+- `code_page` (Number) <p>Specify the coded character set identifier to which the remote IBM MQ queue manager converts output data. This property is meaningful only when the queue manager has the convert property set to on. The CCSI will be put in the CodeCharSetId field of MQMD.</p><p>The default CCSI is for ISO-8859-1 (latin-1).</p><p>For MQCCSI_EMBEDDED enter 4294967295; for MQCCSI_INHERIT enter 4294967294. For the other CCSIDs, refer to the IBM Code Pages.</p>
+- `concurrent_connections` (Number) Specify the number of concurrent IBM MQ conversations to allocate. The default value is 1 but can be increased to improve performance.
 - `content_type_header` (String) Header to extract Content-Type
 - `content_type_x_path` (String) XPath expression to extract Content-Type from IBM MQ header
-- `exclude_headers` (Attributes) Exclude message headers
+- `exclude_headers` (Attributes) Specify the headers after MQMD to strip from the message. By default only the MQMD header is parsed.
   - CLI Alias: `exclude-headers` (see [below for nested schema](#nestedatt--result--exclude_headers))
-- `get_message_options` (Number) Get message options
-- `get_queue` (String) Get queue
+- `get_message_options` (Number) Specify the cumulative value of the MQGET options that are applicable to an IBM MQ message in decimal or hex format. The value is passed directly to the IBM MQ API. The default value is 1, which is the decimal value for the MQGMO_WAIT option.
+- `get_queue` (String) Specify the name of the get queue associated with the queue manager. The handler gets messages from this queue.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `message_selector` (String) Selector
-- `parse_properties` (Boolean) Parse properties
-- `polling_interval` (Number) Polling interval
-- `publish_topic_string` (String) Publish topic string
-- `put_queue` (String) Put queue
-- `queue_manager` (String) Queue manager (reference to MQManger or MQManagerGroup)
-- `retrieve_backout_settings` (Boolean) Retrieve backout settings
-- `subscribe_topic_string` (String) Subscribe topic string
-- `subscription_name` (String) Subscription name
-- `use_qm_name_in_url` (Boolean) Use queue manager in URL
+- `message_selector` (String) Specify the selector that filters the messages from a queue or a subscription by their properties. The selector uses the SQL92 conditional expression syntax. The selector enables the handler to filter messages from a queue or a subscription.
+- `parse_properties` (Boolean) Specify whether to parse the properties of the incoming messages from a queue or a subscription. By default, properties are not parsed.
+- `polling_interval` (Number) Specify the duration in seconds to wait after processing all messages before attempting to retrieve messages from the get queue.
+- `publish_topic_string` (String) Specify the publish topic string associated with the queue manager. The topic string describes the subject of the information that is published in a publish or subscribe message. The handler publishes messages to this topic string. If the put queue is specified, this property is ignored.
+- `put_queue` (String) Specify the the name of the put queue associated with the queue manager. The handler puts server-originated reply messages to this queue.
+- `queue_manager` (String) Specify the name of the queue manager that provides messaging services for communicating applications by periodically monitoring or polling queues and by ensuring that messages are directed to the correct receive queue or routed to another queue manager. The local queue manager corresponds to a queue manager running on another host on the network.
+- `retrieve_backout_settings` (Boolean) Specify whether to retrieve backout setting from the IBM MQ server. <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue queue name</b> settings from the IBM MQ server and checks these values. On a reattempt, the handler uses the higher priority backout settings from the server. If the server does not contain backout settings, The handler uses any existing backout values, either empty or populated, from the local IBM MQ queue manager. If there are no backout settings, the backout function is disabled.</p><p>When an alias queue is used, its attributes are retrieved, not those of the base queue.</p>
+- `subscribe_topic_string` (String) Specify the the topic string associated with the queue manager. The handler subscribes to this topic string and gets messages from it.
+- `subscription_name` (String) Specify the subscription name of a durable subscription associated with the queue manager. This name identifies the subscription after reestablishing a lost connection.
+- `use_qm_name_in_url` (Boolean) Specify whether the var://service/URL-in variable returns the name of the local queue manager or queue manager group when this configuration defines a queue manager group as the queue manager. <ul><li>When enabled, the variable returns the name of the queue manager.</li><li>When not enabled, the variable returns the name of the queue manager group. This setting is the default value.</li></ul>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

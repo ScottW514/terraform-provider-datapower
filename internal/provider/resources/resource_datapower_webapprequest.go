@@ -60,7 +60,7 @@ func (r *WebAppRequestResource) Metadata(ctx context.Context, req resource.Metad
 
 func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Web Request Profile", "webapp-request-profile", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The web request profile specifies various properties about the request side of the transaction that must be satisfied.", "webapp-request-profile", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -89,7 +89,7 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"policy_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Style", "policy-type", "").AddStringEnum("pre-requisite", "admission").AddDefaultValue("admission").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the satisfaction policy for the profile. The default value is Admission.", "policy-type", "").AddStringEnum("pre-requisite", "admission").AddDefaultValue("admission").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -98,7 +98,7 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("admission"),
 			},
 			"ssl_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow SSL", "request-ssl-policy", "").AddStringEnum("allow", "require", "deny").AddDefaultValue("allow").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select how the client side of the inspected transaction handles SSL. The default value is Allow.", "request-ssl-policy", "").AddStringEnum("allow", "require", "deny").AddDefaultValue("allow").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -107,35 +107,35 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("allow"),
 			},
 			"aaa": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("AAA Policy", "aaa-policy", "aaapolicy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("If this property references a AAA policy, then that AAA policy will be run as a filter on this transaction and the success of that AAA run will be required to continue processing. Any input to this transaction as XML, application/www-url-encoded, or multipart/form-data MIME types will be automatically provided to the AAA processing policy.", "aaa-policy", "aaapolicy").String,
 				Optional:            true,
 			},
 			"ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Shared Secret Key", "ss-key", "cryptosskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the Shared Secret Key for both signing or encrypting.", "ss-key", "cryptosskey").String,
 				Optional:            true,
 			},
 			"rate_limiter": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rate Limiting", "ratelimiter-policy", "simplecountmonitor").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A rate limiting policy restricts identities (as determined by AAA or the client IP address if AAA is not available) to a specific number of transactions per second.", "ratelimiter-policy", "simplecountmonitor").String,
 				Optional:            true,
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Access Control List", "acl", "accesscontrollist").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This Access Control List will be used to allow or deny access to this service based on the IP address of the client. When attached to a service, an Access Control List (ACL) denies all access by default. To deny access to only selected addresses, first grant access to all addresses (allow 0.0.0.0) and then create deny entries for the desired hosts.", "acl", "accesscontrollist").String,
 				Optional:            true,
 			},
-			"ok_methods":  models.GetDmHTTPRequestMethodsResourceSchema("Methods", "request-methods", "", false),
-			"ok_versions": models.GetDmHTTPVersionMaskResourceSchema("Versions", "request-versions", "", false),
+			"ok_methods":  models.GetDmHTTPRequestMethodsResourceSchema("Specify which HTTP methods are acceptable from the client acceptable.", "request-methods", "", false),
+			"ok_versions": models.GetDmHTTPVersionMaskResourceSchema("Specify which HTTP versions are acceptable from the client.", "request-versions", "", false),
 			"min_body_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Minimum Size", "request-body-min", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum size of the request body.", "request-body-min", "").String,
 				Optional:            true,
 			},
 			"max_body_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum Size", "request-body-max", "").AddDefaultValue("128000000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the request body.", "request-body-max", "").AddDefaultValue("128000000").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(128000000),
 			},
 			"xml_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML Processing", "request-xml-policy", "").AddStringEnum("nothing", "xml", "soap").AddDefaultValue("nothing").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the device handles requests that contain an XML MIME type.", "request-xml-policy", "").AddStringEnum("nothing", "xml", "soap").AddDefaultValue("nothing").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -144,11 +144,11 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("nothing"),
 			},
 			"xml_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML Transformation Rule", "request-xml-rule", "stylepolicyrule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the request contains an XML MIME type and the XML processing policy is set to XML or SOAP.", "request-xml-rule", "stylepolicyrule").String,
 				Optional:            true,
 			},
 			"non_xml_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Non-XML Processing", "request-nonxml-policy", "").AddStringEnum("nothing", "side", "binary").AddDefaultValue("nothing").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the device handles requests that do not contain an XML MIME type.", "request-nonxml-policy", "").AddStringEnum("nothing", "side", "binary").AddDefaultValue("nothing").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -157,27 +157,27 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("nothing"),
 			},
 			"non_xml_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Non-XML Processing Rule", "request-nonxml-rule", "stylepolicyrule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the request does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.", "request-nonxml-rule", "stylepolicyrule").String,
 				Optional:            true,
 			},
 			"error_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Error Policy", "error-policy-override", "webapperrorhandlingpolicy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("If this request policy is violated the firewall error policy will be invoked unless this more specific error policy is provided, in which case this policy takes precedence.", "error-policy-override", "webapperrorhandlingpolicy").String,
 				Optional:            true,
 			},
 			"session_management_profile": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Session Policy", "session-policy", "webappsessionpolicy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The session management policy enforces the start pages acceptable for requests that match this security profile. If no policy is referenced, any page is an acceptable start page.", "session-policy", "webappsessionpolicy").String,
 				Optional:            true,
 			},
 			"header_gnvc": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Header Name-Value Profile", "request-header-profile", "namevalueprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name-value profile allows you to specify what headers are expected, what headers should be stripped, and what headers should be mapped to known values. If no profile is specified, any header is allowed.", "request-header-profile", "namevalueprofile").String,
 				Optional:            true,
 			},
 			"url_encoded_gnvc": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL-Encoded Body Name-Value Profile", "request-body-profile", "namevalueprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name-value profile allows you to specify what form elements are expected, what form elements should be stripped, and what form elements should be mapped to known values. If no profile is specified, any set of pairs is allowed.", "request-body-profile", "namevalueprofile").String,
 				Optional:            true,
 			},
 			"query_string_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow Query String", "request-qs-policy", "").AddStringEnum("allow", "require", "deny").AddDefaultValue("allow").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select how the client URL handles query strings. The default is Allow.", "request-qs-policy", "").AddStringEnum("allow", "require", "deny").AddDefaultValue("allow").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -186,41 +186,41 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("allow"),
 			},
 			"query_string_gnvc": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("QueryString Name-Value Profile", "request-qs-profile", "namevalueprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name-value profile for query-string. If not present, no profile is enforced. The profile allows you to validate data members of the query string, filter out unknown ones, or map certain names to known values.", "request-qs-profile", "namevalueprofile").String,
 				Optional:            true,
 			},
 			"sql_injection": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SQL Injection Filter", "request-sql-policy", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Data parameters from the query string, application/www-urlencoded requests, and multipart/form-data requests will be passed through the standard SQL Injection filter if this property is enabled.", "request-sql-policy", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"max_uri_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum URI Length", "request-uri-max", "").AddDefaultValue("1024").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The URI may be no longer than the value specified here.", "request-uri-max", "").AddDefaultValue("1024").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(1024),
 			},
 			"uri_filter_unicode": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Filter Unicode", "request-uri-filter-unicode", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("If Unicode is detected in the URI and this property is enabled then the transaction will be rejected", "request-uri-filter-unicode", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"uri_filter_dot_dot": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Filter Dot Dot", "request-uri-filter-dotdot", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Filter Requests with .. in the URI after URI normalization", "request-uri-filter-dotdot", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"uri_filter_exe": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Filter .exe", "request-uri-filter-exe", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Filter Requests with .exe in the URI after URI normalization", "request-uri-filter-exe", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"uri_filter_fragment": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Fragmented URI Policy", "request-uri-filter-fragment", "").AddStringEnum("allow", "reject", "truncate").AddDefaultValue("truncate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select how to handle URI fragments in requests. A URI fragment is the portion of a URI after the # symbol. The default is Truncate", "request-uri-filter-fragment", "").AddStringEnum("allow", "reject", "truncate").AddDefaultValue("truncate").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -229,7 +229,7 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("truncate"),
 			},
 			"content_types": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Content-Type List", "request-content-type", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A list of PCRE regular expressions that indicate acceptable content-type MIME headers on the request. If this list is empty, any content-type is acceptable. If the request does not have a content type that will be represented as an empty string for matching purposes. Requests without a body (GET, HEAD, and so forth) are not subject to this constraint. An empty list will match all content types.", "request-content-type", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Computed:            true,
@@ -238,20 +238,20 @@ func (r *WebAppRequestResource) Schema(ctx context.Context, req resource.SchemaR
 				})),
 			},
 			"multipart_form_data": models.GetDmMultipartFormDataProfileResourceSchema("Multipart/Form-Data Profile", "multipart-form-data", "", false),
-			"cookie_profile":      models.GetDmCookieProfileResourceSchema("Cookie Profile", "cookie-policy", "", false),
+			"cookie_profile":      models.GetDmCookieProfileResourceSchema("The cookie management profile allows you to specify validation profiles for incoming cookies, whether cookies should be allowed at all, and the signature and encryption policies for cookies.", "cookie-policy", "", false),
 			"process_all_cookie": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sign or Encrypt All Cookies", "process-all-cookie", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The process will sign or encrypt all cookies when enabled. The default is enabled.", "process-all-cookie", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"cookie_name_vector": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Cookie Names", "cookie-namelist", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The list of cookies, by name, that the process signs and encrypts.", "cookie-namelist", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"sql_injection_patterns_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SQL Injection Patterns File", "sql-injection-patterns-file", "").AddDefaultValue("store:///SQL-Injection-Patterns.xml").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The patterns file that the SQL injection filter uses.", "sql-injection-patterns-file", "").AddDefaultValue("store:///SQL-Injection-Patterns.xml").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("store:///SQL-Injection-Patterns.xml"),

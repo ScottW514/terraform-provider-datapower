@@ -57,7 +57,7 @@ func (r *SLMScheduleResource) Metadata(ctx context.Context, req resource.Metadat
 
 func (r *SLMScheduleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SLM schedule", "slm-sched", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An SLM schedule defines the time period (hours and days) to enforce the statements in an SLM policy. Schedules allow the application of different statements during different time periods.", "slm-sched", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,13 +85,13 @@ func (r *SLMScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
 				Optional:            true,
 			},
-			"days_of_week": models.GetDmWeekdayBitmapResourceSchema("Week Days", "days", "", false),
+			"days_of_week": models.GetDmWeekdayBitmapResourceSchema("Specify the days to enforce the schedule. The time and duration apply to all selected days.", "days", "", false),
 			"start_time": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Start Time", "start", "").String,
 				Required:            true,
 			},
 			"duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Duration", "duration", "").AddIntegerRange(1, 1440).AddDefaultValue("1440").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in minutes to enforce the schedule. Enter any value of 1 - 1440. The default value is 1440.", "duration", "").AddIntegerRange(1, 1440).AddDefaultValue("1440").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -105,11 +105,11 @@ func (r *SLMScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"stop_date": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Stop date", "stop-date", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the stop date to enforce the schedule. The enforcement period does not include the stop date.", "stop-date", "").String,
 				Optional:            true,
 			},
 			"time_zone": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Time zone", "timezone", "").AddStringEnum("LOCAL", "Pacific/Honolulu", "America/Anchorage", "America/Los_Angeles", "America/Denver", "America/Chicago", "America/New_York", "America/Halifax", "America/Sao_Paulo", "America/Noronha", "Atlantic/Azores", "Europe/London", "Europe/Paris", "Europe/Athens", "Asia/Riyadh", "Europe/Moscow", "Asia/Karachi", "Asia/Kolkata", "Asia/Dhaka", "Asia/Novosibirsk", "Asia/Shanghai", "Australia/Perth", "Asia/Tokyo", "Australia/Adelaide", "Australia/Sydney", "Asia/Vladivostok", "Pacific/Auckland").AddDefaultValue("LOCAL").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time zone to enforce the schedule. The default is the device local time zone.", "timezone", "").AddStringEnum("LOCAL", "Pacific/Honolulu", "America/Anchorage", "America/Los_Angeles", "America/Denver", "America/Chicago", "America/New_York", "America/Halifax", "America/Sao_Paulo", "America/Noronha", "Atlantic/Azores", "Europe/London", "Europe/Paris", "Europe/Athens", "Asia/Riyadh", "Europe/Moscow", "Asia/Karachi", "Asia/Kolkata", "Asia/Dhaka", "Asia/Novosibirsk", "Asia/Shanghai", "Australia/Perth", "Asia/Tokyo", "Australia/Adelaide", "Australia/Sydney", "Asia/Vladivostok", "Pacific/Auckland").AddDefaultValue("LOCAL").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

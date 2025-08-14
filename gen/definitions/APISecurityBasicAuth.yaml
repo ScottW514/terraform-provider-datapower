@@ -1,40 +1,46 @@
 name: APISecurityBasicAuth
-description: 'API security basic authentication'
-cli_alias: 'api-sec-basic-auth'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APISecurityBasicAuth'
+description: An API basic authentication security definition selects a user registry
+  to authenticate accesses to the API. When you use basic authentication, API users
+  must provide a valid username and password in the requests to access API operations
+  that require basic authentication. <b>Note:</b> You cannot apply more than one basic
+  authentication security definition to an API.
+cli_alias: api-sec-basic-auth
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APISecurityBasicAuth
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPISecurityBasicAuth"'
-    test_expect_ds: '"AccTest_APISecurityBasicAuth"'
-    example: 'APISecurityBasicAuthName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: UserRegistry
-    type: String
-    required: true
-    test_value: '"AccTest_APIAuthURLRegistry"'
-    test_bed_value: 'datapower_apiauthurlregistry.acc_test.id'
-    description: 'User registry (reference to APIAuthenticationURLRegistry or APILDAPRegistry)'
-    cli_alias: user-registry
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPISecurityBasicAuth"'
+  test_expect_ds: '"AccTest_APISecurityBasicAuth"'
+  example: APISecurityBasicAuthName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: UserRegistry
+  type: String
+  required: true
+  test_value: '"AccTest_APIAuthURLRegistry"'
+  test_bed_value: datapower_apiauthurlregistry.acc_test.id
+  description: Specify the API user registry configuration to authenticate API requests.
+    The supported registries are API authentication URL and API LDAP registry.
+  cli_alias: user-registry

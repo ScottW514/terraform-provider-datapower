@@ -1,40 +1,42 @@
 name: URLMap
-description: 'URL Map'
-cli_alias: 'urlmap'
-cmd_group: 'urlmap'
-rest_endpoint: '/mgmt/config/{domain}/URLMap'
+description: Configure/Edit URL maps. URL Maps are used by Processing Actions and
+  by XML Manager Compile Options Policies.
+cli_alias: urlmap
+cmd_group: urlmap
+rest_endpoint: /mgmt/config/{domain}/URLMap
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestURLMap"'
-    test_expect_ds: '"AccTest_URLMap"'
-    example: 'URLMapName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-    example: 'Some comment'
-  - name: URLMapRule
-    type: List
-    element_type: DmURLMapRule
-    required: true
-    description: 'URL Map Rule'
-    cli_alias: match
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestURLMap"'
+  test_expect_ds: '"AccTest_URLMap"'
+  example: URLMapName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+  example: Some comment
+- name: URLMapRule
+  type: List
+  element_type: DmURLMapRule
+  required: true
+  description: Add, edit or delete a URL map match pattern
+  cli_alias: match

@@ -3,12 +3,12 @@
 page_title: "datapower_aaajwtgenerator Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  JWT Generator
+  
 ---
 
 # datapower_aaajwtgenerator (Data Source)
 
-JWT Generator
+<p>The JSON Web Token (JWT) Generator specifies the JWT content and the cryptographic methods, such as signing and encryption methods, used for generating a JWT during the AAA postprocessing phase.</p>
 
 ## Example Usage
 
@@ -38,25 +38,25 @@ Optional:
 
 Read-Only:
 
-- `additional_claims` (Attributes) Additional claims
+- `additional_claims` (Attributes) <p>Additional JWT claims, such as audience "aud" claim, not before "nbf" claim, issued at "iat" claim, JWT ID "jit" claim, "nonce" claim, and custom claim, can be added for JWT.</p><p>The subject, "sub" claim is added by default. You can override the subject claim value by specifying the "sub" claim in the Custom claims field.</p>
   - CLI Alias: `add-claims` (see [below for nested schema](#nestedatt--result--additional_claims))
 - `app_domain` (String) The name of the application domain the object belongs to
-- `audience` (List of String) Audience claim
-- `custom_claims` (String) Custom claims
-- `duration` (Number) Validity period
-- `enc_algorithm` (String) Encryption algorithm
-- `encrypt_algorithm` (String) Key management algorithm
-- `encrypt_certificate` (String) Encryption certificate
-- `encrypt_ss_key` (String) Encryption key
-- `gen_method` (Attributes) JWT generation method
+- `audience` (List of String) The audience, "aud", claim identifies the recipients that the JWT is intended for. The maximum length of the Audience claim is 256 characters.
+- `custom_claims` (String) The GatewayScript or XSLT file is processed to specify the custom claim. The GatewayScript or XSLT file must be stored in the <tt>local:</tt> or <tt>store:</tt> directory.
+- `duration` (Number) The validity period identifies the expiration time, "exp" claim. Enter a value in the range 1 - 31622400. The default value is 3600.
+- `enc_algorithm` (String) Various encryption algorithms can be used to encrypt the JWT, such as A128CBC-HS256, A192CBC-HS384, A256CBC-HS512, A128GCM, A192GCM, and A256GCM. The default value is A128CBC-HS256.
+- `encrypt_algorithm` (String) Various key management algorithms can be used to encrypt the JWT, such as RSA1_5, RSA-OAEP, RSA-OAEP-256, A128KW, A192KW, A256KW, and dir. The default value is RSA1_5.
+- `encrypt_certificate` (String) The certificate alias can be used to encrypt the JWT. You can get the certificate alias by configuring the Crypto Certificate.
+- `encrypt_ss_key` (String) The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
+- `gen_method` (Attributes) The signing and encryption methods can be used to secure and generate a JWT.
   - CLI Alias: `generate-method` (see [below for nested schema](#nestedatt--result--gen_method))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `issuer` (String) Issuer
-- `not_before` (Number) Delta for not before claim
-- `sign_algorithm` (String) Signing algorithm
-- `sign_key` (String) Signing key
-- `sign_ss_key` (String) Signing shared secret
-- `user_summary` (String) Comments
+- `issuer` (String) The issuer claim, "iss", identifies the principal that issues the JWT. The maximum length is 256 characters. The default value is <tt>idg</tt> .
+- `not_before` (Number) The not before claim, "nbf", indicates the time before which the JWT must not be accepted for processing. Enter a value in the range 0 - 480. The default value is 0.
+- `sign_algorithm` (String) Various signing algorithms can be used to generate the JWT signature, such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.
+- `sign_key` (String) The key alias can be used to sign the JWT. You can get a key alias by configuring the Crypto Key.
+- `sign_ss_key` (String) The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
+- `user_summary` (String) A descriptive summary for the JWT Generator configuration.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

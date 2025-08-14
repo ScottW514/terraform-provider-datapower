@@ -3,13 +3,13 @@
 page_title: "datapower_domainavailability Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Domain availability (updates restart domain)
+  Domain availability monitors each multiprotocol gateway and web service proxy in the domain. When the operational state of any service in the domain is in the down state, the operational state for domain availability is down to indicate that these services are not ready to accept traffic. At startup, domain availability maintains all handlers in a quiesced state until their associated services are fully configured. When these services are ready to accept traffic, an event is written to the log that indicates that the domain is ready to process traffic.
   CLI Alias: domain-availability
 ---
 
 # datapower_domainavailability (Resource)
 
-Domain availability (updates restart domain)
+Domain availability monitors each multiprotocol gateway and web service proxy in the domain. When the operational state of any service in the domain is in the down state, the operational state for domain availability is down to indicate that these services are not ready to accept traffic. At startup, domain availability maintains all handlers in a quiesced state until their associated services are fully configured. When these services are ready to accept traffic, an event is written to the log that indicates that the domain is ready to process traffic.
   - CLI Alias: `domain-availability`
 
 ## Example Usage
@@ -30,7 +30,7 @@ resource "datapower_domainavailability" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
 - `user_summary` (String) Comments

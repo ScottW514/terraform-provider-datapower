@@ -3,12 +3,12 @@
 page_title: "datapower_mcfhttpheader Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  HTTP Header Message Content Filter
+  Filter based on HTTP header. A specific header value is used to match the request message.
 ---
 
 # datapower_mcfhttpheader (Data Source)
 
-HTTP Header Message Content Filter
+Filter based on HTTP header. A specific header value is used to match the request message.
 
 ## Example Usage
 

@@ -57,7 +57,7 @@ func (d *PolicyParametersDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *PolicyParametersDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Policy Parameters",
+		MarkdownDescription: "Configuration to persist the values of ws-policy parameters.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *PolicyParametersDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"policy_parameter": schema.ListNestedAttribute{
-							MarkdownDescription: "Policy Parameter",
+							MarkdownDescription: "A key-value pair. The key specifies a policy parameter in a policy mapping stylesheet formatted {policy-domain-ns}key.",
 							NestedObject:        models.DmPolicyParameterDataSourceSchema,
 							Computed:            true,
 						},

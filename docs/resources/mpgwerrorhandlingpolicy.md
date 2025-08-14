@@ -3,13 +3,13 @@
 page_title: "datapower_mpgwerrorhandlingpolicy Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Multi-Protocol Gateway Error Policy
+  A Multi-Protocol gateway error policy consists of one or more error actions. A service runs an error action depending on whether or not a corresponding matching rule selects the action for processing. A service can have one policy active at a time. When an error occurs in the Multi-Protocol Gateway from an HTTP or HTTPS request flow and no precedent error handler handles the error, the service calls the error policy.
   CLI Alias: mpgw-error-handling
 ---
 
 # datapower_mpgwerrorhandlingpolicy (Resource)
 
-Multi-Protocol Gateway Error Policy
+A Multi-Protocol gateway error policy consists of one or more error actions. A service runs an error action depending on whether or not a corresponding matching rule selects the action for processing. A service can have one policy active at a time. When an error occurs in the Multi-Protocol Gateway from an HTTP or HTTPS request flow and no precedent error handler handles the error, the service calls the error policy.
   - CLI Alias: `mpgw-error-handling`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_mpgwerrorhandlingpolicy" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `policy_maps` (Attributes List) Policy Maps
+- `policy_maps` (Attributes List) The policy maps contain a list of error response action rules and their corresponding matching rules. When the policy evaluates the matching rules and finds a match, it runs the corresponding error response action. The policy runs the first error response action with a successful match.
   - CLI Alias: `match` (see [below for nested schema](#nestedatt--policy_maps))
 
 ### Optional

@@ -3,13 +3,13 @@
 page_title: "datapower_filesystemusagemonitor Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  File system usage monitor (default domain only)
+  The file system usage monitor is a utility that checks file systems to determine how much space is available and generates log events to report the usage of each file system. When initially enabled, the monitor immediately checks the file systems.
   CLI Alias: fs-usage-monitor
 ---
 
 # datapower_filesystemusagemonitor (Resource)
 
-File system usage monitor (`default` domain only)
+The file system usage monitor is a utility that checks file systems to determine how much space is available and generates log events to report the usage of each file system. When initially enabled, the monitor immediately checks the file systems.
   - CLI Alias: `fs-usage-monitor`
 
 ## Example Usage
@@ -26,36 +26,36 @@ resource "datapower_filesystemusagemonitor" "test" {
 
 ### Optional
 
-- `all_qm_critical_threshold` (Number) Critical threshold for queue manager file systems
+- `all_qm_critical_threshold` (Number) Specify the usage threshold to generate a critical event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.
   - CLI Alias: `all-qm-critical`
   - Range: `0`-`100`
   - Default value: `90`
-- `all_qm_warning_threshold` (Number) Warning threshold for queue manager file systems
+- `all_qm_warning_threshold` (Number) Specify the usage threshold to generate a warning event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.
   - CLI Alias: `all-qm-warning`
   - Range: `0`-`100`
   - Default value: `75`
-- `all_system` (Boolean) Monitor all system file systems
+- `all_system` (Boolean) Specify whether the utility checks all or only a subset of system file systems. By default, all file systems are scanned. <ul><li>When enabled, you can define specific file systems that override their default thresholds.</li><li>When not enabled, define the file systems to check with their thresholds.</li></ul>
   - CLI Alias: `all-system`
   - Default value: `true`
-- `all_system_critical_threshold` (Number) Critical threshold for all system file systems
+- `all_system_critical_threshold` (Number) Specify the usage threshold to generate a critical event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.
   - CLI Alias: `all-system-critical`
   - Range: `0`-`100`
   - Default value: `90`
-- `all_system_warning_threshold` (Number) Warning threshold for all system file systems
+- `all_system_warning_threshold` (Number) Specify the usage threshold to generate a warning event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.
   - CLI Alias: `all-system-warning`
   - Range: `0`-`100`
   - Default value: `75`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `polling_interval` (Number) Polling interval
+- `polling_interval` (Number) Specify the interval in minutes between file system checks for their usage. Enter a value in the range 15 - 65535. The default value is 60.
   - CLI Alias: `poll`
   - Range: `15`-`65535`
   - Default value: `60`
-- `queue_manager` (Attributes List) Queue manager file systems
+- `queue_manager` (Attributes List) Specify the queue manager file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all queue manager file systems.
   - CLI Alias: `qm` (see [below for nested schema](#nestedatt--queue_manager))
-- `system` (Attributes List) System file systems
+- `system` (Attributes List) Specify the system file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all system file systems.
   - CLI Alias: `system` (see [below for nested schema](#nestedatt--system))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

@@ -3,12 +3,12 @@
 page_title: "datapower_ratelimitdefinitiongroup Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Rate limit definition group
+  A rate limit definition group contains a list of rate limit definitions to enforce.
 ---
 
 # datapower_ratelimitdefinitiongroup (Data Source)
 
-Rate limit definition group
+A rate limit definition group contains a list of rate limit definitions to enforce.
 
 ## Example Usage
 

@@ -3,12 +3,12 @@
 page_title: "datapower_controllist Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Control List
+  
 ---
 
 # datapower_controllist (Data Source)
 
-Control List
+<p>A control list uses a value-matching pattern to determine whether values are on the allowlist or blocklist.</p><p>The value-matching pattern is defined by a PCRE. When you define the control list, you can indicates whether evaluation is case-sensitive or case-insensitive.</p>
 
 ## Example Usage
 
@@ -39,11 +39,11 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `case_insensitive` (Boolean) Case-insensitive
+- `case_insensitive` (Boolean) Indicates whether the specified values are case-sensitive or case-insensitive.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `type` (String) Type
-- `user_summary` (String) Comments
-- `value` (List of String) Value
+- `type` (String) Specifies whether values are accepted or rejected.
+- `user_summary` (String) A descriptive summary for the configuration.
+- `value` (List of String) <p>Specifies the PCRE to evaluate values.</p><ul><li>An entry of <tt>^foo</tt> indicates a match against only values that start with <tt>foo</tt> .</li><li>An empty list indicates no match against any value.</li><li>A list with only <tt>.*</tt> indicates a match against all values.</li></ul>
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

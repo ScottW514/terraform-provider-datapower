@@ -1,58 +1,61 @@
 name: GatewayPeeringManager
-description: 'Gateway-peering manager'
-cli_alias: 'gateway-peering-manager'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/GatewayPeeringManager/default'
+description: <p>The gateway-peering manager defines the gateway-peering instances
+  that store data for synchronization across a peer group. With the gateway-peering
+  manager, you specify the gateway-peering instance to use the feature-specific data
+  store. The gateway-peering instance are for API rate limits, API subscribers, API
+  probe data, and the GatweayScript <tt>ratelimit</tt> module.</p>
+cli_alias: gateway-peering-manager
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/GatewayPeeringManager/default
 update_only: true
 attributes:
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: APIConnectGatewayService
-    type: String
-    reference_to: GatewayPeering
-    test_value: '"default-gateway-peering"'
-    required: true
-    description: 'API Connect gateway service'
-    cli_alias: apic-gw-service
-  - name: RateLimit
-    type: String
-    reference_to: GatewayPeering
-    test_value: '"default-gateway-peering"'
-    required: true
-    description: 'API rate limits'
-    cli_alias: rate-limit
-  - name: Subscription
-    type: String
-    reference_to: GatewayPeering
-    test_value: '"default-gateway-peering"'
-    required: true
-    description: 'API subscribers'
-    cli_alias: subscription
-# DEPRECATED
-#  - name: APIProbe
-  - name: RatelimitModule
-    type: String
-    reference_to: GatewayPeering
-    test_value: '"default-gateway-peering"'
-    required: true
-    description: 'GatewayScript ratelimit module keys'
-    cli_alias: ratelimit-module
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: APIConnectGatewayService
+  type: String
+  reference_to: GatewayPeering
+  test_value: '"default-gateway-peering"'
+  required: true
+  description: API Connect gateway service
+  cli_alias: apic-gw-service
+- name: RateLimit
+  type: String
+  reference_to: GatewayPeering
+  test_value: '"default-gateway-peering"'
+  required: true
+  description: API rate limits
+  cli_alias: rate-limit
+- name: Subscription
+  type: String
+  reference_to: GatewayPeering
+  test_value: '"default-gateway-peering"'
+  required: true
+  description: API subscribers
+  cli_alias: subscription
+- name: RatelimitModule
+  type: String
+  reference_to: GatewayPeering
+  test_value: '"default-gateway-peering"'
+  required: true
+  description: GatewayScript ratelimit module keys
+  cli_alias: ratelimit-module

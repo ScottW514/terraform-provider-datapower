@@ -57,7 +57,7 @@ func (d *WebAppResponseDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *WebAppResponseDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Web Response Profile",
+		MarkdownDescription: "The web response profile specifies various properties about the response side of the transaction that must be satisfied.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,46 +81,46 @@ func (d *WebAppResponseDataSource) Schema(ctx context.Context, req datasource.Sc
 							Computed:            true,
 						},
 						"policy_type": schema.StringAttribute{
-							MarkdownDescription: "Style",
+							MarkdownDescription: "Select the satisfaction policy for the profile. The default is Admission.",
 							Computed:            true,
 						},
-						"ok_codes":    models.GetDmHTTPResponseCodesDataSourceSchema("Response Codes", "response-codes", ""),
-						"ok_versions": models.GetDmHTTPVersionMaskDataSourceSchema("Response Versions", "response-versions", ""),
+						"ok_codes":    models.GetDmHTTPResponseCodesDataSourceSchema("Specify which response codes from the backend server are acceptable.", "response-codes", ""),
+						"ok_versions": models.GetDmHTTPVersionMaskDataSourceSchema("Specify which HTTP versions are acceptable from the backend server.", "response-versions", ""),
 						"min_body_size": schema.Int64Attribute{
-							MarkdownDescription: "Minimum Size",
+							MarkdownDescription: "Specify the minimum size of the response body.",
 							Computed:            true,
 						},
 						"max_body_size": schema.Int64Attribute{
-							MarkdownDescription: "Maximum Size",
+							MarkdownDescription: "Specify the maximum size of the response body.",
 							Computed:            true,
 						},
 						"header_gnvc": schema.StringAttribute{
-							MarkdownDescription: "Header Name-Value Profile",
+							MarkdownDescription: "The validation profile allows you to specify what headers are expected, what headers should be stripped, and what headers should be mapped to known values. If no profile is specified, any header is allowed.",
 							Computed:            true,
 						},
 						"content_types": schema.ListAttribute{
-							MarkdownDescription: "Content-Type List",
+							MarkdownDescription: "A list of PCRE regular expressions that indicate acceptable content-type MIME headers on the response. If this list is empty, any content-type is acceptable. If the response does not have a content type that will be represented as an empty string for matching purposes. An empty list will match all content types.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"xml_policy": schema.StringAttribute{
-							MarkdownDescription: "XML Processing",
+							MarkdownDescription: "Specify how the device handles responses that contain an XML MIME type.",
 							Computed:            true,
 						},
 						"xml_rule": schema.StringAttribute{
-							MarkdownDescription: "XML Transformation Rule",
+							MarkdownDescription: "This is the transformation rule that is run when the response contains an XML MIME type and the XML processing policy is set to XML or SOAP.",
 							Computed:            true,
 						},
 						"non_xml_policy": schema.StringAttribute{
-							MarkdownDescription: "Non-XML Processing",
+							MarkdownDescription: "Specify how the device handles responses that do not contain an XML MIME type.",
 							Computed:            true,
 						},
 						"non_xml_rule": schema.StringAttribute{
-							MarkdownDescription: "Non-XML Processing Rule",
+							MarkdownDescription: "This is the transformation rule that is run when the response does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.",
 							Computed:            true,
 						},
 						"error_policy": schema.StringAttribute{
-							MarkdownDescription: "Error Policy",
+							MarkdownDescription: "If this response policy is violated the firewall error policy will be invoked unless this more specific error policy is provided, in which case this policy takes precedence.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

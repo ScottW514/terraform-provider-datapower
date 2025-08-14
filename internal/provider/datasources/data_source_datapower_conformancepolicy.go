@@ -80,59 +80,59 @@ func (d *ConformancePolicyDataSource) Schema(ctx context.Context, req datasource
 							MarkdownDescription: "Comments",
 							Computed:            true,
 						},
-						"profiles": models.GetDmConformanceProfilesDataSourceSchema("Profiles", "profiles", ""),
+						"profiles": models.GetDmConformanceProfilesDataSourceSchema("Profiles against which to check conformance", "profiles", ""),
 						"ignored_requirements": schema.ListAttribute{
-							MarkdownDescription: "Ignored Requirements",
+							MarkdownDescription: "Requirements that should not be validated. A requirement is specified by a string of the form \"&lt;profile>:&lt;reqid>\", where &lt;profile> names the profile and is one of BP1.0, BP1.1, BSP1.0 or AP1.0, and &lt;reqid> names the requirement within that profile, and follows the naming convention used by the profile itself. For example, requirement R4221 in the Basic Security Profile 1.0 would be named as \"BSP1.0:R4221\".",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"fixup_stylesheets": schema.ListAttribute{
-							MarkdownDescription: "Corrective Stylesheets",
+							MarkdownDescription: "Stylesheets to invoke after conformance analysis. These stylesheets can manipulate the analysis results or repair instances of nonconformance.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"assert_bp10_conformance": schema.BoolAttribute{
-							MarkdownDescription: "BP1.0 Conformance Claim Assertion",
+							MarkdownDescription: "Attach a Basic Profile 1.0 conformance assertion to messages that conform to BP 1.0, or remove a Basic Profile 1.0 conformance assertion to the messages that don't conform to BP 1.0.",
 							Computed:            true,
 						},
 						"report_level": schema.StringAttribute{
-							MarkdownDescription: "Record Report",
+							MarkdownDescription: "Select the degree of nonconformance to cause a conformance report to be recorded.",
 							Computed:            true,
 						},
 						"log_target": schema.StringAttribute{
-							MarkdownDescription: "Destination",
+							MarkdownDescription: "Target URL to which conformance reports will be sent",
 							Computed:            true,
 						},
 						"reject_level": schema.StringAttribute{
-							MarkdownDescription: "Reject non-conforming messages",
+							MarkdownDescription: "Select the degree of nonconformance to cause the message to be rejected.",
 							Computed:            true,
 						},
 						"reject_include_summary": schema.BoolAttribute{
-							MarkdownDescription: "Include error summary",
+							MarkdownDescription: "Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found.",
 							Computed:            true,
 						},
 						"result_is_conformance_report": schema.BoolAttribute{
-							MarkdownDescription: "Use analysis as result",
+							MarkdownDescription: "The normal behavior of the conformance action is to deliver the original message, possibly modified by one or more stylesheets, to the next multistep stage. Setting this property will instead cause the analysis result to be used as the output. This is primarily intended for use within a loopback firewall, which will return the analysis results to the client.",
 							Computed:            true,
 						},
 						"response_properties_enabled": schema.BoolAttribute{
-							MarkdownDescription: "Distinct response behavior",
+							MarkdownDescription: "When placed inside a single conformance check action (as is typical in an XML gateway), a single set of logging and behavior parameters is sufficent. However, sometimes (as in the case of auto-generated WS-Proxy conformance checking), the same policy is used in checks in both the request and response directions. In this case, the conformance reports should likely be sent to different targets. This toggle allows for an alternate set of logging and rejection parameters to be specified for messages in the response direction.",
 							Computed:            true,
 						},
 						"response_report_level": schema.StringAttribute{
-							MarkdownDescription: "Record Report (response direction)",
+							MarkdownDescription: "Select the degree of nonconformance in a response message to cause a conformance report to be recorded.",
 							Computed:            true,
 						},
 						"response_log_target": schema.StringAttribute{
-							MarkdownDescription: "Destination",
+							MarkdownDescription: "Target URL to which response conformance reports will be sent",
 							Computed:            true,
 						},
 						"response_reject_level": schema.StringAttribute{
-							MarkdownDescription: "Reject non-conforming response messages",
+							MarkdownDescription: "Select the degree of nonconformance to cause a response message to be rejected.",
 							Computed:            true,
 						},
 						"response_reject_include_summary": schema.BoolAttribute{
-							MarkdownDescription: "Include response error summary",
+							MarkdownDescription: "Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found in response messages.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

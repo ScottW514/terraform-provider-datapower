@@ -3,13 +3,13 @@
 page_title: "datapower_webappfw Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web Application Firewall
+  The web application firewall provides filtering, security, and input validation for HTTP transactions.
   CLI Alias: web-application-firewallAccepted Dependency Actions: quiesce
 ---
 
 # datapower_webappfw (Resource)
 
-Web Application Firewall
+The web application firewall provides filtering, security, and input validation for HTTP transactions.
   - CLI Alias: `web-application-firewall`
   - Accepted Dependency Actions: `quiesce`
 
@@ -37,94 +37,94 @@ resource "datapower_webappfw" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `remote_address` (String) Remote Host
+- `remote_address` (String) Specify the host name or IP address of the backend server. If the backend requires TLS, ensure that the TLS client profile is configured for client (forward) connections.
   - CLI Alias: `remote-address`
-- `style_policy` (String) Security Policy
+- `style_policy` (String) Select a security policy from the list of available policies. Click + to create a new Policy. This policy controls which profiles are enforced.
   - CLI Alias: `security-policy`
   - Reference to: `datapower_appsecuritypolicy:id`
 
 ### Optional
 
-- `allow_cache_control_header` (Boolean) Allow Cache-Control Header
+- `allow_cache_control_header` (Boolean) Specify whether to allow the HTTP GET method to pass the Cache-Control header through to the back end. If disabled, a "Cache-Control:no-transform" header is passed. If enabled, the client request can specify the cache control behavior, or if the client request does not specify the Cache-Control header, a "Cache-Control:no-transform" header is passed.
   - CLI Alias: `allow-cache-control`
   - Default value: `false`
-- `back_http_version` (String) HTTP Version to Server
+- `back_http_version` (String) Select the HTTP version to use on the server-side connection. The default is HTTP 1.1.
   - CLI Alias: `http-back-version`
   - Choices: `HTTP/1.0`, `HTTP/1.1`
   - Default value: `HTTP/1.1`
-- `back_persistent_timeout` (Number) Back Persistent Timeout
+- `back_persistent_timeout` (Number) <p>Specify the maximum inter-transaction idle time in seconds for Web Application Firewall to server connections. This value is the maximum idle time between the completion of a TCP transaction and the initiation of a new TCP transaction on this connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.</p><p><b>Note:</b> For HTTP GET and HEAD requests, the service attempts the connection again after the specified value, Therefore, the actual timeout is twice the specified value.</p><p>An idle TCP connection can remain in the idle state for 20 seconds after the expiration of the persistence timer.</p>
   - CLI Alias: `back-persistent-timeout`
   - Range: `0`-`86400`
   - Default value: `180`
-- `back_timeout` (Number) Back Side Timeout
+- `back_timeout` (Number) Set the intra-transaction timeout for Web Application Firewall to server connections. This value is the maximum idle time to allow in a transaction on the Web Application Firewall to server connection. This timer monitors the idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.
   - CLI Alias: `back-timeout`
   - Range: `1`-`86400`
   - Default value: `120`
-- `debug_history` (Number) Transaction History
+- `debug_history` (Number) Set the number of records for transaction diagnostics in the probe. Enter a value in the range 10 - 250. The default value is 25.
   - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
-- `debug_mode` (String) Probe setting
+- `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
   - Default value: `off`
-- `debug_trigger` (Attributes List) Probe Triggers
+- `debug_trigger` (Attributes List) The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.
   - CLI Alias: `debug-trigger` (see [below for nested schema](#nestedatt--debug_trigger))
-- `delay_errors` (Boolean) Delay Error Messages
+- `delay_errors` (Boolean) The timing difference of the error messages returned after a decryption action can provide an attacker with enough information to determine the contents of the plain-text data. When enabled, the default, the DataPower Gateway delays error messages for the defined duration. When disabled, the DataPower Gateway does not delay error messages.
   - CLI Alias: `delay-errors`
   - Default value: `true`
-- `delay_errors_duration` (Number) Duration to Delay Error Messages
+- `delay_errors_duration` (Number) When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not send error messages to the client until 3 seconds have elapsed since the DataPower Gateway performed decryption on the requests. Use any value of 250 - 300000. The default value is 1000.
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `do_chunked_upload` (Boolean) Allow Chunked Uploads
+- `do_chunked_upload` (Boolean) Use the radio buttons to enable (on) or disable (off) the ability to send Content-Type Chunked Encoded documents to the back end server. When the device employs the HTTP/1.1 protocol, the body of the document can be delimited by either Content-Length or chunked encodings. While all servers will understand how to interpret Content-Length, many applications will fail to understand Chunked encoding. For this reason, Content-Length is the standard method used. However doing so interferes with the ability of the device to fully stream. To stream full documents towards the back end server, this property should be turned on. However, the back end server must be RFC 2616 compatible, because this feature cannot be renegotiated at run time, unlike all other HTTP/1.1 features which can be negotiated down at runtime if necessary. This property can also be enabled by configuring a User Agent to enable it on a per-URL basis.
   - CLI Alias: `chunked-uploads`
   - Default value: `false`
-- `do_host_rewriting` (Boolean) Rewrite Host Names When Gatewaying
+- `do_host_rewriting` (Boolean) Some protocols have distinct name based elements, separate from the URL, to de multiplex. HTTP uses the Host header for this purposes. If this feature is enabled the backside server will receive a request reflecting the final route, otherwise it will receive a request reflecting the information as it arrived at the DataPower device. Web servers issuing redirects may want to disable this feature, as they often depend on the host header for the value of their redirect.
   - CLI Alias: `host-rewriting`
   - Default value: `true`
-- `error_policy` (String) Error Policy
+- `error_policy` (String) If any policy is violated, this is the default policy that will handle the response sent to the client. It might be overridden in the profile that fails.
   - CLI Alias: `error-policy`
   - Reference to: `datapower_webapperrorhandlingpolicy:id`
-- `follow_redirects` (Boolean) Follow Redirects
+- `follow_redirects` (Boolean) Some protocols generate redirects as part of the protocol - for example HTTP response code 302. If this property is enabled the firewall will try and transparently resolve those redirects.
   - CLI Alias: `follow-redirects`
   - Default value: `true`
-- `front_http_version` (String) HTTP Response Version
+- `front_http_version` (String) Select the HTTP version to be use on client responses. Incoming version 1.0 requests will always be replied to with 1.0 compatible responses regardless of this setting. The default is HTTP 1.1.
   - CLI Alias: `http-front-version`
   - Choices: `HTTP/1.0`, `HTTP/1.1`
   - Default value: `HTTP/1.1`
-- `front_persistent_timeout` (Number) Front Persistent Timeout
+- `front_persistent_timeout` (Number) Set the inter-transaction timeout for Web Application Firewall to client connections. This value is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction on the Web Application Firewall to client connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.
   - CLI Alias: `front-persistent-timeout`
   - Range: `0`-`86400`
   - Default value: `180`
 - `front_side` (Attributes List) Source Addresses
   - CLI Alias: `listen-on` (see [below for nested schema](#nestedatt--front_side))
-- `front_timeout` (Number) Front Side Timeout
+- `front_timeout` (Number) Set the intra-transaction timeout for Web Application Firewall to client connections. This value is the maximum idle time to allow in a transaction on the Web Application Firewall to client connection. This timer monitors idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.
   - CLI Alias: `front-timeout`
   - Range: `1`-`86400`
   - Default value: `120`
-- `http_client_ip_label` (String) HTTP Client IP Label
+- `http_client_ip_label` (String) Retain the default value (X-Client-IP) or provide an other value (for example, X-Forwarded-For).
   - CLI Alias: `http-client-ip-label`
   - Default value: `X-Client-IP`
-- `http_log_cor_id_label` (String) HTTP Global Transaction ID Label
+- `http_log_cor_id_label` (String) Enter the name of an HTTP Header to read to determine the global transaction ID for chained services. This value defaults to X-Global-Transaction-ID.
   - CLI Alias: `http-global-tranID-label`
   - Default value: `X-Global-Transaction-ID`
-- `priority` (String) Service Priority
+- `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
-- `remote_port` (Number) Remote Port
+- `remote_port` (Number) Specify the port on the remote server.
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`
   - Default value: `80`
-- `request_side_security` (Boolean) Request Security
+- `request_side_security` (Boolean) If this property is disabled, no request side security policies will be enforced and all requests will be allowed through.
   - CLI Alias: `request-security`
   - Default value: `true`
-- `response_side_security` (Boolean) Response Security
+- `response_side_security` (Boolean) If this property is disabled, no response side security policies will be enforced and all responses will be allowed through.
   - CLI Alias: `response-security`
   - Default value: `true`
-- `rewrite_errors` (Boolean) Rewrite Error Messages
+- `rewrite_errors` (Boolean) Error messages after a decryption action can provide an attacker who is using the padding oracle attack method with enough information to determine the contents of the plain-text data. When enabled, the default, the client receives error messages without the internal information that could lead to a discovery. When disabled, the client receives the original message with this information.
   - CLI Alias: `rewrite-errors`
   - Default value: `true`
 - `ssl_client` (String) TLS client profile
@@ -140,23 +140,23 @@ resource "datapower_webappfw" "test" {
 - `sslsni_server` (String) TLS SNI server profile
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_sslsniserverprofile:id`
-- `stream_output_to_back` (String) Stream Output to Back
+- `stream_output_to_back` (String) Select the desired streaming behavior.
   - CLI Alias: `stream-output-to-back`
   - Choices: `buffer-until-verification`, `stream-until-infraction`
   - Default value: `buffer-until-verification`
-- `stream_output_to_front` (String) Stream Output to Front
+- `stream_output_to_front` (String) Select the desired streaming behavior.
   - CLI Alias: `stream-output-to-front`
   - Choices: `buffer-until-verification`, `stream-until-infraction`
   - Default value: `buffer-until-verification`
-- `uri_normalization` (Boolean) Normalize URI
+- `uri_normalization` (Boolean) If this property is enabled the URI is rewritten to make sure the URI is RFC compliant by escaping certain characters. Additionally, characters that are escaped that do not need to be are unescaped. This makes checking for attack sequences such as .. more reliable.
   - CLI Alias: `uri-normalization`
   - Default value: `true`
-- `url_rewrite_policy` (String) Header and URL Rewrite Policy
+- `url_rewrite_policy` (String) A Rewrite Policy can be used to modify the values of certain headers before the security policies are executed. One common use for this is to rewrite the contents of an HTTP Location header to reflect external DNS names. By using a Rewrite Policy, it is possible to intercept and rewrite URLs that might send a browser directly to the back end web site, rather than through the Web Application Firewall.
   - CLI Alias: `urlrewrite-policy`
   - Reference to: `datapower_urlrewritepolicy:id`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `xml_manager` (String) XML Manager
+- `xml_manager` (String) <p>An XML Manager manages the compilation and caching of stylesheets, the caching of documents, and provides configuration constraints on the size and parsing depth of documents. You can enable streaming operation by configuring an XML Manager to use a Streaming Compile Option Policy.</p><p>Note that an XML Manager can optionally employ a User Agent. The User Agent settings, in turn, can affect the behavior of the gateway when communicating with back end servers or with clients when sending back responses.</p><p>More than one firewall may use the same XML Manager. Select an existing XML Manager from the list to assign the Manager to this firewall. Click the + button to create a new XML Manager that is assigned to this firewall. A default Manager is used if you do not create one.</p>
   - CLI Alias: `xml-manager`
   - Reference to: `datapower_xmlmanager:id`
   - Default value: `default`

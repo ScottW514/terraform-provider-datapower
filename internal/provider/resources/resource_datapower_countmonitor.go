@@ -56,7 +56,7 @@ func (r *CountMonitorResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *CountMonitorResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Message Count Monitor", "monitor-count", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("On-Line Help for Message-Count Monitors", "monitor-count", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -81,7 +81,7 @@ func (r *CountMonitorResource) Schema(ctx context.Context, req resource.SchemaRe
 				},
 			},
 			"measure": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Measure", "measure", "").AddStringEnum("requests", "responses", "xpath", "errors").AddDefaultValue("requests").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the action that advances the counter. The default is Requests.", "measure", "").AddStringEnum("requests", "responses", "xpath", "errors").AddDefaultValue("requests").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -90,7 +90,7 @@ func (r *CountMonitorResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("requests"),
 			},
 			"source": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Source", "source", "").AddStringEnum("all", "each-ip", "ip-from-header").AddDefaultValue("all").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select how monitoring is applied to IP addresses. This setting is meaningful only if an associated traffic definition contains and inclusive or exclusive IP address criterion. The default is All.", "source", "").AddStringEnum("all", "each-ip", "ip-from-header").AddDefaultValue("all").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -99,28 +99,28 @@ func (r *CountMonitorResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("all"),
 			},
 			"header": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Header", "header", "").AddDefaultValue("X-Client-IP").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name of the HTTP header to read to determine the value of the source IP address.", "header", "").AddDefaultValue("X-Client-IP").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("X-Client-IP"),
 			},
 			"filter": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Thresholds/Filters", "filter", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Click this tab to define a message-count monitor threshold and assign an action (Message Filter Action) that is taken when the threshold is reached.", "filter", "").String,
 				NestedObject:        models.DmCountMonitorFilterResourceSchema,
 				Optional:            true,
 			},
 			"max_sources": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum Distinct Sources", "distinct-sources", "").AddDefaultValue("10000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.", "distinct-sources", "").AddDefaultValue("10000").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(10000),
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).", "summary", "").String,
 				Optional:            true,
 			},
 			"message_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Message Type", "message-type", "messagetype").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the message type monitored by this message-count monitor.", "message-type", "messagetype").String,
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

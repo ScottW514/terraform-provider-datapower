@@ -57,7 +57,7 @@ func (d *APISecurityHTTPSchemeDataSource) Metadata(_ context.Context, req dataso
 
 func (d *APISecurityHTTPSchemeDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API security HTTP scheme",
+		MarkdownDescription: "Configure and manage an HTTP bearer authentication security definition with the Bearer authentication security scheme in an API as defined in OpenAPI 3.0. Bearer authentication is an HTTP Authentication scheme and was originally part of RFC 6750: The OAuth 2.0 Authorization Framework: Bearer Token Usage.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,11 +81,11 @@ func (d *APISecurityHTTPSchemeDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"scheme": schema.StringAttribute{
-							MarkdownDescription: "Scheme",
+							MarkdownDescription: "Specify the HTTP authentication security scheme. The only supported value is <tt>bearer</tt> .",
 							Computed:            true,
 						},
 						"bearer_format": schema.StringAttribute{
-							MarkdownDescription: "Bearer format",
+							MarkdownDescription: "Specify how the bearer token is formatted. The format is primarily a hint.",
 							Computed:            true,
 						},
 						"bearer_validation_method": schema.StringAttribute{
@@ -93,11 +93,11 @@ func (d *APISecurityHTTPSchemeDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"bearer_validation_endpoint": schema.StringAttribute{
-							MarkdownDescription: "Bearer validation endpoint",
+							MarkdownDescription: "Specify the URL of the validation endpoint. When this connection uses the HTTPS protocol, specify the TLS client profile to secure the connection.",
 							Computed:            true,
 						},
 						"bearer_validation_tls_profile": schema.StringAttribute{
-							MarkdownDescription: "Bearer validation TLS profile",
+							MarkdownDescription: "Specify the TLS client profile to secure the connection to the validation endpoint. You must specify a client profile when you connect to the validation endpoint with the HTTPS protocol.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

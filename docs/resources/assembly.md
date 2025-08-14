@@ -3,13 +3,13 @@
 page_title: "datapower_assembly Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Assembly
+  An assembly specifies the API rule to apply to the API call and how to handle errors during the assembly execution. The API rule for the assembly comprises only assembly actions that are executed in order to control a specific aspect of processing such as data transformation during API call at run time. When an API is identified for the incoming request, its assembly is executed.
   CLI Alias: assembly
 ---
 
 # datapower_assembly (Resource)
 
-Assembly
+An assembly specifies the API rule to apply to the API call and how to handle errors during the assembly execution. The API rule for the assembly comprises only assembly actions that are executed in order to control a specific aspect of processing such as data transformation during API call at run time. When an API is identified for the incoming request, its assembly is executed.
   - CLI Alias: `assembly`
 
 ## Example Usage
@@ -29,22 +29,22 @@ resource "datapower_assembly" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `rule` (String) Rule
+- `rule` (String) Specifies the API rule that comprises only assembly actions to apply to the API call.
   - CLI Alias: `rule`
   - Reference to: `datapower_apirule:id`
 
 ### Optional
 
-- `catch` (Attributes List) Catch
+- `catch` (Attributes List) Specifies how to handle a specific error when it occurs during the assembly execution.
   - CLI Alias: `catch` (see [below for nested schema](#nestedatt--catch))
-- `default_catch` (String) Default catch
+- `default_catch` (String) Specifies how to handle errors that are not caught by the catch setting during the assembly execution.
   - CLI Alias: `default-catch`
   - Reference to: `datapower_apirule:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `finally` (String) Finally
+- `finally` (String) Specifies the final API rule to apply to the API call after the main rule, catch rule, or both have finished executing. The final API rule comprises only assembly actions.
   - CLI Alias: `finally`
   - Reference to: `datapower_apirule:id`
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the assembly configuration.
   - CLI Alias: `summary`
 
 <a id="nestedatt--catch"></a>

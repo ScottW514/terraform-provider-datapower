@@ -39,7 +39,7 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `cpa_id` (String) CPA ID
+- `cpa_id` (String) Specify the CPA ID in the ebMS message header. <ul><li>For outbound transactions, specify the CPA ID in the outbound ebMS message to the external partner.</li><li>For inbound transactions, specify the CPA ID to identify the inbound ebMS message.</li></ul>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
 

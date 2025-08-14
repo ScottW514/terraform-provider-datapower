@@ -30,37 +30,37 @@ resource "datapower_cryptokerberoskdc" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `realm` (String) Kerberos realm name
+- `realm` (String) The name of the Kerberos realm that the KDC is serving.
   - CLI Alias: `realm`
-- `server` (String) Kerberos KDC Server
+- `server` (String) Specify the host name or IP address of the remote Kerberos KDC server. Click Ping verify network connectivity.
   - CLI Alias: `server`
 
 ### Optional
 
-- `cache_tickets` (Boolean) Cache Service Tickets
+- `cache_tickets` (Boolean) Specify whether to cache Kerberos service tickets when generating AP-REQ tokens in this realm.
   - CLI Alias: `cache-tickets`
   - Default value: `true`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `max_cached_tickets` (Number) Maximum Number of Cached Service Tickets
+- `max_cached_tickets` (Number) Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.
   - CLI Alias: `max-cached-tickets`
   - Range: `1`-`65535`
   - Default value: `32`
-- `min_cached_ticket_validity` (Number) Minimum Cached Ticket Validity
+- `min_cached_ticket_validity` (Number) Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.
   - CLI Alias: `min-cached-ticket-validity`
   - Range: `1`-`65535`
   - Default value: `60`
-- `server_port` (Number) Server Port Number
+- `server_port` (Number) Specify the UDP or TCP listening port on the Kerberos KDC server. Use a value in the range 1 - 65535. The default value is 88.
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `88`
-- `udp_timeout` (Number) UDP Timeout
+- `udp_timeout` (Number) The number of seconds to wait for a UDP response from the KDC before declaring failure.
   - CLI Alias: `udp-timeout`
   - Range: `1`-`60`
   - Default value: `5`
-- `use_tcp` (Boolean) Use TCP
+- `use_tcp` (Boolean) Select to control whether to contact the Kerberos KDC server with UDP (the default, off) or TCP (on).
   - CLI Alias: `tcp`
   - Default value: `false`
-- `user_summary` (String) Comments
+- `user_summary` (String) Enter a brief, descriptive comment.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

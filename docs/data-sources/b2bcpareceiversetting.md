@@ -43,11 +43,11 @@ Read-Only:
 - `allow_duplicate_message` (String) Allow duplicate messages
 - `app_domain` (String) The name of the application domain the object belongs to
 - `decrypt_id_cred` (String) Decryption identification credentials
-- `default_signer_cert` (String) Default signature certificate
+- `default_signer_cert` (String) Specify the default certificate to verify the signature. This certificate is used when either the <tt>keyInfo</tt> element is missing or the signature method is not supported.
 - `encryption_required` (Boolean) Require encryption
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `local_endpoint_uri` (String) Local URI
-- `persist_duration` (Number) Persistence duration
+- `persist_duration` (Number) Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
 - `signature_required` (Boolean) Require signature
 - `sync_reply_mode` (String) Sync reply mode
 - `user_summary` (String) Comments

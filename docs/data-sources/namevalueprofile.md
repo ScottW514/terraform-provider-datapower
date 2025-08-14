@@ -3,12 +3,12 @@
 page_title: "datapower_namevalueprofile Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Name-Value Profile
+  Many HTTP things are expressed as name value pairs. These include HTTP headers, cookie values, url-encoded query strings, and url-encoded request messages. This profile provides a mechanism for what kinds of names are expected and for each kind of name what properties should be enforced on the corresponding values. When a name-value pair is not validated successfully that may generate an error, the pair might be stripped from the transaction, or the value may be mapped to another default value.
 ---
 
 # datapower_namevalueprofile (Data Source)
 
-Name-Value Profile
+Many HTTP things are expressed as name value pairs. These include HTTP headers, cookie values, url-encoded query strings, and url-encoded request messages. This profile provides a mechanism for what kinds of names are expected and for each kind of name what properties should be enforced on the corresponding values. When a name-value pair is not validated successfully that may generate an error, the pair might be stripped from the transaction, or the value may be mapped to another default value.
 
 ## Example Usage
 
@@ -39,17 +39,17 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `default_fixup` (String) No Match Policy
-- `default_map_value` (String) No Match Map Value
-- `default_xss` (Boolean) No Match XSS Policy
+- `default_fixup` (String) Select the action to taken when no matching entry in the validation list is found. The default is Strip.
+- `default_map_value` (String) An value that does not have a matching entry in the validation list is changed to this value if the no match policy is 'set'.
+- `default_xss` (Boolean) This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `max_aggregate_size` (Number) Total Size
-- `max_attributes` (Number) Maximum Count
-- `max_name_size` (Number) Maximum Name Length
-- `max_value_size` (Number) Maximum Value Length
-- `no_match_xss_patterns_file` (String) XSS (Cross Site Scripting) Protection Patterns File
+- `max_aggregate_size` (Number) The lengths of all the names and values in a single entity (header, cookie set, body, query string, and so forth) in aggregate must not exceed this property.
+- `max_attributes` (Number) The maximum number of name value pairs allowed in a single entity (header, cookie set, body, and so forth).
+- `max_name_size` (Number) The maximum size of a name attribute used in this profile.
+- `max_value_size` (Number) The maximum size of a value attribute used in this profile.
+- `no_match_xss_patterns_file` (String) Specifies the patterns file that will be used by the XSS filter when No Match XSS is selected. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.
 - `user_summary` (String) Comments
-- `validation_list` (Attributes List) Validation List (see [below for nested schema](#nestedatt--result--validation_list))
+- `validation_list` (Attributes List) Each pair submitted to this profile consults this validation list, looking for the first regular expression match of the name against the name expression in the list. When that is found, the corresponding value constraint is matched against the value portion of the name-value pair. If that does not match, the policy applies the 'fixup' attribute to the submitted value. That may result in no change, the pair being removed, an error being generated, or the value being mapped to a known constant. (see [below for nested schema](#nestedatt--result--validation_list))
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

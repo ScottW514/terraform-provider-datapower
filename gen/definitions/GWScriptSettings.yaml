@@ -1,40 +1,56 @@
 name: GWScriptSettings
-description: 'GatewayScript Settings (`default` domain only)'
-cli_alias: 'gatewayscript-settings'
-cmd_group: 'system'
-rest_endpoint: '/mgmt/config/default/GWScriptSettings/GatewayScript-Settings'
+description: You can configure the following GatewayScript settings. <ul><li>Whether
+  to freeze the GatewayScript built-in objects.</li><li>How to manage untrusted code
+  mitigation to protect against SSCA.</li><li>The maximum allowed duration that a
+  GatewayScript action can continuously use the CPU.</li></ul>
+cli_alias: gatewayscript-settings
+cmd_group: system
+rest_endpoint: /mgmt/config/default/GWScriptSettings/GatewayScript-Settings
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: FrozenEnabled
-    type: Bool
-    default: true
-    description: 'Freeze prototype'
-    cli_alias: freeze-prototype
-  - name: UntrustedCodeMitigated
-    type: Bool
-    default: true
-    description: 'Untrusted code mitigation'
-    cli_alias: untrusted-code-mitigations
-  - name: ReloadNeeded
-    type: Bool
-    default: false
-    description: 'System reload needed'
-    cli_alias: reload-needed
-    computed: true
-  - name: TerminateTime
-    type: Int64
-    maximum: 300
-    description: 'Max processing duration'
-    cli_alias: max-processing-duration
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: FrozenEnabled
+  type: Bool
+  default: true
+  description: Specify whether to freeze the GatewayScript built-in object prototypes.
+    <ul><li>When frozen, you cannot modify, add, or remove prototypes. This setting
+    is the default setting.</li><li>When not frozen, you can manipulate prototypes.</li></ul><p>If
+    you change and persist this property, the change is pending and requires a firmware
+    reload.</p>
+  cli_alias: freeze-prototype
+- name: UntrustedCodeMitigated
+  type: Bool
+  default: true
+  description: Specify whether to enable untrusted code mitigation to protect against
+    Speculative Side-Channel Attacks (SSCA). <ul><li>When enabled, protects untrusted
+    code against SSCA. This setting is the default setting.</li><li>When disabled,
+    does not protect untrusted code against SSCA.</li></ul><p>If you change and persist
+    this property, the change is pending and requires a firmware reload.</p>
+  cli_alias: untrusted-code-mitigations
+- name: ReloadNeeded
+  type: Bool
+  default: false
+  description: System reload needed
+  cli_alias: reload-needed
+  computed: true
+- name: TerminateTime
+  type: Int64
+  maximum: 300
+  description: Specify the maximum duration in seconds that a GatewayScript action
+    can continuously use CPU without yielding back to the system event loop. When
+    the processing of a GatewayScript action exceeds the duration, processing is stopped
+    and an error is logged. Enter a value in the range 1 - 300. The default value
+    is 0, which indicates unlimited.
+  cli_alias: max-processing-duration

@@ -57,7 +57,7 @@ func (d *VisibilityListDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *VisibilityListDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Visibility list",
+		MarkdownDescription: "A visibility list specifies elements in a GraphQL schema to remove from introspection and validation.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *VisibilityListDataSource) Schema(ctx context.Context, req datasource.Sc
 							Computed:            true,
 						},
 						"value": schema.ListAttribute{
-							MarkdownDescription: "Value",
+							MarkdownDescription: "Specify the path to a GraphQL schema element. For example, <tt>Account.number</tt> uniquely identifies the <tt>number</tt> field of the <tt>Account</tt> type.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

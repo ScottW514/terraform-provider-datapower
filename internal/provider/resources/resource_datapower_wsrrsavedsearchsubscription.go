@@ -59,7 +59,7 @@ func (r *WSRRSavedSearchSubscriptionResource) Metadata(ctx context.Context, req 
 
 func (r *WSRRSavedSearchSubscriptionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("WSRR saved search subscription", "wsrr-saved-search-subscription", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The WSRR (WebSphere Service Registry and Repository) saved subscription is useful when you want to deploy services with an indirect reference to WSRR resources. The configuration references a WSRR server, a saved search and a saved search or named query on the server. <p>The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.</p>", "wsrr-saved-search-subscription", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -92,7 +92,7 @@ func (r *WSRRSavedSearchSubscriptionResource) Schema(ctx context.Context, req re
 				Required:            true,
 			},
 			"saved_search_parameters": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Query parameters", "params", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the parameters to include in the query. The query to the registry uses these parameters. A parameter can be up to 255 characters in length. You can define a maximum of 9 parameters. <p>If you define parameters and they are not require parameters, an error is logged.</p><p><b>Note:</b> In WSRR, a named query and a saved search can have the same name. WSRR matches named queries before saved searches. Therefore, WSRR never finds a saved search with the same name as a named query.</p>", "params", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
@@ -106,7 +106,7 @@ func (r *WSRRSavedSearchSubscriptionResource) Schema(ctx context.Context, req re
 				Default: stringdefault.StaticString("poll"),
 			},
 			"refresh_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Refresh interval", "refresh-interval", "").AddIntegerRange(60, 4294967).AddDefaultValue("86400").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.", "refresh-interval", "").AddIntegerRange(60, 4294967).AddDefaultValue("86400").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -116,7 +116,7 @@ func (r *WSRRSavedSearchSubscriptionResource) Schema(ctx context.Context, req re
 				Default: int64default.StaticInt64(86400),
 			},
 			"fetch_policy_attachments": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Fetch policy attachments", "fetch-policy-attachments", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to fetch external policy attachments. When enabled, the registry is queried for external policy attachments for retrieved resources. These policies are processed when the service allow external policy attachments.", "fetch-policy-attachments", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

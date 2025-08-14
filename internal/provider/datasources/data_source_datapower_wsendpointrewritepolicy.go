@@ -57,7 +57,7 @@ func (d *WSEndpointRewritePolicyDataSource) Metadata(_ context.Context, req data
 
 func (d *WSEndpointRewritePolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "WS-Proxy Endpoint Rewrite",
+		MarkdownDescription: "Create or edit WS Endpoint Rewrite Policy",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,32 +81,32 @@ func (d *WSEndpointRewritePolicyDataSource) Schema(ctx context.Context, req data
 							Computed:            true,
 						},
 						"ws_endpoint_local_rewrite_rule": schema.ListNestedAttribute{
-							MarkdownDescription: "Local Rewrite Rules",
+							MarkdownDescription: "Add, edit, or delete a local endpoint rewrite rule. These rules evaluate services in a deployed WSDL file and specify the URL the appliance should use locally for matched services. They convert addresses in WSDL files to local endpoints.",
 							NestedObject:        models.DmWSEndpointLocalRewriteRuleDataSourceSchema,
 							Computed:            true,
 						},
 						"ws_endpoint_remote_rewrite_rule": schema.ListNestedAttribute{
-							MarkdownDescription: "Remote Rewrite Rules",
+							MarkdownDescription: "Add, edit, or delete a remote endpoint rewrite rule. These rules evaluate services in deployed WSDL file and specify the URL the appliance should use remotely for matched services. They convert address in WSDL files to remote endpoints.",
 							NestedObject:        models.DmWSEndpointRemoteRewriteRuleDataSourceSchema,
 							Computed:            true,
 						},
 						"ws_endpoint_publish_rewrite_rule": schema.ListNestedAttribute{
-							MarkdownDescription: "Publish Rewrite Rules",
+							MarkdownDescription: "Add, edit, or delete a publish endpoint rewrite rule. These rules evaluate services in deployed WSDL file and specify the URL the appliance should publish when producing its own WSDL files. Use this if you wish to publish an address different from the local address, for example the address of a load balancer in front of appliance.",
 							NestedObject:        models.DmWSEndpointPublishRewriteRuleDataSourceSchema,
 							Computed:            true,
 						},
 						"ws_endpoint_subscription_local_rule": schema.ListNestedAttribute{
-							MarkdownDescription: "Subscription Local Rewrite Rule",
+							MarkdownDescription: "Add, edit, or delete a subscription rewrite rule.",
 							NestedObject:        models.DmWSEndpointSubscriptionLocalRuleDataSourceSchema,
 							Computed:            true,
 						},
 						"ws_endpoint_subscription_remote_rule": schema.ListNestedAttribute{
-							MarkdownDescription: "Subscription Remote Rewrite Rule",
+							MarkdownDescription: "Add, edit, or delete a subscription rewrite rule.",
 							NestedObject:        models.DmWSEndpointSubscriptionRemoteRuleDataSourceSchema,
 							Computed:            true,
 						},
 						"ws_endpoint_subscription_publish_rule": schema.ListNestedAttribute{
-							MarkdownDescription: "Subscription Publish Rewrite Rule",
+							MarkdownDescription: "Add, edit, or delete a subscription rewrite rule.",
 							NestedObject:        models.DmWSEndpointSubscriptionPublishRuleDataSourceSchema,
 							Computed:            true,
 						},

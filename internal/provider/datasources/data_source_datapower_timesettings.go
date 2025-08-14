@@ -50,78 +50,78 @@ func (d *TimeSettingsDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *TimeSettingsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Time Settings (`default` domain only)",
+		MarkdownDescription: "<p>The time zone for the system. The time zone affects the time that the system displays. All timestamps use this time zone.</p><p><b>Note: </b>The system clock runs on Coordinated Universal Time (UTC).</p><p>When daylight saving time (DST), or summer time, applies to a time zone, the system adjusts the time when a DST boundary is crossed.</p>",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"local_time_zone": schema.StringAttribute{
-				MarkdownDescription: "Local time zone",
+				MarkdownDescription: "Specify the time zone to use in management interfaces. The default value is EST-5EDT.",
 				Computed:            true,
 			},
 			"custom_tz_name": schema.StringAttribute{
-				MarkdownDescription: "Name",
+				MarkdownDescription: "Specify the symbolic name for the custom time zone. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.",
 				Computed:            true,
 			},
 			"utc_direction": schema.StringAttribute{
-				MarkdownDescription: "Direction from UTC",
+				MarkdownDescription: "Specify the direction relative to UTC for the custom time zone. Asia is east. North America is west. The default value is East.",
 				Computed:            true,
 			},
 			"offset_hours": schema.Int64Attribute{
-				MarkdownDescription: "Hours from UTC",
+				MarkdownDescription: "Specify the number of hours the custom time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 2.",
 				Computed:            true,
 			},
 			"offset_minutes": schema.Int64Attribute{
-				MarkdownDescription: "Minutes from UTC",
+				MarkdownDescription: "Specify the number of minutes the time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 30.",
 				Computed:            true,
 			},
 			"daylight_offset_hours": schema.Int64Attribute{
-				MarkdownDescription: "Daylight savings time (DST) offset",
+				MarkdownDescription: "Specify the offset in hours when the custom time zone observes DST. Generally, the offset is 1 hour. The default value is 1.",
 				Computed:            true,
 			},
 			"tz_name_dst": schema.StringAttribute{
-				MarkdownDescription: "DST name",
+				MarkdownDescription: "Specify the symbolic name for the custom time zone during DST. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.",
 				Computed:            true,
 			},
 			"daylight_start_month": schema.StringAttribute{
-				MarkdownDescription: "DST start month",
+				MarkdownDescription: "Specify the month when DST starts for the custom time zone. The default value is March.",
 				Computed:            true,
 			},
 			"daylight_start_week": schema.Int64Attribute{
-				MarkdownDescription: "DST start day instance",
+				MarkdownDescription: "Specify the instance of the day in the month when DST starts for the custom time zone. If DST starts on the second Sunday in the month, enter 2.",
 				Computed:            true,
 			},
 			"daylight_start_day": schema.StringAttribute{
-				MarkdownDescription: "DST start day",
+				MarkdownDescription: "Specify the day of the week when DST starts for the custom time zone. The default value is Sunday.",
 				Computed:            true,
 			},
 			"daylight_start_time_hours": schema.Int64Attribute{
-				MarkdownDescription: "DST start hour",
+				MarkdownDescription: "Specify the hour when DST starts for the custom time zone. If the start boundary is 2:30 AM, enter 2.",
 				Computed:            true,
 			},
 			"daylight_start_time_minutes": schema.Int64Attribute{
-				MarkdownDescription: "DST start minute",
+				MarkdownDescription: "Specify the minute when DST starts for the custom time zone. If the start boundary is 2:30 AM, enter 30.",
 				Computed:            true,
 			},
 			"daylight_stop_month": schema.StringAttribute{
-				MarkdownDescription: "DST stop month",
+				MarkdownDescription: "Specify the month when DST ends for the custom time zone. The default value is November.",
 				Computed:            true,
 			},
 			"daylight_stop_week": schema.Int64Attribute{
-				MarkdownDescription: "DST stop day instance",
+				MarkdownDescription: "Specify the instance of the day in the month when DST ends for the custom time zone. If DST ends on the second Sunday in the month, enter 2.",
 				Computed:            true,
 			},
 			"daylight_stop_day": schema.StringAttribute{
-				MarkdownDescription: "DST stop day",
+				MarkdownDescription: "Specify the day of the week when DST ends for the custom time zone. The default value is Sunday.",
 				Computed:            true,
 			},
 			"daylight_stop_time_hours": schema.Int64Attribute{
-				MarkdownDescription: "DST stop hour",
+				MarkdownDescription: "Specify the hour when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 2.",
 				Computed:            true,
 			},
 			"daylight_stop_time_minutes": schema.Int64Attribute{
-				MarkdownDescription: "DST stop minutes",
+				MarkdownDescription: "Specify the minute when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 30.",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

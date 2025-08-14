@@ -3,12 +3,12 @@
 page_title: "datapower_configsequence Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Configuration sequence
+  A configuration sequence defines a series of configuration files to load after the startup configuration. By default, changes in configuration files are detected and reloaded.
 ---
 
 # datapower_configsequence (Data Source)
 
-Configuration sequence
+A configuration sequence defines a series of configuration files to load after the startup configuration. By default, changes in configuration files are detected and reloaded.
 
 ## Example Usage
 
@@ -40,17 +40,17 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `capabilities` (Attributes) Capabilities (see [below for nested schema](#nestedatt--result--capabilities))
-- `delete_unused` (Boolean) Delete unused
+- `delete_unused` (Boolean) Specify whether to clean up objects that are no longer needed. When enabled, the configuration sequence detects and attempts to delete objects that are no longer modified by any configuration file. By default, the configuration sequence does not delete unneeded objects.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `locations` (Attributes List) Location profiles (see [below for nested schema](#nestedatt--result--locations))
-- `match_pattern` (String) Matching pattern
-- `output_location` (String) Output file location
-- `result_name_pattern` (String) Result file-naming pattern
-- `run_sequence_interval` (Number) Run interval
-- `status_name_pattern` (String) Status file-naming pattern
-- `use_output_location` (Boolean) Use output location
+- `locations` (Attributes List) Specify the locations to watch for changes and the permissions for each location. Each entry specifies a directory where the configuration files to match are stored. The DataPower Gateway watches the location and reloads the configuration when a change is detected that match the PCRE match pattern. The entries are processed in the listed order. The assess profile indicates the permissions for processing. (see [below for nested schema](#nestedatt--result--locations))
+- `match_pattern` (String) Specify the PCRE pattern to determine whether a file is considered part of the location match. For example, when the configuration files to match are <tt>NNNNNN.input</tt> , the PCRE pattern is <tt>"([0-9]{6})\.input$"</tt> .
+- `output_location` (String) Specify the directory to store the output files that processing generates. When not specified, the input file location is used.
+- `result_name_pattern` (String) Specify the PCRE pattern to name the result file. This pattern normally has a back-reference to the base input file name. For example, when input files are <tt>NNNNNN.input</tt> and the wanted result file name is <tt>NNNNNN.result</tt> , the pattern is <tt>"$1.result"</tt> .
+- `run_sequence_interval` (Number) Specify the interval in milliseconds between the processing of changes. This delay enables multiple file events to be aggregated and handled within the same sequence run. Enter a value in the range 100 - 60000. The default value is 100.
+- `status_name_pattern` (String) Specify the PCRE pattern to name the status file. This pattern normally has a back-reference to the base input file name. For example, when the input files are <tt>NNNNNN.input</tt> and the wanted status file name is <tt>NNNNNN.json</tt> , the pattern is <tt>"$1.json"</tt> .
+- `use_output_location` (Boolean) Specify whether to place output log and status files in the configured output location after processing. By default, output files are stored in the input file location.
 - `user_summary` (String) Comments
-- `watch` (Boolean) Watch
+- `watch` (Boolean) Specify whether to watch the specified directory for configuration file changes and automatically reload the configuration when a change is detected. By default, the specified directory is watched.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

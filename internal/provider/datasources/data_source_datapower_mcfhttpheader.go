@@ -57,7 +57,7 @@ func (d *MCFHttpHeaderDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *MCFHttpHeaderDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "HTTP Header Message Content Filter",
+		MarkdownDescription: "Filter based on HTTP header. A specific header value is used to match the request message.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

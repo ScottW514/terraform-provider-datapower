@@ -3,12 +3,12 @@
 page_title: "datapower_xmlmanager Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XML Manager
+  An XML Manager manages the compilation and caching of stylesheets, the caching of documents, and provides configuration constraints on the size and parsing depth of documents. You can enable streaming operation by configuring an XML Manager to use a Streaming Compile Option Policy. More than one firewall can use the same XML Manager.
 ---
 
 # datapower_xmlmanager (Data Source)
 
-XML Manager
+An XML Manager manages the compilation and caching of stylesheets, the caching of documents, and provides configuration constraints on the size and parsing depth of documents. You can enable streaming operation by configuring an XML Manager to use a Streaming Compile Option Policy. More than one firewall can use the same XML Manager.
 
 ## Example Usage
 
@@ -39,33 +39,33 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `cache_memory_size` (Number) Stylesheet cache size
-- `cache_size` (Number) Stylesheet cache count
-- `compile_options_policy` (String) Compile Options Policy
-- `doc_cache_max_docs` (Number) Document Cache Count
-- `doc_cache_policy` (Attributes List) Document Cache Policy (see [below for nested schema](#nestedatt--result--doc_cache_policy))
-- `doc_cache_size` (Number) Document Cache Size
-- `doc_max_writes` (Number) Maximum concurrent writes
+- `cache_memory_size` (Number) Enter the maximum size of the stylesheet cache. The default value is 2147483647. A value of 0 disables caching. Stylesheets are purged when either the cache size or the cache count is reached.
+- `cache_size` (Number) Enter the maximum number of stylesheets to cache. Enter a value in the range 5 - 250000. The default value is 256. Stylesheets are purged when either the cache size or the cache count is reached.
+- `compile_options_policy` (String) <p>Optionally, assigns a Compilation Options Policy to the XML Manager. Stylesheets cached by this manager are compiled in accordance with policy rules. Compile Options allow the administrator to manage profiling and debug modes, which are helpful during development and troubleshooting sessions. Profiling and debug modes should not be left on for production purposes.</p><p>Compile Options Policy also enables streaming mode, which might be a valid choice for production environments that regularly encounter very large documents.</p>
+- `doc_cache_max_docs` (Number) Enter the maximum number of documents to cache. Enter a value in the range 1 - 250000. The default value is 5000.
+- `doc_cache_policy` (Attributes List) A document cache policy allows the administrator to determine how documents are cached by the XML manager. The policy offers time-to-live, priority, and type configuration values. This document cache is distinct from the stylesheet cache for the XML manager. Documents and stylesheets that the XML manager retrieves can be cached. (see [below for nested schema](#nestedatt--result--doc_cache_policy))
+- `doc_cache_size` (Number) Enter the maximum size of the document cache. Regardless of the specified size, no document that is greater than 1073741824 bytes is cached. This restriction applies even if the cache has available space.
+- `doc_max_writes` (Number) Enter the maximum number of concurrent write requests to create documents or refresh expired documents in the document cache. Enter a value in the range 1 - 32768. The default value is 32768. After the maximum number is reached, requests are forwarded to the target server and the response is not written to the cache.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `json_parser_settings` (String) JSON Settings
-- `ldap_conn_pool` (String) LDAP Connection Pool
-- `parser_limits_attribute_count` (Number) XML Attribute Count
-- `parser_limits_bytes_scanned` (Number) XML Bytes Scanned
-- `parser_limits_element_depth` (Number) XML Element Depth
-- `parser_limits_external_references` (String) XML External Reference Handling
-- `parser_limits_max_local_names` (Number) XML Maximum Distinct Local Names
-- `parser_limits_max_namespaces` (Number) XML Maximum Distinct Namespaces
-- `parser_limits_max_node_size` (Number) XML Maximum Node Size
-- `parser_limits_max_prefixes` (Number) XML Maximum Distinct Prefixes
-- `scheduled_rule` (Attributes List) Scheduled Processing Policy Rule (see [below for nested schema](#nestedatt--result--scheduled_rule))
-- `schema_validation` (Attributes List) Schema Validation Rules (see [below for nested schema](#nestedatt--result--schema_validation))
-- `search_results` (Boolean) XSLT Expression Optimization
-- `sha1_caching` (Boolean) SHA1 Caching
-- `static_document_calls` (Boolean) Static Document Call
-- `url_refresh_policy` (String) URL Refresh Policy
-- `user_agent` (String) User Agent Configuration
+- `json_parser_settings` (String) Identifies the JSON Settings used by the XML manager when processing a JSON body. If no JSON Settings are specified, the default limits are enforced.
+- `ldap_conn_pool` (String) Identifies the LDAP connection pool to be used by the XML Manager when contacting LDAP
+- `parser_limits_attribute_count` (Number) Enter the maximum number of attributes of a given element. The default value is 128.
+- `parser_limits_bytes_scanned` (Number) Enter the maximum number of bytes scanned in one message. This property applies to any XML document that is parsed. If the value is 0, no limit is enforced. The default value is 4194304.
+- `parser_limits_element_depth` (Number) Enter the maximum depth of element nesting in XML parser. The default value is 512.
+- `parser_limits_external_references` (String) Select the special handling for input documents that contain external references, such as an external entity or external DTD definition.
+- `parser_limits_max_local_names` (Number) Enter the maximum number of distinct XML local names in a document. This limit counts all local names, independent of the namespaces they are associated with. Enter a value in the range 0 - 1048575. The default value is 60000. A value of 0 indicates that the limit is 60000.
+- `parser_limits_max_namespaces` (Number) Enter the maximum number of distinct XML namespace URIs in a document. This limit counts all XML namespaces, regardless of how many prefixes are used to declare them. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates that the limit is 1024.
+- `parser_limits_max_node_size` (Number) Enter the maximum size that any one node can consume. Enter a value in the range 1024 - 4294967295. The default value is 33554432. Sizes which are powers of two result in the best performance. Although you define a value, the DataPower Gateway uses a value that is the rounded-down to the largest power of two that is smaller than the defined value.
+- `parser_limits_max_prefixes` (Number) Enter the maximum number of distinct XML namespace prefixes in a document. This limit counts multiple prefixes defined for the same namespace, but does not count multiple namespaces defined in different parts of the input document under a single prefix. Enter a value in the range 0 - 262143. The default value is 1024. A value of 0 indicates that the limit is 1024.
+- `scheduled_rule` (Attributes List) Certain applications might require the running of a scheduled processing rule. Integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager. (see [below for nested schema](#nestedatt--result--scheduled_rule))
+- `schema_validation` (Attributes List) (see [below for nested schema](#nestedatt--result--schema_validation))
+- `search_results` (Boolean) Configures optimization of '//' in XPath expressions
+- `sha1_caching` (Boolean) Enables/disables SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
+- `static_document_calls` (Boolean) The latest XSLT specifications require that multiple document calls in the same transformation return the same result. Disable to allow all document calls to operate independently.
+- `url_refresh_policy` (String) Optionally, assigns a Stylesheet Refresh Policy to the XML manager. Stylesheets cached by this manager are refreshed in accordance with policy rules.
+- `user_agent` (String) Identifies the User Agent configuration the XML manager uses to connect to external servers to retrieve resources.
 - `user_summary` (String) Comments
-- `virtual_servers` (List of String) Load Balancer Groups
+- `virtual_servers` (List of String) Select a Load Balancer Group and assign that group to this XML manager. A Load Balancer Group, or server pool, provides redundancy among backside resources.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

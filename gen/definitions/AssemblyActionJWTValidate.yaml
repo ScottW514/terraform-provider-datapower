@@ -1,82 +1,119 @@
 name: AssemblyActionJWTValidate
-description: 'JWT validate assembly action'
-cli_alias: 'assembly-jwt-validate'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/AssemblyActionJWTValidate'
+description: <p>The JWT validate assembly action specifies credentials and methods
+  to validate a JWT in the request. The following guidelines apply. <ul><li>All claims
+  that are specified in the JWT validate assembly action are validated. If any specified
+  claim fails, the JWT validation fails.</li><li>You can use a crypto object or a
+  JWK to decrypt or verify the JWT. When both are specified, the crypto object is
+  used.</li><li>If the original message is signed with a shared secret key, the crypto
+  object that is specified must also be a shared secret key.</li><li>If the original
+  message is signed with a private key, the crypto object that is specified must be
+  a crypto certificate (public certificate).</li><li>If a JWK header parameter is
+  included in the header of the JWT, the parameter must match the crypto object or
+  JWK that is specified in the action. Otherwise, validation fails.</li></ul></p>
+cli_alias: assembly-jwt-validate
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/AssemblyActionJWTValidate
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAssemblyActionJWTValidate"'
-    test_expect_ds: '"AccTest_AssemblyActionJWTValidate"'
-    example: 'AssemblyActionJWTValidateName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: JWT
-    type: String
-    required: true
-    default: 'request.headers.authorization'
-    description: 'JWT location'
-    cli_alias: jwt
-  - name: OutputClaims
-    type: String
-    required: true
-    default: 'decoded.claims'
-    description: 'Output claims'
-    cli_alias: output-claims
-  - name: IssuerClaim
-    type: String
-    description: 'Issuer claim'
-    cli_alias: iss-claim
-  - name: AudienceClaim
-    type: String
-    description: 'Audience claim'
-    cli_alias: aud-claim
-  - name: DecryptCrypto
-    type: String
-    description: 'Crypto object for JWT decryption'
-    cli_alias: jwe-crypto
-  - name: DecryptJWK
-    type: String
-    description: 'JWK for JWT decryption'
-    cli_alias: jwe-jwk
-  - name: VerifyCrypto
-    type: String
-    description: 'Crypto object for JWT verification'
-    cli_alias: jws-crypto
-  - name: VerifyJWK
-    type: String
-    description: 'JWK for JWT verification'
-    cli_alias: jws-jwk
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: CorrelationPath
-    type: String
-    description: 'Correlation path'
-    cli_alias: correlation-path
-  - name: ActionDebug
-    type: Bool
-    default: false
-    description: 'Enable debugging'
-    cli_alias: debug
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAssemblyActionJWTValidate"'
+  test_expect_ds: '"AccTest_AssemblyActionJWTValidate"'
+  example: AssemblyActionJWTValidateName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: JWT
+  type: String
+  required: true
+  default: request.headers.authorization
+  description: 'Specify the context variable that contains the JSON Web Token (JWT)
+    to validate. The default value is <tt>request.headers.authorization</tt> . The
+    format of the authorization header must be <tt>Authorization: Bearer jwt-token</tt>
+    , where <tt>jwt-token</tt> indicates the encoded JWT.'
+  cli_alias: jwt
+- name: OutputClaims
+  type: String
+  required: true
+  default: decoded.claims
+  description: Specify a context variable to store all claims that the JWT contains
+    when the validation of the JWT succeeds. The default value is <tt>decoded.claims</tt>
+    .
+  cli_alias: output-claims
+- name: IssuerClaim
+  type: String
+  description: Specify the PCRE to validate the issuer claim. When specified, the
+    "iss" claim in the JWT is validated. If this claim fails, validation fails. The
+    maximum value length is 256 characters.
+  cli_alias: iss-claim
+- name: AudienceClaim
+  type: String
+  description: Specify the PCRE to validate the audience claim. When specified, the
+    "aud" claim in the JWT is validated. If this claim fails, the validation fails.
+    The maximum value length is 256 characters.
+  cli_alias: aud-claim
+- name: DecryptCrypto
+  type: String
+  description: Crypto object for JWT decryption
+  cli_alias: jwe-crypto
+- name: DecryptJWK
+  type: String
+  description: JWK for JWT decryption
+  cli_alias: jwe-jwk
+- name: VerifyCrypto
+  type: String
+  description: Crypto object for JWT verification
+  cli_alias: jws-crypto
+- name: VerifyJWK
+  type: String
+  description: JWK for JWT verification
+  cli_alias: jws-jwk
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Title
+  type: String
+  description: Title
+  cli_alias: title
+- name: CorrelationPath
+  type: String
+  description: Specify the path that correlates the API action to a specific part
+    of the API specification. The correlation path specifies the part of the API definition
+    that correlates with the API action. This path is exposed in the debug data by
+    the API gateway for use by debugging tools. For example, for an API configuration
+    that is retrieved from API Connect and specified in an OpenAPI document with IBM
+    extensions, this path is the JSON path to the assembly policy in the IBM extensions
+    section of the document. The path can be expressed in any form that the debugging
+    tool can correlate to the API definition.
+  cli_alias: correlation-path
+- name: ActionDebug
+  type: Bool
+  default: false
+  description: <p>Specify whether to enable the GatewayScript debugger to troubleshoot
+    the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript
+    file that is called from the GatewayScript assembly action.</li><li>Troubleshoot
+    a GatewayScript file that is called from an XSLT assembly action that uses the
+    <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript
+    script that is called through the <tt>value</tt> or <tt>default</tt> property
+    in the JSON file from the map assembly action.</li></ul><p>To debug a file or
+    script, the following conditions must be met.</p><ul><li>The file contains one
+    or more <tt>debugger;</tt> statements at the points in your script where you want
+    to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You
+    run the <tt>debug-action</tt> command.</p>
+  cli_alias: debug

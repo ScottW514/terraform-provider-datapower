@@ -56,7 +56,7 @@ func (r *JSONSettingsResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("JSON settings", "json-settings", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The JSON settings specify constraints for parsing JSON messages. JSON settings work in conjunction with the parser limits in the XML manager. The more restrictive limits apply.", "json-settings", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,7 +85,7 @@ func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"json_max_nesting_depth": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max nesting depth", "max-nesting-depth", "").AddIntegerRange(64, 256).AddDefaultValue("64").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum nesting depth in levels of label-value pairs. Enter a value in the range 64 - 256. The default value is 64.", "max-nesting-depth", "").AddIntegerRange(64, 256).AddDefaultValue("64").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -95,7 +95,7 @@ func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: int64default.StaticInt64(64),
 			},
 			"json_max_label_length": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max label length", "max-label-string-length", "").AddIntegerRange(256, 8192).AddDefaultValue("256").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum length in bytes of the label portion of label-value pair. The length includes any white space between quotation marks. Enter a value in the range 256 - 8192. The default value is 256.", "max-label-string-length", "").AddIntegerRange(256, 8192).AddDefaultValue("256").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -105,7 +105,7 @@ func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: int64default.StaticInt64(256),
 			},
 			"json_max_value_length": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max value length for strings", "max-value-string-length", "").AddIntegerRange(8192, 5368709121).AddDefaultValue("8192").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number in bytes for string values of label-value pairs. The length includes any white space between quotation marks. Enter a value in the range 8192 - 5368709121. The default value is 8192.", "max-value-string-length", "").AddIntegerRange(8192, 5368709121).AddDefaultValue("8192").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -115,7 +115,7 @@ func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: int64default.StaticInt64(8192),
 			},
 			"json_max_number_length": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max value length for numbers", "max-number-length", "").AddIntegerRange(128, 256).AddDefaultValue("128").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number in bytes for number values of label-value pairs. The number must be a contiguous string of bytes that contain no white space. The number can include a minus sign and a positive or negative exponent. Enter a value in the range 128 - 256. The default value is 128.", "max-number-length", "").AddIntegerRange(128, 256).AddDefaultValue("128").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -125,7 +125,7 @@ func (r *JSONSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: int64default.StaticInt64(128),
 			},
 			"json_document_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max document size", "max-document-size", "").AddIntegerRange(4194304, 5368709121).AddDefaultValue("4194304").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum document size in bytes for the body of the JSON message. If the message is converted to JSONx, the maximum document size specifies the size before the conversion to JSONx. <b>Note:</b> The document size of the JSON message and the size of the JSONx equivalent might differ. Enter a value in the range 4194304 - 5368709121. The default value is 4194304.", "max-document-size", "").AddIntegerRange(4194304, 5368709121).AddDefaultValue("4194304").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

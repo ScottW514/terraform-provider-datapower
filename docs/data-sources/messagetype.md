@@ -3,12 +3,12 @@
 page_title: "datapower_messagetype Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Type
+  On-Line Help for Message Types
 ---
 
 # datapower_messagetype (Data Source)
 
-Message Type
+On-Line Help for Message Types
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `matching` (List of String) Message Matchings
+- `matching` (List of String) Use the values list (a list of traffic definitions), in conjunction with the Add and Delete buttons, to add one or more traffic definitions to this message type. Click the + button to create a new traffic definition (Message Matching object). Select an object and click ... to edit it.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

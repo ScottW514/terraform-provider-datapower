@@ -54,7 +54,7 @@ func (r *JWEHeaderResource) Metadata(ctx context.Context, req resource.MetadataR
 
 func (r *JWEHeaderResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("JWE Header", "jwe-header", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("JWE header object.", "jwe-header", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -79,21 +79,21 @@ func (r *JWEHeaderResource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"jwe_protected_header": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Protected Header", "protected-header", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Add a JWE protected header to a JWE encrypt action.", "protected-header", "").String,
 				NestedObject:        models.DmJOSEHeaderResourceSchema,
 				Optional:            true,
 			},
 			"jwe_shared_unprotected_header": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Shared Unprotected Header", "shared-unprotected-header", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Add a JWE shared unprotected header to a JWE encrypt action.", "shared-unprotected-header", "").String,
 				NestedObject:        models.DmJOSEHeaderResourceSchema,
 				Optional:            true,
 			},
 			"recipient": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Recipient", "recipient", "jwerecipient").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Add a JWE recipient object to a JWE encrypt action.", "recipient", "jwerecipient").String,
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

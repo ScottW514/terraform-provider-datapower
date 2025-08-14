@@ -3,13 +3,13 @@
 page_title: "datapower_importpackage Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Import configuration file
+  An import package allows the system to import a configuration package from an external server, such as a centralized configuration server, when the configuration is reloaded (such as during a restart). This package can optionally overwrite existing files or objects. An import package specifies a source, content type, and import parameters for a single bundle.
   CLI Alias: import-package
 ---
 
 # datapower_importpackage (Resource)
 
-Import configuration file
+An import package allows the system to import a configuration package from an external server, such as a centralized configuration server, when the configuration is reloaded (such as during a restart). This package can optionally overwrite existing files or objects. <p>An import package specifies a source, content type, and import parameters for a single bundle.</p>
   - CLI Alias: `import-package`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_importpackage" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `url` (String) URL
+- `url` (String) Specify the URL of the import package. The tool does not support SCP and SFTP protocols. All other URL protocols are available; for example, HTTP, HTTPS, or FTP.
   - CLI Alias: `source-url`
 
 ### Optional
@@ -47,20 +47,20 @@ resource "datapower_importpackage" "test" {
 - `destination_domain` (String) Destination domain
   - CLI Alias: `destination-domain`
   - Reference to: `datapower_domain:id`
-- `import_format` (String) Format
+- `import_format` (String) Specify the format of the import package. The default value is ZIP.
   - CLI Alias: `import-format`
   - Choices: `ZIP`, `XML`
   - Default value: `ZIP`
-- `local_ip_rewrite` (Boolean) Local IP rewrite
+- `local_ip_rewrite` (Boolean) Specify whether to rewrite local IP addresses on import. When enabled, local IP addresses in the import package are rewritten to match the local configuration on import. In other words, a service bound to eth1 in the import package are rewritten to bind to eth1 on the local system on import. The default behavior is to rewrite IP addresses.
   - CLI Alias: `local-ip-rewrite`
   - Default value: `true`
-- `on_startup` (Boolean) Import on startup
+- `on_startup` (Boolean) Specify whether to import the import package on startup. The default behavior is to import on startup. <ul><li>When enabled, the import package is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>
   - CLI Alias: `auto-execute`
   - Default value: `true`
-- `overwrite_files` (Boolean) Overwrite files
+- `overwrite_files` (Boolean) Specify whether to overwrite existing files. When enabled, files in the package overwrite any file of the same path and name that already exist. The default behavior is to overwrite files.
   - CLI Alias: `overwrite-files`
   - Default value: `true`
-- `overwrite_objects` (Boolean) Overwrite objects
+- `overwrite_objects` (Boolean) Specify whether to overwrite existing objects. When enabled, objects in the package overwrite any object of the same class and name that already exist. The default behavior is to overwrite objects.
   - CLI Alias: `overwrite-objects`
   - Default value: `true`
 - `user_summary` (String) Comments

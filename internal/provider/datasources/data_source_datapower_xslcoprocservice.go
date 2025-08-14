@@ -57,7 +57,7 @@ func (d *XSLCoprocServiceDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *XSLCoprocServiceDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "XSL Coprocessor",
+		MarkdownDescription: "<p>The XSL Coprocessor is obsolete.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,80 +77,80 @@ func (d *XSLCoprocServiceDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"priority": schema.StringAttribute{
-							MarkdownDescription: "Service Priority",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"local_port": schema.Int64Attribute{
-							MarkdownDescription: "Port Number",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"xml_manager": schema.StringAttribute{
-							MarkdownDescription: "XML Manager",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"url_rewrite_policy": schema.StringAttribute{
-							MarkdownDescription: "URL Rewrite Policy",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"style_policy_rule": schema.StringAttribute{
-							MarkdownDescription: "Processing Rule",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"connection_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Connection Timeout",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"intermediate_result_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Intermediate Result Timeout",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"cache_relative_url": schema.BoolAttribute{
-							MarkdownDescription: "Cache Relative URL",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"use_client_uri_resolver": schema.BoolAttribute{
-							MarkdownDescription: "Use URI Resolver",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"crypto_extensions": schema.BoolAttribute{
-							MarkdownDescription: "Crypto Extensions",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"default_param_namespace": schema.StringAttribute{
-							MarkdownDescription: "Default parameter namespace",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"debug_mode": schema.StringAttribute{
-							MarkdownDescription: "Probe setting",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"debug_history": schema.Int64Attribute{
-							MarkdownDescription: "Transaction History",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"debug_trigger": schema.ListNestedAttribute{
-							MarkdownDescription: "Probe Triggers",
+							MarkdownDescription: "",
 							NestedObject:        models.DmMSDebugTriggerTypeDataSourceSchema,
 							Computed:            true,
 						},
 						"ssl_server_config_type": schema.StringAttribute{
-							MarkdownDescription: "TLS type",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"ssl_server": schema.StringAttribute{
-							MarkdownDescription: "TLS server profile",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"sslsni_server": schema.StringAttribute{
-							MarkdownDescription: "TLS SNI server profile",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"local_address": schema.StringAttribute{
-							MarkdownDescription: "Local address",
+							MarkdownDescription: "<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

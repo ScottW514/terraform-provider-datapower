@@ -1,103 +1,118 @@
 name: UserGroup
-description: 'User group (`default` domain only)'
-cli_alias: 'usergroup'
-cmd_group: 'usergroup'
-rest_endpoint: '/mgmt/config/default/UserGroup'
+description: Create or edit user groups and their access privileges.
+cli_alias: usergroup
+cmd_group: usergroup
+rest_endpoint: /mgmt/config/default/UserGroup
 default_domain_only: true
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTest_UserGroup"'
-    test_expect_ds: '"AccTest_UserGroup"'
-    example: 'UserGroupName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: AccessPolicies
-    type: List
-    element_type: String
-    list_default:
-      - '*/*/*?Access=r'
-    list_example:
-      - '10.10.1.1/domainA/services/xslproxy?Access=r+w&Name=foo.*'
-    test_value: '["*/*/*?Access=r"]'
-    description: 'Access policies'
-    cli_alias: access-policy
-  - name: CommandGroup
-    type: List
-    enum:
-      - 'aaapolicy'
-      - 'acl'
-      - 'assembly'
-      - 'b2b'
-      - 'common'
-      - 'compile-options'
-      - 'config-management'
-      - 'configuration'
-      - 'crl'
-      - 'quota-enforcement'
-      - 'crypto'
-      - 'device-management'
-      - 'diagnostics'
-      - 'document-crypto-map'
-      - 'domain'
-      - 'failure-notification'
-      - 'file-management'
-      - 'firewallcred'
-      - 'flash'
-      - 'httpserv'
-      - 'input-conversion'
-      - 'interface'
-      - 'load-balancer'
-      - 'logging'
-      - 'matching'
-      - 'messages'
-      - 'monitors'
-      - 'mpgw'
-      - 'mq-qm'
-      - 'idg-mqqm'
-      - 'network'
-      - 'radius'
-      - 'rbm'
-      - 'schema-exception-map'
-      - 'service-monitor'
-      - 'snmp'
-      - 'sql'
-      - 'sslforwarder'
-      - 'stylesheetaction'
-      - 'stylesheetpolicy'
-      - 'stylesheetrule'
-      - 'system'
-      - 'tam'
-      - 'tcpproxy'
-      - 'urlmap'
-      - 'urlrefresh'
-      - 'urlrewrite'
-      - 'useragent'
-      - 'usergroup'
-      - 'validation'
-      - 'webservice'
-      - 'wsm-agent'
-      - 'xmlfirewall'
-      - 'xmlmgr'
-      - 'xpath-routing'
-      - 'xslcoproc'
-      - 'xslproxy'
-      - 'http'
-      - 'document-cache'
-      - 'parserlimit'
-      - 'rule'
-      - 'password-change'
-      - 'reserved50'
-    element_type: String
-    description: 'Command group'
-    cli_alias: add
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTest_UserGroup"'
+  test_expect_ds: '"AccTest_UserGroup"'
+  example: UserGroupName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: AccessPolicies
+  type: List
+  element_type: String
+  list_default:
+  - '*/*/*?Access=r'
+  list_example:
+  - 10.10.1.1/domainA/services/xslproxy?Access=r+w&Name=foo.*
+  test_value: '["*/*/*?Access=r"]'
+  description: Specify the access policies that define privileges for the access profile.
+    When more than one policy applies to a resource, the most specific policy is used.
+    To create access policies, enter a policy statement in the following format. <p><tt><i>address</i>
+    / <i>domain</i> / <i>resource</i> ?Access= <i>privileges</i> &amp; <i>field</i>
+    = <i>value</i></tt></p><dl><dt><i>address</i></dt><dd>The complete local IP address
+    or host alias. Use the * character to designate all addresses.</dd><dt><i>domain</i></dt><dd>The
+    complete domain name. Use the * character to designate all domains.</dd><dt>resource</dt><dd>The
+    complete value for the resource type. Use the * character to designate all resource
+    types.</dd><dt><i>privileges</i></dt><dd>The privileges to apply. Separate permissions
+    with the + character. For example, <tt>a+d+x+r+w</tt> defines add, delete, execute,
+    read, and write privileges.</dd><dt><i>field</i></dt><dd>The complete name of
+    a specific property in the configuration; for example, <tt>Name</tt> .</dd><dt><i>value</i></dt><dd>The
+    PCRE match for the property value; For example, <tt>foo(.*)bar</tt> .</dd></dl>
+  cli_alias: access-policy
+- name: CommandGroup
+  type: List
+  enum:
+  - aaapolicy
+  - acl
+  - assembly
+  - b2b
+  - common
+  - compile-options
+  - config-management
+  - configuration
+  - crl
+  - quota-enforcement
+  - crypto
+  - device-management
+  - diagnostics
+  - document-crypto-map
+  - domain
+  - failure-notification
+  - file-management
+  - firewallcred
+  - flash
+  - httpserv
+  - input-conversion
+  - interface
+  - load-balancer
+  - logging
+  - matching
+  - messages
+  - monitors
+  - mpgw
+  - mq-qm
+  - idg-mqqm
+  - network
+  - radius
+  - rbm
+  - schema-exception-map
+  - service-monitor
+  - snmp
+  - sql
+  - sslforwarder
+  - stylesheetaction
+  - stylesheetpolicy
+  - stylesheetrule
+  - system
+  - tam
+  - tcpproxy
+  - urlmap
+  - urlrefresh
+  - urlrewrite
+  - useragent
+  - usergroup
+  - validation
+  - webservice
+  - wsm-agent
+  - xmlfirewall
+  - xmlmgr
+  - xpath-routing
+  - xslcoproc
+  - xslproxy
+  - http
+  - document-cache
+  - parserlimit
+  - rule
+  - password-change
+  - reserved50
+  element_type: String
+  description: Specify the command groups to which the user group has CLI access.
+    This property is superseded by the access profile when role-based management is
+    applied to the CLI.
+  cli_alias: add

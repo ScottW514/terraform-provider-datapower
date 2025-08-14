@@ -1,79 +1,81 @@
 name: JOSESignatureIdentifier
-description: 'Signature Identifier'
-cli_alias: 'jose-signature-identifier'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/JOSESignatureIdentifier'
+description: JOSE Signature Identifier object for the JSON Web Verify.
+cli_alias: jose-signature-identifier
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/JOSESignatureIdentifier
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestJOSESignatureIdentifier"'
-    test_expect_ds: '"AccTest_JOSESignatureIdentifier"'
-    example: 'JOSESignatureIdentifierName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Type
-    type: String
-    enum:
-      - 'certificate'
-      - 'sskey'
-    test_value: '"certificate"'
-    description: 'Key Material Type'
-    cli_alias: type
-  - name: SSKey
-    type: String
-    reference_to: CryptoSSKey
-    description: 'Key Material'
-    cli_alias: sskey
-  - name: Certificate
-    type: String
-    reference_to: CryptoCertificate
-    description: 'Key Material'
-    test_value: '"AccTest_CryptoCertificate"'
-    test_bed_value: 'datapower_cryptocertificate.acc_test.id'
-    cli_alias: cert
-  - name: ValidAlgorithms
-    type: List
-    enum:
-      - 'HS256'
-      - 'HS384'
-      - 'HS512'
-      - 'RS256'
-      - 'RS384'
-      - 'RS512'
-      - 'ES256'
-      - 'ES384'
-      - 'ES512'
-      - 'PS256'
-      - 'PS384'
-      - 'PS512'
-    element_type: String
-    description: 'Valid algorithms'
-    cli_alias: alg
-  - name: HeaderParam
-    type: List
-    element_type: DmJOSEHeader
-    required: true
-    description: 'Header Parameters'
-    cli_alias: header-param
-  # DEPRECATED
-  # - name: Verify
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestJOSESignatureIdentifier"'
+  test_expect_ds: '"AccTest_JOSESignatureIdentifier"'
+  example: JOSESignatureIdentifierName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the configuration.
+  cli_alias: summary
+- name: Type
+  type: String
+  enum:
+  - certificate
+  - sskey
+  test_value: '"certificate"'
+  description: Key material type used to verify the signature.
+  cli_alias: type
+- name: SSKey
+  type: String
+  reference_to: CryptoSSKey
+  description: Use the shared secret key to verify the signature.
+  cli_alias: sskey
+- name: Certificate
+  type: String
+  reference_to: CryptoCertificate
+  description: Use the certificate to verify the signature.
+  test_value: '"AccTest_CryptoCertificate"'
+  test_bed_value: datapower_cryptocertificate.acc_test.id
+  cli_alias: cert
+- name: ValidAlgorithms
+  type: List
+  enum:
+  - HS256
+  - HS384
+  - HS512
+  - RS256
+  - RS384
+  - RS512
+  - ES256
+  - ES384
+  - ES512
+  - PS256
+  - PS384
+  - PS512
+  element_type: String
+  description: Specifies an array of algorithm values that are valid for signature
+    verification. When specified, the JWS <tt>alg</tt> header parameter value must
+    match a value in this set. By default, all allowed JWS <tt>alg</tt> header parameters
+    values are valid.
+  cli_alias: alg
+- name: HeaderParam
+  type: List
+  element_type: DmJOSEHeader
+  required: true
+  description: The JOSE header parameters used to identify the signature.
+  cli_alias: header-param

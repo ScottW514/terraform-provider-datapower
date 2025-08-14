@@ -1,64 +1,75 @@
 name: APISecurityOAuth
-description: 'API security OAuth'
-cli_alias: 'api-sec-oauth'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APISecurityOAuth'
+description: An API OAuth security definition defines the applicable settings for
+  an OAuth provider.
+cli_alias: api-sec-oauth
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APISecurityOAuth
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPISecurityOAuth"'
-    test_expect_ds: '"AccTest_APISecurityOAuth"'
-    example: 'APISecurityOAuthName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: OAuthProvider
-    type: String
-    reference_to: OAuthProviderSettings
-    test_value: '"AccTest_OAuthProviderSettings"'
-    test_bed_value: 'datapower_oauthprovidersettings.acc_test.id'
-    description: 'OAuth provider'
-    cli_alias: oauth-provider
-  - name: OAuthFlow
-    type: String
-    enum:
-      - 'implicit'
-      - 'password'
-      - 'application'
-      - 'accessCode'
-    default: 'implicit'
-    required: true
-    description: 'OAuth flow'
-    cli_alias: oauth-flow
-  - name: OAuthScope
-    type: String
-    description: 'OAuth scopes'
-    cli_alias: oauth-scope
-  - name: OAuthAdvScopeURL
-    type: String
-    description: 'OAuth advanced scope URL'
-    cli_alias: oauth-advanced-scope-url
-  - name: OAuthAdvScopeTLSProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'OAuth TLS profile'
-    cli_alias: oauth-advanced-scope-tls-profile
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPISecurityOAuth"'
+  test_expect_ds: '"AccTest_APISecurityOAuth"'
+  example: APISecurityOAuthName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: OAuthProvider
+  type: String
+  reference_to: OAuthProviderSettings
+  test_value: '"AccTest_OAuthProviderSettings"'
+  test_bed_value: datapower_oauthprovidersettings.acc_test.id
+  description: OAuth provider
+  cli_alias: oauth-provider
+- name: OAuthFlow
+  type: String
+  enum:
+  - implicit
+  - password
+  - application
+  - accessCode
+  default: implicit
+  required: true
+  description: Specify the OAuth flow to enforce to protect the target. The value
+    must be among the supported grant types that are defined by the referenced OAuth
+    provider.
+  cli_alias: oauth-flow
+- name: OAuthScope
+  type: String
+  description: Specify the scopes that the access token is valid to access. To specify
+    multiple scopes, use a space between each scope. The order of scopes does not
+    matter. <ul><li>The allowed scopes for this configuration must be a subset of
+    the allowed scopes set for the API OAuth security definition.</li><li>The allowed
+    scopes for the API OAuth security definition must be a subset of the allowed scopes
+    set for the OAuth provider settings.</li></ul><p>Scopes ensure that the granted
+    access token is valid to access only specific protected resources.</p>
+  cli_alias: oauth-scope
+- name: OAuthAdvScopeURL
+  type: String
+  description: Specify the URL that overrides the advanced scope URL in the OAuth
+    provider settings. The value must be a properly formatted URL.
+  cli_alias: oauth-advanced-scope-url
+- name: OAuthAdvScopeTLSProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: OAuth TLS profile
+  cli_alias: oauth-advanced-scope-tls-profile

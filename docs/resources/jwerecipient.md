@@ -3,13 +3,13 @@
 page_title: "datapower_jwerecipient Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  JWE Recipient
+  JWE recipient object includes several values required by the JWE JSON Serialization object.
   CLI Alias: jwe-recipient
 ---
 
 # datapower_jwerecipient (Resource)
 
-JWE Recipient
+JWE recipient object includes several values required by the JWE JSON Serialization object.
   - CLI Alias: `jwe-recipient`
 
 ## Example Usage
@@ -33,20 +33,20 @@ resource "datapower_jwerecipient" "test" {
 
 ### Optional
 
-- `algorithm` (String) Algorithm
+- `algorithm` (String) JWE key management algorithm for the JWE recipient.
   - CLI Alias: `alg`
   - Choices: `RSA1_5`, `RSA-OAEP`, `RSA-OAEP-256`, `A128KW`, `A192KW`, `A256KW`, `dir`
   - Default value: `RSA1_5`
-- `certificate` (String) Certificate
+- `certificate` (String) Certificate.
   - CLI Alias: `cert`
   - Reference to: `datapower_cryptocertificate:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `ss_key` (String) Shared Secret Key
+- `ss_key` (String) Shared secret key.
   - CLI Alias: `sskey`
   - Reference to: `datapower_cryptosskey:id`
-- `unprotected_header` (Attributes List) Unprotected Header
+- `unprotected_header` (Attributes List) Unprotected header for the JWE recipient.
   - CLI Alias: `unprotected-header` (see [below for nested schema](#nestedatt--unprotected_header))
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

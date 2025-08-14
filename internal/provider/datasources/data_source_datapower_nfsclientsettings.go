@@ -50,10 +50,10 @@ func (d *NFSClientSettingsDataSource) Metadata(_ context.Context, req datasource
 
 func (d *NFSClientSettingsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "NFS client settings (`default` domain only)",
+		MarkdownDescription: "Configure global NFS client parameters, which is the global configuration to enable NFS.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -61,7 +61,7 @@ func (d *NFSClientSettingsDataSource) Schema(ctx context.Context, req datasource
 				Computed:            true,
 			},
 			"mount_refresh_time": schema.Int64Attribute{
-				MarkdownDescription: "Mount refresh time",
+				MarkdownDescription: "Specify the interval between the validation of NFS mounts. The status of each NFS mount is checked at this interval. This check detects whether the NFS server is up or down to prevent application-level NFS timeouts.",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

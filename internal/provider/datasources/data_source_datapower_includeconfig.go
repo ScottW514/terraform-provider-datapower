@@ -57,7 +57,7 @@ func (d *IncludeConfigDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *IncludeConfigDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Include configuration file",
+		MarkdownDescription: "An include configuration file defines external configuration data to process on startup. The included configuration files can reside locally or on a remote host.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,15 +81,15 @@ func (d *IncludeConfigDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"url": schema.StringAttribute{
-							MarkdownDescription: "URL",
+							MarkdownDescription: "Specify the URL of the configuration file. The file must be a configuration file of type <tt>.cfg</tt> . The URL takes the form 'protocol://username:password@host/path' when a username and password are needed to retrieve the file.",
 							Computed:            true,
 						},
 						"on_startup": schema.BoolAttribute{
-							MarkdownDescription: "Import on startup",
+							MarkdownDescription: "Specify whether to import the configuration file on startup. The default behavior is to import on startup. <ul><li>When enabled, the configuration file is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>",
 							Computed:            true,
 						},
 						"interface_detection": schema.BoolAttribute{
-							MarkdownDescription: "Interface detection",
+							MarkdownDescription: "Specify whether to wait for the associated IP interface to be operational. This setting only affects configuration files from remote servers. When enabled, remote files are processed asynchronously after the associated IP interface is operational.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

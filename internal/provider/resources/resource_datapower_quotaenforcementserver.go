@@ -53,69 +53,69 @@ func (r *QuotaEnforcementServerResource) Metadata(ctx context.Context, req resou
 
 func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Quota Enforcement Server (`default` domain only)", "quota-enforcement-server", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>On each DataPower Gateway, you configure the quota enforcement server to store the thresholds and associated metadata in memory or persist them on the RAID volume.</p><p>The quota enforcement server can work in standalone mode or peer group mode.</p><p>A peer group is collection of at least three nodes across which quota enforcement is implemented. In each peer group, one DataPower Gateway is the primary node and others are replicas. Failover might occur when the primary node becomes unavailable.</p><p>When you enable the peer group mode, the appropriate configuration properties are displayed. You must configure the connection among peers.</p><p>Based on your requirements for quota enforcement, you can enable or disable strict mode. Strict mode affects data-consistency across the peer group.</p><p>When strict mode is enabled, the following effects are caused: <ul><li>When the primary node is operational and when strict mode of all nodes in a peer group is enabled, threshold synchronization is more frequent to ensure data-consistency across the peer group. However, more network bandwidth is used. Therefore, strict mode is suitable for peers in the same data center.</li><li>When the primary node becomes unavailable, before failover occurs, the replica with enabled strict mode cannot process the request. <p>If service performance and availability are more important than data-consistency, you can disable strict mode for the replica so that this replica can process the request. The replica with disabled strict mode writes the threshold and associated metadata to the local data storage. After failover occurs, the connection is resumed between the replica and the new primary node. The threshold and associated metadata stored by the replica might be overwritten by the new primary node when the new primay node synchronizes the data to all replicas. Data-consistency might be affected across the peer group.</p></li></ul></p><p>By default, data is stored in memory and quota enforcement server works in standalone mode.</p>", "quota-enforcement-server", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a brief descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "passwordalias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the password alias to secure the data store. If not specified, a system default is used.", "password-alias", "passwordalias").String,
 				Optional:            true,
 			},
 			"raid_volume": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Data storage location", "raid-volume", "raidvolume").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies whether data storage is persistent or in-memory. <ul><li>For persistent storage, select the RAID volume that must be <tt>raid0</tt> .</li><li>For in-memory storage, do not select the RAID volume.</li></ul></p>", "raid-volume", "raidvolume").String,
 				Optional:            true,
 			},
 			"server_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Server port", "server-port", "").AddDefaultValue("16379").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the listening port used by the GatewayScript module to communicate with the quota enforcement server. The default port value is 16379.", "server-port", "").AddDefaultValue("16379").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(16379),
 			},
 			"monitor_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Monitor port", "monitor-port", "").AddDefaultValue("26379").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the listening port for operational state monitoring for the quota enforcement server. The default port is 26379.", "monitor-port", "").AddDefaultValue("26379").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(26379),
 			},
 			"enable_peer_group": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Peer group mode", "enable-peer-group", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the DataPower Gateway is enabled to work in peer group mode. By default, peer group mode is disabled, which indicates that the DataPower Gateway works in standalone mode.", "enable-peer-group", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"enable_ssl": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS", "enable-ssl", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether TLS is used to secure connection among the peers of the peer group. By default, the TLS is enabled.", "enable-ssl", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"ssl_crypto_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Crypto key", "ssl-key", "cryptokey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the key alias for the DataPower Gateway to authenticate a peer of the DataPower Gateway during the TLS handshake.", "ssl-key", "cryptokey").String,
 				Optional:            true,
 			},
 			"ssl_crypto_certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Certificate", "ssl-cert", "cryptocertificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates the certificate alias that is sent to a peer when the DataPower Gateway negotiates a TLS connection with the peer.", "ssl-cert", "cryptocertificate").String,
 				Optional:            true,
 			},
 			"ip_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("IP address", "ip-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the IP address of the DataPower Gateway for other peers to connect to. The IP address can be the IP address on any interface of the DataPower Gateway and must be accessible by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::. This IP address uniquely identifies the DataPower Gateway.</p><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address.</p>", "ip-address", "").String,
 				Optional:            true,
 			},
 			"peers": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Peers", "peer", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies peers of the DataPower Gateway in the peer group. The DataPower Gateway connects to each peer in the order in which peers are added in the list. It is not necessary to specify all peers in the Peers list.</p><ul><li>When the DataPower Gateway connects to no peer in the list, this DataPower Gateway is the first active server and joins the peer group as the primary node.</li><li>When the DataPower Gateway connects to any peer in the list, it joins the peer group as a replica.</li></ul><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address. Aliasing can help when you move configurations among appliances.</p><p>Note: Do not specify the IP address or hostname of this DataPower Gateway.</p>", "peer", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"priority": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Priority", "priority", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the priority that is used to decide which replica is promoted to the primary node when failover occurs.</p><p>Enter a value in range 0 - 255. The default value is 100. The replica with the lowest priority number is promoted. A replica with the value of 0 can never be promoted.</p>", "priority", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -125,7 +125,7 @@ func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resourc
 				Default: int64default.StaticInt64(100),
 			},
 			"strict_mode": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Strict mode", "strict-mode", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Based on your requirements for quota enforcement, enable or disable strict mode. By default, the strict mode is enabled.", "strict-mode", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),

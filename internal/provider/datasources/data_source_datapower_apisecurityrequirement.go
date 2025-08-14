@@ -57,7 +57,7 @@ func (d *APISecurityRequirementDataSource) Metadata(_ context.Context, req datas
 
 func (d *APISecurityRequirementDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API security requirement",
+		MarkdownDescription: "The API security requirement defines the required security schemes that an API request must pass to process an API operation. You must specify the security schemes that are declared in the security definitions. When multiple security schemes are specified, the API request must pass all security checks.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

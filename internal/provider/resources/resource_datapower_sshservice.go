@@ -53,16 +53,16 @@ func (r *SSHServiceResource) Metadata(ctx context.Context, req resource.Metadata
 
 func (r *SSHServiceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SSH service (`default` domain only)", "ssh", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Modify the configuration of the SSH server.", "ssh", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Port number", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("22").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP port that the service monitors. The default value is 22.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("22").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -72,13 +72,13 @@ func (r *SSHServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: int64default.StaticInt64(22),
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "acl", "accesscontrollist").AddDefaultValue("ssh").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Edit the <tt>ssh</tt> access control list to define IP addresses to allow or deny.", "acl", "accesscontrollist").AddDefaultValue("ssh").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("ssh"),
 			},
 			"connection_limit": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Concurrent connections", "maximum-connections", "").AddIntegerRange(0, 1000).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of concurrent SSH CLI connections. Enter a value in the range 0 - 1000. The default value is 0, which means no limit.", "maximum-connections", "").AddIntegerRange(0, 1000).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -88,7 +88,7 @@ func (r *SSHServiceResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: int64default.StaticInt64(0),
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),

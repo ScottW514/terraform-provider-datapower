@@ -3,12 +3,12 @@
 page_title: "datapower_domainsettings Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Domain settings
+  Domain settings provide properties to define domain-specific characteristics when you save changes to the persisted configuration.
 ---
 
 # datapower_domainsettings (Data Source)
 
-Domain settings
+Domain settings provide properties to define domain-specific characteristics when you save changes to the persisted configuration.
 
 ## Example Usage
 
@@ -31,7 +31,7 @@ data "datapower_domainsettings" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `passphrase` (String) Passphrase
 - `password_treatment` (String) Password treatment
 - `user_summary` (String) Comments

@@ -55,7 +55,7 @@ func (r *CORSPolicyResource) Metadata(ctx context.Context, req resource.Metadata
 
 func (r *CORSPolicyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("CORS policy", "cors-policy", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A CORS policy contains one or more CORS rules where you can configure CORS behavior.", "cors-policy", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *CORSPolicyResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 			},
 			"rule": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CORS rules", "rule", "corsrule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the CORS rules to to apply to the CORS policy. A CORS rule defines allowed origins and other CORS properties. The first rule that is valid is applied to the inbound CORS request. If no rule applies, the CORS request is rejected.", "rule", "corsrule").String,
 				ElementType:         types.StringType,
 				Required:            true,
 			},

@@ -3,12 +3,12 @@
 page_title: "datapower_assemblyactionratelimit Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Rate limit assembly action
+  The rate limit assembly action applies rate limit, burst limits, count limits, or any combination to subsequent actions in the assembly. This action is not supported in IBM Cloud. Any assembly that includes it will fail.
 ---
 
 # datapower_assemblyactionratelimit (Data Source)
 
-Rate limit assembly action
+The rate limit assembly action applies rate limit, burst limits, count limits, or any combination to subsequent actions in the assembly. <p>This action is not supported in IBM Cloud. Any assembly that includes it will fail.</p>
 
 ## Example Usage
 
@@ -38,17 +38,17 @@ Optional:
 
 Read-Only:
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
 - `app_domain` (String) The name of the application domain the object belongs to
 - `burst_limit` (List of String) Burst limits
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
 - `count_limit` (Attributes List) Count limits (see [below for nested schema](#nestedatt--result--count_limit))
-- `group_action` (String) Group action
+- `group_action` (String) Specify the action to take for rate limits in the group. Each rate limit definition that the group references is consumed or replenished based on this setting. The default value is consume.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `rate_limit` (Attributes List) Rate limits (see [below for nested schema](#nestedatt--result--rate_limit))
 - `rate_limit_definition` (Attributes List) Rate limit definitions (see [below for nested schema](#nestedatt--result--rate_limit_definition))
 - `rate_limit_group` (String) Rate limit group
-- `source` (String) Source
+- `source` (String) Specify the source of the limits to apply to the assembly. By default, rate limits and burst limits in the API plan are applied.
 - `title` (String) Title
 - `user_summary` (String) Comments
 

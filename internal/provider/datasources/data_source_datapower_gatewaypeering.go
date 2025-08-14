@@ -57,7 +57,7 @@ func (d *GatewayPeeringDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *GatewayPeeringDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Gateway peering",
+		MarkdownDescription: "A gateway-peering instance defines how members synchronize data across members.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,15 +81,15 @@ func (d *GatewayPeeringDataSource) Schema(ctx context.Context, req datasource.Sc
 							Computed:            true,
 						},
 						"password_alias": schema.StringAttribute{
-							MarkdownDescription: "Password alias",
+							MarkdownDescription: "Specify the password alias to secure the data store. If not specified, a system default is used. The use of the system default is classified as a security vulnerability (CVE-2022-31776).",
 							Computed:            true,
 						},
 						"local_address": schema.StringAttribute{
-							MarkdownDescription: "Local address",
+							MarkdownDescription: "Specify the IP address or host alias that the gateway service listens on. The IP address can be any DataPower network interface that can be accessed by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::.",
 							Computed:            true,
 						},
 						"local_port": schema.Int64Attribute{
-							MarkdownDescription: "Local port",
+							MarkdownDescription: "Specify the port that the gateway service listens on. The default value is 16380. Ensure that all peers use the same port.",
 							Computed:            true,
 						},
 						"peer_group": schema.StringAttribute{
@@ -97,27 +97,27 @@ func (d *GatewayPeeringDataSource) Schema(ctx context.Context, req datasource.Sc
 							Computed:            true,
 						},
 						"monitor_port": schema.Int64Attribute{
-							MarkdownDescription: "Monitor port",
+							MarkdownDescription: "Specify the port to monitor for state synchronization. The default value is 26380. Ensure that all peers use the same port.",
 							Computed:            true,
 						},
 						"enable_peer_group": schema.BoolAttribute{
-							MarkdownDescription: "Use peer group",
+							MarkdownDescription: "Specify whether the gateway-peering instance uses a peer group. <ul><li>When enabled, the instance works in the mode that is set for the peer group. This setting is the default value.</li><li>When not enabled, the instance works in stand-alone mode.</li></ul>",
 							Computed:            true,
 						},
 						"enable_ssl": schema.BoolAttribute{
-							MarkdownDescription: "DEPRECATED: LEAVE SET TO FALSE",
+							MarkdownDescription: "Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. In peer-based mode, ensure that all peers use the same TLS configuration.",
 							Computed:            true,
 						},
 						"persistence_location": schema.StringAttribute{
-							MarkdownDescription: "Persistence location",
+							MarkdownDescription: "Specify where to store data. Ensure that all peers in the group store data in the same location.",
 							Computed:            true,
 						},
 						"local_directory": schema.StringAttribute{
-							MarkdownDescription: "Local directory",
+							MarkdownDescription: "Specify the directory to store data. For example, <tt>local:///group1</tt> .",
 							Computed:            true,
 						},
 						"max_memory": schema.Int64Attribute{
-							MarkdownDescription: "Max memory",
+							MarkdownDescription: "Specify the maximum memory for the data store. When memory reaches this limit, data is removed by using the least recently used (LRU) algorithm. The default value is 0, which means no limits. Do not over allocate memory.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

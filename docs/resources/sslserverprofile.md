@@ -3,13 +3,13 @@
 page_title: "datapower_sslserverprofile Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  TLS server profile
+  The TLS server profile secures connections with clients.
   CLI Alias: ssl-server
 ---
 
 # datapower_sslserverprofile (Resource)
 
-TLS server profile
+The TLS server profile secures connections with clients.
   - CLI Alias: `ssl-server`
 
 ## Example Usage
@@ -29,7 +29,7 @@ resource "datapower_sslserverprofile" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `ciphers` (List of String) Ciphers
+- `ciphers` (List of String) Specify the cipher suites to support in preference order. Ensure that the order of cipher suites are in preference order. Otherwise, change the sequence order to meet your preference.
   - CLI Alias: `ciphers`
   - Choices: `RSA_WITH_NULL_MD5`, `RSA_WITH_NULL_SHA`, `RSA_WITH_RC4_128_MD5`, `RSA_WITH_RC4_128_SHA`, `RSA_WITH_DES_CBC_SHA`, `RSA_WITH_3DES_EDE_CBC_SHA`, `DHE_DSS_WITH_DES_CBC_SHA`, `DHE_DSS_WITH_3DES_EDE_CBC_SHA`, `DHE_RSA_WITH_DES_CBC_SHA`, `DHE_RSA_WITH_3DES_EDE_CBC_SHA`, `RSA_WITH_AES_128_CBC_SHA`, `DHE_DSS_WITH_AES_128_CBC_SHA`, `DHE_RSA_WITH_AES_128_CBC_SHA`, `RSA_WITH_AES_256_CBC_SHA`, `DHE_DSS_WITH_AES_256_CBC_SHA`, `DHE_RSA_WITH_AES_256_CBC_SHA`, `RSA_WITH_NULL_SHA256`, `RSA_WITH_AES_128_CBC_SHA256`, `RSA_WITH_AES_256_CBC_SHA256`, `DHE_DSS_WITH_AES_128_CBC_SHA256`, `DHE_RSA_WITH_AES_128_CBC_SHA256`, `DHE_DSS_WITH_AES_256_CBC_SHA256`, `DHE_RSA_WITH_AES_256_CBC_SHA256`, `RSA_WITH_AES_128_GCM_SHA256`, `RSA_WITH_AES_256_GCM_SHA384`, `DHE_RSA_WITH_AES_128_GCM_SHA256`, `DHE_RSA_WITH_AES_256_GCM_SHA384`, `DHE_DSS_WITH_AES_128_GCM_SHA256`, `DHE_DSS_WITH_AES_256_GCM_SHA384`, `AES_128_GCM_SHA256`, `AES_256_GCM_SHA384`, `CHACHA20_POLY1305_SHA256`, `AES_128_CCM_SHA256`, `AES_128_CCM_8_SHA256`, `ECDHE_RSA_WITH_NULL_SHA`, `ECDHE_RSA_WITH_RC4_128_SHA`, `ECDHE_RSA_WITH_3DES_EDE_CBC_SHA`, `ECDHE_RSA_WITH_AES_128_CBC_SHA`, `ECDHE_RSA_WITH_AES_256_CBC_SHA`, `ECDHE_RSA_WITH_AES_128_CBC_SHA256`, `ECDHE_RSA_WITH_AES_256_CBC_SHA384`, `ECDHE_RSA_WITH_AES_128_GCM_SHA256`, `ECDHE_RSA_WITH_AES_256_GCM_SHA384`, `ECDHE_ECDSA_WITH_NULL_SHA`, `ECDHE_ECDSA_WITH_RC4_128_SHA`, `ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_128_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_256_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_128_CBC_SHA256`, `ECDHE_ECDSA_WITH_AES_256_CBC_SHA384`, `ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`, `ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
 - `id` (String) Name of the object. Must be unique among object types in application domain.
@@ -39,21 +39,21 @@ resource "datapower_sslserverprofile" "test" {
 
 ### Optional
 
-- `allow_legacy_renegotiation` (Boolean) Allow legacy renegotiation
+- `allow_legacy_renegotiation` (Boolean) Specify whether to allow TLS renegotiation with TLS clients that do not support RFC 5746. By default, this support is disabled because renegotiation is vulnerable to man-in-the-middle attacks as documented in CVE-2009-3555. Renegotiation with TLS clients that support RFC 5746 is permitted regardless of the setting.
   - CLI Alias: `allow-legacy-renegotiation`
   - Default value: `false`
-- `cache_size` (Number) Session cache size
+- `cache_size` (Number) Specify the maximum number of entries (multiplied by 1024) in the session cache. Enter a value in the range 1 - 500. The default value is 20.
   - CLI Alias: `cache-size`
   - Range: `1`-`500`
   - Default value: `20`
-- `cache_timeout` (Number) Session cache timeout
+- `cache_timeout` (Number) Specify the number of seconds that TLS sessions are allowed to remain in the TLS session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.
   - CLI Alias: `cache-timeout`
   - Range: `1`-`86400`
   - Default value: `300`
 - `caching` (Boolean) Enable session caching
   - CLI Alias: `caching`
   - Default value: `true`
-- `compression` (Boolean) Enable compression
+- `compression` (Boolean) Specify whether to enable TLS compression. TLS compression in HTTPS is dangerous because the connection becomes vulnerable to the CRIME attack.
   - CLI Alias: `compression`
   - Default value: `false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
@@ -63,18 +63,18 @@ resource "datapower_sslserverprofile" "test" {
 - `elliptic_curves` (List of String) Elliptic curves
   - CLI Alias: `curves`
   - Choices: `sect163k1`, `sect163r1`, `sect163r2`, `sect193r1`, `sect193r2`, `sect233k1`, `sect233r1`, `sect239k1`, `sect283k1`, `sect283r1`, `sect409k1`, `sect409r1`, `sect571k1`, `sect571r1`, `secp160k1`, `secp160r1`, `secp160r2`, `secp192k1`, `secp192r1`, `secp224k1`, `secp224r1`, `secp256k1`, `secp256r1`, `secp384r1`, `secp521r1`, `brainpoolP256r1`, `brainpoolP384r1`, `brainpoolP512r1`
-- `max_ssl_duration` (Number) Maximum TLS session duration
+- `max_ssl_duration` (Number) Specify the maximum duration of an established TLS session. The TLS connection terminates when the duration is reached. Enter a value in the range 1 - 11520. The default value is 60.
   - CLI Alias: `max-duration`
   - Range: `1`-`11520`
   - Default value: `60`
-- `number_of_renegotiation_allowed` (Number) Maximum client initiated renegotiations
+- `number_of_renegotiation_allowed` (Number) Specify the maximum number of client initiated renegotiations to allow. Enter a value in the range 0 - 512. The default value is 0, which indicates TLS client initiated renegotiation is not allowed.
   - CLI Alias: `max-renegotiation-allowed`
   - Range: `0`-`512`
   - Default value: `0`
 - `prefer_server_ciphers` (Boolean) Use server cipher suite preferences
   - CLI Alias: `prefer-server-ciphers`
   - Default value: `true`
-- `prioritize_cha_cha` (Boolean) Prioritize ChaCha20-Poly1305 cipher
+- `prioritize_cha_cha` (Boolean) Specify whether to move ChaCha20-Poly1305 cipher to the top of preference list sent to the client when this cipher is at the top of client cipher list When server cipher suite preferences is in effect, enabling this property temporarily moves the ChaCha20-Poly1305 cipher to the top of preference list when clients that present ChaCha20-Poly1305 cipher have this cipher at the top of their preference list. This setting allows the client to negotiate ChaCha20-Poly1305 cipher while other clients can use other ciphers.
   - CLI Alias: `prioritize-chacha`
   - Default value: `false`
 - `prohibit_resume_on_reneg` (Boolean) Prohibit session resumption on renegotiation
@@ -85,7 +85,7 @@ resource "datapower_sslserverprofile" "test" {
 - `request_client_auth` (Boolean) Request client authentication
   - CLI Alias: `request-client-auth`
   - Default value: `false`
-- `require_client_auth` (Boolean) Require client authentication
+- `require_client_auth` (Boolean) Specify whether to require client authentication during the TLS handshake. When enabled, the handshake is aborted if the client certificate is not provided. Otherwise, the request does not fail when there is no client certificate.
   - CLI Alias: `require-client-auth`
   - Default value: `true`
 - `require_closure_notification` (Boolean) Require closure notification
@@ -94,10 +94,10 @@ resource "datapower_sslserverprofile" "test" {
 - `send_client_auth_ca_list` (Boolean) Send client authentication CA list
   - CLI Alias: `send-client-auth-ca-list`
   - Default value: `true`
-- `sig_algs` (List of String) Signature algorithms
+- `sig_algs` (List of String) Specify the signature algorithms to advertise and support. An empty list uses the default algorithms.
   - CLI Alias: `sign-alg`
   - Choices: `ecdsa_secp256r1_sha256`, `ecdsa_secp384r1_sha384`, `ecdsa_secp521r1_sha512`, `ed25519`, `ed448`, `ecdsa_sha224`, `ecdsa_sha1`, `rsa_pss_rsae_sha256`, `rsa_pss_rsae_sha384`, `rsa_pss_rsae_sha512`, `rsa_pss_pss_sha256`, `rsa_pss_pss_sha384`, `rsa_pss_pss_sha512`, `rsa_pkcs1_sha256`, `rsa_pkcs1_sha384`, `rsa_pkcs1_sha512`, `rsa_pkcs1_sha224`, `rsa_pkcs1_sha1`, `dsa_sha256`, `dsa_sha384`, `dsa_sha512`, `dsa_sha224`, `dsa_sha1`
-- `ssl_options` (Attributes) Advanced TLS options
+- `ssl_options` (Attributes) Specify the options to apply to the TLS connection. These options have negative impact on the performance.
   - CLI Alias: `ssl-options` (see [below for nested schema](#nestedatt--ssl_options))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

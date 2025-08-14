@@ -55,7 +55,7 @@ func (r *APISecurityAPIKeyResource) Metadata(ctx context.Context, req resource.M
 
 func (r *APISecurityAPIKeyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API security API key", "api-sec-apikey", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An API key security definition defines the credentials that an API client must provide to the API gateway to identify itself when calling the API operations. You can require that the client must provide only the client ID, or both the client ID and client secret. When you require the client to provide both the client ID and client secret, you must define two separate configurations, one of type ID and the other of type secret.", "api-sec-apikey", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *APISecurityAPIKeyResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 			},
 			"where": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Where", "where", "").AddStringEnum("header", "query").AddDefaultValue("header").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the client credentials. An API call fails if the credentials are not included in the specified location. <b>Note:</b> Regardless of where the client credentials are sent, you must specify the same location for the client ID and client secret.", "where", "").AddStringEnum("header", "query").AddDefaultValue("header").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

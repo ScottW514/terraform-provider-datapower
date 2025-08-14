@@ -1,77 +1,108 @@
 name: CryptoValCred
-description: 'Validation credentials'
-cli_alias: 'valcred'
-cmd_group: 'validation'
-rest_endpoint: '/mgmt/config/{domain}/CryptoValCred'
+description: <p>Validation credentials authenticate certificates that are received
+  from TLS peers. Validation credentials can be used to validate certificates that
+  are used in digital signature and encryption operations.</p><p>a TLS client requires
+  validation credentials only when it authenticates the certificate that is presented
+  by the remote TLS server. The TLS standard does not require authentication of the
+  server certificate.</p><p>a TLS server requires validation credentials only when
+  it authenticates remote TLS clients. The TLS standard does not require authentication
+  of the client certificate.</p>
+cli_alias: valcred
+cmd_group: validation
+rest_endpoint: /mgmt/config/{domain}/CryptoValCred
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestCryptoValCred"'
-    test_expect_ds: '"AccTest_CryptoValCred"'
-    example: 'CryptoValCredName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Certificate
-    type: List
-    reference_to: CryptoCertificate
-    element_type: String
-    description: 'Certificates'
-    cli_alias: certificate
-  - name: CertValidationMode
-    type: String
-    enum:
-      - 'legacy'
-      - 'pkix'
-      - 'exact-match'
-    default: 'legacy'
-    description: 'Certificate validation mode'
-    cli_alias: cert-validation-mode
-  - name: UseCRL
-    type: Bool
-    default: true
-    description: 'Use CRL'
-    cli_alias: use-crl
-  - name: RequireCRL
-    type: Bool
-    default: false
-    description: 'Require CRL'
-    cli_alias: require-crl
-  - name: CRLDPHandling
-    type: String
-    enum:
-      - 'ignore'
-      - 'require'
-    default: 'ignore'
-    description: 'CRL distribution points handling'
-    cli_alias: crldp
-  - name: InitialPolicySet
-    type: List
-    element_type: String
-    description: 'Initial certificate policy set'
-    cli_alias: initial-policy-set
-  - name: ExplicitPolicy
-    type: Bool
-    default: false
-    description: 'Require explicit certificate policy'
-    cli_alias: explicit-policy
-  - name: CheckDates
-    type: Bool
-    default: true
-    description: 'Check dates'
-    cli_alias: check-dates
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestCryptoValCred"'
+  test_expect_ds: '"AccTest_CryptoValCred"'
+  example: CryptoValCredName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Certificate
+  type: List
+  reference_to: CryptoCertificate
+  element_type: String
+  description: Specify the list of certificates for the validation credentials. Each
+    certificate in the validation credentials is the certificate that a TLS peer might
+    send or is the certificate of the certification authority (CA) that signed the
+    certificate that is sent by a peer or is the root certificate.
+  cli_alias: certificate
+- name: CertValidationMode
+  type: String
+  enum:
+  - legacy
+  - pkix
+  - exact-match
+  default: legacy
+  description: Certificate validation mode
+  cli_alias: cert-validation-mode
+- name: UseCRL
+  type: Bool
+  default: true
+  description: Specify whether to check certificate revocation lists (CRLs) during
+    certificate validation. When enabled, CRLs are checked. Otherwise, CRLs are not
+    checked.
+  cli_alias: use-crl
+- name: RequireCRL
+  type: Bool
+  default: false
+  description: Specify whether to mandate CRLs during certificate validation. When
+    enabled, certificate validation fails if no CRL is available. Otherwise, validation
+    succeeds independent of the availability of a CRL.
+  cli_alias: require-crl
+- name: CRLDPHandling
+  type: String
+  enum:
+  - ignore
+  - require
+  default: ignore
+  description: Specify the support of certificate extensions for X.509 certificate
+    distribution points. This certificate extension specifies how to obtain CRL information.
+    For more information, see RFC 2527 and RFC 3280.
+  cli_alias: crldp
+- name: InitialPolicySet
+  type: List
+  element_type: String
+  description: Specify the unique object identifiers for the certificate policy. <p>RFC
+    3280 refers to the input variable for certificate chain validation as <tt>user-initial-policy-set</tt>
+    . These OIDs specify the allow values of certificate policies. To use this functionality,
+    you need to require an explicit certificate policy. Otherwise, this set is used
+    only if there are policy constraint extensions in the certificate chain.</p><p>By
+    default, the initial certificate policy set consists of the single OID 2.5.29.32.0,
+    which identifies <tt>anyPolicy</tt> .</p>
+  cli_alias: initial-policy-set
+- name: ExplicitPolicy
+  type: Bool
+  default: false
+  description: Specify support for the initial explicit policy variable as defined
+    by RFC 3280. When enabled, the chain validation algorithm must end with a non-empty
+    policy tree. Otherwise, the algorithm can end with an empty policy tree unless
+    policy constraint extensions in the chain require an explicit policy.
+  cli_alias: explicit-policy
+- name: CheckDates
+  type: Bool
+  default: true
+  description: Specify whether to check dates during certificate validation. This
+    validation checks the current date and time against the <tt>notBefore</tt> and
+    <tt>notAfter</tt> values in certificates and CRLs. When enabled, the date values
+    are checked and expired certificates cause validation to fail. Otherwise, the
+    date values are ignored and and do not cause validation to fail when a certificate
+    is expired.
+  cli_alias: check-dates

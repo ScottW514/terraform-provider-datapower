@@ -1,385 +1,478 @@
 name: RBMSettings
-description: 'RBM settings (`default` domain only)'
-cli_alias: 'rbm'
-cmd_group: 'rbm'
-rest_endpoint: '/mgmt/config/default/RBMSettings/RBM-Settings'
+description: '<p>Manage role-based management (RBM) settings: RBM, password policy,
+  and account policy</p><ul><li>RBM consists of the following capabilities: Authenticating
+  users, evaluating the access profile, enforcing access to resources</li><li>The
+  password policy sets the password requirements for local user accounts.</li><li>The
+  account policy sets the lockout behavior and the timeout for CLI sessions.</li></ul>'
+cli_alias: rbm
+cmd_group: rbm
+rest_endpoint: /mgmt/config/default/RBMSettings/RBM-Settings
 actions:
-  - name: flush_cache
-    body: '{"FlushRBMCache": 0}'
+- name: flush_cache
+  body: '{"FlushRBMCache": 0}'
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: AUMethod
-    type: String
-    enum:
-      - 'local'
-      - 'xmlfile'
-      - 'ldap'
-      - 'radius'
-      - 'spnego'
-      - 'zosnss'
-      - 'custom'
-      - 'client-ssl'
-      - 'oidc'
-    required: true
-    default: 'local'
-    description: 'Authentication method'
-    cli_alias: au-method
-  - name: SSHAUMethod
-    dm_type: DmRBMSSHAuthenticateType
-    description: 'SSH authentication method'
-    cli_alias: ssh-au-method
-  - name: CAPubKeyFile
-    type: String
-    description: 'CA user public key file'
-    cli_alias: ssh-ca-pubkey-file
-  - name: RevokedKeys
-    type: List
-    element_type: String
-    description: 'Revoked keys'
-    cli_alias: ssh-revoked-keys
-  - name: AUZOSNSSConfig
-    type: String
-    reference_to: ZosNSSClient
-    description: 'z/OS NSS client'
-    cli_alias: zos-nss-au
-  - name: AUOIDCScope
-    type: String
-    default: 'openid'
-    description: 'Scope'
-    cli_alias: au-oidc-scope
-  - name: AUOIDCClientID
-    type: String
-    description: 'Client ID'
-    cli_alias: au-oidc-client-id
-  - name: AUOIDCClientSecret
-    type: String
-    reference_to: PasswordAlias
-    description: 'Client secret'
-    cli_alias: au-oidc-client-secret
-  - name: AUOIDCIdentityServiceURL
-    type: String
-    description: 'Identity service URL'
-    cli_alias: au-oidc-identity-service-url
-  - name: AUOIDCKeyFetchInterval
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    default: 30
-    description: 'Retrieval interval for public keys.'
-    cli_alias: au-oidc-key-fetch-interval
-  - name: AUOIDCIdentityServiceURLSSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: au-oidc-identity-service-ssl-client
-  - name: AUKerberosKeytab
-    type: String
-    reference_to: CryptoKerberosKeytab
-    description: 'Kerberos keytab'
-    cli_alias: au-kerberos-keytab
-  - name: AUCustomURL
-    type: String
-    description: 'Custom URL'
-    cli_alias: au-custom-url
-  - name: AUInfoURL
-    type: String
-    description: 'XML file URL'
-    cli_alias: au-info-url
-  - name: AUSSLValcred
-    type: String
-    reference_to: CryptoValCred
-    description: 'Validation credentials'
-    cli_alias: au-valcred
-  - name: AUHost
-    type: String
-    description: 'Server host'
-    cli_alias: au-server-host
-  - name: AUPort
-    type: Int64
-    description: 'Server port'
-    cli_alias: au-server-port
-  - name: AULDAPSearchForDN
-    type: Bool
-    default: false
-    description: 'Search LDAP for DN'
-    cli_alias: au-ldap-search
-  - name: AULDAPBindDN
-    type: String
-    description: 'LDAP bind DN'
-    cli_alias: au-ldap-bind-dn
-# DEPRECATED
-#  - name: AULDAPBindPassword
-  - name: AULDAPBindPasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'LDAP bind password alias'
-    cli_alias: au-ldap-bind-password-alias
-  - name: AULDAPSearchParameters
-    type: String
-    reference_to: LDAPSearchParameters
-    description: 'LDAP search parameters'
-    cli_alias: au-ldap-parameters
-  - name: AULDAPPrefix
-    type: String
-    default: 'cn='
-    description: 'LDAP prefix'
-    cli_alias: ldap-prefix
-  - name: AUForceDNLDAPOrder
-    type: Bool
-    default: false
-    description: 'Convert DN to LDAP format'
-    cli_alias: au-force-dn-ldap-order
-  - name: LDAPsuffix
-    type: String
-    description: 'LDAP suffix'
-    cli_alias: ldap-suffix
-# DEPRECATED
-#  - name: LDAPSSLProxyProfile
-  - name: AULDAPLoadBalanceGroup
-    type: String
-    reference_to: LoadBalancerGroup
-    description: 'Load balancer group'
-    cli_alias: loadbalancer-group
-  - name: AUCacheAllow
-    type: String
-    enum:
-      - 'absolute'
-      - 'disabled'
-      - 'maximum'
-      - 'minimum'
-    required: true
-    default: 'absolute'
-    description: 'Authentication cache mode'
-    cli_alias: au-cache-mode
-  - name: AUCacheTTL
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    default: 600
-    description: 'Authentication cache lifetime'
-    cli_alias: au-cache-ttl
-  - name: AULDAPReadTimeout
-    type: Int64
-    maximum: 86400
-    default: 60
-    description: 'LDAP read timeout'
-    cli_alias: au-ldap-readtimeout
-  - name: MCMethod
-    type: String
-    enum:
-      - 'local'
-      - 'xmlfile'
-      - 'custom'
-    required: true
-    default: 'local'
-    description: 'Credential-mapping method'
-    cli_alias: mc-method
-  - name: MCCustomURL
-    type: String
-    description: 'Custom URL'
-    cli_alias: mc-custom-url
-  - name: MCLDAPSearchForGroup
-    type: Bool
-    default: false
-    description: 'Search LDAP for group name'
-    cli_alias: mc-ldap-search
-  - name: MCHost
-    type: String
-    description: 'Server host'
-    cli_alias: mc-server-host
-  - name: MCPort
-    type: Int64
-    description: 'Server port'
-    cli_alias: mc-server-port
-# DEPRECATED
-#  - name: MCLDAPSSLProxyProfile
-  - name: MCLDAPLoadBalanceGroup
-    type: String
-    reference_to: LoadBalancerGroup
-    description: 'Load balancer group'
-    cli_alias: mc-loadbalancer-group
-  - name: MCLDAPBindDN
-    type: String
-    description: 'LDAP bind DN'
-    cli_alias: mc-ldap-bind-dn
-# DEPRECATED
-#  - name: MCLDAPBindPassword
-  - name: MCLDAPBindPasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'LDAP bind password alias'
-    cli_alias: mc-ldap-bind-password-alias
-  - name: MCLDAPSearchParameters
-    type: String
-    reference_to: LDAPSearchParameters
-    description: 'LDAP search parameters'
-    cli_alias: mc-ldap-parameters
-  - name: MCInfoURL
-    type: String
-    description: 'XML file URL'
-    cli_alias: mc-info-url
-  - name: MCLDAPReadTimeout
-    type: Int64
-    maximum: 86400
-    default: 60
-    description: 'LDAP read timeout'
-    cli_alias: mc-ldap-readtimeout
-  - name: LDAPVersion
-    type: String
-    enum:
-      - 'v2'
-      - 'v3'
-    description: 'LDAP version'
-    cli_alias: ldap-version
-  - name: FallbackLogin
-    type: String
-    enum:
-      - 'disabled'
-      - 'local'
-      - 'restricted'
-    default: 'disabled'
-    description: 'Local accounts for fallback'
-    cli_alias: fallback-login
-  - name: FallbackUser
-    type: List
-    reference_to: User
-    element_type: String
-    description: 'Fallback users'
-    cli_alias: fallback-user
-  - name: ApplyToCLI
-    type: Bool
-    default: false
-    description: 'Enforce RBM on CLI'
-    cli_alias: apply-cli
-  - name: RestrictAdminToSerialPort
-    type: Bool
-    default: false
-    description: 'Restrict admin to serial'
-    cli_alias: restrict-admin
-  - name: MinPasswordLength
-    type: Int64
-    minimum: 1
-    maximum: 128
-    required: true
-    default: 6
-    description: 'Minimum length'
-    cli_alias: pwd-minimum-length
-  - name: RequireMixedCase
-    type: Bool
-    required: true
-    default: false
-    description: 'Require mixed case'
-    cli_alias: pwd-mixed-case
-  - name: RequireDigit
-    type: Bool
-    required: true
-    default: false
-    description: 'Require number'
-    cli_alias: pwd-digit
-  - name: RequireNonAlphaNumeric
-    type: Bool
-    required: true
-    default: false
-    description: 'Require non-alphanumeric'
-    cli_alias: pwd-nonalphanumeric
-  - name: DisallowUsernameSubstring
-    type: Bool
-    required: true
-    default: false
-    description: 'Disallow username substring'
-    cli_alias: pwd-username
-  - name: DoPasswordAging
-    type: Bool
-    required: true
-    default: false
-    description: 'Enable aging'
-    cli_alias: pwd-aging
-  - name: MaxPasswordAge
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    default: 30
-    description: 'Max age'
-    cli_alias: pwd-max-age
-  - name: DoPasswordHistory
-    type: Bool
-    required: true
-    default: false
-    description: 'Control reuse'
-    cli_alias: pwd-history
-  - name: NumOldPasswords
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    default: 5
-    description: 'Reuse history'
-    cli_alias: pwd-max-history
-  - name: CliTimeout
-    type: Int64
-    maximum: 65535
-    default: 0
-    required: true
-    description: 'CLI idle timeout'
-    cli_alias: cli-timeout
-  - name: MaxFailedLogin
-    type: Int64
-    maximum: 64
-    default: 0
-    required: true
-    description: 'Max failed logins'
-    cli_alias: max-login-failure
-  - name: LockoutPeriod
-    type: Int64
-    maximum: 1000
-    default: 1
-    description: 'Lockout duration'
-    cli_alias: lockout-duration
-  - name: MCForceDNLDAPOrder
-    type: Bool
-    default: false
-    description: 'Convert DN to LDAP format'
-    cli_alias: mc-force-dn-ldap-order
-  - name: PasswordHashAlgorithm
-    type: String
-    enum:
-      - 'md5crypt'
-      - 'sha256crypt'
-    default: 'md5crypt'
-    description: 'Password hash algorithm'
-    cli_alias: password-hash-algorithm
-  - name: LDAPSSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: LDAPSSLClientProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
-  - name: MCLDAPSSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: mc-ssl-client-type
-  - name: MCLDAPSSLClientProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: mc-ssl-client
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: AUMethod
+  type: String
+  enum:
+  - local
+  - xmlfile
+  - ldap
+  - radius
+  - spnego
+  - zosnss
+  - custom
+  - client-ssl
+  - oidc
+  required: true
+  default: local
+  description: Authentication method
+  cli_alias: au-method
+- name: SSHAUMethod
+  dm_type: DmRBMSSHAuthenticateType
+  description: Specify the method to authenticate SSH users. <ul><li>When no method,
+    the user is prompted for both username and password.</li><li>When password, the
+    user is prompted for the password. For this method, the username must be part
+    of the invocation. With the ssh command, the invocation is in the ssh username@host
+    format.</li><li>When user certificate, the user is not prompted for input. The
+    connection is successful when the invocation provides a signed SSH user certificate
+    that is verified by the CA public key file in the <tt>cert:</tt> directory. With
+    the ssh command, the invocation must include the -i file parameter.</li><li>When
+    both certificate and password, processing attempts to first authenticate with
+    the provided signed SSH user certificate. If unsuccessful, prompts for the password.</li><li>Supported
+    RBM authentication methods with SSH authentication method are local and LDAP.
+    <ul><li>Local authentication method extracts the certificate identity and attempts
+    login with local User of that name.</li><li>LDAP authentication method constructs
+    the DN through LDAP search or by applying the configured prefix and suffix. Since
+    SSH authentication completes prior to the Authentication step no LDAP bind or
+    authenticate will take place.</li></ul></li></ul>
+  cli_alias: ssh-au-method
+- name: CAPubKeyFile
+  type: String
+  description: Specify the certificate authority (CA) public key file in the <tt>cert:</tt>
+    directory for SSH authentication with SSH user certificates. This public key file
+    contains the public key for one or more certificate authorities.
+  cli_alias: ssh-ca-pubkey-file
+- name: RevokedKeys
+  type: List
+  element_type: String
+  description: Specify the OpenSSH public keys to revoke for SSH authentication. Each
+    entry is the public key file in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory
+    and must be in the OpenSSH public key format. These keys are signed by the CA
+    user public key file.
+  cli_alias: ssh-revoked-keys
+- name: AUZOSNSSConfig
+  type: String
+  reference_to: ZosNSSClient
+  description: z/OS NSS client
+  cli_alias: zos-nss-au
+- name: AUOIDCScope
+  type: String
+  default: openid
+  description: Scope
+  cli_alias: au-oidc-scope
+- name: AUOIDCClientID
+  type: String
+  description: Client ID
+  cli_alias: au-oidc-client-id
+- name: AUOIDCClientSecret
+  type: String
+  reference_to: PasswordAlias
+  description: Client secret
+  cli_alias: au-oidc-client-secret
+- name: AUOIDCIdentityServiceURL
+  type: String
+  description: Identity service URL
+  cli_alias: au-oidc-identity-service-url
+- name: AUOIDCKeyFetchInterval
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  default: 30
+  description: Retrieval interval for public keys.
+  cli_alias: au-oidc-key-fetch-interval
+- name: AUOIDCIdentityServiceURLSSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: au-oidc-identity-service-ssl-client
+- name: AUKerberosKeytab
+  type: String
+  reference_to: CryptoKerberosKeytab
+  description: Kerberos keytab
+  cli_alias: au-kerberos-keytab
+- name: AUCustomURL
+  type: String
+  description: Custom URL
+  cli_alias: au-custom-url
+- name: AUInfoURL
+  type: String
+  description: Specify the URL of the XML file for authentication. The XML file can
+    be on the DataPower Gateway or on a remote server. You can use the same XML file
+    to map credentials.
+  cli_alias: au-info-url
+- name: AUSSLValcred
+  type: String
+  reference_to: CryptoValCred
+  description: Validation credentials
+  cli_alias: au-valcred
+- name: AUHost
+  type: String
+  description: Server host
+  cli_alias: au-server-host
+- name: AUPort
+  type: Int64
+  description: Server port
+  cli_alias: au-server-port
+- name: AULDAPSearchForDN
+  type: Bool
+  default: false
+  description: Specify whether to retrieve the user DN with an LDAP search. <ul><li>When
+    enabled, the login name presented by the user is used with the LDAP search parameters
+    for an LDAP search to retrieve the user DN.</li><li>When disabled, the login name
+    presented by the user is used with the LDAP prefix and suffix to construct the
+    user DN.</li></ul>
+  cli_alias: au-ldap-search
+- name: AULDAPBindDN
+  type: String
+  description: LDAP bind DN
+  cli_alias: au-ldap-bind-dn
+- name: AULDAPBindPasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: LDAP bind password alias
+  cli_alias: au-ldap-bind-password-alias
+- name: AULDAPSearchParameters
+  type: String
+  reference_to: LDAPSearchParameters
+  description: LDAP search parameters
+  cli_alias: au-ldap-parameters
+- name: AULDAPPrefix
+  type: String
+  default: cn=
+  description: Specify the string to add before the username to form the DN. If this
+    value is <tt>CN=</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt>
+    when the LDAP suffix is <tt>O=example.com</tt> .
+  cli_alias: ldap-prefix
+- name: AUForceDNLDAPOrder
+  type: Bool
+  default: false
+  description: Specify whether to convert the extracted DN to LDAP format. This property
+    is essential when the extracted DN from a TLS certificate is in X.500 format.
+    This format arranges the RDNs of the DNs from left to right with forward slashes
+    as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When
+    you retrieve the group name with an LDAP search, the authenticated DN must be
+    in LDAP format. This format arranges the RDNs of the DNs from right to left with
+    commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
+  cli_alias: au-force-dn-ldap-order
+- name: LDAPsuffix
+  type: String
+  description: Specify the string to add after the username to form the DN. If this
+    value is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the complete
+    DN is <tt>CN=Bob,O=example.com</tt> when the LDAP prefix is <tt>CN=</tt> .
+  cli_alias: ldap-suffix
+- name: AULDAPLoadBalanceGroup
+  type: String
+  reference_to: LoadBalancerGroup
+  description: Specify the load balancer group of LDAP servers. This setting overrides
+    the settings for the server host and port.
+  cli_alias: loadbalancer-group
+- name: AUCacheAllow
+  type: String
+  enum:
+  - absolute
+  - disabled
+  - maximum
+  - minimum
+  required: true
+  default: absolute
+  description: Authentication cache mode
+  cli_alias: au-cache-mode
+- name: AUCacheTTL
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  default: 600
+  description: Specify the expiry for cached authentication decisions. Enter a value
+    in the range 1 - 86400. The default value is 600.
+  cli_alias: au-cache-ttl
+- name: AULDAPReadTimeout
+  type: Int64
+  maximum: 86400
+  default: 60
+  description: Specify the time to wait for a response from the LDAP server before
+    the DataPower Gateway closes the LDAP connection. Enter a value in the range 0
+    - 86400. The default value is 60. A value of 0 indicates that the connection never
+    times out.
+  cli_alias: au-ldap-readtimeout
+- name: MCMethod
+  type: String
+  enum:
+  - local
+  - xmlfile
+  - custom
+  required: true
+  default: local
+  description: Credential-mapping method
+  cli_alias: mc-method
+- name: MCCustomURL
+  type: String
+  description: Custom URL
+  cli_alias: mc-custom-url
+- name: MCLDAPSearchForGroup
+  type: Bool
+  default: false
+  description: Specify whether to search LDAP to retrieve all user groups that match
+    the query. <ul><li>When enabled, the authenticated DN of the user and the LDAP
+    search parameters are used as part of the LDAP search to retrieve all user groups
+    that match the query. When a user belongs to multiple groups, the resultant access
+    policy for this user is additive not most restrictive.</li><li>When disabled,
+    the authenticated identity of the user (DN or user group of local user) is used
+    directly as the input credential.</li></ul>
+  cli_alias: mc-ldap-search
+- name: MCHost
+  type: String
+  description: Server host
+  cli_alias: mc-server-host
+- name: MCPort
+  type: Int64
+  description: Server port
+  cli_alias: mc-server-port
+- name: MCLDAPLoadBalanceGroup
+  type: String
+  reference_to: LoadBalancerGroup
+  description: Load balancer group
+  cli_alias: mc-loadbalancer-group
+- name: MCLDAPBindDN
+  type: String
+  description: LDAP bind DN
+  cli_alias: mc-ldap-bind-dn
+- name: MCLDAPBindPasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: LDAP bind password alias
+  cli_alias: mc-ldap-bind-password-alias
+- name: MCLDAPSearchParameters
+  type: String
+  reference_to: LDAPSearchParameters
+  description: LDAP search parameters
+  cli_alias: mc-ldap-parameters
+- name: MCInfoURL
+  type: String
+  description: Specify the URL of the XML file to map credentials. The XML file can
+    be on the DataPower Gateway or on a remote server. You can use the same XML file
+    for authentication.
+  cli_alias: mc-info-url
+- name: MCLDAPReadTimeout
+  type: Int64
+  maximum: 86400
+  default: 60
+  description: Specify the time to wait for a response from the LDAP server before
+    the DataPower Gateway closes the LDAP connection. Enter a value in the range 0
+    - 86400. The default value is 60. A value of 0 indicates that the connection never
+    times out.
+  cli_alias: mc-ldap-readtimeout
+- name: LDAPVersion
+  type: String
+  enum:
+  - v2
+  - v3
+  description: LDAP version
+  cli_alias: ldap-version
+- name: FallbackLogin
+  type: String
+  enum:
+  - disabled
+  - local
+  - restricted
+  default: disabled
+  description: 'Specify whether to use local user accounts as fallback users if remote
+    authentication fails. With fallback users, local user accounts can log on to the
+    DataPower Gateway if authentication fails or during a network outage that affects
+    primary authentication. The recommendation is to restrict fallback users to a
+    subset of local user accounts. <p><b>Note: </b>When authentication uses a TLS
+    certificate from a connection peer, you cannot enforce RBM on CLI sessions unless
+    fallback users are supported.</p>'
+  cli_alias: fallback-login
+- name: FallbackUser
+  type: List
+  reference_to: User
+  element_type: String
+  description: Fallback users
+  cli_alias: fallback-user
+- name: ApplyToCLI
+  type: Bool
+  default: false
+  description: Specify whether to enforce the RBM policy on CLI sessions. When authentication
+    uses a TLS certificate from a connection peer, you cannot enforce RBM on CLI sessions
+    unless fallback users are supported.
+  cli_alias: apply-cli
+- name: RestrictAdminToSerialPort
+  type: Bool
+  default: false
+  description: Restrict admin to serial
+  cli_alias: restrict-admin
+- name: MinPasswordLength
+  type: Int64
+  minimum: 1
+  maximum: 128
+  required: true
+  default: 6
+  description: Specify the minimum length of a valid password. Enter a value in the
+    range 1 - 128. The default value depends on common criteria mode. <ul><li>When
+    common criteria is enabled, the default value is 14.</li><li>When common criteria
+    is not enabled, the default value is 6.</li></ul>
+  cli_alias: pwd-minimum-length
+- name: RequireMixedCase
+  type: Bool
+  required: true
+  default: false
+  description: Require mixed case
+  cli_alias: pwd-mixed-case
+- name: RequireDigit
+  type: Bool
+  required: true
+  default: false
+  description: Require number
+  cli_alias: pwd-digit
+- name: RequireNonAlphaNumeric
+  type: Bool
+  required: true
+  default: false
+  description: Require non-alphanumeric
+  cli_alias: pwd-nonalphanumeric
+- name: DisallowUsernameSubstring
+  type: Bool
+  required: true
+  default: false
+  description: Disallow username substring
+  cli_alias: pwd-username
+- name: DoPasswordAging
+  type: Bool
+  required: true
+  default: false
+  description: Enable aging
+  cli_alias: pwd-aging
+- name: MaxPasswordAge
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  default: 30
+  description: Specify the expiry for passwords. The default value depends on common
+    criteria mode. <ul><li>When common criteria is enabled, the default value is 90.</li><li>When
+    common criteria is not enabled, the default value is 30.</li></ul>
+  cli_alias: pwd-max-age
+- name: DoPasswordHistory
+  type: Bool
+  required: true
+  default: false
+  description: Control reuse
+  cli_alias: pwd-history
+- name: NumOldPasswords
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  default: 5
+  description: Specify the number of recent passwords to track to prevent reuse. The
+    default value depends on common criteria mode. <ul><li>When common criteria is
+    enabled, the default value is 3.</li><li>When common criteria is not enabled,
+    the default value is 5.</li></ul>
+  cli_alias: pwd-max-history
+- name: CliTimeout
+  type: Int64
+  maximum: 65535
+  default: 0
+  required: true
+  description: Specify the time after which to invalidate idle CLI sessions. When
+    invalidated, requires re-authentication. Enter a value in the range 0 - 65535.
+    A value of 0 disables the timer. The default value depends on common criteria
+    mode. <ul><li>When common criteria is enabled, the default value is 900.</li><li>When
+    common criteria is not enabled, the default value is 0.</li></ul>
+  cli_alias: cli-timeout
+- name: MaxFailedLogin
+  type: Int64
+  maximum: 64
+  default: 0
+  required: true
+  description: Specify the number of failed login attempts to allow before account
+    lockout. Enter a value in the range of 0 - 64, where 0 disables account lockout.
+    The default value depends on common criteria mode. <ul><li>When common criteria
+    is enabled, the default value is 3.</li><li>When common criteria is not enabled,
+    the default value is 0.</li></ul>
+  cli_alias: max-login-failure
+- name: LockoutPeriod
+  type: Int64
+  maximum: 1000
+  default: 1
+  description: Specify the duration to lock out local user accounts after the maximum
+    number of failed login attempts is exceeded. Instead of locking out accounts for
+    a specific duration, the account can be locked out until re-enabled by a privileged
+    user. Enter a value in the range 0 - 1000, where 0 locks out accounts until reset.
+    The default value depends on common criteria mode. <ul><li>When common criteria
+    is enabled, the default value is 0.</li><li>When common criteria is not enabled,
+    the default value is 1.</li></ul><p><b>Note:</b> The duration applies to all local
+    accounts, including the <tt>admin</tt> user account. The only difference is that
+    the <tt>admin</tt> user account cannot be locked out until reset. When the duration
+    is 0, the <tt>admin</tt> user account is locked out for 120 minutes or until re-enabled
+    by a privileged user.</p>
+  cli_alias: lockout-duration
+- name: MCForceDNLDAPOrder
+  type: Bool
+  default: false
+  description: Specify whether to convert the extracted DN to LDAP format. This property
+    is essential when the extracted DN from a TLS certificate is in X.500 format.
+    This format arranges the RDNs of the DNs from left to right with forward slashes
+    as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When
+    you retrieve the group name with an LDAP search, the authenticated DN must be
+    in LDAP format. This format arranges the RDNs of the DNs from right to left with
+    commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
+  cli_alias: mc-force-dn-ldap-order
+- name: PasswordHashAlgorithm
+  type: String
+  enum:
+  - md5crypt
+  - sha256crypt
+  default: md5crypt
+  description: Specify the algorithm to apply to passwords before they are stored.
+    The hash algorithm affects firmware downgrade and cryptographic modes in the following
+    ways. <ul><li>For firmware downgrade, sha256crypt is not supported in releases
+    earlier than 6.0.1.0.</li><li>For cryptographic modes, like FIPS 140-2 Level 1,
+    md5crypt is not supported in FIPS mode.</li></ul>
+  cli_alias: password-hash-algorithm
+- name: LDAPSSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: TLS client type
+  cli_alias: ssl-client-type
+- name: LDAPSSLClientProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: ssl-client
+- name: MCLDAPSSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: TLS client type
+  cli_alias: mc-ssl-client-type
+- name: MCLDAPSSLClientProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: mc-ssl-client

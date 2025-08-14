@@ -57,7 +57,7 @@ func (d *MessageContentFiltersDataSource) Metadata(_ context.Context, req dataso
 
 func (d *MessageContentFiltersDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Message Content Filters",
+		MarkdownDescription: "A Message Content Filters is a group of HTTP header-based and XPath-based filters. <ul><li>For HTTP header-based filters, the filter succeeds when the name and value of an HTTP header field match.</li><li>For XPath-based filters, the filter succeeds when a document matches the element structure and content of the XPath expression and value.</li></ul>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,12 +81,12 @@ func (d *MessageContentFiltersDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"filter_refs": schema.ListAttribute{
-							MarkdownDescription: "Message Content Filter",
+							MarkdownDescription: "Defines the group of message content filter objects.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"filters": schema.ListNestedAttribute{
-							MarkdownDescription: "Message Content Filter",
+							MarkdownDescription: "Defines the group of message content filters.",
 							NestedObject:        models.DmMCFilterDataSourceSchema,
 							Computed:            true,
 						},

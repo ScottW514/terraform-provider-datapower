@@ -3,13 +3,13 @@
 page_title: "datapower_apifinal Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Final API action
+  The final API action prepares responses to the client based on the result from the execute API action.
   CLI Alias: api-final
 ---
 
 # datapower_apifinal (Resource)
 
-Final API action
+The final API action prepares responses to the client based on the result from the execute API action.
   - CLI Alias: `api-final`
 
 ## Example Usage
@@ -31,10 +31,10 @@ resource "datapower_apifinal" "test" {
 
 ### Optional
 
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
   - CLI Alias: `correlation-path`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `output` (String) Output
+- `output` (String) Specify the destination context that receives variables from the API context. The final API action uses the variables in the destination context to prepare the final response to the client. The default value of <tt>OUTPUT</tt> indicates to transmit the context variables to the destination context. When the value is changed or removed, the context variables are not transmitted to the destination context, and therefore, no response is returned to the client.
   - CLI Alias: `output`
   - Default value: `OUTPUT`
 - `title` (String) Title

@@ -50,10 +50,10 @@ func (d *WebGUIDataSource) Metadata(_ context.Context, req datasource.MetadataRe
 
 func (d *WebGUIDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Web management service (`default` domain only)",
+		MarkdownDescription: "Modify the configuration of the web management service. <p>If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.</p>",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -61,7 +61,7 @@ func (d *WebGUIDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				Computed:            true,
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: "Port number",
+				MarkdownDescription: "Specify the TCP port that the service monitors. The default value is 9090.",
 				Computed:            true,
 			},
 			"user_agent": schema.StringAttribute{
@@ -69,15 +69,15 @@ func (d *WebGUIDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				Computed:            true,
 			},
 			"save_config_overwrites": schema.BoolAttribute{
-				MarkdownDescription: "Save configuration overwrites",
+				MarkdownDescription: "Specify whether saving the configuration overwrites the startup configuration. <ul><li>When enable, saving the configuration overwrites the startup configuration with the running configuration.</li><li>When not enabled, a manual step is required that prevents overwriting the manually edited startup configuration.</li></ul>",
 				Computed:            true,
 			},
 			"idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: "Idle timeout",
+				MarkdownDescription: "Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535. The default value is 600. A value of 0 disables the timer.",
 				Computed:            true,
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: "Access control list",
+				MarkdownDescription: "Edit the <tt>web-mgmt</tt> access control list to define the client IP addresses to allow or deny.",
 				Computed:            true,
 			},
 			"ssl_server_config_type": schema.StringAttribute{
@@ -93,11 +93,11 @@ func (d *WebGUIDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				Computed:            true,
 			},
 			"enable_sts": schema.BoolAttribute{
-				MarkdownDescription: "Enable HTTP Strict Transport Security",
+				MarkdownDescription: "Specify whether to enable HTTP Strict Transport Security headers. When enabled, responses inject HTTP Strict Transport Security headers.",
 				Computed:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: "Local address",
+				MarkdownDescription: "<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

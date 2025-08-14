@@ -3,12 +3,12 @@
 page_title: "datapower_nfsstaticmount Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  NFS static mounts
+  Create static NFS mounts for URL or file system access. These mounts remain mounted as long as their application domain is up.
 ---
 
 # datapower_nfsstaticmount (Data Source)
 
-NFS static mounts
+Create static NFS mounts for URL or file system access. These mounts remain mounted as long as their application domain is up.
 
 ## Example Usage
 
@@ -40,17 +40,17 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_filesystem_access` (Boolean) Local file system access
-- `mount_type` (String) Mount type
-- `read_only` (Boolean) Read-Only
-- `read_size` (Number) Read size
-- `remote` (String) Remote NFS export
-- `retransmissions` (Number) Max retransmissions
-- `timeout` (Number) Retransmission timeout
-- `transport` (String) Transport protocol
+- `local_filesystem_access` (Boolean) Specify whether to allow local file system access through the <tt>nfs-&lt;name></tt> directory. By default, local access is not enabled. When enabled, the NFS mount is available for file system access through the CLI in the <tt>nfs-&lt;name></tt> directory, where <tt>&lt;name></tt> is the name of the mount.
+- `mount_type` (String) Specify the type of NFS mount. The default mount type is a hard mount.
+- `read_only` (Boolean) Specify whether the mount is read-only. By default, the mount is not read-only.
+- `read_size` (Number) Specify the size in bytes for NFS read operations. Enter a value in the range 1024 - 32768. The default value is 4096.
+- `remote` (String) Specify the remote NFS file system to mount. Use the form <tt>host:/path</tt> , where <tt>host</tt> is the DNS name or IP address of the NFS server, and <tt>path</tt> is the path exported by the host to mount.
+- `retransmissions` (Number) Specify the number of minor RPC timeouts and retransmissions until a major timeout. Enter a value in the range 1 - 60. The default value is 3.
+- `timeout` (Number) Specify the time in tenths of seconds until the first retransmission on RPC times out. Enter a value in the range 1 - 600. The default value is 7.
+- `transport` (String) Specify the transport protocol. The default transport protocol is TCP.
 - `user_summary` (String) Comments
-- `version` (Number) NFS version
-- `write_size` (Number) Write size
+- `version` (Number) Specify the preferred NFS protocol version. Enter a value in the range 2 - 4. The default value is 3. <ul><li>If version 3 and the server only implements version 2, the client falls back to version 2.</li><li>If version 4, the remote export paths are different and prevents fallback.</li></ul>
+- `write_size` (Number) Specify the size in bytes for NFS write operations. Enter a value in the range 1024 - 32768. The default value is 4096.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

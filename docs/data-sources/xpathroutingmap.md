@@ -3,12 +3,12 @@
 page_title: "datapower_xpathroutingmap Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XPath Routing Map
+  
 ---
 
 # datapower_xpathroutingmap (Data Source)
 
-XPath Routing Map
+<p>An XPath Routing Map matches XPath expressions with corresponding destination URLs. When the XPath expression evaluates to true when applied to the message submitted, the target destination for the message is set to the corresponding URL.</p><p>Use the Rules tab to establish these mappings. Use the Namespace Mapping tab to determine Namespace URIs for namespaces used in the XPath Expressions.</p>
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `name_space_mappings` (Attributes List) Namespace Mappings (see [below for nested schema](#nestedatt--result--name_space_mappings))
+- `name_space_mappings` (Attributes List) The prefix and URI for namespaces that might be encountered in requests. (see [below for nested schema](#nestedatt--result--name_space_mappings))
 - `user_summary` (String) Comments
 - `x_path_routing_rules` (Attributes List) Rules (see [below for nested schema](#nestedatt--result--x_path_routing_rules))
 

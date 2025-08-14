@@ -1,49 +1,62 @@
 name: IncludeConfig
-description: 'Include configuration file'
-cli_alias: 'include-config'
-cmd_group: 'config-management'
-rest_endpoint: '/mgmt/config/{domain}/IncludeConfig'
+description: An include configuration file defines external configuration data to
+  process on startup. The included configuration files can reside locally or on a
+  remote host.
+cli_alias: include-config
+cmd_group: config-management
+rest_endpoint: /mgmt/config/{domain}/IncludeConfig
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestIncludeConfig"'
-    test_expect_ds: '"AccTest_IncludeConfig"'
-    example: 'IncludeConfigName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: URL
-    type: String
-    required: true
-    example: 'http://localhost/config.zip'
-    description: 'URL'
-    cli_alias: config-url
-  - name: OnStartup
-    type: Bool
-    default: true
-    description: 'Import on startup'
-    cli_alias: auto-execute
-  - name: InterfaceDetection
-    type: Bool
-    default: false
-    description: 'Interface detection'
-    cli_alias: interface-detection
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestIncludeConfig"'
+  test_expect_ds: '"AccTest_IncludeConfig"'
+  example: IncludeConfigName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: URL
+  type: String
+  required: true
+  example: http://localhost/config.zip
+  description: Specify the URL of the configuration file. The file must be a configuration
+    file of type <tt>.cfg</tt> . The URL takes the form 'protocol://username:password@host/path'
+    when a username and password are needed to retrieve the file.
+  cli_alias: config-url
+- name: OnStartup
+  type: Bool
+  default: true
+  description: Specify whether to import the configuration file on startup. The default
+    behavior is to import on startup. <ul><li>When enabled, the configuration file
+    is imported at startup. The configuration is marked external and cannot be saved
+    locally. This setting is equivalent to 'import-always'.</li><li>When disabled,
+    the import must be started manually. The configuration is not marked external
+    and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>
+  cli_alias: auto-execute
+- name: InterfaceDetection
+  type: Bool
+  default: false
+  description: Specify whether to wait for the associated IP interface to be operational.
+    This setting only affects configuration files from remote servers. When enabled,
+    remote files are processed asynchronously after the associated IP interface is
+    operational.
+  cli_alias: interface-detection

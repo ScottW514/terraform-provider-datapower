@@ -57,7 +57,7 @@ func (d *CORSPolicyDataSource) Metadata(_ context.Context, req datasource.Metada
 
 func (d *CORSPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "CORS policy",
+		MarkdownDescription: "A CORS policy contains one or more CORS rules where you can configure CORS behavior.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *CORSPolicyDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"rule": schema.ListAttribute{
-							MarkdownDescription: "CORS rules",
+							MarkdownDescription: "Specify the CORS rules to to apply to the CORS policy. A CORS rule defines allowed origins and other CORS properties. The first rule that is valid is applied to the inbound CORS request. If no rule applies, the CORS request is rejected.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

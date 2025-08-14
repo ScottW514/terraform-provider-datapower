@@ -1,38 +1,41 @@
 name: FTPQuoteCommands
-description: 'FTP Quoted Commands'
-cli_alias: 'ftp-quote-command-list'
-cmd_group: 'useragent'
-rest_endpoint: '/mgmt/config/{domain}/FTPQuoteCommands'
+description: The configturation creates a named list of FTP commands to be quoted
+  to a remote FTP server before a file transfer. These commands are referenced by
+  the FTP Policies section of a User Agent configuration.
+cli_alias: ftp-quote-command-list
+cmd_group: useragent
+rest_endpoint: /mgmt/config/{domain}/FTPQuoteCommands
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestFTPQuoteCommands"'
-    test_expect_ds: '"AccTest_FTPQuoteCommands"'
-    example: 'FTPQuoteCommandsName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: FTPQuotedCommands
-    type: List
-    element_type: DmFTPQuotedCommand
-    description: 'Quoted Commands'
-    cli_alias: quoted-command
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestFTPQuoteCommands"'
+  test_expect_ds: '"AccTest_FTPQuoteCommands"'
+  example: FTPQuoteCommandsName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: FTPQuotedCommands
+  type: List
+  element_type: DmFTPQuotedCommand
+  description: The list of commands to send to the remote FTP server.
+  cli_alias: quoted-command

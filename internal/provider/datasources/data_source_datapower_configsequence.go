@@ -57,7 +57,7 @@ func (d *ConfigSequenceDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *ConfigSequenceDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Configuration sequence",
+		MarkdownDescription: "A configuration sequence defines a series of configuration files to load after the startup configuration. By default, changes in configuration files are detected and reloaded.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,40 +81,40 @@ func (d *ConfigSequenceDataSource) Schema(ctx context.Context, req datasource.Sc
 							Computed:            true,
 						},
 						"locations": schema.ListNestedAttribute{
-							MarkdownDescription: "Location profiles",
+							MarkdownDescription: "Specify the locations to watch for changes and the permissions for each location. Each entry specifies a directory where the configuration files to match are stored. The DataPower Gateway watches the location and reloads the configuration when a change is detected that match the PCRE match pattern. The entries are processed in the listed order. The assess profile indicates the permissions for processing.",
 							NestedObject:        models.DmConfigSequenceLocationDataSourceSchema,
 							Computed:            true,
 						},
 						"match_pattern": schema.StringAttribute{
-							MarkdownDescription: "Matching pattern",
+							MarkdownDescription: "Specify the PCRE pattern to determine whether a file is considered part of the location match. For example, when the configuration files to match are <tt>NNNNNN.input</tt> , the PCRE pattern is <tt>\"([0-9]{6})\\.input$\"</tt> .",
 							Computed:            true,
 						},
 						"result_name_pattern": schema.StringAttribute{
-							MarkdownDescription: "Result file-naming pattern",
+							MarkdownDescription: "Specify the PCRE pattern to name the result file. This pattern normally has a back-reference to the base input file name. For example, when input files are <tt>NNNNNN.input</tt> and the wanted result file name is <tt>NNNNNN.result</tt> , the pattern is <tt>\"$1.result\"</tt> .",
 							Computed:            true,
 						},
 						"status_name_pattern": schema.StringAttribute{
-							MarkdownDescription: "Status file-naming pattern",
+							MarkdownDescription: "Specify the PCRE pattern to name the status file. This pattern normally has a back-reference to the base input file name. For example, when the input files are <tt>NNNNNN.input</tt> and the wanted status file name is <tt>NNNNNN.json</tt> , the pattern is <tt>\"$1.json\"</tt> .",
 							Computed:            true,
 						},
 						"watch": schema.BoolAttribute{
-							MarkdownDescription: "Watch",
+							MarkdownDescription: "Specify whether to watch the specified directory for configuration file changes and automatically reload the configuration when a change is detected. By default, the specified directory is watched.",
 							Computed:            true,
 						},
 						"use_output_location": schema.BoolAttribute{
-							MarkdownDescription: "Use output location",
+							MarkdownDescription: "Specify whether to place output log and status files in the configured output location after processing. By default, output files are stored in the input file location.",
 							Computed:            true,
 						},
 						"output_location": schema.StringAttribute{
-							MarkdownDescription: "Output file location",
+							MarkdownDescription: "Specify the directory to store the output files that processing generates. When not specified, the input file location is used.",
 							Computed:            true,
 						},
 						"delete_unused": schema.BoolAttribute{
-							MarkdownDescription: "Delete unused",
+							MarkdownDescription: "Specify whether to clean up objects that are no longer needed. When enabled, the configuration sequence detects and attempts to delete objects that are no longer modified by any configuration file. By default, the configuration sequence does not delete unneeded objects.",
 							Computed:            true,
 						},
 						"run_sequence_interval": schema.Int64Attribute{
-							MarkdownDescription: "Run interval",
+							MarkdownDescription: "Specify the interval in milliseconds between the processing of changes. This delay enables multiple file events to be aggregated and handled within the same sequence run. Enter a value in the range 100 - 60000. The default value is 100.",
 							Computed:            true,
 						},
 						"capabilities":       models.GetDmConfigSequenceCapabilitiesDataSourceSchema("Capabilities", "", ""),

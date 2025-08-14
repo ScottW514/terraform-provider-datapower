@@ -3,12 +3,12 @@
 page_title: "datapower_ldapsearchparameters Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  LDAP search parameters
+  LDAP search parameters are a container for the parameters to use to perform an LDAP search operation. When used with authentication, the search retrieves the distinguished name (DN) for the user. When used with credential authorization mapping, the search retrieves the group name (DN or attribute value) based on the DN of the authenticated user.
 ---
 
 # datapower_ldapsearchparameters (Data Source)
 
-LDAP search parameters
+LDAP search parameters are a container for the parameters to use to perform an LDAP search operation. When used with authentication, the search retrieves the distinguished name (DN) for the user. When used with credential authorization mapping, the search retrieves the group name (DN or attribute value) based on the DN of the authenticated user.
 
 ## Example Usage
 
@@ -40,11 +40,11 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ldap_base_dn` (String) LDAP base DN
-- `ldap_filter_prefix` (String) LDAP filter prefix
-- `ldap_filter_suffix` (String) LDAP filter suffix
-- `ldap_returned_attribute` (String) LDAP returned attribute
-- `ldap_scope` (String) LDAP scope
+- `ldap_base_dn` (String) Specify the base DN to begin the search. This value identifies the entry level of the tree.
+- `ldap_filter_prefix` (String) Specify the prefix of the LDAP filter expression. An LDAP filter expression is composed by <tt>prefix + username + suffix</tt> . If the prefix is <tt>(&amp;(uid=</tt> and the username is <tt>bob</tt> , the LDAP search filter is <tt>(&amp;(uid=bob</tt> .
+- `ldap_filter_suffix` (String) Specify the suffix of the LDAP filter expression. An LDAP filter expression is composed by <tt>prefix + username + suffix</tt> . If the prefix is <tt>(&amp;(uid=</tt> , the username is <tt>bob</tt> , and the suffix is <tt>)(objectClass=person))</tt> , the LDAP search filter is <tt>(&amp;(uid=bob)(objectClass=person))</tt> .
+- `ldap_returned_attribute` (String) Specify the LDAP attribute to return for each entry that matches the search filter. The default value is dn.
+- `ldap_scope` (String) Specify the depth of the LDAP search. The default is subtree.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

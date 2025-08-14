@@ -1,182 +1,203 @@
 name: TimeSettings
-description: 'Time Settings (`default` domain only)'
-cli_alias: 'timezone'
-cmd_group: 'system'
-rest_endpoint: '/mgmt/config/default/TimeSettings/Time'
+description: '<p>The time zone for the system. The time zone affects the time that
+  the system displays. All timestamps use this time zone.</p><p><b>Note: </b>The system
+  clock runs on Coordinated Universal Time (UTC).</p><p>When daylight saving time
+  (DST), or summer time, applies to a time zone, the system adjusts the time when
+  a DST boundary is crossed.</p>'
+cli_alias: timezone
+cmd_group: system
+rest_endpoint: /mgmt/config/default/TimeSettings/Time
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: LocalTimeZone
-    type: String
-    enum:
-      - 'HST10'
-      - 'AKST9AKDT'
-      - 'PST8PDT'
-      - 'MST7MDT'
-      - 'CST6CDT'
-      - 'EST5EDT'
-      - 'AST4ADT'
-      - 'UTC'
-      - 'GMT0BST'
-      - 'CET-1CEST'
-      - 'EET-2EEST'
-      - 'MKS-3MSD'
-      - 'MSK-3MSD'
-      - 'AST-3'
-      - 'KRT-5'
-      - 'IST-5:30'
-      - 'NOVST-6NOVDT'
-      - 'CST-8'
-      - 'WST-8'
-      - 'WST-8WDT'
-      - 'JST-9'
-      - 'CST-9:30CDT'
-      - 'EST-10EDT'
-      - 'EST-10'
-      - 'Custom'
-    required: true
-    default: 'EST5EDT'
-    description: 'Local time zone'
-    cli_alias: name
-  - name: CustomTZName
-    type: String
-    default: 'STD'
-    description: 'Name'
-    cli_alias: custom
-  - name: UTCDirection
-    type: String
-    enum:
-      - 'East'
-      - 'West'
-    default: 'West'
-    description: 'Direction from UTC'
-    cli_alias: direction
-  - name: OffsetHours
-    type: Int64
-    maximum: 12
-    description: 'Hours from UTC'
-    cli_alias: offset-hours
-  - name: OffsetMinutes
-    type: Int64
-    maximum: 59
-    description: 'Minutes from UTC'
-    cli_alias: offset-minutes
-  - name: DaylightOffsetHours
-    type: Int64
-    maximum: 12
-    default: 1
-    description: 'Daylight savings time (DST) offset'
-    cli_alias: daylight-offset
-  - name: TZNameDST
-    type: String
-    default: 'DST'
-    description: 'DST name'
-    cli_alias: daylight-name
-  - name: DaylightStartMonth
-    type: String
-    enum:
-      - 'January'
-      - 'February'
-      - 'March'
-      - 'April'
-      - 'May'
-      - 'June'
-      - 'July'
-      - 'August'
-      - 'September'
-      - 'October'
-      - 'November'
-      - 'December'
-    default: 'March'
-    description: 'DST start month'
-    cli_alias: daylight-start-month
-  - name: DaylightStartWeek
-    type: Int64
-    minimum: 1
-    maximum: 5
-    default: 2
-    description: 'DST start day instance'
-    cli_alias: daylight-start-week
-  - name: DaylightStartDay
-    type: String
-    enum:
-      - 'Sunday'
-      - 'Monday'
-      - 'Tuesday'
-      - 'Wednesday'
-      - 'Thursday'
-      - 'Friday'
-      - 'Saturday'
-    default: 'Sunday'
-    description: 'DST start day'
-    cli_alias: daylight-start-day
-  - name: DaylightStartTimeHours
-    type: Int64
-    maximum: 23
-    default: 2
-    description: 'DST start hour'
-    cli_alias: daylight-start-hours
-  - name: DaylightStartTimeMinutes
-    type: Int64
-    maximum: 59
-    description: 'DST start minute'
-    cli_alias: daylight-start-minutes
-  - name: DaylightStopMonth
-    type: String
-    enum:
-      - 'January'
-      - 'February'
-      - 'March'
-      - 'April'
-      - 'May'
-      - 'June'
-      - 'July'
-      - 'August'
-      - 'September'
-      - 'October'
-      - 'November'
-      - 'December'
-    default: 'November'
-    description: 'DST stop month'
-    cli_alias: daylight-stop-month
-  - name: DaylightStopWeek
-    type: Int64
-    minimum: 1
-    maximum: 5
-    default: 1
-    description: 'DST stop day instance'
-    cli_alias: daylight-stop-week
-  - name: DaylightStopDay
-    type: String
-    enum:
-      - 'Sunday'
-      - 'Monday'
-      - 'Tuesday'
-      - 'Wednesday'
-      - 'Thursday'
-      - 'Friday'
-      - 'Saturday'
-    default: 'Sunday'
-    description: 'DST stop day'
-    cli_alias: daylight-stop-day
-  - name: DaylightStopTimeHours
-    type: Int64
-    maximum: 23
-    default: 2
-    description: 'DST stop hour'
-    cli_alias: daylight-stop-hours
-  - name: DaylightStopTimeMinutes
-    type: Int64
-    maximum: 59
-    description: 'DST stop minutes'
-    cli_alias: daylight-stop-minutes
-  # - name: Time
-  #   type: String
-  #   description: 'Local time, last applied'
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: LocalTimeZone
+  type: String
+  enum:
+  - HST10
+  - AKST9AKDT
+  - PST8PDT
+  - MST7MDT
+  - CST6CDT
+  - EST5EDT
+  - AST4ADT
+  - UTC
+  - GMT0BST
+  - CET-1CEST
+  - EET-2EEST
+  - MKS-3MSD
+  - MSK-3MSD
+  - AST-3
+  - KRT-5
+  - IST-5:30
+  - NOVST-6NOVDT
+  - CST-8
+  - WST-8
+  - WST-8WDT
+  - JST-9
+  - CST-9:30CDT
+  - EST-10EDT
+  - EST-10
+  - Custom
+  required: true
+  default: EST5EDT
+  description: Specify the time zone to use in management interfaces. The default
+    value is EST-5EDT.
+  cli_alias: name
+- name: CustomTZName
+  type: String
+  default: STD
+  description: Specify the symbolic name for the custom time zone. This name is appended
+    to local times. The name must be three or more alphabetic characters. If you use
+    any other characters, the time zone becomes UTC.
+  cli_alias: custom
+- name: UTCDirection
+  type: String
+  enum:
+  - East
+  - West
+  default: West
+  description: Specify the direction relative to UTC for the custom time zone. Asia
+    is east. North America is west. The default value is East.
+  cli_alias: direction
+- name: OffsetHours
+  type: Int64
+  maximum: 12
+  description: Specify the number of hours the custom time zone is from UTC. If 2
+    hours and 30 minutes from UTC, enter 2.
+  cli_alias: offset-hours
+- name: OffsetMinutes
+  type: Int64
+  maximum: 59
+  description: Specify the number of minutes the time zone is from UTC. If 2 hours
+    and 30 minutes from UTC, enter 30.
+  cli_alias: offset-minutes
+- name: DaylightOffsetHours
+  type: Int64
+  maximum: 12
+  default: 1
+  description: Specify the offset in hours when the custom time zone observes DST.
+    Generally, the offset is 1 hour. The default value is 1.
+  cli_alias: daylight-offset
+- name: TZNameDST
+  type: String
+  default: DST
+  description: Specify the symbolic name for the custom time zone during DST. This
+    name is appended to local times. The name must be three or more alphabetic characters.
+    If you use any other characters, the time zone becomes UTC.
+  cli_alias: daylight-name
+- name: DaylightStartMonth
+  type: String
+  enum:
+  - January
+  - February
+  - March
+  - April
+  - May
+  - June
+  - July
+  - August
+  - September
+  - October
+  - November
+  - December
+  default: March
+  description: Specify the month when DST starts for the custom time zone. The default
+    value is March.
+  cli_alias: daylight-start-month
+- name: DaylightStartWeek
+  type: Int64
+  minimum: 1
+  maximum: 5
+  default: 2
+  description: Specify the instance of the day in the month when DST starts for the
+    custom time zone. If DST starts on the second Sunday in the month, enter 2.
+  cli_alias: daylight-start-week
+- name: DaylightStartDay
+  type: String
+  enum:
+  - Sunday
+  - Monday
+  - Tuesday
+  - Wednesday
+  - Thursday
+  - Friday
+  - Saturday
+  default: Sunday
+  description: Specify the day of the week when DST starts for the custom time zone.
+    The default value is Sunday.
+  cli_alias: daylight-start-day
+- name: DaylightStartTimeHours
+  type: Int64
+  maximum: 23
+  default: 2
+  description: Specify the hour when DST starts for the custom time zone. If the start
+    boundary is 2:30 AM, enter 2.
+  cli_alias: daylight-start-hours
+- name: DaylightStartTimeMinutes
+  type: Int64
+  maximum: 59
+  description: Specify the minute when DST starts for the custom time zone. If the
+    start boundary is 2:30 AM, enter 30.
+  cli_alias: daylight-start-minutes
+- name: DaylightStopMonth
+  type: String
+  enum:
+  - January
+  - February
+  - March
+  - April
+  - May
+  - June
+  - July
+  - August
+  - September
+  - October
+  - November
+  - December
+  default: November
+  description: Specify the month when DST ends for the custom time zone. The default
+    value is November.
+  cli_alias: daylight-stop-month
+- name: DaylightStopWeek
+  type: Int64
+  minimum: 1
+  maximum: 5
+  default: 1
+  description: Specify the instance of the day in the month when DST ends for the
+    custom time zone. If DST ends on the second Sunday in the month, enter 2.
+  cli_alias: daylight-stop-week
+- name: DaylightStopDay
+  type: String
+  enum:
+  - Sunday
+  - Monday
+  - Tuesday
+  - Wednesday
+  - Thursday
+  - Friday
+  - Saturday
+  default: Sunday
+  description: Specify the day of the week when DST ends for the custom time zone.
+    The default value is Sunday.
+  cli_alias: daylight-stop-day
+- name: DaylightStopTimeHours
+  type: Int64
+  maximum: 23
+  default: 2
+  description: Specify the hour when DST ends for the custom time zone. If the end
+    boundary is 2:30 AM, enter 2.
+  cli_alias: daylight-stop-hours
+- name: DaylightStopTimeMinutes
+  type: Int64
+  maximum: 59
+  description: Specify the minute when DST ends for the custom time zone. If the end
+    boundary is 2:30 AM, enter 30.
+  cli_alias: daylight-stop-minutes

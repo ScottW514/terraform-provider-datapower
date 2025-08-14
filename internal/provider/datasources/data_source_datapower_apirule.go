@@ -57,7 +57,7 @@ func (d *APIRuleDataSource) Metadata(_ context.Context, req datasource.MetadataR
 
 func (d *APIRuleDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API rule",
+		MarkdownDescription: "An API rule completes the processing of API requests or completes the operations that are required by the API requests.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,16 +77,16 @@ func (d *APIRuleDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 							Computed:            true,
 						},
 						"dynamic_actions_mode": schema.BoolAttribute{
-							MarkdownDescription: "Use dynamic actions",
+							MarkdownDescription: "Specify whether to use dynamic actions instead of explicit actions. Dynamic actions take configuration values at run time and override the default properties in API actions. API rules that contain dynamic actions can be included in user-defined policies that API Connect advertises and makes available in the API Connect assembly editor.",
 							Computed:            true,
 						},
 						"actions": schema.ListAttribute{
-							MarkdownDescription: "API actions",
+							MarkdownDescription: "Specify the processing actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"dynamic_actions": schema.ListNestedAttribute{
-							MarkdownDescription: "API dynamic actions",
+							MarkdownDescription: "Specify the dynamic actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.",
 							NestedObject:        models.DmDynamicStylePolicyActionBaseReferenceDataSourceSchema,
 							Computed:            true,
 						},

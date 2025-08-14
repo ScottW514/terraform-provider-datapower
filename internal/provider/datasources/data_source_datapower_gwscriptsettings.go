@@ -50,10 +50,10 @@ func (d *GWScriptSettingsDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *GWScriptSettingsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "GatewayScript Settings (`default` domain only)",
+		MarkdownDescription: "You can configure the following GatewayScript settings. <ul><li>Whether to freeze the GatewayScript built-in objects.</li><li>How to manage untrusted code mitigation to protect against SSCA.</li><li>The maximum allowed duration that a GatewayScript action can continuously use the CPU.</li></ul>",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -61,11 +61,11 @@ func (d *GWScriptSettingsDataSource) Schema(ctx context.Context, req datasource.
 				Computed:            true,
 			},
 			"frozen_enabled": schema.BoolAttribute{
-				MarkdownDescription: "Freeze prototype",
+				MarkdownDescription: "Specify whether to freeze the GatewayScript built-in object prototypes. <ul><li>When frozen, you cannot modify, add, or remove prototypes. This setting is the default setting.</li><li>When not frozen, you can manipulate prototypes.</li></ul><p>If you change and persist this property, the change is pending and requires a firmware reload.</p>",
 				Computed:            true,
 			},
 			"untrusted_code_mitigated": schema.BoolAttribute{
-				MarkdownDescription: "Untrusted code mitigation",
+				MarkdownDescription: "Specify whether to enable untrusted code mitigation to protect against Speculative Side-Channel Attacks (SSCA). <ul><li>When enabled, protects untrusted code against SSCA. This setting is the default setting.</li><li>When disabled, does not protect untrusted code against SSCA.</li></ul><p>If you change and persist this property, the change is pending and requires a firmware reload.</p>",
 				Computed:            true,
 			},
 			"reload_needed": schema.BoolAttribute{
@@ -73,7 +73,7 @@ func (d *GWScriptSettingsDataSource) Schema(ctx context.Context, req datasource.
 				Computed:            true,
 			},
 			"terminate_time": schema.Int64Attribute{
-				MarkdownDescription: "Max processing duration",
+				MarkdownDescription: "Specify the maximum duration in seconds that a GatewayScript action can continuously use CPU without yielding back to the system event loop. When the processing of a GatewayScript action exceeds the duration, processing is stopped and an error is logged. Enter a value in the range 1 - 300. The default value is 0, which indicates unlimited.",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

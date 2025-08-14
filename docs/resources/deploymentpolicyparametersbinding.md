@@ -3,13 +3,13 @@
 page_title: "datapower_deploymentpolicyparametersbinding Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Deployment Policy Variables
+  Configuration to persist the values of the deployment policy variables.
   CLI Alias: deployment-policy-variables
 ---
 
 # datapower_deploymentpolicyparametersbinding (Resource)
 
-Deployment Policy Variables
+Configuration to persist the values of the deployment policy variables.
   - CLI Alias: `deployment-policy-variables`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_deploymentpolicyparametersbinding" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `deployment_policy_parameter` (Attributes List) Deployment Policy Variables
+- `deployment_policy_parameter` (Attributes List) A list of name-value pairs. The name specifies a variable in a deployment policy, which will be replaced by its associated value before applying the policy to a configuration import.
   - CLI Alias: `variable` (see [below for nested schema](#nestedatt--deployment_policy_parameter))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

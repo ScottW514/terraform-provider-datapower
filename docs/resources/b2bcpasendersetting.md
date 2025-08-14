@@ -40,14 +40,14 @@ resource "datapower_b2bcpasendersetting" "test" {
   - CLI Alias: `ack-signature-requested`
   - Choices: `never`, `always`
   - Default value: `never`
-- `connection_timeout` (Number) Connection timeout
+- `connection_timeout` (Number) Specify the duration in seconds to maintain an idle connection. Enter a value in the range 3 - 7200. The default value is 300.
   - CLI Alias: `timeout`
   - Range: `3`-`7200`
   - Default value: `300`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `dest_endpoint_url` (String) Destination URL
+- `dest_endpoint_url` (String) Specify the destination URL for sending the message to the external party endpoint. For load distribution, use the name of the load-balancing group instead of the address-port pair in the URL.
   - CLI Alias: `dest-url`
-- `duplicate_elimination` (String) Duplicate elimination
+- `duplicate_elimination` (String) For an outbound ebMS message, specify whether the internal sending party requests the external receiving party to check duplicate elimination. The request is made by presenting the <tt>DuplicateElimination</tt> element in the <tt>MessageHeader</tt> element in the ebMS SOAP header. <p>When imported from CPA, the <tt>duplicateElimination</tt> attribute on the internal party <tt>DeliveryChannel</tt> element in the <tt>MessagingCharacteristics</tt> element.</p>
   - CLI Alias: `duplicate-elimination`
   - Choices: `never`, `always`
   - Default value: `always`
@@ -60,26 +60,26 @@ resource "datapower_b2bcpasendersetting" "test" {
 - `encrypt_cert` (String) Encryption certificate
   - CLI Alias: `encrypt-cert`
   - Reference to: `datapower_cryptocertificate:id`
-- `encryption_required` (Boolean) Require encryption
+- `encryption_required` (Boolean) Specify whether to encrypt outbound messages. Encryption does not apply to MSH level signals.
   - CLI Alias: `encrypt-required`
   - Default value: `false`
-- `include_time_to_live` (Boolean) Include TimeToLive element
+- `include_time_to_live` (Boolean) Specify whether to include the <tt>TimeToLive</tt> element in the outbound messages. This element indicates when the message expires. The receiving partner can accept the message only when it has not expired.
   - CLI Alias: `include-time-to-live`
   - Default value: `true`
-- `max_retries` (Number) Retransmit attempts
+- `max_retries` (Number) Specify the number of attempts to retransmit an unacknowledged message. Enter a value in the range 1 - 30. The default value is 3.
   - CLI Alias: `max-retries`
   - Range: `1`-`30`
   - Default value: `3`
 - `password_alias` (String) Password alias
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`
-- `persist_duration` (Number) Persistence duration
+- `persist_duration` (Number) Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
   - CLI Alias: `persist-duration`
   - Range: `0`-`6000000`
 - `retry` (Boolean) Retransmit unacknowledged messages
   - CLI Alias: `retry`
   - Default value: `false`
-- `retry_interval` (Number) Retransmit interval
+- `retry_interval` (Number) Specify the interval in seconds between retransmit attempts. Enter a value in the range 1 - 86400. The default value in 1800.
   - CLI Alias: `retry-interval`
   - Range: `1`-`86400`
   - Default value: `1800`

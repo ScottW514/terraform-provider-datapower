@@ -3,13 +3,12 @@
 page_title: "datapower_statelesstcpsourceprotocolhandler Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Stateless raw XML handler
-  CLI Alias: source-rawAccepted Dependency Actions: quiesce
+  
 ---
 
 # datapower_statelesstcpsourceprotocolhandler (Resource)
 
-Stateless raw XML handler
+<p>The configuration for the stateless TCP handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed.</p>
   - CLI Alias: `source-raw`
   - Accepted Dependency Actions: `quiesce`
 
@@ -34,28 +33,28 @@ resource "datapower_statelesstcpsourceprotocolhandler" "test" {
 
 ### Optional
 
-- `acl` (String) Access control list
+- `acl` (String) This Access Control List will be used to allow or deny access to this service based on the IP address of the client. When attached to a service, an Access Control List (ACL) denies all access by default. To deny access to only selected addresses, first grant access to all addresses (allow 0.0.0.0) and then create deny entries for the desired hosts.
   - CLI Alias: `acl`
   - Reference to: `datapower_accesscontrollist:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `local_address` (String) Local IP address
+- `local_address` (String) The address on which the service listens. The default of 0.0.0.0 indicates that the service is active on all addresses. Click Select Alias to use an alias for this value. Local host aliases help to ease migration tasks between machines. See Local Host Alias under Networking for more.
   - CLI Alias: `local-address`
   - Default value: `0.0.0.0`
-- `local_port` (Number) Port
+- `local_port` (Number) An integer (within the range 1 through 65535, with a default of 4000) that specifies the port monitored by the service.
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `4000`
-- `persistent_connections` (Boolean) Persistent connections
+- `persistent_connections` (Boolean) Enable or disable persistent connections where appropriate the front end.
   - CLI Alias: `persistent-connections`
   - Default value: `true`
-- `ssl_server` (String) TLS server profile
+- `ssl_server` (String) The TLS server profile to secure connections between clients and the DataPower Gateway.
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_sslserverprofile:id`
-- `ssl_server_config_type` (String) TLS server type
+- `ssl_server_config_type` (String) The TLS profile type to secure connections between clients and the DataPower Gateway.
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
-- `sslsni_server` (String) TLS SNI server profile
+- `sslsni_server` (String) The TLS SNI server profile to secure connections between clients and the DataPower Gateway.
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_sslsniserverprofile:id`
 - `user_summary` (String) Comments

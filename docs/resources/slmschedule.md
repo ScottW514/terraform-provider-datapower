@@ -3,13 +3,13 @@
 page_title: "datapower_slmschedule Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SLM schedule
+  An SLM schedule defines the time period (hours and days) to enforce the statements in an SLM policy. Schedules allow the application of different statements during different time periods.
   CLI Alias: slm-sched
 ---
 
 # datapower_slmschedule (Resource)
 
-SLM schedule
+An SLM schedule defines the time period (hours and days) to enforce the statements in an SLM policy. Schedules allow the application of different statements during different time periods.
   - CLI Alias: `slm-sched`
 
 ## Example Usage
@@ -35,18 +35,18 @@ resource "datapower_slmschedule" "test" {
 
 ### Optional
 
-- `days_of_week` (Attributes) Week Days
+- `days_of_week` (Attributes) Specify the days to enforce the schedule. The time and duration apply to all selected days.
   - CLI Alias: `days` (see [below for nested schema](#nestedatt--days_of_week))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `duration` (Number) Duration
+- `duration` (Number) Specify the duration in minutes to enforce the schedule. Enter any value of 1 - 1440. The default value is 1440.
   - CLI Alias: `duration`
   - Range: `1`-`1440`
   - Default value: `1440`
 - `start_date` (String) Start date
   - CLI Alias: `start-date`
-- `stop_date` (String) Stop date
+- `stop_date` (String) Specify the stop date to enforce the schedule. The enforcement period does not include the stop date.
   - CLI Alias: `stop-date`
-- `time_zone` (String) Time zone
+- `time_zone` (String) Specify the time zone to enforce the schedule. The default is the device local time zone.
   - CLI Alias: `timezone`
   - Choices: `LOCAL`, `Pacific/Honolulu`, `America/Anchorage`, `America/Los_Angeles`, `America/Denver`, `America/Chicago`, `America/New_York`, `America/Halifax`, `America/Sao_Paulo`, `America/Noronha`, `Atlantic/Azores`, `Europe/London`, `Europe/Paris`, `Europe/Athens`, `Asia/Riyadh`, `Europe/Moscow`, `Asia/Karachi`, `Asia/Kolkata`, `Asia/Dhaka`, `Asia/Novosibirsk`, `Asia/Shanghai`, `Australia/Perth`, `Asia/Tokyo`, `Australia/Adelaide`, `Australia/Sydney`, `Asia/Vladivostok`, `Pacific/Auckland`
   - Default value: `LOCAL`

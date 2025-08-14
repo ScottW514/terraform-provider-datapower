@@ -1,127 +1,152 @@
 name: APILDAPRegistry
-description: 'API LDAP registry'
-cli_alias: 'api-ldap-reg'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APILDAPRegistry'
+description: Configure and manage the API LDAP registry.
+cli_alias: api-ldap-reg
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APILDAPRegistry
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPILDAPRegistry"'
-    test_expect_ds: '"AccTest_APILDAPRegistry"'
-    example: 'APILDAPRegistryName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: LDAPHost
-    type: String
-    required: true
-    example: 'localhost'
-    description: 'Host'
-    cli_alias: ldap-host
-  - name: LDAPPort
-    type: Int64
-    required: true
-    default: 636
-    description: 'Port'
-    cli_alias: ldap-port
-  - name: SSLClientProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
-  - name: LDAPVersion
-    type: String
-    enum:
-      - 'v2'
-      - 'v3'
-    default: 'v3'
-    description: 'LDAP version'
-    cli_alias: ldap-version
-  - name: LDAPAuthMethod
-    type: String
-    enum:
-      - 'composeDN'
-      - 'composeUPN'
-      - 'searchDN'
-    default: 'searchDN'
-    description: 'LDAP authentication method'
-    cli_alias: ldap-auth-method
-  - name: LDAPBindDN
-    type: String
-    description: 'LDAP bind DN'
-    cli_alias: ldap-bind-dn
-  - name: LDAPBindPasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'LDAP bind password alias'
-    cli_alias: ldap-bind-password-alias
-  - name: LDAPSearchParameters
-    type: String
-    reference_to: LDAPSearchParameters
-    required: true
-    test_value: '"AccTest_LDAPSearchParameters"'
-    test_bed_value: 'datapower_ldapsearchparameters.acc_test.id'
-    description: 'LDAP search parameters'
-    cli_alias: ldap-search-param
-  - name: LDAPReadTimeout
-    type: Int64
-    maximum: 86400
-    default: 60
-    description: 'LDAP read timeout'
-    cli_alias: ldap-readtimeout
-  - name: LDAPGroupAuthEnabled
-    type: Bool
-    default: false
-    description: 'Enable LDAP group authentication'
-    cli_alias: ldap-group-auth-enabled
-  - name: LDAPGroupAuthType
-    type: String
-    enum:
-      - 'dynamic'
-      - 'static'
-    description: 'LDAP group authentication type'
-    cli_alias: ldap-group-auth-type
-  - name: LDAPGroupScope
-    type: String
-    enum:
-      - 'subtree'
-      - 'one-level'
-      - 'base'
-    default: 'subtree'
-    description: 'LDAP group scope'
-    cli_alias: ldap-group-scope
-  - name: LDAPGroupBaseDN
-    type: String
-    description: 'LDAP static group base DN'
-    cli_alias: ldap-group-base-dn
-  - name: LDAPGroupFilterPrefix
-    type: String
-    description: 'LDAP static group filter prefix'
-    cli_alias: ldap-group-filter-prefix
-  - name: LDAPGroupFilterSuffix
-    type: String
-    description: 'LDAP static group filter suffix'
-    cli_alias: ldap-group-filter-suffix
-  - name: LDAPGroupDynamicFilter
-    type: String
-    description: 'LDAP dynamic filter'
-    cli_alias: ldap-group-dynamic-filter
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPILDAPRegistry"'
+  test_expect_ds: '"AccTest_APILDAPRegistry"'
+  example: APILDAPRegistryName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: LDAPHost
+  type: String
+  required: true
+  example: localhost
+  description: Host
+  cli_alias: ldap-host
+- name: LDAPPort
+  type: Int64
+  required: true
+  default: 636
+  description: Specify the listening port on the LDAP server. The default value is
+    636.
+  cli_alias: ldap-port
+- name: SSLClientProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: ssl-client
+- name: LDAPVersion
+  type: String
+  enum:
+  - v2
+  - v3
+  default: v3
+  description: Specify the LDAP protocol version for bind operation. The default value
+    is v3.
+  cli_alias: ldap-version
+- name: LDAPAuthMethod
+  type: String
+  enum:
+  - composeDN
+  - composeUPN
+  - searchDN
+  default: searchDN
+  description: Specify the method to create the user for authentication. <ul><li>When
+    compose DN, the DN can be composed from the username. For example, <tt>uid=john,ou=People,dc=company,dc=com</tt>
+    is a DN format that can be composed from the username.</li><li>When compose UPN,
+    the UPN can be composed from the username. For example, <tt>john@example.com</tt>
+    is a UPN format that can be composed from the username.</li><li>When search DN,
+    the DN cannot be composed from the username. You must use an LDAP search to retrieve
+    information that matches the username.</li></ul><p>By default, queries the LDAP
+    server to retrieve user information. Before deciding on the method, contact your
+    LDAP administrator.</p>
+  cli_alias: ldap-auth-method
+- name: LDAPBindDN
+  type: String
+  description: LDAP bind DN
+  cli_alias: ldap-bind-dn
+- name: LDAPBindPasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: LDAP bind password alias
+  cli_alias: ldap-bind-password-alias
+- name: LDAPSearchParameters
+  type: String
+  reference_to: LDAPSearchParameters
+  required: true
+  test_value: '"AccTest_LDAPSearchParameters"'
+  test_bed_value: datapower_ldapsearchparameters.acc_test.id
+  description: LDAP search parameters
+  cli_alias: ldap-search-param
+- name: LDAPReadTimeout
+  type: Int64
+  maximum: 86400
+  default: 60
+  description: Specify the time to wait for a response from the LDAP server before
+    the connection is closed. Enter a value in the range 0 - 86400. The default value
+    is 60. A value of 0 indicates that the connection never times out.
+  cli_alias: ldap-readtimeout
+- name: LDAPGroupAuthEnabled
+  type: Bool
+  default: false
+  description: Specify whether to enable LDAP group authentication to use to check
+    group membership for a user. The default value is off.
+  cli_alias: ldap-group-auth-enabled
+- name: LDAPGroupAuthType
+  type: String
+  enum:
+  - dynamic
+  - static
+  description: Specify the type of group authentication configuration to use. The
+    default value is static.
+  cli_alias: ldap-group-auth-type
+- name: LDAPGroupScope
+  type: String
+  enum:
+  - subtree
+  - one-level
+  - base
+  default: subtree
+  description: Specify the depth of the LDAP group search. The default value is subtree.
+  cli_alias: ldap-group-scope
+- name: LDAPGroupBaseDN
+  type: String
+  description: Specify the base DN name to begin the group authentication search.
+    This value identifies the entry level of the tree used by the LDAP group scope.
+  cli_alias: ldap-group-base-dn
+- name: LDAPGroupFilterPrefix
+  type: String
+  description: Specify the prefix of the LDAP group filter expression. An LDAP group
+    filter expression is composed by <tt>prefix + user DN + suffix</tt> . <p>When
+    the prefix is <tt>(&amp;(objectclass=group)(member=</tt> and the user DN is <tt>CN=bob,DN=ibm,DN=com</tt>
+    , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com))</tt>
+    .</p>
+  cli_alias: ldap-group-filter-prefix
+- name: LDAPGroupFilterSuffix
+  type: String
+  description: Specify the suffix of the LDAP group filter expression. <p>When the
+    prefix is <tt>&amp;(objectclass=group)(member=</tt> , the user DN is <tt>CN=bob,DN=ibm,DN=com</tt>
+    , and the suffix is <tt>)(CN=ibm-group))</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com)(CN=ibm-group))</tt>
+    .</p>
+  cli_alias: ldap-group-filter-suffix
+- name: LDAPGroupDynamicFilter
+  type: String
+  description: Specify the filter expression of the LDAP dynamic group configuration.
+    Only for dynamic. <p>When the filter is <tt>(memberOf=CN=ibm-group,DC=ibm,DC=com)</tt>
+    , the value is used verbatim for LDAP group dynamic search.</p>
+  cli_alias: ldap-group-dynamic-filter

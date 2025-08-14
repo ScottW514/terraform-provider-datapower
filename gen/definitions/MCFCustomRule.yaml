@@ -1,46 +1,52 @@
 name: MCFCustomRule
-description: 'Custom Rule Message Content Filter'
-cli_alias: 'mcf-customrule'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/MCFCustomRule'
+description: A custom message content filter calls a processing rule to retrieve a
+  specified value. The filter value is matched to the contents of variable 'var://context/policy/mcf/RULE-NAME'
+cli_alias: mcf-customrule
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/MCFCustomRule
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestMCFCustomRule"'
-    test_expect_ds: '"AccTest_MCFCustomRule"'
-    example: 'MCFCustomRuleName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: CustomRuleName
-    type: String
-    reference_to: StylePolicyRule
-    required: true
-    test_value: '"__dp-policy-begin__"'
-    description: 'Rule'
-    cli_alias: rulename
-  - name: CustomRuleValue
-    type: String
-    example: 'rulevalue'
-    required: true
-    description: 'Value'
-    cli_alias: value
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestMCFCustomRule"'
+  test_expect_ds: '"AccTest_MCFCustomRule"'
+  example: MCFCustomRuleName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: CustomRuleName
+  type: String
+  reference_to: StylePolicyRule
+  required: true
+  test_value: '"__dp-policy-begin__"'
+  description: Rule
+  cli_alias: rulename
+- name: CustomRuleValue
+  type: String
+  example: rulevalue
+  required: true
+  description: <p>Enter the value to match against the value that is retrieved from
+    the named processing rule. Enter either a string that must match the outcome of
+    the rule or enter an asterisk (*) to match any value.</p><p>When the value is
+    a string, an identical literal string comparison result is a match. When the value
+    is an asterisk, any value other than NULL or an empty string results in a match.</p>
+  cli_alias: value
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary

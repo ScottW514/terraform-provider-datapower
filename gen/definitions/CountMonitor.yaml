@@ -1,78 +1,90 @@
 name: CountMonitor
-description: 'Message Count Monitor'
-cli_alias: 'monitor-count'
-cmd_group: 'monitors'
-rest_endpoint: '/mgmt/config/{domain}/CountMonitor'
+description: On-Line Help for Message-Count Monitors
+cli_alias: monitor-count
+cmd_group: monitors
+rest_endpoint: /mgmt/config/{domain}/CountMonitor
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestCountMonitor"'
-    test_expect_ds: '"AccTest_CountMonitor"'
-    example: 'CountMonitorName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Measure
-    type: String
-    enum:
-      - 'requests'
-      - 'responses'
-      - 'xpath'
-      - 'errors'
-    required: true
-    default: 'requests'
-    description: 'Measure'
-    cli_alias: measure
-  - name: Source
-    type: String
-    enum:
-      - 'all'
-      - 'each-ip'
-      - 'ip-from-header'
-    required: true
-    default: 'all'
-    description: 'Source'
-    cli_alias: source
-  - name: Header
-    type: String
-    default: 'X-Client-IP'
-    description: 'Header'
-    cli_alias: header
-  - name: Filter
-    type: List
-    element_type: DmCountMonitorFilter
-    description: 'Thresholds/Filters'
-    cli_alias: filter
-  - name: MaxSources
-    type: Int64
-    required: true
-    default: 10000
-    description: 'Maximum Distinct Sources'
-    cli_alias: distinct-sources
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: MessageType
-    type: String
-    reference_to: MessageType
-    required: true
-    test_value: '"AccTest_MessageType"'
-    test_bed_value: 'datapower_messagetype.acc_test.id'
-    description: 'Message Type'
-    cli_alias: message-type
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestCountMonitor"'
+  test_expect_ds: '"AccTest_CountMonitor"'
+  example: CountMonitorName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Measure
+  type: String
+  enum:
+  - requests
+  - responses
+  - xpath
+  - errors
+  required: true
+  default: requests
+  description: Select the action that advances the counter. The default is Requests.
+  cli_alias: measure
+- name: Source
+  type: String
+  enum:
+  - all
+  - each-ip
+  - ip-from-header
+  required: true
+  default: all
+  description: Select how monitoring is applied to IP addresses. This setting is meaningful
+    only if an associated traffic definition contains and inclusive or exclusive IP
+    address criterion. The default is All.
+  cli_alias: source
+- name: Header
+  type: String
+  default: X-Client-IP
+  description: The name of the HTTP header to read to determine the value of the source
+    IP address.
+  cli_alias: header
+- name: Filter
+  type: List
+  element_type: DmCountMonitorFilter
+  description: Click this tab to define a message-count monitor threshold and assign
+    an action (Message Filter Action) that is taken when the threshold is reached.
+  cli_alias: filter
+- name: MaxSources
+  type: Int64
+  required: true
+  default: 10000
+  description: When utilizing the each-ip aggregate addressing policy the system organizes
+    the counts per address by the addresses most recently used. When too many distinct
+    counts have been observed, the Addresses not seen in the longest time are discarded.
+    This parameter specifies how many distinct addresses are tracked.
+  cli_alias: distinct-sources
+- name: UserSummary
+  type: String
+  description: A Message Monitor observes traffic that is incuded by the Message Type
+    definition (which in turn is a collection of Message Matching objects). The Monitor
+    measures only that traffic selected by the Measure field. On the Filters page,
+    traffic which meets the filter criteria causes the Monitor to take the corresponding
+    action (which is defined by a Message Filter Type object).
+  cli_alias: summary
+- name: MessageType
+  type: String
+  reference_to: MessageType
+  required: true
+  test_value: '"AccTest_MessageType"'
+  test_bed_value: datapower_messagetype.acc_test.id
+  description: Select the message type monitored by this message-count monitor.
+  cli_alias: message-type

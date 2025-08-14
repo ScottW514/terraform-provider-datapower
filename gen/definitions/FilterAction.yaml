@@ -1,61 +1,68 @@
 name: FilterAction
-description: 'Message Filter Action'
-cli_alias: 'monitor-action'
-cmd_group: 'monitors'
-rest_endpoint: '/mgmt/config/{domain}/FilterAction'
+description: A message filter action defines the administrative action to take. Filters
+  can be cautionary or stringent.
+cli_alias: monitor-action
+cmd_group: monitors
+rest_endpoint: /mgmt/config/{domain}/FilterAction
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestFilterAction"'
-    test_expect_ds: '"AccTest_FilterAction"'
-    example: 'FilterActionName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Type
-    type: String
-    enum:
-      - 'notify'
-      - 'reject'
-      - 'shape'
-    required: true
-    default: 'notify'
-    description: 'Type'
-    cli_alias: type
-  - name: LogLevel
-    type: String
-    enum:
-      - 'emerg'
-      - 'alert'
-      - 'critic'
-      - 'error'
-      - 'warn'
-      - 'notice'
-      - 'info'
-      - 'debug'
-    default: 'debug'
-    description: 'Log priority'
-    cli_alias: log-priority
-  - name: BlockInterval
-    type: Int64
-    description: 'Block interval'
-    cli_alias: block-interval
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestFilterAction"'
+  test_expect_ds: '"AccTest_FilterAction"'
+  example: FilterActionName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Type
+  type: String
+  enum:
+  - notify
+  - reject
+  - shape
+  required: true
+  default: notify
+  description: Select the action to take The default is notify.
+  cli_alias: type
+- name: LogLevel
+  type: String
+  enum:
+  - emerg
+  - alert
+  - critic
+  - error
+  - warn
+  - notice
+  - info
+  - debug
+  default: debug
+  description: Specify the priority of the log message that is generated when a monitored
+    message type exceeds a threshold value.
+  cli_alias: log-priority
+- name: BlockInterval
+  type: Int64
+  description: Specify an optional interval during which an over-threshold message
+    type is denied service. Meaningful only when the message is rejected due to policy
+    or shaping queue overflow. This value is the duration of service denial in milliseconds.
+    The default value is 0, indicates that over-threshold messages are dropped but
+    no service denial penalty is imposed.
+  cli_alias: block-interval

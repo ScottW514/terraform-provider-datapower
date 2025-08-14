@@ -50,10 +50,10 @@ func (d *CertMonitorDataSource) Metadata(_ context.Context, req datasource.Metad
 
 func (d *CertMonitorDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Certificate monitor (`default` domain only)",
+		MarkdownDescription: "The certificate monitor is a task that checks the expiration date of all certificates. The defined values establish both the polling frequency and a notification window during which the monitor generates log messages that record when certificates are nearing their expiration date. The certificate monitor scans all certificates when first enabled.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -61,19 +61,19 @@ func (d *CertMonitorDataSource) Schema(ctx context.Context, req datasource.Schem
 				Computed:            true,
 			},
 			"polling_interval": schema.Int64Attribute{
-				MarkdownDescription: "Polling interval",
+				MarkdownDescription: "Specify the frequency that the certificate monitor scans certificates for their expiration. The certificate monitor scans for expiry at each restart. If today is Monday and you set the frequency to three days and you restart on Wednesday, the next scan is three days later. Enter a value in the range 1 - 65535. The default value is 1.",
 				Computed:            true,
 			},
 			"reminder_time": schema.Int64Attribute{
-				MarkdownDescription: "Reminder time",
+				MarkdownDescription: "Specify the notification window before certificate expiration to start the logging of certificate expiration messages. For example, the value 21 specifies that all certificates to expire in three weeks or less generate a log message at the defined priority. Enter a value in the range 1 - 65535. The default value is 30.",
 				Computed:            true,
 			},
 			"log_level": schema.StringAttribute{
-				MarkdownDescription: "Log level",
+				MarkdownDescription: "Specify the priority to log messages about the impending expiration date of certificates. By default, messages are logged as warnings.",
 				Computed:            true,
 			},
 			"disable_expired_certs": schema.BoolAttribute{
-				MarkdownDescription: "Disable expired certificates",
+				MarkdownDescription: "Specify the behavior for expired certificates. By default, expired certificate objects are not disabled, which allows the use of expired certificates. When enabled, prevents the use of expired certificates either directly or through inheritance, which disables the use of any objects the reference expired certificates.",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -1,45 +1,51 @@
 name: SchemaExceptionMap
-description: 'Schema Exception Map'
-cli_alias: 'schema-exception-map'
-cmd_group: 'schema-exception-map'
-rest_endpoint: '/mgmt/config/{domain}/SchemaExceptionMap'
+description: This object describes exceptions to an XML Schema by identifying elements
+  of the schema that may be encrypted in an instance document. When Schema Validation
+  is performed on the document using this Exception Map, encrypted elements are considered
+  valid when they appear in place of the specified elements.
+cli_alias: schema-exception-map
+cmd_group: schema-exception-map
+rest_endpoint: /mgmt/config/{domain}/SchemaExceptionMap
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestSchemaExceptionMap"'
-    test_expect_ds: '"AccTest_SchemaExceptionMap"'
-    example: 'SchemaExceptionMapName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: OriginalSchemaURL
-    type: String
-    required: true
-    example: 'http://localhost'
-    description: 'Original Schema URL'
-    cli_alias: original-schema
-  - name: SchemaExceptionRules
-    type: List
-    element_type: DmSchemaExceptionRule
-    required: true
-    description: 'Rules'
-    cli_alias: rule
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestSchemaExceptionMap"'
+  test_expect_ds: '"AccTest_SchemaExceptionMap"'
+  example: SchemaExceptionMapName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: OriginalSchemaURL
+  type: String
+  required: true
+  example: http://localhost
+  description: This is the location of the full original schema document. This is
+    required. This may reside on or off the device.
+  cli_alias: original-schema
+- name: SchemaExceptionRules
+  type: List
+  element_type: DmSchemaExceptionRule
+  required: true
+  description: Rules describe what elements may be excepted from the schema validation
+    when the Original Schema is used for Schema Validation.
+  cli_alias: rule
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary

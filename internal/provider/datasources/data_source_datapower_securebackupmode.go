@@ -50,18 +50,18 @@ func (d *SecureBackupModeDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *SecureBackupModeDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Backup Mode (`default` domain only)",
+		MarkdownDescription: "Sets the backup operational mode. This mode controls whether a secure-backup is allowed. After this mode is set, it cannot be changed. Operational modes are set the first time the DataPower Gateway is started.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: "Comments",
+				MarkdownDescription: "A descriptive summary for the configuration.",
 				Computed:            true,
 			},
 			"mode": schema.StringAttribute{
-				MarkdownDescription: "Backup mode",
+				MarkdownDescription: "<p>Sets the backup mode to support, when this operational mode is not previously set.</p><p>The creation of a secure backup is available only when secure backup mode is enabled. Unlike a standard backup, a secure backup contains private data (certificates, keys, and user data), which the DataPower Gateway encrypts with a customer-provided and a DataPower certificate.</p>",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

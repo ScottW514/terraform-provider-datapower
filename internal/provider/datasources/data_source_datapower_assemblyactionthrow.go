@@ -57,7 +57,7 @@ func (d *AssemblyActionThrowDataSource) Metadata(_ context.Context, req datasour
 
 func (d *AssemblyActionThrowDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Throw assembly action",
+		MarkdownDescription: "The throw assembly action customizes an error. When triggered, the custom error is thrown. Subsequent actions in the assembly are not processed. The custom error, including the error identifier and text, is saved in the API context.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,19 +77,19 @@ func (d *AssemblyActionThrowDataSource) Schema(ctx context.Context, req datasour
 							Computed:            true,
 						},
 						"error_id": schema.StringAttribute{
-							MarkdownDescription: "Error identifier",
+							MarkdownDescription: "Specify the identifier of the custom error. The maximum value length is 64 characters. The following characters are valid. <ul><li>a - z</li><li>A - Z</li><li>0 - 9</li><li>_</li><li>-</li></ul><p>You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$( <i>property_name</i> )</tt> when the assembly action does not have a property with the same name.</p>",
 							Computed:            true,
 						},
 						"error_text": schema.StringAttribute{
-							MarkdownDescription: "Error text",
+							MarkdownDescription: "Specify the text for the error message. You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short form <tt>$( <i>property_name</i> )</tt> when the assembly action does not have a property with the same name.",
 							Computed:            true,
 						},
 						"error_status_code": schema.StringAttribute{
-							MarkdownDescription: "Error status code",
+							MarkdownDescription: "Specify the HTTP status code to return to the client for the error. You can reference a variable in the API context with the <tt>$( <i>variable</i> )</tt> format, such as <tt>$(message.status.code)</tt> .",
 							Computed:            true,
 						},
 						"error_status_reason": schema.StringAttribute{
-							MarkdownDescription: "Error reason phrase",
+							MarkdownDescription: "Specify the HTTP reason phrase to return to the client for the error. You can reference a variable in the API context with the <tt>$( <i>variable</i> )</tt> format, such as <tt>$(message.status.reason)</tt> .",
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
@@ -101,11 +101,11 @@ func (d *AssemblyActionThrowDataSource) Schema(ctx context.Context, req datasour
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

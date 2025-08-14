@@ -3,12 +3,12 @@
 page_title: "datapower_apischema Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API schema
+  An API schema defines the schemas to validate JSON, XML, WSDL, or SOAP messages.
 ---
 
 # datapower_apischema (Data Source)
 
-API schema
+An API schema defines the schemas to validate JSON, XML, WSDL, or SOAP messages.
 
 ## Example Usage
 
@@ -39,16 +39,16 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `graph_ql_schema` (String) GraphQL schema URL
+- `graph_ql_schema` (String) Specify the schema URL for GraphQL message validation. For example, <tt>local:///petstore-Pet.graphql</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `json_schema` (String) JSON schema URL
+- `json_schema` (String) Specify the schema URL for JSON message validation. For example, <tt>local:///petstore.json#/definitions/Pet</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
 - `user_summary` (String) Comments
-- `wsdl_attachment_part` (String) WSDL attachment part
-- `wsdl_message_direction_or_name` (String) WSDL direction or name
-- `wsdl_operation_name` (String) WSDL operation
-- `wsdl_port_q_name` (String) WSDL port
-- `wsdl_schema_url` (String) WSDL schema URL
-- `xml_schema_url` (String) XML schema URL
+- `wsdl_attachment_part` (String) Specify the mime:content to validate in the format <tt>mime:content/@part</tt> . The value must be the unqualified name of the message part. The name is the same as the part attribute on the corresponding <tt>mime:content</tt> component in the WSDL file. When not specified or <tt>*</tt> , the root MIME part is validated. The root MIME part is bound to a <tt>soap:Body</tt> .
+- `wsdl_message_direction_or_name` (String) Specify the <tt>wsdl:input</tt> , <tt>wsdl:output</tt> , or <tt>wsdl:fault</tt> for the traffic to validate. The value must be the name of one or more WSDL input, output, or fault components, or <tt>#input</tt> or <tt>#output</tt> for the request and response directions respectively, or <tt>*</tt> for all inputs, outputs, and faults in the WSDL file. When specified and not <tt>*</tt> , only messages that match the specified direction or name are valid. Faults are valid for the response direction.
+- `wsdl_operation_name` (String) Specify the <tt>wsdl:operation</tt> for the traffic to validate. The value should be the unqualified name of the operation or <tt>*</tt> for all operations in the WSDL file. When specified and not <tt>*</tt> , only messages for the named operation are valid.
+- `wsdl_port_q_name` (String) Specify the <tt>wsdl:port</tt> for the traffic to validate. The value should be a QName in the form <tt>{namespace-uri}local-part</tt> or <tt>*</tt> for all ports in the WSDL file. When specified and not <tt>*</tt> , only messages for the named port are valid.
+- `wsdl_schema_url` (String) Specify the schema URL for WSDL message validation. For example, <tt>local:///petstore-Pet.wsdl</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
+- `xml_schema_url` (String) Specify the schema URL for XML message validation. For example, <tt>local:///petstore-Pet.xsd</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
 - `xml_type` (String) XML type
 - `xml_validation_mode` (String) XML validation mode
 

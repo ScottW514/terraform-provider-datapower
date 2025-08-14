@@ -3,13 +3,13 @@
 page_title: "datapower_operationratelimit Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API operation rate limit
+  An API operation rate limit defines the operation-specific rate limit scheme. Operation specific rate limits override the schemes in the API plan.
   CLI Alias: api-operation-rate-limit
 ---
 
 # datapower_operationratelimit (Resource)
 
-API operation rate limit
+An API operation rate limit defines the operation-specific rate limit scheme. Operation specific rate limits override the schemes in the API plan.
   - CLI Alias: `api-operation-rate-limit`
 
 ## Example Usage

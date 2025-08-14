@@ -57,7 +57,7 @@ func (d *SSLSNIMappingDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *SSLSNIMappingDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "TLS hostname map",
+		MarkdownDescription: "A TLS hostname map defines the SNI map for TLS server profiles.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *SSLSNIMappingDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"sni_mapping": schema.ListNestedAttribute{
-							MarkdownDescription: "SNI mapping",
+							MarkdownDescription: "Specify a match pattern to select the TLS server profile based on the SNI hostname sent by the TLS client. The map allows virtual TLS server configuration where different server profiles are used in response to the hostname value in the <tt>ClientHello</tt> SNI extension from the TLS client. In this way, a single IP address and port can be used to host multiple TLS servers with separate crypto keys and certificates.",
 							NestedObject:        models.DmHostToSSLServerProfileDataSourceSchema,
 							Computed:            true,
 						},

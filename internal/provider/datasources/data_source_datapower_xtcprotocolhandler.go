@@ -57,7 +57,7 @@ func (d *XTCProtocolHandlerDataSource) Metadata(_ context.Context, req datasourc
 
 func (d *XTCProtocolHandlerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Stateful raw XML handler",
+		MarkdownDescription: "The configuration for the stateful TCP protocol handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed. The source protocol also specifies the destination address and any single TCP connection will use the same TCP session on the backside for all of its transactions (one transaction per document). <p>Any gateway that employs one of these handlers must use a dynamic backend.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,11 +81,11 @@ func (d *XTCProtocolHandlerDataSource) Schema(ctx context.Context, req datasourc
 							Computed:            true,
 						},
 						"local_address": schema.StringAttribute{
-							MarkdownDescription: "Local IP address",
+							MarkdownDescription: "Specify the local IP address that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses. You can use a local host alias to help ease migration.",
 							Computed:            true,
 						},
 						"local_port": schema.Int64Attribute{
-							MarkdownDescription: "Local port",
+							MarkdownDescription: "Specifies the port that this service monitors. Enter a value in the range 1 - 65535. The default value is 3000.",
 							Computed:            true,
 						},
 						"remote_address": schema.StringAttribute{
@@ -97,7 +97,7 @@ func (d *XTCProtocolHandlerDataSource) Schema(ctx context.Context, req datasourc
 							Computed:            true,
 						},
 						"close_on_fault": schema.BoolAttribute{
-							MarkdownDescription: "Close session on fault",
+							MarkdownDescription: "Specify whether to close the session on fault. When enabled, TCP connections between clients and servers are closed when the system generates a fault. Otherwise, the session is closed at only connection termination, timeout, or error.",
 							Computed:            true,
 						},
 						"acl": schema.StringAttribute{

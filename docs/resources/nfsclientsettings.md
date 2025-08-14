@@ -3,13 +3,13 @@
 page_title: "datapower_nfsclientsettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  NFS client settings (default domain only)
+  Configure global NFS client parameters, which is the global configuration to enable NFS.
   CLI Alias: nfs-client
 ---
 
 # datapower_nfsclientsettings (Resource)
 
-NFS client settings (`default` domain only)
+Configure global NFS client parameters, which is the global configuration to enable NFS.
   - CLI Alias: `nfs-client`
 
 ## Example Usage
@@ -25,10 +25,10 @@ resource "datapower_nfsclientsettings" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `mount_refresh_time` (Number) Mount refresh time
+- `mount_refresh_time` (Number) Specify the interval between the validation of NFS mounts. The status of each NFS mount is checked at this interval. This check detects whether the NFS server is up or down to prevent application-level NFS timeouts.
   - CLI Alias: `mount-refresh-time`
   - Range: `1`-`1000`
   - Default value: `10`

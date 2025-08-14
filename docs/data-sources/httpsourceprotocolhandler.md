@@ -3,12 +3,12 @@
 page_title: "datapower_httpsourceprotocolhandler Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  HTTP handler
+  An HTTP handler receives HTTP requests that are not over TLS and forwards them to the appropriate DataPower service. HTTP handlers conform to RFC 2616.
 ---
 
 # datapower_httpsourceprotocolhandler (Data Source)
 
-HTTP handler
+An HTTP handler receives HTTP requests that are not over TLS and forwards them to the appropriate DataPower service. HTTP handlers conform to RFC 2616.
 
 ## Example Usage
 
@@ -39,32 +39,32 @@ Optional:
 Read-Only:
 
 - `acl` (String) Access control list
-- `allow_compression` (Boolean) Enable compression
-- `allow_web_socket_upgrade` (Boolean) Allow WebSocket upgrade
+- `allow_compression` (Boolean) Specify whether to negotiate GZIP compression for client connections. When enabled and the <tt>Accept-Encoding</tt> HTTP header indicates that compressed documents can be processed, the service uses GZIP to compress HTTP transmissions. The <tt>Transfer-Encoding</tt> HTTP header indicates compression.
+- `allow_web_socket_upgrade` (Boolean) Specify whether to allow WebSocket upgrade requests from clients. The default value is disabled. This request is to switch the existing connection to use the WebSocket protocol. WebSocket upgrade requests require that The handler allows GET methods.
 - `allowed_features` (Attributes) Allowed methods and versions
   - CLI Alias: `allowed-features` (see [below for nested schema](#nestedatt--result--allowed_features))
 - `app_domain` (String) The name of the application domain the object belongs to
-- `chunked_encoding` (Boolean) Enable chunked encoding responses
-- `credential_charset` (String) Credential character set
-- `header_timeout` (Number) Request headers processing timeout
-- `http2_idle_timeout` (Number) HTTP/2 idle timeout
-- `http2_max_frame_size` (Number) HTTP/2 max frame size
-- `http2_max_streams` (Number) HTTP/2 maximum streams
-- `http2_stream_header` (Boolean) Enable HTTP/2 stream header
-- `http_version` (String) HTTP version to client
+- `chunked_encoding` (Boolean) Specify whether to enable responses to use chunked transfer-encoding. By default, HTTP responses use <tt>Transfer-Encoding: chunked</tt> .
+- `credential_charset` (String) Specify the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The contents of the <tt>Authorization</tt> header are transcoded to UTF-8. The default value represents ISO-8859-1 Latin 1.
+- `header_timeout` (Number) Specify the maximum duration in milliseconds to allow for request headers processing. When the value is greater than 0, request header processing must complete before the duration elapses. Enter a value in the range 0 - 3600000, where a value of 0 disables the timer. The default value is 30000.
+- `http2_idle_timeout` (Number) Specify the maximum idle duration in milliseconds to allow before closing the HTTP/2 connection. Enter a value in the range 0 - 3600000, where a value of 0 disables the timer. The default value is 0.
+- `http2_max_frame_size` (Number) Specify the largest payload frame size that the client can send. Enter a value in the range 16384 - 16777215. The default value is 16384.
+- `http2_max_streams` (Number) Specify the maximum number of concurrent streams that the client can have outstanding at the same time. Enter a value in the range 1 - 500. The default value is 100. <p>The limit applies to the number of streams that the client allows the target to create. The greater the number of streams in use, the more resources the client uses. Resources include memory and the network connections to the destination.</p>
+- `http2_stream_header` (Boolean) Specify whether to enable the HTTP/2 stream identifier header in the request or response. When enabled, the HTTP/2 stream identifier is included in the <tt>X-DP-http2-stream</tt> header. With this header, you can correlate the HTTP/2 stream. The default behavior is disabled.
+- `http_version` (String) Specify the HTTP version for client connections. The default value is HTTP/1.1. For the HTTP/2 protocol, requests and responses are always HTTP/2. When HTTP/2, this setting is ignored.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_address` (String) Local IP address
+- `local_address` (String) Specify the IP address or host alias that the handler listens. The default value indicates that The handler listens on all IPv4 addresses.
 - `local_port` (Number) Port
-- `max_hdr_count` (Number) Maximum request headers
-- `max_name_hdr_len` (Number) Maximum header name length
-- `max_persistent_connections_reuse` (Number) Maximum persistent reuse
-- `max_query_string_len` (Number) Maximum query string length
-- `max_total_hdr_len` (Number) Maximum total header length
-- `max_url_len` (Number) Maximum URL length
-- `max_value_hdr_len` (Number) Maximum header value length
-- `persistent_connections` (Boolean) Negotiate persistent connections
+- `max_hdr_count` (Number) Specify the maximum number of headers to allow in client requests. The default value is 0, which indicates no limit.
+- `max_name_hdr_len` (Number) Specify the maximum length of a header name in bytes to allow in client requests. Each HTTP header is expressed as a name-value pair. This setting sets the maximum length of the name portion of a header. The default value is 0, which indicates no limit.
+- `max_persistent_connections_reuse` (Number) Specify the maximum number of times that a client can reuse a persistent connection. When this count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response, and the TCP connection is closed. The default value is 0, which means unlimited reuse.
+- `max_query_string_len` (Number) Specify the maximum length of the query string to allow in client requests. The query string is the portion of the URL after the ? character. The default value is 0, which indicates no limit.
+- `max_total_hdr_len` (Number) Specify the maximum aggregate length of HTTP headers in bytes to allow. Enter a value in the range 5 - 128000. The default value is 128000.
+- `max_url_len` (Number) Specify the length in bytes of the longest incoming URL to accept. The length includes any query string or fragment identifier. Enter a value in the range 1 - 128000. The default value is 16384.
+- `max_value_hdr_len` (Number) Specify the maximum length of a header value in bytes to allow in client requests. Each HTTP header is expressed as a name-value pair. This setting sets the maximum length of the value portion of a header. The default value is 0, which indicates no limit.
+- `persistent_connections` (Boolean) Specify whether to negotiate persistent connections with clients. The HTTP/2 protocol controls persistent connections and reuse. Therefore, this setting is ignored for the HTTP/2 protocol.
 - `user_summary` (String) Comments
-- `web_socket_idle_timeout` (Number) WebSocket idle timeout
+- `web_socket_idle_timeout` (Number) Specify the maximum idle time for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

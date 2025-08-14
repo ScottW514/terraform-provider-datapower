@@ -57,7 +57,7 @@ func (d *SLMCredClassDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *SLMCredClassDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SLM credential class",
+		MarkdownDescription: "An SLM credentials class identifies a set of users (credentials) to be subject to an SLM policy. An SLM credentials class consists of the following types and properties. <ul><li>A credential type that specifies the manner to obtain user credentials.</li><li>A match type that determines the credentials to apply to the policy.</li><li>Depending on the credentials and match type, properties that identify specific instances of credentials.</li></ul>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *SLMCredClassDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"cred_type": schema.StringAttribute{
-							MarkdownDescription: "Credential Type",
+							MarkdownDescription: "Specify the manner to obtain the credentials (user identity) for each transaction. The default value is mapped credentials from an AAA action.",
 							Computed:            true,
 						},
 						"cred_match_type": schema.StringAttribute{

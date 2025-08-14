@@ -1,94 +1,101 @@
 name: SLMSchedule
-description: 'SLM schedule'
-cli_alias: 'slm-sched'
-cmd_group: 'webservice'
-rest_endpoint: '/mgmt/config/{domain}/SLMSchedule'
+description: An SLM schedule defines the time period (hours and days) to enforce the
+  statements in an SLM policy. Schedules allow the application of different statements
+  during different time periods.
+cli_alias: slm-sched
+cmd_group: webservice
+rest_endpoint: /mgmt/config/{domain}/SLMSchedule
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestSLMSchedule"'
-    test_expect_ds: '"AccTest_SLMSchedule"'
-    example: 'SLMScheduleName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: DaysOfWeek
-    dm_type: DmWeekdayBitmap
-    description: 'Week Days'
-    cli_alias: days
-  - name: StartTime
-    type: String
-    required: true
-    example: '12:34:00'
-    description: 'Start Time'
-    cli_alias: start
-  - name: Duration
-    type: Int64
-    minimum: 1
-    maximum: 1440
-    required: true
-    default: 1440
-    description: 'Duration'
-    cli_alias: duration
-  - name: StartDate
-    type: String
-    example: '2011-08-24'
-    description: 'Start date'
-    cli_alias: start-date
-  - name: StopDate
-    type: String
-    example: '2011-08-27'
-    description: 'Stop date'
-    cli_alias: stop-date
-  - name: TimeZone
-    type: String
-    enum:
-      - 'LOCAL'
-      - 'Pacific/Honolulu'
-      - 'America/Anchorage'
-      - 'America/Los_Angeles'
-      - 'America/Denver'
-      - 'America/Chicago'
-      - 'America/New_York'
-      - 'America/Halifax'
-      - 'America/Sao_Paulo'
-      - 'America/Noronha'
-      - 'Atlantic/Azores'
-      - 'Europe/London'
-      - 'Europe/Paris'
-      - 'Europe/Athens'
-      - 'Asia/Riyadh'
-      - 'Europe/Moscow'
-      - 'Asia/Karachi'
-      - 'Asia/Kolkata'
-      - 'Asia/Dhaka'
-      - 'Asia/Novosibirsk'
-      - 'Asia/Shanghai'
-      - 'Australia/Perth'
-      - 'Asia/Tokyo'
-      - 'Australia/Adelaide'
-      - 'Australia/Sydney'
-      - 'Asia/Vladivostok'
-      - 'Pacific/Auckland'
-    default: 'LOCAL'
-    description: 'Time zone'
-    cli_alias: timezone
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestSLMSchedule"'
+  test_expect_ds: '"AccTest_SLMSchedule"'
+  example: SLMScheduleName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: DaysOfWeek
+  dm_type: DmWeekdayBitmap
+  description: Specify the days to enforce the schedule. The time and duration apply
+    to all selected days.
+  cli_alias: days
+- name: StartTime
+  type: String
+  required: true
+  example: '12:34:00'
+  description: Start Time
+  cli_alias: start
+- name: Duration
+  type: Int64
+  minimum: 1
+  maximum: 1440
+  required: true
+  default: 1440
+  description: Specify the duration in minutes to enforce the schedule. Enter any
+    value of 1 - 1440. The default value is 1440.
+  cli_alias: duration
+- name: StartDate
+  type: String
+  example: '2011-08-24'
+  description: Start date
+  cli_alias: start-date
+- name: StopDate
+  type: String
+  example: '2011-08-27'
+  description: Specify the stop date to enforce the schedule. The enforcement period
+    does not include the stop date.
+  cli_alias: stop-date
+- name: TimeZone
+  type: String
+  enum:
+  - LOCAL
+  - Pacific/Honolulu
+  - America/Anchorage
+  - America/Los_Angeles
+  - America/Denver
+  - America/Chicago
+  - America/New_York
+  - America/Halifax
+  - America/Sao_Paulo
+  - America/Noronha
+  - Atlantic/Azores
+  - Europe/London
+  - Europe/Paris
+  - Europe/Athens
+  - Asia/Riyadh
+  - Europe/Moscow
+  - Asia/Karachi
+  - Asia/Kolkata
+  - Asia/Dhaka
+  - Asia/Novosibirsk
+  - Asia/Shanghai
+  - Australia/Perth
+  - Asia/Tokyo
+  - Australia/Adelaide
+  - Australia/Sydney
+  - Asia/Vladivostok
+  - Pacific/Auckland
+  default: LOCAL
+  description: Specify the time zone to enforce the schedule. The default is the device
+    local time zone.
+  cli_alias: timezone

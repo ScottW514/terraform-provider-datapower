@@ -57,7 +57,7 @@ func (d *AAAJWTGeneratorDataSource) Metadata(_ context.Context, req datasource.M
 
 func (d *AAAJWTGeneratorDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "JWT Generator",
+		MarkdownDescription: "<p>The JSON Web Token (JWT) Generator specifies the JWT content and the cryptographic methods, such as signing and encryption methods, used for generating a JWT during the AAA postprocessing phase.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,58 +77,58 @@ func (d *AAAJWTGeneratorDataSource) Schema(ctx context.Context, req datasource.S
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A descriptive summary for the JWT Generator configuration.",
 							Computed:            true,
 						},
 						"issuer": schema.StringAttribute{
-							MarkdownDescription: "Issuer",
+							MarkdownDescription: "The issuer claim, \"iss\", identifies the principal that issues the JWT. The maximum length is 256 characters. The default value is <tt>idg</tt> .",
 							Computed:            true,
 						},
 						"duration": schema.Int64Attribute{
-							MarkdownDescription: "Validity period",
+							MarkdownDescription: "The validity period identifies the expiration time, \"exp\" claim. Enter a value in the range 1 - 31622400. The default value is 3600.",
 							Computed:            true,
 						},
-						"additional_claims": models.GetDmJWTClaimsDataSourceSchema("Additional claims", "add-claims", ""),
+						"additional_claims": models.GetDmJWTClaimsDataSourceSchema("<p>Additional JWT claims, such as audience \"aud\" claim, not before \"nbf\" claim, issued at \"iat\" claim, JWT ID \"jit\" claim, \"nonce\" claim, and custom claim, can be added for JWT.</p><p>The subject, \"sub\" claim is added by default. You can override the subject claim value by specifying the \"sub\" claim in the Custom claims field.</p>", "add-claims", ""),
 						"audience": schema.ListAttribute{
-							MarkdownDescription: "Audience claim",
+							MarkdownDescription: "The audience, \"aud\", claim identifies the recipients that the JWT is intended for. The maximum length of the Audience claim is 256 characters.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"not_before": schema.Int64Attribute{
-							MarkdownDescription: "Delta for not before claim",
+							MarkdownDescription: "The not before claim, \"nbf\", indicates the time before which the JWT must not be accepted for processing. Enter a value in the range 0 - 480. The default value is 0.",
 							Computed:            true,
 						},
 						"custom_claims": schema.StringAttribute{
-							MarkdownDescription: "Custom claims",
+							MarkdownDescription: "The GatewayScript or XSLT file is processed to specify the custom claim. The GatewayScript or XSLT file must be stored in the <tt>local:</tt> or <tt>store:</tt> directory.",
 							Computed:            true,
 						},
-						"gen_method": models.GetDmJWTGenMethodDataSourceSchema("JWT generation method", "generate-method", ""),
+						"gen_method": models.GetDmJWTGenMethodDataSourceSchema("The signing and encryption methods can be used to secure and generate a JWT.", "generate-method", ""),
 						"sign_algorithm": schema.StringAttribute{
-							MarkdownDescription: "Signing algorithm",
+							MarkdownDescription: "Various signing algorithms can be used to generate the JWT signature, such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.",
 							Computed:            true,
 						},
 						"sign_key": schema.StringAttribute{
-							MarkdownDescription: "Signing key",
+							MarkdownDescription: "The key alias can be used to sign the JWT. You can get a key alias by configuring the Crypto Key.",
 							Computed:            true,
 						},
 						"sign_ss_key": schema.StringAttribute{
-							MarkdownDescription: "Signing shared secret",
+							MarkdownDescription: "The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.",
 							Computed:            true,
 						},
 						"enc_algorithm": schema.StringAttribute{
-							MarkdownDescription: "Encryption algorithm",
+							MarkdownDescription: "Various encryption algorithms can be used to encrypt the JWT, such as A128CBC-HS256, A192CBC-HS384, A256CBC-HS512, A128GCM, A192GCM, and A256GCM. The default value is A128CBC-HS256.",
 							Computed:            true,
 						},
 						"encrypt_algorithm": schema.StringAttribute{
-							MarkdownDescription: "Key management algorithm",
+							MarkdownDescription: "Various key management algorithms can be used to encrypt the JWT, such as RSA1_5, RSA-OAEP, RSA-OAEP-256, A128KW, A192KW, A256KW, and dir. The default value is RSA1_5.",
 							Computed:            true,
 						},
 						"encrypt_certificate": schema.StringAttribute{
-							MarkdownDescription: "Encryption certificate",
+							MarkdownDescription: "The certificate alias can be used to encrypt the JWT. You can get the certificate alias by configuring the Crypto Certificate.",
 							Computed:            true,
 						},
 						"encrypt_ss_key": schema.StringAttribute{
-							MarkdownDescription: "Encryption key",
+							MarkdownDescription: "The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

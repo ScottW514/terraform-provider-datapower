@@ -1,208 +1,237 @@
 name: XMLManager
-description: 'XML Manager'
-cli_alias: 'xmlmgr'
-cmd_group: 'xmlmgr'
-rest_endpoint: '/mgmt/config/{domain}/XMLManager'
+description: An XML Manager manages the compilation and caching of stylesheets, the
+  caching of documents, and provides configuration constraints on the size and parsing
+  depth of documents. You can enable streaming operation by configuring an XML Manager
+  to use a Streaming Compile Option Policy. More than one firewall can use the same
+  XML Manager.
+cli_alias: xmlmgr
+cmd_group: xmlmgr
+rest_endpoint: /mgmt/config/{domain}/XMLManager
 actions:
-  - name: flush_stylesheet_cache
-    body: '{"FlushStylesheetCache": {"XMLManager": "{name}"}}'
-  - name: flush_document_cache
-    body: '{"FlushDocumentCache": {"XMLManager": "{name}"}}'
-  - name: flush_ldap_pool_cache
-    body: '{"FlushLDAPPoolCache": {"XMLManager": "{name}"}}'
+- name: flush_stylesheet_cache
+  body: '{"FlushStylesheetCache": {"XMLManager": "{name}"}}'
+- name: flush_document_cache
+  body: '{"FlushDocumentCache": {"XMLManager": "{name}"}}'
+- name: flush_ldap_pool_cache
+  body: '{"FlushLDAPPoolCache": {"XMLManager": "{name}"}}'
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestXMLManager"'
-    test_expect_ds: '"AccTest_XMLManager"'
-    example: 'XMLManagerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  # DEPRECATED
-  # - name: SSLProxy
-  #   type: String
-  #   reference_to: SSLProxyProfile
-  #   description: 'TLS Proxy'
-  - name: URLRefreshPolicy
-    type: String
-    reference_to: URLRefreshPolicy
-    description: 'URL Refresh Policy'
-    cli_alias: xslrefresh
-  - name: CompileOptionsPolicy
-    type: String
-    reference_to: CompileOptionsPolicy
-    description: 'Compile Options Policy'
-    cli_alias: xslconfig
-  - name: CacheMemorySize
-    type: Int64
-    default: 2147483647
-    description: 'Stylesheet cache size'
-    cli_alias: xsl cache memorysize
-  - name: CacheSize
-    type: Int64
-    minimum: 5
-    maximum: 250000
-    default: 256
-    description: 'Stylesheet cache count'
-    cli_alias: xsl cache size
-  - name: SHA1Caching
-    type: Bool
-    default: true
-    description: 'SHA1 Caching'
-    cli_alias: xsl checksummed cache
-  - name: StaticDocumentCalls
-    type: Bool
-    default: true
-    description: 'Static Document Call'
-    cli_alias: static-document-calls
-  - name: SearchResults
-    type: Bool
-    default: true
-    description: 'XSLT Expression Optimization'
-    cli_alias: search results
-  # - name: SupportTxWarn
-  #   type: Bool
-  #   default: false
-  #   description: 'Support ITX Warnings'
-  #   cli_alias: tx-warn
-  - name: VirtualServers
-    type: List
-    reference_to: LoadBalancerGroup
-    element_type: String
-    description: 'Load Balancer Groups'
-    cli_alias: loadbalancer-group
-  # TODO: Can be written, but does not appear in GET response from API
-  # - name: ExtensionFunctions
-  #   type: List
-  #   element_type: DmExtensionFunction
-  #   description: 'Extension Functions'
-  - name: ParserLimitsBytesScanned
-    type: Int64
-    default: 4194304
-    description: 'XML Bytes Scanned'
-    cli_alias: bytes-scanned
-  - name: ParserLimitsElementDepth
-    type: Int64
-    default: 512
-    description: 'XML Element Depth'
-    cli_alias: element-depth
-  - name: ParserLimitsAttributeCount
-    type: Int64
-    default: 128
-    description: 'XML Attribute Count'
-    cli_alias: attribute-count
-  - name: ParserLimitsMaxNodeSize
-    type: Int64
-    minimum: 1024
-    maximum: 4294967295
-    default: 33554432
-    description: 'XML Maximum Node Size'
-    cli_alias: max-node-size
-  # - name: ParserLimitsForbidExternalReferences
-  #   type: Bool
-  #   default: true
-  #   description: 'XML Forbid External References'
-  #   cli_alias: forbid-external-references
-  - name: ParserLimitsExternalReferences
-    type: String
-    enum:
-      - 'forbid'
-      - 'ignore'
-      - 'allow'
-    default: 'forbid'
-    description: 'XML External Reference Handling'
-    cli_alias: external-references
-  - name: ParserLimitsMaxPrefixes
-    type: Int64
-    maximum: 262143
-    default: 1024
-    description: 'XML Maximum Distinct Prefixes'
-    cli_alias: max-prefixes
-  - name: ParserLimitsMaxNamespaces
-    type: Int64
-    maximum: 65535
-    default: 1024
-    description: 'XML Maximum Distinct Namespaces'
-    cli_alias: max-namespaces
-  - name: ParserLimitsMaxLocalNames
-    type: Int64
-    maximum: 1048575
-    default: 60000
-    description: 'XML Maximum Distinct Local Names'
-    cli_alias: max-local-names
-  - name: DocCacheMaxDocs
-    type: Int64
-    minimum: 1
-    maximum: 250000
-    default: 5000
-    description: 'Document Cache Count'
-    cli_alias: maxdocs
-  - name: DocCacheSize
-    type: Int64
-    description: 'Document Cache Size'
-    cli_alias: size
-  - name: DocMaxWrites
-    type: Int64
-    minimum: 1
-    maximum: 32768
-    default: 32768
-    description: 'Maximum concurrent writes'
-    cli_alias: max-writes
-  - name: DocCachePolicy
-    type: List
-    element_type: DmDocCachePolicy
-    description: 'Document Cache Policy'
-    cli_alias: policy
-  - name: SchemaValidation
-    type: List
-    element_type: DmSchemaValidation
-    description: 'Schema Validation Rules'
-    cli_alias: validate
-  - name: ScheduledRule
-    type: List
-    element_type: DmScheduledRule
-    description: 'Scheduled Processing Policy Rule'
-    cli_alias: schedule-rule
-  - name: UserAgent
-    type: String
-    reference_to: HTTPUserAgent
-    default: 'default'
-    description: 'User Agent Configuration'
-    cli_alias: user-agent
-  - name: JSONParserSettings
-    type: String
-    reference_to: JSONSettings
-    description: 'JSON Settings'
-    cli_alias: json-parser-settings
-  # TODO: Missing API Endpoint
-  # - name: DFDLSettingsReference
-  #   type: String
-  #   reference_to: DFDLSettings
-  #   description: 'DFDL Settings'
-  #   cli_alias: dfdl-settings-reference
-  - name: LDAPConnPool
-    type: String
-    reference_to: LDAPConnectionPool
-    description: 'LDAP Connection Pool'
-    test_bed_value: 'datapower_ldapconnectionpool.acc_test.id'
-    cli_alias: ldap-pool
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestXMLManager"'
+  test_expect_ds: '"AccTest_XMLManager"'
+  example: XMLManagerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: URLRefreshPolicy
+  type: String
+  reference_to: URLRefreshPolicy
+  description: Optionally, assigns a Stylesheet Refresh Policy to the XML manager.
+    Stylesheets cached by this manager are refreshed in accordance with policy rules.
+  cli_alias: xslrefresh
+- name: CompileOptionsPolicy
+  type: String
+  reference_to: CompileOptionsPolicy
+  description: <p>Optionally, assigns a Compilation Options Policy to the XML Manager.
+    Stylesheets cached by this manager are compiled in accordance with policy rules.
+    Compile Options allow the administrator to manage profiling and debug modes, which
+    are helpful during development and troubleshooting sessions. Profiling and debug
+    modes should not be left on for production purposes.</p><p>Compile Options Policy
+    also enables streaming mode, which might be a valid choice for production environments
+    that regularly encounter very large documents.</p>
+  cli_alias: xslconfig
+- name: CacheMemorySize
+  type: Int64
+  default: 2147483647
+  description: Enter the maximum size of the stylesheet cache. The default value is
+    2147483647. A value of 0 disables caching. Stylesheets are purged when either
+    the cache size or the cache count is reached.
+  cli_alias: xsl cache memorysize
+- name: CacheSize
+  type: Int64
+  minimum: 5
+  maximum: 250000
+  default: 256
+  description: Enter the maximum number of stylesheets to cache. Enter a value in
+    the range 5 - 250000. The default value is 256. Stylesheets are purged when either
+    the cache size or the cache count is reached.
+  cli_alias: xsl cache size
+- name: SHA1Caching
+  type: Bool
+  default: true
+  description: Enables/disables SHA1-assisted stylesheet caching. With SHA1 caching
+    enabled, stylesheets are cached by both URL and SHA1 message digest value. With
+    SHA1 caching disabled, stylesheets are cached only by URL.
+  cli_alias: xsl checksummed cache
+- name: StaticDocumentCalls
+  type: Bool
+  default: true
+  description: The latest XSLT specifications require that multiple document calls
+    in the same transformation return the same result. Disable to allow all document
+    calls to operate independently.
+  cli_alias: static-document-calls
+- name: SearchResults
+  type: Bool
+  default: true
+  description: Configures optimization of '//' in XPath expressions
+  cli_alias: search results
+- name: VirtualServers
+  type: List
+  reference_to: LoadBalancerGroup
+  element_type: String
+  description: Select a Load Balancer Group and assign that group to this XML manager.
+    A Load Balancer Group, or server pool, provides redundancy among backside resources.
+  cli_alias: loadbalancer-group
+- name: ParserLimitsBytesScanned
+  type: Int64
+  default: 4194304
+  description: Enter the maximum number of bytes scanned in one message. This property
+    applies to any XML document that is parsed. If the value is 0, no limit is enforced.
+    The default value is 4194304.
+  cli_alias: bytes-scanned
+- name: ParserLimitsElementDepth
+  type: Int64
+  default: 512
+  description: Enter the maximum depth of element nesting in XML parser. The default
+    value is 512.
+  cli_alias: element-depth
+- name: ParserLimitsAttributeCount
+  type: Int64
+  default: 128
+  description: Enter the maximum number of attributes of a given element. The default
+    value is 128.
+  cli_alias: attribute-count
+- name: ParserLimitsMaxNodeSize
+  type: Int64
+  minimum: 1024
+  maximum: 4294967295
+  default: 33554432
+  description: Enter the maximum size that any one node can consume. Enter a value
+    in the range 1024 - 4294967295. The default value is 33554432. Sizes which are
+    powers of two result in the best performance. Although you define a value, the
+    DataPower Gateway uses a value that is the rounded-down to the largest power of
+    two that is smaller than the defined value.
+  cli_alias: max-node-size
+- name: ParserLimitsExternalReferences
+  type: String
+  enum:
+  - forbid
+  - ignore
+  - allow
+  default: forbid
+  description: Select the special handling for input documents that contain external
+    references, such as an external entity or external DTD definition.
+  cli_alias: external-references
+- name: ParserLimitsMaxPrefixes
+  type: Int64
+  maximum: 262143
+  default: 1024
+  description: Enter the maximum number of distinct XML namespace prefixes in a document.
+    This limit counts multiple prefixes defined for the same namespace, but does not
+    count multiple namespaces defined in different parts of the input document under
+    a single prefix. Enter a value in the range 0 - 262143. The default value is 1024.
+    A value of 0 indicates that the limit is 1024.
+  cli_alias: max-prefixes
+- name: ParserLimitsMaxNamespaces
+  type: Int64
+  maximum: 65535
+  default: 1024
+  description: Enter the maximum number of distinct XML namespace URIs in a document.
+    This limit counts all XML namespaces, regardless of how many prefixes are used
+    to declare them. Enter a value in the range 0 - 65535. The default value is 1024.
+    A value of 0 indicates that the limit is 1024.
+  cli_alias: max-namespaces
+- name: ParserLimitsMaxLocalNames
+  type: Int64
+  maximum: 1048575
+  default: 60000
+  description: Enter the maximum number of distinct XML local names in a document.
+    This limit counts all local names, independent of the namespaces they are associated
+    with. Enter a value in the range 0 - 1048575. The default value is 60000. A value
+    of 0 indicates that the limit is 60000.
+  cli_alias: max-local-names
+- name: DocCacheMaxDocs
+  type: Int64
+  minimum: 1
+  maximum: 250000
+  default: 5000
+  description: Enter the maximum number of documents to cache. Enter a value in the
+    range 1 - 250000. The default value is 5000.
+  cli_alias: maxdocs
+- name: DocCacheSize
+  type: Int64
+  description: Enter the maximum size of the document cache. Regardless of the specified
+    size, no document that is greater than 1073741824 bytes is cached. This restriction
+    applies even if the cache has available space.
+  cli_alias: size
+- name: DocMaxWrites
+  type: Int64
+  minimum: 1
+  maximum: 32768
+  default: 32768
+  description: Enter the maximum number of concurrent write requests to create documents
+    or refresh expired documents in the document cache. Enter a value in the range
+    1 - 32768. The default value is 32768. After the maximum number is reached, requests
+    are forwarded to the target server and the response is not written to the cache.
+  cli_alias: max-writes
+- name: DocCachePolicy
+  type: List
+  element_type: DmDocCachePolicy
+  description: A document cache policy allows the administrator to determine how documents
+    are cached by the XML manager. The policy offers time-to-live, priority, and type
+    configuration values. This document cache is distinct from the stylesheet cache
+    for the XML manager. Documents and stylesheets that the XML manager retrieves
+    can be cached.
+  cli_alias: policy
+- name: SchemaValidation
+  type: List
+  element_type: DmSchemaValidation
+  description: ''
+  cli_alias: validate
+- name: ScheduledRule
+  type: List
+  element_type: DmScheduledRule
+  description: Certain applications might require the running of a scheduled processing
+    rule. Integration with a CA Unicenter Manager is facilitated by a regularly scheduled
+    processing rule that obtains relationship data from the Unicenter Manager.
+  cli_alias: schedule-rule
+- name: UserAgent
+  type: String
+  reference_to: HTTPUserAgent
+  default: default
+  description: Identifies the User Agent configuration the XML manager uses to connect
+    to external servers to retrieve resources.
+  cli_alias: user-agent
+- name: JSONParserSettings
+  type: String
+  reference_to: JSONSettings
+  description: Identifies the JSON Settings used by the XML manager when processing
+    a JSON body. If no JSON Settings are specified, the default limits are enforced.
+  cli_alias: json-parser-settings
+- name: LDAPConnPool
+  type: String
+  reference_to: LDAPConnectionPool
+  description: Identifies the LDAP connection pool to be used by the XML Manager when
+    contacting LDAP
+  test_bed_value: datapower_ldapconnectionpool.acc_test.id
+  cli_alias: ldap-pool

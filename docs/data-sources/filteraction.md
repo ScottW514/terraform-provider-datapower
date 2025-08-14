@@ -3,12 +3,12 @@
 page_title: "datapower_filteraction Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Filter Action
+  A message filter action defines the administrative action to take. Filters can be cautionary or stringent.
 ---
 
 # datapower_filteraction (Data Source)
 
-Message Filter Action
+A message filter action defines the administrative action to take. Filters can be cautionary or stringent.
 
 ## Example Usage
 
@@ -39,10 +39,10 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `block_interval` (Number) Block interval
+- `block_interval` (Number) Specify an optional interval during which an over-threshold message type is denied service. Meaningful only when the message is rejected due to policy or shaping queue overflow. This value is the duration of service denial in milliseconds. The default value is 0, indicates that over-threshold messages are dropped but no service denial penalty is imposed.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `log_level` (String) Log priority
-- `type` (String) Type
+- `log_level` (String) Specify the priority of the log message that is generated when a monitored message type exceeds a threshold value.
+- `type` (String) Select the action to take The default is notify.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

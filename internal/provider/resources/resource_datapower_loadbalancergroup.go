@@ -59,7 +59,7 @@ func (r *LoadBalancerGroupResource) Metadata(ctx context.Context, req resource.M
 
 func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Load Balancer Group", "loadbalancer-group", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>The DataPower device distributes traffic to members of a Load Balancer Group. These are back end servers and not additional DataPower devices. A Load Balancer Group lists members of a virtual server group and sets the algorithm for balancing them. Periodic health checks can be performed. Load Balancers may also be used to provide redundant LDAP server access.</p><p>When created, a DataPower service can use a Load Balancer Group by associating it with an XML manager that is associated with this service.</p><p>The back end destination URL is set to the name of the Load Balancer Group (example: \"BackEndServers\").</p>", "loadbalancer-group", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -88,7 +88,7 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 			},
 			"algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Algorithm", "algorithm", "").AddStringEnum("round-robin", "weighted-round-robin", "hash", "least-connections", "first-alive", "weighted-least-connections").AddDefaultValue("round-robin").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the algorithm to use to balance the real servers.", "algorithm", "").AddStringEnum("round-robin", "weighted-round-robin", "hash", "least-connections", "first-alive", "weighted-least-connections").AddDefaultValue("round-robin").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -97,13 +97,13 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("round-robin"),
 			},
 			"retrieve_info": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Retrieve Workload Management Information", "retrieve-wlm-info", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use this setting to control whether this Load Balancer Group has membership and weight information automatically retrieved from the work load management repository WebSphere Cell. When disabled, the static configuration is used.", "retrieve-wlm-info", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"wlm_retrieval": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Workload Management Retrieval", "wlm-type", "").AddStringEnum("use-websphere").AddDefaultValue("use-websphere").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Contains the back end work load management repository selection type. Select 'WebSphere Cell' if your back-end is a WebSphere Application Server (WAS) Network Deployment (ND) or WAS Virtual Enterprise (VE).", "wlm-type", "").AddStringEnum("use-websphere").AddDefaultValue("use-websphere").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -112,15 +112,15 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("use-websphere"),
 			},
 			"web_sphere_cell_config": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere Cell", "websphere-cell", "wccservice").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("If you selected 'WebSphere Cell' for Workload Management Retrieval, you need to select a WebSphere Cell object that retrieves this information. If no objects are available in the pull down, you must create one.", "websphere-cell", "wccservice").String,
 				Optional:            true,
 			},
 			"wlm_group": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Workload Management Group Name", "wlm-group", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The Workload Management Group Name is used to define a group. In a WebSphere Application Server environment, the back end group is a cluster name. Once specified, the Load Balancer Group will be populated with the members and weights retrieved from the back end.", "wlm-group", "").String,
 				Optional:            true,
 			},
 			"wlm_transport": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Protocol", "wlm-transport", "").AddStringEnum("http", "https").AddDefaultValue("http").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify either HTTP or HTTPS for the Load Balancer Group protocol. This protocol is used to forward traffic between the DataPower Gateway and the members of the Load Balancer Group.", "wlm-transport", "").AddStringEnum("http", "https").AddDefaultValue("http").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -129,7 +129,7 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("http"),
 			},
 			"damp": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Damp Time", "damp", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When a real server is observed to be non-functioning, it is temporarily disabled. When the damp time has elapsed, it is re-enabled. Allowable values are in the range 1 - 86400.", "damp", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -139,7 +139,7 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 				Default: int64default.StaticInt64(120),
 			},
 			"never_return_sick_member": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Do not Bypass Down State", "giveup-when-all-members-down", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("During normal operation, when all members of the load-balancing group are down and a new request for that group is made, the first member of the group is automatically selected. If this property is turned on, no attempt will be made to connect under these circumstances.", "giveup-when-all-members-down", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -150,27 +150,27 @@ func (r *LoadBalancerGroupResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 			},
 			"try_every_server_before_failing": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Try Every Server Before Failing", "try-every-server", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This property applies only when none of the group members are in the \"up\" state. If this value is set, every server in the group is tried before failing the connection attempt. It is a \"last best-effort\" attempt.", "try-every-server", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"lb_group_checks": models.GetDmLBGroupCheckResourceSchema("Health Checks", "health-check", "", false),
+			"lb_group_checks": models.GetDmLBGroupCheckResourceSchema("The members of a Load Balancer Group can be periodically polled to verify the health of the server. If the server is found to be unresponsive, it is removed from the list of actively available servers until the unresponsive server passes a health check.", "health-check", "", false),
 			"masquerade_member": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Masquerade As Group Name", "masquerade", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("If you set this value, the host name presented to the server will be the name of the group instead of the name of the member being used for that specific transaction.", "masquerade", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"application_routing": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable Application Routing", "appl-routing", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>If set to on, the load balancer group will route to the back end cluster depending on the following conditions.</p><ul><li>the application for which this request is targeted</li><li>the application status on the back end servers</li></ul><p>Application Routing is required for Application Edition (group or atomic) rollout. If you need Application Edition support, set the Update Type to Subscribe in the WebSphere Cell object.</p>", "appl-routing", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
-			"lb_group_affinity_conf": models.GetDmLBGroupAffinityResourceSchema("Session Affinity", "session-affinity", "", false),
+			"lb_group_affinity_conf": models.GetDmLBGroupAffinityResourceSchema("Session affinity allows applications to maintain sessions with clients.", "session-affinity", "", false),
 			"monitored_cookies": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Monitored Cookies", "monitored-cookie", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The DataPower Gateway enforces session affinity when the application server attempts to establish session affinity using one of these cookie names.", "monitored-cookie", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

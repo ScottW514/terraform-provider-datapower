@@ -1,115 +1,140 @@
 name: WXSGrid
-description: 'eXtreme Scale Grid'
-cli_alias: 'wxs-grid'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/WXSGrid'
+description: The configuration of an eXtreme Scale Grid defines the connection details
+  to an eXtreme Scale grid in an eXtreme Scale collective. To define this configuration,
+  you must define the eXtreme Scale collective, the grid name, and the user and password
+  for the user account who connects to the eXtreme Scale. If you need to secure connections
+  to eXtreme Scale, you must assign a TLS Proxy Profile.
+cli_alias: wxs-grid
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/WXSGrid
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestWXSGrid"'
-    test_expect_ds: '"AccTest_WXSGrid"'
-    example: 'WXSGridName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Collective
-    type: String
-    reference_to: LoadBalancerGroup
-    test_value: '"AccTest_LoadBalancerGroup"'
-    test_bed_value: 'datapower_loadbalancergroup.acc_test.id'
-    required: true
-    description: 'Collective'
-    cli_alias: collective
-  - name: Grid
-    type: String
-    required: true
-    example: "gridname"
-    description: 'Grid Name'
-    cli_alias: grid
-  - name: UserName
-    type: String
-    required: true
-    example: 'username'
-    description: 'User'
-    cli_alias: username
-  - name: PasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    required: true
-    test_value: '"AccTest_PasswordAlias"'
-    test_bed_value: 'datapower_passwordalias.acc_test.id'
-    description: 'Password Alias'
-    cli_alias: password-alias
-  - name: Timeout
-    type: Int64
-    minimum: 10
-    maximum: 86400000
-    required: true
-    default: 1000
-    description: 'Timeout'
-    cli_alias: timeout
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
-  - name: Encrypt
-    type: Bool
-    default: false
-    description: 'Encrypted Data'
-    cli_alias: encrypt
-  - name: EncryptSSKey
-    type: String
-    reference_to: CryptoSSKey
-    description: 'Shared Secret Key for Encryption and Decryption'
-    cli_alias: encrypt-sskey
-  - name: EncryptAlg
-    type: String
-    enum:
-      - 'tripledes-cbc'
-      - 'aes128-cbc'
-      - 'aes192-cbc'
-      - 'aes256-cbc'
-      - 'rc2-40-cbc'
-      - 'rc2-64-cbc'
-      - 'rc2-cbc'
-    default: 'tripledes-cbc'
-    description: 'PKCS #7 algorithm for encryption and decryption'
-    cli_alias: encrypt-alg
-  - name: KeyObfuscation
-    type: Bool
-    default: false
-    description: 'Hash Key Obfuscation'
-    cli_alias: key-obfuscation
-  - name: KeyObfuscationAlg
-    type: String
-    enum:
-      - 'sha1'
-      - 'sha256'
-      - 'sha512'
-      - 'ripemd160'
-      - 'sha224'
-      - 'sha384'
-      - 'md5'
-    default: 'sha256'
-    description: 'Hash Algorithm for Key Obfuscation'
-    cli_alias: key-obfuscation-alg
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestWXSGrid"'
+  test_expect_ds: '"AccTest_WXSGrid"'
+  example: WXSGridName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Specify a brief, but descriptive, summary of the configuration.
+  cli_alias: summary
+- name: Collective
+  type: String
+  reference_to: LoadBalancerGroup
+  test_value: '"AccTest_LoadBalancerGroup"'
+  test_bed_value: datapower_loadbalancergroup.acc_test.id
+  required: true
+  description: Specify the Load Balancer Group that contains members in the collective
+    of eXtreme Scale. You must define at least one member in the collective.
+  cli_alias: collective
+- name: Grid
+  type: String
+  required: true
+  example: gridname
+  description: 'Specify the name of the eXtreme Scale grid. The value cannot contain
+    whitespace or the following characters: <tt>^ . \ / , # $ @ : ; * ? &lt; > | =
+    + &amp; % [ ] " ''</tt> .'
+  cli_alias: grid
+- name: UserName
+  type: String
+  required: true
+  example: username
+  description: '<p>Specify the user account of the eXtreme Scale user who connects
+    to the eXtreme Scale collective. The value can be up to 64 characters in length
+    and cannot be blank. You can use all alphanumeric characters and most special
+    characters. You cannot use spaces or the following special characters: <tt># &lt;</tt>
+    .</p><p>The user must have sufficient eXtreme Scale permissions to access the
+    grid.</p>'
+  cli_alias: username
+- name: PasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  required: true
+  test_value: '"AccTest_PasswordAlias"'
+  test_bed_value: datapower_passwordalias.acc_test.id
+  description: Specify the password alias to use to look up the password of the eXtreme
+    Scale user who connects to the eXtreme Scale collective.
+  cli_alias: password-alias
+- name: Timeout
+  type: Int64
+  minimum: 10
+  maximum: 86400000
+  required: true
+  default: 1000
+  description: Specify the maximum time to wait to establish a connection to an eXtreme
+    Scale. If unable to establish a connection, the operation fails. Enter a value
+    in the range 10 - 86400000. The default value is 1000.
+  cli_alias: timeout
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: The TLS client profile to secure connections between the DataPower
+    Gateway and its targets.
+  cli_alias: ssl-client
+- name: Encrypt
+  type: Bool
+  default: false
+  description: Indicates whether the data in the eXtreme Scale data grid is encrypted.
+    If encrypted, the data is encrypted, when writing to, and decrypted, when reading
+    from, the eXtreme Scale data grid.
+  cli_alias: encrypt
+- name: EncryptSSKey
+  type: String
+  reference_to: CryptoSSKey
+  description: 'Specify the shared secret for PKCS #7 encryption and decryption. When
+    writing data to the data grid, encrypts the data. When reading data from the eXtreme
+    Scale data grid, decrypts the data.'
+  cli_alias: encrypt-sskey
+- name: EncryptAlg
+  type: String
+  enum:
+  - tripledes-cbc
+  - aes128-cbc
+  - aes192-cbc
+  - aes256-cbc
+  - rc2-40-cbc
+  - rc2-64-cbc
+  - rc2-cbc
+  default: tripledes-cbc
+  description: 'Specify the PKCS #7 algorithm for encryption and decryption. When
+    writing data to the data grid, encrypts the data. When reading data from the eXtreme
+    Scale data grid, decrypts the data.'
+  cli_alias: encrypt-alg
+- name: KeyObfuscation
+  type: Bool
+  default: false
+  description: Indicate whether to apply a hash algorithm to obfuscate keys before
+    reading data from or writing data to the eXtreme Scale data grid.
+  cli_alias: key-obfuscation
+- name: KeyObfuscationAlg
+  type: String
+  enum:
+  - sha1
+  - sha256
+  - sha512
+  - ripemd160
+  - sha224
+  - sha384
+  - md5
+  default: sha256
+  description: Specify the hash algorithm to obfuscate keys before reading data from
+    or writing data to the eXtreme Scale data grid.
+  cli_alias: key-obfuscation-alg

@@ -3,12 +3,12 @@
 page_title: "datapower_mcfhttpurl Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  HTTP URL Message Content Filter
+  Filter based on the request URL. The filter value is matched to the request URL.
 ---
 
 # datapower_mcfhttpurl (Data Source)
 
-HTTP URL Message Content Filter
+Filter based on the request URL. The filter value is matched to the request URL.
 
 ## Example Usage
 

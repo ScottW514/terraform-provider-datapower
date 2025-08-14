@@ -1,151 +1,195 @@
 name: WebTokenService
-description: 'Web Token Service'
-cli_alias: 'web-token-service'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/WebTokenService'
+description: The web token service provides on-box HTTP services.
+cli_alias: web-token-service
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/WebTokenService
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestWebTokenService"'
-    test_expect_ds: '"AccTest_WebTokenService"'
-    example: 'WebTokenServiceName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Priority
-    type: String
-    enum:
-      - 'unknown'
-      - 'high-min'
-      - 'high'
-      - 'high-max'
-      - 'normal-min'
-      - 'normal'
-      - 'normal-max'
-      - 'low-min'
-      - 'low'
-      - 'low-max'
-    default: 'normal'
-    description: 'Service priority'
-    cli_alias: priority
-  - name: XMLManager
-    type: String
-    reference_to: XMLManager
-    required: true
-    test_value: '"default"'
-    default: 'default'
-    description: 'XML manager'
-    cli_alias: xml-manager
-  - name: RequestType
-    type: String
-    enum:
-      - 'soap'
-      - 'xml'
-      - 'unprocessed'
-      - 'preprocessed'
-      - 'json'
-    default: 'preprocessed'
-    description: 'Request type'
-    cli_alias: request-type
-  - name: FrontSide
-    type: List
-    required: true
-    element_type: DmSSLFrontSide
-    description: 'Source addresses'
-    cli_alias: listen-on
-  - name: StylePolicy
-    type: String
-    reference_to: StylePolicy
-    required: true
-    default: 'default'
-    test_value: '"default"'
-    description: 'Processing policy'
-    cli_alias: stylepolicy
-  - name: RewriteErrors
-    type: Bool
-    default: true
-    description: 'Rewrite error messages'
-    cli_alias: rewrite-errors
-  - name: DelayErrors
-    type: Bool
-    default: true
-    description: 'Delay error messages'
-    cli_alias: delay-errors
-  - name: DelayErrorsDuration
-    type: Int64
-    minimum: 250
-    maximum: 300000
-    default: 1000
-    description: 'Duration to delay error messages'
-    cli_alias: delay-errors-duration
-  - name: FrontTimeout
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    required: true
-    default: 120
-    description: 'Front side timeout'
-    cli_alias: front-timeout
-  - name: FrontPersistentTimeout
-    type: Int64
-    minimum: 0
-    maximum: 86400
-    required: true
-    default: 180
-    description: 'Front persistent timeout'
-    cli_alias: front-persistent-timeout
-  - name: FrontHTTPVersion
-    type: String
-    enum:
-      - 'HTTP/1.0'
-      - 'HTTP/1.1'
-    default: 'HTTP/1.1'
-    description: 'HTTP version to client'
-    cli_alias: http-front-version
-  - name: HTTPClientIPLabel
-    type: String
-    default: 'X-Client-IP'
-    description: 'HTTP client IP label'
-    cli_alias: http-client-ip-label
-  - name: HTTPLogCorIDLabel
-    type: String
-    default: 'X-Global-Transaction-ID'
-    description: 'HTTP global transaction ID label'
-    cli_alias: http-global-tranID-label
-  - name: DebugMode
-    type: String
-    enum:
-      - 'on'
-      - 'off'
-      - 'unbounded'
-    default: 'off'
-    description: 'Probe setting'
-    cli_alias: debug-mode
-  - name: DebugHistory
-    type: Int64
-    minimum: 10
-    maximum: 250
-    default: 25
-    description: 'Transaction history'
-    cli_alias: debug-history
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestWebTokenService"'
+  test_expect_ds: '"AccTest_WebTokenService"'
+  example: WebTokenServiceName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Specify a brief, descriptive comment.
+  cli_alias: summary
+- name: Priority
+  type: String
+  enum:
+  - unknown
+  - high-min
+  - high
+  - high-max
+  - normal-min
+  - normal
+  - normal-max
+  - low-min
+  - low
+  - low-max
+  default: normal
+  description: Set the service-level priority. When resources are in high demand,
+    the appliance handles transactions for higher priority services over lower priority
+    services.
+  cli_alias: priority
+- name: XMLManager
+  type: String
+  reference_to: XMLManager
+  required: true
+  test_value: '"default"'
+  default: default
+  description: Assign the XML manager that obtains and manages documents on behalf
+    of the service. The user agent, which is referenced by this XML manager, controls
+    access to remote destinations. Unless you have service-specific needs, use the
+    <tt>default</tt> XML manager.
+  cli_alias: xml-manager
+- name: RequestType
+  type: String
+  enum:
+  - soap
+  - xml
+  - unprocessed
+  - preprocessed
+  - json
+  default: preprocessed
+  description: Characterizes the traffic that originates from the client. The default
+    is Non-XML.
+  cli_alias: request-type
+- name: FrontSide
+  type: List
+  required: true
+  element_type: DmSSLFrontSide
+  description: Define the addresses and ports that the service listens on. You can
+    define listening sources for HTTP and HTTPS requests. For HTTPS request, set the
+    listening source to use TLS parameter and assign the TLS profile.
+  cli_alias: listen-on
+- name: StylePolicy
+  type: String
+  reference_to: StylePolicy
+  required: true
+  default: default
+  test_value: '"default"'
+  description: Assign the processing policy to the service. The processing policy
+    defines the actions to perform on security token requests.
+  cli_alias: stylepolicy
+- name: RewriteErrors
+  type: Bool
+  default: true
+  description: Error messages after a decryption action can provide an attacker who
+    is using the padding oracle attack method with enough information to determine
+    the contents of the plain-text data. When enabled, the default, the client receives
+    error messages without the internal information that could lead to a discovery.
+    When disabled, the client receives the original message with this information.
+  cli_alias: rewrite-errors
+- name: DelayErrors
+  type: Bool
+  default: true
+  description: The timing difference of the error messages returned after a decryption
+    action can provide an attacker with enough information to determine the contents
+    of the plain-text data. When enabled, the default, the appliance delays error
+    messages for the defined duration. When disabled, the appliance does not delay
+    error messages.
+  cli_alias: delay-errors
+- name: DelayErrorsDuration
+  type: Int64
+  minimum: 250
+  maximum: 300000
+  default: 1000
+  description: When enabling the delay of error messages, specify the delay duration
+    in milliseconds. If delaying messages for 3000 ms, the appliance will not send
+    error messages to the client until 3 seconds have elapsed since the appliance
+    performed decryption on the requests. Enter any value in the range 250 - 300000.
+    The default value is 1000.
+  cli_alias: delay-errors-duration
+- name: FrontTimeout
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  required: true
+  default: 120
+  description: Set the intra-transaction timeout for Web Token Service to client connections.
+    This value is the maximum idle time to allow in a transaction on the Web Token
+    Service to client connection. This timer monitors idle time in the data transfer
+    process. If the specified idle time is exceeded, the connection is torn down.
+    Enter a value in the range 1 - 86400. The default value is 120.
+  cli_alias: front-timeout
+- name: FrontPersistentTimeout
+  type: Int64
+  minimum: 0
+  maximum: 86400
+  required: true
+  default: 180
+  description: Set the inter-transaction timeout for Web Token Service to client connections.
+    This value is the maximum idle time to allow between the completion of a TCP transaction
+    and the initiation of a new TCP transaction on the Web Token Service to client
+    connection. If the specified idle time is exceeded, the connection is torn down.
+    Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables
+    persistent connections.
+  cli_alias: front-persistent-timeout
+- name: FrontHTTPVersion
+  type: String
+  enum:
+  - HTTP/1.0
+  - HTTP/1.1
+  default: HTTP/1.1
+  description: Set the HTTP version for client-to-service connections. If the client
+    submits an HTTP/1.0 request, the service on the DataPower appliance always replies
+    with HTTP/1.0 compatible responses regardless of this setting. The default version
+    is HTTP 1.1.
+  cli_alias: http-front-version
+- name: HTTPClientIPLabel
+  type: String
+  default: X-Client-IP
+  description: Set the HTTP header that contains the client IP address. When defined,
+    the client IP address is read from this HTTP header. This IP address will then
+    be used for monitoring and logging. Retain the default value <tt>X-Client-IP</tt>
+    or specify another value; for example, <tt>X-Forwarded-For</tt> .
+  cli_alias: http-client-ip-label
+- name: HTTPLogCorIDLabel
+  type: String
+  default: X-Global-Transaction-ID
+  description: Enter the name of an HTTP Header to read to determine the global transaction
+    ID for chained services. This value defaults to X-Global-Transaction-ID.
+  cli_alias: http-global-tranID-label
+- name: DebugMode
+  type: String
+  enum:
+  - 'on'
+  - 'off'
+  - unbounded
+  default: 'off'
+  description: <p>Select the diagnostic mode for processing policies. When enabled,
+    you can view details about the state of variables and contexts for a captured
+    transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction
+    diagnostic mode is not intended for use in a production environment. Transaction
+    diagnostic mode consumes significant resources that can slow down transaction
+    processing.</p>
+  cli_alias: debug-mode
+- name: DebugHistory
+  type: Int64
+  minimum: 10
+  maximum: 250
+  default: 25
+  description: Set the number of records for transaction diagnostic mode in the probe.
+    Enter a value in the range 10 - 250. The default value is 25.
+  cli_alias: debug-history

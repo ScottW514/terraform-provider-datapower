@@ -3,13 +3,13 @@
 page_title: "datapower_ldapconnectionpool Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  LDAP connection pool
+  The LDAP connection pool settings specify the pool of LDAP servers to use.
   CLI Alias: ldap-connection-pool
 ---
 
 # datapower_ldapconnectionpool (Resource)
 
-LDAP connection pool
+The LDAP connection pool settings specify the pool of LDAP servers to use.
   - CLI Alias: `ldap-connection-pool`
 
 ## Example Usage
@@ -32,15 +32,15 @@ resource "datapower_ldapconnectionpool" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `idle_timeout` (Number) Idle timeout
+- `idle_timeout` (Number) Specify the duration in seconds that an LDAP connection can remain idle before the connection is removed from the pool. Enter a value in the range 1-86400. The default value is 120.
   - CLI Alias: `idle-timeout`
   - Range: `1`-`86400`
   - Default value: `120`
-- `max_pool_size` (Number) Max pool size
+- `max_pool_size` (Number) Specify the maximum number of LDAP connections that can exist for a server:port:BindDN combination in an LDAP connection pool. Enter a value in the range 1-2000. The default value is 35.
   - CLI Alias: `max-pool-size`
   - Range: `1`-`2000`
   - Default value: `35`
-- `reject_on_pool_limit` (Boolean) Reject on pool limit
+- `reject_on_pool_limit` (Boolean) Specify whether to reject an incoming LDAP connection when the LDAP connection pool reaches the maximum pool size for a server:port:BindDN combination.
   - CLI Alias: `reject-on-pool-limit`
   - Default value: `false`
 - `user_summary` (String) Comments

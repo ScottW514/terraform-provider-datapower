@@ -1,79 +1,92 @@
 name: StatelessTCPSourceProtocolHandler
-description: 'Stateless raw XML handler'
-cli_alias: 'source-raw'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/StatelessTCPSourceProtocolHandler'
+description: <p>The configuration for the stateless TCP handler. This protocol uses
+  raw XML - where the close of the root node delineates the document - PI and comments
+  outside of the root node are not allowed.</p>
+cli_alias: source-raw
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/StatelessTCPSourceProtocolHandler
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestStatelessTCPSourceProtocolHandler"'
-    test_expect_ds: '"AccTest_StatelessTCPSourceProtocolHandler"'
-    example: 'StatelessTCPSourceProtocolHandlerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local IP address'
-    cli_alias: local-address
-  - name: LocalPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 4000
-    description: 'Port'
-    cli_alias: port
-  - name: PersistentConnections
-    type: Bool
-    default: true
-    description: 'Persistent connections'
-    cli_alias: persistent-connections
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: ACL
-    type: String
-    reference_to: AccessControlList
-    description: 'Access control list'
-    cli_alias: acl
-  - name: SSLServerConfigType
-    type: String
-    enum:
-      - 'server'
-      - 'sni'
-    default: 'server'
-    description: 'TLS server type'
-    cli_alias: ssl-config-type
-  - name: SSLServer
-    type: String
-    reference_to: SSLServerProfile
-    description: 'TLS server profile'
-    cli_alias: ssl-server
-  - name: SSLSNIServer
-    type: String
-    reference_to: SSLSNIServerProfile
-    description: 'TLS SNI server profile'
-    cli_alias: ssl-sni-server
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestStatelessTCPSourceProtocolHandler"'
+  test_expect_ds: '"AccTest_StatelessTCPSourceProtocolHandler"'
+  example: StatelessTCPSourceProtocolHandlerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: The address on which the service listens. The default of 0.0.0.0 indicates
+    that the service is active on all addresses. Click Select Alias to use an alias
+    for this value. Local host aliases help to ease migration tasks between machines.
+    See Local Host Alias under Networking for more.
+  cli_alias: local-address
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 4000
+  description: An integer (within the range 1 through 65535, with a default of 4000)
+    that specifies the port monitored by the service.
+  cli_alias: port
+- name: PersistentConnections
+  type: Bool
+  default: true
+  description: Enable or disable persistent connections where appropriate the front
+    end.
+  cli_alias: persistent-connections
+- name: ACL
+  type: String
+  reference_to: AccessControlList
+  description: This Access Control List will be used to allow or deny access to this
+    service based on the IP address of the client. When attached to a service, an
+    Access Control List (ACL) denies all access by default. To deny access to only
+    selected addresses, first grant access to all addresses (allow 0.0.0.0) and then
+    create deny entries for the desired hosts.
+  cli_alias: acl
+- name: SSLServerConfigType
+  type: String
+  enum:
+  - server
+  - sni
+  default: server
+  description: The TLS profile type to secure connections between clients and the
+    DataPower Gateway.
+  cli_alias: ssl-config-type
+- name: SSLServer
+  type: String
+  reference_to: SSLServerProfile
+  description: The TLS server profile to secure connections between clients and the
+    DataPower Gateway.
+  cli_alias: ssl-server
+- name: SSLSNIServer
+  type: String
+  reference_to: SSLSNIServerProfile
+  description: The TLS SNI server profile to secure connections between clients and
+    the DataPower Gateway.
+  cli_alias: ssl-sni-server

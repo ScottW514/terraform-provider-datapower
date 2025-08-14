@@ -1,67 +1,75 @@
 name: PolicyAttachments
-description: 'Policy Attachment'
-cli_alias: 'policy-attachments'
-cmd_group: 'webservice'
-rest_endpoint: '/mgmt/config/{domain}/PolicyAttachments'
+description: Create and configure ws-policy attachments for WSDLs
+cli_alias: policy-attachments
+cmd_group: webservice
+rest_endpoint: /mgmt/config/{domain}/PolicyAttachments
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestPolicyAttachments"'
-    test_expect_ds: '"AccTest_PolicyAttachments"'
-    example: 'PolicyAttachmentsName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: EnforcementMode
-    type: String
-    enum:
-      - 'filter'
-      - 'enforce'
-    required: true
-    default: 'enforce'
-    description: 'Policy Enforcement Mode'
-    cli_alias: enforcement-mode
-  - name: PolicyReferences
-    type: Bool
-    default: false
-    required: true
-    description: 'Policy References'
-    cli_alias: policy-references
-  - name: IgnoredPolicyAttachmentPoints
-    type: List
-    element_type: DmPolicyAttachmentPoint
-    description: 'Ignore Embedded Policy'
-    cli_alias: ignore-attachment-point
-  - name: ExternalPolicy
-    type: List
-    element_type: DmExternalAttachedPolicy
-    description: 'External Policy'
-    cli_alias: external-policy
-  - name: SLAEnforcementMode
-    type: String
-    enum:
-      - 'allow-if-no-sla'
-      - 'reject-if-no-sla'
-    required: true
-    default: 'allow-if-no-sla'
-    description: 'SLA Enforcement Mode'
-    cli_alias: sla-enforcement-mode
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestPolicyAttachments"'
+  test_expect_ds: '"AccTest_PolicyAttachments"'
+  example: PolicyAttachmentsName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: EnforcementMode
+  type: String
+  enum:
+  - filter
+  - enforce
+  required: true
+  default: enforce
+  description: Enforcement Mode defines how the service uses WS-Policy to ensure that
+    messages meet security requirements. The default behavior is enforce.
+  cli_alias: enforcement-mode
+- name: PolicyReferences
+  type: Bool
+  default: false
+  required: true
+  description: Enable policies attached to WSDL using PolicyURI attributes and PolicyReference
+    elements. These attachments are sometimes called XML element attachments. If 'off',
+    all PolicyURI attributes and PolicyReference elements are ignored and only external
+    policies are enforced.
+  cli_alias: policy-references
+- name: IgnoredPolicyAttachmentPoints
+  type: List
+  element_type: DmPolicyAttachmentPoint
+  description: Disable all policies attached by policy references at a configured
+    attachment point leaving other policy references intact.
+  cli_alias: ignore-attachment-point
+- name: ExternalPolicy
+  type: List
+  element_type: DmExternalAttachedPolicy
+  description: Associate an external policy with a service.
+  cli_alias: external-policy
+- name: SLAEnforcementMode
+  type: String
+  enum:
+  - allow-if-no-sla
+  - reject-if-no-sla
+  required: true
+  default: allow-if-no-sla
+  description: SLA Enforcement Mode controls the application of SLA Policies to transactions.
+    Transactions are either allowed or rejected based on whether an SLA rule is applied
+    to the transaction.
+  cli_alias: sla-enforcement-mode

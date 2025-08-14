@@ -3,12 +3,12 @@
 page_title: "datapower_amqpsourceprotocolhandler Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  AMQP handler
+  In AMQP, distributed source and target termini are managed by a broker. The broker periodically monitors and polls termini. The broker ensures that sent messages are directed to the correct target terminus or are routed to another server. The AMQP broker configuration corresponds to an AMQP broker that is running on another host in the network.
 ---
 
 # datapower_amqpsourceprotocolhandler (Data Source)
 
-AMQP handler
+In AMQP, distributed source and target termini are managed by a broker. The broker periodically monitors and polls termini. The broker ensures that sent messages are directed to the correct target terminus or are routed to another server. The AMQP broker configuration corresponds to an AMQP broker that is running on another host in the network.
 
 ## Example Usage
 
@@ -40,10 +40,10 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `broker` (String) AMQP broker
-- `credit` (Number) Credit
+- `credit` (Number) Specify the number of concurrent messages that a receiver can handle. The minimum value is 1. The default value is 100.
 - `from` (String) Source terminus
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ignore_reply_to` (Boolean) Ignore reply-to
+- `ignore_reply_to` (Boolean) <p>Specify whether to ignore the AMQP <tt>reply-to</tt> property. The default behavior is to ignore the property. <ul><li>When enabled, ignore the <tt>reply-to</tt> address when sending an AMQP response message.</li><li>When disabled, use the <tt>reply-to</tt> address instead of the address of the target terminus.</li></ul></p>
 - `to` (String) Target terminus
 - `user_summary` (String) Comments
 

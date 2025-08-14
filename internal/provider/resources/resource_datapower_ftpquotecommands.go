@@ -54,7 +54,7 @@ func (r *FTPQuoteCommandsResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *FTPQuoteCommandsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("FTP Quoted Commands", "ftp-quote-command-list", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The configturation creates a named list of FTP commands to be quoted to a remote FTP server before a file transfer. These commands are referenced by the FTP Policies section of a User Agent configuration.", "ftp-quote-command-list", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *FTPQuoteCommandsResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"ftp_quoted_commands": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Quoted Commands", "quoted-command", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The list of commands to send to the remote FTP server.", "quoted-command", "").String,
 				NestedObject:        models.DmFTPQuotedCommandResourceSchema,
 				Optional:            true,
 			},

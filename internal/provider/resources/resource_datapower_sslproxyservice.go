@@ -58,7 +58,7 @@ func (r *SSLProxyServiceResource) Metadata(ctx context.Context, req resource.Met
 
 func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("TLS proxy service", "sslforwarder", "").AddActions("quiesce").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>Creates a TLS proxy service. This service can be used to wrap or unwrap a TCP stream in TLS.</p><p>This service requires TLS profiles to secure the connections.</p><ul><li>When the system is a client, use a TLS client profile to secure connections with targets.</li><li>When the system is a server, use a a TLS server profile to secure connections with clients. When the server supports Server Name Indication (SNI), use a TLS SNI server profile.</li><li>When the system is both client and server, use TLS client and server profiles to secure both connections.</li></ul>", "sslforwarder", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -116,7 +116,7 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"front_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client-side timeout", "front-timeout", "").AddIntegerRange(0, 86400).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time in seconds for client connections. This timer monitors the idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The value of 0 indicates that the timer is disabled. The default value is 0.", "front-timeout", "").AddIntegerRange(0, 86400).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -126,7 +126,7 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Default: int64default.StaticInt64(0),
 			},
 			"back_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Server-side timeout", "back-timeout", "").AddIntegerRange(0, 86400).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum idle time for server connections. This timer monitors the idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The value of 0 indicates that the timer is disabled. The default value is 0.", "back-timeout", "").AddIntegerRange(0, 86400).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -136,7 +136,7 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Default: int64default.StaticInt64(0),
 			},
 			"conn_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Transaction timeout", "connection-timeout", "").AddIntegerRange(0, 86400).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in seconds for transactions. This timer monitors the duration of end-to-end transactions. If the specified connection time is exceeded, the client connection is torn down. Enter a value in the range of 0 - 86400. The value of 0 indicates that the timer is disabled. The default value is 0.", "connection-timeout", "").AddIntegerRange(0, 86400).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -146,7 +146,7 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Default: int64default.StaticInt64(0),
 			},
 			"conn_limit": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max client connections", "maximum-connections", "").AddIntegerRange(0, 65535).AddDefaultValue("100").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of concurrent client connections. Enter a value in the range of 0 - 65535. The value of 0 indicates an unlimited number of connections. The default value is 100.", "maximum-connections", "").AddIntegerRange(0, 65535).AddDefaultValue("100").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -177,7 +177,7 @@ func (r *SSLProxyServiceResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),

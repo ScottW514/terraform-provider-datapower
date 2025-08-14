@@ -1,60 +1,69 @@
 name: APISecurityHTTPScheme
-description: 'API security HTTP scheme'
-cli_alias: 'api-sec-http-scheme'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APISecurityHTTPScheme'
+description: 'Configure and manage an HTTP bearer authentication security definition
+  with the Bearer authentication security scheme in an API as defined in OpenAPI 3.0.
+  Bearer authentication is an HTTP Authentication scheme and was originally part of
+  RFC 6750: The OAuth 2.0 Authorization Framework: Bearer Token Usage.'
+cli_alias: api-sec-http-scheme
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APISecurityHTTPScheme
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPISecurityHTTPScheme"'
-    test_expect_ds: '"AccTest_APISecurityHTTPScheme"'
-    example: 'APISecurityHTTPSchemeName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Scheme
-    type: String
-    enum:
-      - 'bearer'
-    description: 'Scheme'
-    cli_alias: http-scheme
-  - name: BearerFormat
-    type: String
-    description: 'Bearer format'
-    cli_alias: bearer-format
-  - name: BearerValidationMethod
-    type: String
-    enum:
-      - 'external-url'
-      - 'udp'
-      - 'none'
-    description: 'Bearer validation method'
-    cli_alias: bearer-validation-method
-  - name: BearerValidationEndpoint
-    type: String
-    description: 'Bearer validation endpoint'
-    cli_alias: bearer-validation-endpoint
-  - name: BearerValidationTLSProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'Bearer validation TLS profile'
-    cli_alias: bearer-validation-tls-profile
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPISecurityHTTPScheme"'
+  test_expect_ds: '"AccTest_APISecurityHTTPScheme"'
+  example: APISecurityHTTPSchemeName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Scheme
+  type: String
+  enum:
+  - bearer
+  description: Specify the HTTP authentication security scheme. The only supported
+    value is <tt>bearer</tt> .
+  cli_alias: http-scheme
+- name: BearerFormat
+  type: String
+  description: Specify how the bearer token is formatted. The format is primarily
+    a hint.
+  cli_alias: bearer-format
+- name: BearerValidationMethod
+  type: String
+  enum:
+  - external-url
+  - udp
+  - none
+  description: Bearer validation method
+  cli_alias: bearer-validation-method
+- name: BearerValidationEndpoint
+  type: String
+  description: Specify the URL of the validation endpoint. When this connection uses
+    the HTTPS protocol, specify the TLS client profile to secure the connection.
+  cli_alias: bearer-validation-endpoint
+- name: BearerValidationTLSProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: Specify the TLS client profile to secure the connection to the validation
+    endpoint. You must specify a client profile when you connect to the validation
+    endpoint with the HTTPS protocol.
+  cli_alias: bearer-validation-tls-profile

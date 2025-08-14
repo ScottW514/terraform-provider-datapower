@@ -1,44 +1,49 @@
 name: APIAuthURLRegistry
-description: 'API authentication URL registry'
-cli_alias: 'api-auth-url-reg'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APIAuthURLRegistry'
+description: Configure and manage the API authentication URL registry.
+cli_alias: api-auth-url-reg
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APIAuthURLRegistry
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPIAuthURLRegistry"'
-    test_expect_ds: '"AccTest_APIAuthURLRegistry"'
-    example: 'APIAuthURLRegistryName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: AuthURL
-    type: String
-    required: true
-    description: 'Authentication URL'
-    cli_alias: auth-url
-    example: 'http://localhost'
-  - name: TLSClientProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: tls-client
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPIAuthURLRegistry"'
+  test_expect_ds: '"AccTest_APIAuthURLRegistry"'
+  example: APIAuthURLRegistryName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: AuthURL
+  type: String
+  required: true
+  description: Specify the URL of the authentication endpoint to authenticate credentials.
+    The user credentials in the authorization header are validated by the authentication
+    endpoint. When the user is authenticated, DataPower expects the authentication
+    endpoint to return an HTTP 200 status code. All other status codes result in an
+    authentication failure, and access is denied.
+  cli_alias: auth-url
+  example: http://localhost
+- name: TLSClientProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: tls-client

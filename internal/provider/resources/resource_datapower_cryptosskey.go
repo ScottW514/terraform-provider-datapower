@@ -54,7 +54,7 @@ func (r *CryptoSSKeyResource) Metadata(ctx context.Context, req resource.Metadat
 
 func (r *CryptoSSKeyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key", "sskey", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A shared secret key is a sequence of characters that is pre-shared between users for use with symmetric encryption.", "sskey", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -79,7 +79,7 @@ func (r *CryptoSSKeyResource) Schema(ctx context.Context, req resource.SchemaReq
 				},
 			},
 			"filename": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("File name", "file-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the file that contains the shared secret key. If the file begins with <tt>0x</tt> , processing assumes that the rest of the file contains bytes in hex. You can access the file in the <tt>cert:</tt> or <tt>local:</tt> directory. <p><b>Attention:</b> Any file in the <tt>local:</tt> directory can be downloaded or included in an export. Therefore, consider whether to store crypto files in this directory.</p>", "file-name", "").String,
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -51,10 +51,10 @@ func (d *SNMPSettingsDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *SNMPSettingsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SNMP Settings (`default` domain only)",
+		MarkdownDescription: "Use this page to establish SNMP connectivity to the device, and to set values used by SNMP.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -62,11 +62,11 @@ func (d *SNMPSettingsDataSource) Schema(ctx context.Context, req datasource.Sche
 				Computed:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: "Local IP Address",
+				MarkdownDescription: "A specific IP address monitored by the SNMP agent or engine for incoming SNMP requests. The default value of 0.0.0.0 allows the agent or engine to listen on all interfaces. Selecting the address of one interface restricts SNMP to that interface.",
 				Computed:            true,
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: "Local Port",
+				MarkdownDescription: "A specific UDP port monitored by the SNMP agent or engine for incoming SNMP requests. By default, the agent or engine monitors port 161.",
 				Computed:            true,
 			},
 			"policies": schema.ListNestedAttribute{
@@ -85,33 +85,33 @@ func (d *SNMPSettingsDataSource) Schema(ctx context.Context, req datasource.Sche
 				Computed:            true,
 			},
 			"users": schema.ListAttribute{
-				MarkdownDescription: "SNMPv3 Users",
+				MarkdownDescription: "The name of a user (which must have SNMP credential parameters) which is authorized to use SNMPv3 to access the MIBs on this system.",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"contexts": schema.ListNestedAttribute{
-				MarkdownDescription: "SNMPv3 Contexts",
+				MarkdownDescription: "SNMPv3 context definitions, which provide SNMPv3 access to non-default application domains.",
 				NestedObject:        models.DmSnmpContextDataSourceSchema,
 				Computed:            true,
 			},
 			"security_level": schema.StringAttribute{
-				MarkdownDescription: "SNMPv3 Security Level",
+				MarkdownDescription: "The minimum security level required for incoming SNMPv3 Get and Set requests. The default is Authentication, Privacy.",
 				Computed:            true,
 			},
 			"access_level": schema.StringAttribute{
-				MarkdownDescription: "SNMPv3 Access Level",
+				MarkdownDescription: "The type of access allowed to MIB objects for incoming SNMPv3 Get and Set requests.",
 				Computed:            true,
 			},
 			"enable_default_trap_subscriptions": schema.BoolAttribute{
-				MarkdownDescription: "Enable Default Event Subscriptions",
+				MarkdownDescription: "Enable or Disable the default list of event codes that generate traps. The default is Enable Trap Subscriptions.",
 				Computed:            true,
 			},
 			"trap_priority": schema.StringAttribute{
-				MarkdownDescription: "Minimum Priority",
+				MarkdownDescription: "Select a minimum trap event priority. The priorities are hierarchical. The lowest is listed last. Set to the minimum that is required for your trap events.",
 				Computed:            true,
 			},
 			"trap_event_code": schema.ListAttribute{
-				MarkdownDescription: "Event Subscriptions",
+				MarkdownDescription: "The list of event codes generating traps. You can add event codes which will be triggering traps send to the configured trap targets.",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},

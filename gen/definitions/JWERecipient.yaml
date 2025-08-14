@@ -1,64 +1,66 @@
 name: JWERecipient
-description: 'JWE Recipient'
-cli_alias: 'jwe-recipient'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/JWERecipient'
+description: JWE recipient object includes several values required by the JWE JSON
+  Serialization object.
+cli_alias: jwe-recipient
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/JWERecipient
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestJWERecipient"'
-    test_expect_ds: '"AccTest_JWERecipient"'
-    example: 'JWERecipientName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Algorithm
-    type: String
-    enum:
-      - 'RSA1_5'
-      - 'RSA-OAEP'
-      - 'RSA-OAEP-256'
-      - 'A128KW'
-      - 'A192KW'
-      - 'A256KW'
-      - 'dir'
-    required: true
-    default: 'RSA1_5'
-    description: 'Algorithm'
-    cli_alias: alg
-  - name: SSKey
-    type: String
-    reference_to: CryptoSSKey
-    description: 'Shared Secret Key'
-    cli_alias: sskey
-  - name: Certificate
-    type: String
-    reference_to: CryptoCertificate
-    test_value: '"TestAcc_CryptoCertificate"'
-    test_bed_value: 'datapower_cryptocertificate.acc_test.id'
-    description: 'Certificate'
-    cli_alias: cert
-  - name: UnprotectedHeader
-    type: List
-    element_type: DmJOSEHeader
-    description: 'Unprotected Header'
-    cli_alias: unprotected-header
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestJWERecipient"'
+  test_expect_ds: '"AccTest_JWERecipient"'
+  example: JWERecipientName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the configuration.
+  cli_alias: summary
+- name: Algorithm
+  type: String
+  enum:
+  - RSA1_5
+  - RSA-OAEP
+  - RSA-OAEP-256
+  - A128KW
+  - A192KW
+  - A256KW
+  - dir
+  required: true
+  default: RSA1_5
+  description: JWE key management algorithm for the JWE recipient.
+  cli_alias: alg
+- name: SSKey
+  type: String
+  reference_to: CryptoSSKey
+  description: Shared secret key.
+  cli_alias: sskey
+- name: Certificate
+  type: String
+  reference_to: CryptoCertificate
+  test_value: '"TestAcc_CryptoCertificate"'
+  test_bed_value: datapower_cryptocertificate.acc_test.id
+  description: Certificate.
+  cli_alias: cert
+- name: UnprotectedHeader
+  type: List
+  element_type: DmJOSEHeader
+  description: Unprotected header for the JWE recipient.
+  cli_alias: unprotected-header

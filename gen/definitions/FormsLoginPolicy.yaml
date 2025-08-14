@@ -1,170 +1,221 @@
 name: FormsLoginPolicy
-description: 'HTML forms login policy'
-cli_alias: 'forms-login-policy'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/FormsLoginPolicy'
+description: Define the policy for HTML form behavior. This policy identifies the
+  location of the HTML login, logout, and error pages.
+cli_alias: forms-login-policy
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/FormsLoginPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestFormsLoginPolicy"'
-    test_expect_ds: '"AccTest_FormsLoginPolicy"'
-    example: 'FormsLoginPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: LoginForm
-    type: String
-    required: true
-    default: '/LoginPage.htm'
-    description: 'Login'
-    cli_alias: login-url
-  - name: UseCookieAttributes
-    type: Bool
-    bool_type: 'flag'
-    required: true
-    default: false
-    description: 'Attach cookie attribute policy'
-    cli_alias: use-cookie-attribute
-  - name: CookieAttributes
-    type: String
-    reference_to: CookieAttributePolicy
-    description: 'Cookie attributes'
-    cli_alias: cookie-attributes
-  - name: UseSSLForLogin
-    type: Bool
-    default: true
-    description: 'Use TLS for Login'
-    cli_alias: use-ssl
-  - name: EnableMigration
-    type: Bool
-    default: false
-    required: true
-    description: 'Enable session migration'
-    cli_alias: enable-migration
-  - name: SSLPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    default: 8080
-    description: 'TLS port'
-    cli_alias: ssl-port
-  - name: SharedSecret
-    type: String
-    reference_to: CryptoSSKey
-    description: 'Shared secret'
-    cli_alias: shared-secret
-  - name: ErrorPage
-    type: String
-    required: true
-    default: '/ErrorPage.htm'
-    description: 'Error'
-    cli_alias: error-url
-  - name: LogoutPage
-    type: String
-    required: true
-    default: '/LogoutPage.htm'
-    description: 'Logout'
-    cli_alias: logout-url
-  - name: DefaultURL
-    type: String
-    required: true
-    default: '/'
-    description: 'Default'
-    cli_alias: default-url
-  - name: FormsLocation
-    type: String
-    enum:
-      - 'backend'
-      - 'appliance'
-    default: 'backend'
-    description: 'Forms storage location'
-    cli_alias: forms-location
-  - name: LocalLoginForm
-    type: String
-    default: 'store:///LoginPage.htm'
-    description: 'Local login form'
-    cli_alias: local-login-page
-  - name: LocalErrorPage
-    type: String
-    default: 'store:///ErrorPage.htm'
-    description: 'Local error page'
-    cli_alias: local-error-page
-  - name: LocalLogoutPage
-    type: String
-    default: 'store:///LogoutPage.htm'
-    description: 'Local logout page'
-    cli_alias: local-logout-page
-  - name: UsernameField
-    type: String
-    required: true
-    default: 'j_username'
-    description: 'Username field name'
-    cli_alias: username-field
-  - name: PasswordField
-    type: String
-    required: true
-    default: 'j_password'
-    description: 'Password field name'
-    cli_alias: password-field
-  - name: RedirectField
-    type: String
-    required: true
-    default: 'originalUrl'
-    description: 'Target URL field name'
-    cli_alias: redirect-field
-  - name: FormProcessingURL
-    type: String
-    required: true
-    default: '/j_security_check'
-    description: 'Form POST action URL'
-    cli_alias: post-action-url
-  - name: InactivityTimeout
-    type: Int64
-    default: 600
-    description: 'Inactivity timeout'
-    cli_alias: inactivity-timeout
-  - name: SessionLifetime
-    type: Int64
-    default: 10800
-    description: 'Session lifetime'
-    cli_alias: session-lifetime
-  - name: RedirectURLType
-    type: String
-    enum:
-      - 'urlin'
-      - 'host'
-    default: 'urlin'
-    description: 'Redirect URL Type'
-    cli_alias: redirect-url-type
-  - name: FormSupportType
-    type: String
-    enum:
-      - 'static'
-      - 'custom'
-    default: 'static'
-    description: 'Source for form processing'
-    cli_alias: support-type
-  - name: FormSupportScript
-    type: String
-    default: 'store:///Form-Generate-HTML.xsl'
-    description: 'Custom processing for form'
-    cli_alias: script-location
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestFormsLoginPolicy"'
+  test_expect_ds: '"AccTest_FormsLoginPolicy"'
+  example: FormsLoginPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: LoginForm
+  type: String
+  required: true
+  default: /LoginPage.htm
+  description: Specify the URL fragment of the login page on the application server.
+    This page collects username and password information. The default value is <tt>/LoginPage.htm</tt>
+    .
+  cli_alias: login-url
+- name: UseCookieAttributes
+  type: Bool
+  bool_type: flag
+  required: true
+  default: false
+  description: Whether to attach a cookie attribute policy to allow predefined or
+    custom attributes to be included in the forms login cookie. If you do not use
+    a cookie attribute policy, the configuration use the properties of the forms login
+    policy. By default, does not attach a cookie attribute policy.
+  cli_alias: use-cookie-attribute
+- name: CookieAttributes
+  type: String
+  reference_to: CookieAttributePolicy
+  description: Specify the cookie attribute policy that allows predefined or custom
+    attributes to be included in forms login cookie. <ul><li><tt>Max-Age</tt> overrides
+    inactivity timeout and session lifetime.</li><li><tt>Path</tt> replaces the form
+    POST action URL.</li><li><tt>Secure</tt> replaces the use TLS for login.</li></ul>
+  cli_alias: cookie-attributes
+- name: UseSSLForLogin
+  type: Bool
+  default: true
+  description: Specify whether to use TLS for login transactions. By default, uses
+    TLS.
+  cli_alias: use-ssl
+- name: EnableMigration
+  type: Bool
+  default: false
+  required: true
+  description: Specify whether users need to reauthenticate if their session moves
+    to another member in the standby group if the current member becomes unavailable.
+    Whether another member is available depends on the standby control configuration.
+    In a standby configuration, each member must use the same shared secret. By default,
+    session migration is enabled.
+  cli_alias: enable-migration
+- name: SSLPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  default: 8080
+  description: Specify the listening port to secure TLS redirection during the login
+    transaction. The default value is 8080.
+  cli_alias: ssl-port
+- name: SharedSecret
+  type: String
+  reference_to: CryptoSSKey
+  description: Specify the shared secret that protects cookies. The shared secret
+    key protects cookies that the service generates and consumes. If allowed, all
+    members in the standby group must use the same shared secret.
+  cli_alias: shared-secret
+- name: ErrorPage
+  type: String
+  required: true
+  default: /ErrorPage.htm
+  description: Specify the URL fragment of the error page on the application server.
+    This fragment is relative to the root directory. With the address of the service,
+    the URL fragment forms the complete URL of the error page on the application server.
+    The default value is <tt>/ErrorPage.htm</tt> .
+  cli_alias: error-url
+- name: LogoutPage
+  type: String
+  required: true
+  default: /LogoutPage.htm
+  description: Specify the URL fragment of the logout page on the application server.
+    This fragment is relative to the root directory. With the address of the service,
+    the URL fragment forms the complete URL of the logout page on the application
+    server. An empty string disables logout. The default value is <tt>/LogoutPage.htm</tt>
+    .
+  cli_alias: logout-url
+- name: DefaultURL
+  type: String
+  required: true
+  default: /
+  description: Specify the URL fragment on the application server to go to after a
+    successful login. The field is only used when the user was not redirected to the
+    login page. This fragment is relative to the root directory. The URL fragment
+    with the address of the service forms the complete URL of the default page for
+    the application. The default value is <tt>/</tt> .
+  cli_alias: default-url
+- name: FormsLocation
+  type: String
+  enum:
+  - backend
+  - appliance
+  default: backend
+  description: Specify the location to retrieve HTML pages. These pages can be on
+    the DataPower Gateway or on an application server. The default value is from an
+    application server.
+  cli_alias: forms-location
+- name: LocalLoginForm
+  type: String
+  default: store:///LoginPage.htm
+  description: Specify the location of the login form on the DataPower Gateway. The
+    default value is <tt>store:///LoginPage.htm</tt> .
+  cli_alias: local-login-page
+- name: LocalErrorPage
+  type: String
+  default: store:///ErrorPage.htm
+  description: Specify the location of the error page on the DataPower Gateway. The
+    default value is <tt>store:///ErrorPage.htm</tt> .
+  cli_alias: local-error-page
+- name: LocalLogoutPage
+  type: String
+  default: store:///LogoutPage.htm
+  description: Specify the location of the logout page on the DataPower Gateway. The
+    default value is <tt>store:///LogoutPage.htm</tt> .
+  cli_alias: local-logout-page
+- name: UsernameField
+  type: String
+  required: true
+  default: j_username
+  description: Specify the attribute value of the username field. The default value
+    is <tt>j_username</tt> .
+  cli_alias: username-field
+- name: PasswordField
+  type: String
+  required: true
+  default: j_password
+  description: Specify the attribute value of the password field. The default value
+    is <tt>j_password</tt> .
+  cli_alias: password-field
+- name: RedirectField
+  type: String
+  required: true
+  default: originalUrl
+  description: Specify the attribute value for the hidden field that contains the
+    target URL. If an unauthenticated user attempts to access a secured page, the
+    application server displays the login page. The login form contains a hidden field
+    to collect the URL of the secured page that the user attempted to access. After
+    authentication, the application server displays the secured page. The default
+    value is <tt>originalUrl</tt> .
+  cli_alias: redirect-field
+- name: FormProcessingURL
+  type: String
+  required: true
+  default: /j_security_check
+  description: Specify the processing URL fragment where the login form posts information.
+    The default value is <tt>/j_security_check</tt> .
+  cli_alias: post-action-url
+- name: InactivityTimeout
+  type: Int64
+  default: 600
+  description: Specify the duration in seconds for an inactive session. The default
+    value is 600. A value of 0 disables the timer.
+  cli_alias: inactivity-timeout
+- name: SessionLifetime
+  type: Int64
+  default: 10800
+  description: Specify the maximum duration in seconds before the user must reauthentication.
+    The default value is 10800. The minimum value is 1. The special value of 0 sets
+    the value to the default value of 10800.
+  cli_alias: session-lifetime
+- name: RedirectURLType
+  type: String
+  enum:
+  - urlin
+  - host
+  default: urlin
+  description: Specify how to retrieve host information for URL redirects. By default,
+    uses the variable value.
+  cli_alias: redirect-url-type
+- name: FormSupportType
+  type: String
+  enum:
+  - static
+  - custom
+  default: static
+  description: Specify whether to use static HTML pages or a custom file to generate
+    the HTML pages. By default, uses static pages from an explicit location.
+  cli_alias: support-type
+- name: FormSupportScript
+  type: String
+  default: store:///Form-Generate-HTML.xsl
+  description: Specify the location of the custom file that generates the HTML pages.
+    This stylesheet or GatewayScript file must generate the following pages. <ul><li>A
+    login form request to generate a login form with the <tt>login</tt> operation.</li><li>A
+    logout page request to generate a logout page with the <tt>logout</tt> operation.</li><li>An
+    error page request to generate an error page with the <tt>error</tt> operation.</li></ul>
+  cli_alias: script-location

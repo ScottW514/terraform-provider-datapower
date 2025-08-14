@@ -52,13 +52,13 @@ func (r *CRLFetchResource) Schema(ctx context.Context, req resource.SchemaReques
 		MarkdownDescription: tfutils.NewAttributeDescription("CRL Retrieval (`default` domain only)", "crl", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"crl_fetch_config": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CRL update policy", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Define the configuration of an HTTP-enabled or an LDAP-enabled CRL (Certificate Revocation List) update policy. When HTTP, specify the Fetch URL. When LDAP, specify the LDAP bind information. For both, specify the validation credentials.", "", "").String,
 				NestedObject:        models.DmCRLFetchConfigResourceSchema,
 				Optional:            true,
 			},

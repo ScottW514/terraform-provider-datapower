@@ -1,66 +1,84 @@
 name: DNSNameService
-description: 'DNS settings (`default` domain only)'
-cli_alias: 'dns'
-cmd_group: 'network'
-rest_endpoint: '/mgmt/config/default/DNSNameService/Main-Name-Service'
+description: Configure the DNS client with the DNS servers to contact to resolve hostnames
+  to IP addresses.
+cli_alias: dns
+cmd_group: network
+rest_endpoint: /mgmt/config/default/DNSNameService/Main-Name-Service
 update_only: true
 default_domain_only: true
 skip_test: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: SearchDomains
-    type: List
-    element_type: DmSearchDomain
-    description: 'Search domains'
-    cli_alias: search-domain
-  - name: NameServers
-    type: List
-    element_type: DmNameServer
-    description: 'DNS servers'
-    cli_alias: name-server
-  - name: StaticHosts
-    type: List
-    element_type: DmStaticHost
-    description: 'Static hosts'
-    cli_alias: static-host
-  - name: IPPreference
-    type: String
-    enum:
-      - '4'
-      - '6'
-    description: 'IP preference'
-    cli_alias: ip-preference
-  - name: ForceIPPreference
-    type: Bool
-    default: false
-    description: 'Force IP preference'
-    cli_alias: force-ip-preference
-  - name: LoadBalanceAlgorithm
-    type: String
-    enum:
-      - 'round-robin'
-      - 'first-alive'
-    required: true
-    default: 'first-alive'
-    description: 'Load distribution algorithm'
-    cli_alias: load-balance
-  - name: MaxRetries
-    type: Int64
-    default: 2
-    description: 'Attempts'
-    cli_alias: retries
-  - name: Timeout
-    type: Int64
-    default: 5
-    description: 'Timeout'
-    cli_alias: timeout
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: SearchDomains
+  type: List
+  element_type: DmSearchDomain
+  description: Specify the list of search domains to resolve partial hostnames.
+  cli_alias: search-domain
+- name: NameServers
+  type: List
+  element_type: DmNameServer
+  description: Specify the list of DNS servers to contact to resolve hostnames. If
+    you define multiple servers, ensure that the sequence to contact the servers is
+    your preferred order.
+  cli_alias: name-server
+- name: StaticHosts
+  type: List
+  element_type: DmStaticHost
+  description: Specify the static map of hostnames to IP addresses that do not use
+    DNS resolution. Because the local resolver uses a cache, static hosts do not improve
+    performance.
+  cli_alias: static-host
+- name: IPPreference
+  type: String
+  enum:
+  - '4'
+  - '6'
+  description: Specify the preferred IP version to resolve hostnames. When a hostname
+    resolves to both IPv4 and IPv6 addresses, this setting determines which version
+    to use.
+  cli_alias: ip-preference
+- name: ForceIPPreference
+  type: Bool
+  default: false
+  description: Specify whether to restrict DNS queries to the preferred IP version
+    to resolve hostnames. You want to force the IP preference except when both IPv4
+    and IPv6 addresses are in use. When not forced, the device resolves each hostname
+    by querying A and AAAA records and waiting for both responses or a timeout. Waiting
+    for the response or timeout for both records can introduce unnecessary latency
+    in DNS resolution.
+  cli_alias: force-ip-preference
+- name: LoadBalanceAlgorithm
+  type: String
+  enum:
+  - round-robin
+  - first-alive
+  required: true
+  default: first-alive
+  description: Specify the load distribution algorithm to resolve hostnames. The default
+    algorithm is first-alive.
+  cli_alias: load-balance
+- name: MaxRetries
+  type: Int64
+  default: 2
+  description: For the first alive algorithm, specify the maximum number of resolution
+    attempts to send a query to the list of name servers before an error is returned.
+    By default, an unacknowledged resolution request is attempted 3 times.
+  cli_alias: retries
+- name: Timeout
+  type: Int64
+  default: 5
+  description: For the first alive algorithm, specify the duration in seconds that
+    the resolver waits for a response from a DNS server. After expiry, the resolver
+    attempts the query to a different DNS server. The default value is 5.
+  cli_alias: timeout

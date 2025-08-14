@@ -55,7 +55,7 @@ func (r *AssemblyActionMapResource) Metadata(ctx context.Context, req resource.M
 
 func (r *AssemblyActionMapResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Map assembly action", "assembly-map", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The map assembly action applies data transformations to the assembly flow according to a specified map file. <p>The map file is automatically created from the map policy specification in the OpenAPI document. The API gateway can process only JSON formatted map files and prepares a valid map file as follows.</p><ol><li>Update the map file by complying with the map file structure.</li><li>For a YAML file, convert it to JSON.</li><li>Import the JSON file to the DataPower <tt>local:</tt> or <tt>temporary:</tt> directory or to one of their subdirectories.</li></ol>", "assembly-map", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -80,10 +80,10 @@ func (r *AssemblyActionMapResource) Schema(ctx context.Context, req resource.Sch
 				},
 			},
 			"location": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Location", "location", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the map file. The file must be in the DataPower <tt>local:</tt> or <tt>temporary:</tt> directory or to one of their subdirectories.", "location", "").String,
 				Required:            true,
 			},
-			"parse_settings_reference": models.GetDmDynamicParseSettingsReferenceResourceSchema("Parse settings", "parse-settings-reference", "", false),
+			"parse_settings_reference": models.GetDmDynamicParseSettingsReferenceResourceSchema("Specify the configuration that defines constraints on documents to parse. You can use one or more of the following methods to specify a configuration. Precedence rules apply when you configure the same aspect of the input document through multiple methods. If you do not specify, the configuration of the default object reference is applied.", "parse-settings-reference", "", false),
 			"user_summary": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
 				Optional:            true,
@@ -93,11 +93,11 @@ func (r *AssemblyActionMapResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 			},
 			"correlation_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Correlation path", "correlation-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.", "correlation-path", "").String,
 				Optional:            true,
 			},
 			"action_debug": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable debugging", "debug", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

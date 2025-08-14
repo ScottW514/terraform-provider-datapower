@@ -3,12 +3,12 @@
 page_title: "datapower_oauthprovidersettings Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  OAuth provider settings
+  An OAuth provider settings configuration defines how a client application is authorized to access resources on behalf of the resource owner.
 ---
 
 # datapower_oauthprovidersettings (Data Source)
 
-OAuth provider settings
+An OAuth provider settings configuration defines how a client application is authorized to access resources on behalf of the resource owner.
 
 ## Example Usage
 
@@ -38,82 +38,82 @@ Optional:
 
 Read-Only:
 
-- `adv_scope_basic_auth_header_name` (String) Basic authentication header name
+- `adv_scope_basic_auth_header_name` (String) Specify the header name to use for sending encoded or non-encoded authentication string in the header. For example, <tt>x-basic-authorization-header</tt> .
 - `adv_scope_basic_auth_password` (String) Basic authentication password
 - `adv_scope_basic_auth_user_name` (String) Basic authentication username
 - `adv_scope_tls_profile` (String) TLS profile to access advanced scope URL
 - `adv_scope_url_security` (Attributes) Advanced scope endpoint security
   - CLI Alias: `advanced-scope-url-security` (see [below for nested schema](#nestedatt--result--adv_scope_url_security))
 - `adv_scope_url_security_enabled` (Boolean) Enable advanced scope endpoint security
-- `adv_scope_validation_enabled` (Boolean) Enable advanced scope validation
-- `advanced_scope_custom_contexts` (String) Response context variables
-- `advanced_scope_custom_headers` (String) Request headers
-- `advanced_scope_url` (String) Advanced scope URL
+- `adv_scope_validation_enabled` (Boolean) Specify whether to enable advanced scope validation that you can use to provide additional scope checking.
+- `advanced_scope_custom_contexts` (String) Specify custom context variables to save headers from the advanced scope validation request. Use a regular expression to include headers from the advanced scope endpoint response.
+- `advanced_scope_custom_headers` (String) Specify the custom headers to send with the advanced scope validation request. Use a regular expression match to include headers from the initial request.
+- `advanced_scope_url` (String) Specify the URL to send scope information for validation. This external endpoint is where the specified scope is verified. You must define this property for advanced scope validation.
 - `advanced_scope_url_override` (Boolean) Use URL from API Security Definition
 - `api_security_token_manager` (String) API security token manager
-- `apic_access_token_ttl` (Number) Access token TTL
-- `apic_auth_code_ttl` (Number) Authorization code TTL
-- `apic_authorize_endpoint` (String) Authorization endpoint
-- `apic_enable_introspection` (Boolean) Enable token introspection
-- `apic_enable_oidc` (Boolean) Enable OIDC
-- `apic_enable_refresh_token` (Boolean) Enable refresh tokens
-- `apic_introspect_endpoint` (String) Introspection endpoint
-- `apic_maximum_consent_ttl` (Number) Consent TTL
+- `apic_access_token_ttl` (Number) Specify the time in seconds that an access token remains valid. The default value is 3600.
+- `apic_auth_code_ttl` (Number) Specify the time in seconds that an authorization code remains valid. The default value is 300.
+- `apic_authorize_endpoint` (String) Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .
+- `apic_enable_introspection` (Boolean) Specify whether to enable the introspection of access tokens. When enabled, authorized protected resources can introspect the access token to determine the metadata for making appropriate authorization decisions. By default, token introspection is disabled.
+- `apic_enable_oidc` (Boolean) Specify whether to enable OIDC to verify the identity of the user. When enabled, the client application verifies the identity of the user based on the requirement of an OIDC provider before requesting access to client resources. By default, OIDC token generation is enabled. OIDC is only available for implicit and AZ code grant types.
+- `apic_enable_refresh_token` (Boolean) Specify whether to enable issuing refresh tokens. Refresh tokens are issued to the client. Refresh tokens are used to obtain a new access token when the current access token becomes invalid, expires, or are used to obtain additional access tokens with identical or narrower scope. By default, this setting is disabled.
+- `apic_introspect_endpoint` (String) Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .
+- `apic_maximum_consent_ttl` (Number) Specify the time in seconds that a consent remains valid. The default value is 0, which disables maximum consent.
 - `apic_one_time_use_accesstoken` (Boolean) One-time use access token
-- `apic_one_time_use_refreshtoken` (Boolean) One-time use refresh token
-- `apic_provider_base_path` (String) Provider base path
-- `apic_refresh_token_limit` (Number) APIC refresh token count
-- `apic_refresh_token_ttl` (Number) Refresh token TTL
-- `apic_require_pkce` (Boolean) Require PKCE
-- `apic_support_pkce` (Boolean) Support PKCE
-- `apic_support_pkce_plain` (Boolean) Support PKCE 'plain' challenge method
-- `apic_token_endpoint` (String) Token endpoint
+- `apic_one_time_use_refreshtoken` (Boolean) Specify whether a refresh tokens is one-time use. <ul><li>When enabled, the refresh token is one-time use. This setting is the default value.</li><li>When disabled, the refresh token can be reused until it expires or is revoked.</li></ul>
+- `apic_provider_base_path` (String) Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .
+- `apic_refresh_token_limit` (Number) Specify the number of refresh tokens to allow to be generated. The default value is 10.
+- `apic_refresh_token_ttl` (Number) Specify the time in seconds that a refresh token remains valid. The default value is 5400.
+- `apic_require_pkce` (Boolean) Specify whether the application must enforce PKCE. For more information, see RFC 7636.
+- `apic_support_pkce` (Boolean) Specify whether the application should enforce PKCE if provided by the client. For more information, see RFC 7636.
+- `apic_support_pkce_plain` (Boolean) Specify whether to support the PKCE <tt>plain</tt> code challenge transform method. For more information, see RFC 7636.
+- `apic_token_endpoint` (String) Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .
 - `apic_token_secret` (String) Token secret
 - `apic_token_type_to_generate` (String) Type of token to generate
 - `apicoidc_hybrid_response_types` (Attributes) OIDC Hybrid Flow Response Types
   - CLI Alias: `apic-oidc-hybrid-response-types` (see [below for nested schema](#nestedatt--result--apicoidc_hybrid_response_types))
 - `app_domain` (String) The name of the application domain the object belongs to
 - `application_revocation_endpoint` (String) Application revocation endpoint
-- `default_scopes` (String) Default scopes
-- `enable_application_revocation` (Boolean) Application revocation
-- `enable_debug_mode` (Boolean) Enable debug headers
-- `enable_owner_revocation` (Boolean) Resource owner revocation
-- `enable_token_management` (Boolean) Enable token management
-- `external_revocation_basic_auth_header_name` (String) Basic authentication header name
+- `default_scopes` (String) Specify the default scopes to apply when the request does not contain a scope. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The default scopes must be a subset of the allowed scopes in the API security OAuth requirement. Without defined scopes and the request does not contain a scope, an invalid scope error is returned.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
+- `enable_application_revocation` (Boolean) Specify whether to enable revocation by application. Enabling application revocation allows the application to revoke consent before the token expires.
+- `enable_debug_mode` (Boolean) Specify whether to enable debug mode to add security error details in response headers. In debug mode when you use a validation endpoint, security error details are sent in the <tt>x-apic-debug-oauth-error</tt> and <tt>x-apic-debug-oauth-error-desc</tt> response headers.
+- `enable_owner_revocation` (Boolean) Specify whether to enable revocation by resource owner. Enabling resource owner revocation allows the resource owner to revoke consent before the token expires.
+- `enable_token_management` (Boolean) Specify if security token details should be managed and stored. Enabling token management for security token details provides the ability to create one-time use tokens, prevent AZ code reuse, and support allow-listing through the use of the token manager.
+- `external_revocation_basic_auth_header_name` (String) Specify the header name to use for sending encoded or non-encoded authentication string in the header. For example, <tt>x-external-basic-authorization-header</tt> .
 - `external_revocation_basic_auth_password` (String) Basic authentication password
-- `external_revocation_basic_auth_user_name` (String) Basic authentication username
-- `external_revocation_cache_time_to_live` (Number) Time to live
+- `external_revocation_basic_auth_user_name` (String)
+- `external_revocation_cache_time_to_live` (Number) Specify the validity period in seconds for external management service responses in the cache. The default value is 900.
 - `external_revocation_cache_type` (String) Cache type
-- `external_revocation_custom_header_format` (String) Custom header pattern
-- `external_revocation_fail_on_error` (Boolean) Fail on error
+- `external_revocation_custom_header_format` (String) Specify the pattern of header names to include from the original message. For example, <tt>x-external-management-*</tt> .
+- `external_revocation_fail_on_error` (Boolean) Specify whether to stop processing if connection to external management service fails. If failed, stops token-generation or use, and returns an error.
 - `external_revocation_ssl_profile` (String) External management TLS client profile
-- `external_revocation_url` (String) External management URL
+- `external_revocation_url` (String) Specify an external endpoint through which the token management is accomplished. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
 - `external_revocation_url_security` (Attributes) External management security
   - CLI Alias: `external-revocation-url-security` (see [below for nested schema](#nestedatt--result--external_revocation_url_security))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `metadata_from` (Attributes) Obtain metadata from
   - CLI Alias: `metadata-from` (see [below for nested schema](#nestedatt--result--metadata_from))
-- `metadata_header_for_access_token` (String) Response header for access token
-- `metadata_header_for_payload` (String) Response header for payload
+- `metadata_header_for_access_token` (String) Specify the response header to place in the access token. These headers are in the response from the authentication or metadata endpoint.
+- `metadata_header_for_payload` (String) Specify the response header to place in the response payload. These headers are in the response from the authentication or metadata endpoint.
 - `metadata_ssl_profile` (String) TLS profile to access metadata URL
-- `metadata_url` (String) External metadata URL
+- `metadata_url` (String) Specify the URL to a remote server where the custom metadata is stored. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
 - `owner_revocation_endpoint` (String) Resource owner revocation endpoint
 - `provider_type` (String) Provider type
-- `scopes_allowed` (String) Allowed scopes
+- `scopes_allowed` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. Scopes ensure that the granted access token is valid to access only specific protected resources.
 - `supported_client_types` (Attributes) Supported client types
   - CLI Alias: `supported-client-types` (see [below for nested schema](#nestedatt--result--supported_client_types))
-- `supported_grant_types` (Attributes) Supported grant types
+- `supported_grant_types` (Attributes) Specify the supported grant types. Each grant type defines a method to grant authorization to client applications.
   - CLI Alias: `supported-grant-types` (see [below for nested schema](#nestedatt--result--supported_grant_types))
-- `third_party_authorization_header_pass_thru` (Boolean) Retain Authorization header
+- `third_party_authorization_header_pass_thru` (Boolean) Specify whether to retain or remove the <tt>Authorization</tt> header for a bearer token. The default behavior is to remove this header.
 - `third_party_azurl` (String) Authorization endpoint
-- `third_party_basic_auth_header_name` (String) Basic authentication header name
-- `third_party_custom_header_name_format` (String) Custom header pattern
+- `third_party_basic_auth_header_name` (String) Specify the header name to send the encoded or non-encoded authentication string. For example, <tt>x-introspect-basic-authorization-header</tt> .
+- `third_party_custom_header_name_format` (String) Specify the pattern of header name to send additional information. For example, <tt>x-introspect-*</tt> .
 - `third_party_introspect_basic_auth_password` (String) Basic authentication password
 - `third_party_introspect_basic_auth_user_name` (String) Basic authentication username
-- `third_party_introspect_cache_time_to_live` (Number) Time to live
+- `third_party_introspect_cache_time_to_live` (Number) Specify the validity period in seconds for third-party provider responses in the cache. The default value is 900.
 - `third_party_introspect_cache_type` (String) Cache type
 - `third_party_introspect_ssl_profile` (String) TLS client profile
-- `third_party_introspect_url` (String) Introspection endpoint
+- `third_party_introspect_url` (String) Specify the endpoint for token-introspection operation. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
 - `third_party_introspect_url_security` (Attributes) Introspection endpoint security
   - CLI Alias: `third-party-introspect-url-security` (see [below for nested schema](#nestedatt--result--third_party_introspect_url_security))
 - `third_party_token_url` (String) Token endpoint

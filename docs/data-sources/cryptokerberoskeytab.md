@@ -39,12 +39,12 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `filename` (String) File Name
-- `generate_gss_checksum` (Boolean) Generate GSS-API Checksum in AP-REQ
-- `gss_checksum_flags` (Attributes) GSS-API Checksum Flags
+- `filename` (String) <p>The file containing the Kerberos keytab. You can access the keytab file in the cert: or local: directory.</p><p><b>Attention:</b> Any file in the local: directory can be downloaded or included in an export. Therefore, consider carefully before you store cryptographic files in this directory.</p>
+- `generate_gss_checksum` (Boolean) Whether to generate a GSS-API checksum when generating AP-REQ tokens with this keytab.
+- `gss_checksum_flags` (Attributes) Which flags to set in GSS-API checksums when generating AP-REQ tokens with this keytab. Refer to RFC 4121 for the flag definitions.
   - CLI Alias: `gss-checksum-flags` (see [below for nested schema](#nestedatt--result--gss_checksum_flags))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `use_replay_cache` (Boolean) Use Replay Cache
+- `use_replay_cache` (Boolean) Whether to cache authenticator values from AP-REQ tokens that were verified with this keytab. Caching prevents replay attacks.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

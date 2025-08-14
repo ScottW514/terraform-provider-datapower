@@ -1,55 +1,56 @@
 name: OpenTelemetrySampler
-description: 'OpenTelemetry sampler'
-cli_alias: 'otel-sampler'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/OpenTelemetrySampler'
+description: OpenTelemetry sampler
+cli_alias: otel-sampler
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/OpenTelemetrySampler
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestOpenTelemetrySampler"'
-    test_expect_ds: '"AccTest_OpenTelemetrySampler"'
-    example: 'OpenTelemetrySamplerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: ParentBased
-    type: Bool
-    required: true
-    default: true
-    description: 'Parent based'
-    cli_alias: parent-based
-  - name: Type
-    type: String
-    enum:
-      - 'always-on'
-      - 'always-off'
-      - 'ratio'
-    required: true
-    default: 'always-on'
-    description: 'Sampler type'
-    cli_alias: type
-  - name: Ratio
-    type: Int64
-    minimum: 0
-    maximum: 100
-    description: 'Ratio'
-    cli_alias: ratio
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestOpenTelemetrySampler"'
+  test_expect_ds: '"AccTest_OpenTelemetrySampler"'
+  example: OpenTelemetrySamplerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: ParentBased
+  type: Bool
+  required: true
+  default: true
+  description: Parent based
+  cli_alias: parent-based
+- name: Type
+  type: String
+  enum:
+  - always-on
+  - always-off
+  - ratio
+  required: true
+  default: always-on
+  description: Sampler type
+  cli_alias: type
+- name: Ratio
+  type: Int64
+  minimum: 0
+  maximum: 100
+  description: Ratio
+  cli_alias: ratio

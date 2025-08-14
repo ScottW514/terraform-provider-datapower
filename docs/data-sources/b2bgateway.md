@@ -3,12 +3,12 @@
 page_title: "datapower_b2bgateway Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  B2B gateway
+  A B2B gateway can handle B2B messages transmitted over a variety of AS and non-AS protocols for inbound and outbound flows, as well as MDN messages.
 ---
 
 # datapower_b2bgateway (Data Source)
 
-B2B gateway
+A B2B gateway can handle B2B messages transmitted over a variety of AS and non-AS protocols for inbound and outbound flows, as well as MDN messages.
 
 ## Example Usage
 
@@ -39,35 +39,35 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `archive_backup_documents` (Attributes) Document types to archive
+- `archive_backup_documents` (Attributes) Specify the types of documents to archive. This property does not indicate the inbound or outbound transaction to archive.
   - CLI Alias: `arch-backup-documents` (see [below for nested schema](#nestedatt--result--archive_backup_documents))
-- `archive_document_age` (Number) Document age
-- `archive_file_name` (String) Archive file base name
-- `archive_location` (String) Archive location
-- `archive_minimum_documents` (Number) Min documents
-- `archive_minimum_size` (Number) Min size
+- `archive_document_age` (Number) Specify the maximum duration in days to retain processed documents. Enter a value in the range 1 - 3650. The default value is 90.
+- `archive_file_name` (String) Specify the base file name for archive file. When archiving, the operation appends the current timestamp.
+- `archive_location` (String) Specify the location for archive file. Enter the fully qualified name of the directory. To copy the archive file to an FTP server, ensure that the FTP policies in the XML manager enable image (binary) data transfer.
+- `archive_minimum_documents` (Number) Specify the minimum number of documents to retain in document storage after archival. The minimum value is 1. The default value is 100.
+- `archive_minimum_size` (Number) Specify the minimum remaining size in KB of document storage that triggers archival. The default value is 1024.
 - `archive_mode` (String) Purge mode
-- `archive_monitor` (Boolean) Monitor during archival
-- `as1mdn_email` (String) Default AS1 MDN return email
-- `as1mdnsmtp_server_connection` (String) AS1 MDN SMTP server connection
-- `as2mdnurl` (String) Default AS2 MDN Return URL
-- `as3mdnurl` (String) Default AS3 MDN return URL
+- `archive_monitor` (Boolean) Specify whether to use a monitor during archival. The monitor limits the message injection rate to prevent problems in a critical situation like performance testing or on a heavily loaded system.
+- `as1mdn_email` (String) For AS1 asynchronous MDN scenarios, specify the default email address for the AS1 asynchronous MDN. When sending outbound AS1 email messages that request an MDN, this email address can be the default email address for the response MDN. An email address in the destination overrides this value.
+- `as1mdnsmtp_server_connection` (String) When an incoming AS1 message requests an MDN as an email request, specify the SMTP server connection for asynchronous MDN responses.
+- `as2mdnurl` (String) For AS2 asynchronous MDN scenarios, specify the default URL for the AS2 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
+- `as3mdnurl` (String) For AS3 asynchronous MDN scenarios, specify the default URL for the AS3 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
 - `as_front_protocol` (Attributes List) Protocol handlers (see [below for nested schema](#nestedatt--result--as_front_protocol))
 - `b2b_groups` (Attributes List) Active profile groups (see [below for nested schema](#nestedatt--result--b2b_groups))
 - `b2b_profiles` (Attributes List) Active partner profiles (see [below for nested schema](#nestedatt--result--b2b_profiles))
-- `cpa_entries` (Attributes List) CPA (see [below for nested schema](#nestedatt--result--cpa_entries))
-- `debug_history` (Number) Transaction history
-- `debug_mode` (String) Probe setting
-- `disk_use_check_interval` (Number) Check interval
-- `doc_store_location` (String) Document storage location
-- `document_routing_preprocessor` (String) File location
-- `document_routing_preprocessor_debug` (Boolean) Enable GatewayScript debugger
-- `document_routing_preprocessor_type` (String) Processor type
-- `front_side_timeout` (Number) Front timeout
+- `cpa_entries` (Attributes List) Specify CPA entries. Each CPA entry binds an ebXML messaging service (ebMS) to provide partnership interactions between the internal and partner. (see [below for nested schema](#nestedatt--result--cpa_entries))
+- `debug_history` (Number) Specify the number of transactions to capture for diagnostics. Enter a value in the range 10 - 250. The default value is 25.
+- `debug_mode` (String) Specify whether to enable diagnostics. Diagnostics are not intended for use in production environments. Diagnostics consume significant resources that can slow down processing.
+- `disk_use_check_interval` (Number) Specify the interval in minutes between checks for documents that exceed the maximum age. During the check, documents that exceed the maximum age are purged. Enter a value in the range 1 - 1440. The default value is 60.
+- `doc_store_location` (String) Specify the location for document storage, which saves copies of inbound, outbound, and intermediate documents that might be needed for a retransmit operation. If unspecified, documents are stored in the encrypted area on the RAID volume. For storage on the RAID volume, set the maximum disk usage to 30 GB.
+- `document_routing_preprocessor` (String) Specify the location of the document-routing preprocessor file, which is a stylesheet or a GatewayScript file to run against transactions that cannot be handled by B2B-specific handlers. <ul><li>A stylesheet examines information from transport headers and other non-content sources to select relevant trading partners. The default stylesheet is <tt>store:///b2b-routing.xsl</tt> .</li><li>A GatewayScript examines information from transport headers and payloads to select relevant trading partners. A GatewayScript can parse messages of different data types, such as JSON, XML, and non-XML. A sample GatewayScript file is <tt>store:///gateayscript/example-b2b-routing.js</tt> .</li></ul>
+- `document_routing_preprocessor_debug` (Boolean) Specify whether to enable the GatewayScript debugger to detect and diagnose errors in the document routing preprocessor file. To debug a file, ensure that the file contains one or more <tt>debugger;</tt> statements where you want to start debugging.
+- `document_routing_preprocessor_type` (String) Specify the file type of the document-routing preprocessor file to run against messages that are not received through AS or ebMS protocols. The default value is stylesheet.
+- `front_side_timeout` (Number) Specify the duration that a client connection can be idle before the connection is closed. For outbound transactions, this connection is between an internal application and the B2B gateway. For inbound transaction, this connection is between an external partner and a B2B gateway.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `max_document_disk_use` (Number) Max document storage
-- `priority` (String) Service priority
-- `shaping_threshold` (Number) Monitor threshold
+- `max_document_disk_use` (Number) Specify the maximum size in KB for document storage. When storage exceeds this value, documents are purged. The default value is 25165824.
+- `priority` (String) Specify the priority of service-scheduling. When system resources are in high demand, high priority services are favored over lower priority services.
+- `shaping_threshold` (Number) Specify the maximum TPS to allow during archival. When the threshold is reached, the service queues transactions. When the queue is full, the service rejects transactions and generates a log message. Enter a value in the range 10 - 10000. The default value is 200.
 - `sql_data_source` (String) SQL data source
 - `user_summary` (String) Comments
 - `x_path_routing_policies` (List of String) XPath routing policies

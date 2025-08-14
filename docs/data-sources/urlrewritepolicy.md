@@ -3,12 +3,12 @@
 page_title: "datapower_urlrewritepolicy Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  URL Rewrite Policy
+  Configure/Edit URL Rewrite Policies
 ---
 
 # datapower_urlrewritepolicy (Data Source)
 
-URL Rewrite Policy
+Configure/Edit URL Rewrite Policies
 
 ## Example Usage
 
@@ -39,9 +39,9 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `direction` (String) URL Rewrite Direction
+- `direction` (String) Restricts the URL Rewrite Policy to a specified direction. Direction is applied at the service object level and has no effect on policies used from multistep or elsewhere.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `url_rewrite_rule` (Attributes List) URL Rewrite Rule (see [below for nested schema](#nestedatt--result--url_rewrite_rule))
+- `url_rewrite_rule` (Attributes List) Add, edit, or delete a URL rewrite rule (see [below for nested schema](#nestedatt--result--url_rewrite_rule))
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

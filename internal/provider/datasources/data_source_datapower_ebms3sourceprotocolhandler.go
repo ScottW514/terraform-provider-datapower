@@ -57,7 +57,7 @@ func (d *EBMS3SourceProtocolHandlerDataSource) Metadata(_ context.Context, req d
 
 func (d *EBMS3SourceProtocolHandlerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "ebMS3 handler",
+		MarkdownDescription: "The configuration for an ebMS3 handler.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,47 +81,47 @@ func (d *EBMS3SourceProtocolHandlerDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"local_address": schema.StringAttribute{
-							MarkdownDescription: "Local IP address",
+							MarkdownDescription: "Specify the local IP address that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses. You can use a local host alias to help ease migration.",
 							Computed:            true,
 						},
 						"local_port": schema.Int64Attribute{
-							MarkdownDescription: "Local port",
+							MarkdownDescription: "Specifies the port that this service monitors. Enter a value in the range 1 - 65535. The default value is 80.",
 							Computed:            true,
 						},
 						"http_version": schema.StringAttribute{
-							MarkdownDescription: "HTTP version to client",
+							MarkdownDescription: "Specify the HTTP version for client connection. The default value is HTTP/1.1.",
 							Computed:            true,
 						},
 						"persistent_connections": schema.BoolAttribute{
-							MarkdownDescription: "Persistent connections",
+							MarkdownDescription: "Specify whether to enable persistent connections with clients. By default, persistent connections are enabled.",
 							Computed:            true,
 						},
 						"allow_compression": schema.BoolAttribute{
-							MarkdownDescription: "Compression",
+							MarkdownDescription: "Specify whether to enable GZIP compression with clients. By default, compression is not enabled.",
 							Computed:            true,
 						},
 						"max_url_len": schema.Int64Attribute{
-							MarkdownDescription: "Max URL length",
+							MarkdownDescription: "Specify the maximum URL length in bytes to accept from clients. Enter a value in the range 1 - 128000. The default value is 16384. The length includes any query string or fragment identifier.",
 							Computed:            true,
 						},
 						"max_total_hdr_len": schema.Int64Attribute{
-							MarkdownDescription: "Max total header length",
+							MarkdownDescription: "Specify the maximum aggregate size of headers in bytes in client requests. Enter a value in the range 5 - 128000. The default value is 128000.",
 							Computed:            true,
 						},
 						"max_hdr_count": schema.Int64Attribute{
-							MarkdownDescription: "Max request headers",
+							MarkdownDescription: "Specify the maximum number of headers to allow in client requests. The default value is 0, which means unlimited.",
 							Computed:            true,
 						},
 						"max_name_hdr_len": schema.Int64Attribute{
-							MarkdownDescription: "Max length of header name",
+							MarkdownDescription: "Specify the maximum length to accept for any header name. A header is expressed as a name-value pair. The default value is 0, which means unlimited.",
 							Computed:            true,
 						},
 						"max_value_hdr_len": schema.Int64Attribute{
-							MarkdownDescription: "Max length of header value",
+							MarkdownDescription: "Specify the maximum length to accept for any header value. A header is expressed as a name-value pair. The default value is 0, which means unlimited.",
 							Computed:            true,
 						},
 						"max_query_string_len": schema.Int64Attribute{
-							MarkdownDescription: "Max length of query string",
+							MarkdownDescription: "Specify the maximum length of the query string. The query string is the portion of the URL after the <tt>?</tt> character. The default value is 0, which indicates no limit.",
 							Computed:            true,
 						},
 						"acl": schema.StringAttribute{
@@ -133,11 +133,11 @@ func (d *EBMS3SourceProtocolHandlerDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"credential_charset": schema.StringAttribute{
-							MarkdownDescription: "Credential character set",
+							MarkdownDescription: "Specify the character encoding of the original basic authentication values. The default value is protocol, which is ISO-8859-1 (Latin 1). <p>Basic authentication credentials are combined and base64 encoded in the HTTP <tt>Authorization</tt> request header. The contents of the <tt>Authorization</tt> header is transcoded to UTF-8.</p>",
 							Computed:            true,
 						},
 						"ssl_server_config_type": schema.StringAttribute{
-							MarkdownDescription: "TLS server type",
+							MarkdownDescription: "Specify the type of TLS profile to secure client connections.",
 							Computed:            true,
 						},
 						"ssl_server": schema.StringAttribute{

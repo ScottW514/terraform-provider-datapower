@@ -3,13 +3,13 @@
 page_title: "datapower_sslclientprofile Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  TLS client profile
+  A TLS client profile define how to secure a connection remote endpoint.
   CLI Alias: ssl-client
 ---
 
 # datapower_sslclientprofile (Resource)
 
-TLS client profile
+A TLS client profile define how to secure a connection remote endpoint.
   - CLI Alias: `ssl-client`
 
 ## Example Usage
@@ -33,18 +33,18 @@ resource "datapower_sslclientprofile" "test" {
 
 ### Optional
 
-- `cache_size` (Number) Session cache size
+- `cache_size` (Number) Specify the maximum number of entries of the session cache. Enter a value in the range 1 - 500000. The default value is 100.
   - CLI Alias: `cache-size`
   - Range: `1`-`500000`
   - Default value: `100`
-- `cache_timeout` (Number) Session cache timeout
+- `cache_timeout` (Number) Specify the duration in seconds that TLS sessions remain in the session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.
   - CLI Alias: `cache-timeout`
   - Range: `1`-`86400`
   - Default value: `300`
 - `caching` (Boolean) Enable session caching
   - CLI Alias: `caching`
   - Default value: `true`
-- `ciphers` (List of String) Ciphers
+- `ciphers` (List of String) Specify the list of cipher suites to support in preference order. Ensure that the displayed order of cipher suites are in preference order. Otherwise, change the sequence to meet your preference.
   - CLI Alias: `ciphers`
   - Choices: `RSA_WITH_NULL_MD5`, `RSA_WITH_NULL_SHA`, `RSA_WITH_RC4_128_MD5`, `RSA_WITH_RC4_128_SHA`, `RSA_WITH_DES_CBC_SHA`, `RSA_WITH_3DES_EDE_CBC_SHA`, `DHE_DSS_WITH_DES_CBC_SHA`, `DHE_DSS_WITH_3DES_EDE_CBC_SHA`, `DHE_RSA_WITH_DES_CBC_SHA`, `DHE_RSA_WITH_3DES_EDE_CBC_SHA`, `RSA_WITH_AES_128_CBC_SHA`, `DHE_DSS_WITH_AES_128_CBC_SHA`, `DHE_RSA_WITH_AES_128_CBC_SHA`, `RSA_WITH_AES_256_CBC_SHA`, `DHE_DSS_WITH_AES_256_CBC_SHA`, `DHE_RSA_WITH_AES_256_CBC_SHA`, `RSA_WITH_NULL_SHA256`, `RSA_WITH_AES_128_CBC_SHA256`, `RSA_WITH_AES_256_CBC_SHA256`, `DHE_DSS_WITH_AES_128_CBC_SHA256`, `DHE_RSA_WITH_AES_128_CBC_SHA256`, `DHE_DSS_WITH_AES_256_CBC_SHA256`, `DHE_RSA_WITH_AES_256_CBC_SHA256`, `RSA_WITH_AES_128_GCM_SHA256`, `RSA_WITH_AES_256_GCM_SHA384`, `DHE_RSA_WITH_AES_128_GCM_SHA256`, `DHE_RSA_WITH_AES_256_GCM_SHA384`, `DHE_DSS_WITH_AES_128_GCM_SHA256`, `DHE_DSS_WITH_AES_256_GCM_SHA384`, `AES_128_GCM_SHA256`, `AES_256_GCM_SHA384`, `CHACHA20_POLY1305_SHA256`, `AES_128_CCM_SHA256`, `AES_128_CCM_8_SHA256`, `ECDHE_RSA_WITH_NULL_SHA`, `ECDHE_RSA_WITH_RC4_128_SHA`, `ECDHE_RSA_WITH_3DES_EDE_CBC_SHA`, `ECDHE_RSA_WITH_AES_128_CBC_SHA`, `ECDHE_RSA_WITH_AES_256_CBC_SHA`, `ECDHE_RSA_WITH_AES_128_CBC_SHA256`, `ECDHE_RSA_WITH_AES_256_CBC_SHA384`, `ECDHE_RSA_WITH_AES_128_GCM_SHA256`, `ECDHE_RSA_WITH_AES_256_GCM_SHA384`, `ECDHE_ECDSA_WITH_NULL_SHA`, `ECDHE_ECDSA_WITH_RC4_128_SHA`, `ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_128_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_256_CBC_SHA`, `ECDHE_ECDSA_WITH_AES_128_CBC_SHA256`, `ECDHE_ECDSA_WITH_AES_256_CBC_SHA384`, `ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`, `ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`
 - `custom_sni_hostname` (String) Custom SNI hostname
@@ -56,13 +56,13 @@ resource "datapower_sslclientprofile" "test" {
 - `elliptic_curves` (List of String) Elliptic curves
   - CLI Alias: `curves`
   - Choices: `sect163k1`, `sect163r1`, `sect163r2`, `sect193r1`, `sect193r2`, `sect233k1`, `sect233r1`, `sect239k1`, `sect283k1`, `sect283r1`, `sect409k1`, `sect409r1`, `sect571k1`, `sect571r1`, `secp160k1`, `secp160r1`, `secp160r2`, `secp192k1`, `secp192r1`, `secp224k1`, `secp224r1`, `secp256k1`, `secp256r1`, `secp384r1`, `secp521r1`, `brainpoolP256r1`, `brainpoolP384r1`, `brainpoolP512r1`
-- `enable_tls13_compat` (Boolean) Enable TLSv1.3 compatibility
+- `enable_tls13_compat` (Boolean) Specify whether to send extra TLS messages to look more like TLSv1.2. Some network middleboxes might not recognize TLSv1.3 and drop the connection. Enable this option to send dummy Change Cipher Spec messages, which makes TLSv1.3 look more like TLSv1.2.
   - CLI Alias: `enable-tls13-compat`
   - Default value: `true`
-- `hostname_validation_fail_on_error` (Boolean) Hostname validation fail on error
+- `hostname_validation_fail_on_error` (Boolean) Specify whether to terminate the handshake when hostname validation fails or to ignore the failure, log an event, and continue with server certificate validation. The default behavior is to ignore the failure, log an event, and continue with any configured server certificate validation.
   - CLI Alias: `hostname-validation-fail`
   - Default value: `false`
-- `hostname_validation_flags` (Attributes) Hostname validation flags
+- `hostname_validation_flags` (Attributes) Specify the flags that fine tune the validation methods and settings during the handshake. The default behavior uses the subject DN only when the <tt>Subject Alternative Name</tt> (SAN) extension contains no DNS name.
   - CLI Alias: `hostname-validation-flags` (see [below for nested schema](#nestedatt--hostname_validation_flags))
 - `idcred` (String) Identification credentials
   - CLI Alias: `idcred`
@@ -72,12 +72,12 @@ resource "datapower_sslclientprofile" "test" {
 - `require_closure_notification` (Boolean) Require closure notification
   - CLI Alias: `require-closure-notification`
   - Default value: `true`
-- `sig_algs` (List of String) Signature algorithms
+- `sig_algs` (List of String) Specify the list of signature algorithms to advertise and support. An empty list implies the use of all of the default algorithms.
   - CLI Alias: `sign-alg`
   - Choices: `ecdsa_secp256r1_sha256`, `ecdsa_secp384r1_sha384`, `ecdsa_secp521r1_sha512`, `ed25519`, `ed448`, `ecdsa_sha224`, `ecdsa_sha1`, `rsa_pss_rsae_sha256`, `rsa_pss_rsae_sha384`, `rsa_pss_rsae_sha512`, `rsa_pss_pss_sha256`, `rsa_pss_pss_sha384`, `rsa_pss_pss_sha512`, `rsa_pkcs1_sha256`, `rsa_pkcs1_sha384`, `rsa_pkcs1_sha512`, `rsa_pkcs1_sha224`, `rsa_pkcs1_sha1`, `dsa_sha256`, `dsa_sha384`, `dsa_sha512`, `dsa_sha224`, `dsa_sha1`
 - `ssl_client_features` (Attributes) Features
   - CLI Alias: `ssl-client-features` (see [below for nested schema](#nestedatt--ssl_client_features))
-- `use_custom_sni_hostname` (Boolean) Use custom SNI host name
+- `use_custom_sni_hostname` (Boolean) Specify whether to use a custom server name in the SNI extension in the TLS client <tt>hello</tt> message. By default, the hostname of the target is used in the SNI extension.
   - CLI Alias: `use-custom-sni-hostname`
   - Default value: `false`
 - `user_summary` (String) Comments

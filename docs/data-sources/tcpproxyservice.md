@@ -3,12 +3,12 @@
 page_title: "datapower_tcpproxyservice Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  TCP Proxy Service
+  Creates a TCP Proxy service.
 ---
 
 # datapower_tcpproxyservice (Data Source)
 
-TCP Proxy Service
+Creates a TCP Proxy service.
 
 ## Example Usage
 
@@ -40,13 +40,13 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_address` (String) Local address
-- `local_port` (Number) Port Number
-- `priority` (String) Service Priority
-- `remote_address` (String) Remote Host
-- `remote_port` (Number) Remote Port
-- `timeout` (Number) Idle timeout
-- `user_summary` (String) Comments
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
+- `local_port` (Number) An integer (within the range 1 through 65535) that specifies the port monitored by the TCP proxy
+- `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
+- `remote_address` (String) Specify the host name or IP address of the remote host for which this proxy is accepting TCP traffic. TCP traffic sent to the proxy will in turn be sent to this host. Click Ping to verify connectivity.
+- `remote_port` (Number) Specify the port number of the remote host, specify with Remote Host, for which this proxy is accepting TCP traffic.
+- `timeout` (Number) Specify the maximum idle time that is allowed for the front side connection and the server side connection. After the time is reached, the idle connections are terminated. Enter a value in the range 0 - 86400. The default value is 360. A value of 0 disables the idle timer.
+- `user_summary` (String) A descriptive summary for the configuration.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

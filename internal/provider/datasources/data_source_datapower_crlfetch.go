@@ -53,11 +53,11 @@ func (d *CRLFetchDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 		MarkdownDescription: "CRL Retrieval (`default` domain only)",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"crl_fetch_config": schema.ListNestedAttribute{
-				MarkdownDescription: "CRL update policy",
+				MarkdownDescription: "Define the configuration of an HTTP-enabled or an LDAP-enabled CRL (Certificate Revocation List) update policy. When HTTP, specify the Fetch URL. When LDAP, specify the LDAP bind information. For both, specify the validation credentials.",
 				NestedObject:        models.DmCRLFetchConfigDataSourceSchema,
 				Computed:            true,
 			},

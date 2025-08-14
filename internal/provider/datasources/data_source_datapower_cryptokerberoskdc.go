@@ -77,39 +77,39 @@ func (d *CryptoKerberosKDCDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "Enter a brief, descriptive comment.",
 							Computed:            true,
 						},
 						"realm": schema.StringAttribute{
-							MarkdownDescription: "Kerberos realm name",
+							MarkdownDescription: "The name of the Kerberos realm that the KDC is serving.",
 							Computed:            true,
 						},
 						"server": schema.StringAttribute{
-							MarkdownDescription: "Kerberos KDC Server",
+							MarkdownDescription: "Specify the host name or IP address of the remote Kerberos KDC server. Click Ping verify network connectivity.",
 							Computed:            true,
 						},
 						"use_tcp": schema.BoolAttribute{
-							MarkdownDescription: "Use TCP",
+							MarkdownDescription: "Select to control whether to contact the Kerberos KDC server with UDP (the default, off) or TCP (on).",
 							Computed:            true,
 						},
 						"server_port": schema.Int64Attribute{
-							MarkdownDescription: "Server Port Number",
+							MarkdownDescription: "Specify the UDP or TCP listening port on the Kerberos KDC server. Use a value in the range 1 - 65535. The default value is 88.",
 							Computed:            true,
 						},
 						"udp_timeout": schema.Int64Attribute{
-							MarkdownDescription: "UDP Timeout",
+							MarkdownDescription: "The number of seconds to wait for a UDP response from the KDC before declaring failure.",
 							Computed:            true,
 						},
 						"cache_tickets": schema.BoolAttribute{
-							MarkdownDescription: "Cache Service Tickets",
+							MarkdownDescription: "Specify whether to cache Kerberos service tickets when generating AP-REQ tokens in this realm.",
 							Computed:            true,
 						},
 						"max_cached_tickets": schema.Int64Attribute{
-							MarkdownDescription: "Maximum Number of Cached Service Tickets",
+							MarkdownDescription: "Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.",
 							Computed:            true,
 						},
 						"min_cached_ticket_validity": schema.Int64Attribute{
-							MarkdownDescription: "Minimum Cached Ticket Validity",
+							MarkdownDescription: "Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

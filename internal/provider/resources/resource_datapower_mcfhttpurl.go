@@ -54,7 +54,7 @@ func (r *MCFHttpURLResource) Metadata(ctx context.Context, req resource.Metadata
 
 func (r *MCFHttpURLResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("HTTP URL Message Content Filter", "mcf-httpurl", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Filter based on the request URL. The filter value is matched to the request URL.", "mcf-httpurl", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

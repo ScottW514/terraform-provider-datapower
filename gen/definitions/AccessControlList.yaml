@@ -1,34 +1,42 @@
 name: AccessControlList
-description: 'Access control list'
-cli_alias: 'acl'
-cmd_group: 'acl'
-rest_endpoint: '/mgmt/config/{domain}/AccessControlList'
+description: An access control list (ACL) consists of a sequence of allow and deny
+  clauses. Each clause identifies an IP address or range of addresses that grants
+  or denies access to a service. <p>Candidate addresses are sequentially evaluated
+  against each clause. A candidate address is granted or denied access in accordance
+  with the first clause that matches. Consequently, the order of the clauses is vital.</p><p>An
+  ACL with only deny clauses effectively disables the service. To complete the configuration,
+  include an allow clause to ensure that all addresses that are not explicitly denied
+  access are granted access.</p>
+cli_alias: acl
+cmd_group: acl
+rest_endpoint: /mgmt/config/{domain}/AccessControlList
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAccessControlList"'
-    test_expect_ds: '"AccTest_AccessControlList"'
-    example: 'AccessControlListName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AccessControlEntry
-    type: List
-    element_type: DmACE
-    description: 'Entry'
-    cli_alias: entry
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAccessControlList"'
+  test_expect_ds: '"AccTest_AccessControlList"'
+  example: AccessControlListName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AccessControlEntry
+  type: List
+  element_type: DmACE
+  description: Specify allow and deny clauses.
+  cli_alias: entry

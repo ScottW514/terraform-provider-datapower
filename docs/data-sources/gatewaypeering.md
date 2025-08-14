@@ -3,12 +3,12 @@
 page_title: "datapower_gatewaypeering Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Gateway peering
+  A gateway-peering instance defines how members synchronize data across members.
 ---
 
 # datapower_gatewaypeering (Data Source)
 
-Gateway peering
+A gateway-peering instance defines how members synchronize data across members.
 
 ## Example Usage
 
@@ -39,17 +39,17 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `enable_peer_group` (Boolean) Use peer group
-- `enable_ssl` (Boolean) DEPRECATED: LEAVE SET TO FALSE
+- `enable_peer_group` (Boolean) Specify whether the gateway-peering instance uses a peer group. <ul><li>When enabled, the instance works in the mode that is set for the peer group. This setting is the default value.</li><li>When not enabled, the instance works in stand-alone mode.</li></ul>
+- `enable_ssl` (Boolean) Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. In peer-based mode, ensure that all peers use the same TLS configuration.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_address` (String) Local address
-- `local_directory` (String) Local directory
-- `local_port` (Number) Local port
-- `max_memory` (Number) Max memory
-- `monitor_port` (Number) Monitor port
-- `password_alias` (String) Password alias
+- `local_address` (String) Specify the IP address or host alias that the gateway service listens on. The IP address can be any DataPower network interface that can be accessed by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::.
+- `local_directory` (String) Specify the directory to store data. For example, <tt>local:///group1</tt> .
+- `local_port` (Number) Specify the port that the gateway service listens on. The default value is 16380. Ensure that all peers use the same port.
+- `max_memory` (Number) Specify the maximum memory for the data store. When memory reaches this limit, data is removed by using the least recently used (LRU) algorithm. The default value is 0, which means no limits. Do not over allocate memory.
+- `monitor_port` (Number) Specify the port to monitor for state synchronization. The default value is 26380. Ensure that all peers use the same port.
+- `password_alias` (String) Specify the password alias to secure the data store. If not specified, a system default is used. The use of the system default is classified as a security vulnerability (CVE-2022-31776).
 - `peer_group` (String) Gateway-peering group
-- `persistence_location` (String) Persistence location
+- `persistence_location` (String) Specify where to store data. Ensure that all peers in the group store data in the same location.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

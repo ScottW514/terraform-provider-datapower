@@ -57,7 +57,7 @@ func (d *URLMapDataSource) Metadata(_ context.Context, req datasource.MetadataRe
 
 func (d *URLMapDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "URL Map",
+		MarkdownDescription: "Configure/Edit URL maps. URL Maps are used by Processing Actions and by XML Manager Compile Options Policies.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *URLMapDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 							Computed:            true,
 						},
 						"url_map_rule": schema.ListNestedAttribute{
-							MarkdownDescription: "URL Map Rule",
+							MarkdownDescription: "Add, edit or delete a URL map match pattern",
 							NestedObject:        models.DmURLMapRuleDataSourceSchema,
 							Computed:            true,
 						},

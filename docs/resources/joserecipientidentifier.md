@@ -3,13 +3,13 @@
 page_title: "datapower_joserecipientidentifier Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Recipient Identifier
+  JOSE Recipient Identifier object for the JSON Web Decrypt.
   CLI Alias: jose-recipient-identifier
 ---
 
 # datapower_joserecipientidentifier (Resource)
 
-Recipient Identifier
+JOSE Recipient Identifier object for the JSON Web Decrypt.
   - CLI Alias: `jose-recipient-identifier`
 
 ## Example Usage
@@ -32,23 +32,23 @@ resource "datapower_joserecipientidentifier" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `header_param` (Attributes List) Header Parameters
+- `header_param` (Attributes List) The JOSE header parameters used to identify the recipient.
   - CLI Alias: `header-param` (see [below for nested schema](#nestedatt--header_param))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `key` (String) Key Material
+- `key` (String) Use the private key to verify the recipient.
   - CLI Alias: `key`
   - Reference to: `datapower_cryptokey:id`
-- `ss_key` (String) Key Material
+- `ss_key` (String) Use the shared secret key to verify the recipient.
   - CLI Alias: `sskey`
   - Reference to: `datapower_cryptosskey:id`
-- `type` (String) Key Material Type
+- `type` (String) Key material type used to verify the recipient.
   - CLI Alias: `type`
   - Choices: `key`, `sskey`
-- `user_summary` (String) Comments
+- `user_summary` (String) Brief summary for user annotation.
   - CLI Alias: `summary`
 
 <a id="nestedatt--header_param"></a>

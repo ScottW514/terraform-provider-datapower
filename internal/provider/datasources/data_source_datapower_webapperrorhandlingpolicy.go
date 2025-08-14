@@ -57,7 +57,7 @@ func (d *WebAppErrorHandlingPolicyDataSource) Metadata(_ context.Context, req da
 
 func (d *WebAppErrorHandlingPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Web Application Firewall Error Policy",
+		MarkdownDescription: "Define an error policy for a web application firewall. When the remote web service returns an error, this policy specifies how to handle the response that is sent to the client.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *WebAppErrorHandlingPolicyDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: "Mode",
+							MarkdownDescription: "Specify the mode for error handling. The default value is standard.",
 							Computed:            true,
 						},
 						"url": schema.StringAttribute{

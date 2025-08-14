@@ -3,13 +3,13 @@
 page_title: "datapower_sshserverprofile Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SSH server profile
+  The SSH domain client profile defines the cipher suites.
   CLI Alias: sshserverprofile
 ---
 
 # datapower_sshserverprofile (Resource)
 
-SSH server profile
+The SSH domain client profile defines the cipher suites.
   - CLI Alias: `sshserverprofile`
 
 ## Example Usage
@@ -29,24 +29,24 @@ resource "datapower_sshserverprofile" "test" {
 
 ### Optional
 
-- `ciphers` (List of String) Ciphers
+- `ciphers` (List of String) Specify the SSH cipher suites to support.
   - CLI Alias: `ciphers`
   - Choices: `CHACHA20-POLY1305_AT_OPENSSH.COM`, `AES128-CTR`, `AES192-CTR`, `AES256-CTR`, `AES128-GCM_AT_OPENSSH.COM`, `AES256-GCM_AT_OPENSSH.COM`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
 - `host_key_alg` (Attributes) Host key algorithms
   - CLI Alias: `host-key-alg` (see [below for nested schema](#nestedatt--host_key_alg))
-- `kex_alg` (List of String) Key exchange algorithms
+- `kex_alg` (List of String) Specify the key exchange (KEX) algorithms to support.
   - CLI Alias: `kex-alg`
   - Choices: `DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256`, `ECDH-SHA2-NISTP256`, `ECDH-SHA2-NISTP384`, `ECDH-SHA2-NISTP521`, `CURVE25519-SHA256_AT_LIBSSH.ORG`
-- `mac_alg` (List of String) Message authentication codes
+- `mac_alg` (List of String) Specify the message authentication codes (MAC) to support.
   - CLI Alias: `mac-alg`
   - Choices: `HMAC-SHA1`, `HMAC-SHA2-256`, `HMAC-SHA2-512`, `UMAC-64_AT_OPENSSH.COM`, `UMAC-128_AT_OPENSSH.COM`, `HMAC-SHA1-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-256-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-512-ETM_AT_OPENSSH.COM`, `UMAC-64-ETM_AT_OPENSSH.COM`, `UMAC-128-ETM_AT_OPENSSH.COM`
-- `pre_auth_msg` (String) Preauthentication message
+- `pre_auth_msg` (String) Specify the banner message to display to users before the login prompt. White space characters ( <tt>\n</tt> , <tt>\t</tt> ) are recognized and escaped. The banner message must be at least one character. The banner message is truncated at 4096 characters.
   - CLI Alias: `preauth-msg`
-- `send_pre_auth_msg` (Boolean) Include SSH preauthentication message
+- `send_pre_auth_msg` (Boolean) Specify whether to include a banner message during SSH preauthentication. The banner message contains the text to display to users before the login prompt.
   - CLI Alias: `send-preauth-msg`
   - Default value: `false`
 - `user_summary` (String) Comments

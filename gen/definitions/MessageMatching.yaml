@@ -1,71 +1,93 @@
 name: MessageMatching
-description: 'Message Matching'
-cli_alias: 'message-matching'
-cmd_group: 'messages'
-rest_endpoint: '/mgmt/config/{domain}/MessageMatching'
+description: <p>Message Matching determines what messages will be monitored by any
+  monitor that uses the Message Matching object. It is a definition of the traffic
+  flow that is monitored.</p><p>To capture all messages, set the HTTP Method field
+  to 'any' and leave all other fields blank.</p>
+cli_alias: message-matching
+cmd_group: messages
+rest_endpoint: /mgmt/config/{domain}/MessageMatching
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestMessageMatching"'
-    test_expect_ds: '"AccTest_MessageMatching"'
-    example: 'MessageMatchingName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: IPAddress
-    type: String
-    description: 'IP Addresses'
-    cli_alias: ip
-  - name: IPExclude
-    type: String
-    description: 'Excluded IP Addresses'
-    cli_alias: ip-exclude
-  - name: HTTPMethod
-    type: String
-    enum:
-      - 'any'
-      - 'OPTIONS'
-      - 'GET'
-      - 'HEAD'
-      - 'POST'
-      - 'PUT'
-      - 'PATCH'
-      - 'DELETE'
-      - 'TRACE'
-      - 'CONNECT'
-    default: 'any'
-    description: 'HTTP Method'
-    cli_alias: method
-  - name: HTTPHeader
-    type: List
-    element_type: DmHTTPHeader
-    description: 'HTTP Headers'
-    cli_alias: http-header
-  - name: HTTPHeaderExclude
-    type: List
-    element_type: DmHTTPHeader
-    description: 'Excluded HTTP Headers'
-    cli_alias: http-header-exclude
-  - name: RequestURL
-    type: String
-    description: 'Request URL'
-    cli_alias: request-url
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestMessageMatching"'
+  test_expect_ds: '"AccTest_MessageMatching"'
+  example: MessageMatchingName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: IPAddress
+  type: String
+  description: Use an IP network address and prefix length to define a contiguous
+    range of IP addresses included in this traffic definition (for example, 10.10.100.0/28
+    specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies
+    a single host address).
+  cli_alias: ip
+- name: IPExclude
+  type: String
+  description: Use an IP network address and prefix length to define a contiguous
+    range of IP addresses excluded from this traffic definition (for example, 10.10.100.0/28
+    specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies
+    a single host address).
+  cli_alias: ip-exclude
+- name: HTTPMethod
+  type: String
+  enum:
+  - any
+  - OPTIONS
+  - GET
+  - HEAD
+  - POST
+  - PUT
+  - PATCH
+  - DELETE
+  - TRACE
+  - CONNECT
+  default: any
+  description: Select the HTTP method included in this traffic definition. The default
+    value is any, which indicates that HTTP method is not a match criteria.
+  cli_alias: method
+- name: HTTPHeader
+  type: List
+  element_type: DmHTTPHeader
+  description: Click this tab to add match criteria for inclusive HTTP header fields
+    to the traffic definition. The field with its corresponding value must appear
+    in the HTTP header of the message to qualify for inclusion.
+  cli_alias: http-header
+- name: HTTPHeaderExclude
+  type: List
+  element_type: DmHTTPHeader
+  description: Click this tab to add match criteria for exclusive HTTP header field
+    to the traffic definition. The field with its corresponding value cannot appear
+    in the HTTP header of the message to qualify for exclusion.
+  cli_alias: http-header-exclude
+- name: RequestURL
+  type: String
+  description: Provide a literal or wildcard expression to define a URL set included
+    in this traffic definition. The following wildcard characters are available when
+    defining the URL set. <table><tr><td valign="top">asterisk (*)</td><td valign="top">Matches
+    0 or more occurrences of any character</td></tr><tr><td valign="top">question
+    mark (?)</td><td valign="top">Matches one occurrence of any single character</td></tr><tr><td
+    valign="top">brackets ( [ ] )</td><td valign="top">Defines a character or numeric
+    range. For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or
+    xsl.</td></tr></table>
+  cli_alias: request-url

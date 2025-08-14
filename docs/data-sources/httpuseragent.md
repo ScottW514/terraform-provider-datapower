@@ -3,12 +3,12 @@
 page_title: "datapower_httpuseragent Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  User agent
+  A user agent define how to retrieve resources from remote servers.
 ---
 
 # datapower_httpuseragent (Data Source)
 
-User agent
+A user agent define how to retrieve resources from remote servers.
 
 ## Example Usage
 
@@ -38,24 +38,24 @@ Optional:
 
 Read-Only:
 
-- `add_header_policies` (Attributes List) Header injection policy (see [below for nested schema](#nestedatt--result--add_header_policies))
-- `allow_compression_policies` (Attributes List) Allow compression policy (see [below for nested schema](#nestedatt--result--allow_compression_policies))
+- `add_header_policies` (Attributes List) Specify the policy that associates a set of URLS to inject HTTP headers into the message. (see [below for nested schema](#nestedatt--result--add_header_policies))
+- `allow_compression_policies` (Attributes List) Specify the policy that associates a set of URLS that allow compression. (see [below for nested schema](#nestedatt--result--allow_compression_policies))
 - `app_domain` (String) The name of the application domain the object belongs to
-- `basic_auth_policies` (Attributes List) Basic authentication policy (see [below for nested schema](#nestedatt--result--basic_auth_policies))
-- `ftp_policies` (Attributes List) FTP client policy (see [below for nested schema](#nestedatt--result--ftp_policies))
-- `header_retention_policies` (Attributes List) Header retention policy (see [below for nested schema](#nestedatt--result--header_retention_policies))
-- `http_version_policies` (Attributes List) HTTP version policy (see [below for nested schema](#nestedatt--result--http_version_policies))
+- `basic_auth_policies` (Attributes List) Specify the policy that associates a set of URLs with a specific username and password for basic authentication. (see [below for nested schema](#nestedatt--result--basic_auth_policies))
+- `ftp_policies` (Attributes List) Specify the policy that associate a set of URLs to control FTP client options for outgoing connections. These settings override the compiled-in defaults and can be further overridden by query parameters that initiates the file transfer. (see [below for nested schema](#nestedatt--result--ftp_policies))
+- `header_retention_policies` (Attributes List) Specify the policy that associates a set of URLS to retain specific heads in messages. (see [below for nested schema](#nestedatt--result--header_retention_policies))
+- `http_version_policies` (Attributes List) Specify the policy that associates a set of URLs to specific HTTP versions. This policy is cumulative. If any transaction, URL match, or gateway have an HTTP version policy, that transaction is processed at the requested HTTP version. (see [below for nested schema](#nestedatt--result--http_version_policies))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `identifier` (String) HTTP request-header
-- `max_redirects` (Number) Max redirects
-- `proxy_policies` (Attributes List) Proxy policy (see [below for nested schema](#nestedatt--result--proxy_policies))
-- `pubkey_auth_policies` (Attributes List) Public key authentication policy (see [below for nested schema](#nestedatt--result--pubkey_auth_policies))
-- `sftp_policies` (Attributes List) SFTP client policy (see [below for nested schema](#nestedatt--result--sftp_policies))
-- `smtp_policies` (Attributes List) SMTP client policy (see [below for nested schema](#nestedatt--result--smtp_policies))
-- `soap_action_policies` (Attributes List) SOAPAction policy (see [below for nested schema](#nestedatt--result--soap_action_policies))
-- `ssl_policies` (Attributes List) TLS profile policy (see [below for nested schema](#nestedatt--result--ssl_policies))
-- `timeout` (Number) Timeout
-- `upload_chunked_policies` (Attributes List) Chunked upload policy (see [below for nested schema](#nestedatt--result--upload_chunked_policies))
+- `identifier` (String) Specify the string that the user agent includes as the <tt>request-header</tt> field. This field contains information about the user agent that initiates the request. By default, the system does not include a <tt>request-header</tt> field.
+- `max_redirects` (Number) Specify the maximum number of HTTP redirect messages received before the target URL is declared unreachable. Enter a value in the range 0 - 128. The default value is 8.
+- `proxy_policies` (Attributes List) Specify the proxy policy that associates a set of URLs with a specific HTTP proxy. (see [below for nested schema](#nestedatt--result--proxy_policies))
+- `pubkey_auth_policies` (Attributes List) Specify the policy that associates a set of URLs with a specific private key for public key authentication. The remote host must possess and reference the corresponding public key (certificate) to connect successfully. (see [below for nested schema](#nestedatt--result--pubkey_auth_policies))
+- `sftp_policies` (Attributes List) Specify the policy that associate a set of URLs to control SSH client options for outgoing connections. These settings override the compiled-in defaults and can be further overridden by query parameters that initiates the file transfer. (see [below for nested schema](#nestedatt--result--sftp_policies))
+- `smtp_policies` (Attributes List) Specify the policy that associates a set of URLS to control SMTP client options for outgoing connections. These settings override the compiled-in defaults and can be further overridden by query parameters that sends the e-mail message. (see [below for nested schema](#nestedatt--result--smtp_policies))
+- `soap_action_policies` (Attributes List) Specify the policy that associates a set of URLs with a specific HTTP SOAPAction header. (see [below for nested schema](#nestedatt--result--soap_action_policies))
+- `ssl_policies` (Attributes List) Specify the policy that associates a set of URLs with a specific TLS profile. When a URL matches the expression, the agent uses the corresponding TLS profile to secure connections with the resource. (see [below for nested schema](#nestedatt--result--ssl_policies))
+- `timeout` (Number) the maximum idle time in seconds before an established connection to a remote server is torn down. Enter a avlue in the range 1 - 86400. The default value is 300.
+- `upload_chunked_policies` (Attributes List) Specify the policy that associates a set of URL to control whether to send chunked-encoded documents. With HTTP/1.1, the body of the document can be delimited by <tt>Content-Length</tt> or chunked encoding. All servers understand <tt>Content-Length</tt> but many applications fail to understand chunked encoding. Therefore, <tt>Content-Length</tt> is used. However, the use of <tt>Content-Length</tt> interferes with the ability of the service to fully stream. <p>Unlike all other HTTP/1.1 features that can be negotiated down at run time, you must know beforehand that the target server is RFC 2616 compatible.</p> (see [below for nested schema](#nestedatt--result--upload_chunked_policies))
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

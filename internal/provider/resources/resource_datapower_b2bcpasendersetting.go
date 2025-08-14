@@ -88,7 +88,7 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 			},
 			"enabled_doc_type": models.GetDmB2BEnabledDocTypeResourceSchema("Enabled document types", "enabled-doc-type", "", false),
 			"dest_endpoint_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Destination URL", "dest-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination URL for sending the message to the external party endpoint. For load distribution, use the name of the load-balancing group instead of the address-port pair in the URL.", "dest-url", "").String,
 				Optional:            true,
 			},
 			"user_name": schema.StringAttribute{
@@ -100,7 +100,7 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 			},
 			"connection_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Connection timeout", "timeout", "").AddIntegerRange(3, 7200).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to maintain an idle connection. Enter a value in the range 3 - 7200. The default value is 300.", "timeout", "").AddIntegerRange(3, 7200).AddDefaultValue("300").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -119,7 +119,7 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 				Default: stringdefault.StaticString("none"),
 			},
 			"duplicate_elimination": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Duplicate elimination", "duplicate-elimination", "").AddStringEnum("never", "always").AddDefaultValue("always").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("For an outbound ebMS message, specify whether the internal sending party requests the external receiving party to check duplicate elimination. The request is made by presenting the <tt>DuplicateElimination</tt> element in the <tt>MessageHeader</tt> element in the ebMS SOAP header. <p>When imported from CPA, the <tt>duplicateElimination</tt> attribute on the internal party <tt>DeliveryChannel</tt> element in the <tt>MessagingCharacteristics</tt> element.</p>", "duplicate-elimination", "").AddStringEnum("never", "always").AddDefaultValue("always").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -152,7 +152,7 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 				Default:             booldefault.StaticBool(false),
 			},
 			"max_retries": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Retransmit attempts", "max-retries", "").AddIntegerRange(1, 30).AddDefaultValue("3").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of attempts to retransmit an unacknowledged message. Enter a value in the range 1 - 30. The default value is 3.", "max-retries", "").AddIntegerRange(1, 30).AddDefaultValue("3").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -162,7 +162,7 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 				Default: int64default.StaticInt64(3),
 			},
 			"retry_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Retransmit interval", "retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("1800").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between retransmit attempts. Enter a value in the range 1 - 86400. The default value in 1800.", "retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("1800").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -172,7 +172,7 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 				Default: int64default.StaticInt64(1800),
 			},
 			"persist_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Persistence duration", "persist-duration", "").AddIntegerRange(0, 6000000).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.", "persist-duration", "").AddIntegerRange(0, 6000000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 
@@ -180,13 +180,13 @@ func (r *B2BCPASenderSettingResource) Schema(ctx context.Context, req resource.S
 				},
 			},
 			"include_time_to_live": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Include TimeToLive element", "include-time-to-live", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include the <tt>TimeToLive</tt> element in the outbound messages. This element indicates when the message expires. The receiving partner can accept the message only when it has not expired.", "include-time-to-live", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"encryption_required": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Require encryption", "encrypt-required", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to encrypt outbound messages. Encryption does not apply to MSH level signals.", "encrypt-required", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

@@ -3,13 +3,13 @@
 page_title: "datapower_snmpsettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SNMP Settings (default domain only)
+  Use this page to establish SNMP connectivity to the device, and to set values used by SNMP.
   CLI Alias: snmp
 ---
 
 # datapower_snmpsettings (Resource)
 
-SNMP Settings (`default` domain only)
+Use this page to establish SNMP connectivity to the device, and to set values used by SNMP.
   - CLI Alias: `snmp`
 
 ## Example Usage
@@ -27,7 +27,7 @@ resource "datapower_snmpsettings" "test" {
 
 ### Optional
 
-- `access_level` (String) SNMPv3 Access Level
+- `access_level` (String) The type of access allowed to MIB objects for incoming SNMPv3 Get and Set requests.
   - CLI Alias: `access-level`
   - Choices: `none`, `read-only`, `read-write`
   - Default value: `read-only`
@@ -37,19 +37,19 @@ resource "datapower_snmpsettings" "test" {
 - `config_mib_mq` (String) Configuration
   - CLI Alias: `config-mib`
   - Default value: `/mqConfigMIB.txt`
-- `contexts` (Attributes List) SNMPv3 Contexts
+- `contexts` (Attributes List) SNMPv3 context definitions, which provide SNMPv3 access to non-default application domains.
   - CLI Alias: `context` (see [below for nested schema](#nestedatt--contexts))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enable_default_trap_subscriptions` (Boolean) Enable Default Event Subscriptions
+- `enable_default_trap_subscriptions` (Boolean) Enable or Disable the default list of event codes that generate traps. The default is Enable Trap Subscriptions.
   - CLI Alias: `trap-default-subscriptions`
   - Default value: `true`
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `local_address` (String) Local IP Address
+- `local_address` (String) A specific IP address monitored by the SNMP agent or engine for incoming SNMP requests. The default value of 0.0.0.0 allows the agent or engine to listen on all interfaces. Selecting the address of one interface restricts SNMP to that interface.
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`
-- `local_port` (Number) Local Port
+- `local_port` (Number) A specific UDP port monitored by the SNMP agent or engine for incoming SNMP requests. By default, the agent or engine monitors port 161.
   - CLI Alias: `port`
   - Default value: `161`
 - `notif_mib` (String) Notifications
@@ -62,7 +62,7 @@ resource "datapower_snmpsettings" "test" {
   - CLI Alias: `community` (see [below for nested schema](#nestedatt--policies))
 - `policies_mq` (Attributes List) SNMPv1/v2c Communities
   - CLI Alias: `snmp-community` (see [below for nested schema](#nestedatt--policies_mq))
-- `security_level` (String) SNMPv3 Security Level
+- `security_level` (String) The minimum security level required for incoming SNMPv3 Get and Set requests. The default is Authentication, Privacy.
   - CLI Alias: `security-level`
   - Choices: `noAuthNoPriv`, `authNoPriv`, `authPriv`
   - Default value: `authPriv`
@@ -74,15 +74,15 @@ resource "datapower_snmpsettings" "test" {
   - Default value: `/mqStatusMIB.txt`
 - `targets` (Attributes List) Trap and Notification Targets
   - CLI Alias: `trap-target` (see [below for nested schema](#nestedatt--targets))
-- `trap_event_code` (List of String) Event Subscriptions
+- `trap_event_code` (List of String) The list of event codes generating traps. You can add event codes which will be triggering traps send to the configured trap targets.
   - CLI Alias: `trap-code`
-- `trap_priority` (String) Minimum Priority
+- `trap_priority` (String) Select a minimum trap event priority. The priorities are hierarchical. The lowest is listed last. Set to the minimum that is required for your trap events.
   - CLI Alias: `trap-priority`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
   - Default value: `warn`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `users` (List of String) SNMPv3 Users
+- `users` (List of String) The name of a user (which must have SNMP credential parameters) which is authorized to use SNMPv3 to access the MIBs on this system.
   - CLI Alias: `user`
   - Reference to: `datapower_user:id`
 

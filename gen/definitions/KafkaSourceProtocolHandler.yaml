@@ -1,67 +1,75 @@
 name: KafkaSourceProtocolHandler
-description: 'Kafka handler'
-cli_alias: 'source-kafka'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/KafkaSourceProtocolHandler'
+description: A Kafka handler monitors the request topic for incoming client requests.
+cli_alias: source-kafka
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/KafkaSourceProtocolHandler
 skip_test: true
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestKafkaSourceProtocolHandler"'
-    test_expect_ds: '"AccTest_KafkaSourceProtocolHandler"'
-    example: 'KafkaSourceProtocolHandlerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Cluster
-    type: String
-    reference_to: KafkaCluster
-    required: true
-    test_value: '"AccTest_KafkaCluster"'
-    test_bed_value: 'datapower_kafkacluster.acc_test.id'
-    description: 'Kafka cluster'
-    cli_alias: cluster
-  - name: RequestTopic
-    type: String
-    required: true
-    example: 'topic'
-    description: 'Request topic'
-    cli_alias: request-topic
-  - name: ResponseTopic
-    type: String
-    description: 'Response topic'
-    cli_alias: response-topic
-  - name: ConsumerGroup
-    type: String
-    required: true
-    example: 'consumer'
-    description: 'Consumer group'
-    cli_alias: consumer-group
-  - name: BatchSize
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    default: 1
-    description: 'Batch size'
-    cli_alias: batch-size
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestKafkaSourceProtocolHandler"'
+  test_expect_ds: '"AccTest_KafkaSourceProtocolHandler"'
+  example: KafkaSourceProtocolHandlerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Cluster
+  type: String
+  reference_to: KafkaCluster
+  required: true
+  test_value: '"AccTest_KafkaCluster"'
+  test_bed_value: datapower_kafkacluster.acc_test.id
+  description: Kafka cluster
+  cli_alias: cluster
+- name: RequestTopic
+  type: String
+  required: true
+  example: topic
+  description: Specify the name of the request topic to monitor for incoming client
+    requests. On receipt, the handler forwards the extracted message to the DataPower
+    service for processing.
+  cli_alias: request-topic
+- name: ResponseTopic
+  type: String
+  description: Specify the name of the response topic to send responses after processing
+    by the DataPower service. When the Kafka server does not expect responses, leave
+    blank. When blank, responses are dropped.
+  cli_alias: response-topic
+- name: ConsumerGroup
+  type: String
+  required: true
+  example: consumer
+  description: Consumer group
+  cli_alias: consumer-group
+- name: BatchSize
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  default: 1
+  description: Specify the number of messages to retrieve and process as a batch.
+    The handler attempts to retrieve the number of specified messages from the consumer
+    and processes these messages as a batch. Enter a value in the range 1 - 65535.
+    The default value is 1.
+  cli_alias: batch-size

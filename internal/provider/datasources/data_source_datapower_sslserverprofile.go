@@ -57,7 +57,7 @@ func (d *SSLServerProfileDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *SSLServerProfileDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "TLS server profile",
+		MarkdownDescription: "The TLS server profile secures connections with clients.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -82,7 +82,7 @@ func (d *SSLServerProfileDataSource) Schema(ctx context.Context, req datasource.
 						},
 						"protocols": models.GetDmSSLProtoVersionsBitmapDataSourceSchema("Protocols", "protocols", ""),
 						"ciphers": schema.ListAttribute{
-							MarkdownDescription: "Ciphers",
+							MarkdownDescription: "Specify the cipher suites to support in preference order. Ensure that the order of cipher suites are in preference order. Otherwise, change the sequence order to meet your preference.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
@@ -95,7 +95,7 @@ func (d *SSLServerProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"require_client_auth": schema.BoolAttribute{
-							MarkdownDescription: "Require client authentication",
+							MarkdownDescription: "Specify whether to require client authentication during the TLS handshake. When enabled, the handshake is aborted if the client certificate is not provided. Otherwise, the request does not fail when there is no client certificate.",
 							Computed:            true,
 						},
 						"validate_client_cert": schema.BoolAttribute{
@@ -115,16 +115,16 @@ func (d *SSLServerProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"cache_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Session cache timeout",
+							MarkdownDescription: "Specify the number of seconds that TLS sessions are allowed to remain in the TLS session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.",
 							Computed:            true,
 						},
 						"cache_size": schema.Int64Attribute{
-							MarkdownDescription: "Session cache size",
+							MarkdownDescription: "Specify the maximum number of entries (multiplied by 1024) in the session cache. Enter a value in the range 1 - 500. The default value is 20.",
 							Computed:            true,
 						},
-						"ssl_options": models.GetDmSSLOptionsDataSourceSchema("Advanced TLS options", "ssl-options", ""),
+						"ssl_options": models.GetDmSSLOptionsDataSourceSchema("Specify the options to apply to the TLS connection. These options have negative impact on the performance.", "ssl-options", ""),
 						"max_ssl_duration": schema.Int64Attribute{
-							MarkdownDescription: "Maximum TLS session duration",
+							MarkdownDescription: "Specify the maximum duration of an established TLS session. The TLS connection terminates when the duration is reached. Enter a value in the range 1 - 11520. The default value is 60.",
 							Computed:            true,
 						},
 						"disable_renegotiation": schema.BoolAttribute{
@@ -132,7 +132,7 @@ func (d *SSLServerProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"number_of_renegotiation_allowed": schema.Int64Attribute{
-							MarkdownDescription: "Maximum client initiated renegotiations",
+							MarkdownDescription: "Specify the maximum number of client initiated renegotiations to allow. Enter a value in the range 0 - 512. The default value is 0, which indicates TLS client initiated renegotiation is not allowed.",
 							Computed:            true,
 						},
 						"prohibit_resume_on_reneg": schema.BoolAttribute{
@@ -140,11 +140,11 @@ func (d *SSLServerProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"compression": schema.BoolAttribute{
-							MarkdownDescription: "Enable compression",
+							MarkdownDescription: "Specify whether to enable TLS compression. TLS compression in HTTPS is dangerous because the connection becomes vulnerable to the CRIME attack.",
 							Computed:            true,
 						},
 						"allow_legacy_renegotiation": schema.BoolAttribute{
-							MarkdownDescription: "Allow legacy renegotiation",
+							MarkdownDescription: "Specify whether to allow TLS renegotiation with TLS clients that do not support RFC 5746. By default, this support is disabled because renegotiation is vulnerable to man-in-the-middle attacks as documented in CVE-2009-3555. Renegotiation with TLS clients that support RFC 5746 is permitted regardless of the setting.",
 							Computed:            true,
 						},
 						"prefer_server_ciphers": schema.BoolAttribute{
@@ -157,11 +157,11 @@ func (d *SSLServerProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"prioritize_cha_cha": schema.BoolAttribute{
-							MarkdownDescription: "Prioritize ChaCha20-Poly1305 cipher",
+							MarkdownDescription: "Specify whether to move ChaCha20-Poly1305 cipher to the top of preference list sent to the client when this cipher is at the top of client cipher list When server cipher suite preferences is in effect, enabling this property temporarily moves the ChaCha20-Poly1305 cipher to the top of preference list when clients that present ChaCha20-Poly1305 cipher have this cipher at the top of their preference list. This setting allows the client to negotiate ChaCha20-Poly1305 cipher while other clients can use other ciphers.",
 							Computed:            true,
 						},
 						"sig_algs": schema.ListAttribute{
-							MarkdownDescription: "Signature algorithms",
+							MarkdownDescription: "Specify the signature algorithms to advertise and support. An empty list uses the default algorithms.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

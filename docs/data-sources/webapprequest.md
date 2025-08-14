@@ -3,12 +3,12 @@
 page_title: "datapower_webapprequest Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web Request Profile
+  The web request profile specifies various properties about the request side of the transaction that must be satisfied.
 ---
 
 # datapower_webapprequest (Data Source)
 
-Web Request Profile
+The web request profile specifies various properties about the request side of the transaction that must be satisfied.
 
 ## Example Usage
 
@@ -38,45 +38,45 @@ Optional:
 
 Read-Only:
 
-- `aaa` (String) AAA Policy
-- `acl` (String) Access Control List
+- `aaa` (String) If this property references a AAA policy, then that AAA policy will be run as a filter on this transaction and the success of that AAA run will be required to continue processing. Any input to this transaction as XML, application/www-url-encoded, or multipart/form-data MIME types will be automatically provided to the AAA processing policy.
+- `acl` (String) This Access Control List will be used to allow or deny access to this service based on the IP address of the client. When attached to a service, an Access Control List (ACL) denies all access by default. To deny access to only selected addresses, first grant access to all addresses (allow 0.0.0.0) and then create deny entries for the desired hosts.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `content_types` (List of String) Content-Type List
-- `cookie_name_vector` (List of String) Cookie Names
-- `cookie_profile` (Attributes) Cookie Profile
+- `content_types` (List of String) A list of PCRE regular expressions that indicate acceptable content-type MIME headers on the request. If this list is empty, any content-type is acceptable. If the request does not have a content type that will be represented as an empty string for matching purposes. Requests without a body (GET, HEAD, and so forth) are not subject to this constraint. An empty list will match all content types.
+- `cookie_name_vector` (List of String) The list of cookies, by name, that the process signs and encrypts.
+- `cookie_profile` (Attributes) The cookie management profile allows you to specify validation profiles for incoming cookies, whether cookies should be allowed at all, and the signature and encryption policies for cookies.
   - CLI Alias: `cookie-policy` (see [below for nested schema](#nestedatt--result--cookie_profile))
-- `error_policy` (String) Error Policy
-- `header_gnvc` (String) Header Name-Value Profile
+- `error_policy` (String) If this request policy is violated the firewall error policy will be invoked unless this more specific error policy is provided, in which case this policy takes precedence.
+- `header_gnvc` (String) The name-value profile allows you to specify what headers are expected, what headers should be stripped, and what headers should be mapped to known values. If no profile is specified, any header is allowed.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `max_body_size` (Number) Maximum Size
-- `max_uri_size` (Number) Maximum URI Length
-- `min_body_size` (Number) Minimum Size
+- `max_body_size` (Number) Specify the maximum size of the request body.
+- `max_uri_size` (Number) The URI may be no longer than the value specified here.
+- `min_body_size` (Number) Specify the minimum size of the request body.
 - `multipart_form_data` (Attributes) Multipart/Form-Data Profile
   - CLI Alias: `multipart-form-data` (see [below for nested schema](#nestedatt--result--multipart_form_data))
-- `non_xml_policy` (String) Non-XML Processing
-- `non_xml_rule` (String) Non-XML Processing Rule
-- `ok_methods` (Attributes) Methods
+- `non_xml_policy` (String) Specify how the device handles requests that do not contain an XML MIME type.
+- `non_xml_rule` (String) This is the transformation rule that is run when the request does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.
+- `ok_methods` (Attributes) Specify which HTTP methods are acceptable from the client acceptable.
   - CLI Alias: `request-methods` (see [below for nested schema](#nestedatt--result--ok_methods))
-- `ok_versions` (Attributes) Versions
+- `ok_versions` (Attributes) Specify which HTTP versions are acceptable from the client.
   - CLI Alias: `request-versions` (see [below for nested schema](#nestedatt--result--ok_versions))
-- `policy_type` (String) Style
-- `process_all_cookie` (Boolean) Sign or Encrypt All Cookies
-- `query_string_gnvc` (String) QueryString Name-Value Profile
-- `query_string_policy` (String) Allow Query String
-- `rate_limiter` (String) Rate Limiting
-- `session_management_profile` (String) Session Policy
-- `sql_injection` (Boolean) SQL Injection Filter
-- `sql_injection_patterns_file` (String) SQL Injection Patterns File
-- `ss_key` (String) Shared Secret Key
-- `ssl_policy` (String) Allow SSL
-- `uri_filter_dot_dot` (Boolean) Filter Dot Dot
-- `uri_filter_exe` (Boolean) Filter .exe
-- `uri_filter_fragment` (String) Fragmented URI Policy
-- `uri_filter_unicode` (Boolean) Filter Unicode
-- `url_encoded_gnvc` (String) URL-Encoded Body Name-Value Profile
+- `policy_type` (String) Select the satisfaction policy for the profile. The default value is Admission.
+- `process_all_cookie` (Boolean) The process will sign or encrypt all cookies when enabled. The default is enabled.
+- `query_string_gnvc` (String) The name-value profile for query-string. If not present, no profile is enforced. The profile allows you to validate data members of the query string, filter out unknown ones, or map certain names to known values.
+- `query_string_policy` (String) Select how the client URL handles query strings. The default is Allow.
+- `rate_limiter` (String) A rate limiting policy restricts identities (as determined by AAA or the client IP address if AAA is not available) to a specific number of transactions per second.
+- `session_management_profile` (String) The session management policy enforces the start pages acceptable for requests that match this security profile. If no policy is referenced, any page is an acceptable start page.
+- `sql_injection` (Boolean) Data parameters from the query string, application/www-urlencoded requests, and multipart/form-data requests will be passed through the standard SQL Injection filter if this property is enabled.
+- `sql_injection_patterns_file` (String) The patterns file that the SQL injection filter uses.
+- `ss_key` (String) Select the Shared Secret Key for both signing or encrypting.
+- `ssl_policy` (String) Select how the client side of the inspected transaction handles SSL. The default value is Allow.
+- `uri_filter_dot_dot` (Boolean) Filter Requests with .. in the URI after URI normalization
+- `uri_filter_exe` (Boolean) Filter Requests with .exe in the URI after URI normalization
+- `uri_filter_fragment` (String) Select how to handle URI fragments in requests. A URI fragment is the portion of a URI after the # symbol. The default is Truncate
+- `uri_filter_unicode` (Boolean) If Unicode is detected in the URI and this property is enabled then the transaction will be rejected
+- `url_encoded_gnvc` (String) The name-value profile allows you to specify what form elements are expected, what form elements should be stripped, and what form elements should be mapped to known values. If no profile is specified, any set of pairs is allowed.
 - `user_summary` (String) Comments
-- `xml_policy` (String) XML Processing
-- `xml_rule` (String) XML Transformation Rule
+- `xml_policy` (String) Specify how the device handles requests that contain an XML MIME type.
+- `xml_rule` (String) This is the transformation rule that is run when the request contains an XML MIME type and the XML processing policy is set to XML or SOAP.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

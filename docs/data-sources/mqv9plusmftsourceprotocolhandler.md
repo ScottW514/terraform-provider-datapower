@@ -3,12 +3,12 @@
 page_title: "datapower_mqv9plusmftsourceprotocolhandler Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  IBM MQ v9+ MFT handler
+  Configure the IBM MQ v9+ MFT handle to manage IBM MQ MFT protocol communications.
 ---
 
 # datapower_mqv9plusmftsourceprotocolhandler (Data Source)
 
-IBM MQ v9+ MFT handler
+Configure the IBM MQ v9+ MFT handle to manage IBM MQ MFT protocol communications.
 
 ## Example Usage
 
@@ -39,15 +39,15 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `concurrent_connections` (Number) Concurrent conversations
-- `get_message_options` (Number) Get message options
-- `get_queue` (String) Get queue
+- `concurrent_connections` (Number) Specify the number of concurrent IBM MQ conversations to allocate. The default value is 1 but can be increased to improve performance.
+- `get_message_options` (Number) Specify the cumulative value of the MQGET options that are applicable to an IBM MQ message in decimal or hex format. The value is passed directly to the IBM MQ API. The default value is 32769, which is the decimal value for the <tt>MQGMO_WAIT</tt> and <tt>MQGMO_LOGICAL_ORDER</tt> options.
+- `get_queue` (String) Specify the name of the get queue associated with the queue manager. The handler gets messages from this queue.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ignore_backout_errors` (Boolean) Ignore backout errors
-- `polling_interval` (Number) Polling interval
-- `queue_manager` (String) Queue manager (reference to MQManger or MQManagerGroup)
-- `retrieve_backout_settings` (Boolean) Retrieve backout settings
-- `use_qm_name_in_url` (Boolean) Use queue manager in URL
+- `ignore_backout_errors` (Boolean) Specify whether to ignore backout errors. <ul><li>>When enabled, ignore the error in sending the transfer to the backout queue and commit the transfer from the get queue.</li><li>When not enabled roll back and retry the transfer. This setting is the default value.</li></ul>
+- `polling_interval` (Number) Specify the duration in seconds to wait after processing all messages before attempting to retrieve messages from the get queue.
+- `queue_manager` (String) Specify the name of the queue manager that provides messaging services for communicating applications by periodically monitoring or polling queues and by ensuring that messages are directed to the correct receive queue or routed to another queue manager. The local queue manager corresponds to a queue manager running on another host on the network.
+- `retrieve_backout_settings` (Boolean) Specify whether to retrieve backout setting from the IBM MQ server. <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue queue name</b> settings from the IBM MQ server and checks these values. On a reattempt, the handler uses the higher priority backout settings from the server. If the server does not contain backout settings, The handler uses any existing backout values, either empty or populated, from the local IBM MQ queue manager. If there are no backout settings, the backout function is disabled.</p><p>When an alias queue is used, its attributes are retrieved, not those of the base queue.</p>
+- `use_qm_name_in_url` (Boolean) Specify whether the var://service/URL-in variable returns the name of the local queue manager or queue manager group when this configuration defines a queue manager group as the queue manager. <ul><li>When enabled, the variable returns the name of the queue manager.</li><li>When not enabled, the variable returns the name of the queue manager group. This setting is the default value.</li></ul>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

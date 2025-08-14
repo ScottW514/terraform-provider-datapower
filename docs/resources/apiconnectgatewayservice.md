@@ -3,13 +3,13 @@
 page_title: "datapower_apiconnectgatewayservice Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API Connect gateway service
+  The API Connect gateway service defines the type of gateway service and manages connections with API Connect. When configured, the DataPower Gateway creates a gateway service to retrieve data from API Connect to define the configuration to process API requests.
   CLI Alias: apic-gw-service
 ---
 
 # datapower_apiconnectgatewayservice (Resource)
 
-API Connect gateway service
+The API Connect gateway service defines the type of gateway service and manages connections with API Connect. When configured, the DataPower Gateway creates a gateway service to retrieve data from API Connect to define the configuration to process API requests.
   - CLI Alias: `apic-gw-service`
 
 ## Example Usage
@@ -32,54 +32,54 @@ resource "datapower_apiconnectgatewayservice" "test" {
 
 ### Optional
 
-- `api_gateway_address` (String) API gateway address
+- `api_gateway_address` (String) Specify the IP address or host alias to accept API requests. The default value is 0.0.0.0. This address is used with its port to create an HTTPS handler.
   - CLI Alias: `api-gw-address`
   - Default value: `0.0.0.0`
-- `api_gateway_port` (Number) API gateway port
+- `api_gateway_port` (Number) Specify the listening port for API requests. The default value is 9443. This port is used with its address to create an HTTPS handler.
   - CLI Alias: `api-gw-port`
   - Default value: `9443`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `gateway_peering` (String) Gateway peering
+- `gateway_peering` (String) Specify the gateway-peering instance that manages data across the gateway peers. The following restrictions apply. <ul><li>When TLS and peer group mode are enabled, all peers must use the same crypto material.</li><li>Keys and certificates are restricted to PEM and PKCS #12 formats.</li></ul>
   - CLI Alias: `gateway-peering`
   - Reference to: `datapower_gatewaypeering:id`
-- `gateway_peering_manager` (String) Gateway-peering manager
+- `gateway_peering_manager` (String) Specify the gateway-peering manager that manages gateway-peering instances for the gateway service. This property is meaningful when the gateway type is an API gateway.
   - CLI Alias: `gateway-peering-manager`
   - Reference to: `datapower_gatewaypeeringmanager:id`
   - Default value: `default`
-- `ip_multicast` (String) IP multicast
+- `ip_multicast` (String) Specify the IP multicast configuration for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is multicast.
   - CLI Alias: `ip-multicast`
   - Reference to: `datapower_ipmulticast:id`
-- `ip_unicast` (String) IP unicast
+- `ip_unicast` (String) Specify the address of the unicast peer group for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is unicast.
   - CLI Alias: `ip-unicast`
-- `jwt_validation_mode` (String) JWT validation mode
+- `jwt_validation_mode` (String) Specify the JWT validation mode. This property does not control whether a token is validated. This property controls whether transactions fail when validation fails.
   - CLI Alias: `jwt-validate-mode`
   - Choices: `request`, `require`
   - Default value: `request`
 - `jwturl` (String) JWT URL
   - CLI Alias: `jwt-url`
-- `local_address` (String) Local address
+- `local_address` (String) Specify the IP address or interface through that API Connect uses to manage the gateway service. The default value is 0.0.0.0.
   - CLI Alias: `local-address`
   - Default value: `0.0.0.0`
-- `local_port` (Number) Local port
+- `local_port` (Number) Specify the listening port for the gateway service. The default value is 3000. <p><b>Note:</b> The gateway service uses four additional consecutive ports after the local port. Therefore, all five consecutive ports must be clear of conflicts.</p>
   - CLI Alias: `local-port`
   - Default value: `3000`
 - `proxy_policy` (Attributes) API Manager proxy
   - CLI Alias: `proxy` (see [below for nested schema](#nestedatt--proxy_policy))
-- `ssl_server` (String) TLS server profile
+- `ssl_server` (String) Specify the TLS server profile to secure connections between API Connect to the gateway service. The following restrictions apply. <ul><li>Keys and certificates are restricted to PEM and PKCS #12 formats.</li><li>The validation credentials must use PEM formatted material.</li></ul>
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_sslserverprofile:id`
-- `user_defined_policies` (List of String) User-defined policies
+- `user_defined_policies` (List of String) Specify user-defined policies to advertise to API Connect for use in the API Connect Assembly Editor. This property is meaningful when the gateway type is an API gateway. <p>For an assembly function that is a user-defined policy, configure the assembly function with a mechanism other than a watched file that is processed by a configuration sequence. Objects that are created through the processing of configuration sequences are not persisted to the startup configuration. The preferred method for user-defined policies is to define them explicitly so that they persist to the startup configuration.</p>
   - CLI Alias: `user-defined-policies`
   - Reference to: `datapower_assemblyfunction:id`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `v5_compatibility_mode` (Boolean) V5 compatibility mode
+- `v5_compatibility_mode` (Boolean) Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>
   - CLI Alias: `v5-compatibility-mode`
   - Default value: `true`
-- `v5c_slm_mode` (String) SLM peer mode
+- `v5c_slm_mode` (String) Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.
   - CLI Alias: `slm-mode`
   - Choices: `autounicast`, `unicast`, `multicast`
   - Default value: `autounicast`

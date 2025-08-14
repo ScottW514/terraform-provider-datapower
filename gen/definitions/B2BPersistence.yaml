@@ -1,58 +1,69 @@
 name: B2BPersistence
-description: 'B2B persistence (`default` domain only)'
-cli_alias: 'b2b-persistence'
-cmd_group: 'system'
-rest_endpoint: '/mgmt/config/default/B2BPersistence/B2BPersistence'
+description: Define the data storage for B2B transaction data.
+cli_alias: b2b-persistence
+cmd_group: system
+rest_endpoint: /mgmt/config/default/B2BPersistence/B2BPersistence
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: RaidVolume
-    type: String
-    reference_to: RaidVolume
-    required: true
-    description: 'RAID volume'
-    example: 'raid0'
-    test_value: '"raid0"'
-    cli_alias: raid-volume
-  - name: StorageSize
-    type: Int64
-    minimum: 1024
-    maximum: 65536
-    required: true
-    default: 1024
-    description: 'Storage size'
-    cli_alias: storage-size
-  - name: HAEnabled
-    type: Bool
-    required: true
-    default: false
-    description: 'Enable high availability'
-    cli_alias: ha-enabled
-  - name: HAOtherHosts
-    dm_type: DmB2BHAHost
-    description: 'Alternate host'
-    cli_alias: ha-other-hosts
-  - name: HALocalIP
-    type: String
-    description: 'Replication address'
-    cli_alias: ha-local-ip
-  - name: HALocalPort
-    type: Int64
-    default: 1320
-    description: 'Replication port'
-    cli_alias: ha-local-port
-  - name: HAVirtualIP
-    type: String
-    description: 'Virtual IP address'
-    cli_alias: ha-virtual-ip
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: RaidVolume
+  type: String
+  reference_to: RaidVolume
+  required: true
+  description: Specify the location of the data store. The location must be the <tt>raid0</tt>
+    RAID volume. During firmware initialization, the <tt>raid0</tt> volume is associated
+    with persistent storage.
+  example: raid0
+  test_value: '"raid0"'
+  cli_alias: raid-volume
+- name: StorageSize
+  type: Int64
+  minimum: 1024
+  maximum: 65536
+  required: true
+  default: 1024
+  description: Specify the maximum size for the data store in MB. Enter a value in
+    the range 1024 - 65536. The default is 1024. <p>This data store is for all B2B
+    gateway services. These services store transaction metadata on the unencrypted
+    partition of the RAID volume. These services store copies of the messages on the
+    encrypted portion of the RAID volume.</p><p>The storage location for messages
+    is defined on a service-by-service basis during the configuration of the B2B gateway.</p><p><b>Attention:</b>
+    The maximum size for the persistent data store cannot be changed to a smaller
+    value. Changing to a larger value might interrupt transactions that are in flight.</p>
+  cli_alias: storage-size
+- name: HAEnabled
+  type: Bool
+  required: true
+  default: false
+  description: When on, the appliance is in active-passive high availability mode
+    with the configured 'Alternate Host'.
+  cli_alias: ha-enabled
+- name: HAOtherHosts
+  dm_type: DmB2BHAHost
+  description: Alternate host
+  cli_alias: ha-other-hosts
+- name: HALocalIP
+  type: String
+  description: Replication address
+  cli_alias: ha-local-ip
+- name: HALocalPort
+  type: Int64
+  default: 1320
+  description: Replication port
+  cli_alias: ha-local-port
+- name: HAVirtualIP
+  type: String
+  description: Virtual IP address
+  cli_alias: ha-virtual-ip

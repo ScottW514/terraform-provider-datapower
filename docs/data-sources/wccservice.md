@@ -3,12 +3,12 @@
 page_title: "datapower_wccservice Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WebSphere Cell
+  Use the WebSphere Cell configuration to retrieve configuration information and runtime information from a Network Deployment or Virtual Enterprise product. Load balancer groups use this information to automate configuration and updates.
 ---
 
 # datapower_wccservice (Data Source)
 
-WebSphere Cell
+Use the WebSphere Cell configuration to retrieve configuration information and runtime information from a Network Deployment or Virtual Enterprise product. Load balancer groups use this information to automate configuration and updates.
 
 ## Example Usage
 
@@ -40,12 +40,12 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `odc_info_hostname` (String) Deployment Manager Host
-- `odc_info_port` (Number) Deployment Manager Port number
-- `ssl_client` (String) TLS client profile
-- `ssl_client_config_type` (String) TLS client type
-- `time_interval` (Number) Time Interval
-- `update_type` (String) Update Method
+- `odc_info_hostname` (String) Host name or IP address of the Deployment Manager. It is used to communicate with the ODCInfo servlet. The ODCInfo servlet must be installed in a WebSphere Application Server environment.
+- `odc_info_port` (Number) Specifies the listening port of the ODCInfo servlet on the deployment manager. To determine the listening port number, log in to the WebSphere Application Server administrative console and click System Administration > Deployment Manager > ports. From the list, use the port associated with WC_adminhost for HTTP or the port associated with WC_adminhost_secure for HTTPS.
+- `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
+- `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
+- `time_interval` (Number) <p>If the update method is poll, the time interval specifies the amount of time in seconds between poll requests.</p><p>If the update method is subscribe, the time interval specifies the maximum duration of the request in seconds.</p><p>Use any value of 1 - 86400. The default is 10.</p>
+- `update_type` (String) Specifies the method for retrieving WebSphere information. The method defines the responsiveness of the updates received by the DataPower Gateway. The method also affects the amount of system resource used for providing those updates. The default is poll.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

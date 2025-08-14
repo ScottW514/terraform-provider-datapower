@@ -1,164 +1,212 @@
 name: APICollection
-description: 'API collection'
-cli_alias: 'api-collection'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APICollection'
+description: An API collection is a logical partition of an API gateway that packages
+  the plans and subscribers to make APIs available to a specific group of clients.
+  An API collection corresponds to a catalog in the API manager.
+cli_alias: api-collection
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APICollection
 actions:
-  - name: flush_cache
-    body: '{"FlushAPISubscriberCache": {"APICollection": "{name}"}}'
+- name: flush_cache
+  body: '{"FlushAPISubscriberCache": {"APICollection": "{name}"}}'
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPICollection"'
-    test_expect_ds: '"AccTest_APICollection"'
-    example: 'APICollectionName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Sandbox
-    type: Bool
-    default: false
-    description: 'Sandbox'
-    cli_alias: sandbox
-  - name: OrgID
-    type: String
-    required: true
-    example: 'orgid'
-    description: 'Organization ID'
-    cli_alias: organization-id
-  - name: OrgName
-    type: String
-    required: true
-    example: 'orgname'
-    description: 'Organization name'
-    cli_alias: organization-name
-  - name: CatalogID
-    type: String
-    default: 'default-catalog-id'
-    description: 'Catalog ID'
-    cli_alias: catalog-id
-  - name: CatalogName
-    type: String
-    default: 'default'
-    description: 'Catalog name'
-    cli_alias: catalog-name
-  - name: DevPortalEndpoint
-    type: String
-    description: 'Developer Portal endpoint'
-    cli_alias: dev-portal-endpoint
-  - name: CacheCapacity
-    type: Int64
-    minimum: 8
-    maximum: 51200
-    default: 128
-    description: 'Subscriber cache capacity'
-    cli_alias: cache-capacity
-  - name: RoutingPrefix
-    type: List
-    element_type: DmRoutingPrefix
-    required: true
-    description: 'Routing prefixes'
-    cli_alias: routing-prefix
-  - name: UseRateLimitGroup
-    type: Bool
-    default: false
-    description: 'Use rate limit group'
-    cli_alias: use-rate-limit-group
-  - name: DefaultRateLimit
-    type: List
-    element_type: DmAPIRateLimit
-    description: 'Default rate limit'
-    cli_alias: default-rate-limit
-  - name: RateLimitGroup
-    type: String
-    reference_to: RateLimitDefinitionGroup
-    description: 'Rate limit group'
-    cli_alias: rate-limit-group
-  - name: AssemblyBurstLimit
-    type: List
-    element_type: DmAPIBurstLimit
-    description: 'Assembly burst limit'
-    cli_alias: assembly-burst-limit
-  - name: AssemblyRateLimit
-    type: List
-    element_type: DmAPIRateLimit
-    description: 'Assembly rate limit'
-    cli_alias: assembly-rate-limit
-  - name: AssemblyCountLimit
-    type: List
-    element_type: DmAPICountLimit
-    description: 'Assembly count limit'
-    cli_alias: assembly-count-limit
-  - name: EnforcePreAssemblyRateLimits
-    type: Bool
-    default: true
-    description: 'Enforce preassembly rate limits'
-    cli_alias: enforce-pre-assembly-rate-limits
-  - name: APIProcessingRule
-    type: String
-    reference_to: APIRule
-    required: true
-    default: 'default-api-rule'
-    test_value: '"default-api-rule"'
-    description: 'API processing rule'
-    cli_alias: processing-rule
-  - name: APIErrorRule
-    type: String
-    reference_to: APIRule
-    default: 'default-api-error-rule'
-    test_value: '"default-api-error-rule"'
-    description: 'API error rule'
-    cli_alias: error-rule
-  - name: AssemblyPreflow
-    type: String
-    reference_to: Assembly
-    description: 'Assembly preprocessing'
-    cli_alias: assembly-preprocessing
-  - name: AssemblyPostflow
-    type: String
-    reference_to: Assembly
-    description: 'Assembly postprocessing'
-    cli_alias: assembly-postprocessing
-  - name: Plan
-    type: List
-    reference_to: APIPlan
-    element_type: String
-    required: true
-    test_value: '["AccTest_APIPlan"]'
-    test_bed_value: '[datapower_apiplan.acc_test.id]'
-    description: 'Plans'
-    cli_alias: plan
-  - name: AnalyticsEndpoint
-    type: String
-    reference_to: AnalyticsEndpoint
-    description: 'Analytic endpoint'
-    cli_alias: analytics-endpoint
-  - name: ApplicationType
-    type: List
-    reference_to: APIApplicationType
-    element_type: String
-    description: 'Application types'
-    cli_alias: application-type
-  - name: ParseSettingsReference
-    dm_type: DmDynamicParseSettingsReference
-    description: 'Parse settings'
-    cli_alias: parse-settings-reference
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPICollection"'
+  test_expect_ds: '"AccTest_APICollection"'
+  example: APICollectionName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Sandbox
+  type: Bool
+  default: false
+  description: Specify whether the APIs in this catalog are for test purposes. By
+    default, a catalog is not for test purposes.
+  cli_alias: sandbox
+- name: OrgID
+  type: String
+  required: true
+  example: orgid
+  description: Organization ID
+  cli_alias: organization-id
+- name: OrgName
+  type: String
+  required: true
+  example: orgname
+  description: Organization name
+  cli_alias: organization-name
+- name: CatalogID
+  type: String
+  default: default-catalog-id
+  description: Catalog ID
+  cli_alias: catalog-id
+- name: CatalogName
+  type: String
+  default: default
+  description: Catalog name
+  cli_alias: catalog-name
+- name: DevPortalEndpoint
+  type: String
+  description: Specify the URL of the Developer Portal endpoint. This endpoint can
+    be used to provide security credentials for access to an API.
+  cli_alias: dev-portal-endpoint
+- name: CacheCapacity
+  type: Int64
+  minimum: 8
+  maximum: 51200
+  default: 128
+  description: Specify the maximum number of subscriber entries to cache. Enter a
+    value in the range 8 - 51200. The default value is 128. When the limit is exceeded,
+    the least recently used (LRU) entry is removed.
+  cli_alias: cache-capacity
+- name: RoutingPrefix
+  type: List
+  element_type: DmRoutingPrefix
+  required: true
+  description: Specify the routing prefix to determine which API collection to route
+    the request. You can use routing prefixes to organize your APIs and plans into
+    collections and subcollections. For example, if you have a collection of APIs
+    serving for a certain purpose, and the APIs are to be used by two segments of
+    your organization, you might create two API collections with the organization
+    name, purpose name, and segment name in the routing prefix. If the organization
+    name is <tt>myorg</tt> , the APIs serve for purpose <tt>purpose1</tt> , and the
+    two segments under the organization is <tt>section1</tt> and <tt>section2</tt>
+    , the resulting URL routing prefixes are <tt>/myorg/purpose1/section1</tt> and
+    <tt>/myorg/purpose1/section2</tt> . The resulting hostname routing prefixes are
+    <tt>section1.purpose1.myorg</tt> and <tt>section2.purpose1.myorg</tt> . <p>The
+    API gateway uses the routing prefix to form the complete URI <tt>routing_prefix/base_path/operation_path</tt>
+    and accepts only the incoming requests with this URI. In the complete URI, <tt>base_path</tt>
+    is the base path on which the API is served, and <tt>operation_path</tt> is the
+    relative path to the base path where the operations are available.</p><p>The default
+    routing prefix is slash (/) when the type is URI and blank when the type is hostname.
+    An API collection becomes the default API collection in the API Gateway when the
+    API collection has a default routing prefix. The API gateway routes a request
+    to the default API collection when other API collections do not match. An API
+    gateway can have only one default API collection. Therefore, regardless of the
+    prefix type, only one API collection can be configured with the default routing
+    prefix.</p>
+  cli_alias: routing-prefix
+- name: UseRateLimitGroup
+  type: Bool
+  default: false
+  description: Use rate limit group
+  cli_alias: use-rate-limit-group
+- name: DefaultRateLimit
+  type: List
+  element_type: DmAPIRateLimit
+  description: Specify the default rate limit scheme for API requests without API
+    keys for client identification. When not defined, requests without API keys are
+    rejected.
+  cli_alias: default-rate-limit
+- name: RateLimitGroup
+  type: String
+  reference_to: RateLimitDefinitionGroup
+  description: Specify the default rate limit group for API requests without API keys
+    for client identification. When not defined, requests without API keys are rejected.
+  cli_alias: rate-limit-group
+- name: AssemblyBurstLimit
+  type: List
+  element_type: DmAPIBurstLimit
+  description: Assembly burst limit
+  cli_alias: assembly-burst-limit
+- name: AssemblyRateLimit
+  type: List
+  element_type: DmAPIRateLimit
+  description: Assembly rate limit
+  cli_alias: assembly-rate-limit
+- name: AssemblyCountLimit
+  type: List
+  element_type: DmAPICountLimit
+  description: Assembly count limit
+  cli_alias: assembly-count-limit
+- name: EnforcePreAssemblyRateLimits
+  type: Bool
+  default: true
+  description: Specify whether to enforce the API rate and burst limits from the plan.
+    When disabled, only the limits specified in a rate limit assembly action are applied
+    to this API.
+  cli_alias: enforce-pre-assembly-rate-limits
+- name: APIProcessingRule
+  type: String
+  reference_to: APIRule
+  required: true
+  default: default-api-rule
+  test_value: '"default-api-rule"'
+  description: Specify the processing rule to process API requests. When your collection
+    requires custom processing, use API Connect global policies to define the custom
+    rules.
+  cli_alias: processing-rule
+- name: APIErrorRule
+  type: String
+  reference_to: APIRule
+  default: default-api-error-rule
+  test_value: '"default-api-error-rule"'
+  description: Specify the processing rule to handle errors during API processing.
+    When your collection requires custom processing, use API Connect global policies
+    to define the custom rules.
+  cli_alias: error-rule
+- name: AssemblyPreflow
+  type: String
+  reference_to: Assembly
+  description: Specify the processing rule to run before the assembly rule. When your
+    collection requires custom processing, use API Connect global policies to configure
+    the assembly.
+  cli_alias: assembly-preprocessing
+- name: AssemblyPostflow
+  type: String
+  reference_to: Assembly
+  description: Specify the processing rule to run after the assembly rule. When your
+    collection requires custom processing, use API Connect global policies to configure
+    the assembly.
+  cli_alias: assembly-postprocessing
+- name: Plan
+  type: List
+  reference_to: APIPlan
+  element_type: String
+  required: true
+  test_value: '["AccTest_APIPlan"]'
+  test_bed_value: '[datapower_apiplan.acc_test.id]'
+  description: Specify the API plans for the collection. Each plan contains a list
+    of APIs and defines the rate limit for the API operations.
+  cli_alias: plan
+- name: AnalyticsEndpoint
+  type: String
+  reference_to: AnalyticsEndpoint
+  description: Analytic endpoint
+  cli_alias: analytics-endpoint
+- name: ApplicationType
+  type: List
+  reference_to: APIApplicationType
+  element_type: String
+  description: Application types
+  cli_alias: application-type
+- name: ParseSettingsReference
+  dm_type: DmDynamicParseSettingsReference
+  description: Specify the constraints to parse documents. Precedence rules apply
+    when the constraint for the same aspect of an input document is configured with
+    more than one method. <ul><li>You can specify a URL reference from which to retrieve
+    the constraints definition.</li><li>You can specify a literal configuration string
+    in XML management interface or REST management interface format that contains
+    the constraints definition.</li><li>You can specify a parse settings configuration
+    object to retrieve the constraints definition.</li></ul>
+  cli_alias: parse-settings-reference

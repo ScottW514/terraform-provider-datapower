@@ -126,7 +126,7 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 				Default: stringdefault.StaticString("never"),
 			},
 			"persist_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Persistence duration", "persist-duration", "").AddIntegerRange(0, 6000000).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.", "persist-duration", "").AddIntegerRange(0, 6000000).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 
@@ -154,7 +154,7 @@ func (r *B2BCPAReceiverSettingResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"default_signer_cert": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Default signature certificate", "default-signer-cert", "cryptocertificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the default certificate to verify the signature. This certificate is used when either the <tt>keyInfo</tt> element is missing or the signature method is not supported.", "default-signer-cert", "cryptocertificate").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -3,12 +3,12 @@
 page_title: "datapower_importpackage Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Import configuration file
+  An import package allows the system to import a configuration package from an external server, such as a centralized configuration server, when the configuration is reloaded (such as during a restart). This package can optionally overwrite existing files or objects. An import package specifies a source, content type, and import parameters for a single bundle.
 ---
 
 # datapower_importpackage (Data Source)
 
-Import configuration file
+An import package allows the system to import a configuration package from an external server, such as a centralized configuration server, when the configuration is reloaded (such as during a restart). This package can optionally overwrite existing files or objects. <p>An import package specifies a source, content type, and import parameters for a single bundle.</p>
 
 ## Example Usage
 
@@ -43,12 +43,12 @@ Read-Only:
 - `deployment_policy_parameters` (String) Deployment policy variables
 - `destination_domain` (String) Destination domain
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `import_format` (String) Format
-- `local_ip_rewrite` (Boolean) Local IP rewrite
-- `on_startup` (Boolean) Import on startup
-- `overwrite_files` (Boolean) Overwrite files
-- `overwrite_objects` (Boolean) Overwrite objects
-- `url` (String) URL
+- `import_format` (String) Specify the format of the import package. The default value is ZIP.
+- `local_ip_rewrite` (Boolean) Specify whether to rewrite local IP addresses on import. When enabled, local IP addresses in the import package are rewritten to match the local configuration on import. In other words, a service bound to eth1 in the import package are rewritten to bind to eth1 on the local system on import. The default behavior is to rewrite IP addresses.
+- `on_startup` (Boolean) Specify whether to import the import package on startup. The default behavior is to import on startup. <ul><li>When enabled, the import package is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>
+- `overwrite_files` (Boolean) Specify whether to overwrite existing files. When enabled, files in the package overwrite any file of the same path and name that already exist. The default behavior is to overwrite files.
+- `overwrite_objects` (Boolean) Specify whether to overwrite existing objects. When enabled, objects in the package overwrite any object of the same class and name that already exist. The default behavior is to overwrite objects.
+- `url` (String) Specify the URL of the import package. The tool does not support SCP and SFTP protocols. All other URL protocols are available; for example, HTTP, HTTPS, or FTP.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

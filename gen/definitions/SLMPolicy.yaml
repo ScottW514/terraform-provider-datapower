@@ -1,54 +1,72 @@
 name: SLMPolicy
-description: 'SLM policy'
-cli_alias: 'slm-policy'
-cmd_group: 'webservice'
-rest_endpoint: '/mgmt/config/{domain}/SLMPolicy'
+description: <p>An SLM policy counts messages or measures latency for messages that
+  match a set of select criteria and that pass through the appliance during a configured
+  interval. The policy can take action when configured thresholds are reached.</p><p>Messages
+  can be selected based on credential class, resource class, or both. If neither,
+  all messages are selected.</p><p>A policy consists of one or more statements. Each
+  statement establishes the credential class, resource class, thresholds, and actions
+  to take when thresholds are met during an interval.</p><p>Examples:</p><ul><li>A
+  policy that throttles all traffic that arrives at a rate faster than 1000 messages
+  per second.</li><li>A policy that generates a log message for all messages that
+  arrive during the last elapsed second that originated from a specific IP address
+  and requested use of a specific resource.</li></ul>
+cli_alias: slm-policy
+cmd_group: webservice
+rest_endpoint: /mgmt/config/{domain}/SLMPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestSLMPolicy"'
-    test_expect_ds: '"AccTest_SLMPolicy"'
-    example: 'SLMPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: ExecutionPolicy
-    type: String
-    enum:
-      - 'terminate-at-first-reject'
-      - 'terminate-at-first-action'
-      - 'execute-all-statements'
-    default: 'execute-all-statements'
-    description: 'Evaluation method'
-    cli_alias: eval-method
-  - name: Statement
-    type: List
-    element_type: DmSLMStatement
-    description: 'Statement'
-    cli_alias: statement
-  - name: PeerGroup
-    type: String
-    reference_to: PeerGroup
-    description: 'Peer group'
-    cli_alias: peer-group
-  - name: APIMgmt
-    type: Bool
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestSLMPolicy"'
+  test_expect_ds: '"AccTest_SLMPolicy"'
+  example: SLMPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: ExecutionPolicy
+  type: String
+  enum:
+  - terminate-at-first-reject
+  - terminate-at-first-action
+  - execute-all-statements
+  default: execute-all-statements
+  description: Specify the operational behavior of the policy. The default behavior
+    is to process all policy statements.
+  cli_alias: eval-method
+- name: Statement
+  type: List
+  element_type: DmSLMStatement
+  description: Specify the policy statement that establishes criteria to select messages,
+    to set a measurement interval, to set thresholds, and to determine the action
+    to take when the threshold is met. A policy can have multiple statements that
+    run in the sequence defined by the statement identifier.
+  cli_alias: statement
+- name: PeerGroup
+  type: String
+  reference_to: PeerGroup
+  description: Specify the peer group that share in load distribution of traffic that
+    is destined for the same resources. A peer group establishes a data-sharing protocol
+    among members where each member has the data to determine whether a threshold
+    is reached.
+  cli_alias: peer-group
+- name: APIMgmt
+  type: Bool

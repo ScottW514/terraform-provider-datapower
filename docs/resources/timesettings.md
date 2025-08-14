@@ -3,13 +3,12 @@
 page_title: "datapower_timesettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Time Settings (default domain only)
-  CLI Alias: timezone
+  
 ---
 
 # datapower_timesettings (Resource)
 
-Time Settings (`default` domain only)
+<p>The time zone for the system. The time zone affects the time that the system displays. All timestamps use this time zone.</p><p><b>Note: </b>The system clock runs on Coordinated Universal Time (UTC).</p><p>When daylight saving time (DST), or summer time, applies to a time zone, the system adjusts the time when a DST boundary is crossed.</p>
   - CLI Alias: `timezone`
 
 ## Example Usage
@@ -25,69 +24,69 @@ resource "datapower_timesettings" "test" {
 
 ### Optional
 
-- `custom_tz_name` (String) Name
+- `custom_tz_name` (String) Specify the symbolic name for the custom time zone. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.
   - CLI Alias: `custom`
   - Default value: `STD`
-- `daylight_offset_hours` (Number) Daylight savings time (DST) offset
+- `daylight_offset_hours` (Number) Specify the offset in hours when the custom time zone observes DST. Generally, the offset is 1 hour. The default value is 1.
   - CLI Alias: `daylight-offset`
   - Range: `0`-`12`
   - Default value: `1`
-- `daylight_start_day` (String) DST start day
+- `daylight_start_day` (String) Specify the day of the week when DST starts for the custom time zone. The default value is Sunday.
   - CLI Alias: `daylight-start-day`
   - Choices: `Sunday`, `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`
   - Default value: `Sunday`
-- `daylight_start_month` (String) DST start month
+- `daylight_start_month` (String) Specify the month when DST starts for the custom time zone. The default value is March.
   - CLI Alias: `daylight-start-month`
   - Choices: `January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`
   - Default value: `March`
-- `daylight_start_time_hours` (Number) DST start hour
+- `daylight_start_time_hours` (Number) Specify the hour when DST starts for the custom time zone. If the start boundary is 2:30 AM, enter 2.
   - CLI Alias: `daylight-start-hours`
   - Range: `0`-`23`
   - Default value: `2`
-- `daylight_start_time_minutes` (Number) DST start minute
+- `daylight_start_time_minutes` (Number) Specify the minute when DST starts for the custom time zone. If the start boundary is 2:30 AM, enter 30.
   - CLI Alias: `daylight-start-minutes`
   - Range: `0`-`59`
-- `daylight_start_week` (Number) DST start day instance
+- `daylight_start_week` (Number) Specify the instance of the day in the month when DST starts for the custom time zone. If DST starts on the second Sunday in the month, enter 2.
   - CLI Alias: `daylight-start-week`
   - Range: `1`-`5`
   - Default value: `2`
-- `daylight_stop_day` (String) DST stop day
+- `daylight_stop_day` (String) Specify the day of the week when DST ends for the custom time zone. The default value is Sunday.
   - CLI Alias: `daylight-stop-day`
   - Choices: `Sunday`, `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`
   - Default value: `Sunday`
-- `daylight_stop_month` (String) DST stop month
+- `daylight_stop_month` (String) Specify the month when DST ends for the custom time zone. The default value is November.
   - CLI Alias: `daylight-stop-month`
   - Choices: `January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`
   - Default value: `November`
-- `daylight_stop_time_hours` (Number) DST stop hour
+- `daylight_stop_time_hours` (Number) Specify the hour when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 2.
   - CLI Alias: `daylight-stop-hours`
   - Range: `0`-`23`
   - Default value: `2`
-- `daylight_stop_time_minutes` (Number) DST stop minutes
+- `daylight_stop_time_minutes` (Number) Specify the minute when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 30.
   - CLI Alias: `daylight-stop-minutes`
   - Range: `0`-`59`
-- `daylight_stop_week` (Number) DST stop day instance
+- `daylight_stop_week` (Number) Specify the instance of the day in the month when DST ends for the custom time zone. If DST ends on the second Sunday in the month, enter 2.
   - CLI Alias: `daylight-stop-week`
   - Range: `1`-`5`
   - Default value: `1`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `local_time_zone` (String) Local time zone
+- `local_time_zone` (String) Specify the time zone to use in management interfaces. The default value is EST-5EDT.
   - CLI Alias: `name`
   - Choices: `HST10`, `AKST9AKDT`, `PST8PDT`, `MST7MDT`, `CST6CDT`, `EST5EDT`, `AST4ADT`, `UTC`, `GMT0BST`, `CET-1CEST`, `EET-2EEST`, `MKS-3MSD`, `MSK-3MSD`, `AST-3`, `KRT-5`, `IST-5:30`, `NOVST-6NOVDT`, `CST-8`, `WST-8`, `WST-8WDT`, `JST-9`, `CST-9:30CDT`, `EST-10EDT`, `EST-10`, `Custom`
   - Default value: `EST5EDT`
-- `offset_hours` (Number) Hours from UTC
+- `offset_hours` (Number) Specify the number of hours the custom time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 2.
   - CLI Alias: `offset-hours`
   - Range: `0`-`12`
-- `offset_minutes` (Number) Minutes from UTC
+- `offset_minutes` (Number) Specify the number of minutes the time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 30.
   - CLI Alias: `offset-minutes`
   - Range: `0`-`59`
-- `tz_name_dst` (String) DST name
+- `tz_name_dst` (String) Specify the symbolic name for the custom time zone during DST. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.
   - CLI Alias: `daylight-name`
   - Default value: `DST`
-- `utc_direction` (String) Direction from UTC
+- `utc_direction` (String) Specify the direction relative to UTC for the custom time zone. Asia is east. North America is west. The default value is East.
   - CLI Alias: `direction`
   - Choices: `East`, `West`
   - Default value: `West`

@@ -54,16 +54,16 @@ func (r *AuditLogResource) Metadata(ctx context.Context, req resource.MetadataRe
 
 func (r *AuditLogResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Audit log settings (`default` domain only)", "audit-log-settings", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>The audit log settings control the configuration of the system audit log. These settings controls the level of audit. When set to full, connection information is logged. When the system is in Common Criteria Compliance mode, more information is logged.</p>", "audit-log-settings", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Log size", "size", "").AddIntegerRange(250, 500000).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of audit log rotations in KB. Enter a value in the range 250 - 500000. The default value is 1000.", "size", "").AddIntegerRange(250, 500000).AddDefaultValue("1000").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -73,7 +73,7 @@ func (r *AuditLogResource) Schema(ctx context.Context, req resource.SchemaReques
 				Default: int64default.StaticInt64(1000),
 			},
 			"rotate": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Number of rotations", "rotate", "").AddIntegerRange(1, 100).AddDefaultValue("3").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of rotations. Enter a value in the range 1 - 100. The default value is 3.", "rotate", "").AddIntegerRange(1, 100).AddDefaultValue("3").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -83,7 +83,7 @@ func (r *AuditLogResource) Schema(ctx context.Context, req resource.SchemaReques
 				Default: int64default.StaticInt64(3),
 			},
 			"audit_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Audit level", "audit-level", "").AddStringEnum("standard", "full").AddDefaultValue("standard").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the audit level. The default value is for standard logging.", "audit-level", "").AddStringEnum("standard", "full").AddDefaultValue("standard").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

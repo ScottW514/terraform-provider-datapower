@@ -3,12 +3,12 @@
 page_title: "datapower_radiussettings Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  RADIUS settings (default domain only)
+  RADIUS settings define RADIUS servers. You can use RADIUS servers to authenticate access with RBM or in a AAA policy. The DataPower Gateway is a client to RADIUS servers.
 ---
 
 # datapower_radiussettings (Data Source)
 
-RADIUS settings (`default` domain only)
+RADIUS settings define RADIUS servers. You can use RADIUS servers to authenticate access with RBM or in a AAA policy. The DataPower Gateway is a client to RADIUS servers.
 
 ## Example Usage
 
@@ -27,10 +27,10 @@ data "datapower_radiussettings" "test" {
 ### Read-Only
 
 - `aaa_servers` (Attributes List) AAA and RBM (see [below for nested schema](#nestedatt--aaa_servers))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `id` (String) The ID of this resource.
-- `retries` (Number) Retries
-- `timeout` (Number) Timeout
+- `retries` (Number) Specify the maximum number of times that the RADIUS client can retransmit an unacknowledged request to a server. Enter a value in the range 1 - 10. The default value is 3.
+- `timeout` (Number) Specify the RADIUS retransmit interval in milliseconds. This timeout is the duration that the RADIUS client waits before an unacknowledged request is retransmitted. Enter a value in the range of 1 - 30000. The default value is 1000.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

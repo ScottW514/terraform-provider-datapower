@@ -57,7 +57,7 @@ func (d *KafkaClusterDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *KafkaClusterDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Kafka Cluster",
+		MarkdownDescription: "Define the Kafka cluster that is responsible for the messaging services. The Kafka cluster periodically monitors and polls topics. The Kafka cluster ensures that sent messages are directed to the correct response topic or are routed to another server.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,16 +81,16 @@ func (d *KafkaClusterDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"protocol": schema.StringAttribute{
-							MarkdownDescription: "Protocol",
+							MarkdownDescription: "Specify the transport protocol for the Kafka bootstrap connection. The selected protocol is used for the exchange of information between the Kafka server and the bootstrap server. By default, uses a non-encrypted transport.",
 							Computed:            true,
 						},
 						"endpoint": schema.ListNestedAttribute{
-							MarkdownDescription: "Endpoints",
+							MarkdownDescription: "Specify the endpoints for the bootstrap process. A bootstrap server uses a host name or IP address and a port to define an endpoint address. You can add multiple nondefault bootstrap servers. For failover capability, the endpoints must be members of the same cluster.",
 							NestedObject:        models.DmKafkaEndpointDataSourceSchema,
 							Computed:            true,
 						},
 						"sasl_mechanism": schema.StringAttribute{
-							MarkdownDescription: "SASL mechanism",
+							MarkdownDescription: "Specify the Simple Authentication and Security Layer (SASL) mechanism to communicate with the Kafka cluster. By default, uses a clear text password.",
 							Computed:            true,
 						},
 						"user_name": schema.StringAttribute{
@@ -102,7 +102,7 @@ func (d *KafkaClusterDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"autocommit": schema.BoolAttribute{
-							MarkdownDescription: "Autocommit",
+							MarkdownDescription: "Specify whether to commit offsets at the defined interval or at process-completion. <ul><li>When enabled, commits offsets at the defined interval. The default interval is 5 seconds. To change the interval, set the <tt>auto.commit.interval.ms</tt> property.</li><li>When disabled, commits offsets at process-completion. You can use the batch size setting for the Kafka handle to define the number of messages to attempt to receive from the consumer.</li></ul>",
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{
@@ -110,11 +110,11 @@ func (d *KafkaClusterDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"memory_threshold": schema.Int64Attribute{
-							MarkdownDescription: "Memory threshold",
+							MarkdownDescription: "Specify the maximum memory to allocate in bytes. Enter a value in the range 10485760 - 1073741824. The default value is 268435456.",
 							Computed:            true,
 						},
 						"maximum_message_size": schema.Int64Attribute{
-							MarkdownDescription: "Max message size",
+							MarkdownDescription: "Specify the maximum message size in bytes. Enter a value in the range 0 - 1073741824. The default value is 1048576. A value of 0 disables the enforcement of a maximum message size.",
 							Computed:            true,
 						},
 						"auto_retry": schema.BoolAttribute{
@@ -122,11 +122,11 @@ func (d *KafkaClusterDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"retry_interval": schema.Int64Attribute{
-							MarkdownDescription: "Retry interval",
+							MarkdownDescription: "Specify the interval between attempts to reestablish a connection in seconds. Enter a value in the range 1 - 65535. The default value is 10.",
 							Computed:            true,
 						},
 						"property": schema.ListNestedAttribute{
-							MarkdownDescription: "Properties",
+							MarkdownDescription: "Specify extra property to configure the connection to the Kafka server. Use this property for each extra property that is required. Some properties are unsupported and will cause a configuration failure.",
 							NestedObject:        models.DmKafkaPropertyDataSourceSchema,
 							Computed:            true,
 						},

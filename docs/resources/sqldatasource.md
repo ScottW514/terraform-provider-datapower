@@ -3,13 +3,12 @@
 page_title: "datapower_sqldatasource Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SQL data source
-  CLI Alias: sql-source
+  
 ---
 
 # datapower_sqldatasource (Resource)
 
-SQL data source
+<p>An SQL data source the configuration to establish a direct connection to a database instance on a remote data server. When configured, a DataPower service can dynamically run database operations, such as <tt>SELECT</tt> and <tt>INSERT</tt> , on the remote database.</p><p>An SQL data source is used by SQL actions in processing policies. The SQL action retrieves the data for further processing. Conversely, the processing policy can store the processed data in the configured database instance.</p><p>When you configure an SQL data source, you can define valid configuration parameters for your data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some configuration parameters in the configuration file are informational and define characteristics about the environment. These configuration parameters cannot be modified.</p>
   - CLI Alias: `sql-source`
 
 ## Example Usage
@@ -39,7 +38,7 @@ resource "datapower_sqldatasource" "test" {
 - `app_domain` (String) The name of the application domain the object belongs to
 - `data_source_host` (String) Data source host
   - CLI Alias: `host`
-- `data_source_id` (String) Data source ID
+- `data_source_id` (String) Specify the identifier of the data source. The terminology differs by vendor. <ul><li><b>Db2</b> - The IBM Db2 database alias.</li><li><b>IMS</b> - The name of the IBM IMS data store.</li><li><b>Microsoft SQL Server</b> - The name of the Microsoft SQL Server data source.</li><li><b>Oracle</b> - The Oracle system identifier (SID) or service name.</li><li><b>Sybase</b> - The name of the Sybase database.</li></ul>
   - CLI Alias: `id`
 - `data_source_port` (Number) Data source port
   - CLI Alias: `port`
@@ -47,51 +46,51 @@ resource "datapower_sqldatasource" "test" {
   - CLI Alias: `db`
   - Choices: `DB2`, `Oracle`, `Sybase`, `MSSQLServer`, `DB2v9`, `IMS`
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `password_alias` (String) Connection password alias
+- `password_alias` (String) Specify the password alias of the user password to establish connection with the SQL database. The password alias looks up the password for the user. The server maintains the password.
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`
-- `query_timeout` (Number) Query timeout
+- `query_timeout` (Number) Specify the duration in seconds to wait for an SQL request to complete. Enter a value in the range 0 - 4294967295. The default value is 0, which uses the standard timeout in the user agent. <p>The duration is from when the service sends the request to when the service receives the results.</p><p>The query timeout must be greater than the connection timeout. With this configuration, the initial query has time to establish the connection to the remote data server.</p>
   - CLI Alias: `query-timeout`
-- `username` (String) Connection username
+- `username` (String) Specify the user to establish the connection to the SQL database. The server maintains this information.
   - CLI Alias: `username`
 
 ### Optional
 
-- `connect_timeout` (Number) Connection timeout
+- `connect_timeout` (Number) <p>Specify the duration in seconds to wait to establish a connection to the data server. Enter a value in the range 0 - 4294967295. The value of 0 disables the timeout. The default value is 15.</p><p>A new connection is the initial connection and each new connection from the connection pool. Reuse of a connection from the connection pool is not considered establishing a new connection.</p><p>The connection timeout must be less than the query timeout. With this configuration, the initial query has time to establish the connection to the data server.</p>
   - CLI Alias: `connect-timeout`
   - Default value: `15`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `encryption_method_db2` (String) Encryption method - Db2
+- `encryption_method_db2` (String) Specify the TLS encryption method for an IBM Db2 database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.
   - CLI Alias: `db2-encryption-method`
   - Choices: `NoEncryption`, `SSL`
   - Default value: `NoEncryption`
-- `encryption_method_mssql` (String) Encryption method - SQL Server
+- `encryption_method_mssql` (String) Specify the TLS encryption method for a Microsoft SQL Server database. When the server does not support the specified encryption method, the connection fails.
   - CLI Alias: `mssql-encryption-method`
   - Choices: `NoEncryption`, `SSL`, `RequestSSL`, `LoginSSL`
   - Default value: `NoEncryption`
-- `encryption_method_oracle` (String) Encryption method - Oracle
+- `encryption_method_oracle` (String) Specify the TLS encryption method for an Oracle database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.
   - CLI Alias: `oracle-encryption-method`
   - Choices: `NoEncryption`, `SSL`
   - Default value: `NoEncryption`
-- `host_name_in_certificate` (String) Hostname in certificate
+- `host_name_in_certificate` (String) Specify the hostname that the certificate must contain for hostname validation. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.
   - CLI Alias: `hostname-in-certificate`
-- `idle_timeout` (Number) Idle connection timeout
+- `idle_timeout` (Number) Specify the duration that a connection from the connection pool can remain idle before the connection is released. Enter a value in the range 0 - 4294967295. The default value is 180. The value of 0 disables the timer.
   - CLI Alias: `idle-timeout`
   - Default value: `180`
 - `keystore_ref` (String) Keystore
   - CLI Alias: `keystore`
   - Reference to: `datapower_cryptoidentcred:id`
-- `limit_returned_data` (Boolean) Limit returned data
+- `limit_returned_data` (Boolean) Specify whether to limit the data from a <b>SELECT</b> statement. By default, the response size is not limited.
   - CLI Alias: `limit`
   - Default value: `false`
-- `limit_returned_data_size` (Number) Returned data size limit
+- `limit_returned_data_size` (Number) Specify the limit in KB on returned data from a <b>SELECT</b> statement. The default value is 128.
   - CLI Alias: `limit-size`
   - Range: `1`-`65535`
   - Default value: `128`
-- `load_balancing` (Boolean) Load distribution - Db2 for z/OS
+- `load_balancing` (Boolean) Specify whether to enable Db2 workload balancing and automatic client reroute for Db2 for z/OS. <p>When enabled, this feature set uses the z/OS Sysplex Distributor for real-time load distribution of SQL calls to the sysplex-aware Db2 instance.</p><p>When enabled, you must specify the sysplex DVIPA as the data source host.</p>
   - CLI Alias: `load-balancing`
   - Default value: `false`
-- `max_connection` (Number) Max connections
+- `max_connection` (Number) Specify the maximum number of concurrent SQL connections. Enter a value in the range 1 - 65535. The default value is 10.
   - CLI Alias: `maximum-connections`
   - Range: `1`-`65535`
   - Default value: `10`
@@ -99,14 +98,14 @@ resource "datapower_sqldatasource" "test" {
   - CLI Alias: `oracle-datasource-type`
   - Choices: `SID`, `ServiceName`
   - Default value: `SID`
-- `sql_data_source_config_nv_pairs` (Attributes List) Advanced configuration parameters
+- `sql_data_source_config_nv_pairs` (Attributes List) Specify configuration parameters for the data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some parameters in the configuration file are informational and define characteristics about the environment. These parameters cannot be modified.
   - CLI Alias: `sql-config-param` (see [below for nested schema](#nestedatt--sql_data_source_config_nv_pairs))
 - `truststore_ref` (String) Truststore
   - CLI Alias: `truststore`
   - Reference to: `datapower_cryptovalcred:id`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `validate_host_name` (Boolean) Validate hostname
+- `validate_host_name` (Boolean) Specify whether to validate the hostname against the hostname in the server certificate. Hostname validate uses the value of the data source host. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.
   - CLI Alias: `validate-host-name`
   - Default value: `true`
 - `validate_server_certificate` (String) Validate server certificate

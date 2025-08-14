@@ -57,7 +57,7 @@ func (d *KafkaSourceProtocolHandlerDataSource) Metadata(_ context.Context, req d
 
 func (d *KafkaSourceProtocolHandlerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Kafka handler",
+		MarkdownDescription: "A Kafka handler monitors the request topic for incoming client requests.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -85,11 +85,11 @@ func (d *KafkaSourceProtocolHandlerDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"request_topic": schema.StringAttribute{
-							MarkdownDescription: "Request topic",
+							MarkdownDescription: "Specify the name of the request topic to monitor for incoming client requests. On receipt, the handler forwards the extracted message to the DataPower service for processing.",
 							Computed:            true,
 						},
 						"response_topic": schema.StringAttribute{
-							MarkdownDescription: "Response topic",
+							MarkdownDescription: "Specify the name of the response topic to send responses after processing by the DataPower service. When the Kafka server does not expect responses, leave blank. When blank, responses are dropped.",
 							Computed:            true,
 						},
 						"consumer_group": schema.StringAttribute{
@@ -97,7 +97,7 @@ func (d *KafkaSourceProtocolHandlerDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"batch_size": schema.Int64Attribute{
-							MarkdownDescription: "Batch size",
+							MarkdownDescription: "Specify the number of messages to retrieve and process as a batch. The handler attempts to retrieve the number of specified messages from the consumer and processes these messages as a batch. Enter a value in the range 1 - 65535. The default value is 1.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -57,7 +57,7 @@ func (d *CryptoKeyDataSource) Metadata(_ context.Context, req datasource.Metadat
 
 func (d *CryptoKeyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Key",
+		MarkdownDescription: "A private key provides an added layer of security by supplying an indirect reference to a file that contains a private key.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,7 +77,7 @@ func (d *CryptoKeyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"filename": schema.StringAttribute{
-							MarkdownDescription: "File",
+							MarkdownDescription: "Specify the file that contains the private key. The name might be the same as the file that contains the public key. <ul><li>When in the public crypto area, the file is in the <tt>pubcert:</tt> directory.</li><li>When in the private crypto area, the file is in the <tt>cert:</tt> directory.</li><li>When in the public area, the file is in the <tt>local:</tt> directory. <p><b>Attention:</b> Any file in the <tt>local:</tt> directory can be downloaded or included in an export. Therefore, consider carefully before you store crypto files in this directory.</p></li><li>When retrieved from z/OS, the file is in the <tt>saf-key:</tt> directory. The key must be a SAF key that is stored in ICSF.</li><li>When on z/OS, the file is in the <tt>saf-remote-key:</tt> directory. The key must be a SAF key that is stored in ICSF.</li><li>When on SafeNet Luna HSM, the file is in a partition of the <tt>luna-key:</tt> directory.</li></ul>",
 							Computed:            true,
 						},
 						"alias": schema.StringAttribute{

@@ -55,7 +55,7 @@ func (r *LDAPSearchParametersResource) Metadata(ctx context.Context, req resourc
 
 func (r *LDAPSearchParametersResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("LDAP search parameters", "ldap-search-parameters", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("LDAP search parameters are a container for the parameters to use to perform an LDAP search operation. When used with authentication, the search retrieves the distinguished name (DN) for the user. When used with credential authorization mapping, the search retrieves the group name (DN or attribute value) based on the DN of the authenticated user.", "ldap-search-parameters", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,25 +84,25 @@ func (r *LDAPSearchParametersResource) Schema(ctx context.Context, req resource.
 				Optional:            true,
 			},
 			"ldap_base_dn": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP base DN", "base-dn", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base DN to begin the search. This value identifies the entry level of the tree.", "base-dn", "").String,
 				Optional:            true,
 			},
 			"ldap_returned_attribute": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP returned attribute", "returned-attribute", "").AddDefaultValue("dn").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the LDAP attribute to return for each entry that matches the search filter. The default value is dn.", "returned-attribute", "").AddDefaultValue("dn").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("dn"),
 			},
 			"ldap_filter_prefix": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP filter prefix", "filter-prefix", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the prefix of the LDAP filter expression. An LDAP filter expression is composed by <tt>prefix + username + suffix</tt> . If the prefix is <tt>(&amp;(uid=</tt> and the username is <tt>bob</tt> , the LDAP search filter is <tt>(&amp;(uid=bob</tt> .", "filter-prefix", "").String,
 				Optional:            true,
 			},
 			"ldap_filter_suffix": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP filter suffix", "filter-suffix", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the suffix of the LDAP filter expression. An LDAP filter expression is composed by <tt>prefix + username + suffix</tt> . If the prefix is <tt>(&amp;(uid=</tt> , the username is <tt>bob</tt> , and the suffix is <tt>)(objectClass=person))</tt> , the LDAP search filter is <tt>(&amp;(uid=bob)(objectClass=person))</tt> .", "filter-suffix", "").String,
 				Optional:            true,
 			},
 			"ldap_scope": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP scope", "scope", "").AddStringEnum("subtree", "one-level", "base").AddDefaultValue("subtree").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the depth of the LDAP search. The default is subtree.", "scope", "").AddStringEnum("subtree", "one-level", "base").AddDefaultValue("subtree").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

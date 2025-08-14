@@ -3,13 +3,12 @@
 page_title: "datapower_rbmsettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  RBM settings (default domain only)
-  CLI Alias: rbmAccepted Dependency Actions: flush_cache
+  
 ---
 
 # datapower_rbmsettings (Resource)
 
-RBM settings (`default` domain only)
+<p>Manage role-based management (RBM) settings: RBM, password policy, and account policy</p><ul><li>RBM consists of the following capabilities: Authenticating users, evaluating the access profile, enforcing access to resources</li><li>The password policy sets the password requirements for local user accounts.</li><li>The account policy sets the lockout behavior and the timeout for CLI sessions.</li></ul>
   - CLI Alias: `rbm`
   - Accepted Dependency Actions: `flush_cache`
 
@@ -37,25 +36,25 @@ resource "datapower_rbmsettings" "test" {
 
 ### Optional
 
-- `apply_to_cli` (Boolean) Enforce RBM on CLI
+- `apply_to_cli` (Boolean) Specify whether to enforce the RBM policy on CLI sessions. When authentication uses a TLS certificate from a connection peer, you cannot enforce RBM on CLI sessions unless fallback users are supported.
   - CLI Alias: `apply-cli`
   - Default value: `false`
 - `au_cache_allow` (String) Authentication cache mode
   - CLI Alias: `au-cache-mode`
   - Choices: `absolute`, `disabled`, `maximum`, `minimum`
   - Default value: `absolute`
-- `au_cache_ttl` (Number) Authentication cache lifetime
+- `au_cache_ttl` (Number) Specify the expiry for cached authentication decisions. Enter a value in the range 1 - 86400. The default value is 600.
   - CLI Alias: `au-cache-ttl`
   - Range: `1`-`86400`
   - Default value: `600`
 - `au_custom_url` (String) Custom URL
   - CLI Alias: `au-custom-url`
-- `au_force_dnldap_order` (Boolean) Convert DN to LDAP format
+- `au_force_dnldap_order` (Boolean) Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
   - CLI Alias: `au-force-dn-ldap-order`
   - Default value: `false`
 - `au_host` (String) Server host
   - CLI Alias: `au-server-host`
-- `au_info_url` (String) XML file URL
+- `au_info_url` (String) Specify the URL of the XML file for authentication. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file to map credentials.
   - CLI Alias: `au-info-url`
 - `au_kerberos_keytab` (String) Kerberos keytab
   - CLI Alias: `au-kerberos-keytab`
@@ -71,17 +70,17 @@ resource "datapower_rbmsettings" "test" {
 - `auldap_bind_password_alias` (String) LDAP bind password alias
   - CLI Alias: `au-ldap-bind-password-alias`
   - Reference to: `datapower_passwordalias:id`
-- `auldap_load_balance_group` (String) Load balancer group
+- `auldap_load_balance_group` (String) Specify the load balancer group of LDAP servers. This setting overrides the settings for the server host and port.
   - CLI Alias: `loadbalancer-group`
   - Reference to: `datapower_loadbalancergroup:id`
-- `auldap_prefix` (String) LDAP prefix
+- `auldap_prefix` (String) Specify the string to add before the username to form the DN. If this value is <tt>CN=</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP suffix is <tt>O=example.com</tt> .
   - CLI Alias: `ldap-prefix`
   - Default value: `cn=`
-- `auldap_read_timeout` (Number) LDAP read timeout
+- `auldap_read_timeout` (Number) Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.
   - CLI Alias: `au-ldap-readtimeout`
   - Range: `0`-`86400`
   - Default value: `60`
-- `auldap_search_for_dn` (Boolean) Search LDAP for DN
+- `auldap_search_for_dn` (Boolean) Specify whether to retrieve the user DN with an LDAP search. <ul><li>When enabled, the login name presented by the user is used with the LDAP search parameters for an LDAP search to retrieve the user DN.</li><li>When disabled, the login name presented by the user is used with the LDAP prefix and suffix to construct the user DN.</li></ul>
   - CLI Alias: `au-ldap-search`
   - Default value: `false`
 - `auldap_search_parameters` (String) LDAP search parameters
@@ -110,9 +109,9 @@ resource "datapower_rbmsettings" "test" {
 - `auzosnss_config` (String) z/OS NSS client
   - CLI Alias: `zos-nss-au`
   - Reference to: `datapower_zosnssclient:id`
-- `ca_pub_key_file` (String) CA user public key file
+- `ca_pub_key_file` (String) Specify the certificate authority (CA) public key file in the <tt>cert:</tt> directory for SSH authentication with SSH user certificates. This public key file contains the public key for one or more certificate authorities.
   - CLI Alias: `ssh-ca-pubkey-file`
-- `cli_timeout` (Number) CLI idle timeout
+- `cli_timeout` (Number) Specify the time after which to invalidate idle CLI sessions. When invalidated, requires re-authentication. Enter a value in the range 0 - 65535. A value of 0 disables the timer. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 900.</li><li>When common criteria is not enabled, the default value is 0.</li></ul>
   - CLI Alias: `cli-timeout`
   - Range: `0`-`65535`
   - Default value: `0`
@@ -126,17 +125,17 @@ resource "datapower_rbmsettings" "test" {
 - `do_password_history` (Boolean) Control reuse
   - CLI Alias: `pwd-history`
   - Default value: `false`
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `fallback_login` (String) Local accounts for fallback
+- `fallback_login` (String) Specify whether to use local user accounts as fallback users if remote authentication fails. With fallback users, local user accounts can log on to the DataPower Gateway if authentication fails or during a network outage that affects primary authentication. The recommendation is to restrict fallback users to a subset of local user accounts. <p><b>Note: </b>When authentication uses a TLS certificate from a connection peer, you cannot enforce RBM on CLI sessions unless fallback users are supported.</p>
   - CLI Alias: `fallback-login`
   - Choices: `disabled`, `local`, `restricted`
   - Default value: `disabled`
 - `fallback_user` (List of String) Fallback users
   - CLI Alias: `fallback-user`
   - Reference to: `datapower_user:id`
-- `lda_psuffix` (String) LDAP suffix
+- `lda_psuffix` (String) Specify the string to add after the username to form the DN. If this value is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP prefix is <tt>CN=</tt> .
   - CLI Alias: `ldap-suffix`
 - `ldap_version` (String) LDAP version
   - CLI Alias: `ldap-version`
@@ -148,26 +147,26 @@ resource "datapower_rbmsettings" "test" {
 - `ldapssl_client_profile` (String) TLS client profile
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_sslclientprofile:id`
-- `lockout_period` (Number) Lockout duration
+- `lockout_period` (Number) Specify the duration to lock out local user accounts after the maximum number of failed login attempts is exceeded. Instead of locking out accounts for a specific duration, the account can be locked out until re-enabled by a privileged user. Enter a value in the range 0 - 1000, where 0 locks out accounts until reset. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 0.</li><li>When common criteria is not enabled, the default value is 1.</li></ul><p><b>Note:</b> The duration applies to all local accounts, including the <tt>admin</tt> user account. The only difference is that the <tt>admin</tt> user account cannot be locked out until reset. When the duration is 0, the <tt>admin</tt> user account is locked out for 120 minutes or until re-enabled by a privileged user.</p>
   - CLI Alias: `lockout-duration`
   - Range: `0`-`1000`
   - Default value: `1`
-- `max_failed_login` (Number) Max failed logins
+- `max_failed_login` (Number) Specify the number of failed login attempts to allow before account lockout. Enter a value in the range of 0 - 64, where 0 disables account lockout. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 3.</li><li>When common criteria is not enabled, the default value is 0.</li></ul>
   - CLI Alias: `max-login-failure`
   - Range: `0`-`64`
   - Default value: `0`
-- `max_password_age` (Number) Max age
+- `max_password_age` (Number) Specify the expiry for passwords. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 90.</li><li>When common criteria is not enabled, the default value is 30.</li></ul>
   - CLI Alias: `pwd-max-age`
   - Range: `1`-`65535`
   - Default value: `30`
 - `mc_custom_url` (String) Custom URL
   - CLI Alias: `mc-custom-url`
-- `mc_force_dnldap_order` (Boolean) Convert DN to LDAP format
+- `mc_force_dnldap_order` (Boolean) Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
   - CLI Alias: `mc-force-dn-ldap-order`
   - Default value: `false`
 - `mc_host` (String) Server host
   - CLI Alias: `mc-server-host`
-- `mc_info_url` (String) XML file URL
+- `mc_info_url` (String) Specify the URL of the XML file to map credentials. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file for authentication.
   - CLI Alias: `mc-info-url`
 - `mc_method` (String) Credential-mapping method
   - CLI Alias: `mc-method`
@@ -183,11 +182,11 @@ resource "datapower_rbmsettings" "test" {
 - `mcldap_load_balance_group` (String) Load balancer group
   - CLI Alias: `mc-loadbalancer-group`
   - Reference to: `datapower_loadbalancergroup:id`
-- `mcldap_read_timeout` (Number) LDAP read timeout
+- `mcldap_read_timeout` (Number) Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.
   - CLI Alias: `mc-ldap-readtimeout`
   - Range: `0`-`86400`
   - Default value: `60`
-- `mcldap_search_for_group` (Boolean) Search LDAP for group name
+- `mcldap_search_for_group` (Boolean) Specify whether to search LDAP to retrieve all user groups that match the query. <ul><li>When enabled, the authenticated DN of the user and the LDAP search parameters are used as part of the LDAP search to retrieve all user groups that match the query. When a user belongs to multiple groups, the resultant access policy for this user is additive not most restrictive.</li><li>When disabled, the authenticated identity of the user (DN or user group of local user) is used directly as the input credential.</li></ul>
   - CLI Alias: `mc-ldap-search`
   - Default value: `false`
 - `mcldap_search_parameters` (String) LDAP search parameters
@@ -200,15 +199,15 @@ resource "datapower_rbmsettings" "test" {
 - `mcldapssl_client_profile` (String) TLS client profile
   - CLI Alias: `mc-ssl-client`
   - Reference to: `datapower_sslclientprofile:id`
-- `min_password_length` (Number) Minimum length
+- `min_password_length` (Number) Specify the minimum length of a valid password. Enter a value in the range 1 - 128. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 14.</li><li>When common criteria is not enabled, the default value is 6.</li></ul>
   - CLI Alias: `pwd-minimum-length`
   - Range: `1`-`128`
   - Default value: `6`
-- `num_old_passwords` (Number) Reuse history
+- `num_old_passwords` (Number) Specify the number of recent passwords to track to prevent reuse. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 3.</li><li>When common criteria is not enabled, the default value is 5.</li></ul>
   - CLI Alias: `pwd-max-history`
   - Range: `1`-`65535`
   - Default value: `5`
-- `password_hash_algorithm` (String) Password hash algorithm
+- `password_hash_algorithm` (String) Specify the algorithm to apply to passwords before they are stored. The hash algorithm affects firmware downgrade and cryptographic modes in the following ways. <ul><li>For firmware downgrade, sha256crypt is not supported in releases earlier than 6.0.1.0.</li><li>For cryptographic modes, like FIPS 140-2 Level 1, md5crypt is not supported in FIPS mode.</li></ul>
   - CLI Alias: `password-hash-algorithm`
   - Choices: `md5crypt`, `sha256crypt`
   - Default value: `md5crypt`
@@ -224,9 +223,9 @@ resource "datapower_rbmsettings" "test" {
 - `restrict_admin_to_serial_port` (Boolean) Restrict admin to serial
   - CLI Alias: `restrict-admin`
   - Default value: `false`
-- `revoked_keys` (List of String) Revoked keys
+- `revoked_keys` (List of String) Specify the OpenSSH public keys to revoke for SSH authentication. Each entry is the public key file in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory and must be in the OpenSSH public key format. These keys are signed by the CA user public key file.
   - CLI Alias: `ssh-revoked-keys`
-- `sshau_method` (Attributes) SSH authentication method
+- `sshau_method` (Attributes) Specify the method to authenticate SSH users. <ul><li>When no method, the user is prompted for both username and password.</li><li>When password, the user is prompted for the password. For this method, the username must be part of the invocation. With the ssh command, the invocation is in the ssh username@host format.</li><li>When user certificate, the user is not prompted for input. The connection is successful when the invocation provides a signed SSH user certificate that is verified by the CA public key file in the <tt>cert:</tt> directory. With the ssh command, the invocation must include the -i file parameter.</li><li>When both certificate and password, processing attempts to first authenticate with the provided signed SSH user certificate. If unsuccessful, prompts for the password.</li><li>Supported RBM authentication methods with SSH authentication method are local and LDAP. <ul><li>Local authentication method extracts the certificate identity and attempts login with local User of that name.</li><li>LDAP authentication method constructs the DN through LDAP search or by applying the configured prefix and suffix. Since SSH authentication completes prior to the Authentication step no LDAP bind or authenticate will take place.</li></ul></li></ul>
   - CLI Alias: `ssh-au-method` (see [below for nested schema](#nestedatt--sshau_method))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

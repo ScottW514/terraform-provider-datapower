@@ -3,12 +3,12 @@
 page_title: "datapower_assemblyactionoauth Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  OAuth assembly action
+  The OAuth assembly action processes the requested OAuth flow based on the defined OAuth provider settings.
 ---
 
 # datapower_assemblyactionoauth (Data Source)
 
-OAuth assembly action
+The OAuth assembly action processes the requested OAuth flow based on the defined OAuth provider settings.
 
 ## Example Usage
 
@@ -38,13 +38,13 @@ Optional:
 
 Read-Only:
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
 - `app_domain` (String) The name of the application domain the object belongs to
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `o_auth_provider_settings_reference` (Attributes) OAuth token provider settings
+- `o_auth_provider_settings_reference` (Attributes) Specify the OAuth token provider settings to use for OAuth action. You can use one or more methods. Precedence rules apply when you configure the same aspect of the OAuth provider settings through multiple methods.
   - CLI Alias: `oauth-provider-settings-ref` (see [below for nested schema](#nestedatt--result--o_auth_provider_settings_reference))
-- `supported_o_auth_components` (Attributes) Supported OAuth components
+- `supported_o_auth_components` (Attributes) Specify the OAuth components that the action supports. When the action does not support a component but that component is requested, the unsupported component is not run.
   - CLI Alias: `supported-oauth-components` (see [below for nested schema](#nestedatt--result--supported_o_auth_components))
 - `title` (String) Title
 - `user_summary` (String) Comments

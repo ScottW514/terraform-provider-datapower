@@ -1,100 +1,115 @@
 name: NFSStaticMount
-description: 'NFS static mounts'
-cli_alias: 'nfs-static-mount'
-cmd_group: 'file-management'
-rest_endpoint: '/mgmt/config/{domain}/NFSStaticMount'
+description: Create static NFS mounts for URL or file system access. These mounts
+  remain mounted as long as their application domain is up.
+cli_alias: nfs-static-mount
+cmd_group: file-management
+rest_endpoint: /mgmt/config/{domain}/NFSStaticMount
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestNFSStaticMount"'
-    test_expect_ds: '"AccTest_NFSStaticMount"'
-    example: 'NFSStaticMountName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: remote
-    type: String
-    required: true
-    example: 'url://test'
-    description: 'Remote NFS export'
-    cli_alias: remote
-  - name: LocalFilesystemAccess
-    type: Bool
-    default: false
-    description: 'Local file system access'
-    cli_alias: local-filesystem-access
-  - name: Version
-    type: Int64
-    minimum: 2
-    maximum: 4
-    default: 3
-    description: 'NFS version'
-    cli_alias: version
-  - name: Transport
-    type: String
-    enum:
-      - 'tcp'
-      - 'udp'
-    default: 'tcp'
-    description: 'Transport protocol'
-    cli_alias: transport
-  - name: MountType
-    type: String
-    enum:
-      - 'hard'
-      - 'soft'
-    default: 'hard'
-    description: 'Mount type'
-    cli_alias: mount-type
-  - name: ReadOnly
-    type: Bool
-    default: false
-    description: 'Read-Only'
-    cli_alias: read-only
-  - name: ReadSize
-    type: Int64
-    minimum: 1024
-    maximum: 32768
-    default: 4096
-    description: 'Read size'
-    cli_alias: rsize
-  - name: WriteSize
-    type: Int64
-    minimum: 1024
-    maximum: 32768
-    default: 4096
-    description: 'Write size'
-    cli_alias: wsize
-  - name: Timeout
-    type: Int64
-    minimum: 1
-    maximum: 600
-    default: 7
-    description: 'Retransmission timeout'
-    cli_alias: timeo
-  - name: Retransmissions
-    type: Int64
-    minimum: 1
-    maximum: 60
-    default: 3
-    description: 'Max retransmissions'
-    cli_alias: retrans
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestNFSStaticMount"'
+  test_expect_ds: '"AccTest_NFSStaticMount"'
+  example: NFSStaticMountName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: remote
+  type: String
+  required: true
+  example: url://test
+  description: Specify the remote NFS file system to mount. Use the form <tt>host:/path</tt>
+    , where <tt>host</tt> is the DNS name or IP address of the NFS server, and <tt>path</tt>
+    is the path exported by the host to mount.
+  cli_alias: remote
+- name: LocalFilesystemAccess
+  type: Bool
+  default: false
+  description: Specify whether to allow local file system access through the <tt>nfs-&lt;name></tt>
+    directory. By default, local access is not enabled. When enabled, the NFS mount
+    is available for file system access through the CLI in the <tt>nfs-&lt;name></tt>
+    directory, where <tt>&lt;name></tt> is the name of the mount.
+  cli_alias: local-filesystem-access
+- name: Version
+  type: Int64
+  minimum: 2
+  maximum: 4
+  default: 3
+  description: Specify the preferred NFS protocol version. Enter a value in the range
+    2 - 4. The default value is 3. <ul><li>If version 3 and the server only implements
+    version 2, the client falls back to version 2.</li><li>If version 4, the remote
+    export paths are different and prevents fallback.</li></ul>
+  cli_alias: version
+- name: Transport
+  type: String
+  enum:
+  - tcp
+  - udp
+  default: tcp
+  description: Specify the transport protocol. The default transport protocol is TCP.
+  cli_alias: transport
+- name: MountType
+  type: String
+  enum:
+  - hard
+  - soft
+  default: hard
+  description: Specify the type of NFS mount. The default mount type is a hard mount.
+  cli_alias: mount-type
+- name: ReadOnly
+  type: Bool
+  default: false
+  description: Specify whether the mount is read-only. By default, the mount is not
+    read-only.
+  cli_alias: read-only
+- name: ReadSize
+  type: Int64
+  minimum: 1024
+  maximum: 32768
+  default: 4096
+  description: Specify the size in bytes for NFS read operations. Enter a value in
+    the range 1024 - 32768. The default value is 4096.
+  cli_alias: rsize
+- name: WriteSize
+  type: Int64
+  minimum: 1024
+  maximum: 32768
+  default: 4096
+  description: Specify the size in bytes for NFS write operations. Enter a value in
+    the range 1024 - 32768. The default value is 4096.
+  cli_alias: wsize
+- name: Timeout
+  type: Int64
+  minimum: 1
+  maximum: 600
+  default: 7
+  description: Specify the time in tenths of seconds until the first retransmission
+    on RPC times out. Enter a value in the range 1 - 600. The default value is 7.
+  cli_alias: timeo
+- name: Retransmissions
+  type: Int64
+  minimum: 1
+  maximum: 60
+  default: 3
+  description: Specify the number of minor RPC timeouts and retransmissions until
+    a major timeout. Enter a value in the range 1 - 60. The default value is 3.
+  cli_alias: retrans

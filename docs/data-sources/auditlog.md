@@ -3,12 +3,12 @@
 page_title: "datapower_auditlog Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Audit log settings (default domain only)
+  
 ---
 
 # datapower_auditlog (Data Source)
 
-Audit log settings (`default` domain only)
+<p>The audit log settings control the configuration of the system audit log. These settings controls the level of audit. When set to full, connection information is logged. When the system is in Common Criteria Compliance mode, more information is logged.</p>
 
 ## Example Usage
 
@@ -26,10 +26,10 @@ data "datapower_auditlog" "test" {
 
 ### Read-Only
 
-- `audit_level` (String) Audit level
-- `enabled` (Boolean) Administrative state
-- `rotate` (Number) Number of rotations
-- `size` (Number) Log size
+- `audit_level` (String) Specify the audit level. The default value is for standard logging.
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `rotate` (Number) Specify the maximum number of rotations. Enter a value in the range 1 - 100. The default value is 3.
+- `size` (Number) Specify the maximum size of audit log rotations in KB. Enter a value in the range 250 - 500000. The default value is 1000.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

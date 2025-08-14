@@ -3,13 +3,13 @@
 page_title: "datapower_webappsessionpolicy Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Session Management Policy
+  Session policy - specify a series of start pages that the a web application firewall protected host use as initial browsing points. Accessing these pages issues a signed and time limited cookie which must be presented for accessing any pages not designated as a starting point.
   CLI Alias: webapp-session-management
 ---
 
 # datapower_webappsessionpolicy (Resource)
 
-Session Management Policy
+Session policy - specify a series of start pages that the a web application firewall protected host use as initial browsing points. Accessing these pages issues a signed and time limited cookie which must be presented for accessing any pages not designated as a starting point.
   - CLI Alias: `webapp-session-management`
 
 ## Example Usage
@@ -29,20 +29,20 @@ resource "datapower_webappsessionpolicy" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `start_matches` (String) Start Pages
+- `start_matches` (String) Select the matching rule that is used to identify start pages. Start pages are pages that can be accessed without a session cookie and if their security policy passes will issue a session cookie.
   - CLI Alias: `matching-policy`
   - Reference to: `datapower_matching:id`
 
 ### Optional
 
-- `address_agnostic_cookie` (Boolean) Address Independent Sessions
+- `address_agnostic_cookie` (Boolean) Normally the session cookie contains the client IP address and this prevents them from using the session on any other host. Some proxy server environments may make this undesirable. Turning this property on will make the session cookie address independent.
   - CLI Alias: `allow-cookie-sharing`
   - Default value: `false`
-- `auto_renew` (Boolean) Auto Renew
+- `auto_renew` (Boolean) If this property is enabled, the session lifetime is renewed on each use of the session. Otherwise the session lifetime is the total amount of time allowed before returning to the login sections.
   - CLI Alias: `auto-renew`
   - Default value: `true`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `timeout` (Number) Session Lifetime
+- `timeout` (Number) The login cookie is only good for the amount of time specified by this property. It may be automatically renewed during activity depending on the value of the Auto Renew property.
   - CLI Alias: `lifetime`
   - Range: `1`-`864000`
   - Default value: `3600`

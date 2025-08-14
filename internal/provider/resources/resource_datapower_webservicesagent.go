@@ -56,7 +56,7 @@ func (r *WebServicesAgentResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *WebServicesAgentResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Web Services Management agent", "wsm-agent", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The Web Services Management agent provides manageability for Web Services by providing status, metrics, and transaction history to external management stations.", "wsm-agent", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -70,7 +70,7 @@ func (r *WebServicesAgentResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -80,19 +80,19 @@ func (r *WebServicesAgentResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"max_records": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max records to buffer", "max-records", "").AddDefaultValue("3000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of transaction records to buffer. Buffering controls the behavior of the agent when there are no registered consumers of transaction events. Records are accumulated until they reach the configured threshold. After this threshold is reached, new records are dropped. The loss of records are visible to web service managers that understand the concept.", "max-records", "").AddDefaultValue("3000").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(3000),
 			},
 			"max_memory_kb": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max memory for buffer", "max-memory", "").AddDefaultValue("64000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum memory in KB to buffer transaction records. Buffering controls the behavior of the agent when there are no registered consumers of transaction events. Records are accumulated until they reach the configured threshold. After this threshold is reached, new records are dropped. The loss of records are visible to web service managers that understand the concept.", "max-memory", "").AddDefaultValue("64000").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(64000),
 			},
 			"capture_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Capture mode", "capture-mode", "").AddStringEnum("none", "faults", "all-messages").AddDefaultValue("faults").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the mode to capture messages for further analysis. Because not all Web Services Management protocols can accommodate full message-capture, configure this property only when the spooler can forward full messages. <p>Full message-capture incurs a performance penalty.</p>", "capture-mode", "").AddStringEnum("none", "faults", "all-messages").AddDefaultValue("faults").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -101,13 +101,13 @@ func (r *WebServicesAgentResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("faults"),
 			},
 			"mediation_metrics": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Collect mediation enforcement metrics", "mediation-enforcement-metrics", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to collect metrics about mediation enforcement. The default behavior is to not collect metrics.", "mediation-enforcement-metrics", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"max_payload_size_kb": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max payload size", "max-payload-size", "").AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum total payload size in KB of a buffered transaction record. The total payload size is the sum of the payloads that are collected at the following points. <ul><li>When the service accepts the request.</li><li>When the service sends the processed request to its target.</li><li>When the service accepts the response.</li><li>When the service sends the processed response to the client.</li></ul><p>A record is dropped when its total payload size exceeds the maximum value. The default value is 0, which indicates no limit.</p>", "max-payload-size", "").AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(0),

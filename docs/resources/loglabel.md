@@ -3,13 +3,13 @@
 page_title: "datapower_loglabel Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Log category
+  Configuration of custom log categories.
   CLI Alias: logging category
 ---
 
 # datapower_loglabel (Resource)
 
-Log category
+Configuration of custom log categories.
   - CLI Alias: `logging category`
 
 ## Example Usage

@@ -3,12 +3,12 @@
 page_title: "datapower_statistics Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Statistic settings
+  Manages whether the system collects and presents statistics to help you determine whether the system correctly processes the transactions.
 ---
 
 # datapower_statistics (Data Source)
 
-Statistic settings
+Manages whether the system collects and presents statistics to help you determine whether the system correctly processes the transactions.
 
 ## Example Usage
 
@@ -31,8 +31,8 @@ data "datapower_statistics" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
-- `load_interval` (Number) Load interval (can only be set in `default` domain)
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `load_interval` (Number) Specifies the measurement interval for load estimation in milliseconds. Enter a value in the range 500 - 5000. The default value is 1000. During this interval, the system load reported by the <tt>show load</tt> command is estimated and expressed as a percentage. <p><b>Note:</b> You can modify this property in only the <tt>default</tt> domain. In application domains, this property is read-only.</p>
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

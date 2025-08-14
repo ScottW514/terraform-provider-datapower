@@ -1,118 +1,149 @@
 name: APIConnectGatewayService
-description: 'API Connect gateway service'
-cli_alias: 'apic-gw-service'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APIConnectGatewayService/default'
+description: The API Connect gateway service defines the type of gateway service and
+  manages connections with API Connect. When configured, the DataPower Gateway creates
+  a gateway service to retrieve data from API Connect to define the configuration
+  to process API requests.
+cli_alias: apic-gw-service
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APIConnectGatewayService/default
 update_only: true
 attributes:
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local address'
-    cli_alias: local-address
-  - name: LocalPort
-    type: Int64
-    required: true
-    default: 3000
-    description: 'Local port'
-    cli_alias: local-port
-  # DEPRECATED
-  # - name: SSLClient
-  #   type: String
-  #   reference_to: SSLClientProfile
-  #   description: 'TLS client profile'
-  #   cli_alias: ssl-client
-  - name: SSLServer
-    type: String
-    reference_to: SSLServerProfile
-    description: 'TLS server profile'
-    cli_alias: ssl-server
-  - name: APIGatewayAddress
-    type: String
-    default: '0.0.0.0'
-    description: 'API gateway address'
-    cli_alias: api-gw-address
-  - name: APIGatewayPort
-    type: Int64
-    default: 9443
-    description: 'API gateway port'
-    cli_alias: api-gw-port
-  - name: GatewayPeering
-    type: String
-    reference_to: GatewayPeering
-    description: 'Gateway peering'
-    cli_alias: gateway-peering
-  - name: GatewayPeeringManager
-    type: String
-    reference_to: GatewayPeeringManager
-    default: 'default'
-    description: 'Gateway-peering manager'
-    cli_alias: gateway-peering-manager
-  - name: V5CompatibilityMode
-    type: Bool
-    default: true
-    description: 'V5 compatibility mode'
-    cli_alias: v5-compatibility-mode
-  - name: UserDefinedPolicies
-    type: List
-    reference_to: AssemblyFunction
-    element_type: String
-    description: 'User-defined policies'
-    cli_alias: user-defined-policies
-  - name: V5CSlmMode
-    type: String
-    enum:
-      - 'autounicast'
-      - 'unicast'
-      - 'multicast'
-    default: 'autounicast'
-    description: 'SLM peer mode'
-    cli_alias: slm-mode
-  - name: IPMulticast
-    type: String
-    reference_to: IPMulticast
-    description: 'IP multicast'
-    cli_alias: ip-multicast
-  - name: IPUnicast
-    type: String
-    description: 'IP unicast'
-    cli_alias: ip-unicast
-  - name: JWTValidationMode
-    type: String
-    enum:
-      - 'request'
-      - 'require'
-    default: 'request'
-    description: 'JWT validation mode'
-    cli_alias: jwt-validate-mode
-  - name: JWTURL
-    type: String
-    description: 'JWT URL'
-    cli_alias: jwt-url
-  - name: ProxyPolicy
-    dm_type: DmAPICGSProxyPolicy
-    description: 'API Manager proxy'
-    cli_alias: proxy
-    test_value: '{proxy_policy_enable = false, remote_address = "localhost", remote_port = 8080}'
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: Specify the IP address or interface through that API Connect uses to
+    manage the gateway service. The default value is 0.0.0.0.
+  cli_alias: local-address
+- name: LocalPort
+  type: Int64
+  required: true
+  default: 3000
+  description: Specify the listening port for the gateway service. The default value
+    is 3000. <p><b>Note:</b> The gateway service uses four additional consecutive
+    ports after the local port. Therefore, all five consecutive ports must be clear
+    of conflicts.</p>
+  cli_alias: local-port
+- name: SSLServer
+  type: String
+  reference_to: SSLServerProfile
+  description: 'Specify the TLS server profile to secure connections between API Connect
+    to the gateway service. The following restrictions apply. <ul><li>Keys and certificates
+    are restricted to PEM and PKCS #12 formats.</li><li>The validation credentials
+    must use PEM formatted material.</li></ul>'
+  cli_alias: ssl-server
+- name: APIGatewayAddress
+  type: String
+  default: 0.0.0.0
+  description: Specify the IP address or host alias to accept API requests. The default
+    value is 0.0.0.0. This address is used with its port to create an HTTPS handler.
+  cli_alias: api-gw-address
+- name: APIGatewayPort
+  type: Int64
+  default: 9443
+  description: Specify the listening port for API requests. The default value is 9443.
+    This port is used with its address to create an HTTPS handler.
+  cli_alias: api-gw-port
+- name: GatewayPeering
+  type: String
+  reference_to: GatewayPeering
+  description: 'Specify the gateway-peering instance that manages data across the
+    gateway peers. The following restrictions apply. <ul><li>When TLS and peer group
+    mode are enabled, all peers must use the same crypto material.</li><li>Keys and
+    certificates are restricted to PEM and PKCS #12 formats.</li></ul>'
+  cli_alias: gateway-peering
+- name: GatewayPeeringManager
+  type: String
+  reference_to: GatewayPeeringManager
+  default: default
+  description: Specify the gateway-peering manager that manages gateway-peering instances
+    for the gateway service. This property is meaningful when the gateway type is
+    an API gateway.
+  cli_alias: gateway-peering-manager
+- name: V5CompatibilityMode
+  type: Bool
+  default: true
+  description: Specify whether the gateway service is a Multi-Protocol Gateway or
+    an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol
+    Gateway that is compatible with API Connect version 5.</li><li>When disabled,
+    that gateway service is an API gateway this is not compatible with API Connect
+    v5.</li></ui>
+  cli_alias: v5-compatibility-mode
+- name: UserDefinedPolicies
+  type: List
+  reference_to: AssemblyFunction
+  element_type: String
+  description: Specify user-defined policies to advertise to API Connect for use in
+    the API Connect Assembly Editor. This property is meaningful when the gateway
+    type is an API gateway. <p>For an assembly function that is a user-defined policy,
+    configure the assembly function with a mechanism other than a watched file that
+    is processed by a configuration sequence. Objects that are created through the
+    processing of configuration sequences are not persisted to the startup configuration.
+    The preferred method for user-defined policies is to define them explicitly so
+    that they persist to the startup configuration.</p>
+  cli_alias: user-defined-policies
+- name: V5CSlmMode
+  type: String
+  enum:
+  - autounicast
+  - unicast
+  - multicast
+  default: autounicast
+  description: Specify the peer group type for the SLM policy. This property is meaningful
+    when the gateway type is a Multi-Protocol Gateway.
+  cli_alias: slm-mode
+- name: IPMulticast
+  type: String
+  reference_to: IPMulticast
+  description: Specify the IP multicast configuration for the SLM policy. This property
+    is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode
+    is multicast.
+  cli_alias: ip-multicast
+- name: IPUnicast
+  type: String
+  description: Specify the address of the unicast peer group for the SLM policy. This
+    property is meaningful when the gateway type is a Multi-Protocol Gateway and the
+    peer mode is unicast.
+  cli_alias: ip-unicast
+- name: JWTValidationMode
+  type: String
+  enum:
+  - request
+  - require
+  default: request
+  description: Specify the JWT validation mode. This property does not control whether
+    a token is validated. This property controls whether transactions fail when validation
+    fails.
+  cli_alias: jwt-validate-mode
+- name: JWTURL
+  type: String
+  description: JWT URL
+  cli_alias: jwt-url
+- name: ProxyPolicy
+  dm_type: DmAPICGSProxyPolicy
+  description: API Manager proxy
+  cli_alias: proxy
+  test_value: '{proxy_policy_enable = false, remote_address = "localhost", remote_port
+    = 8080}'

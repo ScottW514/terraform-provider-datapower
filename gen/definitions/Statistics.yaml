@@ -1,31 +1,37 @@
 name: Statistics
-description: 'Statistic settings'
-cli_alias: 'statistics'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/Statistics/default'
+description: Manages whether the system collects and presents statistics to help you
+  determine whether the system correctly processes the transactions.
+cli_alias: statistics
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/Statistics/default
 update_only: true
 attributes:
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: LoadInterval
-    type: Int64
-    minimum: 500
-    maximum: 5000
-    default: 1000
-    description: 'Load interval (can only be set in `default` domain)'
-    cli_alias: load-interval
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: LoadInterval
+  type: Int64
+  minimum: 500
+  maximum: 5000
+  default: 1000
+  description: Specifies the measurement interval for load estimation in milliseconds.
+    Enter a value in the range 500 - 5000. The default value is 1000. During this
+    interval, the system load reported by the <tt>show load</tt> command is estimated
+    and expressed as a percentage. <p><b>Note:</b> You can modify this property in
+    only the <tt>default</tt> domain. In application domains, this property is read-only.</p>
+  cli_alias: load-interval

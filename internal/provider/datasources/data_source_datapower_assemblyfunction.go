@@ -57,7 +57,7 @@ func (d *AssemblyFunctionDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *AssemblyFunctionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Assembly function",
+		MarkdownDescription: "An assembly function augments the assembly actions that the API gateway uses during processing. You can implement an assembly function in one of the following ways. <ul><li>Define an assembly function to add custom logic to an assembly. After you define the assembly function, you can add it to a function call assembly action.</li><li>When you configure the API Connect gateway service as not V5 compatible, use an assembly function to specify a user-defined policy (UDP) that API Connect advertises and makes available in the API Connect assembly editor. A UDP provides custom processing control of APIs in the gateway server.</li></ul>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,11 +81,11 @@ func (d *AssemblyFunctionDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"title": schema.StringAttribute{
-							MarkdownDescription: "Title",
+							MarkdownDescription: "Specify the title of the assembly function to advertise to API developers. When not provided, the DataPower Gateway provides the title to advertise to API Connect.",
 							Computed:            true,
 						},
 						"description": schema.StringAttribute{
-							MarkdownDescription: "Description",
+							MarkdownDescription: "Specify the description of the assembly function to advertise to API developers. When not provided, the DataPower Gateway provides the description to advertise to API Connect.",
 							Computed:            true,
 						},
 						"scope": schema.StringAttribute{
@@ -98,7 +98,7 @@ func (d *AssemblyFunctionDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"assembly": schema.StringAttribute{
-							MarkdownDescription: "Assembly",
+							MarkdownDescription: "Specify the assembly to apply to calls to the assembly function. An assembly comprises a rule that defines the actions to run against the call and how to handle errors during processing.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

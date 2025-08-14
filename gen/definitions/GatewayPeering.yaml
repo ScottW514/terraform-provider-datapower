@@ -1,108 +1,107 @@
 name: GatewayPeering
-description: 'Gateway peering'
-cli_alias: 'gateway-peering'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/GatewayPeering'
+description: A gateway-peering instance defines how members synchronize data across
+  members.
+cli_alias: gateway-peering
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/GatewayPeering
 skip_test: true
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestGatewayPeering"'
-    test_expect_ds: '"AccTest_GatewayPeering"'
-    example: 'GatewayPeeringName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: PasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password alias'
-    cli_alias: password-alias
-  - name: LocalAddress
-    type: String
-    description: 'Local address'
-    test_value: '"5.5.5.5"'
-    cli_alias: local-address
-  - name: LocalPort
-    type: Int64
-    required: true
-    default: 16380
-    description: 'Local port'
-    cli_alias: local-port
-  - name: PeerGroup
-    type: String
-    reference_to: GatewayPeeringGroup
-    description: 'Gateway-peering group'
-    cli_alias: peer-group
-  # DEPRECATED
-  # - name: PrimaryCount
-  - name: MonitorPort
-    type: Int64
-    default: 26380
-    description: 'Monitor port'
-    cli_alias: monitor-port
-  # DEPRECATED
-  # - name: ClusterAutoConfig
-  - name: EnablePeerGroup
-    type: Bool
-    default: true
-    description: 'Use peer group'
-    cli_alias: enable-peer-group
-  # DEPRECATED
-  # - name: Peers
-  # DEPRECATED
-  # - name: ClusterNodes
-  # DEPRECATED
-  # - name: Priority
-  # DEPRECATED
-  - name: EnableSSL
-    type: Bool
-    default: false
-    required: true
-    description: 'DEPRECATED: LEAVE SET TO FALSE'
-  # DEPRECATED
-  # - name: Idcred
-  # DEPRECATED
-  # - name: Valcred
-  # DEPRECATED
-  # - name: SSLCryptoKey
-  # DEPRECATED
-  # - name: SSLCryptoCertificate
-  - name: PersistenceLocation
-    type: String
-    enum:
-      - 'memory'
-      - 'local'
-      - 'raid'
-    default: 'memory'
-    description: 'Persistence location'
-    cli_alias: persistence
-  - name: LocalDirectory
-    type: String
-    default: 'local:///'
-    description: 'Local directory'
-    cli_alias: local-directory
-  - name: MaxMemory
-    type: Int64
-    maximum: 1048576
-    description: 'Max memory'
-    cli_alias: max-memory
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestGatewayPeering"'
+  test_expect_ds: '"AccTest_GatewayPeering"'
+  example: GatewayPeeringName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: PasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: Specify the password alias to secure the data store. If not specified,
+    a system default is used. The use of the system default is classified as a security
+    vulnerability (CVE-2022-31776).
+  cli_alias: password-alias
+- name: LocalAddress
+  type: String
+  description: Specify the IP address or host alias that the gateway service listens
+    on. The IP address can be any DataPower network interface that can be accessed
+    by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0
+    or ::.
+  test_value: '"5.5.5.5"'
+  cli_alias: local-address
+- name: LocalPort
+  type: Int64
+  required: true
+  default: 16380
+  description: Specify the port that the gateway service listens on. The default value
+    is 16380. Ensure that all peers use the same port.
+  cli_alias: local-port
+- name: PeerGroup
+  type: String
+  reference_to: GatewayPeeringGroup
+  description: Gateway-peering group
+  cli_alias: peer-group
+- name: MonitorPort
+  type: Int64
+  default: 26380
+  description: Specify the port to monitor for state synchronization. The default
+    value is 26380. Ensure that all peers use the same port.
+  cli_alias: monitor-port
+- name: EnablePeerGroup
+  type: Bool
+  default: true
+  description: Specify whether the gateway-peering instance uses a peer group. <ul><li>When
+    enabled, the instance works in the mode that is set for the peer group. This setting
+    is the default value.</li><li>When not enabled, the instance works in stand-alone
+    mode.</li></ul>
+  cli_alias: enable-peer-group
+- name: EnableSSL
+  type: Bool
+  default: false
+  required: true
+  description: Specify whether to use TLS to secure the connection among the members.
+    By default, TLS is enabled. In peer-based mode, ensure that all peers use the
+    same TLS configuration.
+- name: PersistenceLocation
+  type: String
+  enum:
+  - memory
+  - local
+  - raid
+  default: memory
+  description: Specify where to store data. Ensure that all peers in the group store
+    data in the same location.
+  cli_alias: persistence
+- name: LocalDirectory
+  type: String
+  default: local:///
+  description: Specify the directory to store data. For example, <tt>local:///group1</tt>
+    .
+  cli_alias: local-directory
+- name: MaxMemory
+  type: Int64
+  maximum: 1048576
+  description: Specify the maximum memory for the data store. When memory reaches
+    this limit, data is removed by using the least recently used (LRU) algorithm.
+    The default value is 0, which means no limits. Do not over allocate memory.
+  cli_alias: max-memory

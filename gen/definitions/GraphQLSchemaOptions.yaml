@@ -1,42 +1,44 @@
 name: GraphQLSchemaOptions
-description: 'GraphQL schema options'
-cli_alias: 'graphql-schema-options'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/GraphQLSchemaOptions'
+description: GraphQL schema options define a list of schema elements to remove during
+  validation and introspection.
+cli_alias: graphql-schema-options
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/GraphQLSchemaOptions
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestGraphQLSchemaOptions"'
-    test_expect_ds: '"AccTest_GraphQLSchemaOptions"'
-    example: 'GraphQLSchemaOptionsName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: VisibilityList
-    type: String
-    reference_to: VisibilityList
-    description: 'Visibility list'
-    cli_alias: visibility-list
-  - name: API
-    type: String
-    reference_to: APIDefinition
-    required: true
-    test_value: '"AccTest_APIDefinition"'
-    test_bed_value: 'datapower_apidefinition.acc_test.id'
-    description: 'API'
-    cli_alias: api
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestGraphQLSchemaOptions"'
+  test_expect_ds: '"AccTest_GraphQLSchemaOptions"'
+  example: GraphQLSchemaOptionsName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: VisibilityList
+  type: String
+  reference_to: VisibilityList
+  description: Visibility list
+  cli_alias: visibility-list
+- name: API
+  type: String
+  reference_to: APIDefinition
+  required: true
+  test_value: '"AccTest_APIDefinition"'
+  test_bed_value: datapower_apidefinition.acc_test.id
+  description: API
+  cli_alias: api

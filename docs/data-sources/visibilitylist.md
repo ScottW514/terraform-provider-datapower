@@ -3,12 +3,12 @@
 page_title: "datapower_visibilitylist Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Visibility list
+  A visibility list specifies elements in a GraphQL schema to remove from introspection and validation.
 ---
 
 # datapower_visibilitylist (Data Source)
 
-Visibility list
+A visibility list specifies elements in a GraphQL schema to remove from introspection and validation.
 
 ## Example Usage
 
@@ -41,7 +41,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `type` (String) Type
-- `value` (List of String) Value
+- `value` (List of String) Specify the path to a GraphQL schema element. For example, <tt>Account.number</tt> uniquely identifies the <tt>number</tt> field of the <tt>Account</tt> type.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

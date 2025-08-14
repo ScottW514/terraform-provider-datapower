@@ -1,266 +1,362 @@
 name: WebAppFW
-description: 'Web Application Firewall'
-cli_alias: 'web-application-firewall'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/WebAppFW'
+description: The web application firewall provides filtering, security, and input
+  validation for HTTP transactions.
+cli_alias: web-application-firewall
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/WebAppFW
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestWebAppFW"'
-    test_expect_ds: '"AccTest_WebAppFW"'
-    example: 'WebAppFWName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Priority
-    type: String
-    enum:
-      - 'unknown'
-      - 'high-min'
-      - 'high'
-      - 'high-max'
-      - 'normal-min'
-      - 'normal'
-      - 'normal-max'
-      - 'low-min'
-      - 'low'
-      - 'low-max'
-    default: 'normal'
-    description: 'Service Priority'
-    cli_alias: priority
-  - name: FrontSide
-    type: List
-    element_type: DmFrontSide
-    description: 'Source Addresses'
-    test_value: '[{"LocalAddress": "0.0.0.0"}]'
-    cli_alias: listen-on
-  - name: RemoteAddress
-    type: String
-    required: true
-    example: "10.10.10.10"
-    description: 'Remote Host'
-    cli_alias: remote-address
-  - name: RemotePort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    default: 80
-    description: 'Remote Port'
-    cli_alias: remote-port
-  - name: StylePolicy
-    type: String
-    reference_to: AppSecurityPolicy
-    required: true
-    test_value: '"AccTest_AppSecurityPolicy"'
-    test_bed_value: 'datapower_appsecuritypolicy.acc_test.id'
-    description: 'Security Policy'
-    cli_alias: security-policy
-  - name: XMLManager
-    type: String
-    reference_to: XMLManager
-    required: true
-    default: 'default'
-    test_value: '"default"'
-    description: 'XML Manager'
-    cli_alias: xml-manager
-  - name: ErrorPolicy
-    type: String
-    reference_to: WebAppErrorHandlingPolicy
-    description: 'Error Policy'
-    cli_alias: error-policy
-  - name: URINormalization
-    type: Bool
-    default: true
-    description: 'Normalize URI'
-    cli_alias: uri-normalization
-  - name: RewriteErrors
-    type: Bool
-    default: true
-    description: 'Rewrite Error Messages'
-    cli_alias: rewrite-errors
-  - name: DelayErrors
-    type: Bool
-    default: true
-    description: 'Delay Error Messages'
-    cli_alias: delay-errors
-  - name: DelayErrorsDuration
-    type: Int64
-    minimum: 250
-    maximum: 300000
-    default: 1000
-    description: 'Duration to Delay Error Messages'
-    cli_alias: delay-errors-duration
-  - name: StreamOutputToBack
-    type: String
-    enum:
-      - 'buffer-until-verification'
-      - 'stream-until-infraction'
-    default: 'buffer-until-verification'
-    description: 'Stream Output to Back'
-    cli_alias: stream-output-to-back
-  - name: StreamOutputToFront
-    type: String
-    enum:
-      - 'buffer-until-verification'
-      - 'stream-until-infraction'
-    default: 'buffer-until-verification'
-    description: 'Stream Output to Front'
-    cli_alias: stream-output-to-front
-  - name: FrontTimeout
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    required: true
-    default: 120
-    description: 'Front Side Timeout'
-    cli_alias: front-timeout
-  - name: BackTimeout
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    required: true
-    default: 120
-    description: 'Back Side Timeout'
-    cli_alias: back-timeout
-  - name: FrontPersistentTimeout
-    type: Int64
-    maximum: 86400
-    required: true
-    default: 180
-    description: 'Front Persistent Timeout'
-    cli_alias: front-persistent-timeout
-  - name: AllowCacheControlHeader
-    type: Bool
-    default: false
-    description: 'Allow Cache-Control Header'
-    cli_alias: allow-cache-control
-  - name: BackPersistentTimeout
-    type: Int64
-    maximum: 86400
-    required: true
-    default: 180
-    description: 'Back Persistent Timeout'
-    cli_alias: back-persistent-timeout
-  - name: FrontHTTPVersion
-    type: String
-    enum:
-      - 'HTTP/1.0'
-      - 'HTTP/1.1'
-    default: 'HTTP/1.1'
-    description: 'HTTP Response Version'
-    cli_alias: http-front-version
-  - name: BackHTTPVersion
-    type: String
-    enum:
-      - 'HTTP/1.0'
-      - 'HTTP/1.1'
-    default: 'HTTP/1.1'
-    description: 'HTTP Version to Server'
-    cli_alias: http-back-version
-  - name: RequestSideSecurity
-    type: Bool
-    default: true
-    description: 'Request Security'
-    cli_alias: request-security
-  - name: ResponseSideSecurity
-    type: Bool
-    default: true
-    description: 'Response Security'
-    cli_alias: response-security
-  - name: DoChunkedUpload
-    type: Bool
-    default: false
-    description: 'Allow Chunked Uploads'
-    cli_alias: chunked-uploads
-  - name: FollowRedirects
-    type: Bool
-    default: true
-    description: 'Follow Redirects'
-    cli_alias: follow-redirects
-  - name: HTTPClientIPLabel
-    type: String
-    default: 'X-Client-IP'
-    description: 'HTTP Client IP Label'
-    cli_alias: http-client-ip-label
-  - name: HTTPLogCorIDLabel
-    type: String
-    default: 'X-Global-Transaction-ID'
-    description: 'HTTP Global Transaction ID Label'
-    cli_alias: http-global-tranID-label
-  - name: DebugMode
-    type: String
-    enum:
-      - 'on'
-      - 'off'
-      - 'unbounded'
-    default: 'off'
-    description: 'Probe setting'
-    cli_alias: debug-mode
-  - name: DebugHistory
-    type: Int64
-    minimum: 10
-    maximum: 250
-    default: 25
-    description: 'Transaction History'
-    cli_alias: debug-history
-  - name: DebugTrigger
-    type: List
-    element_type: DmMSDebugTriggerType
-    description: 'Probe Triggers'
-    cli_alias: debug-trigger
-  - name: URLRewritePolicy
-    type: String
-    reference_to: URLRewritePolicy
-    description: 'Header and URL Rewrite Policy'
-    cli_alias: urlrewrite-policy
-  - name: DoHostRewriting
-    type: Bool
-    default: true
-    description: 'Rewrite Host Names When Gatewaying'
-    cli_alias: host-rewriting
-  - name: SSLConfigType
-    type: String
-    enum:
-      - 'server'
-      - 'sni'
-    default: 'server'
-    description: 'TLS type'
-    cli_alias: ssl-config-type
-  # DEPRECATED
-  # - name: SSLProxyProfile
-  - name: SSLServer
-    type: String
-    reference_to: SSLServerProfile
-    description: 'TLS server profile'
-    cli_alias: ssl-server
-  - name: SSLSNIServer
-    type: String
-    reference_to: SSLSNIServerProfile
-    description: 'TLS SNI server profile'
-    cli_alias: ssl-sni-server
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestWebAppFW"'
+  test_expect_ds: '"AccTest_WebAppFW"'
+  example: WebAppFWName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Priority
+  type: String
+  enum:
+  - unknown
+  - high-min
+  - high
+  - high-max
+  - normal-min
+  - normal
+  - normal-max
+  - low-min
+  - low
+  - low-max
+  default: normal
+  description: Control the service scheduling priority. When system resources are
+    in high demand, "high" priority services will be favored over lower priority services.
+  cli_alias: priority
+- name: FrontSide
+  type: List
+  element_type: DmFrontSide
+  description: Source Addresses
+  test_value: '[{"LocalAddress": "0.0.0.0"}]'
+  cli_alias: listen-on
+- name: RemoteAddress
+  type: String
+  required: true
+  example: 10.10.10.10
+  description: Specify the host name or IP address of the backend server. If the backend
+    requires TLS, ensure that the TLS client profile is configured for client (forward)
+    connections.
+  cli_alias: remote-address
+- name: RemotePort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  default: 80
+  description: Specify the port on the remote server.
+  cli_alias: remote-port
+- name: StylePolicy
+  type: String
+  reference_to: AppSecurityPolicy
+  required: true
+  test_value: '"AccTest_AppSecurityPolicy"'
+  test_bed_value: datapower_appsecuritypolicy.acc_test.id
+  description: Select a security policy from the list of available policies. Click
+    + to create a new Policy. This policy controls which profiles are enforced.
+  cli_alias: security-policy
+- name: XMLManager
+  type: String
+  reference_to: XMLManager
+  required: true
+  default: default
+  test_value: '"default"'
+  description: <p>An XML Manager manages the compilation and caching of stylesheets,
+    the caching of documents, and provides configuration constraints on the size and
+    parsing depth of documents. You can enable streaming operation by configuring
+    an XML Manager to use a Streaming Compile Option Policy.</p><p>Note that an XML
+    Manager can optionally employ a User Agent. The User Agent settings, in turn,
+    can affect the behavior of the gateway when communicating with back end servers
+    or with clients when sending back responses.</p><p>More than one firewall may
+    use the same XML Manager. Select an existing XML Manager from the list to assign
+    the Manager to this firewall. Click the + button to create a new XML Manager that
+    is assigned to this firewall. A default Manager is used if you do not create one.</p>
+  cli_alias: xml-manager
+- name: ErrorPolicy
+  type: String
+  reference_to: WebAppErrorHandlingPolicy
+  description: If any policy is violated, this is the default policy that will handle
+    the response sent to the client. It might be overridden in the profile that fails.
+  cli_alias: error-policy
+- name: URINormalization
+  type: Bool
+  default: true
+  description: If this property is enabled the URI is rewritten to make sure the URI
+    is RFC compliant by escaping certain characters. Additionally, characters that
+    are escaped that do not need to be are unescaped. This makes checking for attack
+    sequences such as .. more reliable.
+  cli_alias: uri-normalization
+- name: RewriteErrors
+  type: Bool
+  default: true
+  description: Error messages after a decryption action can provide an attacker who
+    is using the padding oracle attack method with enough information to determine
+    the contents of the plain-text data. When enabled, the default, the client receives
+    error messages without the internal information that could lead to a discovery.
+    When disabled, the client receives the original message with this information.
+  cli_alias: rewrite-errors
+- name: DelayErrors
+  type: Bool
+  default: true
+  description: The timing difference of the error messages returned after a decryption
+    action can provide an attacker with enough information to determine the contents
+    of the plain-text data. When enabled, the default, the DataPower Gateway delays
+    error messages for the defined duration. When disabled, the DataPower Gateway
+    does not delay error messages.
+  cli_alias: delay-errors
+- name: DelayErrorsDuration
+  type: Int64
+  minimum: 250
+  maximum: 300000
+  default: 1000
+  description: When enabling the delay of error messages, specify the delay duration
+    in milliseconds. If delaying messages for 3000ms, the DataPower Gateway will not
+    send error messages to the client until 3 seconds have elapsed since the DataPower
+    Gateway performed decryption on the requests. Use any value of 250 - 300000. The
+    default value is 1000.
+  cli_alias: delay-errors-duration
+- name: StreamOutputToBack
+  type: String
+  enum:
+  - buffer-until-verification
+  - stream-until-infraction
+  default: buffer-until-verification
+  description: Select the desired streaming behavior.
+  cli_alias: stream-output-to-back
+- name: StreamOutputToFront
+  type: String
+  enum:
+  - buffer-until-verification
+  - stream-until-infraction
+  default: buffer-until-verification
+  description: Select the desired streaming behavior.
+  cli_alias: stream-output-to-front
+- name: FrontTimeout
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  required: true
+  default: 120
+  description: Set the intra-transaction timeout for Web Application Firewall to client
+    connections. This value is the maximum idle time to allow in a transaction on
+    the Web Application Firewall to client connection. This timer monitors idle time
+    in the data transfer process. If the specified idle time is exceeded, the connection
+    is torn down. Enter a value in the range 1 - 86400. The default value is 120.
+  cli_alias: front-timeout
+- name: BackTimeout
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  required: true
+  default: 120
+  description: Set the intra-transaction timeout for Web Application Firewall to server
+    connections. This value is the maximum idle time to allow in a transaction on
+    the Web Application Firewall to server connection. This timer monitors the idle
+    time in the data transfer process. If the specified idle time is exceeded, the
+    connection is torn down. Enter a value in the range 1 - 86400. The default value
+    is 120.
+  cli_alias: back-timeout
+- name: FrontPersistentTimeout
+  type: Int64
+  maximum: 86400
+  required: true
+  default: 180
+  description: Set the inter-transaction timeout for Web Application Firewall to client
+    connections. This value is the maximum idle time to allow between the completion
+    of a TCP transaction and the initiation of a new TCP transaction on the Web Application
+    Firewall to client connection. If the specified idle time is exceeded, the connection
+    is torn down. Enter a value in the range 0 - 86400. The default value is 180.
+    A value of 0 disables persistent connections.
+  cli_alias: front-persistent-timeout
+- name: AllowCacheControlHeader
+  type: Bool
+  default: false
+  description: Specify whether to allow the HTTP GET method to pass the Cache-Control
+    header through to the back end. If disabled, a "Cache-Control:no-transform" header
+    is passed. If enabled, the client request can specify the cache control behavior,
+    or if the client request does not specify the Cache-Control header, a "Cache-Control:no-transform"
+    header is passed.
+  cli_alias: allow-cache-control
+- name: BackPersistentTimeout
+  type: Int64
+  maximum: 86400
+  required: true
+  default: 180
+  description: <p>Specify the maximum inter-transaction idle time in seconds for Web
+    Application Firewall to server connections. This value is the maximum idle time
+    between the completion of a TCP transaction and the initiation of a new TCP transaction
+    on this connection. If the specified idle time is exceeded, the connection is
+    torn down. Enter a value in the range 0 - 86400. The default value is 180. A value
+    of 0 disables persistent connections.</p><p><b>Note:</b> For HTTP GET and HEAD
+    requests, the service attempts the connection again after the specified value,
+    Therefore, the actual timeout is twice the specified value.</p><p>An idle TCP
+    connection can remain in the idle state for 20 seconds after the expiration of
+    the persistence timer.</p>
+  cli_alias: back-persistent-timeout
+- name: FrontHTTPVersion
+  type: String
+  enum:
+  - HTTP/1.0
+  - HTTP/1.1
+  default: HTTP/1.1
+  description: Select the HTTP version to be use on client responses. Incoming version
+    1.0 requests will always be replied to with 1.0 compatible responses regardless
+    of this setting. The default is HTTP 1.1.
+  cli_alias: http-front-version
+- name: BackHTTPVersion
+  type: String
+  enum:
+  - HTTP/1.0
+  - HTTP/1.1
+  default: HTTP/1.1
+  description: Select the HTTP version to use on the server-side connection. The default
+    is HTTP 1.1.
+  cli_alias: http-back-version
+- name: RequestSideSecurity
+  type: Bool
+  default: true
+  description: If this property is disabled, no request side security policies will
+    be enforced and all requests will be allowed through.
+  cli_alias: request-security
+- name: ResponseSideSecurity
+  type: Bool
+  default: true
+  description: If this property is disabled, no response side security policies will
+    be enforced and all responses will be allowed through.
+  cli_alias: response-security
+- name: DoChunkedUpload
+  type: Bool
+  default: false
+  description: Use the radio buttons to enable (on) or disable (off) the ability to
+    send Content-Type Chunked Encoded documents to the back end server. When the device
+    employs the HTTP/1.1 protocol, the body of the document can be delimited by either
+    Content-Length or chunked encodings. While all servers will understand how to
+    interpret Content-Length, many applications will fail to understand Chunked encoding.
+    For this reason, Content-Length is the standard method used. However doing so
+    interferes with the ability of the device to fully stream. To stream full documents
+    towards the back end server, this property should be turned on. However, the back
+    end server must be RFC 2616 compatible, because this feature cannot be renegotiated
+    at run time, unlike all other HTTP/1.1 features which can be negotiated down at
+    runtime if necessary. This property can also be enabled by configuring a User
+    Agent to enable it on a per-URL basis.
+  cli_alias: chunked-uploads
+- name: FollowRedirects
+  type: Bool
+  default: true
+  description: Some protocols generate redirects as part of the protocol - for example
+    HTTP response code 302. If this property is enabled the firewall will try and
+    transparently resolve those redirects.
+  cli_alias: follow-redirects
+- name: HTTPClientIPLabel
+  type: String
+  default: X-Client-IP
+  description: Retain the default value (X-Client-IP) or provide an other value (for
+    example, X-Forwarded-For).
+  cli_alias: http-client-ip-label
+- name: HTTPLogCorIDLabel
+  type: String
+  default: X-Global-Transaction-ID
+  description: Enter the name of an HTTP Header to read to determine the global transaction
+    ID for chained services. This value defaults to X-Global-Transaction-ID.
+  cli_alias: http-global-tranID-label
+- name: DebugMode
+  type: String
+  enum:
+  - 'on'
+  - 'off'
+  - unbounded
+  default: 'off'
+  description: <p>Select the diagnostic mode for processing policies. When enabled,
+    you can view details about the state of variables and contexts for a captured
+    transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction
+    diagnostic mode is not intended for use in a production environment. Transaction
+    diagnostic mode consumes significant resources that can slow down transaction
+    processing.</p>
+  cli_alias: debug-mode
+- name: DebugHistory
+  type: Int64
+  minimum: 10
+  maximum: 250
+  default: 25
+  description: Set the number of records for transaction diagnostics in the probe.
+    Enter a value in the range 10 - 250. The default value is 25.
+  cli_alias: debug-history
+- name: DebugTrigger
+  type: List
+  element_type: DmMSDebugTriggerType
+  description: The probe captures transactions that meet one or more of the conditions
+    defined by the triggers. These triggers examine the direction or type of the message
+    flow and examine the message for an XPath expression match. When a message meets
+    one of these conditions, the transaction is captured in diagnostics mode and becomes
+    part of the list of transactions that can be viewed.
+  cli_alias: debug-trigger
+- name: URLRewritePolicy
+  type: String
+  reference_to: URLRewritePolicy
+  description: A Rewrite Policy can be used to modify the values of certain headers
+    before the security policies are executed. One common use for this is to rewrite
+    the contents of an HTTP Location header to reflect external DNS names. By using
+    a Rewrite Policy, it is possible to intercept and rewrite URLs that might send
+    a browser directly to the back end web site, rather than through the Web Application
+    Firewall.
+  cli_alias: urlrewrite-policy
+- name: DoHostRewriting
+  type: Bool
+  default: true
+  description: Some protocols have distinct name based elements, separate from the
+    URL, to de multiplex. HTTP uses the Host header for this purposes. If this feature
+    is enabled the backside server will receive a request reflecting the final route,
+    otherwise it will receive a request reflecting the information as it arrived at
+    the DataPower device. Web servers issuing redirects may want to disable this feature,
+    as they often depend on the host header for the value of their redirect.
+  cli_alias: host-rewriting
+- name: SSLConfigType
+  type: String
+  enum:
+  - server
+  - sni
+  default: server
+  description: TLS type
+  cli_alias: ssl-config-type
+- name: SSLServer
+  type: String
+  reference_to: SSLServerProfile
+  description: TLS server profile
+  cli_alias: ssl-server
+- name: SSLSNIServer
+  type: String
+  reference_to: SSLSNIServerProfile
+  description: TLS SNI server profile
+  cli_alias: ssl-sni-server
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: ssl-client

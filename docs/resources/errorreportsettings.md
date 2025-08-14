@@ -3,13 +3,12 @@
 page_title: "datapower_errorreportsettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Failure Notification (default domain only)
-  CLI Alias: failure-notification
+  
 ---
 
 # datapower_errorreportsettings (Resource)
 
-Failure Notification (`default` domain only)
+<p>Failure notification is a serviceability tool. By default, failure notification is disabled. To use failure notification, you must enable the configuration and allow the error report to be uploaded.</p><p>The uploading of an error report allows the capture of more diagnostic information, which safely improves serviceability. Although there is a tradeoff between performance and serviceability, you should choose serviceability by enabling the following properties:</p><ul><li>Include Internal State</li><li>Background Packet Capture</li><li>Background Log Capture</li><li>Background Memory Trace</li></ul><p>When you allow the error report to be uploaded, this setting enables the Failure Notification status provider. This status provide in combination with the report history tracks the error reports that the appliance generates, the reason why the appliance generated the error report, and its upload status to the specific destination.</p><p>You can specify an NFS, RAID, SMTP, or FTP destination. You can also specify the local temporary directory as the destination. The appliance generates error reports, the naming convention includes the serial number of the appliance and the timestamp of the report. This naming convention prevents one report from overwriting another.</p><p>You can use Event Triggers to generate error reports automatically when specific events occur.</p>
   - CLI Alias: `failure-notification`
 
 ## Example Usage
@@ -24,64 +23,64 @@ resource "datapower_errorreportsettings" "test" {
 
 ### Optional
 
-- `always_on_shutdown` (Boolean) Always On Shutdown
+- `always_on_shutdown` (Boolean) <p>Specify whether the appliance generates an error report when it shuts down. When the appliance shuts down and when using the upload error report feature, the status provider lists <tt>on-shutdown</tt> as the reason code. If the appliance shuts down due to a crash, the status provider lists <tt>crash</tt> as the reason code.</p><p><b>Best Practices:</b></p><ul><li>In general enable this feature.</li><li>In particular when in production, enable this feature to make sure debugging information is captured when the appliance shuts down.</li></ul>
   - CLI Alias: `always-on-shutdown`
   - Default value: `true`
-- `always_on_startup` (Boolean) Always On Startup
+- `always_on_startup` (Boolean) <p>Specify whether the appliance generates an error report when it reboots or reloads. If this feature is enabled logs will be collected before they are overwritten when the system reloads. When the appliance reboots or reloads and when using the upload error report feature, the status provider lists <tt>on-start</tt> as the reason code. If the appliance reloads due to a crash, the status provider lists <tt>crash</tt> as the reason code.</p><p><b>Best Practices:</b></p><ul><li>In general enable this feature.</li><li>In particular when in production, enable this feature to track reloads and reboots.</li></ul>
   - CLI Alias: `always-on-startup`
   - Default value: `true`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `email_address` (String) E-mail Address
+- `email_address` (String) Specify the e-mail address to which to send the error report.
   - CLI Alias: `email-address`
-- `email_sender_address` (String) E-mail Sender Address
+- `email_sender_address` (String) Specify the e-mail address of the sender ( <tt>MAIL FROM</tt> ). If not specified, the configuration uses the e-mail address of the recipient.
   - CLI Alias: `email-sender-address`
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `ffdc_event_log_capture` (Boolean) Background Log Capture
+- `ffdc_event_log_capture` (Boolean) <p>Specify whether to use a background log capture. This feature enables the capture of all log and trace points with minimal overhead. When enabled, this feature runs continuously.</p><p>If the appliance encounters a problem or a user triggers the generation of an error report, the error report includes data from this log capture. This data can help IBM Support identify the problem.</p><p>These messages are independent of messages written to log and trace targets.</p>
   - CLI Alias: `ffdc event-log`
   - Default value: `false`
-- `ffdc_memory_leak_capture` (Boolean) Background Memory Trace
+- `ffdc_memory_leak_capture` (Boolean) <p>Specify whether to enable automatic leak detection. This feature finds gradual memory leaks that occur steadily over time. This feature does not help in situations where messages are larger than the appliance can parse.</p><p>When enabled and if memory falls below an internal threshold, the appliance tracks all memory allocations. When the appliance reaches a critical condition that will lead to a crash, it generates an error report that contains information about memory allocation.</p><p>The configuration of the Throttle Settings affects this feature. The throttle settings can prevent the appliance from reaching the internal threshold.</p>
   - CLI Alias: `ffdc memory-trace`
   - Default value: `false`
-- `ffdc_packet_capture` (Boolean) Background Packet Capture
+- `ffdc_packet_capture` (Boolean) <p>Specify whether to use a background packet capture. This feature enables network packet capture for all interfaces including the internal loopback interface. When enabled, this feature runs continuously.</p><p>If the appliance encounters a problem or a user triggers the generation of an error report, the error report includes the data from this packet capture data. This data helps to determine the messages that the appliance was processing when it encountered the problem.</p>
   - CLI Alias: `ffdc packet-capture`
   - Default value: `false`
-- `ftp_path` (String) FTP Path
+- `ftp_path` (String) Specify the directory on the FTP server to which to upload the error report. Use <tt>%2F</tt> to specify an absolute path.
   - CLI Alias: `ftp-path`
-- `ftp_server` (String) FTP Server
+- `ftp_server` (String) Specify the host name or IP address of the remote FTP server to which to upload the error report.
   - CLI Alias: `ftp-server`
-- `ftp_user_agent` (String) FTP User Agent
+- `ftp_user_agent` (String) Specify the User Agent that describes how to connect to remote FTP servers. In addition to the FTP Policy to define the connection, ensure that this User Agent defines the basic authentication policy (user name and password) to connect to the FTP server.
   - CLI Alias: `ftp-user-agent`
   - Reference to: `datapower_httpuseragent:id`
-- `internal_state` (Boolean) Include Internal State
+- `internal_state` (Boolean) Specify whether to include the internal state of the appliance in the error report. The internal state can be useful in diagnosing the cause of the error.
   - CLI Alias: `internal-state`
   - Default value: `false`
-- `location_identifier` (String) Location
+- `location_identifier` (String) Specify text to include in the subject of an e-mail notification. In general, this value should be how you identify this appliance in your environment. When using the upload error report feature, this property is not necessary. In this case, failure notification uses the serial number of the appliance and the timestamp of the error report.
   - CLI Alias: `location-id`
-- `nfs_mount` (String) NFS Mount
+- `nfs_mount` (String) Specify the NFS mount point to which to upload the error report.
   - CLI Alias: `nfs-mount`
   - Reference to: `datapower_nfsstaticmount:id`
-- `nfs_path` (String) NFS Path
+- `nfs_path` (String) This describes the NFS path location for the Error Report
   - CLI Alias: `nfs-path`
-- `protocol` (String) Report Destination Protocol
+- `protocol` (String) Specify the protocol to use to upload the error report. Note that the selection you will see depends on your device features and licenses.
   - CLI Alias: `protocol`
   - Choices: `ftp`, `nfs`, `raid`, `smtp`, `temporary`, `mqdiag`
-- `raid_path` (String) RAID Volume Path
+- `raid_path` (String) Specify the directory on the RAID volume to which to upload the error report.
   - CLI Alias: `raid-path`
-- `raid_volume` (String) RAID Volume
+- `raid_volume` (String) Specify the volume on the RAID array to which to upload the error report.
   - CLI Alias: `raid-volume`
   - Reference to: `datapower_raidvolume:id`
-- `report_history_kept` (Number) Report History
+- `report_history_kept` (Number) <p>Specify the maximum number of local error reports to maintain when using the upload error report feature. After reaching this limit, the next local error report overwrites the oldest local error report. Use any value of 2 - 10. The default value is 5.</p><p>This feature only applies to locally stored error reports, including temporary and Raid.</p><p>To view the history, see the Failure Notification status provider.</p>
   - CLI Alias: `report-history`
   - Range: `2`-`10`
   - Default value: `5`
-- `smtp_server` (String) SMTP Server
+- `smtp_server` (String) Specify the host name or IP address of the remote SMTP server to which to send the error report.
   - CLI Alias: `remote-address`
-- `upload_report` (Boolean) Upload Error Report
+- `upload_report` (Boolean) <p>Specify whether to upload the error report to an NFS, RAID, SMTP, or FTP destination or write the error report to the local temporary directory. If you enable this feature:</p><ul><li>It enables the Failure Notification status provider, which tracks previous error reports</li><li>It changes the naming convention to include the serial number of the appliance and the timestamp, which prevents one report overwriting another</li></ul>
   - CLI Alias: `upload-report`
   - Default value: `false`
-- `use_smtp` (Boolean) E-mail Notification
+- `use_smtp` (Boolean) Specify whether to send an e-mail at start-up only that contains the error report. If you want to receive e-mail notification, use the upload error report property instead of this property.
   - CLI Alias: `use-smtp`
   - Default value: `false`
 - `user_summary` (String) Comments

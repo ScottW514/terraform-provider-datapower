@@ -55,7 +55,7 @@ func (r *APIFinalResource) Metadata(ctx context.Context, req resource.MetadataRe
 
 func (r *APIFinalResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Final API action", "api-final", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The final API action prepares responses to the client based on the result from the execute API action.", "api-final", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *APIFinalResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 			},
 			"output": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Output", "output", "").AddDefaultValue("OUTPUT").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the destination context that receives variables from the API context. The final API action uses the variables in the destination context to prepare the final response to the client. The default value of <tt>OUTPUT</tt> indicates to transmit the context variables to the destination context. When the value is changed or removed, the context variables are not transmitted to the destination context, and therefore, no response is returned to the client.", "output", "").AddDefaultValue("OUTPUT").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("OUTPUT"),
@@ -94,7 +94,7 @@ func (r *APIFinalResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 			},
 			"correlation_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Correlation path", "correlation-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.", "correlation-path", "").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

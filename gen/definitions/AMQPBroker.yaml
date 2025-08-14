@@ -1,121 +1,145 @@
 name: AMQPBroker
-description: 'AMQP broker'
-cli_alias: 'amqp-broker'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/AMQPBroker'
+description: In AMQP, distributed source and target termini are managed by a broker.
+  The broker provides messaging services for communicating applications by periodically
+  monitoring and polling termini. The broker ensures that sent messages are directed
+  to the correct target terminus or are routed to another server. The AMQP broker
+  configuration corresponds to an AMQP broker that is running on another host in the
+  network. The configured properties enable communication between the DataPower Gateway
+  and the remote AMQP broker.
+cli_alias: amqp-broker
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/AMQPBroker
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAMQPBroker"'
-    test_expect_ds: '"AccTest_AMQPBroker"'
-    example: 'AMQPBrokerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: HostName
-    type: String
-    required: true
-    description: 'Host'
-    example: "host.name"
-    cli_alias: hostname
-  - name: Port
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 5672
-    description: 'Port'
-    cli_alias: port
-  - name: XMLManager
-    type: String
-    reference_to: XMLManager
-    required: true
-    default: 'default'
-    test_value: '"default"'
-    description: 'XML manager'
-    cli_alias: xml-manager
-  - name: ContainerID
-    type: String
-    description: 'AMQP container ID'
-    cli_alias: container-id
-  - name: Authorization
-    type: String
-    enum:
-      - 'none'
-      - 'anonymous'
-      - 'plain'
-    required: true
-    default: 'none'
-    description: 'Authorization'
-    cli_alias: authorization
-  - name: UserName
-    type: String
-    description: 'Username'
-    cli_alias: user
-  - name: PasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password alias'
-    cli_alias: password-alias
-  - name: MaximumFrameSize
-    type: Int64
-    minimum: 512
-    maximum: 104857600
-    default: 104857600
-    description: 'Max frame size'
-    cli_alias: maximum-frame-size
-  - name: AutoRetry
-    type: Bool
-    default: true
-    description: 'Automatic retry'
-    cli_alias: auto-retry
-  - name: RetryInterval
-    type: Int64
-    minimum: 1
-    default: 10
-    maximum: 86400
-    description: 'Retry Interval'
-    cli_alias: retry-interval
-  - name: RetryAttempts
-    type: Int64
-    default: 6
-    description: 'Retry attempts'
-    cli_alias: retry-attempts
-  - name: LongRetryInterval
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    default: 600
-    description: 'Long retry interval'
-    cli_alias: long-retry-interval
-  - name: ReportingInterval
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    default: 10
-    description: 'Reporting interval'
-    cli_alias: reporting-interval
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAMQPBroker"'
+  test_expect_ds: '"AccTest_AMQPBroker"'
+  example: AMQPBrokerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: HostName
+  type: String
+  required: true
+  description: Host
+  example: host.name
+  cli_alias: hostname
+- name: Port
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 5672
+  description: Port
+  cli_alias: port
+- name: XMLManager
+  type: String
+  reference_to: XMLManager
+  required: true
+  default: default
+  test_value: '"default"'
+  description: Specify the XML manager to control access to the remote AMQP server.
+    The XML manager obtains and manages documents.
+  cli_alias: xml-manager
+- name: ContainerID
+  type: String
+  description: AMQP container ID
+  cli_alias: container-id
+- name: Authorization
+  type: String
+  enum:
+  - none
+  - anonymous
+  - plain
+  required: true
+  default: none
+  description: Specify the SASL layer that the AMQP broker uses to authenticate with
+    the AMQP server. The default setting in no authentication.
+  cli_alias: authorization
+- name: UserName
+  type: String
+  description: Username
+  cli_alias: user
+- name: PasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: Password alias
+  cli_alias: password-alias
+- name: MaximumFrameSize
+  type: Int64
+  minimum: 512
+  maximum: 104857600
+  default: 104857600
+  description: Specify the maximum frame size in bytes to allow. Frames Frames that
+    are larger are rejected. When rejected, the connection is closed. Enter a value
+    in the range 512 - 104857600. The default value is 104857600.
+  cli_alias: maximum-frame-size
+- name: AutoRetry
+  type: Bool
+  default: true
+  description: Specify whether to enable the automatic retry procedure after an AMQP
+    connection failure. By default, the automatic retry behavior is enabled. This
+    setting does not affect attempts over an established connection.
+  cli_alias: auto-retry
+- name: RetryInterval
+  type: Int64
+  minimum: 1
+  default: 10
+  maximum: 86400
+  description: Specify the interval in seconds to wait before attempting to reestablish
+    a failed connection. After the number of attempts is reached, attempts to reestablish
+    a failed connection use the interval that is defined by the long retry interval.
+    Enter a value in the range 1 - 65535. The default value is 10. <p>This setting
+    does not affect attempts over an established connection.</p>
+  cli_alias: retry-interval
+- name: RetryAttempts
+  type: Int64
+  default: 6
+  description: Specify the number of attempts for a failed connection to the remote
+    AMQP server. After the number of attempts is reached, the long retry interval
+    is used. Enter a value in the range 0 - 65535. The default value is 6. The special
+    value of 0 disables the long interval, where the retry interval is used forever.
+  cli_alias: retry-attempts
+- name: LongRetryInterval
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  default: 600
+  description: Specify the interval in seconds to use after the number of attempts
+    is reached to attempt to reestablish a failed connection. Enter a value in the
+    range 1 - 65535. The default value is 600. <p>This setting does not affect attempts
+    over an established connection.</p>
+  cli_alias: long-retry-interval
+- name: ReportingInterval
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  default: 10
+  description: Specify the interval in seconds between the writing of identical log
+    message. Enter a value in the range 1 - 65535. The default value is 10.
+  cli_alias: reporting-interval
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: ssl-client

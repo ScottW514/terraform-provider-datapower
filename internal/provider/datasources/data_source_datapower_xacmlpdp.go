@@ -57,7 +57,7 @@ func (d *XACMLPDPDataSource) Metadata(_ context.Context, req datasource.Metadata
 
 func (d *XACMLPDPDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "XACML Policy Decision Point",
+		MarkdownDescription: "The XACML policies can be evaluated on a DataPower device, This on-box XACML Policy Decision Point (PDP) allows customers to define the necessary information so that it can evaluate the corresponding XACML policies against a XACML request for an XACML Policy Enforcement Point (PEP). The DataPower PEP is implemented with AAA action.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,29 +81,29 @@ func (d *XACMLPDPDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							Computed:            true,
 						},
 						"equal_policies": schema.BoolAttribute{
-							MarkdownDescription: "Evaluate Individual Policies Equally",
+							MarkdownDescription: "In case of a top level policy-set is undefined, all policies are evaluated equally, PDP will use the PolicyCombiningAlg for the final decision.",
 							Computed:            true,
 						},
 						"general_policy": schema.StringAttribute{
-							MarkdownDescription: "General Policy File",
+							MarkdownDescription: "The URL of top level XACML policy/policy-set file, if there is one. This file may reside on the local device (typically as local:///file) or on a remote server. Attempts to retrieve this file from remote servers may be governed by the User Agent in use by the XML Manager of the service. This may be useful for TLS connections, for example.",
 							Computed:            true,
 						},
 						"combining_alg": schema.StringAttribute{
-							MarkdownDescription: "Dependent Policies Combining",
+							MarkdownDescription: "Select the policy-combining algorithm when not using a top-level comprehensive XACML policy file. The default is First Applicable.",
 							Computed:            true,
 						},
 						"dependent_policy": schema.ListAttribute{
-							MarkdownDescription: "Dependent Policy Files",
+							MarkdownDescription: "Some of the XACML Policies/Policy-Sets are indirectly needed when the PDP evaluates a request. They are called Dependent Policy Files. Specify their URLs with this setting.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"directory": schema.ListAttribute{
-							MarkdownDescription: "Other Policy Files from Directory",
+							MarkdownDescription: "List directories that contain dependent files. In these directories, all files with the xml or xacml extension are available to the XACML PDP. Use this option when there are too many policy files to identify independently.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"cache_ttl": schema.Int64Attribute{
-							MarkdownDescription: "XACML Policies Cache Lifetime",
+							MarkdownDescription: "This sets the explicit time to live (TTL) for cached XACML policies, either raw or compiled. The default value 0 means the cache never expire unless PDP explicitly refreshes the policies. The maximum TTL is 31 days (2,678,400 seconds).",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

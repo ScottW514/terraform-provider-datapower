@@ -3,13 +3,13 @@
 page_title: "datapower_assemblyactionwebsocketupgrade Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WebSocket upgrade assembly action
+  The WebSocket upgrade assembly action processes API requests and responses through a WebSocket connection.
   CLI Alias: assembly-websocket-upgrade
 ---
 
 # datapower_assemblyactionwebsocketupgrade (Resource)
 
-WebSocket upgrade assembly action
+The WebSocket upgrade assembly action processes API requests and responses through a WebSocket connection.
   - CLI Alias: `assembly-websocket-upgrade`
 
 ## Example Usage
@@ -29,12 +29,12 @@ resource "datapower_assemblyactionwebsocketupgrade" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `url` (String) URL
+- `url` (String) Specify the URL to invoke. You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short <tt>$( <i>property_name</i> )</tt> format when the assembly action does not have a property with the same name.
   - CLI Alias: `url`
 
 ### Optional
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
   - CLI Alias: `debug`
   - Default value: `false`
 - `api_request_processing_assembly` (String) API request processing assembly
@@ -43,29 +43,29 @@ resource "datapower_assemblyactionwebsocketupgrade" "test" {
 - `api_response_processing_assembly` (String) API response processing assembly
   - CLI Alias: `response-processing-assembly`
   - Reference to: `datapower_assembly:id`
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
   - CLI Alias: `correlation-path`
-- `decode_request_params` (Boolean) Decode request parameters
+- `decode_request_params` (Boolean) Specify whether to decode request parameters in the target URL. When enabled, request parameters are decoded. The default behavior is to not decode request parameters.
   - CLI Alias: `decode-request-params`
   - Default value: `false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `encode_plus_char` (Boolean) Encode + characters in query
+- `encode_plus_char` (Boolean) Specify whether to encode + characters in query strings. When enabled, + characters are encoded to <tt>%2F</tt> . The default behavior is to not encode + characters.
   - CLI Alias: `encode-plus-char`
   - Default value: `false`
-- `follow_redirects` (Boolean) Follow redirects
+- `follow_redirects` (Boolean) Specify whether to follow the redirects. When enabled, attempts to resolve any redirect transparently.
   - CLI Alias: `follow-redirects`
   - Default value: `false`
-- `header_control_list` (String) Header control list
+- `header_control_list` (String) Specify the control list that manages whether to accept or reject headers. The default behavior is to accept all headers.
   - CLI Alias: `header-control-list`
   - Reference to: `datapower_controllist:id`
   - Default value: `default-accept-all`
-- `inject_proxy_headers` (Boolean) Inject proxy headers
+- `inject_proxy_headers` (Boolean) Specify whether to inject proxy-related headers when not found in the request. The proxy-related headers are <tt>X-Forwarded-For</tt> , <tt>X-Forwarded-Host</tt> , and <tt>X-Forwarded-Port</tt> .
   - CLI Alias: `inject-proxy-headers`
   - Default value: `false`
 - `inject_user_agent_header` (Boolean) Inject User-Agent header
   - CLI Alias: `inject-user-agent`
   - Default value: `true`
-- `parameter_control_list` (String) Parameter control list
+- `parameter_control_list` (String) Specify the control list that manages whether to accept or reject URL parameters. The default behavior is to reject all URL parameters.
   - CLI Alias: `parameter-control-list`
   - Reference to: `datapower_controllist:id`
   - Default value: `default-reject-all`
@@ -74,7 +74,7 @@ resource "datapower_assemblyactionwebsocketupgrade" "test" {
   - Reference to: `datapower_passwordalias:id`
 - `ssl_client` (String) TLS client profile
   - CLI Alias: `ssl-client`
-- `timeout` (Number) Timeout
+- `timeout` (Number) Specify the duration in seconds to wait for a reply from the target. The default value is 60.
   - CLI Alias: `timeout`
   - Default value: `60`
 - `title` (String) Title

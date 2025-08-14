@@ -3,13 +3,13 @@
 page_title: "datapower_wsstylepolicy Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WS-Proxy Processing Policy
+  Create, Edit or Delete a Processing Policy. A policy consists of one or more Processing Rules. Rules execute depending upon the direction of the message and on whether or not a corresponding matching rule selects the document for processing. A service may have only one policy active at a time. Click Services in the left-hand navigation menu and then click the appropriate policy link to use the graphical interface to create and edit policies.
   CLI Alias: wsm-stylepolicy
 ---
 
 # datapower_wsstylepolicy (Resource)
 
-WS-Proxy Processing Policy
+Create, Edit or Delete a Processing Policy. A policy consists of one or more Processing Rules. Rules execute depending upon the direction of the message and on whether or not a corresponding matching rule selects the document for processing. A service may have only one policy active at a time. Click Services in the left-hand navigation menu and then click the appropriate policy link to use the graphical interface to create and edit policies.
   - CLI Alias: `wsm-stylepolicy`
 
 ## Example Usage
@@ -31,16 +31,16 @@ resource "datapower_wsstylepolicy" "test" {
 
 ### Optional
 
-- `def_stylesheet_for_soap` (String) Default Stylesheet for SOAP
+- `def_stylesheet_for_soap` (String) Identify the default stylesheet used for SOAP filtering. The default rejects all SOAP documents.
   - CLI Alias: `filter`
   - Default value: `store:///filter-reject-all.xsl`
-- `def_stylesheet_for_xsl` (String) Default Stylesheet for XSL Transforms
+- `def_stylesheet_for_xsl` (String) Identify the default stylesheet used for XSL transformation. The default mirrors all documents.
   - CLI Alias: `xsldefault`
   - Default value: `store:///identity.xsl`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `policy_maps` (Attributes List) Policy Maps
+- `policy_maps` (Attributes List) A list of Policy Rules and corresponding Matching Rules that this policy will execute. If a Match is found, the corresponding Rule runs. The policy executes the first Rule with a successful Match. The order in this list is therefore important.
   - CLI Alias: `match` (see [below for nested schema](#nestedatt--policy_maps))
-- `user_summary` (String) Comments
+- `user_summary` (String) Enter a comment. This appears on the Policy catalog page.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

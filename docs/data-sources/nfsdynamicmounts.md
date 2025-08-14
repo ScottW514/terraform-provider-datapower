@@ -3,12 +3,12 @@
 page_title: "datapower_nfsdynamicmounts Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  NFS dynamic mounts
+  Configure parameters of dynamic NFS mounts for dpnfs URL calls. These mounts support URL access in the form dpnfs://&lt;host>/&lt;path>/&lt;file> . The system automatically mounts any dynamic mounts. Dynamic mounts remain mounted until the inactivity timer elapses.
 ---
 
 # datapower_nfsdynamicmounts (Data Source)
 
-NFS dynamic mounts
+Configure parameters of dynamic NFS mounts for dpnfs URL calls. These mounts support URL access in the form <tt>dpnfs://&lt;host>/&lt;path>/&lt;file></tt> . The system automatically mounts any dynamic mounts. Dynamic mounts remain mounted until the inactivity timer elapses.
 
 ## Example Usage
 
@@ -31,18 +31,18 @@ data "datapower_nfsdynamicmounts" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
-- `idle_unmount_seconds` (Number) Inactivity timeout
-- `mount_timeout_seconds` (Number) Mount timeout
-- `mount_type` (String) Mount type
-- `read_only` (Boolean) Read-Only
-- `read_size` (Number) Read size
-- `retransmissions` (Number) Max retransmissions
-- `timeout` (Number) Retransmission timeout
-- `transport` (String) Transport protocol
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `idle_unmount_seconds` (Number) Specify the inactivity duration in seconds to wait before the mount is unmounted. The default value is 900. The value of 0 disables the timer.
+- `mount_timeout_seconds` (Number) Specify the duration in seconds to attempt to mount a dynamic mount. When the timer elapses, related file open operations fail.
+- `mount_type` (String) Specify the type of NFS mount. The default mount type is a hard mount.
+- `read_only` (Boolean) Specify whether the mount is read-only. By default, the mount is not read-only.
+- `read_size` (Number) Specify the size in bytes for NFS read operations. Enter a value in the range 1024 - 32768. The default value is 4096.
+- `retransmissions` (Number) Specify the number of minor RPC timeouts and retransmissions until a major timeout. Enter a value in the range 1 - 60. The default value is 3.
+- `timeout` (Number) Specify the time in tenths of seconds until the first retransmission on RPC times out. Enter a value in the range 1 - 600. The default value is 7.
+- `transport` (String) Specify the transport protocol. The default transport protocol is TCP.
 - `user_summary` (String) Comments
-- `version` (Number) NFS version
-- `write_size` (Number) Write size
+- `version` (Number) Specify the preferred NFS protocol version. Enter a value in the range 2 - 4. The default value is 3. <ul><li>If version 3 and the server only implements version 2, the client falls back to version 2.</li><li>If version 4, the remote export paths are different and prevents fallback.</li></ul>
+- `write_size` (Number) Specify the size in bytes for NFS write operations. Enter a value in the range 1024 - 32768. The default value is 4096.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

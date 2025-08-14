@@ -57,7 +57,7 @@ func (d *OAuthProviderSettingsDataSource) Metadata(_ context.Context, req dataso
 
 func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "OAuth provider settings",
+		MarkdownDescription: "An OAuth provider settings configuration defines how a client application is authorized to access resources on behalf of the resource owner.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"enable_debug_mode": schema.BoolAttribute{
-							MarkdownDescription: "Enable debug headers",
+							MarkdownDescription: "Specify whether to enable debug mode to add security error details in response headers. In debug mode when you use a validation endpoint, security error details are sent in the <tt>x-apic-debug-oauth-error</tt> and <tt>x-apic-debug-oauth-error-desc</tt> response headers.",
 							Computed:            true,
 						},
 						"provider_type": schema.StringAttribute{
@@ -89,33 +89,33 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"scopes_allowed": schema.StringAttribute{
-							MarkdownDescription: "Allowed scopes",
+							MarkdownDescription: "Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. Scopes ensure that the granted access token is valid to access only specific protected resources.",
 							Computed:            true,
 						},
 						"default_scopes": schema.StringAttribute{
-							MarkdownDescription: "Default scopes",
+							MarkdownDescription: "Specify the default scopes to apply when the request does not contain a scope. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The default scopes must be a subset of the allowed scopes in the API security OAuth requirement. Without defined scopes and the request does not contain a scope, an invalid scope error is returned.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>",
 							Computed:            true,
 						},
-						"supported_grant_types":  models.GetDmOAuthProviderGrantTypeDataSourceSchema("Supported grant types", "supported-grant-types", ""),
+						"supported_grant_types":  models.GetDmOAuthProviderGrantTypeDataSourceSchema("Specify the supported grant types. Each grant type defines a method to grant authorization to client applications.", "supported-grant-types", ""),
 						"supported_client_types": models.GetDmAllowedClientTypeDataSourceSchema("Supported client types", "supported-client-types", ""),
 						"apic_provider_base_path": schema.StringAttribute{
-							MarkdownDescription: "Provider base path",
+							MarkdownDescription: "Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .",
 							Computed:            true,
 						},
 						"apic_authorize_endpoint": schema.StringAttribute{
-							MarkdownDescription: "Authorization endpoint",
+							MarkdownDescription: "Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .",
 							Computed:            true,
 						},
 						"apic_token_endpoint": schema.StringAttribute{
-							MarkdownDescription: "Token endpoint",
+							MarkdownDescription: "Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .",
 							Computed:            true,
 						},
 						"apic_enable_introspection": schema.BoolAttribute{
-							MarkdownDescription: "Enable token introspection",
+							MarkdownDescription: "Specify whether to enable the introspection of access tokens. When enabled, authorized protected resources can introspect the access token to determine the metadata for making appropriate authorization decisions. By default, token introspection is disabled.",
 							Computed:            true,
 						},
 						"apic_introspect_endpoint": schema.StringAttribute{
-							MarkdownDescription: "Introspection endpoint",
+							MarkdownDescription: "Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .",
 							Computed:            true,
 						},
 						"apic_token_secret": schema.StringAttribute{
@@ -127,35 +127,35 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"apic_access_token_ttl": schema.Int64Attribute{
-							MarkdownDescription: "Access token TTL",
+							MarkdownDescription: "Specify the time in seconds that an access token remains valid. The default value is 3600.",
 							Computed:            true,
 						},
 						"apic_auth_code_ttl": schema.Int64Attribute{
-							MarkdownDescription: "Authorization code TTL",
+							MarkdownDescription: "Specify the time in seconds that an authorization code remains valid. The default value is 300.",
 							Computed:            true,
 						},
 						"apic_enable_refresh_token": schema.BoolAttribute{
-							MarkdownDescription: "Enable refresh tokens",
+							MarkdownDescription: "Specify whether to enable issuing refresh tokens. Refresh tokens are issued to the client. Refresh tokens are used to obtain a new access token when the current access token becomes invalid, expires, or are used to obtain additional access tokens with identical or narrower scope. By default, this setting is disabled.",
 							Computed:            true,
 						},
 						"apic_one_time_use_refreshtoken": schema.BoolAttribute{
-							MarkdownDescription: "One-time use refresh token",
+							MarkdownDescription: "Specify whether a refresh tokens is one-time use. <ul><li>When enabled, the refresh token is one-time use. This setting is the default value.</li><li>When disabled, the refresh token can be reused until it expires or is revoked.</li></ul>",
 							Computed:            true,
 						},
 						"apic_refresh_token_limit": schema.Int64Attribute{
-							MarkdownDescription: "APIC refresh token count",
+							MarkdownDescription: "Specify the number of refresh tokens to allow to be generated. The default value is 10.",
 							Computed:            true,
 						},
 						"apic_refresh_token_ttl": schema.Int64Attribute{
-							MarkdownDescription: "Refresh token TTL",
+							MarkdownDescription: "Specify the time in seconds that a refresh token remains valid. The default value is 5400.",
 							Computed:            true,
 						},
 						"apic_maximum_consent_ttl": schema.Int64Attribute{
-							MarkdownDescription: "Consent TTL",
+							MarkdownDescription: "Specify the time in seconds that a consent remains valid. The default value is 0, which disables maximum consent.",
 							Computed:            true,
 						},
 						"adv_scope_validation_enabled": schema.BoolAttribute{
-							MarkdownDescription: "Enable advanced scope validation",
+							MarkdownDescription: "Specify whether to enable advanced scope validation that you can use to provide additional scope checking.",
 							Computed:            true,
 						},
 						"advanced_scope_url_override": schema.BoolAttribute{
@@ -163,7 +163,7 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"advanced_scope_url": schema.StringAttribute{
-							MarkdownDescription: "Advanced scope URL",
+							MarkdownDescription: "Specify the URL to send scope information for validation. This external endpoint is where the specified scope is verified. You must define this property for advanced scope validation.",
 							Computed:            true,
 						},
 						"adv_scope_tls_profile": schema.StringAttribute{
@@ -184,32 +184,32 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"adv_scope_basic_auth_header_name": schema.StringAttribute{
-							MarkdownDescription: "Basic authentication header name",
+							MarkdownDescription: "Specify the header name to use for sending encoded or non-encoded authentication string in the header. For example, <tt>x-basic-authorization-header</tt> .",
 							Computed:            true,
 						},
 						"advanced_scope_custom_headers": schema.StringAttribute{
-							MarkdownDescription: "Request headers",
+							MarkdownDescription: "Specify the custom headers to send with the advanced scope validation request. Use a regular expression match to include headers from the initial request.",
 							Computed:            true,
 						},
 						"advanced_scope_custom_contexts": schema.StringAttribute{
-							MarkdownDescription: "Response context variables",
+							MarkdownDescription: "Specify custom context variables to save headers from the advanced scope validation request. Use a regular expression to include headers from the advanced scope endpoint response.",
 							Computed:            true,
 						},
 						"apic_enable_oidc": schema.BoolAttribute{
-							MarkdownDescription: "Enable OIDC",
+							MarkdownDescription: "Specify whether to enable OIDC to verify the identity of the user. When enabled, the client application verifies the identity of the user based on the requirement of an OIDC provider before requesting access to client resources. By default, OIDC token generation is enabled. OIDC is only available for implicit and AZ code grant types.",
 							Computed:            true,
 						},
 						"apicoidc_hybrid_response_types": models.GetDmOIDCHybridResponseTypeDataSourceSchema("OIDC Hybrid Flow Response Types", "apic-oidc-hybrid-response-types", ""),
 						"apic_support_pkce": schema.BoolAttribute{
-							MarkdownDescription: "Support PKCE",
+							MarkdownDescription: "Specify whether the application should enforce PKCE if provided by the client. For more information, see RFC 7636.",
 							Computed:            true,
 						},
 						"apic_require_pkce": schema.BoolAttribute{
-							MarkdownDescription: "Require PKCE",
+							MarkdownDescription: "Specify whether the application must enforce PKCE. For more information, see RFC 7636.",
 							Computed:            true,
 						},
 						"apic_support_pkce_plain": schema.BoolAttribute{
-							MarkdownDescription: "Support PKCE 'plain' challenge method",
+							MarkdownDescription: "Specify whether to support the PKCE <tt>plain</tt> code challenge transform method. For more information, see RFC 7636.",
 							Computed:            true,
 						},
 						"apic_token_type_to_generate": schema.StringAttribute{
@@ -218,7 +218,7 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 						},
 						"metadata_from": models.GetDmMetadataFromTypeDataSourceSchema("Obtain metadata from", "metadata-from", ""),
 						"metadata_url": schema.StringAttribute{
-							MarkdownDescription: "External metadata URL",
+							MarkdownDescription: "Specify the URL to a remote server where the custom metadata is stored. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.",
 							Computed:            true,
 						},
 						"metadata_ssl_profile": schema.StringAttribute{
@@ -226,15 +226,15 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"metadata_header_for_access_token": schema.StringAttribute{
-							MarkdownDescription: "Response header for access token",
+							MarkdownDescription: "Specify the response header to place in the access token. These headers are in the response from the authentication or metadata endpoint.",
 							Computed:            true,
 						},
 						"metadata_header_for_payload": schema.StringAttribute{
-							MarkdownDescription: "Response header for payload",
+							MarkdownDescription: "Specify the response header to place in the response payload. These headers are in the response from the authentication or metadata endpoint.",
 							Computed:            true,
 						},
 						"external_revocation_url": schema.StringAttribute{
-							MarkdownDescription: "External management URL",
+							MarkdownDescription: "Specify an external endpoint through which the token management is accomplished. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.",
 							Computed:            true,
 						},
 						"external_revocation_ssl_profile": schema.StringAttribute{
@@ -243,7 +243,7 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 						},
 						"external_revocation_url_security": models.GetDmSecurityTypeDataSourceSchema("External management security", "external-revocation-url-security", ""),
 						"external_revocation_basic_auth_user_name": schema.StringAttribute{
-							MarkdownDescription: "Basic authentication username",
+							MarkdownDescription: "",
 							Computed:            true,
 						},
 						"external_revocation_basic_auth_password": schema.StringAttribute{
@@ -251,11 +251,11 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"external_revocation_basic_auth_header_name": schema.StringAttribute{
-							MarkdownDescription: "Basic authentication header name",
+							MarkdownDescription: "Specify the header name to use for sending encoded or non-encoded authentication string in the header. For example, <tt>x-external-basic-authorization-header</tt> .",
 							Computed:            true,
 						},
 						"external_revocation_custom_header_format": schema.StringAttribute{
-							MarkdownDescription: "Custom header pattern",
+							MarkdownDescription: "Specify the pattern of header names to include from the original message. For example, <tt>x-external-management-*</tt> .",
 							Computed:            true,
 						},
 						"external_revocation_cache_type": schema.StringAttribute{
@@ -263,15 +263,15 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"external_revocation_cache_time_to_live": schema.Int64Attribute{
-							MarkdownDescription: "Time to live",
+							MarkdownDescription: "Specify the validity period in seconds for external management service responses in the cache. The default value is 900.",
 							Computed:            true,
 						},
 						"external_revocation_fail_on_error": schema.BoolAttribute{
-							MarkdownDescription: "Fail on error",
+							MarkdownDescription: "Specify whether to stop processing if connection to external management service fails. If failed, stops token-generation or use, and returns an error.",
 							Computed:            true,
 						},
 						"enable_token_management": schema.BoolAttribute{
-							MarkdownDescription: "Enable token management",
+							MarkdownDescription: "Specify if security token details should be managed and stored. Enabling token management for security token details provides the ability to create one-time use tokens, prevent AZ code reuse, and support allow-listing through the use of the token manager.",
 							Computed:            true,
 						},
 						"token_manager_type": schema.StringAttribute{
@@ -283,7 +283,7 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"enable_application_revocation": schema.BoolAttribute{
-							MarkdownDescription: "Application revocation",
+							MarkdownDescription: "Specify whether to enable revocation by application. Enabling application revocation allows the application to revoke consent before the token expires.",
 							Computed:            true,
 						},
 						"application_revocation_endpoint": schema.StringAttribute{
@@ -291,7 +291,7 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"enable_owner_revocation": schema.BoolAttribute{
-							MarkdownDescription: "Resource owner revocation",
+							MarkdownDescription: "Specify whether to enable revocation by resource owner. Enabling resource owner revocation allows the resource owner to revoke consent before the token expires.",
 							Computed:            true,
 						},
 						"owner_revocation_endpoint": schema.StringAttribute{
@@ -311,7 +311,7 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"third_party_introspect_url": schema.StringAttribute{
-							MarkdownDescription: "Introspection endpoint",
+							MarkdownDescription: "Specify the endpoint for token-introspection operation. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.",
 							Computed:            true,
 						},
 						"third_party_introspect_cache_type": schema.StringAttribute{
@@ -319,11 +319,11 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"third_party_introspect_cache_time_to_live": schema.Int64Attribute{
-							MarkdownDescription: "Time to live",
+							MarkdownDescription: "Specify the validity period in seconds for third-party provider responses in the cache. The default value is 900.",
 							Computed:            true,
 						},
 						"third_party_authorization_header_pass_thru": schema.BoolAttribute{
-							MarkdownDescription: "Retain Authorization header",
+							MarkdownDescription: "Specify whether to retain or remove the <tt>Authorization</tt> header for a bearer token. The default behavior is to remove this header.",
 							Computed:            true,
 						},
 						"third_party_introspect_url_security": models.GetDmSecurityTypeDataSourceSchema("Introspection endpoint security", "third-party-introspect-url-security", ""),
@@ -336,11 +336,11 @@ func (d *OAuthProviderSettingsDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"third_party_basic_auth_header_name": schema.StringAttribute{
-							MarkdownDescription: "Basic authentication header name",
+							MarkdownDescription: "Specify the header name to send the encoded or non-encoded authentication string. For example, <tt>x-introspect-basic-authorization-header</tt> .",
 							Computed:            true,
 						},
 						"third_party_custom_header_name_format": schema.StringAttribute{
-							MarkdownDescription: "Custom header pattern",
+							MarkdownDescription: "Specify the pattern of header name to send additional information. For example, <tt>x-introspect-*</tt> .",
 							Computed:            true,
 						},
 						"third_party_introspect_ssl_profile": schema.StringAttribute{

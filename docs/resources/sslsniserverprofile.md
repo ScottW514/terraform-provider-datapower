@@ -3,13 +3,13 @@
 page_title: "datapower_sslsniserverprofile Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  TLS SNI server profile
+  The TLS Server Name Indication (SNI) server profile secures connections with clients.
   CLI Alias: ssl-sni-server
 ---
 
 # datapower_sslsniserverprofile (Resource)
 
-TLS SNI server profile
+The TLS Server Name Indication (SNI) server profile secures connections with clients.
   - CLI Alias: `ssl-sni-server`
 
 ## Example Usage
@@ -36,19 +36,19 @@ resource "datapower_sslsniserverprofile" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `max_ssl_duration` (Number) Maximum TLS session duration
+- `max_ssl_duration` (Number) Specify the maximum duration in seconds for an established TLS session. After the duration is reached, the TLS connection is closed. Enter a value in the range 1 - 691200. The default value is 3600.
   - CLI Alias: `max-duration`
   - Range: `1`-`691200`
   - Default value: `3600`
-- `number_of_renegotiation_allowed` (Number) Maximum client initiated renegotiations
+- `number_of_renegotiation_allowed` (Number) Specify the maximum number of client initiated renegotiations. Enter a value in the range 0 - 512. The default value is 0, which indicates client initiated renegotiation is not allowed.
   - CLI Alias: `max-renegotiation-allowed`
   - Range: `0`-`512`
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--protocols))
-- `sni_server_default` (String) Default server profile
+- `sni_server_default` (String) Specify the TLS server profile to process requests when the client does not send a <tt>ClientHello</tt> SNI extension. <p>The request is rejected when either of the following conditions apply. <ul><li>The client sends a <tt>ClientHello</tt> SNI extension that does not match a hostname in the map.</li><li>The client does not send a <tt>ClientHello</tt> SNI extension</li></ul></p>
   - CLI Alias: `sni-server-default`
   - Reference to: `datapower_sslserverprofile:id`
-- `ssl_options` (Attributes) Advanced TLS options
+- `ssl_options` (Attributes) Specify the options to apply to the TLS connection that override settings in the TLS server profiles. These options have negative impact on the performance.
   - CLI Alias: `ssl-options` (see [below for nested schema](#nestedatt--ssl_options))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

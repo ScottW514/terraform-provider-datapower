@@ -54,7 +54,7 @@ func (r *MCFCustomRuleResource) Metadata(ctx context.Context, req resource.Metad
 
 func (r *MCFCustomRuleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Custom Rule Message Content Filter", "mcf-customrule", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A custom message content filter calls a processing rule to retrieve a specified value. The filter value is matched to the contents of variable 'var://context/policy/mcf/RULE-NAME'", "mcf-customrule", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *MCFCustomRuleResource) Schema(ctx context.Context, req resource.SchemaR
 				Required:            true,
 			},
 			"custom_rule_value": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Value", "value", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the value to match against the value that is retrieved from the named processing rule. Enter either a string that must match the outcome of the rule or enter an asterisk (*) to match any value.</p><p>When the value is a string, an identical literal string comparison result is a match. When the value is an asterisk, any value other than NULL or an empty string results in a match.</p>", "value", "").String,
 				Required:            true,
 			},
 			"user_summary": schema.StringAttribute{

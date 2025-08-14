@@ -54,16 +54,16 @@ func (r *LunaHASettingsResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *LunaHASettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SafeNet Luna HSM HA settings (`default` domain only)", "luna-ha-settings", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Defines the high availability (HA) settings for the SafeNet Luna Network HSM HA group.", "luna-ha-settings", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Recovery mode", "recovery-mode", "").AddStringEnum("activeBasic", "activeEnhanced").AddDefaultValue("activeBasic").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HA recovery mode. The default value is activeBasic.", "recovery-mode", "").AddStringEnum("activeBasic", "activeEnhanced").AddDefaultValue("activeBasic").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -72,7 +72,7 @@ func (r *LunaHASettingsResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("activeBasic"),
 			},
 			"recovery_count": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Recovery count", "recovery-count", "").AddIntegerRange(-1, 500).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of recovery attempts for failed members in the HA group. Enter a value in the range 0 - 500. The default value is 0, which disables automatic recovery.", "recovery-count", "").AddIntegerRange(-1, 500).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 
@@ -80,7 +80,7 @@ func (r *LunaHASettingsResource) Schema(ctx context.Context, req resource.Schema
 				},
 			},
 			"interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Recovery interval", "recovery-interval", "").AddIntegerRange(60, 1200).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between recovery attempts for failed members in the HA group. Enter a value in the range 60 - 1200. The default value is 60.", "recovery-interval", "").AddIntegerRange(60, 1200).AddDefaultValue("60").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

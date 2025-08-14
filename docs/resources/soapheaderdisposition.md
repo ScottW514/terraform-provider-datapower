@@ -3,13 +3,13 @@
 page_title: "datapower_soapheaderdisposition Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SOAP Header Disposition Table
+  The list of instructions provided by customers to control how the SOAP headers and/or children elements are handled. This object is used by store:///soap-refine.xsl transform stylesheet.
   CLI Alias: soap-disposition
 ---
 
 # datapower_soapheaderdisposition (Resource)
 
-SOAP Header Disposition Table
+The list of instructions provided by customers to control how the SOAP headers and/or children elements are handled. This object is used by store:///soap-refine.xsl transform stylesheet.
   - CLI Alias: `soap-disposition`
 
 ## Example Usage
@@ -33,7 +33,7 @@ resource "datapower_soapheaderdisposition" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `refine` (Attributes List) SOAP Header Refine Instruction
+- `refine` (Attributes List) Customer specifically asks this transformation to simply remove/keep/fault a SOAP header; or indicates whether a header was processed or not by the prior action, then this action will take the default behaviors.
   - CLI Alias: `refine` (see [below for nested schema](#nestedatt--refine))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

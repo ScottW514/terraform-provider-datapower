@@ -56,10 +56,10 @@ func (r *RBMSettingsResource) Metadata(ctx context.Context, req resource.Metadat
 
 func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("RBM settings (`default` domain only)", "rbm", "").AddActions("flush_cache").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>Manage role-based management (RBM) settings: RBM, password policy, and account policy</p><ul><li>RBM consists of the following capabilities: Authenticating users, evaluating the access profile, enforcing access to resources</li><li>The password policy sets the password requirements for local user accounts.</li><li>The account policy sets the lockout behavior and the timeout for CLI sessions.</li></ul>", "rbm", "").AddActions("flush_cache").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -77,13 +77,13 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				},
 				Default: stringdefault.StaticString("local"),
 			},
-			"sshau_method": models.GetDmRBMSSHAuthenticateTypeResourceSchema("SSH authentication method", "ssh-au-method", "", false),
+			"sshau_method": models.GetDmRBMSSHAuthenticateTypeResourceSchema("Specify the method to authenticate SSH users. <ul><li>When no method, the user is prompted for both username and password.</li><li>When password, the user is prompted for the password. For this method, the username must be part of the invocation. With the ssh command, the invocation is in the ssh username@host format.</li><li>When user certificate, the user is not prompted for input. The connection is successful when the invocation provides a signed SSH user certificate that is verified by the CA public key file in the <tt>cert:</tt> directory. With the ssh command, the invocation must include the -i file parameter.</li><li>When both certificate and password, processing attempts to first authenticate with the provided signed SSH user certificate. If unsuccessful, prompts for the password.</li><li>Supported RBM authentication methods with SSH authentication method are local and LDAP. <ul><li>Local authentication method extracts the certificate identity and attempts login with local User of that name.</li><li>LDAP authentication method constructs the DN through LDAP search or by applying the configured prefix and suffix. Since SSH authentication completes prior to the Authentication step no LDAP bind or authenticate will take place.</li></ul></li></ul>", "ssh-au-method", "", false),
 			"ca_pub_key_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CA user public key file", "ssh-ca-pubkey-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the certificate authority (CA) public key file in the <tt>cert:</tt> directory for SSH authentication with SSH user certificates. This public key file contains the public key for one or more certificate authorities.", "ssh-ca-pubkey-file", "").String,
 				Optional:            true,
 			},
 			"revoked_keys": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Revoked keys", "ssh-revoked-keys", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the OpenSSH public keys to revoke for SSH authentication. Each entry is the public key file in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory and must be in the OpenSSH public key format. These keys are signed by the CA user public key file.", "ssh-revoked-keys", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
@@ -132,7 +132,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"au_info_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML file URL", "au-info-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the XML file for authentication. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file to map credentials.", "au-info-url", "").String,
 				Optional:            true,
 			},
 			"aussl_valcred": schema.StringAttribute{
@@ -148,7 +148,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"auldap_search_for_dn": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Search LDAP for DN", "au-ldap-search", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to retrieve the user DN with an LDAP search. <ul><li>When enabled, the login name presented by the user is used with the LDAP search parameters for an LDAP search to retrieve the user DN.</li><li>When disabled, the login name presented by the user is used with the LDAP prefix and suffix to construct the user DN.</li></ul>", "au-ldap-search", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -166,23 +166,23 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"auldap_prefix": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP prefix", "ldap-prefix", "").AddDefaultValue("cn=").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the string to add before the username to form the DN. If this value is <tt>CN=</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP suffix is <tt>O=example.com</tt> .", "ldap-prefix", "").AddDefaultValue("cn=").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("cn="),
 			},
 			"au_force_dnldap_order": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Convert DN to LDAP format", "au-force-dn-ldap-order", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>", "au-force-dn-ldap-order", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"lda_psuffix": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP suffix", "ldap-suffix", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the string to add after the username to form the DN. If this value is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt> when the LDAP prefix is <tt>CN=</tt> .", "ldap-suffix", "").String,
 				Optional:            true,
 			},
 			"auldap_load_balance_group": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Load balancer group", "loadbalancer-group", "loadbalancergroup").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the load balancer group of LDAP servers. This setting overrides the settings for the server host and port.", "loadbalancer-group", "loadbalancergroup").String,
 				Optional:            true,
 			},
 			"au_cache_allow": schema.StringAttribute{
@@ -195,7 +195,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: stringdefault.StaticString("absolute"),
 			},
 			"au_cache_ttl": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authentication cache lifetime", "au-cache-ttl", "").AddIntegerRange(1, 86400).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the expiry for cached authentication decisions. Enter a value in the range 1 - 86400. The default value is 600.", "au-cache-ttl", "").AddIntegerRange(1, 86400).AddDefaultValue("600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -205,7 +205,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: int64default.StaticInt64(600),
 			},
 			"auldap_read_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP read timeout", "au-ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.", "au-ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -228,7 +228,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"mcldap_search_for_group": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Search LDAP for group name", "mc-ldap-search", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to search LDAP to retrieve all user groups that match the query. <ul><li>When enabled, the authenticated DN of the user and the LDAP search parameters are used as part of the LDAP search to retrieve all user groups that match the query. When a user belongs to multiple groups, the resultant access policy for this user is additive not most restrictive.</li><li>When disabled, the authenticated identity of the user (DN or user group of local user) is used directly as the input credential.</li></ul>", "mc-ldap-search", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -258,11 +258,11 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"mc_info_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML file URL", "mc-info-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the XML file to map credentials. The XML file can be on the DataPower Gateway or on a remote server. You can use the same XML file for authentication.", "mc-info-url", "").String,
 				Optional:            true,
 			},
 			"mcldap_read_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("LDAP read timeout", "mc-ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time to wait for a response from the LDAP server before the DataPower Gateway closes the LDAP connection. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.", "mc-ldap-readtimeout", "").AddIntegerRange(0, 86400).AddDefaultValue("60").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -279,7 +279,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				},
 			},
 			"fallback_login": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local accounts for fallback", "fallback-login", "").AddStringEnum("disabled", "local", "restricted").AddDefaultValue("disabled").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use local user accounts as fallback users if remote authentication fails. With fallback users, local user accounts can log on to the DataPower Gateway if authentication fails or during a network outage that affects primary authentication. The recommendation is to restrict fallback users to a subset of local user accounts. <p><b>Note: </b>When authentication uses a TLS certificate from a connection peer, you cannot enforce RBM on CLI sessions unless fallback users are supported.</p>", "fallback-login", "").AddStringEnum("disabled", "local", "restricted").AddDefaultValue("disabled").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -293,7 +293,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"apply_to_cli": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enforce RBM on CLI", "apply-cli", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enforce the RBM policy on CLI sessions. When authentication uses a TLS certificate from a connection peer, you cannot enforce RBM on CLI sessions unless fallback users are supported.", "apply-cli", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -305,7 +305,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default:             booldefault.StaticBool(false),
 			},
 			"min_password_length": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Minimum length", "pwd-minimum-length", "").AddIntegerRange(1, 128).AddDefaultValue("6").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum length of a valid password. Enter a value in the range 1 - 128. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 14.</li><li>When common criteria is not enabled, the default value is 6.</li></ul>", "pwd-minimum-length", "").AddIntegerRange(1, 128).AddDefaultValue("6").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -345,7 +345,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default:             booldefault.StaticBool(false),
 			},
 			"max_password_age": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max age", "pwd-max-age", "").AddIntegerRange(1, 65535).AddDefaultValue("30").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the expiry for passwords. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 90.</li><li>When common criteria is not enabled, the default value is 30.</li></ul>", "pwd-max-age", "").AddIntegerRange(1, 65535).AddDefaultValue("30").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -361,7 +361,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default:             booldefault.StaticBool(false),
 			},
 			"num_old_passwords": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Reuse history", "pwd-max-history", "").AddIntegerRange(1, 65535).AddDefaultValue("5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of recent passwords to track to prevent reuse. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 3.</li><li>When common criteria is not enabled, the default value is 5.</li></ul>", "pwd-max-history", "").AddIntegerRange(1, 65535).AddDefaultValue("5").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -371,7 +371,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: int64default.StaticInt64(5),
 			},
 			"cli_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CLI idle timeout", "cli-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time after which to invalidate idle CLI sessions. When invalidated, requires re-authentication. Enter a value in the range 0 - 65535. A value of 0 disables the timer. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 900.</li><li>When common criteria is not enabled, the default value is 0.</li></ul>", "cli-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -381,7 +381,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: int64default.StaticInt64(0),
 			},
 			"max_failed_login": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max failed logins", "max-login-failure", "").AddIntegerRange(0, 64).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of failed login attempts to allow before account lockout. Enter a value in the range of 0 - 64, where 0 disables account lockout. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 3.</li><li>When common criteria is not enabled, the default value is 0.</li></ul>", "max-login-failure", "").AddIntegerRange(0, 64).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -391,7 +391,7 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: int64default.StaticInt64(0),
 			},
 			"lockout_period": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Lockout duration", "lockout-duration", "").AddIntegerRange(0, 1000).AddDefaultValue("1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration to lock out local user accounts after the maximum number of failed login attempts is exceeded. Instead of locking out accounts for a specific duration, the account can be locked out until re-enabled by a privileged user. Enter a value in the range 0 - 1000, where 0 locks out accounts until reset. The default value depends on common criteria mode. <ul><li>When common criteria is enabled, the default value is 0.</li><li>When common criteria is not enabled, the default value is 1.</li></ul><p><b>Note:</b> The duration applies to all local accounts, including the <tt>admin</tt> user account. The only difference is that the <tt>admin</tt> user account cannot be locked out until reset. When the duration is 0, the <tt>admin</tt> user account is locked out for 120 minutes or until re-enabled by a privileged user.</p>", "lockout-duration", "").AddIntegerRange(0, 1000).AddDefaultValue("1").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -401,13 +401,13 @@ func (r *RBMSettingsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Default: int64default.StaticInt64(1),
 			},
 			"mc_force_dnldap_order": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Convert DN to LDAP format", "mc-force-dn-ldap-order", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to convert the extracted DN to LDAP format. This property is essential when the extracted DN from a TLS certificate is in X.500 format. This format arranges the RDNs of the DNs from left to right with forward slashes as separators; for example, <tt>C=US/O=My Organization/CN=Fred</tt> . <p>When you retrieve the group name with an LDAP search, the authenticated DN must be in LDAP format. This format arranges the RDNs of the DNs from right to left with commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>", "mc-force-dn-ldap-order", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"password_hash_algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password hash algorithm", "password-hash-algorithm", "").AddStringEnum("md5crypt", "sha256crypt").AddDefaultValue("md5crypt").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the algorithm to apply to passwords before they are stored. The hash algorithm affects firmware downgrade and cryptographic modes in the following ways. <ul><li>For firmware downgrade, sha256crypt is not supported in releases earlier than 6.0.1.0.</li><li>For cryptographic modes, like FIPS 140-2 Level 1, md5crypt is not supported in FIPS mode.</li></ul>", "password-hash-algorithm", "").AddStringEnum("md5crypt", "sha256crypt").AddDefaultValue("md5crypt").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

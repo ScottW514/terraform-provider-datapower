@@ -3,12 +3,12 @@
 page_title: "datapower_corsrule Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  CORS rule
+  A CORS rule defines allowed origins and other CORS properties.
 ---
 
 # datapower_corsrule (Data Source)
 
-CORS rule
+A CORS rule defines allowed origins and other CORS properties.
 
 ## Example Usage
 
@@ -38,10 +38,10 @@ Optional:
 
 Read-Only:
 
-- `allow_credentials` (Boolean) Allow credentials
-- `allow_origin` (List of String) Allowed origins
+- `allow_credentials` (Boolean) Specify whether the CORS request returns the <tt>Access-Control-Allow-Credentials</tt> response header. By default, this header is not returned in response to a CORS request. When enabled, the CORS request returns this header with a value of <tt>true</tt> .
+- `allow_origin` (List of String) Specify the accepted values for the <tt>Origin</tt> request header for cross-origin requests. This rule does not apply to a CORS request when the value for the <tt>Origin</tt> header does not match any value in the list.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `expose_headers` (Attributes) Expose headers
+- `expose_headers` (Attributes) Specify the values to append to the value of the <tt>Access-Control-Expose-Headers</tt> response header. When undefined, appends the gateway-predefined value.
   - CLI Alias: `expose-headers` (see [below for nested schema](#nestedatt--result--expose_headers))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments

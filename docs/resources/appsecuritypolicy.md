@@ -3,13 +3,13 @@
 page_title: "datapower_appsecuritypolicy Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Application Security Policy
+  An Application Security Policy establishes the rules to use to enforce security for a Web Application Firewall service. This policy employs request maps, response maps, and error maps that provide a detailed security configuration. Each of these maps, in turn, matches to a Web Request Profile, Web Request Profile, or Error Policy, as the case might be.
   CLI Alias: application-security-policy
 ---
 
 # datapower_appsecuritypolicy (Resource)
 
-Application Security Policy
+An Application Security Policy establishes the rules to use to enforce security for a Web Application Firewall service. This policy employs request maps, response maps, and error maps that provide a detailed security configuration. Each of these maps, in turn, matches to a Web Request Profile, Web Request Profile, or Error Policy, as the case might be.
   - CLI Alias: `application-security-policy`
 
 ## Example Usage
@@ -36,15 +36,15 @@ resource "datapower_appsecuritypolicy" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `request_maps` (Attributes List) Request Maps
+- `request_maps` (Attributes List) A list of Web Request Profile objects and their matching criteria. If the client request meets the matching criteria, its Web Request Profile runs.
   - CLI Alias: `request-match` (see [below for nested schema](#nestedatt--request_maps))
-- `response_maps` (Attributes List) Response Maps
+- `response_maps` (Attributes List) A list of Web Response Profile objects and their matching criteria. If the server response meets the matching criteria, its Web Response Profile runs.
   - CLI Alias: `response-match` (see [below for nested schema](#nestedatt--response_maps))
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `error_maps` (Attributes List) Error Maps
+- `error_maps` (Attributes List) A list of Error Policy objects (Processing Rules) and their matching criteria. If an error meets the matching criteria, its Error Policy runs.
   - CLI Alias: `error-match` (see [below for nested schema](#nestedatt--error_maps))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

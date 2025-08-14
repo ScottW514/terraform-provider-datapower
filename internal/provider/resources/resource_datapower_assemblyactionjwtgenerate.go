@@ -58,7 +58,7 @@ func (r *AssemblyActionJWTGenerateResource) Metadata(ctx context.Context, req re
 
 func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("JWT generate assembly action", "assembly-jwt-generate", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The JWT generate assembly action generates JWT claims and specifies the crypto material to generate a JWT during processing.", "assembly-jwt-generate", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,33 +83,33 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				},
 			},
 			"jwt": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("JWT output location", "jwt", "").AddDefaultValue("generated.jwt").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable to store the generated JWT. The default value is <tt>generated.jwt</tt> . When the variable is not set, the generated JWT is written to the Authorization Header as a Bearer token.", "jwt", "").AddDefaultValue("generated.jwt").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("generated.jwt"),
 			},
 			"jwtid_claims": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("JWT ID claims", "jti-claim", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to add a JWT ID (jti) claim to the JWT. When enabled, a UUID is generated and set as the value of the JWT ID claim.", "jti-claim", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"issuer_claim": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Issuer claim", "iss-claim", "").AddDefaultValue("iss.claim").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable from which to retrieve the issuer (iss) claim value. The default value is <tt>iss.claim</tt> . The maximum value length is 256 characters.", "iss-claim", "").AddDefaultValue("iss.claim").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("iss.claim"),
 			},
 			"subject_claim": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Subject claim", "sub-claim", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable from which to retrieve the subject (sub) claim value. The maximum value length is 256 characters.", "sub-claim", "").String,
 				Optional:            true,
 			},
 			"audience_claim": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Audience claim", "aud-claim", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable from which to retrieve the audience (aud) claim value. The maximum value length is 256 characters. This value can be a single string, a comma-separated string of values, or an array of one or more values when you set the variable through GatewayScript processing.", "aud-claim", "").String,
 				Optional:            true,
 			},
 			"validity_period": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validity period", "exp-claim", "").AddIntegerRange(1, 31622400).AddDefaultValue("3600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity period in seconds to calculate the expiration (exp) claim. This value is added to the current date and time to be the value for the \"exp\" claim. The JWT is considered valid until expiry. Enter a value in the range 1 - 31622400. The default value is 3600.", "exp-claim", "").AddIntegerRange(1, 31622400).AddDefaultValue("3600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -119,7 +119,7 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				Default: int64default.StaticInt64(3600),
 			},
 			"private_claim": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Private claim", "private-claims", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable from which to retrieve a valid set of JSON claims. These claims are added to any set of claims that are specified previously.", "private-claims", "").String,
 				Optional:            true,
 			},
 			"sign_jwk": schema.StringAttribute{
@@ -127,19 +127,19 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 			},
 			"crypto_algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Crypto algorithm for JWT signature", "jws-alg", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the crypto algorithm to use. Use one of the following values. <ul><li><tt>HS256</tt> - HMAC using SHA-256</li><li><tt>HS384</tt> - HMAC using SHA-384</li><li><tt>HS512</tt> - HMAC using SHA-512</li><li><tt>RS256</tt> - RSASSA-PKCS-v1_5 using SHA-256</li><li><tt>RS384</tt> - RSASSA-PKCS-v1_5 using SHA 384</li><li><tt>RS512</tt> - RSASSA-PKCS-v1_5 using SHA-512</li><li><tt>ES256</tt> - ECDSA using P-256 and SHA-256</li><li><tt>ES384</tt> - ECDSA using P-384 and SHA-384</li><li><tt>ES512</tt> - ECDSA using P-521 and SHA-512</li><li><tt>none</tt> - Do not sign the JWT, which is unsecured and provides no integrity protection but can be used for a nest JWT</li><li>An inline parameter to read at runtime</li></ul>", "jws-alg", "").String,
 				Optional:            true,
 			},
 			"sign_crypto": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Crypto object for JWT signature", "jws-crypto", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the crypto object (a shared secret key or certificate) to use to sign the JWT.", "jws-crypto", "").String,
 				Optional:            true,
 			},
 			"custom_kid_value_jws": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key ID value for JWS", "custom-kid-value-jws", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the <tt>kid</tt> claim of the JWT for JWS. The maximum length is 256 characters. This value can be a single string, a comma-separated string of values, or an array of values when you set the variable through GatewayScript processing.", "custom-kid-value-jws", "").String,
 				Optional:            true,
 			},
 			"encrypt_algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encrypt algorithm for JWT encryption", "jwe-enc", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the encryption algorithm to use. Use one of the following values. <ul><li><tt>A128CBC-HS256</tt> - AES_128_CBC_HMAC_SHA_256 authenticated encryption algorithm</li><li><tt>A192CBC-HS384</tt> - AES_192_CBC_HMAC_SHA_384 authenticated encryption algorithm</li><li><tt>A256CBC-HS512</tt> - AES_256_CBC_HMAC_SHA_512 authenticated encryption algorithm</li><li><tt>A128GCM</tt> - AES GCM using 128-bit key</li><li><tt>A192GCM</tt> - AES GCM using 192-bit key</li><li><tt>A256GCM</tt> - AES GCM using 256-bit key</li><li>An inline parameter to read at runtime</li></ul>", "jwe-enc", "").String,
 				Optional:            true,
 			},
 			"encrypt_jwk": schema.StringAttribute{
@@ -147,7 +147,7 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 			},
 			"key_encrypt_algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key encrypt algorithm for JWT encryption", "jwe-alg", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the key encryption algorithm to use. Use one of the following values. <ul><li><tt>RSA1_5</tt> - RSAES-PKCS1-V1_5</li><li><tt>RSA-OAEP</tt> - RSAES OAEP using default parameters</li><li><tt>RSA-OAEP-256</tt> - RSAES OAEP using SHA-256 and MGF1 with SHA-256</li><li><tt>A128KW</tt> - AES Key Wrap with default initial value using 128 bit key</li><li><tt>A192KW</tt> - AES Key Wrap with default initial value using 192 bit key</li><li><tt>A256KW</tt> - AES Key Wrap with default initial value using 256 bit key</li><li><tt>dir</tt> - Direct use of a shared symmetric key as the CEK</li><li>An inline parameter to read at runtime</li></ul>", "jwe-alg", "").String,
 				Optional:            true,
 			},
 			"encrypt_crypto": schema.StringAttribute{
@@ -155,7 +155,7 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 			},
 			"custom_kid_value_jwe": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key ID value for JWE", "custom-kid-value-jwe", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the <tt>kid</tt> claim of the JWT for JWE. The maximum length is 256 characters. This value can be a single string, a comma-separated string of values, or an array of values when you set the variable through GatewayScript processing.", "custom-kid-value-jwe", "").String,
 				Optional:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -167,11 +167,11 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 			},
 			"correlation_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Correlation path", "correlation-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.", "correlation-path", "").String,
 				Optional:            true,
 			},
 			"action_debug": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable debugging", "debug", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

@@ -3,13 +3,13 @@
 page_title: "datapower_compilesettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Compile Settings
+  Configure customized compile settings.
   CLI Alias: compile-settings
 ---
 
 # datapower_compilesettings (Resource)
 
-Compile Settings
+Configure customized compile settings.
   - CLI Alias: `compile-settings`
 
 ## Example Usage
@@ -31,69 +31,69 @@ resource "datapower_compilesettings" "test" {
 
 ### Optional
 
-- `allow_soap_enc_array` (Boolean) Specifically allow xsi:type='SOAP-ENC:Array' rule
+- `allow_soap_enc_array` (Boolean) Specifies whether to allow the schema to accept most uses of elements with xsi:type='SOAP-ENC:Array' consistent with SOAP 1.1 Section 5, even when these attributes violate the XML Schema specification. Normally the xsi:type attribute must name a type equal to or derived from the actual type of the element. For schemas compiled with this option, xsi:type is accepted specifically for the SOAP 1.1 Encoding 'Array' complex type if the element type is derived from SOAP-ENC:Array. The opposite is the normal allowable case. By default, elements with xsi:type='SOAP-ENC:Array' are not accepted.
   - CLI Alias: `allow-soap-enc-array`
   - Default value: `false`
-- `allow_xop_include` (Boolean) Accept MTOM/XOP optimized messages
+- `allow_xop_include` (Boolean) <p>Specifies whether the schema or WSDL document accepts messages where base64-encoded binary content was optimized according to the MTOM/XOP specifications. XOP binary-optimization replaces base64-encoded binary data with an xop:Include reference element that references the unencoded binary data located in an attachment. By default, MTOM/XOP optimized messages are disabled.</p><ul><li>When disabled, such optimized messages are rejected by validation of the optimized form. Rejection occurs because the schema specifies a simple type that accepts base64-encoded data, such as xs:base64Binary or xs:string, but the message contains an xop:Include element instead.</li><li>When enabled, an xop:Include element can optionally appear in place of content for any XML Schema simple type that validates base64-encoded binary data. The xop:Include element itself will be validated according to the built-in schema in store:///schemas/xop.xsd.</li></ul>
   - CLI Alias: `allow-xop-include`
   - Default value: `false`
-- `debug` (Boolean) Debug rule
+- `debug` (Boolean) Specifies whether to run the stylesheet, XQuery script, and JSONiq script in debug mode. When a stylesheet, XQuery script, or JSONiq script is run in debug mode, it generates a custom web page instead of displaying its normal output. The web page details exactly what occurred during execution, including the values of variables and where particular pieces of the output came from. This option should not be used in production environments. By default, debug mode is disabled.
   - CLI Alias: `debug`
   - Default value: `false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `minimum_escaping` (Boolean) Minimum output escaping rule
+- `minimum_escaping` (Boolean) Specifies whether to escape output produced from the stylesheet during processing. Minimal escaping is particularly useful when handling non-English character sets. By default, minimum escaping is disabled.
   - CLI Alias: `minesc`
   - Default value: `false`
-- `profile` (Boolean) Profile rule
+- `profile` (Boolean) Specifies whether to enable stylesheet profiling. This option should not be used in production environments. By default, stylesheet profiling is disabled.
   - CLI Alias: `profile`
   - Default value: `false`
-- `stack_size` (Number) Maximum stack size
+- `stack_size` (Number) Indicates the maximum number of bytes that the stack is allowed to use while executing a stylesheet or other compiled content. This setting is used to block infinite recursion. The minimum value is 10 kilobytes, or 10,240 bytes. The maximum value is 100 megabytes, or 104,857,600 bytes. The default value is 1 megabyte, or 1,048,576 bytes.
   - CLI Alias: `stack-size`
   - Range: `10240`-`104857600`
   - Default value: `1048576`
-- `stream` (Boolean) Streaming rule
+- `stream` (Boolean) Specifies whether the stylesheet must be run in streaming mode. Transformation of the document begins before the input is fully parsed. Not all stylesheets can be streamed. If the stylesheet cannot be streamed, an error is generated and the input is not processed. By default, streaming mode is disabled.
   - CLI Alias: `stream`
   - Default value: `false`
-- `strict` (Boolean) Strict
+- `strict` (Boolean) Specifies whether to enable strict XSLT error checking. Non-strict operations attempt to recover from certain errors, such as use of undeclared variables, calling undeclared templates, and so forth. By default, strict XSLT error checking is enabled.
   - CLI Alias: `strict`
   - Default value: `true`
-- `try_stream` (Boolean) Attempt streaming rule
+- `try_stream` (Boolean) Specifies whether to attempt to run the stylesheet in streaming mode. Transformation of the document begins before the input is fully parsed. Not all stylesheets can be streamed. If the stylesheet cannot be streamed, a warning is generated during compilation and the stylesheet is read in the entire input as normal at execution time. By default, attempting to run the stylesheet in streaming mode is disabled.
   - CLI Alias: `try-stream`
   - Default value: `false`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `validate_soap_enc_array` (Boolean) Validate SOAP 1.1 encoding rule
+- `validate_soap_enc_array` (Boolean) Specifies whether to perform extra schema validation following the encoding rules in SOAP 1.1 Section 5. When enabled, members of SOAP arrays are validated, attributes such as @id and @href are allowed even if they are not allowed by the schema, and @href values are checked to ensure that they have a corresponding @id element. By default, the extra validation is not performed.
   - CLI Alias: `validate-soap-enc-array`
   - Default value: `false`
-- `wildcards_ignore_xsi_type` (Boolean) Wildcards ignore xsi:type rule
+- `wildcards_ignore_xsi_type` (Boolean) Specifies whether xs:any elements in the schema validate only child elements by name. The XML Schema specification requires that, if a wildcard matches an element but that element does not have an element declaration, the element is instead validated according to an xsi:type attribute on it. This option ignores those xsi:type attributes. It should be used for cases such as SOAP envelope validation where a further validation step will validate the contents matching the wildcard, possibly using the SOAP 1.1 encoding rules. By default, xsi:type attributes are not ignored.
   - CLI Alias: `wildcards-ignore-xsi-type`
   - Default value: `false`
-- `wsdl_strict_soap_version` (Boolean) Strict SOAP envelope version
+- `wsdl_strict_soap_version` (Boolean) Specifies whether to strictly follow the SOAP binding in the WSDL. When enabled, only messages bound to SOAP 1.2 appear in SOAP 1.2 envelopes and only messages bound to SOAP 1.1 appear in SOAP 1.1 envelopes. By default, strict SOAP binding is disabled.
   - CLI Alias: `wsdl-strict-soap-version`
   - Default value: `false`
-- `wsdl_validate_body` (String) Validate message body
+- `wsdl_validate_body` (String) Specifies the validation behavior for the soap:Body. The default setting is Strict.
   - CLI Alias: `wsdl-validate-body`
   - Choices: `strict`, `lax`, `skip`
   - Default value: `strict`
-- `wsdl_validate_faults` (String) Validate message fault details
+- `wsdl_validate_faults` (String) Specifies the validation behavior for the fault detail. The default setting is Strict.
   - CLI Alias: `wsdl-validate-faults`
   - Choices: `strict`, `lax`, `skip`
   - Default value: `strict`
-- `wsdl_validate_headers` (String) Validate message headers
+- `wsdl_validate_headers` (String) Specifies the validation behavior for the soap:Header. The default setting is Lax.
   - CLI Alias: `wsdl-validate-headers`
   - Choices: `strict`, `lax`, `skip`
   - Default value: `lax`
-- `wsdl_wrapped_faults` (Boolean) Require wrappers on fault details specified by type
+- `wsdl_wrapped_faults` (Boolean) Specifies whether to require compatibility with RPC-style wrappers. By default, RPC-style wrappers are not required.
   - CLI Alias: `wsdl-wrapped-faults`
   - Default value: `false`
-- `wsi_validation` (String) WS-I Basic Profile validation
+- `wsi_validation` (String) Specifies the validation behavior to apply to WSDL files that are checked for conformance to section 5 of WS-I Basic Profile (version 1.0, April 2004). The default setting is Warn.
   - CLI Alias: `wsi-validate`
   - Choices: `ignore`, `warn`, `fail`
   - Default value: `warn`
-- `xacml_debug` (Boolean) Debug XACML policy
+- `xacml_debug` (Boolean) Specifies whether to compile XACML policies with debug information. Note that the XACML debugging messages are also controlled by the log event in the XACML category. Use the debug log level to view the full XACML debugging messages. By default, XACML policies are not compiled with debug information.
   - CLI Alias: `xacml-debug`
   - Default value: `false`
-- `xslt_version` (String) XSLT version
+- `xslt_version` (String) Specifies the XSLT processor version. The default value is XSLT10.
   - CLI Alias: `xslt-version`
   - Choices: `XSLT10`, `XSLT10_IT23272`, `XSLT20`, `StylesheetSpecified`
   - Default value: `XSLT10`

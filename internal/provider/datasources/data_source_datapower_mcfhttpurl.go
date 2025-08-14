@@ -57,7 +57,7 @@ func (d *MCFHttpURLDataSource) Metadata(_ context.Context, req datasource.Metada
 
 func (d *MCFHttpURLDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "HTTP URL Message Content Filter",
+		MarkdownDescription: "Filter based on the request URL. The filter value is matched to the request URL.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

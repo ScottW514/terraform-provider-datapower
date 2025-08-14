@@ -58,7 +58,7 @@ func (r *AMQPSourceProtocolHandlerResource) Metadata(ctx context.Context, req re
 
 func (r *AMQPSourceProtocolHandlerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("AMQP handler", "source-amqp", "").AddActions("quiesce").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("In AMQP, distributed source and target termini are managed by a broker. The broker periodically monitors and polls termini. The broker ensures that sent messages are directed to the correct target terminus or are routed to another server. The AMQP broker configuration corresponds to an AMQP broker that is running on another host in the network.", "source-amqp", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -99,7 +99,7 @@ func (r *AMQPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 			},
 			"credit": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Credit", "credit", "").AddIntegerRange(1, 3600).AddDefaultValue("100").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of concurrent messages that a receiver can handle. The minimum value is 1. The default value is 100.", "credit", "").AddIntegerRange(1, 3600).AddDefaultValue("100").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -109,7 +109,7 @@ func (r *AMQPSourceProtocolHandlerResource) Schema(ctx context.Context, req reso
 				Default: int64default.StaticInt64(100),
 			},
 			"ignore_reply_to": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Ignore reply-to", "ignore-reply-to", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to ignore the AMQP <tt>reply-to</tt> property. The default behavior is to ignore the property. <ul><li>When enabled, ignore the <tt>reply-to</tt> address when sending an AMQP response message.</li><li>When disabled, use the <tt>reply-to</tt> address instead of the address of the target terminus.</li></ul></p>", "ignore-reply-to", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),

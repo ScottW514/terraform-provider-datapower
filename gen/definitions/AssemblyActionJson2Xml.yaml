@@ -1,78 +1,112 @@
 name: AssemblyActionJson2Xml
-description: 'JSON to XML assembly action'
-cli_alias: 'assembly-json-to-xml'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/AssemblyActionJson2Xml'
+description: The JSON to XML assembly action converts the payload of a message from
+  JSON to its equivalent XML.
+cli_alias: assembly-json-to-xml
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/AssemblyActionJson2Xml
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAssemblyActionJson2Xml"'
-    test_expect_ds: '"AccTest_AssemblyActionJson2Xml"'
-    example: 'AssemblyActionJson2XmlName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: ConversionFormat
-    type: String
-    enum:
-      - 'badgerfish'
-      - 'relaxed-badgerfish'
-    default: 'badgerfish'
-    description: 'Conversion type'
-    cli_alias: conversion-format
-  - name: Input
-    type: String
-    default: 'message'
-    description: 'Input message'
-    cli_alias: input
-  - name: Output
-    type: String
-    description: 'Output message'
-    cli_alias: output
-  - name: RootElementName
-    type: String
-    default: 'json'
-    description: 'Root element name'
-    cli_alias: root-element
-  - name: AlwaysOutputRootElement
-    type: Bool
-    default: false
-    description: 'Always output root element'
-    cli_alias: output-root
-  - name: UnnamedElementName
-    type: String
-    default: 'element'
-    description: 'Unnamed element name'
-    cli_alias: unnamed-element
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: CorrelationPath
-    type: String
-    description: 'Correlation path'
-    cli_alias: correlation-path
-  - name: ActionDebug
-    type: Bool
-    default: false
-    description: 'Enable debugging'
-    cli_alias: debug
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAssemblyActionJson2Xml"'
+  test_expect_ds: '"AccTest_AssemblyActionJson2Xml"'
+  example: AssemblyActionJson2XmlName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: ConversionFormat
+  type: String
+  enum:
+  - badgerfish
+  - relaxed-badgerfish
+  default: badgerfish
+  description: Specify the conversion type. The default setting is BadgerFish.
+  cli_alias: conversion-format
+- name: Input
+  type: String
+  default: message
+  description: Specify the variable in the API context that contains the input message.
+    The content of the <tt>body</tt> field is the input. With the default variable
+    of <tt>message</tt> , the input is <tt>message.body</tt> .
+  cli_alias: input
+- name: Output
+  type: String
+  description: Specify the variable in the API context to store the converted output
+    message. The results are written to the <tt>body</tt> field of the specified variable.
+    The output variable cannot be a read-only variable. <p>When you want the converted
+    output to be returned to the client, you must use <tt>message</tt> as the output
+    variable.</p><ul><li>Without an output variable, the output variable matches the
+    input variable. For example, if the input variable is <tt>message</tt> , the output
+    variable is <tt>message</tt> . Therefore, if the input variable is <tt>foo</tt>
+    , the output variable is <tt>foo</tt> .</li><li>When the output variable is not
+    <tt>message</tt> , the content is converted but not returned to the client.</li></ul>
+  cli_alias: output
+- name: RootElementName
+  type: String
+  default: json
+  description: Specify the name of the root element that wraps the resultant XML document.
+    The default value is <tt>json</tt> . <p>The root element is generated with the
+    specified name when one of the following conditions is met.</p><ul><li>The output
+    include the root element.</li><li>The input has no root object.</li></ul>
+  cli_alias: root-element
+- name: AlwaysOutputRootElement
+  type: Bool
+  default: false
+  description: Specify whether to include the root element in the resultant XML. When
+    enabled, the output includes the root element in the resultant XML.
+  cli_alias: output-root
+- name: UnnamedElementName
+  type: String
+  default: element
+  description: Specify the XML element that is the result of converting JSON arrays
+    to XML. The default value is <tt>element</tt> .
+  cli_alias: unnamed-element
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Title
+  type: String
+  description: Title
+  cli_alias: title
+- name: CorrelationPath
+  type: String
+  description: Specify the path that correlates the API action to a specific part
+    of the API specification. The correlation path specifies the part of the API definition
+    that correlates with the API action. This path is exposed in the debug data by
+    the API gateway for use by debugging tools. For example, for an API configuration
+    that is retrieved from API Connect and specified in an OpenAPI document with IBM
+    extensions, this path is the JSON path to the assembly policy in the IBM extensions
+    section of the document. The path can be expressed in any form that the debugging
+    tool can correlate to the API definition.
+  cli_alias: correlation-path
+- name: ActionDebug
+  type: Bool
+  default: false
+  description: <p>Specify whether to enable the GatewayScript debugger to troubleshoot
+    the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript
+    file that is called from the GatewayScript assembly action.</li><li>Troubleshoot
+    a GatewayScript file that is called from an XSLT assembly action that uses the
+    <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript
+    script that is called through the <tt>value</tt> or <tt>default</tt> property
+    in the JSON file from the map assembly action.</li></ul><p>To debug a file or
+    script, the following conditions must be met.</p><ul><li>The file contains one
+    or more <tt>debugger;</tt> statements at the points in your script where you want
+    to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You
+    run the <tt>debug-action</tt> command.</p>
+  cli_alias: debug

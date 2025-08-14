@@ -55,7 +55,7 @@ func (r *MCFHttpMethodResource) Metadata(ctx context.Context, req resource.Metad
 
 func (r *MCFHttpMethodResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("HTTP Method Message Content Filter", "mcf-httpmethod", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Filter based on the HTTP method. The filter value is matched to the HTTP method in the request message.", "mcf-httpmethod", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

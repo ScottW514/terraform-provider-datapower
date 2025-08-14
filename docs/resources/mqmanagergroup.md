@@ -3,13 +3,12 @@
 page_title: "datapower_mqmanagergroup Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  IBM MQ v9+ queue manager group
-  CLI Alias: idg-mq-qm-group
+  
 ---
 
 # datapower_mqmanagergroup (Resource)
 
-IBM MQ v9+ queue manager group
+<p>An IBM MQ queue manager group enables automatic failover between queue managers when a queue manager becomes unavailable. When you define multiple backup queue managers, the first active queue manager in the group replaces the primary queue manager.</p><p>You can configure the queue manager to work with the multi-instance feature in the IBM MQ server. Connect the primary queue manager to one of the instances of a queue manager in the IBM MQ server, and the backup queue manager to the other instance. All connections for the queue manager group go to the queue manager connected to the active instance. If the active instance in the IBM MQ server fails, the queue manager connected to the standby instance automatically takes over all the data and logs from the queue manager connected to the original active instance.</p>
   - CLI Alias: `idg-mq-qm-group`
 
 ## Example Usage
@@ -29,13 +28,13 @@ resource "datapower_mqmanagergroup" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `primary_queue_manager` (String) Primary queue manager
+- `primary_queue_manager` (String) Specify the queue manager to be the primary queue manager for the group. All connections for the group go to this queue manager. If the primary queue manager becomes unreachable, a backup queue manager is selected.
   - CLI Alias: `primary`
   - Reference to: `datapower_mqmanager:id`
 
 ### Optional
 
-- `backup_queue_managers` (List of String) Backup queue managers
+- `backup_queue_managers` (List of String) Specify one or more queue managers to be backup queue managers for redundancy if the primary queue manager becomes unreachable.
   - CLI Alias: `backup`
   - Reference to: `datapower_mqmanager:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))

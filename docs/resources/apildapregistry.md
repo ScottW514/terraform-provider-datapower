@@ -3,13 +3,13 @@
 page_title: "datapower_apildapregistry Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API LDAP registry
+  Configure and manage the API LDAP registry.
   CLI Alias: api-ldap-reg
 ---
 
 # datapower_apildapregistry (Resource)
 
-API LDAP registry
+Configure and manage the API LDAP registry.
   - CLI Alias: `api-ldap-reg`
 
 ## Example Usage
@@ -40,7 +40,7 @@ resource "datapower_apildapregistry" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `ldap_auth_method` (String) LDAP authentication method
+- `ldap_auth_method` (String) Specify the method to create the user for authentication. <ul><li>When compose DN, the DN can be composed from the username. For example, <tt>uid=john,ou=People,dc=company,dc=com</tt> is a DN format that can be composed from the username.</li><li>When compose UPN, the UPN can be composed from the username. For example, <tt>john@example.com</tt> is a UPN format that can be composed from the username.</li><li>When search DN, the DN cannot be composed from the username. You must use an LDAP search to retrieve information that matches the username.</li></ul><p>By default, queries the LDAP server to retrieve user information. Before deciding on the method, contact your LDAP administrator.</p>
   - CLI Alias: `ldap-auth-method`
   - Choices: `composeDN`, `composeUPN`, `searchDN`
   - Default value: `searchDN`
@@ -49,32 +49,32 @@ resource "datapower_apildapregistry" "test" {
 - `ldap_bind_password_alias` (String) LDAP bind password alias
   - CLI Alias: `ldap-bind-password-alias`
   - Reference to: `datapower_passwordalias:id`
-- `ldap_group_auth_enabled` (Boolean) Enable LDAP group authentication
+- `ldap_group_auth_enabled` (Boolean) Specify whether to enable LDAP group authentication to use to check group membership for a user. The default value is off.
   - CLI Alias: `ldap-group-auth-enabled`
   - Default value: `false`
-- `ldap_group_auth_type` (String) LDAP group authentication type
+- `ldap_group_auth_type` (String) Specify the type of group authentication configuration to use. The default value is static.
   - CLI Alias: `ldap-group-auth-type`
   - Choices: `dynamic`, `static`
-- `ldap_group_base_dn` (String) LDAP static group base DN
+- `ldap_group_base_dn` (String) Specify the base DN name to begin the group authentication search. This value identifies the entry level of the tree used by the LDAP group scope.
   - CLI Alias: `ldap-group-base-dn`
-- `ldap_group_dynamic_filter` (String) LDAP dynamic filter
+- `ldap_group_dynamic_filter` (String) Specify the filter expression of the LDAP dynamic group configuration. Only for dynamic. <p>When the filter is <tt>(memberOf=CN=ibm-group,DC=ibm,DC=com)</tt> , the value is used verbatim for LDAP group dynamic search.</p>
   - CLI Alias: `ldap-group-dynamic-filter`
-- `ldap_group_filter_prefix` (String) LDAP static group filter prefix
+- `ldap_group_filter_prefix` (String) Specify the prefix of the LDAP group filter expression. An LDAP group filter expression is composed by <tt>prefix + user DN + suffix</tt> . <p>When the prefix is <tt>(&amp;(objectclass=group)(member=</tt> and the user DN is <tt>CN=bob,DN=ibm,DN=com</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com))</tt> .</p>
   - CLI Alias: `ldap-group-filter-prefix`
-- `ldap_group_filter_suffix` (String) LDAP static group filter suffix
+- `ldap_group_filter_suffix` (String) Specify the suffix of the LDAP group filter expression. <p>When the prefix is <tt>&amp;(objectclass=group)(member=</tt> , the user DN is <tt>CN=bob,DN=ibm,DN=com</tt> , and the suffix is <tt>)(CN=ibm-group))</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com)(CN=ibm-group))</tt> .</p>
   - CLI Alias: `ldap-group-filter-suffix`
-- `ldap_group_scope` (String) LDAP group scope
+- `ldap_group_scope` (String) Specify the depth of the LDAP group search. The default value is subtree.
   - CLI Alias: `ldap-group-scope`
   - Choices: `subtree`, `one-level`, `base`
   - Default value: `subtree`
-- `ldap_port` (Number) Port
+- `ldap_port` (Number) Specify the listening port on the LDAP server. The default value is 636.
   - CLI Alias: `ldap-port`
   - Default value: `636`
-- `ldap_read_timeout` (Number) LDAP read timeout
+- `ldap_read_timeout` (Number) Specify the time to wait for a response from the LDAP server before the connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.
   - CLI Alias: `ldap-readtimeout`
   - Range: `0`-`86400`
   - Default value: `60`
-- `ldap_version` (String) LDAP version
+- `ldap_version` (String) Specify the LDAP protocol version for bind operation. The default value is v3.
   - CLI Alias: `ldap-version`
   - Choices: `v2`, `v3`
   - Default value: `v3`

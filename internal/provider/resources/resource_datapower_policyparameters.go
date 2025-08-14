@@ -54,7 +54,7 @@ func (r *PolicyParametersResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *PolicyParametersResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Policy Parameters", "policy-parameters", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configuration to persist the values of ws-policy parameters.", "policy-parameters", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *PolicyParametersResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"policy_parameter": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Policy Parameter", "parameter", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A key-value pair. The key specifies a policy parameter in a policy mapping stylesheet formatted {policy-domain-ns}key.", "parameter", "").String,
 				NestedObject:        models.DmPolicyParameterResourceSchema,
 				Optional:            true,
 			},

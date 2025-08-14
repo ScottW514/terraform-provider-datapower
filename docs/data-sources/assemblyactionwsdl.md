@@ -3,12 +3,12 @@
 page_title: "datapower_assemblyactionwsdl Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WSDL assembly action
+  The WSDL assembly action returns a static WSDL file.
 ---
 
 # datapower_assemblyactionwsdl (Data Source)
 
-WSDL assembly action
+The WSDL assembly action returns a static WSDL file.
 
 ## Example Usage
 
@@ -38,12 +38,12 @@ Optional:
 
 Read-Only:
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
 - `app_domain` (String) The name of the application domain the object belongs to
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
 - `description` (String) Description
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `output` (String) Output
+- `output` (String) Specify the variable in the API context to store the results. The content of the <tt>body</tt> field of the variable is the results of the action. The default variable is <tt>message</tt> .
 - `title` (String) Title
 - `user_summary` (String) Comments
 

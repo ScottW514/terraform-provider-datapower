@@ -3,13 +3,13 @@
 page_title: "datapower_webservicemonitor Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web service monitor
+  A service level monitor (SLM) for a web service watches web services traffic to a specific endpoint.
   CLI Alias: service-monitor
 ---
 
 # datapower_webservicemonitor (Resource)
 
-Web service monitor
+A service level monitor (SLM) for a web service watches web services traffic to a specific endpoint.
   - CLI Alias: `service-monitor`
 
 ## Example Usage
@@ -32,10 +32,10 @@ resource "datapower_webservicemonitor" "test" {
 - `app_domain` (String) The name of the application domain the object belongs to
 - `endpoint_url` (String) Endpoint URL
   - CLI Alias: `endpoint-url`
-- `frontend_url` (String) Front URL
+- `frontend_url` (String) Specify the URL that clients use to access the web service. This value cannot be the same value as the endpoint URL.. Wildcards are supported.
   - CLI Alias: `frontend-url`
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `wsdlurl` (String) WSDL URL
+- `wsdlurl` (String) Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.
   - CLI Alias: `wsdl`
 
 ### Optional
@@ -45,7 +45,7 @@ resource "datapower_webservicemonitor" "test" {
   - CLI Alias: `endpoint-name`
 - `operations` (Attributes List) Operations to monitor
   - CLI Alias: `operation` (see [below for nested schema](#nestedatt--operations))
-- `transport` (String) Transport type
+- `transport` (String) Specify the transport type for the endpoint. The transport type must agree with the transport type in the WSDL file.
   - CLI Alias: `transport`
   - Choices: `http-get`, `http-post`, `soap-doc`, `soap-rpc`
 - `user_summary` (String) Comments

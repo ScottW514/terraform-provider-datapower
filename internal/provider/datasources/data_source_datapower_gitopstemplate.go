@@ -57,7 +57,7 @@ func (d *GitOpsTemplateDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *GitOpsTemplateDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "GitOps template",
+		MarkdownDescription: "A core capability of the GitOps feature is to replace placeholder or template values with environment or device-specific values. This feature is analogous to deployment policies but differs in implementation.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *GitOpsTemplateDataSource) Schema(ctx context.Context, req datasource.Sc
 							Computed:            true,
 						},
 						"templates": schema.ListNestedAttribute{
-							MarkdownDescription: "Templates",
+							MarkdownDescription: "Specify the GitOps templates to modify the DataPower configuration. Template processing is in the order of the read or write GitOps operation.",
 							NestedObject:        models.DmGitOpsTemplateEntryDataSourceSchema,
 							Computed:            true,
 						},

@@ -3,13 +3,13 @@
 page_title: "datapower_countmonitor Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Count Monitor
+  On-Line Help for Message-Count Monitors
   CLI Alias: monitor-count
 ---
 
 # datapower_countmonitor (Resource)
 
-Message Count Monitor
+On-Line Help for Message-Count Monitors
   - CLI Alias: `monitor-count`
 
 ## Example Usage
@@ -32,30 +32,30 @@ resource "datapower_countmonitor" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `message_type` (String) Message Type
+- `message_type` (String) Select the message type monitored by this message-count monitor.
   - CLI Alias: `message-type`
   - Reference to: `datapower_messagetype:id`
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `filter` (Attributes List) Thresholds/Filters
+- `filter` (Attributes List) Click this tab to define a message-count monitor threshold and assign an action (Message Filter Action) that is taken when the threshold is reached.
   - CLI Alias: `filter` (see [below for nested schema](#nestedatt--filter))
-- `header` (String) Header
+- `header` (String) The name of the HTTP header to read to determine the value of the source IP address.
   - CLI Alias: `header`
   - Default value: `X-Client-IP`
-- `max_sources` (Number) Maximum Distinct Sources
+- `max_sources` (Number) When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.
   - CLI Alias: `distinct-sources`
   - Default value: `10000`
-- `measure` (String) Measure
+- `measure` (String) Select the action that advances the counter. The default is Requests.
   - CLI Alias: `measure`
   - Choices: `requests`, `responses`, `xpath`, `errors`
   - Default value: `requests`
-- `source` (String) Source
+- `source` (String) Select how monitoring is applied to IP addresses. This setting is meaningful only if an associated traffic definition contains and inclusive or exclusive IP address criterion. The default is All.
   - CLI Alias: `source`
   - Choices: `all`, `each-ip`, `ip-from-header`
   - Default value: `all`
-- `user_summary` (String) Comments
+- `user_summary` (String) A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

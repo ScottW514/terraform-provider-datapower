@@ -3,13 +3,13 @@
 page_title: "datapower_httpssourceprotocolhandler Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  HTTPS handler
+  An HTTPS handler receives HTTP requests over TLS and forwards them to the appropriate DataPower service. HTTPS handlers conform to RFC 2616.
   CLI Alias: source-httpsAccepted Dependency Actions: quiesce
 ---
 
 # datapower_httpssourceprotocolhandler (Resource)
 
-HTTPS handler
+An HTTPS handler receives HTTP requests over TLS and forwards them to the appropriate DataPower service. HTTPS handlers conform to RFC 2616.
   - CLI Alias: `source-https`
   - Accepted Dependency Actions: `quiesce`
 
@@ -37,85 +37,85 @@ resource "datapower_httpssourceprotocolhandler" "test" {
 - `acl` (String) Access control list
   - CLI Alias: `acl`
   - Reference to: `datapower_accesscontrollist:id`
-- `allow_compression` (Boolean) Enable compression
+- `allow_compression` (Boolean) Specify whether to negotiate GZIP compression for client connections. When enabled and the <tt>Accept-Encoding</tt> HTTP header indicates that compressed documents can be processed, the service uses GZIP to compress HTTP transmissions. The <tt>Transfer-Encoding</tt> HTTP header indicates compression.
   - CLI Alias: `compression`
   - Default value: `false`
-- `allow_web_socket_upgrade` (Boolean) Allow WebSocket upgrade
+- `allow_web_socket_upgrade` (Boolean) Specify whether to allow WebSocket upgrade requests from clients. The default value is disabled. This request is to switch the existing connection to use the WebSocket protocol. WebSocket upgrade requests require that The handler allows GET methods.
   - CLI Alias: `websocket-upgrade`
   - Default value: `false`
 - `allowed_features` (Attributes) Allowed methods and versions
   - CLI Alias: `allowed-features` (see [below for nested schema](#nestedatt--allowed_features))
-- `chunked_encoding` (Boolean) Enable chunked encoding responses
+- `chunked_encoding` (Boolean) Specify whether to enable responses to use chunked transfer-encoding. By default, HTTP responses use <tt>Transfer-Encoding: chunked</tt> .
   - CLI Alias: `chunked-encoding`
   - Default value: `true`
-- `credential_charset` (String) Credential character set
+- `credential_charset` (String) Specify the character encoding of the original basic authentication values. Basic authentication credentials are combined and base64 encoded in the authorization header of the request. The contents of the <tt>Authorization</tt> header are transcoded to UTF-8. The default value represents ISO-8859-1 Latin 1.
   - CLI Alias: `credential-charset`
   - Choices: `protocol`, `ascii`, `utf8`, `big5`, `cp1250`, `cp1251`, `cp1252`, `cp1253`, `cp1254`, `cp1255`, `cp1256`, `cp1257`, `cp1258`, `euc_jp`, `euc_kr`, `gb18030`, `gb2312`, `iso2022_jp`, `iso2022_kr`, `iso8859_1`, `iso8859_2`, `iso8859_4`, `iso8859_5`, `iso8859_6`, `iso8859_7`, `iso8859_8`, `iso8859_9`, `iso8859_15`, `sjis`, `tis620`, `unicode_le`
   - Default value: `protocol`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `header_timeout` (Number) Request headers processing timeout
+- `header_timeout` (Number) Specify the maximum duration in milliseconds to allow for request headers processing. When the value is greater than 0, request header processing must complete before the duration elapses. Enter a value in the range 0 - 3600000, where a value of 0 disables the timer. The default value is 30000.
   - CLI Alias: `header-timeout`
   - Range: `0`-`3600000`
   - Default value: `30000`
-- `http2_idle_timeout` (Number) HTTP/2 idle timeout
+- `http2_idle_timeout` (Number) Specify the maximum idle duration in milliseconds to allow before closing the HTTP/2 connection. Enter a value in the range 0 - 3600000, where a value of 0 disables the timer. The default value is 0.
   - CLI Alias: `http2-idle-timeout`
   - Range: `0`-`3600000`
-- `http2_max_frame_size` (Number) HTTP/2 max frame size
+- `http2_max_frame_size` (Number) Specify the largest payload frame size that the client can send. Enter a value in the range 16384 - 16777215. The default value is 16384.
   - CLI Alias: `http2-max-frame`
   - Range: `16384`-`16777215`
   - Default value: `16384`
-- `http2_max_streams` (Number) HTTP/2 maximum streams
+- `http2_max_streams` (Number) Specify the maximum number of concurrent streams that the client can have outstanding at the same time. Enter a value in the range 1 - 500. The default value is 100. <p>The limit applies to the number of streams that the client allows the target to create. The greater the number of streams in use, the more resources the client uses. Resources include memory and the network connections to the destination.</p>
   - CLI Alias: `http2-max-streams`
   - Range: `1`-`500`
   - Default value: `100`
-- `http2_stream_header` (Boolean) Enable HTTP/2 stream header
+- `http2_stream_header` (Boolean) Specify whether to enable the HTTP/2 stream identifier header in the request or response. When enabled, the HTTP/2 stream identifier is included in the <tt>X-DP-http2-stream</tt> header. With this header, you can correlate the HTTP/2 stream. The default behavior is disabled.
   - CLI Alias: `http2-stream-header`
   - Default value: `false`
-- `http_version` (String) HTTP version to client
+- `http_version` (String) Specify the HTTP version for client connections. The default value is HTTP/1.1. For the HTTP/2 protocol, requests and responses are always HTTP/2. When HTTP/2, this setting is ignored.
   - CLI Alias: `http-client-version`
   - Choices: `HTTP/1.0`, `HTTP/1.1`
   - Default value: `HTTP/1.1`
-- `local_address` (String) Local IP address
+- `local_address` (String) Specify the IP address or host alias that the handler listens. The default value indicates that The handler listens on all IPv4 addresses.
   - CLI Alias: `local-address`
   - Default value: `0.0.0.0`
 - `local_port` (Number) Port
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `443`
-- `max_hdr_count` (Number) Maximum number of headers
+- `max_hdr_count` (Number) Specify the maximum number of headers to allow in client requests. The default value is 0, which indicates no limit.
   - CLI Alias: `max-header-count`
-- `max_name_hdr_len` (Number) Maximum header name length
+- `max_name_hdr_len` (Number) Specify the maximum length in bytes of a header name to allow in client requests. Each HTTP header is expressed as a name-value pair. This setting sets the maximum length of the name portion of a header. The default value is 0, which indicates no limit.
   - CLI Alias: `max-header-name-len`
-- `max_persistent_connections_reuse` (Number) Maximum persistent reuse
+- `max_persistent_connections_reuse` (Number) Specify the maximum number of times that a client can reuse a persistent connection. When this count is reached, an explicit <tt>HTTP Connection: close</tt> header is sent in the response, and the TCP connection is closed. The default value is 0, which means unlimited reuse.
   - CLI Alias: `max-persistent-reuse`
-- `max_query_string_len` (Number) Maximum query string length
+- `max_query_string_len` (Number) Specify the maximum length of the query string in bytes to allow in client requests. The query string is the portion of the URL after the ? character. The default value is 0, which indicates no limit.
   - CLI Alias: `max-querystring-len`
-- `max_total_hdr_len` (Number) Maximum total header length
+- `max_total_hdr_len` (Number) Specify the maximum aggregate length in bytes of HTTP headers to allow. Enter a value in the range 5 - 128000. The default value is 128000.
   - CLI Alias: `max-total-header-len`
   - Range: `5`-`128000`
   - Default value: `128000`
-- `max_url_len` (Number) Maximum URL length
+- `max_url_len` (Number) Specify the length in bytes of the longest incoming URL to accept. The length includes any query string or fragment identifier. Enter a value in the range 1 - 128000. The default value is 16384.
   - CLI Alias: `max-url-len`
   - Range: `1`-`128000`
   - Default value: `16384`
-- `max_value_hdr_len` (Number) Maximum header value length
+- `max_value_hdr_len` (Number) Specify the maximum length of a header value in bytes to allow in client requests. Each HTTP header is expressed as a name-value pair. This setting sets the maximum length of the value portion of a header. The default value is 0, which indicates no limit.
   - CLI Alias: `max-header-value-len`
-- `persistent_connections` (Boolean) Negotiate persistent connections
+- `persistent_connections` (Boolean) Specify whether to negotiate persistent connections with clients. The HTTP/2 protocol controls persistent connections and reuse. Therefore, this setting is ignored for the HTTP/2 protocol.
   - CLI Alias: `persistent-connections`
   - Default value: `true`
-- `ssl_server` (String) TLS server profile
+- `ssl_server` (String) Specify the TLS server profile to secure connections from clients. <b>Note:</b> The TLS server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_sslserverprofile:id`
 - `ssl_server_config_type` (String) TLS server type
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
-- `sslsni_server` (String) TLS SNI server profile
+- `sslsni_server` (String) Specify the TLS SNI server profile to secure connections from clients. <b>Note:</b> The TLS SNI server profile that secures the HTTP/2 connection must use the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.
   - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_sslsniserverprofile:id`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `web_socket_idle_timeout` (Number) WebSocket idle timeout
+- `web_socket_idle_timeout` (Number) Specify the maximum idle time in seconds for client connections. This timer monitors the idle time in the data transfer process. When the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 0, which indicates that the timer is disabled.
   - CLI Alias: `websocket-idle-timeout`
   - Range: `0`-`86400`
 

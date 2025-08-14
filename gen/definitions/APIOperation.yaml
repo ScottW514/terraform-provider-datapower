@@ -1,101 +1,112 @@
 name: APIOperation
-description: 'API operation'
-cli_alias: 'api-operation'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APIOperation'
+description: An API operation describes the actions to perform against the resource.
+cli_alias: api-operation
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APIOperation
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPIOperation"'
-    test_expect_ds: '"AccTest_APIOperation"'
-    example: 'APIOperationName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Method
-    type: String
-    enum:
-      - 'GET'
-      - 'POST'
-      - 'PUT'
-      - 'DELETE'
-      - 'HEAD'
-      - 'PATCH'
-      - 'OPTIONS'
-      - 'TRACE'
-    default: 'GET'
-    required: true
-    description: 'Method'
-    cli_alias: method
-  - name: OperationId
-    type: String
-    description: 'Operation ID'
-    cli_alias: operation-id
-  - name: RemoveConsume
-    type: Bool
-    default: false
-    description: 'Remove consume'
-    cli_alias: remove-consume
-  - name: Consume
-    type: List
-    element_type: String
-    description: 'Consumes'
-    cli_alias: consume
-  - name: Produce
-    type: List
-    element_type: String
-    description: 'Produces'
-    cli_alias: produce
-  - name: RequestSchema
-    type: String
-    reference_to: APISchema
-    description: 'Request schema'
-    cli_alias: request-schema
-  - name: ResponseSchema
-    type: List
-    element_type: DmAPIResponseSchema
-    description: 'Response schema'
-    cli_alias: response-schema
-  - name: Parameter
-    type: List
-    element_type: DmAPIParameter
-    description: 'Parameters'
-    cli_alias: parameter
-  - name: RemoveSecurity
-    type: Bool
-    default: false
-    description: 'Remove security'
-    cli_alias: remove-security
-  - name: Security
-    type: List
-    reference_to: APISecurityRequirement
-    element_type: String
-    description: 'Security requirements'
-    cli_alias: security
-  - name: SOAPAction
-    type: String
-    description: 'SOAP action'
-    cli_alias: soap-action
-  - name: SOAPElementName
-    type: String
-    description: 'SOAP element name'
-    cli_alias: soap-element-name
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPIOperation"'
+  test_expect_ds: '"AccTest_APIOperation"'
+  example: APIOperationName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Method
+  type: String
+  enum:
+  - GET
+  - POST
+  - PUT
+  - DELETE
+  - HEAD
+  - PATCH
+  - OPTIONS
+  - TRACE
+  default: GET
+  required: true
+  description: Method
+  cli_alias: method
+- name: OperationId
+  type: String
+  description: Operation ID
+  cli_alias: operation-id
+- name: RemoveConsume
+  type: Bool
+  default: false
+  description: Specify whether to remove the API-level consume declaration. By default,
+    the API-level consume declaration is applied to the operation. When removed, the
+    operation can always be performed regardless of the content type.
+  cli_alias: remove-consume
+- name: Consume
+  type: List
+  element_type: String
+  description: Specify MIME types that the operation can consume. This setting overrides
+    the API-level consume declaration that is defined in the API definition.
+  cli_alias: consume
+- name: Produce
+  type: List
+  element_type: String
+  description: Specify MIME types that the operation can produce. This setting overrides
+    the API-level produce declaration that is defined in the API definition.
+  cli_alias: produce
+- name: RequestSchema
+  type: String
+  reference_to: APISchema
+  description: Request schema
+  cli_alias: request-schema
+- name: ResponseSchema
+  type: List
+  element_type: DmAPIResponseSchema
+  description: Response schema
+  cli_alias: response-schema
+- name: Parameter
+  type: List
+  element_type: DmAPIParameter
+  description: Specify applicable parameters for the API operation. This setting overrides
+    the setting in the API path configuration for the same parameter.
+  cli_alias: parameter
+- name: RemoveSecurity
+  type: Bool
+  default: false
+  description: Specify whether to remove the API-level security declaration that is
+    defined for the API. By default, the API-level security declaration is applied
+    to the operation. When removed, the operation can be performed without security
+    check.
+  cli_alias: remove-security
+- name: Security
+  type: List
+  reference_to: APISecurityRequirement
+  element_type: String
+  description: Specify the alternative security requirements to enforce for the operation
+    (that is, there is a logical OR between the security requirements). This setting
+    overrides any declared API-level security.
+  cli_alias: security
+- name: SOAPAction
+  type: String
+  description: SOAP action
+  cli_alias: soap-action
+- name: SOAPElementName
+  type: String
+  description: SOAP element name
+  cli_alias: soap-element-name

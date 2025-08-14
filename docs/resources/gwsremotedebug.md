@@ -3,13 +3,13 @@
 page_title: "datapower_gwsremotedebug Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  GatewayScript Remote Debugger (default domain only)
+  Modify the connection details for a remote GatewayScript debugger. This configuration defines the local GatewayScript debug endpoint for remote debugging.
   CLI Alias: gatewayscript-remote-debug
 ---
 
 # datapower_gwsremotedebug (Resource)
 
-GatewayScript Remote Debugger (`default` domain only)
+Modify the connection details for a remote GatewayScript debugger. This configuration defines the local GatewayScript debug endpoint for remote debugging.
   - CLI Alias: `gatewayscript-remote-debug`
 
 ## Example Usage
@@ -27,17 +27,17 @@ resource "datapower_gwsremotedebug" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `local_address` (String) Local address
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`
-- `local_port` (Number) Local port
+- `local_port` (Number) Sets the port that the local GatewayScript debug endpoint monitors. The default value is 9229.
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `9229`
-- `user_summary` (String) Comments
+- `user_summary` (String) Specifies a brief descriptive summary for the configuration.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

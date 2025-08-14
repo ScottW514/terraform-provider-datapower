@@ -3,13 +3,13 @@
 page_title: "datapower_distributedvariable Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Distributed variable settings
+  The domain-specific configuration that define the settings for using distributed variables.
   CLI Alias: distributed-variable-settings
 ---
 
 # datapower_distributedvariable (Resource)
 
-Distributed variable settings
+The domain-specific configuration that define the settings for using distributed variables.
   - CLI Alias: `distributed-variable-settings`
 
 ## Example Usage
@@ -27,14 +27,14 @@ resource "datapower_distributedvariable" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `gateway_peering` (String) Gateway peering
+- `gateway_peering` (String) Specify the gateway-peering instance for distributed variable. This instance synchronizes the variables among the configured members. If you do not want to persist variable values across a restart, store the data in memory.
   - CLI Alias: `gateway-peering`
   - Reference to: `datapower_gatewaypeering:id`
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
 - `user_summary` (String) Comments

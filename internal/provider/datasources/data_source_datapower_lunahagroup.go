@@ -57,7 +57,7 @@ func (d *LunaHAGroupDataSource) Metadata(_ context.Context, req datasource.Metad
 
 func (d *LunaHAGroupDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SafeNet Luna HSM HA group",
+		MarkdownDescription: "An HA group on the SafeNet Luna Network HSM appliance allows you to define multiple Luna HSM partitions as a group for load balancing and failover.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,16 +81,16 @@ func (d *LunaHAGroupDataSource) Schema(ctx context.Context, req datasource.Schem
 							Computed:            true,
 						},
 						"group_name": schema.StringAttribute{
-							MarkdownDescription: "Label",
+							MarkdownDescription: "Specify the label that identifies the HA group on the Luna HSM. The HA group appears as one single logical partition that is identified by the label on the Luna HSM. The minimum length of the label is one character. The maximum length is 32 characters. The group name must be unique across domains.",
 							Computed:            true,
 						},
 						"member": schema.ListAttribute{
-							MarkdownDescription: "Members",
+							MarkdownDescription: "Specify the members for HA group. An HA group member is an HSM partition that the system can access. The first member is the primary member. The Luna HSM balances cryptographic requests across the members in the HA group.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"standby": schema.ListAttribute{
-							MarkdownDescription: "Standby members",
+							MarkdownDescription: "Specify the standby HSM partition. Standby members are not active for load balancing until all non-standby members fail. You must add the HSM partition as a member of the HA group before you can specify the partition as standby.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

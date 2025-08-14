@@ -3,13 +3,13 @@
 page_title: "datapower_mcfhttpheader Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  HTTP Header Message Content Filter
+  Filter based on HTTP header. A specific header value is used to match the request message.
   CLI Alias: mcf-httpheader
 ---
 
 # datapower_mcfhttpheader (Resource)
 
-HTTP Header Message Content Filter
+Filter based on HTTP header. A specific header value is used to match the request message.
   - CLI Alias: `mcf-httpheader`
 
 ## Example Usage

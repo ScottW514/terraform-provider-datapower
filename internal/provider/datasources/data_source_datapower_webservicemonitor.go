@@ -57,7 +57,7 @@ func (d *WebServiceMonitorDataSource) Metadata(_ context.Context, req datasource
 
 func (d *WebServiceMonitorDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Web service monitor",
+		MarkdownDescription: "A service level monitor (SLM) for a web service watches web services traffic to a specific endpoint.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,7 +77,7 @@ func (d *WebServiceMonitorDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"wsdlurl": schema.StringAttribute{
-							MarkdownDescription: "WSDL URL",
+							MarkdownDescription: "Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.",
 							Computed:            true,
 						},
 						"operations": schema.ListNestedAttribute{
@@ -94,11 +94,11 @@ func (d *WebServiceMonitorDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"frontend_url": schema.StringAttribute{
-							MarkdownDescription: "Front URL",
+							MarkdownDescription: "Specify the URL that clients use to access the web service. This value cannot be the same value as the endpoint URL.. Wildcards are supported.",
 							Computed:            true,
 						},
 						"transport": schema.StringAttribute{
-							MarkdownDescription: "Transport type",
+							MarkdownDescription: "Specify the transport type for the endpoint. The transport type must agree with the transport type in the WSDL file.",
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

@@ -3,12 +3,12 @@
 page_title: "datapower_webappresponse Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web Response Profile
+  The web response profile specifies various properties about the response side of the transaction that must be satisfied.
 ---
 
 # datapower_webappresponse (Data Source)
 
-Web Response Profile
+The web response profile specifies various properties about the response side of the transaction that must be satisfied.
 
 ## Example Usage
 
@@ -39,22 +39,22 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `content_types` (List of String) Content-Type List
-- `error_policy` (String) Error Policy
-- `header_gnvc` (String) Header Name-Value Profile
+- `content_types` (List of String) A list of PCRE regular expressions that indicate acceptable content-type MIME headers on the response. If this list is empty, any content-type is acceptable. If the response does not have a content type that will be represented as an empty string for matching purposes. An empty list will match all content types.
+- `error_policy` (String) If this response policy is violated the firewall error policy will be invoked unless this more specific error policy is provided, in which case this policy takes precedence.
+- `header_gnvc` (String) The validation profile allows you to specify what headers are expected, what headers should be stripped, and what headers should be mapped to known values. If no profile is specified, any header is allowed.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `max_body_size` (Number) Maximum Size
-- `min_body_size` (Number) Minimum Size
-- `non_xml_policy` (String) Non-XML Processing
-- `non_xml_rule` (String) Non-XML Processing Rule
-- `ok_codes` (Attributes) Response Codes
+- `max_body_size` (Number) Specify the maximum size of the response body.
+- `min_body_size` (Number) Specify the minimum size of the response body.
+- `non_xml_policy` (String) Specify how the device handles responses that do not contain an XML MIME type.
+- `non_xml_rule` (String) This is the transformation rule that is run when the response does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.
+- `ok_codes` (Attributes) Specify which response codes from the backend server are acceptable.
   - CLI Alias: `response-codes` (see [below for nested schema](#nestedatt--result--ok_codes))
-- `ok_versions` (Attributes) Response Versions
+- `ok_versions` (Attributes) Specify which HTTP versions are acceptable from the backend server.
   - CLI Alias: `response-versions` (see [below for nested schema](#nestedatt--result--ok_versions))
-- `policy_type` (String) Style
+- `policy_type` (String) Select the satisfaction policy for the profile. The default is Admission.
 - `user_summary` (String) Comments
-- `xml_policy` (String) XML Processing
-- `xml_rule` (String) XML Transformation Rule
+- `xml_policy` (String) Specify how the device handles responses that contain an XML MIME type.
+- `xml_rule` (String) This is the transformation rule that is run when the response contains an XML MIME type and the XML processing policy is set to XML or SOAP.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

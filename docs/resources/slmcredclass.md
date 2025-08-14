@@ -3,13 +3,13 @@
 page_title: "datapower_slmcredclass Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SLM credential class
+  An SLM credentials class identifies a set of users (credentials) to be subject to an SLM policy. An SLM credentials class consists of the following types and properties. A credential type that specifies the manner to obtain user credentials.A match type that determines the credentials to apply to the policy.Depending on the credentials and match type, properties that identify specific instances of credentials.
   CLI Alias: slm-cred
 ---
 
 # datapower_slmcredclass (Resource)
 
-SLM credential class
+An SLM credentials class identifies a set of users (credentials) to be subject to an SLM policy. An SLM credentials class consists of the following types and properties. <ul><li>A credential type that specifies the manner to obtain user credentials.</li><li>A match type that determines the credentials to apply to the policy.</li><li>Depending on the credentials and match type, properties that identify specific instances of credentials.</li></ul>
   - CLI Alias: `slm-cred`
 
 ## Example Usage
@@ -35,7 +35,7 @@ resource "datapower_slmcredclass" "test" {
 - `cred_match_type` (String) Match Type
   - CLI Alias: `match-type`
   - Choices: `per-extracted-value`, `exact-match`, `regexp-match`
-- `cred_type` (String) Credential Type
+- `cred_type` (String) Specify the manner to obtain the credentials (user identity) for each transaction. The default value is mapped credentials from an AAA action.
   - CLI Alias: `type`
   - Choices: `aaa-mapped-credential`, `aaa-username`, `mq-application`, `client-ip`, `request-header`, `ip-from-header`, `custom-stylesheet`
   - Default value: `aaa-mapped-credential`

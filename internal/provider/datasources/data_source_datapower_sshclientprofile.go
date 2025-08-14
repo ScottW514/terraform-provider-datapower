@@ -57,7 +57,7 @@ func (d *SSHClientProfileDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *SSHClientProfileDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SSH client profile",
+		MarkdownDescription: "An SSH client profile defines the authentication type, credentials, and cipher suites to use for an SSH client connection.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -85,12 +85,12 @@ func (d *SSHClientProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"profile_usage": schema.StringAttribute{
-							MarkdownDescription: "Profile usage",
+							MarkdownDescription: "Specify the usage of the profile. Only SFTP is supported.",
 							Computed:            true,
 						},
-						"ssh_user_authentication": models.GetDmSSHUserAuthenticationMethodsDataSourceSchema("User authentication", "user-auth", ""),
+						"ssh_user_authentication": models.GetDmSSHUserAuthenticationMethodsDataSourceSchema("Specify the available types of SSH user authentication for the SSH client. Authentication can be public key or password or both public key and password. When both methods are defined, public key authentication is attempted first.", "user-auth", ""),
 						"user_private_key": schema.StringAttribute{
-							MarkdownDescription: "User private key",
+							MarkdownDescription: "Specify the private key for public key authentication. User private keys must not be password protected.",
 							Computed:            true,
 						},
 						"password_alias": schema.StringAttribute{
@@ -98,29 +98,29 @@ func (d *SSHClientProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"persistent_connections": schema.BoolAttribute{
-							MarkdownDescription: "Persistent connections",
+							MarkdownDescription: "Specify whether to support persistent connections. By default, persistent connections are enabled. <ul><li>When enabled, new requests reuse the connection of a previous session without reauthentication.</li><li>When not enabled, new request must reauthenticate.</li></ul>",
 							Computed:            true,
 						},
 						"persistent_connection_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Persistent connection idle timeout",
+							MarkdownDescription: "Specify the idle duration in seconds for a persistent connection. When the connection remains idle for the specified duration, the connection is closed. Enter any value in the range 1 - 86000. The default value is 120.",
 							Computed:            true,
 						},
 						"strict_host_key_checking": schema.BoolAttribute{
-							MarkdownDescription: "Strict host key checking",
+							MarkdownDescription: "Specify how to check host keys during the connection and authentication phases. By default strict host key checking is not enabled. <ul><li>When enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are rejected.</li><li>When not enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are added to the known hosts list and accepted.</li></ul>",
 							Computed:            true,
 						},
 						"ciphers": schema.ListAttribute{
-							MarkdownDescription: "Ciphers",
+							MarkdownDescription: "Specify the SSH cipher suites to support.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"kex_alg": schema.ListAttribute{
-							MarkdownDescription: "Key exchange algorithms",
+							MarkdownDescription: "Specify the key exchange (KEX) algorithms to support.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"mac_alg": schema.ListAttribute{
-							MarkdownDescription: "Message authentication codes",
+							MarkdownDescription: "Specify the message authentication codes (MAC) to support.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

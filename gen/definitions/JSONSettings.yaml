@@ -1,68 +1,83 @@
 name: JSONSettings
-description: 'JSON settings'
-cli_alias: 'json-settings'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/JSONSettings'
+description: The JSON settings specify constraints for parsing JSON messages. JSON
+  settings work in conjunction with the parser limits in the XML manager. The more
+  restrictive limits apply.
+cli_alias: json-settings
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/JSONSettings
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestJSONSettings"'
-    test_expect_ds: '"AccTest_JSONSettings"'
-    example: 'JSONSettingsName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: JSONMaxNestingDepth
-    type: Int64
-    minimum: 64
-    maximum: 256
-    default: 64
-    description: 'Max nesting depth'
-    cli_alias: max-nesting-depth
-  - name: JSONMaxLabelLength
-    type: Int64
-    minimum: 256
-    maximum: 8192
-    default: 256
-    description: 'Max label length'
-    cli_alias: max-label-string-length
-  - name: JSONMaxValueLength
-    type: Int64
-    minimum: 8192
-    maximum: 5368709121
-    default: 8192
-    description: 'Max value length for strings'
-    cli_alias: max-value-string-length
-  - name: JSONMaxNumberLength
-    type: Int64
-    minimum: 128
-    maximum: 256
-    default: 128
-    description: 'Max value length for numbers'
-    cli_alias: max-number-length
-  - name: JSONDocumentSize
-    type: Int64
-    minimum: 4194304
-    maximum: 5368709121
-    default: 4194304
-    description: 'Max document size'
-    cli_alias: max-document-size
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestJSONSettings"'
+  test_expect_ds: '"AccTest_JSONSettings"'
+  example: JSONSettingsName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: JSONMaxNestingDepth
+  type: Int64
+  minimum: 64
+  maximum: 256
+  default: 64
+  description: Specify the maximum nesting depth in levels of label-value pairs. Enter
+    a value in the range 64 - 256. The default value is 64.
+  cli_alias: max-nesting-depth
+- name: JSONMaxLabelLength
+  type: Int64
+  minimum: 256
+  maximum: 8192
+  default: 256
+  description: Specify the maximum length in bytes of the label portion of label-value
+    pair. The length includes any white space between quotation marks. Enter a value
+    in the range 256 - 8192. The default value is 256.
+  cli_alias: max-label-string-length
+- name: JSONMaxValueLength
+  type: Int64
+  minimum: 8192
+  maximum: 5368709121
+  default: 8192
+  description: Specify the maximum number in bytes for string values of label-value
+    pairs. The length includes any white space between quotation marks. Enter a value
+    in the range 8192 - 5368709121. The default value is 8192.
+  cli_alias: max-value-string-length
+- name: JSONMaxNumberLength
+  type: Int64
+  minimum: 128
+  maximum: 256
+  default: 128
+  description: Specify the maximum number in bytes for number values of label-value
+    pairs. The number must be a contiguous string of bytes that contain no white space.
+    The number can include a minus sign and a positive or negative exponent. Enter
+    a value in the range 128 - 256. The default value is 128.
+  cli_alias: max-number-length
+- name: JSONDocumentSize
+  type: Int64
+  minimum: 4194304
+  maximum: 5368709121
+  default: 4194304
+  description: Specify the maximum document size in bytes for the body of the JSON
+    message. If the message is converted to JSONx, the maximum document size specifies
+    the size before the conversion to JSONx. <b>Note:</b> The document size of the
+    JSON message and the size of the JSONx equivalent might differ. Enter a value
+    in the range 4194304 - 5368709121. The default value is 4194304.
+  cli_alias: max-document-size

@@ -1,84 +1,109 @@
 name: MQv9PlusMFTSourceProtocolHandler
-description: 'IBM MQ v9+ MFT handler'
-cli_alias: 'source-idg-mqmft'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/MQv9PlusMFTSourceProtocolHandler'
+description: Configure the IBM MQ v9+ MFT handle to manage IBM MQ MFT protocol communications.
+cli_alias: source-idg-mqmft
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/MQv9PlusMFTSourceProtocolHandler
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestMQv9PlusMFTSourceProtocolHandler"'
-    test_expect_ds: '"AccTest_MQv9PlusMFTSourceProtocolHandler"'
-    example: 'MQv9PlusMFTSourceProtocolHandlerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: QueueManager
-    type: String
-    required: true
-    description: 'Queue manager (reference to MQManger or MQManagerGroup)'
-    test_value: '"AccTest_MQManager"'
-    test_bed_value: 'datapower_mqmanager.acc_test.id'
-    cli_alias: queue-manager
-  - name: GetQueue
-    type: String
-    required: true
-    example: 'queue'
-    description: 'Get queue'
-    cli_alias: get-queue
-  - name: GetMessageOptions
-    type: Int64
-    minimum: 0
-    maximum: 4294967295
-    default: 32769
-    description: 'Get message options'
-    cli_alias: get-message-options
-  - name: ConcurrentConnections
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    default: 1
-    description: 'Concurrent conversations'
-    cli_alias: concurrent-connections
-  - name: PollingInterval
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    default: 30
-    description: 'Polling interval'
-    cli_alias: polling-interval
-  - name: RetrieveBackoutSettings
-    type: Bool
-    default: false
-    description: 'Retrieve backout settings'
-    cli_alias: retrieve-backout-settings
-  - name: IgnoreBackoutErrors
-    type: Bool
-    default: false
-    description: 'Ignore backout errors'
-    cli_alias: ignore-backout-errors
-  - name: UseQMNameInURL
-    type: Bool
-    default: false
-    description: 'Use queue manager in URL'
-    cli_alias: use-qm-in-url
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestMQv9PlusMFTSourceProtocolHandler"'
+  test_expect_ds: '"AccTest_MQv9PlusMFTSourceProtocolHandler"'
+  example: MQv9PlusMFTSourceProtocolHandlerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: QueueManager
+  type: String
+  required: true
+  description: Specify the name of the queue manager that provides messaging services
+    for communicating applications by periodically monitoring or polling queues and
+    by ensuring that messages are directed to the correct receive queue or routed
+    to another queue manager. The local queue manager corresponds to a queue manager
+    running on another host on the network.
+  test_value: '"AccTest_MQManager"'
+  test_bed_value: datapower_mqmanager.acc_test.id
+  cli_alias: queue-manager
+- name: GetQueue
+  type: String
+  required: true
+  example: queue
+  description: Specify the name of the get queue associated with the queue manager.
+    The handler gets messages from this queue.
+  cli_alias: get-queue
+- name: GetMessageOptions
+  type: Int64
+  minimum: 0
+  maximum: 4294967295
+  default: 32769
+  description: Specify the cumulative value of the MQGET options that are applicable
+    to an IBM MQ message in decimal or hex format. The value is passed directly to
+    the IBM MQ API. The default value is 32769, which is the decimal value for the
+    <tt>MQGMO_WAIT</tt> and <tt>MQGMO_LOGICAL_ORDER</tt> options.
+  cli_alias: get-message-options
+- name: ConcurrentConnections
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  default: 1
+  description: Specify the number of concurrent IBM MQ conversations to allocate.
+    The default value is 1 but can be increased to improve performance.
+  cli_alias: concurrent-connections
+- name: PollingInterval
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  default: 30
+  description: Specify the duration in seconds to wait after processing all messages
+    before attempting to retrieve messages from the get queue.
+  cli_alias: polling-interval
+- name: RetrieveBackoutSettings
+  type: Bool
+  default: false
+  description: Specify whether to retrieve backout setting from the IBM MQ server.
+    <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue
+    queue name</b> settings from the IBM MQ server and checks these values. On a reattempt,
+    the handler uses the higher priority backout settings from the server. If the
+    server does not contain backout settings, The handler uses any existing backout
+    values, either empty or populated, from the local IBM MQ queue manager. If there
+    are no backout settings, the backout function is disabled.</p><p>When an alias
+    queue is used, its attributes are retrieved, not those of the base queue.</p>
+  cli_alias: retrieve-backout-settings
+- name: IgnoreBackoutErrors
+  type: Bool
+  default: false
+  description: Specify whether to ignore backout errors. <ul><li>>When enabled, ignore
+    the error in sending the transfer to the backout queue and commit the transfer
+    from the get queue.</li><li>When not enabled roll back and retry the transfer.
+    This setting is the default value.</li></ul>
+  cli_alias: ignore-backout-errors
+- name: UseQMNameInURL
+  type: Bool
+  default: false
+  description: Specify whether the var://service/URL-in variable returns the name
+    of the local queue manager or queue manager group when this configuration defines
+    a queue manager group as the queue manager. <ul><li>When enabled, the variable
+    returns the name of the queue manager.</li><li>When not enabled, the variable
+    returns the name of the queue manager group. This setting is the default value.</li></ul>
+  cli_alias: use-qm-in-url

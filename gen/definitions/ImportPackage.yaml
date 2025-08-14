@@ -1,85 +1,105 @@
 name: ImportPackage
-description: 'Import configuration file'
-cli_alias: 'import-package'
-cmd_group: 'config-management'
-rest_endpoint: '/mgmt/config/{domain}/ImportPackage'
+description: An import package allows the system to import a configuration package
+  from an external server, such as a centralized configuration server, when the configuration
+  is reloaded (such as during a restart). This package can optionally overwrite existing
+  files or objects. <p>An import package specifies a source, content type, and import
+  parameters for a single bundle.</p>
+cli_alias: import-package
+cmd_group: config-management
+rest_endpoint: /mgmt/config/{domain}/ImportPackage
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestImportPackage"'
-    test_expect_ds: '"AccTest_ImportPackage"'
-    example: 'ImportPackageName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: URL
-    type: String
-    required: true
-    example: 'http://localhost/config.zip'
-    description: 'URL'
-    cli_alias: source-url
-  - name: ImportFormat
-    type: String
-    enum:
-      - 'ZIP'
-      - 'XML'
-    required: true
-    default: 'ZIP'
-    description: 'Format'
-    cli_alias: import-format
-  - name: OverwriteFiles
-    type: Bool
-    required: true
-    default: true
-    description: 'Overwrite files'
-    cli_alias: overwrite-files
-  - name: OverwriteObjects
-    type: Bool
-    required: true
-    default: true
-    description: 'Overwrite objects'
-    cli_alias: overwrite-objects
-  - name: DestinationDomain
-    type: String
-    reference_to: Domain
-    description: 'Destination domain'
-    cli_alias: destination-domain
-  - name: DeploymentPolicy
-    type: String
-    reference_to: ConfigDeploymentPolicy
-    description: 'Deployment policy'
-    cli_alias: deployment-policy
-  - name: DeploymentPolicyParameters
-    type: String
-    reference_to: DeploymentPolicyParametersBinding
-    description: 'Deployment policy variables'
-    cli_alias: deployment-policy-variables
-  - name: LocalIPRewrite
-    type: Bool
-    default: true
-    description: 'Local IP rewrite'
-    cli_alias: local-ip-rewrite
-  - name: OnStartup
-    type: Bool
-    default: true
-    description: 'Import on startup'
-    cli_alias: auto-execute
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestImportPackage"'
+  test_expect_ds: '"AccTest_ImportPackage"'
+  example: ImportPackageName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: URL
+  type: String
+  required: true
+  example: http://localhost/config.zip
+  description: Specify the URL of the import package. The tool does not support SCP
+    and SFTP protocols. All other URL protocols are available; for example, HTTP,
+    HTTPS, or FTP.
+  cli_alias: source-url
+- name: ImportFormat
+  type: String
+  enum:
+  - ZIP
+  - XML
+  required: true
+  default: ZIP
+  description: Specify the format of the import package. The default value is ZIP.
+  cli_alias: import-format
+- name: OverwriteFiles
+  type: Bool
+  required: true
+  default: true
+  description: Specify whether to overwrite existing files. When enabled, files in
+    the package overwrite any file of the same path and name that already exist. The
+    default behavior is to overwrite files.
+  cli_alias: overwrite-files
+- name: OverwriteObjects
+  type: Bool
+  required: true
+  default: true
+  description: Specify whether to overwrite existing objects. When enabled, objects
+    in the package overwrite any object of the same class and name that already exist.
+    The default behavior is to overwrite objects.
+  cli_alias: overwrite-objects
+- name: DestinationDomain
+  type: String
+  reference_to: Domain
+  description: Destination domain
+  cli_alias: destination-domain
+- name: DeploymentPolicy
+  type: String
+  reference_to: ConfigDeploymentPolicy
+  description: Deployment policy
+  cli_alias: deployment-policy
+- name: DeploymentPolicyParameters
+  type: String
+  reference_to: DeploymentPolicyParametersBinding
+  description: Deployment policy variables
+  cli_alias: deployment-policy-variables
+- name: LocalIPRewrite
+  type: Bool
+  default: true
+  description: Specify whether to rewrite local IP addresses on import. When enabled,
+    local IP addresses in the import package are rewritten to match the local configuration
+    on import. In other words, a service bound to eth1 in the import package are rewritten
+    to bind to eth1 on the local system on import. The default behavior is to rewrite
+    IP addresses.
+  cli_alias: local-ip-rewrite
+- name: OnStartup
+  type: Bool
+  default: true
+  description: Specify whether to import the import package on startup. The default
+    behavior is to import on startup. <ul><li>When enabled, the import package is
+    imported at startup. The configuration is marked external and cannot be saved
+    locally. This setting is equivalent to 'import-always'.</li><li>When disabled,
+    the import must be started manually. The configuration is not marked external
+    and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>
+  cli_alias: auto-execute

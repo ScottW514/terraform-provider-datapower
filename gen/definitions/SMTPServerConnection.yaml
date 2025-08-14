@@ -1,82 +1,97 @@
 name: SMTPServerConnection
-description: 'SMTP Server Connection'
-cli_alias: 'smtp-server-connection'
-cmd_group: 'config-management'
-rest_endpoint: '/mgmt/config/{domain}/SMTPServerConnection'
+description: <p>The SMTP server connection defines the connection details for a Simple
+  Mail Transport Protocol (SMTP) server. The DataPower Gateway uses the SMTP server
+  connection for the following purposes</p><ul><li>B2B partners use this configuration
+  to send an e-mail message to an AS1 or ESMTP destination.</li><li>B2B gateways use
+  this configuration to request an AS1 MDN.</li></ul><p>For ease of configuration,
+  the DataPower Gateway provides the <tt>default</tt> SMTP server connection configuration
+  in each domain. By default, this configuration is empty and disabled.</p>
+cli_alias: smtp-server-connection
+cmd_group: config-management
+rest_endpoint: /mgmt/config/{domain}/SMTPServerConnection
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTest_SMTPServerConnection"'
-    test_expect_ds: '"AccTest_SMTPServerConnection"'
-    example: 'SMTPServerConnectionName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: MailServerHost
-    type: String
-    required: true
-    example: 'localhost'
-    description: 'Outgoing Mail Server (SMTP) Host'
-    cli_alias: server-host
-  - name: MailServerPort
-    type: Int64
-    required: true
-    default: 25
-    description: 'Mail Server Port'
-    cli_alias: server-port
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: Options
-    dm_type: DmSMTPOptions
-    description: 'Options'
-    cli_alias: options
-  - name: Auth
-    type: String
-    enum:
-      - 'plain'
-      - 'login'
-    default: 'plain'
-    description: 'Authentication Method'
-    cli_alias: auth
-  - name: AccountName
-    type: String
-    description: 'Account Name'
-    cli_alias: username
-  # DEPRECATED
-  # - name: AccountPassword
-  - name: AccountPasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Account Password Alias'
-    cli_alias: password-alias
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTest_SMTPServerConnection"'
+  test_expect_ds: '"AccTest_SMTPServerConnection"'
+  example: SMTPServerConnectionName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: MailServerHost
+  type: String
+  required: true
+  example: localhost
+  description: The IP address or host name of the SMTP server to send outgoing e-mail
+    messages.
+  cli_alias: server-host
+- name: MailServerPort
+  type: Int64
+  required: true
+  default: 25
+  description: The listening port on the SMTP server to send outgoing e-mail messages.
+  cli_alias: server-port
+- name: Options
+  dm_type: DmSMTPOptions
+  description: The SMTP options to enable for the SMTP client. If blank, the configuration
+    uses the setting from the SMTP client policy in the associated user agent.
+  cli_alias: options
+- name: Auth
+  type: String
+  enum:
+  - plain
+  - login
+  default: plain
+  description: With the client authentication option, the method to authenticate the
+    SMTP client. If blank, the configuration uses the setting from the SMTP client
+    policy in the associated user agent.
+  cli_alias: auth
+- name: AccountName
+  type: String
+  description: The account or user name of the SMTP client to authenticate on the
+    SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If
+    blank, the configuration uses the setting from the basic authentication policy
+    in the associated user agent.
+  cli_alias: username
+- name: AccountPasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: The password alias of the password for the SMTP client account or the
+    user name that is authenticated to the SMTP server. If password or alias are blank,
+    the configuration uses the setting from the basic authentication policy in the
+    associated user agent.
+  cli_alias: password-alias
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: The TLS profile type to secure connections between the DataPower Gateway
+    and its targets.
+  cli_alias: ssl-client-type
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: The TLS client profile to secure connections between the DataPower
+    Gateway and its targets.
+  cli_alias: ssl-client

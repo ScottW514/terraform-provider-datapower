@@ -3,12 +3,12 @@
 page_title: "datapower_timesettings Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Time Settings (default domain only)
+  
 ---
 
 # datapower_timesettings (Data Source)
 
-Time Settings (`default` domain only)
+<p>The time zone for the system. The time zone affects the time that the system displays. All timestamps use this time zone.</p><p><b>Note: </b>The system clock runs on Coordinated Universal Time (UTC).</p><p>When daylight saving time (DST), or summer time, applies to a time zone, the system adjusts the time when a DST boundary is crossed.</p>
 
 ## Example Usage
 
@@ -26,24 +26,24 @@ data "datapower_timesettings" "test" {
 
 ### Read-Only
 
-- `custom_tz_name` (String) Name
-- `daylight_offset_hours` (Number) Daylight savings time (DST) offset
-- `daylight_start_day` (String) DST start day
-- `daylight_start_month` (String) DST start month
-- `daylight_start_time_hours` (Number) DST start hour
-- `daylight_start_time_minutes` (Number) DST start minute
-- `daylight_start_week` (Number) DST start day instance
-- `daylight_stop_day` (String) DST stop day
-- `daylight_stop_month` (String) DST stop month
-- `daylight_stop_time_hours` (Number) DST stop hour
-- `daylight_stop_time_minutes` (Number) DST stop minutes
-- `daylight_stop_week` (Number) DST stop day instance
-- `enabled` (Boolean) Administrative state
-- `local_time_zone` (String) Local time zone
-- `offset_hours` (Number) Hours from UTC
-- `offset_minutes` (Number) Minutes from UTC
-- `tz_name_dst` (String) DST name
-- `utc_direction` (String) Direction from UTC
+- `custom_tz_name` (String) Specify the symbolic name for the custom time zone. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.
+- `daylight_offset_hours` (Number) Specify the offset in hours when the custom time zone observes DST. Generally, the offset is 1 hour. The default value is 1.
+- `daylight_start_day` (String) Specify the day of the week when DST starts for the custom time zone. The default value is Sunday.
+- `daylight_start_month` (String) Specify the month when DST starts for the custom time zone. The default value is March.
+- `daylight_start_time_hours` (Number) Specify the hour when DST starts for the custom time zone. If the start boundary is 2:30 AM, enter 2.
+- `daylight_start_time_minutes` (Number) Specify the minute when DST starts for the custom time zone. If the start boundary is 2:30 AM, enter 30.
+- `daylight_start_week` (Number) Specify the instance of the day in the month when DST starts for the custom time zone. If DST starts on the second Sunday in the month, enter 2.
+- `daylight_stop_day` (String) Specify the day of the week when DST ends for the custom time zone. The default value is Sunday.
+- `daylight_stop_month` (String) Specify the month when DST ends for the custom time zone. The default value is November.
+- `daylight_stop_time_hours` (Number) Specify the hour when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 2.
+- `daylight_stop_time_minutes` (Number) Specify the minute when DST ends for the custom time zone. If the end boundary is 2:30 AM, enter 30.
+- `daylight_stop_week` (Number) Specify the instance of the day in the month when DST ends for the custom time zone. If DST ends on the second Sunday in the month, enter 2.
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `local_time_zone` (String) Specify the time zone to use in management interfaces. The default value is EST-5EDT.
+- `offset_hours` (Number) Specify the number of hours the custom time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 2.
+- `offset_minutes` (Number) Specify the number of minutes the time zone is from UTC. If 2 hours and 30 minutes from UTC, enter 30.
+- `tz_name_dst` (String) Specify the symbolic name for the custom time zone during DST. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.
+- `utc_direction` (String) Specify the direction relative to UTC for the custom time zone. Asia is east. North America is west. The default value is East.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

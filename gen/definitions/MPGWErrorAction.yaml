@@ -1,73 +1,79 @@
 name: MPGWErrorAction
-description: 'Multi-Protocol Gateway Error Action'
-cli_alias: 'mpgw-error-action'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/MPGWErrorAction'
+description: Define how the Multi-Protocol gateway handles errors and generates error
+  responses to the client.
+cli_alias: mpgw-error-action
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/MPGWErrorAction
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestMPGWErrorAction"'
-    test_expect_ds: '"AccTest_MPGWErrorAction"'
-    example: 'MPGWErrorActionName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Type
-    type: String
-    enum:
-      - 'error-rule'
-      - 'proxy'
-      - 'redirect'
-      - 'static'
-    default: 'static'
-    test_value: '"static"'
-    description: 'Mode'
-    cli_alias: type
-  - name: RemoteURL
-    type: String
-    description: 'Remote URL'
-    cli_alias: remote-url
-  - name: LocalURL
-    type: String
-    description: 'Local page location'
-    test_value: '"store:///schemas/XMLSchema.dtd"'
-    cli_alias: local-url
-  - name: ErrorRule
-    type: String
-    reference_to: StylePolicyRule
-    description: 'Error Rule'
-    cli_alias: rule
-  - name: StatusCode
-    type: Int64
-    minimum: 100
-    maximum: 999
-    description: 'Response Code'
-    cli_alias: status-code
-  - name: ReasonPhrase
-    type: String
-    description: 'Reason Phrase'
-    cli_alias: reason-phrase
-  - name: HeaderInjection
-    type: List
-    element_type: DmWebGWErrorRespHeaderInjection
-    description: 'HTTP Header Injection'
-    cli_alias: header-inject
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestMPGWErrorAction"'
+  test_expect_ds: '"AccTest_MPGWErrorAction"'
+  example: MPGWErrorActionName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Type
+  type: String
+  enum:
+  - error-rule
+  - proxy
+  - redirect
+  - static
+  default: static
+  test_value: '"static"'
+  description: Select which mode to handle the errors and generate the responses.
+    The default mode is "Static (Local)".
+  cli_alias: type
+- name: RemoteURL
+  type: String
+  description: Specify the URL of the remote error page.
+  cli_alias: remote-url
+- name: LocalURL
+  type: String
+  description: Specify the URL of the local error page.
+  test_value: '"store:///schemas/XMLSchema.dtd"'
+  cli_alias: local-url
+- name: ErrorRule
+  type: String
+  reference_to: StylePolicyRule
+  description: Specify the custom error rule that the appliance runs to handle errors.
+  cli_alias: rule
+- name: StatusCode
+  type: Int64
+  minimum: 100
+  maximum: 999
+  description: Specify the HTTP status code that the appliance returns to the client.
+    Enter a value in the range 0 - 999.
+  cli_alias: status-code
+- name: ReasonPhrase
+  type: String
+  description: Specify the HTTP reason phrase that the appliance returns to the client.
+    For a proxy mode, the specified reason phrase overrides the fetched value.
+  cli_alias: reason-phrase
+- name: HeaderInjection
+  type: List
+  element_type: DmWebGWErrorRespHeaderInjection
+  description: Specify the name and the value for the HTTP header that the appliance
+    injects.
+  cli_alias: header-inject

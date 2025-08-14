@@ -58,7 +58,7 @@ func (r *SSHServerProfileResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SSH server profile", "sshserverprofile", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The SSH domain client profile defines the cipher suites.", "sshserverprofile", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -72,7 +72,7 @@ func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -82,7 +82,7 @@ func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"ciphers": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Ciphers", "ciphers", "").AddStringEnum("CHACHA20-POLY1305_AT_OPENSSH.COM", "AES128-CTR", "AES192-CTR", "AES256-CTR", "AES128-GCM_AT_OPENSSH.COM", "AES256-GCM_AT_OPENSSH.COM").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SSH cipher suites to support.", "ciphers", "").AddStringEnum("CHACHA20-POLY1305_AT_OPENSSH.COM", "AES128-CTR", "AES192-CTR", "AES256-CTR", "AES128-GCM_AT_OPENSSH.COM", "AES256-GCM_AT_OPENSSH.COM").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Computed:            true,
@@ -98,7 +98,7 @@ func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				})),
 			},
 			"kex_alg": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key exchange algorithms", "kex-alg", "").AddStringEnum("DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256", "ECDH-SHA2-NISTP256", "ECDH-SHA2-NISTP384", "ECDH-SHA2-NISTP521", "CURVE25519-SHA256_AT_LIBSSH.ORG").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the key exchange (KEX) algorithms to support.", "kex-alg", "").AddStringEnum("DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256", "ECDH-SHA2-NISTP256", "ECDH-SHA2-NISTP384", "ECDH-SHA2-NISTP521", "CURVE25519-SHA256_AT_LIBSSH.ORG").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Computed:            true,
@@ -114,7 +114,7 @@ func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				})),
 			},
 			"mac_alg": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Message authentication codes", "mac-alg", "").AddStringEnum("HMAC-SHA1", "HMAC-SHA2-256", "HMAC-SHA2-512", "UMAC-64_AT_OPENSSH.COM", "UMAC-128_AT_OPENSSH.COM", "HMAC-SHA1-ETM_AT_OPENSSH.COM", "HMAC-SHA2-256-ETM_AT_OPENSSH.COM", "HMAC-SHA2-512-ETM_AT_OPENSSH.COM", "UMAC-64-ETM_AT_OPENSSH.COM", "UMAC-128-ETM_AT_OPENSSH.COM").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the message authentication codes (MAC) to support.", "mac-alg", "").AddStringEnum("HMAC-SHA1", "HMAC-SHA2-256", "HMAC-SHA2-512", "UMAC-64_AT_OPENSSH.COM", "UMAC-128_AT_OPENSSH.COM", "HMAC-SHA1-ETM_AT_OPENSSH.COM", "HMAC-SHA2-256-ETM_AT_OPENSSH.COM", "HMAC-SHA2-512-ETM_AT_OPENSSH.COM", "UMAC-64-ETM_AT_OPENSSH.COM", "UMAC-128-ETM_AT_OPENSSH.COM").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Computed:            true,
@@ -130,13 +130,13 @@ func (r *SSHServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				})),
 			},
 			"send_pre_auth_msg": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Include SSH preauthentication message", "send-preauth-msg", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include a banner message during SSH preauthentication. The banner message contains the text to display to users before the login prompt.", "send-preauth-msg", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"pre_auth_msg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Preauthentication message", "preauth-msg", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the banner message to display to users before the login prompt. White space characters ( <tt>\\n</tt> , <tt>\\t</tt> ) are recognized and escaped. The banner message must be at least one character. The banner message is truncated at 4096 characters.", "preauth-msg", "").String,
 				Optional:            true,
 			},
 			"host_key_alg":       models.GetDmHostKeyAlgorithmsResourceSchema("Host key algorithms", "host-key-alg", "", false),

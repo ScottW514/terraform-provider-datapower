@@ -3,13 +3,12 @@
 page_title: "datapower_aaajwtgenerator Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  JWT Generator
-  CLI Alias: jwt-generator
+  
 ---
 
 # datapower_aaajwtgenerator (Resource)
 
-JWT Generator
+<p>The JSON Web Token (JWT) Generator specifies the JWT content and the cryptographic methods, such as signing and encryption methods, used for generating a JWT during the AAA postprocessing phase.</p>
   - CLI Alias: `jwt-generator`
 
 ## Example Usage
@@ -31,50 +30,50 @@ resource "datapower_aaajwtgenerator" "test" {
 
 ### Optional
 
-- `additional_claims` (Attributes) Additional claims
+- `additional_claims` (Attributes) <p>Additional JWT claims, such as audience "aud" claim, not before "nbf" claim, issued at "iat" claim, JWT ID "jit" claim, "nonce" claim, and custom claim, can be added for JWT.</p><p>The subject, "sub" claim is added by default. You can override the subject claim value by specifying the "sub" claim in the Custom claims field.</p>
   - CLI Alias: `add-claims` (see [below for nested schema](#nestedatt--additional_claims))
-- `audience` (List of String) Audience claim
+- `audience` (List of String) The audience, "aud", claim identifies the recipients that the JWT is intended for. The maximum length of the Audience claim is 256 characters.
   - CLI Alias: `aud`
-- `custom_claims` (String) Custom claims
+- `custom_claims` (String) The GatewayScript or XSLT file is processed to specify the custom claim. The GatewayScript or XSLT file must be stored in the <tt>local:</tt> or <tt>store:</tt> directory.
   - CLI Alias: `custom-claims`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `duration` (Number) Validity period
+- `duration` (Number) The validity period identifies the expiration time, "exp" claim. Enter a value in the range 1 - 31622400. The default value is 3600.
   - CLI Alias: `duration`
   - Range: `1`-`31622400`
   - Default value: `3600`
-- `enc_algorithm` (String) Encryption algorithm
+- `enc_algorithm` (String) Various encryption algorithms can be used to encrypt the JWT, such as A128CBC-HS256, A192CBC-HS384, A256CBC-HS512, A128GCM, A192GCM, and A256GCM. The default value is A128CBC-HS256.
   - CLI Alias: `enc`
   - Choices: `A128CBC-HS256`, `A192CBC-HS384`, `A256CBC-HS512`, `A128GCM`, `A192GCM`, `A256GCM`
   - Default value: `A128CBC-HS256`
-- `encrypt_algorithm` (String) Key management algorithm
+- `encrypt_algorithm` (String) Various key management algorithms can be used to encrypt the JWT, such as RSA1_5, RSA-OAEP, RSA-OAEP-256, A128KW, A192KW, A256KW, and dir. The default value is RSA1_5.
   - CLI Alias: `enc-alg`
   - Choices: `RSA1_5`, `RSA-OAEP`, `RSA-OAEP-256`, `A128KW`, `A192KW`, `A256KW`, `dir`
   - Default value: `RSA1_5`
-- `encrypt_certificate` (String) Encryption certificate
+- `encrypt_certificate` (String) The certificate alias can be used to encrypt the JWT. You can get the certificate alias by configuring the Crypto Certificate.
   - CLI Alias: `enc-cert`
   - Reference to: `datapower_cryptocertificate:id`
-- `encrypt_ss_key` (String) Encryption key
+- `encrypt_ss_key` (String) The shared secret key alias can be used to encrypt the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
   - CLI Alias: `enc-sskey`
   - Reference to: `datapower_cryptosskey:id`
-- `gen_method` (Attributes) JWT generation method
+- `gen_method` (Attributes) The signing and encryption methods can be used to secure and generate a JWT.
   - CLI Alias: `generate-method` (see [below for nested schema](#nestedatt--gen_method))
-- `issuer` (String) Issuer
+- `issuer` (String) The issuer claim, "iss", identifies the principal that issues the JWT. The maximum length is 256 characters. The default value is <tt>idg</tt> .
   - CLI Alias: `iss`
   - Default value: `idg`
-- `not_before` (Number) Delta for not before claim
+- `not_before` (Number) The not before claim, "nbf", indicates the time before which the JWT must not be accepted for processing. Enter a value in the range 0 - 480. The default value is 0.
   - CLI Alias: `nbf`
   - Range: `0`-`480`
-- `sign_algorithm` (String) Signing algorithm
+- `sign_algorithm` (String) Various signing algorithms can be used to generate the JWT signature, such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.
   - CLI Alias: `sign-alg`
   - Choices: `HS256`, `HS384`, `HS512`, `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512`, `PS256`, `PS384`, `PS512`
   - Default value: `RS256`
-- `sign_key` (String) Signing key
+- `sign_key` (String) The key alias can be used to sign the JWT. You can get a key alias by configuring the Crypto Key.
   - CLI Alias: `sign-key`
   - Reference to: `datapower_cryptokey:id`
-- `sign_ss_key` (String) Signing shared secret
+- `sign_ss_key` (String) The shared secret key alias can be used to sign the JWT. You can get the shared secret key alias by configuring the Crypto Shared Secret Key.
   - CLI Alias: `sign-sskey`
   - Reference to: `datapower_cryptosskey:id`
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the JWT Generator configuration.
   - CLI Alias: `summary`
 
 <a id="nestedatt--additional_claims"></a>

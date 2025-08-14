@@ -57,7 +57,7 @@ func (d *AssemblyActionInvokeDataSource) Metadata(_ context.Context, req datasou
 
 func (d *AssemblyActionInvokeDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Invoke assembly action",
+		MarkdownDescription: "The invoke assembly action call a service from your assembly.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,7 +77,7 @@ func (d *AssemblyActionInvokeDataSource) Schema(ctx context.Context, req datasou
 							Computed:            true,
 						},
 						"url": schema.StringAttribute{
-							MarkdownDescription: "URL",
+							MarkdownDescription: "Specify the URL of the target. You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short <tt>$( <i>property_name</i> )</tt> format when the assembly action does not have a property with the same name.",
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{
@@ -85,7 +85,7 @@ func (d *AssemblyActionInvokeDataSource) Schema(ctx context.Context, req datasou
 							Computed:            true,
 						},
 						"timeout": schema.Int64Attribute{
-							MarkdownDescription: "Timeout",
+							MarkdownDescription: "Specify the duration in seconds to wait for a reply from the target. The default value is 60.",
 							Computed:            true,
 						},
 						"user_name": schema.StringAttribute{
@@ -105,7 +105,7 @@ func (d *AssemblyActionInvokeDataSource) Schema(ctx context.Context, req datasou
 							Computed:            true,
 						},
 						"graph_ql_send_type": schema.StringAttribute{
-							MarkdownDescription: "GraphQL send type",
+							MarkdownDescription: "Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.",
 							Computed:            true,
 						},
 						"compression": schema.BoolAttribute{
@@ -113,35 +113,35 @@ func (d *AssemblyActionInvokeDataSource) Schema(ctx context.Context, req datasou
 							Computed:            true,
 						},
 						"cache_type": schema.StringAttribute{
-							MarkdownDescription: "Cache type",
+							MarkdownDescription: "Specify how to cache documents.",
 							Computed:            true,
 						},
 						"time_to_live": schema.Int64Attribute{
-							MarkdownDescription: "Time to live",
+							MarkdownDescription: "Specify the validity period in seconds for documents in the cache. The default value is 900.",
 							Computed:            true,
 						},
 						"cache_unsafe_response": schema.BoolAttribute{
-							MarkdownDescription: "Cache response to POST and PUT requests",
+							MarkdownDescription: "Specify whether to cache responses to POST and PUT requests when the cache policy type is set to time to live. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.",
 							Computed:            true,
 						},
 						"cache_key": schema.StringAttribute{
-							MarkdownDescription: "Cache key",
+							MarkdownDescription: "Specify the string for the cache key. If omitted, the entire URL is used as the key.",
 							Computed:            true,
 						},
 						"follow_redirects": schema.BoolAttribute{
-							MarkdownDescription: "Follow redirects",
+							MarkdownDescription: "Specify whether to follow redirects. Some protocols generate redirects. When enabled, the action attempts to resolve redirects transparently.",
 							Computed:            true,
 						},
 						"http_version": schema.StringAttribute{
-							MarkdownDescription: "HTTP version to server",
+							MarkdownDescription: "Specify the HTTP version for server-side connections. The default value is HTTP/1.1.",
 							Computed:            true,
 						},
 						"http2_required": schema.BoolAttribute{
-							MarkdownDescription: "HTTP/2 required",
+							MarkdownDescription: "Specify whether an HTTP/2 connection is required when connecting to the server. Only applicable when the HTTP version to the server is set to HTTP/2 and the connection uses TLS. The default value is off.",
 							Computed:            true,
 						},
 						"do_chunked_upload": schema.BoolAttribute{
-							MarkdownDescription: "Allow chunked uploads",
+							MarkdownDescription: "Specify whether to enable uploading of HTTP/1.1 chunked-encoded documents. For HTTP/1.1, the document body can be delimited by either <tt>Content-Length</tt> or chunked encoding. While all servers understand <tt>Content-Length</tt> , many servers fail to understand chunked encoding. For this reason, <tt>Content-Length</tt> is the standard method. However, the use of <tt>Content-Length</tt> can interfere with streaming. To stream full documents to an RFC 2616 compatible server, enable this property. Unlike other HTTP/1.1 features, you must know that the target server is RFC 2616 compatible.",
 							Computed:            true,
 						},
 						"persistent_connection": schema.BoolAttribute{
@@ -154,35 +154,35 @@ func (d *AssemblyActionInvokeDataSource) Schema(ctx context.Context, req datasou
 						},
 						"error_types": models.GetDmInvokeErrorTypeDataSourceSchema("Error types", "error-types", ""),
 						"output": schema.StringAttribute{
-							MarkdownDescription: "Output",
+							MarkdownDescription: "Specify the variable to store results. By default, results are stored in the <tt>message.body</tt> , <tt>message.headers</tt> , <tt>message.statuscode</tt> variables.",
 							Computed:            true,
 						},
 						"decode_request_params": schema.BoolAttribute{
-							MarkdownDescription: "Decode request parameters",
+							MarkdownDescription: "Specify whether to decode the request parameters in the target URL. When enabled, request parameters are decoded. By default, request parameters are not decoded.",
 							Computed:            true,
 						},
 						"encode_plus_char": schema.BoolAttribute{
-							MarkdownDescription: "Encode + characters in query",
+							MarkdownDescription: "Specify whether to encode + characters in query strings. When enabled, + characters are encoded to <tt>%2F</tt> . By default, + characters are not encoded.",
 							Computed:            true,
 						},
 						"keep_payload": schema.BoolAttribute{
-							MarkdownDescription: "Keep payload",
+							MarkdownDescription: "Specify whether to include the payload for DELETE requests. When enabled, DELETE requests include the payload. By default, DELETE requests do not include the payload.",
 							Computed:            true,
 						},
 						"inject_user_agent_header": schema.BoolAttribute{
-							MarkdownDescription: "Inject User-Agent header",
+							MarkdownDescription: "Specify whether to inject the default <tt>User-Agent</tt> header. When the <tt>User-Agent</tt> header is not in the request, inject this header to the request.",
 							Computed:            true,
 						},
 						"inject_proxy_headers": schema.BoolAttribute{
-							MarkdownDescription: "Inject proxy headers",
+							MarkdownDescription: "Specify whether to inject proxy-related headers. When the <tt>X-Forwarded-For</tt> , <tt>X-Forwarded-Host</tt> , and <tt>X-Forwarded-Port</tt> headers are not found in the request, inject theses headers to the request.",
 							Computed:            true,
 						},
 						"header_control_list": schema.StringAttribute{
-							MarkdownDescription: "Header control list",
+							MarkdownDescription: "Specify the control list that uses headers to accept or reject requests. By default, accepts all requests with headers.",
 							Computed:            true,
 						},
 						"parameter_control_list": schema.StringAttribute{
-							MarkdownDescription: "Parameter control list",
+							MarkdownDescription: "Specify the control list that uses URL parameters to accept or reject requests. By default, rejects all requests with URL parameters.",
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
@@ -194,11 +194,11 @@ func (d *AssemblyActionInvokeDataSource) Schema(ctx context.Context, req datasou
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -57,7 +57,7 @@ func (d *CryptoFWCredDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *CryptoFWCredDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Firewall credentials",
+		MarkdownDescription: "The set of crypto credentials (private keys, shared secret keys, and certificates) that are usable by an XML firewall when calling security extension functions to perform actions such as encryption, decryption, digital signing, and verification. If a firewall uses firewall credentials and a particular certificate or key is not included in this list, the crypto operation attempting to use the key or certificate fails.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

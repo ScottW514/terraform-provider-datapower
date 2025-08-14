@@ -50,14 +50,14 @@ func (d *GitOpsDataSource) Metadata(_ context.Context, req datasource.MetadataRe
 
 func (d *GitOpsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "GitOps",
+		MarkdownDescription: "Each DataPower domain supports a single GitOps instance that operates in either read-only mode or read/write mode. The DataPower GitOps integration helps to automate configuration management through version control. This integration supports industry-standard GitOps practices and authoring experiences.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
 				Required:            true,
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -65,15 +65,15 @@ func (d *GitOpsDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				Computed:            true,
 			},
 			"connection_type": schema.StringAttribute{
-				MarkdownDescription: "Connection type",
+				MarkdownDescription: "Specify the protocol to secure the connection. HTTPS is the default protocol.",
 				Computed:            true,
 			},
 			"mode": schema.StringAttribute{
-				MarkdownDescription: "Operation mode",
+				MarkdownDescription: "Specify the operational mode of the Git repository. The default mode is read-only.",
 				Computed:            true,
 			},
 			"commit_identifier_type": schema.StringAttribute{
-				MarkdownDescription: "Commit identifier type",
+				MarkdownDescription: "Specify the branch, commit hash, or tag for read and write GitOps operations against the repository. Use of branch is the default setting.",
 				Computed:            true,
 			},
 			"commit_identifier": schema.StringAttribute{
@@ -85,7 +85,7 @@ func (d *GitOpsDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				Computed:            true,
 			},
 			"interval": schema.Int64Attribute{
-				MarkdownDescription: "Sync Interval",
+				MarkdownDescription: "Specify the interval in minutes to poll the repository for changes. Enter a value in the range 0 - 1440. The default value is 5. To disable polling, specify 0.",
 				Computed:            true,
 			},
 			"ssh_client_profile": schema.StringAttribute{
@@ -101,7 +101,7 @@ func (d *GitOpsDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				Computed:            true,
 			},
 			"ssh_authorized_keys_file": schema.StringAttribute{
-				MarkdownDescription: "SSH authorized key file",
+				MarkdownDescription: "Specify the file that contains the authorized SSH keys. This file must be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.",
 				Computed:            true,
 			},
 			"tls_valcred": schema.StringAttribute{
@@ -109,11 +109,11 @@ func (d *GitOpsDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				Computed:            true,
 			},
 			"git_user": schema.StringAttribute{
-				MarkdownDescription: "Git user",
+				MarkdownDescription: "Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt> .",
 				Computed:            true,
 			},
 			"git_email": schema.StringAttribute{
-				MarkdownDescription: "Git email",
+				MarkdownDescription: "Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt> .",
 				Computed:            true,
 			},
 			"json_parse_settings": schema.StringAttribute{
@@ -121,7 +121,7 @@ func (d *GitOpsDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 				Computed:            true,
 			},
 			"template_policies": schema.ListNestedAttribute{
-				MarkdownDescription: "Template policies",
+				MarkdownDescription: "Specify the list of template policy for GitOps processing. The policy processing is in the order of the read or write GitOps operation.",
 				NestedObject:        models.DmGitOpsTemplatePolicyDataSourceSchema,
 				Computed:            true,
 			},

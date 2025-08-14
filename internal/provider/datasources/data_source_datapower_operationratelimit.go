@@ -57,7 +57,7 @@ func (d *OperationRateLimitDataSource) Metadata(_ context.Context, req datasourc
 
 func (d *OperationRateLimitDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API operation rate limit",
+		MarkdownDescription: "An API operation rate limit defines the operation-specific rate limit scheme. Operation specific rate limits override the schemes in the API plan.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

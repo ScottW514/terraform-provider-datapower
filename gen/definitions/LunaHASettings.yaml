@@ -1,38 +1,44 @@
 name: LunaHASettings
-description: 'SafeNet Luna HSM HA settings (`default` domain only)'
-cli_alias: 'luna-ha-settings'
-cmd_group: 'system'
-rest_endpoint: '/mgmt/config/default/LunaHASettings/LunaHASettings'
+description: Defines the high availability (HA) settings for the SafeNet Luna Network
+  HSM HA group.
+cli_alias: luna-ha-settings
+cmd_group: system
+rest_endpoint: /mgmt/config/default/LunaHASettings/LunaHASettings
 update_only: true
 default_domain_only: true
 skip_test: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: Mode
-    type: String
-    enum:
-      - 'activeBasic'
-      - 'activeEnhanced'
-    default: 'activeBasic'
-    description: 'Recovery mode'
-    cli_alias: recovery-mode
-  - name: Count
-    tf_name: recovery_count
-    type: Int64
-    minimum: -1
-    maximum: 500
-    description: 'Recovery count'
-    cli_alias: recovery-count
-  - name: Interval
-    type: Int64
-    minimum: 60
-    maximum: 1200
-    default: 60
-    description: 'Recovery interval'
-    cli_alias: recovery-interval
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: Mode
+  type: String
+  enum:
+  - activeBasic
+  - activeEnhanced
+  default: activeBasic
+  description: Specify the HA recovery mode. The default value is activeBasic.
+  cli_alias: recovery-mode
+- name: Count
+  tf_name: recovery_count
+  type: Int64
+  minimum: -1
+  maximum: 500
+  description: Specify the number of recovery attempts for failed members in the HA
+    group. Enter a value in the range 0 - 500. The default value is 0, which disables
+    automatic recovery.
+  cli_alias: recovery-count
+- name: Interval
+  type: Int64
+  minimum: 60
+  maximum: 1200
+  default: 60
+  description: Specify the interval in seconds between recovery attempts for failed
+    members in the HA group. Enter a value in the range 60 - 1200. The default value
+    is 60.
+  cli_alias: recovery-interval

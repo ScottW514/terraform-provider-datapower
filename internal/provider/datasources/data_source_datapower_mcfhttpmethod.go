@@ -57,7 +57,7 @@ func (d *MCFHttpMethodDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *MCFHttpMethodDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "HTTP Method Message Content Filter",
+		MarkdownDescription: "Filter based on the HTTP method. The filter value is matched to the HTTP method in the request message.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

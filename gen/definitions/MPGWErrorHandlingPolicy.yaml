@@ -1,39 +1,48 @@
 name: MPGWErrorHandlingPolicy
-description: 'Multi-Protocol Gateway Error Policy'
-cli_alias: 'mpgw-error-handling'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/MPGWErrorHandlingPolicy'
+description: A Multi-Protocol gateway error policy consists of one or more error actions.
+  A service runs an error action depending on whether or not a corresponding matching
+  rule selects the action for processing. A service can have one policy active at
+  a time. When an error occurs in the Multi-Protocol Gateway from an HTTP or HTTPS
+  request flow and no precedent error handler handles the error, the service calls
+  the error policy.
+cli_alias: mpgw-error-handling
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/MPGWErrorHandlingPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestMPGWErrorHandlingPolicy"'
-    test_expect_ds: '"AccTest_MPGWErrorHandlingPolicy"'
-    example: 'MPGWErrorHandlingPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: PolicyMaps
-    type: List
-    element_type: DmWebGWErrorPolicyMap
-    required: true
-    description: 'Policy Maps'
-    cli_alias: match
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestMPGWErrorHandlingPolicy"'
+  test_expect_ds: '"AccTest_MPGWErrorHandlingPolicy"'
+  example: MPGWErrorHandlingPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: PolicyMaps
+  type: List
+  element_type: DmWebGWErrorPolicyMap
+  required: true
+  description: The policy maps contain a list of error response action rules and their
+    corresponding matching rules. When the policy evaluates the matching rules and
+    finds a match, it runs the corresponding error response action. The policy runs
+    the first error response action with a successful match.
+  cli_alias: match

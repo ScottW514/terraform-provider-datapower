@@ -57,7 +57,7 @@ func (d *AnalyticsEndpointDataSource) Metadata(_ context.Context, req datasource
 
 func (d *AnalyticsEndpointDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Analytics endpoint",
+		MarkdownDescription: "An analytics endpoint buffers API event data and offloads the collected data as a bulk activity log to a remote server. When offloaded, you can use this data for display and analysis.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *AnalyticsEndpointDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"analytics_server_url": schema.StringAttribute{
-							MarkdownDescription: "Analytics server URL",
+							MarkdownDescription: "Specify the URL to offload the collected API event data. The URL can start with <tt>http</tt> or <tt>https</tt> for an Elasticsearch server or start with <tt>dpkafka</tt> for a Kafka server. <ul><li>For an Elasticsearch server, specify the full URL to the endpoint starting with the <tt>http</tt> or <tt>https</tt> protocol identifier. With HTTPS, you must assign a TLS client profile.</li><li>For a Kafka server, specify only the name of the existing Kafka cluster configuration after the <tt>dpkafka</tt> protocol identifier. To complete the URL, you must specify which request topic to offload analytics data.</li></ul>",
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{
@@ -93,31 +93,31 @@ func (d *AnalyticsEndpointDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"max_records": schema.Int64Attribute{
-							MarkdownDescription: "Maximum records",
+							MarkdownDescription: "Specify the maximum number of records that can be buffered for each API gateway. The collected analytics data for an API gateway is offloaded when 80% of this value or the defined interval is reached. The value must be a power of 2. Enter a value in the range 256 - 65536. The default value is 1024.",
 							Computed:            true,
 						},
 						"max_records_memory_kb": schema.Int64Attribute{
-							MarkdownDescription: "Maximum size for each record",
+							MarkdownDescription: "Specify the maximum size for each record in KB. Enter a value in the range 4 - 1024. The default value is 512.",
 							Computed:            true,
 						},
 						"max_delivery_memory_mb": schema.Int64Attribute{
-							MarkdownDescription: "Maximum size for each delivery",
+							MarkdownDescription: "Specify the maximum size for each delivery in MB. Enter a value in the range 1 - 1024. The default value is 512.",
 							Computed:            true,
 						},
 						"interval": schema.Int64Attribute{
-							MarkdownDescription: "Interval",
+							MarkdownDescription: "Specify the interval in seconds between offloads. Data is offloaded at this interval or when an API gateway reaches 80% of the value set for maximum records. Enter a value in the range 1 - 3600. The default value is 600",
 							Computed:            true,
 						},
 						"delivery_connections": schema.Int64Attribute{
-							MarkdownDescription: "Connections per delivery",
+							MarkdownDescription: "Specify the number of connections to establish per delivery to the remote server to offload analytics data. Each connection can carry a bulk activity log. Enter a value in the range 1 - 100. The default value is 1.",
 							Computed:            true,
 						},
 						"enable_jwt": schema.BoolAttribute{
-							MarkdownDescription: "Enable JWT",
+							MarkdownDescription: "Enable JWT feature sending logs to analytics server.",
 							Computed:            true,
 						},
 						"management_url": schema.StringAttribute{
-							MarkdownDescription: "Management platform endpoint",
+							MarkdownDescription: "Specify the URL of management platform endpoint to retrieve a JWT. The URL must use the <tt>http</tt> or <tt>https</tt> protocol.",
 							Computed:            true,
 						},
 						"management_url_ssl_client": schema.StringAttribute{
@@ -133,23 +133,23 @@ func (d *AnalyticsEndpointDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"grant_type": schema.StringAttribute{
-							MarkdownDescription: "Grant type",
+							MarkdownDescription: "Specify the grant type for requesting JWT tokens. Only the client credentials grant type is supported.",
 							Computed:            true,
 						},
 						"scope": schema.StringAttribute{
-							MarkdownDescription: "Scope",
+							MarkdownDescription: "Specify the scope for requesting JWT tokens. The value is in the <tt>openid analytics_subsystem_ID/name</tt> format.",
 							Computed:            true,
 						},
 						"persistent_connection": schema.BoolAttribute{
-							MarkdownDescription: "Negotiate persistent connections",
+							MarkdownDescription: "Specify whether to negotiate persistent connections. By default, persistent connections are enabled. The HTTP/2 protocol controls persistent connections and reuse. Therefore, these settings are ignored.",
 							Computed:            true,
 						},
 						"timeout": schema.Int64Attribute{
-							MarkdownDescription: "Timeout",
+							MarkdownDescription: "Specify the intra-transaction timeout for connections, which is the maximum idle time to allow in a transaction. This timer monitors idle time in the data transfer process. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 90.",
 							Computed:            true,
 						},
 						"persistent_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Persistent timeout",
+							MarkdownDescription: "Specify the inter-transaction timeout for connections, which is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction. When the idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 60.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

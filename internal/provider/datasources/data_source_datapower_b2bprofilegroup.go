@@ -57,7 +57,7 @@ func (d *B2BProfileGroupDataSource) Metadata(_ context.Context, req datasource.M
 
 func (d *B2BProfileGroupDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "B2B partner profile group",
+		MarkdownDescription: "A group of B2B partner profiles that can be enable or disable at the same time. Each partner profile in the group is identified by its name and destination. Without a destination, the configuration uses the first destination for the partner profile.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

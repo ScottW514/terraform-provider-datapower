@@ -1,56 +1,73 @@
 name: CertMonitor
-description: 'Certificate monitor (`default` domain only)'
-cli_alias: 'cert-monitor'
-cmd_group: 'system'
-rest_endpoint: '/mgmt/config/default/CertMonitor/Certificate Monitor'
+description: The certificate monitor is a task that checks the expiration date of
+  all certificates. The defined values establish both the polling frequency and a
+  notification window during which the monitor generates log messages that record
+  when certificates are nearing their expiration date. The certificate monitor scans
+  all certificates when first enabled.
+cli_alias: cert-monitor
+cmd_group: system
+rest_endpoint: /mgmt/config/default/CertMonitor/Certificate Monitor
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: PollingInterval
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 1
-    description: 'Polling interval'
-    cli_alias: poll
-  - name: ReminderTime
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 30
-    description: 'Reminder time'
-    cli_alias: reminder
-  - name: LogLevel
-    type: String
-    enum:
-      - 'emerg'
-      - 'alert'
-      - 'critic'
-      - 'error'
-      - 'warn'
-      - 'notice'
-      - 'info'
-      - 'debug'
-    required: true
-    default: 'warn'
-    description: 'Log level'
-    cli_alias: log-level
-  - name: DisableExpiredCerts
-    type: Bool
-    required: true
-    default: false
-    description: 'Disable expired certificates'
-    cli_alias: disable-expired-certs
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: PollingInterval
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 1
+  description: Specify the frequency that the certificate monitor scans certificates
+    for their expiration. The certificate monitor scans for expiry at each restart.
+    If today is Monday and you set the frequency to three days and you restart on
+    Wednesday, the next scan is three days later. Enter a value in the range 1 - 65535.
+    The default value is 1.
+  cli_alias: poll
+- name: ReminderTime
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 30
+  description: Specify the notification window before certificate expiration to start
+    the logging of certificate expiration messages. For example, the value 21 specifies
+    that all certificates to expire in three weeks or less generate a log message
+    at the defined priority. Enter a value in the range 1 - 65535. The default value
+    is 30.
+  cli_alias: reminder
+- name: LogLevel
+  type: String
+  enum:
+  - emerg
+  - alert
+  - critic
+  - error
+  - warn
+  - notice
+  - info
+  - debug
+  required: true
+  default: warn
+  description: Specify the priority to log messages about the impending expiration
+    date of certificates. By default, messages are logged as warnings.
+  cli_alias: log-level
+- name: DisableExpiredCerts
+  type: Bool
+  required: true
+  default: false
+  description: Specify the behavior for expired certificates. By default, expired
+    certificate objects are not disabled, which allows the use of expired certificates.
+    When enabled, prevents the use of expired certificates either directly or through
+    inheritance, which disables the use of any objects the reference expired certificates.
+  cli_alias: disable-expired-certs

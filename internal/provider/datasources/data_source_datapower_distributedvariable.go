@@ -50,14 +50,14 @@ func (d *DistributedVariableDataSource) Metadata(_ context.Context, req datasour
 
 func (d *DistributedVariableDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Distributed variable settings",
+		MarkdownDescription: "The domain-specific configuration that define the settings for using distributed variables.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
 				Required:            true,
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -65,7 +65,7 @@ func (d *DistributedVariableDataSource) Schema(ctx context.Context, req datasour
 				Computed:            true,
 			},
 			"gateway_peering": schema.StringAttribute{
-				MarkdownDescription: "Gateway peering",
+				MarkdownDescription: "Specify the gateway-peering instance for distributed variable. This instance synchronizes the variables among the configured members. If you do not want to persist variable values across a restart, store the data in memory.",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

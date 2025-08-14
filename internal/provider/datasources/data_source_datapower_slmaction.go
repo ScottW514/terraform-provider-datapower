@@ -57,7 +57,7 @@ func (d *SLMActionDataSource) Metadata(_ context.Context, req datasource.Metadat
 
 func (d *SLMActionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SLM action",
+		MarkdownDescription: "An SLM action defines the control procedure to trigger for transactions in excess of the threshold. As part of any control procedure, the monitor writes an event to the log for each transaction that exceeds a threshold.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *SLMActionDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: "Type",
+							MarkdownDescription: "Specify the administrative sanction to trigger for transactions in excess of the threshold. This action is beyond the generation of a log message.",
 							Computed:            true,
 						},
 						"log_level": schema.StringAttribute{

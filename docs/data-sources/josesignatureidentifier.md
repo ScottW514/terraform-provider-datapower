@@ -3,12 +3,12 @@
 page_title: "datapower_josesignatureidentifier Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Signature Identifier
+  JOSE Signature Identifier object for the JSON Web Verify.
 ---
 
 # datapower_josesignatureidentifier (Data Source)
 
-Signature Identifier
+JOSE Signature Identifier object for the JSON Web Verify.
 
 ## Example Usage
 
@@ -39,13 +39,13 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `certificate` (String) Key Material
-- `header_param` (Attributes List) Header Parameters (see [below for nested schema](#nestedatt--result--header_param))
+- `certificate` (String) Use the certificate to verify the signature.
+- `header_param` (Attributes List) The JOSE header parameters used to identify the signature. (see [below for nested schema](#nestedatt--result--header_param))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ss_key` (String) Key Material
-- `type` (String) Key Material Type
-- `user_summary` (String) Comments
-- `valid_algorithms` (List of String) Valid algorithms
+- `ss_key` (String) Use the shared secret key to verify the signature.
+- `type` (String) Key material type used to verify the signature.
+- `user_summary` (String) A descriptive summary for the configuration.
+- `valid_algorithms` (List of String) Specifies an array of algorithm values that are valid for signature verification. When specified, the JWS <tt>alg</tt> header parameter value must match a value in this set. By default, all allowed JWS <tt>alg</tt> header parameters values are valid.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

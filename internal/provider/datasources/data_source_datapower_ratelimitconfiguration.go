@@ -50,14 +50,14 @@ func (d *RateLimitConfigurationDataSource) Metadata(_ context.Context, req datas
 
 func (d *RateLimitConfigurationDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Rate limit configuration",
+		MarkdownDescription: "A rate limit configuration defines domain-scoped tuning parameters for the rate limit algorithm.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
 				Required:            true,
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"parameters": schema.ListNestedAttribute{

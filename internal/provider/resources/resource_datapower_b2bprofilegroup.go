@@ -54,7 +54,7 @@ func (r *B2BProfileGroupResource) Metadata(ctx context.Context, req resource.Met
 
 func (r *B2BProfileGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("B2B partner profile group", "b2b-profile-group", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A group of B2B partner profiles that can be enable or disable at the same time. Each partner profile in the group is identified by its name and destination. Without a destination, the configuration uses the first destination for the partner profile.", "b2b-profile-group", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

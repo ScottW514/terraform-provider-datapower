@@ -3,13 +3,13 @@
 page_title: "datapower_wsrrsubscription Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WSRR subscription
+  The WSRR (WebSphere Service Registry and Repository) subscription is useful when you want to deploy web services with a direct reference to a service document. The configuration references a WSRR server, the name of the WSRR resource, and its namespace. If more than one version of the service document exists, you must specify the version to reference. The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.
   CLI Alias: wsrr-subscription
 ---
 
 # datapower_wsrrsubscription (Resource)
 
-WSRR subscription
+The WSRR (WebSphere Service Registry and Repository) subscription is useful when you want to deploy web services with a direct reference to a service document. The configuration references a WSRR server, the name of the WSRR resource, and its namespace. If more than one version of the service document exists, you must specify the version to reference. <p>The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.</p>
   - CLI Alias: `wsrr-subscription`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_wsrrsubscription" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `object_name` (String) Object name
+- `object_name` (String) Specify the object name to unambiguously identify the WSRR resource. This property is used with the namespace.
   - CLI Alias: `object-name`
 - `object_type` (String) Subscription object
   - CLI Alias: `object-type`
@@ -44,22 +44,22 @@ resource "datapower_wsrrsubscription" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `fetch_policy_attachments` (Boolean) Fetch policy attachments
+- `fetch_policy_attachments` (Boolean) Specify whether to fetch external policy attachments. When enabled, the registry is queried for external policy attachments for retrieved resources. These policies are processed when the service allow external policy attachments.
   - CLI Alias: `fetch-policy-attachments`
   - Default value: `false`
 - `method` (String) Synchronization method
   - CLI Alias: `method`
   - Choices: `manual`, `poll`, `automatic`
   - Default value: `poll`
-- `namespace` (String) Namespace
+- `namespace` (String) Specify the namespace to unambiguously identify the WSRR resource. This property is used with the object name.
   - CLI Alias: `namespace`
 - `object_version` (String) Object version
   - CLI Alias: `version`
-- `refresh_interval` (Number) Refresh interval
+- `refresh_interval` (Number) Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.
   - CLI Alias: `refresh-interval`
   - Range: `60`-`4294967`
   - Default value: `86400`
-- `use_version` (Boolean) Use object version
+- `use_version` (Boolean) Specify whether to query the registry for a specific object version. Set this property when the registry contains more than one version of an object.
   - CLI Alias: `use-version`
   - Default value: `false`
 - `user_summary` (String) Comments

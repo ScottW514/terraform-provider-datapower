@@ -55,7 +55,7 @@ func (r *MessageMatchingResource) Metadata(ctx context.Context, req resource.Met
 
 func (r *MessageMatchingResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Message Matching", "message-matching", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>Message Matching determines what messages will be monitored by any monitor that uses the Message Matching object. It is a definition of the traffic flow that is monitored.</p><p>To capture all messages, set the HTTP Method field to 'any' and leave all other fields blank.</p>", "message-matching", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,15 +84,15 @@ func (r *MessageMatchingResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 			},
 			"ip_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("IP Addresses", "ip", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use an IP network address and prefix length to define a contiguous range of IP addresses included in this traffic definition (for example, 10.10.100.0/28 specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies a single host address).", "ip", "").String,
 				Optional:            true,
 			},
 			"ip_exclude": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Excluded IP Addresses", "ip-exclude", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use an IP network address and prefix length to define a contiguous range of IP addresses excluded from this traffic definition (for example, 10.10.100.0/28 specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies a single host address).", "ip-exclude", "").String,
 				Optional:            true,
 			},
 			"http_method": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Method", "method", "").AddStringEnum("any", "OPTIONS", "GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "TRACE", "CONNECT").AddDefaultValue("any").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the HTTP method included in this traffic definition. The default value is any, which indicates that HTTP method is not a match criteria.", "method", "").AddStringEnum("any", "OPTIONS", "GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "TRACE", "CONNECT").AddDefaultValue("any").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -101,17 +101,17 @@ func (r *MessageMatchingResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("any"),
 			},
 			"http_header": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Headers", "http-header", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Click this tab to add match criteria for inclusive HTTP header fields to the traffic definition. The field with its corresponding value must appear in the HTTP header of the message to qualify for inclusion.", "http-header", "").String,
 				NestedObject:        models.DmHTTPHeaderResourceSchema,
 				Optional:            true,
 			},
 			"http_header_exclude": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Excluded HTTP Headers", "http-header-exclude", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Click this tab to add match criteria for exclusive HTTP header field to the traffic definition. The field with its corresponding value cannot appear in the HTTP header of the message to qualify for exclusion.", "http-header-exclude", "").String,
 				NestedObject:        models.DmHTTPHeaderResourceSchema,
 				Optional:            true,
 			},
 			"request_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Request URL", "request-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Provide a literal or wildcard expression to define a URL set included in this traffic definition. The following wildcard characters are available when defining the URL set. <table><tr><td valign=\"top\">asterisk (*)</td><td valign=\"top\">Matches 0 or more occurrences of any character</td></tr><tr><td valign=\"top\">question mark (?)</td><td valign=\"top\">Matches one occurrence of any single character</td></tr><tr><td valign=\"top\">brackets ( [ ] )</td><td valign=\"top\">Defines a character or numeric range. For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or xsl.</td></tr></table>", "request-url", "").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

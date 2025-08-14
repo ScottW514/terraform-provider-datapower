@@ -57,7 +57,7 @@ func (d *APIResultDataSource) Metadata(_ context.Context, req datasource.Metadat
 
 func (d *APIResultDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Result API action",
+		MarkdownDescription: "The result API action prepares responses to the client based on the result from the execute API action.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *APIResultDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"output": schema.StringAttribute{
-							MarkdownDescription: "Output",
+							MarkdownDescription: "Specify the destination context that receives variables from the API context. The result API action uses the variables in the destination context to prepare the final response to the client. The default value of <tt>OUTPUT</tt> indicates to transmit the context variables to the destination context. When the value is changed or removed, the context variables are not transmitted to the destination context. Therefore, no response is returned to the client.",
 							Computed:            true,
 						},
 						"title": schema.StringAttribute{
@@ -89,7 +89,7 @@ func (d *APIResultDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -3,13 +3,13 @@
 page_title: "datapower_apirule Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API rule
+  An API rule completes the processing of API requests or completes the operations that are required by the API requests.
   CLI Alias: api-rule
 ---
 
 # datapower_apirule (Resource)
 
-API rule
+An API rule completes the processing of API requests or completes the operations that are required by the API requests.
   - CLI Alias: `api-rule`
 
 ## Example Usage
@@ -31,12 +31,12 @@ resource "datapower_apirule" "test" {
 
 ### Optional
 
-- `actions` (List of String) API actions
+- `actions` (List of String) Specify the processing actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.
   - CLI Alias: `action`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `dynamic_actions` (Attributes List) API dynamic actions
+- `dynamic_actions` (Attributes List) Specify the dynamic actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.
   - CLI Alias: `dynamic-action` (see [below for nested schema](#nestedatt--dynamic_actions))
-- `dynamic_actions_mode` (Boolean) Use dynamic actions
+- `dynamic_actions_mode` (Boolean) Specify whether to use dynamic actions instead of explicit actions. Dynamic actions take configuration values at run time and override the default properties in API actions. API rules that contain dynamic actions can be included in user-defined policies that API Connect advertises and makes available in the API Connect assembly editor.
   - CLI Alias: `dynamic-actions-mode`
   - Default value: `false`
 - `user_summary` (String) Comments

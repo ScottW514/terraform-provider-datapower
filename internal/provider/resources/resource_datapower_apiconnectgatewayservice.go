@@ -57,7 +57,7 @@ func (r *APIConnectGatewayServiceResource) Metadata(ctx context.Context, req res
 
 func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API Connect gateway service", "apic-gw-service", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The API Connect gateway service defines the type of gateway service and manages connections with API Connect. When configured, the DataPower Gateway creates a gateway service to retrieve data from API Connect to define the configuration to process API requests.", "apic-gw-service", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -71,7 +71,7 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -81,56 +81,56 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "local-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or interface through that API Connect uses to manage the gateway service. The default value is 0.0.0.0.", "local-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "local-port", "").AddDefaultValue("3000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port for the gateway service. The default value is 3000. <p><b>Note:</b> The gateway service uses four additional consecutive ports after the local port. Therefore, all five consecutive ports must be clear of conflicts.</p>", "local-port", "").AddDefaultValue("3000").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(3000),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "sslserverprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to secure connections between API Connect to the gateway service. The following restrictions apply. <ul><li>Keys and certificates are restricted to PEM and PKCS #12 formats.</li><li>The validation credentials must use PEM formatted material.</li></ul>", "ssl-server", "sslserverprofile").String,
 				Optional:            true,
 			},
 			"api_gateway_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("API gateway address", "api-gw-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias to accept API requests. The default value is 0.0.0.0. This address is used with its port to create an HTTPS handler.", "api-gw-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"api_gateway_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("API gateway port", "api-gw-port", "").AddDefaultValue("9443").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the listening port for API requests. The default value is 9443. This port is used with its address to create an HTTPS handler.", "api-gw-port", "").AddDefaultValue("9443").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(9443),
 			},
 			"gateway_peering": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Gateway peering", "gateway-peering", "gatewaypeering").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering instance that manages data across the gateway peers. The following restrictions apply. <ul><li>When TLS and peer group mode are enabled, all peers must use the same crypto material.</li><li>Keys and certificates are restricted to PEM and PKCS #12 formats.</li></ul>", "gateway-peering", "gatewaypeering").String,
 				Optional:            true,
 			},
 			"gateway_peering_manager": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Gateway-peering manager", "gateway-peering-manager", "gatewaypeeringmanager").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering manager that manages gateway-peering instances for the gateway service. This property is meaningful when the gateway type is an API gateway.", "gateway-peering-manager", "gatewaypeeringmanager").AddDefaultValue("default").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"v5_compatibility_mode": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("V5 compatibility mode", "v5-compatibility-mode", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the gateway service is a Multi-Protocol Gateway or an API gateway. <ui><li>When enabled, the gateway service is a Multi-Protocol Gateway that is compatible with API Connect version 5.</li><li>When disabled, that gateway service is an API gateway this is not compatible with API Connect v5.</li></ui>", "v5-compatibility-mode", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_defined_policies": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("User-defined policies", "user-defined-policies", "assemblyfunction").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify user-defined policies to advertise to API Connect for use in the API Connect Assembly Editor. This property is meaningful when the gateway type is an API gateway. <p>For an assembly function that is a user-defined policy, configure the assembly function with a mechanism other than a watched file that is processed by a configuration sequence. Objects that are created through the processing of configuration sequences are not persisted to the startup configuration. The preferred method for user-defined policies is to define them explicitly so that they persist to the startup configuration.</p>", "user-defined-policies", "assemblyfunction").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"v5c_slm_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SLM peer mode", "slm-mode", "").AddStringEnum("autounicast", "unicast", "multicast").AddDefaultValue("autounicast").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the peer group type for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway.", "slm-mode", "").AddStringEnum("autounicast", "unicast", "multicast").AddDefaultValue("autounicast").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -139,15 +139,15 @@ func (r *APIConnectGatewayServiceResource) Schema(ctx context.Context, req resou
 				Default: stringdefault.StaticString("autounicast"),
 			},
 			"ip_multicast": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("IP multicast", "ip-multicast", "ipmulticast").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP multicast configuration for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is multicast.", "ip-multicast", "ipmulticast").String,
 				Optional:            true,
 			},
 			"ip_unicast": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("IP unicast", "ip-unicast", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the address of the unicast peer group for the SLM policy. This property is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode is unicast.", "ip-unicast", "").String,
 				Optional:            true,
 			},
 			"jwt_validation_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("JWT validation mode", "jwt-validate-mode", "").AddStringEnum("request", "require").AddDefaultValue("request").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT validation mode. This property does not control whether a token is validated. This property controls whether transactions fail when validation fails.", "jwt-validate-mode", "").AddStringEnum("request", "require").AddDefaultValue("request").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

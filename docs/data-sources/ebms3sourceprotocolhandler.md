@@ -3,12 +3,12 @@
 page_title: "datapower_ebms3sourceprotocolhandler Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  ebMS3 handler
+  The configuration for an ebMS3 handler.
 ---
 
 # datapower_ebms3sourceprotocolhandler (Data Source)
 
-ebMS3 handler
+The configuration for an ebMS3 handler.
 
 ## Example Usage
 
@@ -40,22 +40,22 @@ Read-Only:
 
 - `aaa_policy` (String) AAA policy
 - `acl` (String) Access control list
-- `allow_compression` (Boolean) Compression
+- `allow_compression` (Boolean) Specify whether to enable GZIP compression with clients. By default, compression is not enabled.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `credential_charset` (String) Credential character set
-- `http_version` (String) HTTP version to client
+- `credential_charset` (String) Specify the character encoding of the original basic authentication values. The default value is protocol, which is ISO-8859-1 (Latin 1). <p>Basic authentication credentials are combined and base64 encoded in the HTTP <tt>Authorization</tt> request header. The contents of the <tt>Authorization</tt> header is transcoded to UTF-8.</p>
+- `http_version` (String) Specify the HTTP version for client connection. The default value is HTTP/1.1.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_address` (String) Local IP address
-- `local_port` (Number) Local port
-- `max_hdr_count` (Number) Max request headers
-- `max_name_hdr_len` (Number) Max length of header name
-- `max_query_string_len` (Number) Max length of query string
-- `max_total_hdr_len` (Number) Max total header length
-- `max_url_len` (Number) Max URL length
-- `max_value_hdr_len` (Number) Max length of header value
-- `persistent_connections` (Boolean) Persistent connections
+- `local_address` (String) Specify the local IP address that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses. You can use a local host alias to help ease migration.
+- `local_port` (Number) Specifies the port that this service monitors. Enter a value in the range 1 - 65535. The default value is 80.
+- `max_hdr_count` (Number) Specify the maximum number of headers to allow in client requests. The default value is 0, which means unlimited.
+- `max_name_hdr_len` (Number) Specify the maximum length to accept for any header name. A header is expressed as a name-value pair. The default value is 0, which means unlimited.
+- `max_query_string_len` (Number) Specify the maximum length of the query string. The query string is the portion of the URL after the <tt>?</tt> character. The default value is 0, which indicates no limit.
+- `max_total_hdr_len` (Number) Specify the maximum aggregate size of headers in bytes in client requests. Enter a value in the range 5 - 128000. The default value is 128000.
+- `max_url_len` (Number) Specify the maximum URL length in bytes to accept from clients. Enter a value in the range 1 - 128000. The default value is 16384. The length includes any query string or fragment identifier.
+- `max_value_hdr_len` (Number) Specify the maximum length to accept for any header value. A header is expressed as a name-value pair. The default value is 0, which means unlimited.
+- `persistent_connections` (Boolean) Specify whether to enable persistent connections with clients. By default, persistent connections are enabled.
 - `ssl_server` (String) TLS server profile
-- `ssl_server_config_type` (String) TLS server type
+- `ssl_server_config_type` (String) Specify the type of TLS profile to secure client connections.
 - `sslsni_server` (String) TLS SNI server profile
 - `user_summary` (String) Comments
 

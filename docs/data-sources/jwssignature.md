@@ -3,12 +3,12 @@
 page_title: "datapower_jwssignature Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  JWS Signature
+  JWS signature object.
 ---
 
 # datapower_jwssignature (Data Source)
 
-JWS Signature
+JWS signature object.
 
 ## Example Usage
 
@@ -38,14 +38,14 @@ Optional:
 
 Read-Only:
 
-- `algorithm` (String) Algorithm
+- `algorithm` (String) Algorithm.
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `key` (String) Private Key
-- `protected_header` (Attributes List) Protected Header (see [below for nested schema](#nestedatt--result--protected_header))
-- `ss_key` (String) Shared Secret Key
-- `unprotected_header` (Attributes List) Unprotected Header (see [below for nested schema](#nestedatt--result--unprotected_header))
-- `user_summary` (String) Comments
+- `key` (String) Private key.
+- `protected_header` (Attributes List) Add a protected header to the JWS Sign action. (see [below for nested schema](#nestedatt--result--protected_header))
+- `ss_key` (String) Shared secret key.
+- `unprotected_header` (Attributes List) Add an unprotected header to the JWS Sign action. (see [below for nested schema](#nestedatt--result--unprotected_header))
+- `user_summary` (String) A descriptive summary for the configuration.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

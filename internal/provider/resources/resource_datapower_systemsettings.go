@@ -56,78 +56,78 @@ func (r *SystemSettingsResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("System settings (`default` domain only)", "system", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>System settings provide the following purposes.</p><ul><li>Define system-specific information, such as contact information, location, and name.</li><li>Update serial number after a replacement.</li><li>Enable interface for custom GUI messages and custom CLI prompt.</li><li>Reserve disk space for the audit log.</li><li>Define information about the hardware for use by the SNMP system table, such as serial number, and model type</li></ul>", "system", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter a descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"product_oid": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Product OID", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The read-only string that identifies the installed DataPower agent software.", "", "").String,
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"description": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Description", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The read-only string that identifies the product.", "", "").String,
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"serial_number": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Serial number", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The read-only string that identifies the product serial number.", "", "").String,
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"entitlement_number": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Entitlement serial number", "entitlement", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("After an appliance replacement, the serial number of the original appliance. Without the original serial number, IBM cannot entitle the replacement appliance for maintenance or warranty services.", "entitlement", "").String,
 				Optional:            true,
 			},
 			"product_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Product ID", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The read-only string that identifies the product type.", "", "").String,
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"capacity_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Licensed capacity mode", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The read-only installation setting that indicates the licensed capacity mode.", "", "").String,
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"contact": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Contact", "contact", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify any information that identifies the individual or functional area that is responsible maintenance and management.", "contact", "").String,
 				Optional:            true,
 			},
 			"system_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("System name", "name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the DataPower Gateway to use internally as a custom prompt and to use externally to integrate with remote systems. The name must be a 7-bit US-ASCII string of 127 characters or less consisting of letters, numbers, underscore, or embedded dashes, dots, or spaces. However, it is recommended to also be unique with a length of 64 characters or less to be compatible with most remote systems.", "name", "").String,
 				Optional:            true,
 			},
 			"location": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Location", "location", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the location of the DataPower Gateway.", "location", "").String,
 				Optional:            true,
 			},
 			"services": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Services", "", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The read-only hex value that indicates support for application, presentation, session, and data-link layer services.", "", "").String,
 				Computed:            true,
 				PlanModifiers: []planmodifier.Int64{
 					int64planmodifier.UseStateForUnknown(),
 				},
 			},
 			"backup_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Backup mode", "", "").AddStringEnum("normal", "secure").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The read-only installation setting that indicates whether a secure-backup is allowed.", "", "").AddStringEnum("normal", "secure").String,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("normal", "secure"),
@@ -137,7 +137,7 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 				},
 			},
 			"product_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Product Mode", "", "").AddStringEnum("normal", "cc").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The read-only installation setting that indicates the operational mode of the product.", "", "").AddStringEnum("normal", "cc").String,
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("normal", "cc"),
@@ -147,11 +147,11 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 				},
 			},
 			"custom_ui_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom user interface file", "custom-ui-file", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the URL of the custom user interface file. This file contains custom messages for CLI and GUI sessions as well as the custom CLI prompt. The file must reside in the <tt>store:</tt> or <tt>local:</tt> directory, not on a mounted file system.</p>", "custom-ui-file", "").String,
 				Optional:            true,
 			},
 			"audit_reserve": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Audit reserve space", "audit-reserve", "").AddIntegerRange(0, 10000).AddDefaultValue("40").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the amount of disk space to reserve for audit records. When the disk is full, all services enter the down operational state and stop processing traffic. To restore disk space and resume traffic processing, manual intervention is required. Enter a value in the range 0 - 10000. The default value is 40.", "audit-reserve", "").AddIntegerRange(0, 10000).AddDefaultValue("40").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -161,25 +161,25 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 				Default: int64default.StaticInt64(40),
 			},
 			"detect_intrusion": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Detect intrusion (physical appliances only)", "detect-intrusion", "").AddStringEnum("enable", "disable").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to check for intrusion detection.", "detect-intrusion", "").AddStringEnum("enable", "disable").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("enable", "disable"),
 				},
 			},
 			"hardware_xml_acceleration": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable hardware XML acceleration (physical appliances only)", "xml-accelerator", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates whether to use the Hardware XML accelerator.</p><p><b>Attention: </b>Disable the XML hardware accelerator only when directed by IBM Support. When disabled, XML hardware acceleration rules in the compile options policy have no effect.</p><p>After you change the state, restart the appliance to remove items from the cache. After the appliance restarts, the specified state is in effect. You can view the status of the XML hardware accelerator in the appliance version information. The XML accelerator shows the type appended with <tt>(disabled)</tt> when the accelerator is disabled.</p>", "xml-accelerator", "").String,
 				Optional:            true,
 			},
 			"locale": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("System locale", "locale", "").AddStringEnum("de", "en", "es", "fr", "it", "ja", "ko", "pt_BR", "zh_CN", "zh_TW").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the locale for the operating language of the DataPower Gateway. The locale setting manages locale-specific conventions, such as date and time formats, and controls the language of log messages. The language must be enabled before you can select it.", "locale", "").AddStringEnum("de", "en", "es", "fr", "it", "ja", "ko", "pt_BR", "zh_CN", "zh_TW").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("de", "en", "es", "fr", "it", "ja", "ko", "pt_BR", "zh_CN", "zh_TW"),
 				},
 			},
 			"system_log_fixed_format": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable fixed format", "system-log-fixed-format", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether to enable fixed format in system logs. When enabled, the system logs are in the format that was used in version 6.0.1 and contain no serviceability improvements after this version that can help with monitoring or troubleshooting.", "system-log-fixed-format", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

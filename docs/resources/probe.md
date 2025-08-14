@@ -3,13 +3,13 @@
 page_title: "datapower_probe Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Probe settings
+  The domain-specific configuration that define the settings for the probe that you can use to troubleshoot the processing of transactions by services.
   CLI Alias: probe-settings
 ---
 
 # datapower_probe (Resource)
 
-Probe settings
+The domain-specific configuration that define the settings for the probe that you can use to troubleshoot the processing of transactions by services.
   - CLI Alias: `probe-settings`
 
 ## Example Usage
@@ -28,21 +28,21 @@ resource "datapower_probe" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `gateway_peering` (String) Gateway peering
+- `gateway_peering` (String) Specify the gateway-peering instance for the probe. This instance synchronizes the captured data across the members. If you do not want to persist data across a restart, store the data in memory.
   - CLI Alias: `gateway-peering`
   - Reference to: `datapower_gatewaypeering:id`
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `expiration` (Number) Expiration
+- `expiration` (Number) Specify the duration in seconds to retain the troubleshooting data. Enter a value in the range 60 - 86400. The default value is 3600.
   - CLI Alias: `expiration`
   - Range: `60`-`86400`
   - Default value: `3600`
-- `max_records` (Number) Max records
+- `max_records` (Number) Specify the maximum number of records to allow. Enter a value in the range 1 - 10000. The default value is 1000.
   - CLI Alias: `max-records`
   - Range: `1`-`10000`
   - Default value: `1000`

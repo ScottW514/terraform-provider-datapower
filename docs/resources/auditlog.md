@@ -3,13 +3,12 @@
 page_title: "datapower_auditlog Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Audit log settings (default domain only)
-  CLI Alias: audit-log-settings
+  
 ---
 
 # datapower_auditlog (Resource)
 
-Audit log settings (`default` domain only)
+<p>The audit log settings control the configuration of the system audit log. These settings controls the level of audit. When set to full, connection information is logged. When the system is in Common Criteria Compliance mode, more information is logged.</p>
   - CLI Alias: `audit-log-settings`
 
 ## Example Usage
@@ -24,19 +23,19 @@ resource "datapower_auditlog" "test" {
 
 ### Optional
 
-- `audit_level` (String) Audit level
+- `audit_level` (String) Specify the audit level. The default value is for standard logging.
   - CLI Alias: `audit-level`
   - Choices: `standard`, `full`
   - Default value: `standard`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `rotate` (Number) Number of rotations
+- `rotate` (Number) Specify the maximum number of rotations. Enter a value in the range 1 - 100. The default value is 3.
   - CLI Alias: `rotate`
   - Range: `1`-`100`
   - Default value: `3`
-- `size` (Number) Log size
+- `size` (Number) Specify the maximum size of audit log rotations in KB. Enter a value in the range 250 - 500000. The default value is 1000.
   - CLI Alias: `size`
   - Range: `250`-`500000`
   - Default value: `1000`

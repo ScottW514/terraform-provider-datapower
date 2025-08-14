@@ -39,16 +39,16 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `cache_tickets` (Boolean) Cache Service Tickets
+- `cache_tickets` (Boolean) Specify whether to cache Kerberos service tickets when generating AP-REQ tokens in this realm.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `max_cached_tickets` (Number) Maximum Number of Cached Service Tickets
-- `min_cached_ticket_validity` (Number) Minimum Cached Ticket Validity
-- `realm` (String) Kerberos realm name
-- `server` (String) Kerberos KDC Server
-- `server_port` (Number) Server Port Number
-- `udp_timeout` (Number) UDP Timeout
-- `use_tcp` (Boolean) Use TCP
-- `user_summary` (String) Comments
+- `max_cached_tickets` (Number) Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.
+- `min_cached_ticket_validity` (Number) Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.
+- `realm` (String) The name of the Kerberos realm that the KDC is serving.
+- `server` (String) Specify the host name or IP address of the remote Kerberos KDC server. Click Ping verify network connectivity.
+- `server_port` (Number) Specify the UDP or TCP listening port on the Kerberos KDC server. Use a value in the range 1 - 65535. The default value is 88.
+- `udp_timeout` (Number) The number of seconds to wait for a UDP response from the KDC before declaring failure.
+- `use_tcp` (Boolean) Select to control whether to contact the Kerberos KDC server with UDP (the default, off) or TCP (on).
+- `user_summary` (String) Enter a brief, descriptive comment.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

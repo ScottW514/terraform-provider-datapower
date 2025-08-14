@@ -3,12 +3,12 @@
 page_title: "datapower_sslsniserverprofile Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  TLS SNI server profile
+  The TLS Server Name Indication (SNI) server profile secures connections with clients.
 ---
 
 # datapower_sslsniserverprofile (Data Source)
 
-TLS SNI server profile
+The TLS Server Name Indication (SNI) server profile secures connections with clients.
 
 ## Example Usage
 
@@ -40,13 +40,13 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `max_ssl_duration` (Number) Maximum TLS session duration
-- `number_of_renegotiation_allowed` (Number) Maximum client initiated renegotiations
+- `max_ssl_duration` (Number) Specify the maximum duration in seconds for an established TLS session. After the duration is reached, the TLS connection is closed. Enter a value in the range 1 - 691200. The default value is 3600.
+- `number_of_renegotiation_allowed` (Number) Specify the maximum number of client initiated renegotiations. Enter a value in the range 0 - 512. The default value is 0, which indicates client initiated renegotiation is not allowed.
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--result--protocols))
-- `sni_server_default` (String) Default server profile
+- `sni_server_default` (String) Specify the TLS server profile to process requests when the client does not send a <tt>ClientHello</tt> SNI extension. <p>The request is rejected when either of the following conditions apply. <ul><li>The client sends a <tt>ClientHello</tt> SNI extension that does not match a hostname in the map.</li><li>The client does not send a <tt>ClientHello</tt> SNI extension</li></ul></p>
 - `sni_server_mapping` (String) TLS hostname map
-- `ssl_options` (Attributes) Advanced TLS options
+- `ssl_options` (Attributes) Specify the options to apply to the TLS connection that override settings in the TLS server profiles. These options have negative impact on the performance.
   - CLI Alias: `ssl-options` (see [below for nested schema](#nestedatt--result--ssl_options))
 - `user_summary` (String) Comments
 

@@ -80,22 +80,22 @@ func (r *MatchingResource) Schema(ctx context.Context, req resource.SchemaReques
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"match_rules": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rules", "match", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The rules in the matching rule.", "match", "").String,
 				NestedObject:        models.DmMatchRuleResourceSchema,
 				Optional:            true,
 			},
 			"match_with_pcre": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Match with PCRE", "match-with-pcre", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Whether the evaluation uses shell style expressions or PCREs. This setting does not apply to XPath or HTTP method evaluations.", "match-with-pcre", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"combine_with_or": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Combine with Boolean OR", "combine-with-or", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Whether to use Boolean OR or AND operations during evaluation.</p><ul><li>When enabled, combine with OR semantics. Only one match must evaluate to true for success.</li><li>When disabled, combine with AND semantics. All matches must evaluate to true for success.</li></ul>", "combine-with-or", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

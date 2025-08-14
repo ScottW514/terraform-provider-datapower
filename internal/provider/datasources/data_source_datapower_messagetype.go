@@ -57,7 +57,7 @@ func (d *MessageTypeDataSource) Metadata(_ context.Context, req datasource.Metad
 
 func (d *MessageTypeDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Message Type",
+		MarkdownDescription: "On-Line Help for Message Types",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *MessageTypeDataSource) Schema(ctx context.Context, req datasource.Schem
 							Computed:            true,
 						},
 						"matching": schema.ListAttribute{
-							MarkdownDescription: "Message Matchings",
+							MarkdownDescription: "Use the values list (a list of traffic definitions), in conjunction with the Add and Delete buttons, to add one or more traffic definitions to this message type. Click the + button to create a new traffic definition (Message Matching object). Select an object and click ... to edit it.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

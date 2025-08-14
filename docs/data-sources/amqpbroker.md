@@ -3,12 +3,12 @@
 page_title: "datapower_amqpbroker Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  AMQP broker
+  In AMQP, distributed source and target termini are managed by a broker. The broker provides messaging services for communicating applications by periodically monitoring and polling termini. The broker ensures that sent messages are directed to the correct target terminus or are routed to another server. The AMQP broker configuration corresponds to an AMQP broker that is running on another host in the network. The configured properties enable communication between the DataPower Gateway and the remote AMQP broker.
 ---
 
 # datapower_amqpbroker (Data Source)
 
-AMQP broker
+In AMQP, distributed source and target termini are managed by a broker. The broker provides messaging services for communicating applications by periodically monitoring and polling termini. The broker ensures that sent messages are directed to the correct target terminus or are routed to another server. The AMQP broker configuration corresponds to an AMQP broker that is running on another host in the network. The configured properties enable communication between the DataPower Gateway and the remote AMQP broker.
 
 ## Example Usage
 
@@ -39,22 +39,22 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `authorization` (String) Authorization
-- `auto_retry` (Boolean) Automatic retry
+- `authorization` (String) Specify the SASL layer that the AMQP broker uses to authenticate with the AMQP server. The default setting in no authentication.
+- `auto_retry` (Boolean) Specify whether to enable the automatic retry procedure after an AMQP connection failure. By default, the automatic retry behavior is enabled. This setting does not affect attempts over an established connection.
 - `container_id` (String) AMQP container ID
 - `host_name` (String) Host
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `long_retry_interval` (Number) Long retry interval
-- `maximum_frame_size` (Number) Max frame size
+- `long_retry_interval` (Number) Specify the interval in seconds to use after the number of attempts is reached to attempt to reestablish a failed connection. Enter a value in the range 1 - 65535. The default value is 600. <p>This setting does not affect attempts over an established connection.</p>
+- `maximum_frame_size` (Number) Specify the maximum frame size in bytes to allow. Frames Frames that are larger are rejected. When rejected, the connection is closed. Enter a value in the range 512 - 104857600. The default value is 104857600.
 - `password_alias` (String) Password alias
 - `port` (Number) Port
-- `reporting_interval` (Number) Reporting interval
-- `retry_attempts` (Number) Retry attempts
-- `retry_interval` (Number) Retry Interval
+- `reporting_interval` (Number) Specify the interval in seconds between the writing of identical log message. Enter a value in the range 1 - 65535. The default value is 10.
+- `retry_attempts` (Number) Specify the number of attempts for a failed connection to the remote AMQP server. After the number of attempts is reached, the long retry interval is used. Enter a value in the range 0 - 65535. The default value is 6. The special value of 0 disables the long interval, where the retry interval is used forever.
+- `retry_interval` (Number) Specify the interval in seconds to wait before attempting to reestablish a failed connection. After the number of attempts is reached, attempts to reestablish a failed connection use the interval that is defined by the long retry interval. Enter a value in the range 1 - 65535. The default value is 10. <p>This setting does not affect attempts over an established connection.</p>
 - `ssl_client` (String) TLS client profile
 - `user_name` (String) Username
 - `user_summary` (String) Comments
-- `xml_manager` (String) XML manager
+- `xml_manager` (String) Specify the XML manager to control access to the remote AMQP server. The XML manager obtains and manages documents.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

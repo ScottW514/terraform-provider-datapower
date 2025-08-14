@@ -1,85 +1,86 @@
 name: SSHDomainClientProfile
-description: 'SSH domain client profile'
-cli_alias: 'sshdomainclientprofile'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/SSHDomainClientProfile/default'
+description: The SSH domain client profile defines the cipher suites.
+cli_alias: sshdomainclientprofile
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/SSHDomainClientProfile/default
 update_only: true
 attributes:
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Ciphers
-    type: List
-    enum:
-      - 'CHACHA20-POLY1305_AT_OPENSSH.COM'
-      - 'AES128-CTR'
-      - 'AES192-CTR'
-      - 'AES256-CTR'
-      - 'AES128-GCM_AT_OPENSSH.COM'
-      - 'AES256-GCM_AT_OPENSSH.COM'
-    element_type: String
-    list_default:
-      - 'AES128-CTR'
-      - 'AES192-CTR'
-      - 'AES256-CTR'
-      - 'AES128-GCM_AT_OPENSSH.COM'
-      - 'AES256-GCM_AT_OPENSSH.COM'
-    description: 'Ciphers'
-    cli_alias: ciphers
-  - name: KEXAlg
-    type: List
-    enum:
-      - 'DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256'
-      - 'ECDH-SHA2-NISTP256'
-      - 'ECDH-SHA2-NISTP384'
-      - 'ECDH-SHA2-NISTP521'
-      - 'CURVE25519-SHA256_AT_LIBSSH.ORG'
-    element_type: String
-    list_default:
-      - 'CURVE25519-SHA256_AT_LIBSSH.ORG'
-      - 'ECDH-SHA2-NISTP256'
-      - 'ECDH-SHA2-NISTP384'
-      - 'ECDH-SHA2-NISTP521'
-      - 'DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256'
-    description: 'Key exchange algorithms'
-    cli_alias: kex-alg
-  - name: MACAlg
-    type: List
-    enum:
-      - 'HMAC-SHA1'
-      - 'HMAC-SHA2-256'
-      - 'HMAC-SHA2-512'
-      - 'UMAC-64_AT_OPENSSH.COM'
-      - 'UMAC-128_AT_OPENSSH.COM'
-      - 'HMAC-SHA1-ETM_AT_OPENSSH.COM'
-      - 'HMAC-SHA2-256-ETM_AT_OPENSSH.COM'
-      - 'HMAC-SHA2-512-ETM_AT_OPENSSH.COM'
-      - 'UMAC-64-ETM_AT_OPENSSH.COM'
-      - 'UMAC-128-ETM_AT_OPENSSH.COM'
-    element_type: String
-    list_default:
-      - 'UMAC-64_AT_OPENSSH.COM'
-      - 'UMAC-128_AT_OPENSSH.COM'
-      - 'HMAC-SHA2-256'
-      - 'HMAC-SHA2-512'
-      - 'HMAC-SHA1'
-    description: 'Message authentication codes'
-    cli_alias: mac-alg
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Ciphers
+  type: List
+  enum:
+  - CHACHA20-POLY1305_AT_OPENSSH.COM
+  - AES128-CTR
+  - AES192-CTR
+  - AES256-CTR
+  - AES128-GCM_AT_OPENSSH.COM
+  - AES256-GCM_AT_OPENSSH.COM
+  element_type: String
+  list_default:
+  - AES128-CTR
+  - AES192-CTR
+  - AES256-CTR
+  - AES128-GCM_AT_OPENSSH.COM
+  - AES256-GCM_AT_OPENSSH.COM
+  description: Specify the SSH cipher suites to support.
+  cli_alias: ciphers
+- name: KEXAlg
+  type: List
+  enum:
+  - DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256
+  - ECDH-SHA2-NISTP256
+  - ECDH-SHA2-NISTP384
+  - ECDH-SHA2-NISTP521
+  - CURVE25519-SHA256_AT_LIBSSH.ORG
+  element_type: String
+  list_default:
+  - CURVE25519-SHA256_AT_LIBSSH.ORG
+  - ECDH-SHA2-NISTP256
+  - ECDH-SHA2-NISTP384
+  - ECDH-SHA2-NISTP521
+  - DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256
+  description: Specify the key exchange (KEX) algorithms to support.
+  cli_alias: kex-alg
+- name: MACAlg
+  type: List
+  enum:
+  - HMAC-SHA1
+  - HMAC-SHA2-256
+  - HMAC-SHA2-512
+  - UMAC-64_AT_OPENSSH.COM
+  - UMAC-128_AT_OPENSSH.COM
+  - HMAC-SHA1-ETM_AT_OPENSSH.COM
+  - HMAC-SHA2-256-ETM_AT_OPENSSH.COM
+  - HMAC-SHA2-512-ETM_AT_OPENSSH.COM
+  - UMAC-64-ETM_AT_OPENSSH.COM
+  - UMAC-128-ETM_AT_OPENSSH.COM
+  element_type: String
+  list_default:
+  - UMAC-64_AT_OPENSSH.COM
+  - UMAC-128_AT_OPENSSH.COM
+  - HMAC-SHA2-256
+  - HMAC-SHA2-512
+  - HMAC-SHA1
+  description: Specify the message authentication codes (MAC) to support.
+  cli_alias: mac-alg

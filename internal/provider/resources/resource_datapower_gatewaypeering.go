@@ -58,7 +58,7 @@ func (r *GatewayPeeringResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Gateway peering", "gateway-peering", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A gateway-peering instance defines how members synchronize data across members.", "gateway-peering", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -87,15 +87,15 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "passwordalias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias to secure the data store. If not specified, a system default is used. The use of the system default is classified as a security vulnerability (CVE-2022-31776).", "password-alias", "passwordalias").String,
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "local-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the gateway service listens on. The IP address can be any DataPower network interface that can be accessed by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::.", "local-address", "").String,
 				Optional:            true,
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "local-port", "").AddDefaultValue("16380").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port that the gateway service listens on. The default value is 16380. Ensure that all peers use the same port.", "local-port", "").AddDefaultValue("16380").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(16380),
@@ -105,25 +105,25 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"monitor_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Monitor port", "monitor-port", "").AddDefaultValue("26380").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port to monitor for state synchronization. The default value is 26380. Ensure that all peers use the same port.", "monitor-port", "").AddDefaultValue("26380").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(26380),
 			},
 			"enable_peer_group": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use peer group", "enable-peer-group", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the gateway-peering instance uses a peer group. <ul><li>When enabled, the instance works in the mode that is set for the peer group. This setting is the default value.</li><li>When not enabled, the instance works in stand-alone mode.</li></ul>", "enable-peer-group", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"enable_ssl": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("DEPRECATED: LEAVE SET TO FALSE", "", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. In peer-based mode, ensure that all peers use the same TLS configuration.", "", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"persistence_location": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Persistence location", "persistence", "").AddStringEnum("memory", "local", "raid").AddDefaultValue("memory").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify where to store data. Ensure that all peers in the group store data in the same location.", "persistence", "").AddStringEnum("memory", "local", "raid").AddDefaultValue("memory").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -132,13 +132,13 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("memory"),
 			},
 			"local_directory": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local directory", "local-directory", "").AddDefaultValue("local:///").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store data. For example, <tt>local:///group1</tt> .", "local-directory", "").AddDefaultValue("local:///").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("local:///"),
 			},
 			"max_memory": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max memory", "max-memory", "").AddIntegerRange(0, 1048576).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum memory for the data store. When memory reaches this limit, data is removed by using the least recently used (LRU) algorithm. The default value is 0, which means no limits. Do not over allocate memory.", "max-memory", "").AddIntegerRange(0, 1048576).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 

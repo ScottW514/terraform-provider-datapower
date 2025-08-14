@@ -3,12 +3,12 @@
 page_title: "datapower_certmonitor Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Certificate monitor (default domain only)
+  The certificate monitor is a task that checks the expiration date of all certificates. The defined values establish both the polling frequency and a notification window during which the monitor generates log messages that record when certificates are nearing their expiration date. The certificate monitor scans all certificates when first enabled.
 ---
 
 # datapower_certmonitor (Data Source)
 
-Certificate monitor (`default` domain only)
+The certificate monitor is a task that checks the expiration date of all certificates. The defined values establish both the polling frequency and a notification window during which the monitor generates log messages that record when certificates are nearing their expiration date. The certificate monitor scans all certificates when first enabled.
 
 ## Example Usage
 
@@ -26,11 +26,11 @@ data "datapower_certmonitor" "test" {
 
 ### Read-Only
 
-- `disable_expired_certs` (Boolean) Disable expired certificates
-- `enabled` (Boolean) Administrative state
-- `log_level` (String) Log level
-- `polling_interval` (Number) Polling interval
-- `reminder_time` (Number) Reminder time
+- `disable_expired_certs` (Boolean) Specify the behavior for expired certificates. By default, expired certificate objects are not disabled, which allows the use of expired certificates. When enabled, prevents the use of expired certificates either directly or through inheritance, which disables the use of any objects the reference expired certificates.
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `log_level` (String) Specify the priority to log messages about the impending expiration date of certificates. By default, messages are logged as warnings.
+- `polling_interval` (Number) Specify the frequency that the certificate monitor scans certificates for their expiration. The certificate monitor scans for expiry at each restart. If today is Monday and you set the frequency to three days and you restart on Wednesday, the next scan is three days later. Enter a value in the range 1 - 65535. The default value is 1.
+- `reminder_time` (Number) Specify the notification window before certificate expiration to start the logging of certificate expiration messages. For example, the value 21 specifies that all certificates to expire in three weeks or less generate a log message at the defined priority. Enter a value in the range 1 - 65535. The default value is 30.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

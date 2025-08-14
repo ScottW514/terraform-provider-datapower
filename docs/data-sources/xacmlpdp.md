@@ -3,12 +3,12 @@
 page_title: "datapower_xacmlpdp Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XACML Policy Decision Point
+  The XACML policies can be evaluated on a DataPower device, This on-box XACML Policy Decision Point (PDP) allows customers to define the necessary information so that it can evaluate the corresponding XACML policies against a XACML request for an XACML Policy Enforcement Point (PEP). The DataPower PEP is implemented with AAA action.
 ---
 
 # datapower_xacmlpdp (Data Source)
 
-XACML Policy Decision Point
+The XACML policies can be evaluated on a DataPower device, This on-box XACML Policy Decision Point (PDP) allows customers to define the necessary information so that it can evaluate the corresponding XACML policies against a XACML request for an XACML Policy Enforcement Point (PEP). The DataPower PEP is implemented with AAA action.
 
 ## Example Usage
 
@@ -39,12 +39,12 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `cache_ttl` (Number) XACML Policies Cache Lifetime
-- `combining_alg` (String) Dependent Policies Combining
-- `dependent_policy` (List of String) Dependent Policy Files
-- `directory` (List of String) Other Policy Files from Directory
-- `equal_policies` (Boolean) Evaluate Individual Policies Equally
-- `general_policy` (String) General Policy File
+- `cache_ttl` (Number) This sets the explicit time to live (TTL) for cached XACML policies, either raw or compiled. The default value 0 means the cache never expire unless PDP explicitly refreshes the policies. The maximum TTL is 31 days (2,678,400 seconds).
+- `combining_alg` (String) Select the policy-combining algorithm when not using a top-level comprehensive XACML policy file. The default is First Applicable.
+- `dependent_policy` (List of String) Some of the XACML Policies/Policy-Sets are indirectly needed when the PDP evaluates a request. They are called Dependent Policy Files. Specify their URLs with this setting.
+- `directory` (List of String) List directories that contain dependent files. In these directories, all files with the xml or xacml extension are available to the XACML PDP. Use this option when there are too many policy files to identify independently.
+- `equal_policies` (Boolean) In case of a top level policy-set is undefined, all policies are evaluated equally, PDP will use the PolicyCombiningAlg for the final decision.
+- `general_policy` (String) The URL of top level XACML policy/policy-set file, if there is one. This file may reside on the local device (typically as local:///file) or on a remote server. Attempts to retrieve this file from remote servers may be governed by the User Agent in use by the XML Manager of the service. This may be useful for TLS connections, for example.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
 

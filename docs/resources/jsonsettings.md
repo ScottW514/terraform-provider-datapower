@@ -3,13 +3,13 @@
 page_title: "datapower_jsonsettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  JSON settings
+  The JSON settings specify constraints for parsing JSON messages. JSON settings work in conjunction with the parser limits in the XML manager. The more restrictive limits apply.
   CLI Alias: json-settings
 ---
 
 # datapower_jsonsettings (Resource)
 
-JSON settings
+The JSON settings specify constraints for parsing JSON messages. JSON settings work in conjunction with the parser limits in the XML manager. The more restrictive limits apply.
   - CLI Alias: `json-settings`
 
 ## Example Usage
@@ -32,23 +32,23 @@ resource "datapower_jsonsettings" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `json_document_size` (Number) Max document size
+- `json_document_size` (Number) Specify the maximum document size in bytes for the body of the JSON message. If the message is converted to JSONx, the maximum document size specifies the size before the conversion to JSONx. <b>Note:</b> The document size of the JSON message and the size of the JSONx equivalent might differ. Enter a value in the range 4194304 - 5368709121. The default value is 4194304.
   - CLI Alias: `max-document-size`
   - Range: `4194304`-`5368709121`
   - Default value: `4194304`
-- `json_max_label_length` (Number) Max label length
+- `json_max_label_length` (Number) Specify the maximum length in bytes of the label portion of label-value pair. The length includes any white space between quotation marks. Enter a value in the range 256 - 8192. The default value is 256.
   - CLI Alias: `max-label-string-length`
   - Range: `256`-`8192`
   - Default value: `256`
-- `json_max_nesting_depth` (Number) Max nesting depth
+- `json_max_nesting_depth` (Number) Specify the maximum nesting depth in levels of label-value pairs. Enter a value in the range 64 - 256. The default value is 64.
   - CLI Alias: `max-nesting-depth`
   - Range: `64`-`256`
   - Default value: `64`
-- `json_max_number_length` (Number) Max value length for numbers
+- `json_max_number_length` (Number) Specify the maximum number in bytes for number values of label-value pairs. The number must be a contiguous string of bytes that contain no white space. The number can include a minus sign and a positive or negative exponent. Enter a value in the range 128 - 256. The default value is 128.
   - CLI Alias: `max-number-length`
   - Range: `128`-`256`
   - Default value: `128`
-- `json_max_value_length` (Number) Max value length for strings
+- `json_max_value_length` (Number) Specify the maximum number in bytes for string values of label-value pairs. The length includes any white space between quotation marks. Enter a value in the range 8192 - 5368709121. The default value is 8192.
   - CLI Alias: `max-value-string-length`
   - Range: `8192`-`5368709121`
   - Default value: `8192`

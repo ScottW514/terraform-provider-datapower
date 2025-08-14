@@ -3,13 +3,13 @@
 page_title: "datapower_processingmetadata Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Processing Metadata
+  A Processing Metadata object contains a list of metadata items extracted from a message, such as protocol header values, or from the device processing scope, such as system variables. This list, or manifest, of item values is then returned by the metadata object in an XML nodeset. Currently used by an AAA Policy for Identity and Resource extraction.
   CLI Alias: metadata
 ---
 
 # datapower_processingmetadata (Resource)
 
-Processing Metadata
+A Processing Metadata object contains a list of metadata items extracted from a message, such as protocol header values, or from the device processing scope, such as system variables. This list, or manifest, of item values is then returned by the metadata object in an XML nodeset. Currently used by an AAA Policy for Identity and Resource extraction.
   - CLI Alias: `metadata`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_processingmetadata" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `meta_item` (Attributes List) Metadata Item
+- `meta_item` (Attributes List) Define a metadata item by selecting one from the predefined items for a Processing Metadata Category, or configure a custom metadata item for a "customizable" category to retrieve value from any arbitrary headers or variables.
   - CLI Alias: `meta-item` (see [below for nested schema](#nestedatt--meta_item))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

@@ -3,13 +3,13 @@
 page_title: "datapower_mcfhttpmethod Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  HTTP Method Message Content Filter
+  Filter based on the HTTP method. The filter value is matched to the HTTP method in the request message.
   CLI Alias: mcf-httpmethod
 ---
 
 # datapower_mcfhttpmethod (Resource)
 
-HTTP Method Message Content Filter
+Filter based on the HTTP method. The filter value is matched to the HTTP method in the request message.
   - CLI Alias: `mcf-httpmethod`
 
 ## Example Usage

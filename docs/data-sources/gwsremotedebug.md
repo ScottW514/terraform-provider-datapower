@@ -3,12 +3,12 @@
 page_title: "datapower_gwsremotedebug Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  GatewayScript Remote Debugger (default domain only)
+  Modify the connection details for a remote GatewayScript debugger. This configuration defines the local GatewayScript debug endpoint for remote debugging.
 ---
 
 # datapower_gwsremotedebug (Data Source)
 
-GatewayScript Remote Debugger (`default` domain only)
+Modify the connection details for a remote GatewayScript debugger. This configuration defines the local GatewayScript debug endpoint for remote debugging.
 
 ## Example Usage
 
@@ -26,10 +26,10 @@ data "datapower_gwsremotedebug" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
-- `local_address` (String) Local address
-- `local_port` (Number) Local port
-- `user_summary` (String) Comments
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
+- `local_port` (Number) Sets the port that the local GatewayScript debug endpoint monitors. The default value is 9229.
+- `user_summary` (String) Specifies a brief descriptive summary for the configuration.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

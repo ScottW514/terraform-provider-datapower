@@ -57,7 +57,7 @@ func (d *JWERecipientDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *JWERecipientDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "JWE Recipient",
+		MarkdownDescription: "JWE recipient object includes several values required by the JWE JSON Serialization object.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,23 +77,23 @@ func (d *JWERecipientDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A descriptive summary for the configuration.",
 							Computed:            true,
 						},
 						"algorithm": schema.StringAttribute{
-							MarkdownDescription: "Algorithm",
+							MarkdownDescription: "JWE key management algorithm for the JWE recipient.",
 							Computed:            true,
 						},
 						"ss_key": schema.StringAttribute{
-							MarkdownDescription: "Shared Secret Key",
+							MarkdownDescription: "Shared secret key.",
 							Computed:            true,
 						},
 						"certificate": schema.StringAttribute{
-							MarkdownDescription: "Certificate",
+							MarkdownDescription: "Certificate.",
 							Computed:            true,
 						},
 						"unprotected_header": schema.ListNestedAttribute{
-							MarkdownDescription: "Unprotected Header",
+							MarkdownDescription: "Unprotected header for the JWE recipient.",
 							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
 							Computed:            true,
 						},

@@ -3,13 +3,13 @@
 page_title: "datapower_messagetype Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Type
+  On-Line Help for Message Types
   CLI Alias: message-type
 ---
 
 # datapower_messagetype (Resource)
 
-Message Type
+On-Line Help for Message Types
   - CLI Alias: `message-type`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_messagetype" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `matching` (List of String) Message Matchings
+- `matching` (List of String) Use the values list (a list of traffic definitions), in conjunction with the Add and Delete buttons, to add one or more traffic definitions to this message type. Click the + button to create a new traffic definition (Message Matching object). Select an object and click ... to edit it.
   - CLI Alias: `message-matching`
   - Reference to: `datapower_messagematching:id`
 - `user_summary` (String) Comments

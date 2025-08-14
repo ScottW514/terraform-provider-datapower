@@ -56,7 +56,7 @@ func (r *SLMCredClassResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *SLMCredClassResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SLM credential class", "slm-cred", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An SLM credentials class identifies a set of users (credentials) to be subject to an SLM policy. An SLM credentials class consists of the following types and properties. <ul><li>A credential type that specifies the manner to obtain user credentials.</li><li>A match type that determines the credentials to apply to the policy.</li><li>Depending on the credentials and match type, properties that identify specific instances of credentials.</li></ul>", "slm-cred", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,7 +85,7 @@ func (r *SLMCredClassResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"cred_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Credential Type", "type", "").AddStringEnum("aaa-mapped-credential", "aaa-username", "mq-application", "client-ip", "request-header", "ip-from-header", "custom-stylesheet").AddDefaultValue("aaa-mapped-credential").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the manner to obtain the credentials (user identity) for each transaction. The default value is mapped credentials from an AAA action.", "type", "").AddStringEnum("aaa-mapped-credential", "aaa-username", "mq-application", "client-ip", "request-header", "ip-from-header", "custom-stylesheet").AddDefaultValue("aaa-mapped-credential").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

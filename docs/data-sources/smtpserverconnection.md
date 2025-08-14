@@ -3,12 +3,12 @@
 page_title: "datapower_smtpserverconnection Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SMTP Server Connection
+  
 ---
 
 # datapower_smtpserverconnection (Data Source)
 
-SMTP Server Connection
+<p>The SMTP server connection defines the connection details for a Simple Mail Transport Protocol (SMTP) server. The DataPower Gateway uses the SMTP server connection for the following purposes</p><ul><li>B2B partners use this configuration to send an e-mail message to an AS1 or ESMTP destination.</li><li>B2B gateways use this configuration to request an AS1 MDN.</li></ul><p>For ease of configuration, the DataPower Gateway provides the <tt>default</tt> SMTP server connection configuration in each domain. By default, this configuration is empty and disabled.</p>
 
 ## Example Usage
 
@@ -38,17 +38,17 @@ Optional:
 
 Read-Only:
 
-- `account_name` (String) Account Name
-- `account_password_alias` (String) Account Password Alias
+- `account_name` (String) The account or user name of the SMTP client to authenticate on the SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If blank, the configuration uses the setting from the basic authentication policy in the associated user agent.
+- `account_password_alias` (String) The password alias of the password for the SMTP client account or the user name that is authenticated to the SMTP server. If password or alias are blank, the configuration uses the setting from the basic authentication policy in the associated user agent.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `auth` (String) Authentication Method
+- `auth` (String) With the client authentication option, the method to authenticate the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `mail_server_host` (String) Outgoing Mail Server (SMTP) Host
-- `mail_server_port` (Number) Mail Server Port
-- `options` (Attributes) Options
+- `mail_server_host` (String) The IP address or host name of the SMTP server to send outgoing e-mail messages.
+- `mail_server_port` (Number) The listening port on the SMTP server to send outgoing e-mail messages.
+- `options` (Attributes) The SMTP options to enable for the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.
   - CLI Alias: `options` (see [below for nested schema](#nestedatt--result--options))
-- `ssl_client` (String) TLS client profile
-- `ssl_client_config_type` (String) TLS client type
+- `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
+- `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

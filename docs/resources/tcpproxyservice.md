@@ -3,13 +3,13 @@
 page_title: "datapower_tcpproxyservice Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  TCP Proxy Service
+  Creates a TCP Proxy service.
   CLI Alias: tcpproxyAccepted Dependency Actions: quiesce
 ---
 
 # datapower_tcpproxyservice (Resource)
 
-TCP Proxy Service
+Creates a TCP Proxy service.
   - CLI Alias: `tcpproxy`
   - Accepted Dependency Actions: `quiesce`
 
@@ -33,25 +33,25 @@ resource "datapower_tcpproxyservice" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_port` (Number) Port Number
+- `local_port` (Number) An integer (within the range 1 through 65535) that specifies the port monitored by the TCP proxy
   - Range: `1`-`65535`
-- `remote_address` (String) Remote Host
-- `remote_port` (Number) Remote Port
+- `remote_address` (String) Specify the host name or IP address of the remote host for which this proxy is accepting TCP traffic. TCP traffic sent to the proxy will in turn be sent to this host. Click Ping to verify connectivity.
+- `remote_port` (Number) Specify the port number of the remote host, specify with Remote Host, for which this proxy is accepting TCP traffic.
   - Range: `1`-`65535`
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `local_address` (String) Local address
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`
-- `priority` (String) Service Priority
+- `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
-- `timeout` (Number) Idle timeout
+- `timeout` (Number) Specify the maximum idle time that is allowed for the front side connection and the server side connection. After the time is reached, the idle connections are terminated. Enter a value in the range 0 - 86400. The default value is 360. A value of 0 disables the idle timer.
   - Range: `0`-`86400`
   - Default value: `360`
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

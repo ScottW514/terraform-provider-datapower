@@ -57,7 +57,7 @@ func (d *AssemblyActionWebSocketUpgradeDataSource) Metadata(_ context.Context, r
 
 func (d *AssemblyActionWebSocketUpgradeDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "WebSocket upgrade assembly action",
+		MarkdownDescription: "The WebSocket upgrade assembly action processes API requests and responses through a WebSocket connection.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,7 +77,7 @@ func (d *AssemblyActionWebSocketUpgradeDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"url": schema.StringAttribute{
-							MarkdownDescription: "URL",
+							MarkdownDescription: "Specify the URL to invoke. You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short <tt>$( <i>property_name</i> )</tt> format when the assembly action does not have a property with the same name.",
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{
@@ -85,7 +85,7 @@ func (d *AssemblyActionWebSocketUpgradeDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"timeout": schema.Int64Attribute{
-							MarkdownDescription: "Timeout",
+							MarkdownDescription: "Specify the duration in seconds to wait for a reply from the target. The default value is 60.",
 							Computed:            true,
 						},
 						"user_name": schema.StringAttribute{
@@ -97,15 +97,15 @@ func (d *AssemblyActionWebSocketUpgradeDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"follow_redirects": schema.BoolAttribute{
-							MarkdownDescription: "Follow redirects",
+							MarkdownDescription: "Specify whether to follow the redirects. When enabled, attempts to resolve any redirect transparently.",
 							Computed:            true,
 						},
 						"decode_request_params": schema.BoolAttribute{
-							MarkdownDescription: "Decode request parameters",
+							MarkdownDescription: "Specify whether to decode request parameters in the target URL. When enabled, request parameters are decoded. The default behavior is to not decode request parameters.",
 							Computed:            true,
 						},
 						"encode_plus_char": schema.BoolAttribute{
-							MarkdownDescription: "Encode + characters in query",
+							MarkdownDescription: "Specify whether to encode + characters in query strings. When enabled, + characters are encoded to <tt>%2F</tt> . The default behavior is to not encode + characters.",
 							Computed:            true,
 						},
 						"inject_user_agent_header": schema.BoolAttribute{
@@ -113,15 +113,15 @@ func (d *AssemblyActionWebSocketUpgradeDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"inject_proxy_headers": schema.BoolAttribute{
-							MarkdownDescription: "Inject proxy headers",
+							MarkdownDescription: "Specify whether to inject proxy-related headers when not found in the request. The proxy-related headers are <tt>X-Forwarded-For</tt> , <tt>X-Forwarded-Host</tt> , and <tt>X-Forwarded-Port</tt> .",
 							Computed:            true,
 						},
 						"header_control_list": schema.StringAttribute{
-							MarkdownDescription: "Header control list",
+							MarkdownDescription: "Specify the control list that manages whether to accept or reject headers. The default behavior is to accept all headers.",
 							Computed:            true,
 						},
 						"parameter_control_list": schema.StringAttribute{
-							MarkdownDescription: "Parameter control list",
+							MarkdownDescription: "Specify the control list that manages whether to accept or reject URL parameters. The default behavior is to reject all URL parameters.",
 							Computed:            true,
 						},
 						"api_request_processing_assembly": schema.StringAttribute{
@@ -141,11 +141,11 @@ func (d *AssemblyActionWebSocketUpgradeDataSource) Schema(ctx context.Context, r
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

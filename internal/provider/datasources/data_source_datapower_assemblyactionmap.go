@@ -57,7 +57,7 @@ func (d *AssemblyActionMapDataSource) Metadata(_ context.Context, req datasource
 
 func (d *AssemblyActionMapDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Map assembly action",
+		MarkdownDescription: "The map assembly action applies data transformations to the assembly flow according to a specified map file. <p>The map file is automatically created from the map policy specification in the OpenAPI document. The API gateway can process only JSON formatted map files and prepares a valid map file as follows.</p><ol><li>Update the map file by complying with the map file structure.</li><li>For a YAML file, convert it to JSON.</li><li>Import the JSON file to the DataPower <tt>local:</tt> or <tt>temporary:</tt> directory or to one of their subdirectories.</li></ol>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,10 +77,10 @@ func (d *AssemblyActionMapDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"location": schema.StringAttribute{
-							MarkdownDescription: "Location",
+							MarkdownDescription: "Specify the location of the map file. The file must be in the DataPower <tt>local:</tt> or <tt>temporary:</tt> directory or to one of their subdirectories.",
 							Computed:            true,
 						},
-						"parse_settings_reference": models.GetDmDynamicParseSettingsReferenceDataSourceSchema("Parse settings", "parse-settings-reference", ""),
+						"parse_settings_reference": models.GetDmDynamicParseSettingsReferenceDataSourceSchema("Specify the configuration that defines constraints on documents to parse. You can use one or more of the following methods to specify a configuration. Precedence rules apply when you configure the same aspect of the input document through multiple methods. If you do not specify, the configuration of the default object reference is applied.", "parse-settings-reference", ""),
 						"user_summary": schema.StringAttribute{
 							MarkdownDescription: "Comments",
 							Computed:            true,
@@ -90,11 +90,11 @@ func (d *AssemblyActionMapDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

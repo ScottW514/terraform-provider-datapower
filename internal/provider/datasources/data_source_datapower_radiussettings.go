@@ -50,10 +50,10 @@ func (d *RADIUSSettingsDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *RADIUSSettingsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "RADIUS settings (`default` domain only)",
+		MarkdownDescription: "RADIUS settings define RADIUS servers. You can use RADIUS servers to authenticate access with RBM or in a AAA policy. The DataPower Gateway is a client to RADIUS servers.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -65,11 +65,11 @@ func (d *RADIUSSettingsDataSource) Schema(ctx context.Context, req datasource.Sc
 				Computed:            true,
 			},
 			"timeout": schema.Int64Attribute{
-				MarkdownDescription: "Timeout",
+				MarkdownDescription: "Specify the RADIUS retransmit interval in milliseconds. This timeout is the duration that the RADIUS client waits before an unacknowledged request is retransmitted. Enter a value in the range of 1 - 30000. The default value is 1000.",
 				Computed:            true,
 			},
 			"retries": schema.Int64Attribute{
-				MarkdownDescription: "Retries",
+				MarkdownDescription: "Specify the maximum number of times that the RADIUS client can retransmit an unacknowledged request to a server. Enter a value in the range 1 - 10. The default value is 3.",
 				Computed:            true,
 			},
 			"aaa_servers": schema.ListNestedAttribute{

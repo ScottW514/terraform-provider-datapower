@@ -3,13 +3,13 @@
 page_title: "datapower_assemblyactioninvoke Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Invoke assembly action
+  The invoke assembly action call a service from your assembly.
   CLI Alias: assembly-invoke
 ---
 
 # datapower_assemblyactioninvoke (Resource)
 
-Invoke assembly action
+The invoke assembly action call a service from your assembly.
   - CLI Alias: `assembly-invoke`
 
 ## Example Usage
@@ -32,78 +32,78 @@ resource "datapower_assemblyactioninvoke" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `url` (String) URL
+- `url` (String) Specify the URL of the target. You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short <tt>$( <i>property_name</i> )</tt> format when the assembly action does not have a property with the same name.
   - CLI Alias: `url`
 
 ### Optional
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
   - CLI Alias: `debug`
   - Default value: `false`
 - `backend_type` (String) Backend type
   - CLI Alias: `backend-type`
   - Choices: `detect`, `xml`, `json`, `binary`, `graphql`
   - Default value: `detect`
-- `cache_key` (String) Cache key
+- `cache_key` (String) Specify the string for the cache key. If omitted, the entire URL is used as the key.
   - CLI Alias: `cache-key`
-- `cache_type` (String) Cache type
+- `cache_type` (String) Specify how to cache documents.
   - CLI Alias: `cache-type`
   - Choices: `Protocol`, `NoCache`, `TimeToLive`
   - Default value: `Protocol`
-- `cache_unsafe_response` (Boolean) Cache response to POST and PUT requests
+- `cache_unsafe_response` (Boolean) Specify whether to cache responses to POST and PUT requests when the cache policy type is set to time to live. The response to these requests is the result of an action on the server that might change its resource state. You might want to cache responses to these requests when you know that the action (for example: HTTP POST) will not change the server state.
   - CLI Alias: `cache-unsafe-response`
   - Default value: `false`
 - `compression` (Boolean) Enable compression
   - CLI Alias: `compression`
   - Default value: `false`
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
   - CLI Alias: `correlation-path`
-- `decode_request_params` (Boolean) Decode request parameters
+- `decode_request_params` (Boolean) Specify whether to decode the request parameters in the target URL. When enabled, request parameters are decoded. By default, request parameters are not decoded.
   - CLI Alias: `decode-request-params`
   - Default value: `false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `do_chunked_upload` (Boolean) Allow chunked uploads
+- `do_chunked_upload` (Boolean) Specify whether to enable uploading of HTTP/1.1 chunked-encoded documents. For HTTP/1.1, the document body can be delimited by either <tt>Content-Length</tt> or chunked encoding. While all servers understand <tt>Content-Length</tt> , many servers fail to understand chunked encoding. For this reason, <tt>Content-Length</tt> is the standard method. However, the use of <tt>Content-Length</tt> can interfere with streaming. To stream full documents to an RFC 2616 compatible server, enable this property. Unlike other HTTP/1.1 features, you must know that the target server is RFC 2616 compatible.
   - CLI Alias: `chunked-uploads`
   - Default value: `true`
-- `encode_plus_char` (Boolean) Encode + characters in query
+- `encode_plus_char` (Boolean) Specify whether to encode + characters in query strings. When enabled, + characters are encoded to <tt>%2F</tt> . By default, + characters are not encoded.
   - CLI Alias: `encode-plus-char`
   - Default value: `false`
 - `error_types` (Attributes) Error types
   - CLI Alias: `error-types` (see [below for nested schema](#nestedatt--error_types))
-- `follow_redirects` (Boolean) Follow redirects
+- `follow_redirects` (Boolean) Specify whether to follow redirects. Some protocols generate redirects. When enabled, the action attempts to resolve redirects transparently.
   - CLI Alias: `follow-redirects`
   - Default value: `false`
-- `graph_ql_send_type` (String) GraphQL send type
+- `graph_ql_send_type` (String) Specify the type of payload to send for GraphQL POST requests. When GraphQL or JSON, this setting overrides the message type of the payload.
   - CLI Alias: `graphql-send-type`
   - Choices: `detect`, `graphql`, `json`
-- `header_control_list` (String) Header control list
+- `header_control_list` (String) Specify the control list that uses headers to accept or reject requests. By default, accepts all requests with headers.
   - CLI Alias: `header-control-list`
   - Reference to: `datapower_controllist:id`
   - Default value: `default-accept-all`
-- `http2_required` (Boolean) HTTP/2 required
+- `http2_required` (Boolean) Specify whether an HTTP/2 connection is required when connecting to the server. Only applicable when the HTTP version to the server is set to HTTP/2 and the connection uses TLS. The default value is off.
   - CLI Alias: `http2-required`
   - Default value: `false`
-- `http_version` (String) HTTP version to server
+- `http_version` (String) Specify the HTTP version for server-side connections. The default value is HTTP/1.1.
   - CLI Alias: `http-version`
   - Choices: `HTTP/1.0`, `HTTP/1.1`, `HTTP/2`
   - Default value: `HTTP/1.1`
-- `inject_proxy_headers` (Boolean) Inject proxy headers
+- `inject_proxy_headers` (Boolean) Specify whether to inject proxy-related headers. When the <tt>X-Forwarded-For</tt> , <tt>X-Forwarded-Host</tt> , and <tt>X-Forwarded-Port</tt> headers are not found in the request, inject theses headers to the request.
   - CLI Alias: `inject-proxy-headers`
   - Default value: `false`
-- `inject_user_agent_header` (Boolean) Inject User-Agent header
+- `inject_user_agent_header` (Boolean) Specify whether to inject the default <tt>User-Agent</tt> header. When the <tt>User-Agent</tt> header is not in the request, inject this header to the request.
   - CLI Alias: `inject-user-agent`
   - Default value: `true`
-- `keep_payload` (Boolean) Keep payload
+- `keep_payload` (Boolean) Specify whether to include the payload for DELETE requests. When enabled, DELETE requests include the payload. By default, DELETE requests do not include the payload.
   - CLI Alias: `keep-payload`
   - Default value: `false`
 - `method` (String) HTTP method
   - CLI Alias: `method`
   - Choices: `Keep`, `GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `HEAD`, `OPTIONS`, `TRACE`
   - Default value: `Keep`
-- `output` (String) Output
+- `output` (String) Specify the variable to store results. By default, results are stored in the <tt>message.body</tt> , <tt>message.headers</tt> , <tt>message.statuscode</tt> variables.
   - CLI Alias: `output`
   - Default value: `message`
-- `parameter_control_list` (String) Parameter control list
+- `parameter_control_list` (String) Specify the control list that uses URL parameters to accept or reject requests. By default, rejects all requests with URL parameters.
   - CLI Alias: `parameter-control-list`
   - Reference to: `datapower_controllist:id`
   - Default value: `default-reject-all`
@@ -118,10 +118,10 @@ resource "datapower_assemblyactioninvoke" "test" {
 - `stop_on_error` (Boolean) Stop on error
   - CLI Alias: `stop-on-error`
   - Default value: `false`
-- `time_to_live` (Number) Time to live
+- `time_to_live` (Number) Specify the validity period in seconds for documents in the cache. The default value is 900.
   - CLI Alias: `ttl`
   - Default value: `900`
-- `timeout` (Number) Timeout
+- `timeout` (Number) Specify the duration in seconds to wait for a reply from the target. The default value is 60.
   - CLI Alias: `timeout`
   - Default value: `60`
 - `title` (String) Title

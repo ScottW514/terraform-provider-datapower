@@ -3,13 +3,13 @@
 page_title: "datapower_jweheader Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  JWE Header
+  JWE header object.
   CLI Alias: jwe-header
 ---
 
 # datapower_jweheader (Resource)
 
-JWE Header
+JWE header object.
   - CLI Alias: `jwe-header`
 
 ## Example Usage
@@ -29,18 +29,18 @@ resource "datapower_jweheader" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `recipient` (String) Recipient
+- `recipient` (String) Add a JWE recipient object to a JWE encrypt action.
   - CLI Alias: `recipient`
   - Reference to: `datapower_jwerecipient:id`
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `jwe_protected_header` (Attributes List) Protected Header
+- `jwe_protected_header` (Attributes List) Add a JWE protected header to a JWE encrypt action.
   - CLI Alias: `protected-header` (see [below for nested schema](#nestedatt--jwe_protected_header))
-- `jwe_shared_unprotected_header` (Attributes List) Shared Unprotected Header
+- `jwe_shared_unprotected_header` (Attributes List) Add a JWE shared unprotected header to a JWE encrypt action.
   - CLI Alias: `shared-unprotected-header` (see [below for nested schema](#nestedatt--jwe_shared_unprotected_header))
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

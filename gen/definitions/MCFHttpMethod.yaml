@@ -1,46 +1,48 @@
 name: MCFHttpMethod
-description: 'HTTP Method Message Content Filter'
-cli_alias: 'mcf-httpmethod'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/MCFHttpMethod'
+description: Filter based on the HTTP method. The filter value is matched to the HTTP
+  method in the request message.
+cli_alias: mcf-httpmethod
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/MCFHttpMethod
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestMCFHttpMethod"'
-    test_expect_ds: '"AccTest_MCFHttpMethod"'
-    example: 'MCFHttpMethodName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: HttpMethod
-    type: String
-    enum:
-      - 'POST'
-      - 'GET'
-      - 'PUT'
-      - 'PATCH'
-      - 'DELETE'
-      - 'HEAD'
-    default: 'GET'
-    required: true
-    description: 'HTTP Method'
-    cli_alias: value
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestMCFHttpMethod"'
+  test_expect_ds: '"AccTest_MCFHttpMethod"'
+  example: MCFHttpMethodName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: HttpMethod
+  type: String
+  enum:
+  - POST
+  - GET
+  - PUT
+  - PATCH
+  - DELETE
+  - HEAD
+  default: GET
+  required: true
+  description: HTTP Method
+  cli_alias: value
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary

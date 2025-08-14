@@ -3,13 +3,12 @@
 page_title: "datapower_controllist Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Control List
-  CLI Alias: control-list
+  
 ---
 
 # datapower_controllist (Resource)
 
-Control List
+<p>A control list uses a value-matching pattern to determine whether values are on the allowlist or blocklist.</p><p>The value-matching pattern is defined by a PCRE. When you define the control list, you can indicates whether evaluation is case-sensitive or case-insensitive.</p>
   - CLI Alias: `control-list`
 
 ## Example Usage
@@ -31,16 +30,16 @@ resource "datapower_controllist" "test" {
 
 ### Optional
 
-- `case_insensitive` (Boolean) Case-insensitive
+- `case_insensitive` (Boolean) Indicates whether the specified values are case-sensitive or case-insensitive.
   - CLI Alias: `case-insensitive`
   - Default value: `false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `type` (String) Type
+- `type` (String) Specifies whether values are accepted or rejected.
   - CLI Alias: `type`
   - Choices: `blocklist`, `allowlist`
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
-- `value` (List of String) Value
+- `value` (List of String) <p>Specifies the PCRE to evaluate values.</p><ul><li>An entry of <tt>^foo</tt> indicates a match against only values that start with <tt>foo</tt> .</li><li>An empty list indicates no match against any value.</li><li>A list with only <tt>.*</tt> indicates a match against all values.</li></ul>
   - CLI Alias: `value`
 
 <a id="nestedatt--dependency_actions"></a>

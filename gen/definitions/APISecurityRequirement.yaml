@@ -1,41 +1,46 @@
 name: APISecurityRequirement
-description: 'API security requirement'
-cli_alias: 'api-sec-req'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APISecurityRequirement'
+description: The API security requirement defines the required security schemes that
+  an API request must pass to process an API operation. You must specify the security
+  schemes that are declared in the security definitions. When multiple security schemes
+  are specified, the API request must pass all security checks.
+cli_alias: api-sec-req
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APISecurityRequirement
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPISecurityRequirement"'
-    test_expect_ds: '"AccTest_APISecurityRequirement"'
-    example: 'APISecurityRequirementName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Security
-    type: List
-    element_type: String
-    required: true
-    test_value: '["AccTest_APISecurityAPIKey"]'
-    test_bed_value: '[datapower_apisecurityapikey.acc_test.id]'
-    description: 'Security definition (reference to APISecurityAPIKey, APISecurityBasicAuth, APISecurityHTTPScheme, or APISecurityOAuthReq)'
-    cli_alias: security
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPISecurityRequirement"'
+  test_expect_ds: '"AccTest_APISecurityRequirement"'
+  example: APISecurityRequirementName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Security
+  type: List
+  element_type: String
+  required: true
+  test_value: '["AccTest_APISecurityAPIKey"]'
+  test_bed_value: '[datapower_apisecurityapikey.acc_test.id]'
+  description: Security definition (reference to APISecurityAPIKey, APISecurityBasicAuth,
+    APISecurityHTTPScheme, or APISecurityOAuthReq)
+  cli_alias: security

@@ -57,7 +57,7 @@ func (d *LDAPSearchParametersDataSource) Metadata(_ context.Context, req datasou
 
 func (d *LDAPSearchParametersDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "LDAP search parameters",
+		MarkdownDescription: "LDAP search parameters are a container for the parameters to use to perform an LDAP search operation. When used with authentication, the search retrieves the distinguished name (DN) for the user. When used with credential authorization mapping, the search retrieves the group name (DN or attribute value) based on the DN of the authenticated user.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,23 +81,23 @@ func (d *LDAPSearchParametersDataSource) Schema(ctx context.Context, req datasou
 							Computed:            true,
 						},
 						"ldap_base_dn": schema.StringAttribute{
-							MarkdownDescription: "LDAP base DN",
+							MarkdownDescription: "Specify the base DN to begin the search. This value identifies the entry level of the tree.",
 							Computed:            true,
 						},
 						"ldap_returned_attribute": schema.StringAttribute{
-							MarkdownDescription: "LDAP returned attribute",
+							MarkdownDescription: "Specify the LDAP attribute to return for each entry that matches the search filter. The default value is dn.",
 							Computed:            true,
 						},
 						"ldap_filter_prefix": schema.StringAttribute{
-							MarkdownDescription: "LDAP filter prefix",
+							MarkdownDescription: "Specify the prefix of the LDAP filter expression. An LDAP filter expression is composed by <tt>prefix + username + suffix</tt> . If the prefix is <tt>(&amp;(uid=</tt> and the username is <tt>bob</tt> , the LDAP search filter is <tt>(&amp;(uid=bob</tt> .",
 							Computed:            true,
 						},
 						"ldap_filter_suffix": schema.StringAttribute{
-							MarkdownDescription: "LDAP filter suffix",
+							MarkdownDescription: "Specify the suffix of the LDAP filter expression. An LDAP filter expression is composed by <tt>prefix + username + suffix</tt> . If the prefix is <tt>(&amp;(uid=</tt> , the username is <tt>bob</tt> , and the suffix is <tt>)(objectClass=person))</tt> , the LDAP search filter is <tt>(&amp;(uid=bob)(objectClass=person))</tt> .",
 							Computed:            true,
 						},
 						"ldap_scope": schema.StringAttribute{
-							MarkdownDescription: "LDAP scope",
+							MarkdownDescription: "Specify the depth of the LDAP search. The default is subtree.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

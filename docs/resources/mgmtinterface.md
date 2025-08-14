@@ -3,13 +3,13 @@
 page_title: "datapower_mgmtinterface Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XML management interface (default domain only)
+  Modify the configuration of the XML management interface. This interface is described in the store:///xml-mgmt.wsdl file in the default domain. If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.
   CLI Alias: xml-mgmt
 ---
 
 # datapower_mgmtinterface (Resource)
 
-XML management interface (`default` domain only)
+Modify the configuration of the XML management interface. This interface is described in the <tt>store:///xml-mgmt.wsdl</tt> file in the <tt>default</tt> domain. <p>If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.</p>
   - CLI Alias: `xml-mgmt`
 
 ## Example Usage
@@ -26,22 +26,22 @@ resource "datapower_mgmtinterface" "test" {
 
 ### Optional
 
-- `acl` (String) Access control list
+- `acl` (String) Edit the <tt>xml-mgmt</tt> access control list to define the client IP addresses to allow or deny.
   - CLI Alias: `acl`
   - Reference to: `datapower_accesscontrollist:id`
   - Default value: `xml-mgmt`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `local_address` (String) Local address
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`
-- `local_port` (Number) Port number
+- `local_port` (Number) Specify the TCP port that the interface monitors. The default value is 5550.
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `5550`
-- `mode` (Attributes) Enabled services
+- `mode` (Attributes) Specify which service endpoints to enable. For each enabled endpoint, the interface listens for requests from those services.
   - CLI Alias: `mode` (see [below for nested schema](#nestedatt--mode))
 - `slm_peering` (Number) SLM update interval
   - CLI Alias: `slm-peering`

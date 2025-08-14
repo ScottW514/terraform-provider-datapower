@@ -3,13 +3,13 @@
 page_title: "datapower_oauthprovidersettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  OAuth provider settings
+  An OAuth provider settings configuration defines how a client application is authorized to access resources on behalf of the resource owner.
   CLI Alias: oauth-provider-settings
 ---
 
 # datapower_oauthprovidersettings (Resource)
 
-OAuth provider settings
+An OAuth provider settings configuration defines how a client application is authorized to access resources on behalf of the resource owner.
   - CLI Alias: `oauth-provider-settings`
 
 ## Example Usage
@@ -33,7 +33,7 @@ resource "datapower_oauthprovidersettings" "test" {
 
 ### Optional
 
-- `adv_scope_basic_auth_header_name` (String) Basic authentication header name
+- `adv_scope_basic_auth_header_name` (String) Specify the header name to use for sending encoded or non-encoded authentication string in the header. For example, <tt>x-basic-authorization-header</tt> .
   - CLI Alias: `advanced-scope-basic-auth-headername`
 - `adv_scope_basic_auth_password` (String) Basic authentication password
   - CLI Alias: `advanced-scope-basic-auth-password-alias`
@@ -48,14 +48,14 @@ resource "datapower_oauthprovidersettings" "test" {
 - `adv_scope_url_security_enabled` (Boolean) Enable advanced scope endpoint security
   - CLI Alias: `advanced-scope-url-security-enabled`
   - Default value: `false`
-- `adv_scope_validation_enabled` (Boolean) Enable advanced scope validation
+- `adv_scope_validation_enabled` (Boolean) Specify whether to enable advanced scope validation that you can use to provide additional scope checking.
   - CLI Alias: `advanced-scope-validation-enabled`
   - Default value: `false`
-- `advanced_scope_custom_contexts` (String) Response context variables
+- `advanced_scope_custom_contexts` (String) Specify custom context variables to save headers from the advanced scope validation request. Use a regular expression to include headers from the advanced scope endpoint response.
   - CLI Alias: `advanced-scope-response-contexts`
-- `advanced_scope_custom_headers` (String) Request headers
+- `advanced_scope_custom_headers` (String) Specify the custom headers to send with the advanced scope validation request. Use a regular expression match to include headers from the initial request.
   - CLI Alias: `advanced-scope-request-headers`
-- `advanced_scope_url` (String) Advanced scope URL
+- `advanced_scope_url` (String) Specify the URL to send scope information for validation. This external endpoint is where the specified scope is verified. You must define this property for advanced scope validation.
   - CLI Alias: `advanced-scope-url`
 - `advanced_scope_url_override` (Boolean) Use URL from API Security Definition
   - CLI Alias: `advanced-scope-url-from-security`
@@ -64,60 +64,60 @@ resource "datapower_oauthprovidersettings" "test" {
   - CLI Alias: `api-security-token-manager`
   - Reference to: `datapower_apisecuritytokenmanager:id`
   - Default value: `default`
-- `apic_access_token_ttl` (Number) Access token TTL
+- `apic_access_token_ttl` (Number) Specify the time in seconds that an access token remains valid. The default value is 3600.
   - CLI Alias: `apic-access-token-ttl`
   - Range: `1`-`63244800`
   - Default value: `3600`
-- `apic_auth_code_ttl` (Number) Authorization code TTL
+- `apic_auth_code_ttl` (Number) Specify the time in seconds that an authorization code remains valid. The default value is 300.
   - CLI Alias: `apic-auth-code-ttl`
   - Range: `1`-`600`
   - Default value: `300`
-- `apic_authorize_endpoint` (String) Authorization endpoint
+- `apic_authorize_endpoint` (String) Specify the endpoint where the client application obtains authorization grant. The default value is <tt>/oauth2/authorize</tt> .
   - CLI Alias: `apic-authorize-endpoint`
   - Default value: `/oauth2/authorize`
-- `apic_enable_introspection` (Boolean) Enable token introspection
+- `apic_enable_introspection` (Boolean) Specify whether to enable the introspection of access tokens. When enabled, authorized protected resources can introspect the access token to determine the metadata for making appropriate authorization decisions. By default, token introspection is disabled.
   - CLI Alias: `apic-enable-introspection`
   - Default value: `false`
-- `apic_enable_oidc` (Boolean) Enable OIDC
+- `apic_enable_oidc` (Boolean) Specify whether to enable OIDC to verify the identity of the user. When enabled, the client application verifies the identity of the user based on the requirement of an OIDC provider before requesting access to client resources. By default, OIDC token generation is enabled. OIDC is only available for implicit and AZ code grant types.
   - CLI Alias: `apic-enable-oidc`
   - Default value: `true`
-- `apic_enable_refresh_token` (Boolean) Enable refresh tokens
+- `apic_enable_refresh_token` (Boolean) Specify whether to enable issuing refresh tokens. Refresh tokens are issued to the client. Refresh tokens are used to obtain a new access token when the current access token becomes invalid, expires, or are used to obtain additional access tokens with identical or narrower scope. By default, this setting is disabled.
   - CLI Alias: `apic-enable-refresh-token`
   - Default value: `false`
-- `apic_introspect_endpoint` (String) Introspection endpoint
+- `apic_introspect_endpoint` (String) Specify the endpoint for token introspection. The default value is <tt>/oauth2/introspect</tt> .
   - CLI Alias: `apic-introspect-endpoint`
   - Default value: `/oauth2/introspect`
-- `apic_maximum_consent_ttl` (Number) Consent TTL
+- `apic_maximum_consent_ttl` (Number) Specify the time in seconds that a consent remains valid. The default value is 0, which disables maximum consent.
   - CLI Alias: `apic-maximum-consent-ttl`
   - Range: `0`-`2529792000`
   - Default value: `0`
 - `apic_one_time_use_accesstoken` (Boolean) One-time use access token
   - CLI Alias: `apic-enable-one-time-use-access-token`
   - Default value: `false`
-- `apic_one_time_use_refreshtoken` (Boolean) One-time use refresh token
+- `apic_one_time_use_refreshtoken` (Boolean) Specify whether a refresh tokens is one-time use. <ul><li>When enabled, the refresh token is one-time use. This setting is the default value.</li><li>When disabled, the refresh token can be reused until it expires or is revoked.</li></ul>
   - CLI Alias: `apic-enable-one-time-use-refresh-token`
   - Default value: `true`
-- `apic_provider_base_path` (String) Provider base path
+- `apic_provider_base_path` (String) Specify the base path on which the OAuth provider API is served. The default value is <tt>/</tt> .
   - CLI Alias: `apic-provider-base-path`
   - Default value: `/`
-- `apic_refresh_token_limit` (Number) APIC refresh token count
+- `apic_refresh_token_limit` (Number) Specify the number of refresh tokens to allow to be generated. The default value is 10.
   - CLI Alias: `apic-refresh-token-limit`
   - Range: `1`-`4096`
   - Default value: `10`
-- `apic_refresh_token_ttl` (Number) Refresh token TTL
+- `apic_refresh_token_ttl` (Number) Specify the time in seconds that a refresh token remains valid. The default value is 5400.
   - CLI Alias: `apic-refresh-token-ttl`
   - Range: `2`-`252979200`
   - Default value: `5400`
-- `apic_require_pkce` (Boolean) Require PKCE
+- `apic_require_pkce` (Boolean) Specify whether the application must enforce PKCE. For more information, see RFC 7636.
   - CLI Alias: `apic-require-pkce`
   - Default value: `false`
-- `apic_support_pkce` (Boolean) Support PKCE
+- `apic_support_pkce` (Boolean) Specify whether the application should enforce PKCE if provided by the client. For more information, see RFC 7636.
   - CLI Alias: `apic-support-pkce`
   - Default value: `true`
-- `apic_support_pkce_plain` (Boolean) Support PKCE 'plain' challenge method
+- `apic_support_pkce_plain` (Boolean) Specify whether to support the PKCE <tt>plain</tt> code challenge transform method. For more information, see RFC 7636.
   - CLI Alias: `apic-support-pkce-plain`
   - Default value: `false`
-- `apic_token_endpoint` (String) Token endpoint
+- `apic_token_endpoint` (String) Specify the endpoint where the client application exchanges an authorization grant for an access token. The default value is <tt>/oauth2/token</tt> .
   - CLI Alias: `apic-token-endpoint`
   - Default value: `/oauth2/token`
 - `apic_token_secret` (String) Token secret
@@ -132,29 +132,28 @@ resource "datapower_oauthprovidersettings" "test" {
 - `application_revocation_endpoint` (String) Application revocation endpoint
   - CLI Alias: `apic-app-revoke-endpoint`
   - Default value: `/oauth2/revoke`
-- `default_scopes` (String) Default scopes
+- `default_scopes` (String) Specify the default scopes to apply when the request does not contain a scope. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The default scopes must be a subset of the allowed scopes in the API security OAuth requirement. Without defined scopes and the request does not contain a scope, an invalid scope error is returned.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
   - CLI Alias: `default-scopes`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enable_application_revocation` (Boolean) Application revocation
+- `enable_application_revocation` (Boolean) Specify whether to enable revocation by application. Enabling application revocation allows the application to revoke consent before the token expires.
   - CLI Alias: `apic-app-revoke-enable`
   - Default value: `false`
-- `enable_debug_mode` (Boolean) Enable debug headers
+- `enable_debug_mode` (Boolean) Specify whether to enable debug mode to add security error details in response headers. In debug mode when you use a validation endpoint, security error details are sent in the <tt>x-apic-debug-oauth-error</tt> and <tt>x-apic-debug-oauth-error-desc</tt> response headers.
   - CLI Alias: `enable-debug-mode`
   - Default value: `false`
-- `enable_owner_revocation` (Boolean) Resource owner revocation
+- `enable_owner_revocation` (Boolean) Specify whether to enable revocation by resource owner. Enabling resource owner revocation allows the resource owner to revoke consent before the token expires.
   - CLI Alias: `apic-owner-revoke-enable`
   - Default value: `false`
-- `enable_token_management` (Boolean) Enable token management
+- `enable_token_management` (Boolean) Specify if security token details should be managed and stored. Enabling token management for security token details provides the ability to create one-time use tokens, prevent AZ code reuse, and support allow-listing through the use of the token manager.
   - CLI Alias: `enable-token-management`
   - Default value: `true`
-- `external_revocation_basic_auth_header_name` (String) Basic authentication header name
+- `external_revocation_basic_auth_header_name` (String) Specify the header name to use for sending encoded or non-encoded authentication string in the header. For example, <tt>x-external-basic-authorization-header</tt> .
   - CLI Alias: `external-revocation-basic-auth-headername`
 - `external_revocation_basic_auth_password` (String) Basic authentication password
   - CLI Alias: `external-revocation-basic-auth-password-alias`
   - Reference to: `datapower_passwordalias:id`
-- `external_revocation_basic_auth_user_name` (String) Basic authentication username
-  - CLI Alias: `external-revocation-basic-auth-username`
-- `external_revocation_cache_time_to_live` (Number) Time to live
+- `external_revocation_basic_auth_user_name` (String) - CLI Alias: `external-revocation-basic-auth-username`
+- `external_revocation_cache_time_to_live` (Number) Specify the validity period in seconds for external management service responses in the cache. The default value is 900.
   - CLI Alias: `external-revocation-cache-ttl`
   - Range: `0`-`4294967295`
   - Default value: `900`
@@ -162,30 +161,30 @@ resource "datapower_oauthprovidersettings" "test" {
   - CLI Alias: `external-revocation-cache-type`
   - Choices: `Protocol`, `NoCache`, `TimeToLive`
   - Default value: `NoCache`
-- `external_revocation_custom_header_format` (String) Custom header pattern
+- `external_revocation_custom_header_format` (String) Specify the pattern of header names to include from the original message. For example, <tt>x-external-management-*</tt> .
   - CLI Alias: `external-revocation-custom-headername-format`
-- `external_revocation_fail_on_error` (Boolean) Fail on error
+- `external_revocation_fail_on_error` (Boolean) Specify whether to stop processing if connection to external management service fails. If failed, stops token-generation or use, and returns an error.
   - CLI Alias: `external-revocation-fail-on-error`
   - Default value: `true`
 - `external_revocation_ssl_profile` (String) External management TLS client profile
   - CLI Alias: `external-revocation-ssl-profile`
   - Reference to: `datapower_sslclientprofile:id`
-- `external_revocation_url` (String) External management URL
+- `external_revocation_url` (String) Specify an external endpoint through which the token management is accomplished. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
   - CLI Alias: `external-revocation-url`
 - `external_revocation_url_security` (Attributes) External management security
   - CLI Alias: `external-revocation-url-security` (see [below for nested schema](#nestedatt--external_revocation_url_security))
 - `metadata_from` (Attributes) Obtain metadata from
   - CLI Alias: `metadata-from` (see [below for nested schema](#nestedatt--metadata_from))
-- `metadata_header_for_access_token` (String) Response header for access token
+- `metadata_header_for_access_token` (String) Specify the response header to place in the access token. These headers are in the response from the authentication or metadata endpoint.
   - CLI Alias: `mdheader-for-accesstoken`
   - Default value: `X-API-OAuth-Metadata-For-AccessToken`
-- `metadata_header_for_payload` (String) Response header for payload
+- `metadata_header_for_payload` (String) Specify the response header to place in the response payload. These headers are in the response from the authentication or metadata endpoint.
   - CLI Alias: `mdheader-for-payload`
   - Default value: `X-API-OAuth-Metadata-For-Payload`
 - `metadata_ssl_profile` (String) TLS profile to access metadata URL
   - CLI Alias: `metadata-ssl-profile`
   - Reference to: `datapower_sslclientprofile:id`
-- `metadata_url` (String) External metadata URL
+- `metadata_url` (String) Specify the URL to a remote server where the custom metadata is stored. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
   - CLI Alias: `metadata-url`
 - `owner_revocation_endpoint` (String) Resource owner revocation endpoint
   - CLI Alias: `apic-owner-revoke-endpoint`
@@ -194,27 +193,27 @@ resource "datapower_oauthprovidersettings" "test" {
   - CLI Alias: `provider-type`
   - Choices: `native`, `third_party`
   - Default value: `native`
-- `scopes_allowed` (String) Allowed scopes
+- `scopes_allowed` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. Scopes ensure that the granted access token is valid to access only specific protected resources.
   - CLI Alias: `scopes-allowed`
 - `supported_client_types` (Attributes) Supported client types
   - CLI Alias: `supported-client-types` (see [below for nested schema](#nestedatt--supported_client_types))
-- `supported_grant_types` (Attributes) Supported grant types
+- `supported_grant_types` (Attributes) Specify the supported grant types. Each grant type defines a method to grant authorization to client applications.
   - CLI Alias: `supported-grant-types` (see [below for nested schema](#nestedatt--supported_grant_types))
-- `third_party_authorization_header_pass_thru` (Boolean) Retain Authorization header
+- `third_party_authorization_header_pass_thru` (Boolean) Specify whether to retain or remove the <tt>Authorization</tt> header for a bearer token. The default behavior is to remove this header.
   - CLI Alias: `third-party-authorization-header-pass-thru`
   - Default value: `false`
 - `third_party_azurl` (String) Authorization endpoint
   - CLI Alias: `third-party-az-url`
-- `third_party_basic_auth_header_name` (String) Basic authentication header name
+- `third_party_basic_auth_header_name` (String) Specify the header name to send the encoded or non-encoded authentication string. For example, <tt>x-introspect-basic-authorization-header</tt> .
   - CLI Alias: `third-party-introspect-basic-auth-headername`
-- `third_party_custom_header_name_format` (String) Custom header pattern
+- `third_party_custom_header_name_format` (String) Specify the pattern of header name to send additional information. For example, <tt>x-introspect-*</tt> .
   - CLI Alias: `third-party-introspect-custom-headername-format`
 - `third_party_introspect_basic_auth_password` (String) Basic authentication password
   - CLI Alias: `third-party-introspect-basic-auth-password-alias`
   - Reference to: `datapower_passwordalias:id`
 - `third_party_introspect_basic_auth_user_name` (String) Basic authentication username
   - CLI Alias: `third-party-introspect-basic-auth-username`
-- `third_party_introspect_cache_time_to_live` (Number) Time to live
+- `third_party_introspect_cache_time_to_live` (Number) Specify the validity period in seconds for third-party provider responses in the cache. The default value is 900.
   - CLI Alias: `third-party-introspect-cache-ttl`
   - Range: `0`-`4294967295`
   - Default value: `900`
@@ -225,7 +224,7 @@ resource "datapower_oauthprovidersettings" "test" {
 - `third_party_introspect_ssl_profile` (String) TLS client profile
   - CLI Alias: `third-party-introspect-ssl-profile`
   - Reference to: `datapower_sslclientprofile:id`
-- `third_party_introspect_url` (String) Introspection endpoint
+- `third_party_introspect_url` (String) Specify the endpoint for token-introspection operation. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
   - CLI Alias: `third-party-introspect-url`
 - `third_party_introspect_url_security` (Attributes) Introspection endpoint security
   - CLI Alias: `third-party-introspect-url-security` (see [below for nested schema](#nestedatt--third_party_introspect_url_security))

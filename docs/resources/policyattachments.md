@@ -3,13 +3,13 @@
 page_title: "datapower_policyattachments Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Policy Attachment
+  Create and configure ws-policy attachments for WSDLs
   CLI Alias: policy-attachments
 ---
 
 # datapower_policyattachments (Resource)
 
-Policy Attachment
+Create and configure ws-policy attachments for WSDLs
   - CLI Alias: `policy-attachments`
 
 ## Example Usage
@@ -35,18 +35,18 @@ resource "datapower_policyattachments" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enforcement_mode` (String) Policy Enforcement Mode
+- `enforcement_mode` (String) Enforcement Mode defines how the service uses WS-Policy to ensure that messages meet security requirements. The default behavior is enforce.
   - CLI Alias: `enforcement-mode`
   - Choices: `filter`, `enforce`
   - Default value: `enforce`
-- `external_policy` (Attributes List) External Policy
+- `external_policy` (Attributes List) Associate an external policy with a service.
   - CLI Alias: `external-policy` (see [below for nested schema](#nestedatt--external_policy))
-- `ignored_policy_attachment_points` (Attributes List) Ignore Embedded Policy
+- `ignored_policy_attachment_points` (Attributes List) Disable all policies attached by policy references at a configured attachment point leaving other policy references intact.
   - CLI Alias: `ignore-attachment-point` (see [below for nested schema](#nestedatt--ignored_policy_attachment_points))
-- `policy_references` (Boolean) Policy References
+- `policy_references` (Boolean) Enable policies attached to WSDL using PolicyURI attributes and PolicyReference elements. These attachments are sometimes called XML element attachments. If 'off', all PolicyURI attributes and PolicyReference elements are ignored and only external policies are enforced.
   - CLI Alias: `policy-references`
   - Default value: `false`
-- `sla_enforcement_mode` (String) SLA Enforcement Mode
+- `sla_enforcement_mode` (String) SLA Enforcement Mode controls the application of SLA Policies to transactions. Transactions are either allowed or rejected based on whether an SLA rule is applied to the transaction.
   - CLI Alias: `sla-enforcement-mode`
   - Choices: `allow-if-no-sla`, `reject-if-no-sla`
   - Default value: `allow-if-no-sla`

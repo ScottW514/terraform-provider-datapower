@@ -1,75 +1,90 @@
 name: WSRRSavedSearchSubscription
-description: 'WSRR saved search subscription'
-cli_alias: 'wsrr-saved-search-subscription'
-cmd_group: 'webservice'
-rest_endpoint: '/mgmt/config/{domain}/WSRRSavedSearchSubscription'
+description: The WSRR (WebSphere Service Registry and Repository) saved subscription
+  is useful when you want to deploy services with an indirect reference to WSRR resources.
+  The configuration references a WSRR server, a saved search and a saved search or
+  named query on the server. <p>The management of service documents is controlled
+  on the WSRR server. The service configuration is updated based on the synchronization
+  method.</p>
+cli_alias: wsrr-saved-search-subscription
+cmd_group: webservice
+rest_endpoint: /mgmt/config/{domain}/WSRRSavedSearchSubscription
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestWSRRSavedSearchSubscription"'
-    test_expect_ds: '"AccTest_WSRRSavedSearchSubscription"'
-    example: 'WSRRSavedSearchSubscriptionName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Server
-    type: String
-    reference_to: WSRRServer
-    required: true
-    test_value: '"AccTest_WSRRServer"'
-    test_bed_value: 'datapower_wsrrserver.acc_test.id'
-    description: 'WSRR server'
-    cli_alias: server
-  - name: SavedSearchName
-    type: String
-    required: true
-    test_value: '"ResTestsaved_search"'
-    test_expect_ds: '"AccTest_saved_search"'
-    example: 'saved_searchName'
-    description: 'Saved search or named query'
-    cli_alias: saved-search-name
-  - name: SavedSearchParameters
-    type: List
-    element_type: String
-    description: 'Query parameters'
-    cli_alias: params
-  - name: Method
-    type: String
-    enum:
-      - 'manual'
-      - 'poll'
-      - 'automatic'
-    default: 'poll'
-    description: 'Synchronization method'
-    cli_alias: method
-  - name: RefreshInterval
-    type: Int64
-    minimum: 60
-    maximum: 4294967
-    default: 86400
-    description: 'Refresh interval'
-    cli_alias: refresh-interval
-  - name: FetchPolicyAttachments
-    type: Bool
-    default: false
-    description: 'Fetch policy attachments'
-    cli_alias: fetch-policy-attachments
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestWSRRSavedSearchSubscription"'
+  test_expect_ds: '"AccTest_WSRRSavedSearchSubscription"'
+  example: WSRRSavedSearchSubscriptionName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Server
+  type: String
+  reference_to: WSRRServer
+  required: true
+  test_value: '"AccTest_WSRRServer"'
+  test_bed_value: datapower_wsrrserver.acc_test.id
+  description: WSRR server
+  cli_alias: server
+- name: SavedSearchName
+  type: String
+  required: true
+  test_value: '"ResTestsaved_search"'
+  test_expect_ds: '"AccTest_saved_search"'
+  example: saved_searchName
+  description: Saved search or named query
+  cli_alias: saved-search-name
+- name: SavedSearchParameters
+  type: List
+  element_type: String
+  description: Specify the parameters to include in the query. The query to the registry
+    uses these parameters. A parameter can be up to 255 characters in length. You
+    can define a maximum of 9 parameters. <p>If you define parameters and they are
+    not require parameters, an error is logged.</p><p><b>Note:</b> In WSRR, a named
+    query and a saved search can have the same name. WSRR matches named queries before
+    saved searches. Therefore, WSRR never finds a saved search with the same name
+    as a named query.</p>
+  cli_alias: params
+- name: Method
+  type: String
+  enum:
+  - manual
+  - poll
+  - automatic
+  default: poll
+  description: Synchronization method
+  cli_alias: method
+- name: RefreshInterval
+  type: Int64
+  minimum: 60
+  maximum: 4294967
+  default: 86400
+  description: Specify the refresh interval in seconds between polls to synchronize
+    the local copy with the registry version.
+  cli_alias: refresh-interval
+- name: FetchPolicyAttachments
+  type: Bool
+  default: false
+  description: Specify whether to fetch external policy attachments. When enabled,
+    the registry is queried for external policy attachments for retrieved resources.
+    These policies are processed when the service allow external policy attachments.
+  cli_alias: fetch-policy-attachments
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary

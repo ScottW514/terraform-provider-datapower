@@ -53,10 +53,10 @@ func (r *ErrorReportSettingsResource) Metadata(ctx context.Context, req resource
 
 func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Failure Notification (`default` domain only)", "failure-notification", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>Failure notification is a serviceability tool. By default, failure notification is disabled. To use failure notification, you must enable the configuration and allow the error report to be uploaded.</p><p>The uploading of an error report allows the capture of more diagnostic information, which safely improves serviceability. Although there is a tradeoff between performance and serviceability, you should choose serviceability by enabling the following properties:</p><ul><li>Include Internal State</li><li>Background Packet Capture</li><li>Background Log Capture</li><li>Background Memory Trace</li></ul><p>When you allow the error report to be uploaded, this setting enables the Failure Notification status provider. This status provide in combination with the report history tracks the error reports that the appliance generates, the reason why the appliance generated the error report, and its upload status to the specific destination.</p><p>You can specify an NFS, RAID, SMTP, or FTP destination. You can also specify the local temporary directory as the destination. The appliance generates error reports, the naming convention includes the serial number of the appliance and the timestamp of the report. This naming convention prevents one report from overwriting another.</p><p>You can use Event Triggers to generate error reports automatically when specific events occur.</p>", "failure-notification", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -66,106 +66,106 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 			},
 			"upload_report": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Upload Error Report", "upload-report", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to upload the error report to an NFS, RAID, SMTP, or FTP destination or write the error report to the local temporary directory. If you enable this feature:</p><ul><li>It enables the Failure Notification status provider, which tracks previous error reports</li><li>It changes the naming convention to include the serial number of the appliance and the timestamp, which prevents one report overwriting another</li></ul>", "upload-report", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_smtp": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("E-mail Notification", "use-smtp", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to send an e-mail at start-up only that contains the error report. If you want to receive e-mail notification, use the upload error report property instead of this property.", "use-smtp", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"internal_state": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Include Internal State", "internal-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to include the internal state of the appliance in the error report. The internal state can be useful in diagnosing the cause of the error.", "internal-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ffdc_packet_capture": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Background Packet Capture", "ffdc packet-capture", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use a background packet capture. This feature enables network packet capture for all interfaces including the internal loopback interface. When enabled, this feature runs continuously.</p><p>If the appliance encounters a problem or a user triggers the generation of an error report, the error report includes the data from this packet capture data. This data helps to determine the messages that the appliance was processing when it encountered the problem.</p>", "ffdc packet-capture", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ffdc_event_log_capture": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Background Log Capture", "ffdc event-log", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to use a background log capture. This feature enables the capture of all log and trace points with minimal overhead. When enabled, this feature runs continuously.</p><p>If the appliance encounters a problem or a user triggers the generation of an error report, the error report includes data from this log capture. This data can help IBM Support identify the problem.</p><p>These messages are independent of messages written to log and trace targets.</p>", "ffdc event-log", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ffdc_memory_leak_capture": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Background Memory Trace", "ffdc memory-trace", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable automatic leak detection. This feature finds gradual memory leaks that occur steadily over time. This feature does not help in situations where messages are larger than the appliance can parse.</p><p>When enabled and if memory falls below an internal threshold, the appliance tracks all memory allocations. When the appliance reaches a critical condition that will lead to a crash, it generates an error report that contains information about memory allocation.</p><p>The configuration of the Throttle Settings affects this feature. The throttle settings can prevent the appliance from reaching the internal threshold.</p>", "ffdc memory-trace", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"always_on_startup": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Always On Startup", "always-on-startup", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether the appliance generates an error report when it reboots or reloads. If this feature is enabled logs will be collected before they are overwritten when the system reloads. When the appliance reboots or reloads and when using the upload error report feature, the status provider lists <tt>on-start</tt> as the reason code. If the appliance reloads due to a crash, the status provider lists <tt>crash</tt> as the reason code.</p><p><b>Best Practices:</b></p><ul><li>In general enable this feature.</li><li>In particular when in production, enable this feature to track reloads and reboots.</li></ul>", "always-on-startup", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"always_on_shutdown": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Always On Shutdown", "always-on-shutdown", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether the appliance generates an error report when it shuts down. When the appliance shuts down and when using the upload error report feature, the status provider lists <tt>on-shutdown</tt> as the reason code. If the appliance shuts down due to a crash, the status provider lists <tt>crash</tt> as the reason code.</p><p><b>Best Practices:</b></p><ul><li>In general enable this feature.</li><li>In particular when in production, enable this feature to make sure debugging information is captured when the appliance shuts down.</li></ul>", "always-on-shutdown", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"protocol": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Report Destination Protocol", "protocol", "").AddStringEnum("ftp", "nfs", "raid", "smtp", "temporary", "mqdiag").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol to use to upload the error report. Note that the selection you will see depends on your device features and licenses.", "protocol", "").AddStringEnum("ftp", "nfs", "raid", "smtp", "temporary", "mqdiag").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("ftp", "nfs", "raid", "smtp", "temporary", "mqdiag"),
 				},
 			},
 			"location_identifier": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Location", "location-id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify text to include in the subject of an e-mail notification. In general, this value should be how you identify this appliance in your environment. When using the upload error report feature, this property is not necessary. In this case, failure notification uses the serial number of the appliance and the timestamp of the error report.", "location-id", "").String,
 				Optional:            true,
 			},
 			"smtp_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SMTP Server", "remote-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote SMTP server to which to send the error report.", "remote-address", "").String,
 				Optional:            true,
 			},
 			"email_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("E-mail Address", "email-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address to which to send the error report.", "email-address", "").String,
 				Optional:            true,
 			},
 			"email_sender_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("E-mail Sender Address", "email-sender-address", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address of the sender ( <tt>MAIL FROM</tt> ). If not specified, the configuration uses the e-mail address of the recipient.", "email-sender-address", "").String,
 				Optional:            true,
 			},
 			"ftp_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("FTP Server", "ftp-server", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote FTP server to which to upload the error report.", "ftp-server", "").String,
 				Optional:            true,
 			},
 			"ftp_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("FTP Path", "ftp-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory on the FTP server to which to upload the error report. Use <tt>%2F</tt> to specify an absolute path.", "ftp-path", "").String,
 				Optional:            true,
 			},
 			"ftp_user_agent": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("FTP User Agent", "ftp-user-agent", "httpuseragent").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the User Agent that describes how to connect to remote FTP servers. In addition to the FTP Policy to define the connection, ensure that this User Agent defines the basic authentication policy (user name and password) to connect to the FTP server.", "ftp-user-agent", "httpuseragent").String,
 				Optional:            true,
 			},
 			"nfs_mount": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("NFS Mount", "nfs-mount", "nfsstaticmount").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the NFS mount point to which to upload the error report.", "nfs-mount", "nfsstaticmount").String,
 				Optional:            true,
 			},
 			"nfs_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("NFS Path", "nfs-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This describes the NFS path location for the Error Report", "nfs-path", "").String,
 				Optional:            true,
 			},
 			"raid_volume": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("RAID Volume", "raid-volume", "raidvolume").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the volume on the RAID array to which to upload the error report.", "raid-volume", "raidvolume").String,
 				Optional:            true,
 			},
 			"raid_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("RAID Volume Path", "raid-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory on the RAID volume to which to upload the error report.", "raid-path", "").String,
 				Optional:            true,
 			},
 			"report_history_kept": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Report History", "report-history", "").AddIntegerRange(2, 10).AddDefaultValue("5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the maximum number of local error reports to maintain when using the upload error report feature. After reaching this limit, the next local error report overwrites the oldest local error report. Use any value of 2 - 10. The default value is 5.</p><p>This feature only applies to locally stored error reports, including temporary and Raid.</p><p>To view the history, see the Failure Notification status provider.</p>", "report-history", "").AddIntegerRange(2, 10).AddDefaultValue("5").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

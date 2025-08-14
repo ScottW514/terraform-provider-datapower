@@ -58,7 +58,7 @@ func (r *WXSGridResource) Metadata(ctx context.Context, req resource.MetadataReq
 
 func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("eXtreme Scale Grid", "wxs-grid", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The configuration of an eXtreme Scale Grid defines the connection details to an eXtreme Scale grid in an eXtreme Scale collective. To define this configuration, you must define the eXtreme Scale collective, the grid name, and the user and password for the user account who connects to the eXtreme Scale. If you need to secure connections to eXtreme Scale, you must assign a TLS Proxy Profile.", "wxs-grid", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,27 +83,27 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a brief, but descriptive, summary of the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"collective": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Collective", "collective", "loadbalancergroup").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the Load Balancer Group that contains members in the collective of eXtreme Scale. You must define at least one member in the collective.", "collective", "loadbalancergroup").String,
 				Required:            true,
 			},
 			"grid": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Grid Name", "grid", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the eXtreme Scale grid. The value cannot contain whitespace or the following characters: <tt>^ . \\ / , # $ @ : ; * ? &lt; > | = + &amp; % [ ] \" '</tt> .", "grid", "").String,
 				Required:            true,
 			},
 			"user_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("User", "username", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the user account of the eXtreme Scale user who connects to the eXtreme Scale collective. The value can be up to 64 characters in length and cannot be blank. You can use all alphanumeric characters and most special characters. You cannot use spaces or the following special characters: <tt># &lt;</tt> .</p><p>The user must have sufficient eXtreme Scale permissions to access the grid.</p>", "username", "").String,
 				Required:            true,
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password Alias", "password-alias", "passwordalias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias to use to look up the password of the eXtreme Scale user who connects to the eXtreme Scale collective.", "password-alias", "passwordalias").String,
 				Required:            true,
 			},
 			"timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Timeout", "timeout", "").AddIntegerRange(10, 86400000).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum time to wait to establish a connection to an eXtreme Scale. If unable to establish a connection, the operation fails. Enter a value in the range 10 - 86400000. The default value is 1000.", "timeout", "").AddIntegerRange(10, 86400000).AddDefaultValue("1000").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -113,21 +113,21 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Default: int64default.StaticInt64(1000),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "sslclientprofile").String,
 				Optional:            true,
 			},
 			"encrypt": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encrypted Data", "encrypt", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the data in the eXtreme Scale data grid is encrypted. If encrypted, the data is encrypted, when writing to, and decrypted, when reading from, the eXtreme Scale data grid.", "encrypt", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"encrypt_ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Shared Secret Key for Encryption and Decryption", "encrypt-sskey", "cryptosskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-sskey", "cryptosskey").String,
 				Optional:            true,
 			},
 			"encrypt_alg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("PKCS #7 algorithm for encryption and decryption", "encrypt-alg", "").AddStringEnum("tripledes-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "rc2-40-cbc", "rc2-64-cbc", "rc2-cbc").AddDefaultValue("tripledes-cbc").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PKCS #7 algorithm for encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.", "encrypt-alg", "").AddStringEnum("tripledes-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "rc2-40-cbc", "rc2-64-cbc", "rc2-cbc").AddDefaultValue("tripledes-cbc").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -136,13 +136,13 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Default: stringdefault.StaticString("tripledes-cbc"),
 			},
 			"key_obfuscation": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Hash Key Obfuscation", "key-obfuscation", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicate whether to apply a hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.", "key-obfuscation", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"key_obfuscation_alg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Hash Algorithm for Key Obfuscation", "key-obfuscation-alg", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha256").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.", "key-obfuscation-alg", "").AddStringEnum("sha1", "sha256", "sha512", "ripemd160", "sha224", "sha384", "md5").AddDefaultValue("sha256").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

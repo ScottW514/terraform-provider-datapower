@@ -1,55 +1,65 @@
 name: Assembly
-description: 'Assembly'
-cli_alias: 'assembly'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/Assembly'
+description: An assembly specifies the API rule to apply to the API call and how to
+  handle errors during the assembly execution. The API rule for the assembly comprises
+  only assembly actions that are executed in order to control a specific aspect of
+  processing such as data transformation during API call at run time. When an API
+  is identified for the incoming request, its assembly is executed.
+cli_alias: assembly
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/Assembly
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAssembly"'
-    test_expect_ds: '"AccTest_Assembly"'
-    example: 'AssemblyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Rule
-    type: String
-    reference_to: APIRule
-    required: true
-    test_value: '"default-empty-rule"'
-    description: 'Rule'
-    cli_alias: rule
-  - name: Catch
-    type: List
-    element_type: DmAssemblyCatch
-    description: 'Catch'
-    cli_alias: catch
-  - name: DefaultCatch
-    type: String
-    reference_to: APIRule
-    description: 'Default catch'
-    cli_alias: default-catch
-  - name: Finally
-    type: String
-    reference_to: APIRule
-    description: 'Finally'
-    cli_alias: finally
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAssembly"'
+  test_expect_ds: '"AccTest_Assembly"'
+  example: AssemblyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the assembly configuration.
+  cli_alias: summary
+- name: Rule
+  type: String
+  reference_to: APIRule
+  required: true
+  test_value: '"default-empty-rule"'
+  description: Specifies the API rule that comprises only assembly actions to apply
+    to the API call.
+  cli_alias: rule
+- name: Catch
+  type: List
+  element_type: DmAssemblyCatch
+  description: Specifies how to handle a specific error when it occurs during the
+    assembly execution.
+  cli_alias: catch
+- name: DefaultCatch
+  type: String
+  reference_to: APIRule
+  description: Specifies how to handle errors that are not caught by the catch setting
+    during the assembly execution.
+  cli_alias: default-catch
+- name: Finally
+  type: String
+  reference_to: APIRule
+  description: Specifies the final API rule to apply to the API call after the main
+    rule, catch rule, or both have finished executing. The final API rule comprises
+    only assembly actions.
+  cli_alias: finally

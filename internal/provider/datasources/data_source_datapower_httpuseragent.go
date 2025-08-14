@@ -57,7 +57,7 @@ func (d *HTTPUserAgentDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *HTTPUserAgentDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "User agent",
+		MarkdownDescription: "A user agent define how to retrieve resources from remote servers.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,79 +81,79 @@ func (d *HTTPUserAgentDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"identifier": schema.StringAttribute{
-							MarkdownDescription: "HTTP request-header",
+							MarkdownDescription: "Specify the string that the user agent includes as the <tt>request-header</tt> field. This field contains information about the user agent that initiates the request. By default, the system does not include a <tt>request-header</tt> field.",
 							Computed:            true,
 						},
 						"max_redirects": schema.Int64Attribute{
-							MarkdownDescription: "Max redirects",
+							MarkdownDescription: "Specify the maximum number of HTTP redirect messages received before the target URL is declared unreachable. Enter a value in the range 0 - 128. The default value is 8.",
 							Computed:            true,
 						},
 						"timeout": schema.Int64Attribute{
-							MarkdownDescription: "Timeout",
+							MarkdownDescription: "the maximum idle time in seconds before an established connection to a remote server is torn down. Enter a avlue in the range 1 - 86400. The default value is 300.",
 							Computed:            true,
 						},
 						"proxy_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "Proxy policy",
+							MarkdownDescription: "Specify the proxy policy that associates a set of URLs with a specific HTTP proxy.",
 							NestedObject:        models.DmProxyPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"ssl_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "TLS profile policy",
+							MarkdownDescription: "Specify the policy that associates a set of URLs with a specific TLS profile. When a URL matches the expression, the agent uses the corresponding TLS profile to secure connections with the resource.",
 							NestedObject:        models.DmSSLPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"basic_auth_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "Basic authentication policy",
+							MarkdownDescription: "Specify the policy that associates a set of URLs with a specific username and password for basic authentication.",
 							NestedObject:        models.DmBasicAuthPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"soap_action_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "SOAPAction policy",
+							MarkdownDescription: "Specify the policy that associates a set of URLs with a specific HTTP SOAPAction header.",
 							NestedObject:        models.DmSoapActionPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"pubkey_auth_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "Public key authentication policy",
+							MarkdownDescription: "Specify the policy that associates a set of URLs with a specific private key for public key authentication. The remote host must possess and reference the corresponding public key (certificate) to connect successfully.",
 							NestedObject:        models.DmPubkeyAuthPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"allow_compression_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "Allow compression policy",
+							MarkdownDescription: "Specify the policy that associates a set of URLS that allow compression.",
 							NestedObject:        models.DmAllowCompressionPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"header_retention_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "Header retention policy",
+							MarkdownDescription: "Specify the policy that associates a set of URLS to retain specific heads in messages.",
 							NestedObject:        models.DmHeaderRetentionPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"http_version_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "HTTP version policy",
+							MarkdownDescription: "Specify the policy that associates a set of URLs to specific HTTP versions. This policy is cumulative. If any transaction, URL match, or gateway have an HTTP version policy, that transaction is processed at the requested HTTP version.",
 							NestedObject:        models.DmHTTPVersionPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"add_header_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "Header injection policy",
+							MarkdownDescription: "Specify the policy that associates a set of URLS to inject HTTP headers into the message.",
 							NestedObject:        models.DmAddHeaderPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"upload_chunked_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "Chunked upload policy",
+							MarkdownDescription: "Specify the policy that associates a set of URL to control whether to send chunked-encoded documents. With HTTP/1.1, the body of the document can be delimited by <tt>Content-Length</tt> or chunked encoding. All servers understand <tt>Content-Length</tt> but many applications fail to understand chunked encoding. Therefore, <tt>Content-Length</tt> is used. However, the use of <tt>Content-Length</tt> interferes with the ability of the service to fully stream. <p>Unlike all other HTTP/1.1 features that can be negotiated down at run time, you must know beforehand that the target server is RFC 2616 compatible.</p>",
 							NestedObject:        models.DmUploadChunkedPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"ftp_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "FTP client policy",
+							MarkdownDescription: "Specify the policy that associate a set of URLs to control FTP client options for outgoing connections. These settings override the compiled-in defaults and can be further overridden by query parameters that initiates the file transfer.",
 							NestedObject:        models.DmFTPPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"smtp_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "SMTP client policy",
+							MarkdownDescription: "Specify the policy that associates a set of URLS to control SMTP client options for outgoing connections. These settings override the compiled-in defaults and can be further overridden by query parameters that sends the e-mail message.",
 							NestedObject:        models.DmSMTPPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"sftp_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "SFTP client policy",
+							MarkdownDescription: "Specify the policy that associate a set of URLs to control SSH client options for outgoing connections. These settings override the compiled-in defaults and can be further overridden by query parameters that initiates the file transfer.",
 							NestedObject:        models.DmSFTPPolicyDataSourceSchema,
 							Computed:            true,
 						},

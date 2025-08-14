@@ -57,7 +57,7 @@ func (d *AssemblyActionJson2XmlDataSource) Metadata(_ context.Context, req datas
 
 func (d *AssemblyActionJson2XmlDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "JSON to XML assembly action",
+		MarkdownDescription: "The JSON to XML assembly action converts the payload of a message from JSON to its equivalent XML.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,27 +77,27 @@ func (d *AssemblyActionJson2XmlDataSource) Schema(ctx context.Context, req datas
 							Computed:            true,
 						},
 						"conversion_format": schema.StringAttribute{
-							MarkdownDescription: "Conversion type",
+							MarkdownDescription: "Specify the conversion type. The default setting is BadgerFish.",
 							Computed:            true,
 						},
 						"input": schema.StringAttribute{
-							MarkdownDescription: "Input message",
+							MarkdownDescription: "Specify the variable in the API context that contains the input message. The content of the <tt>body</tt> field is the input. With the default variable of <tt>message</tt> , the input is <tt>message.body</tt> .",
 							Computed:            true,
 						},
 						"output": schema.StringAttribute{
-							MarkdownDescription: "Output message",
+							MarkdownDescription: "Specify the variable in the API context to store the converted output message. The results are written to the <tt>body</tt> field of the specified variable. The output variable cannot be a read-only variable. <p>When you want the converted output to be returned to the client, you must use <tt>message</tt> as the output variable.</p><ul><li>Without an output variable, the output variable matches the input variable. For example, if the input variable is <tt>message</tt> , the output variable is <tt>message</tt> . Therefore, if the input variable is <tt>foo</tt> , the output variable is <tt>foo</tt> .</li><li>When the output variable is not <tt>message</tt> , the content is converted but not returned to the client.</li></ul>",
 							Computed:            true,
 						},
 						"root_element_name": schema.StringAttribute{
-							MarkdownDescription: "Root element name",
+							MarkdownDescription: "Specify the name of the root element that wraps the resultant XML document. The default value is <tt>json</tt> . <p>The root element is generated with the specified name when one of the following conditions is met.</p><ul><li>The output include the root element.</li><li>The input has no root object.</li></ul>",
 							Computed:            true,
 						},
 						"always_output_root_element": schema.BoolAttribute{
-							MarkdownDescription: "Always output root element",
+							MarkdownDescription: "Specify whether to include the root element in the resultant XML. When enabled, the output includes the root element in the resultant XML.",
 							Computed:            true,
 						},
 						"unnamed_element_name": schema.StringAttribute{
-							MarkdownDescription: "Unnamed element name",
+							MarkdownDescription: "Specify the XML element that is the result of converting JSON arrays to XML. The default value is <tt>element</tt> .",
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
@@ -109,11 +109,11 @@ func (d *AssemblyActionJson2XmlDataSource) Schema(ctx context.Context, req datas
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

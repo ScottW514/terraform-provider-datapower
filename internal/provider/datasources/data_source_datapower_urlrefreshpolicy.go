@@ -57,7 +57,7 @@ func (d *URLRefreshPolicyDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *URLRefreshPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "URL Refresh Policy",
+		MarkdownDescription: "Configure/Edit URL Refresh Policies",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *URLRefreshPolicyDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"url_refresh_rule": schema.ListNestedAttribute{
-							MarkdownDescription: "URL Refresh Rule",
+							MarkdownDescription: "Add, edit or delete a refresh rule",
 							NestedObject:        models.DmURLRefreshRuleDataSourceSchema,
 							Computed:            true,
 						},

@@ -3,13 +3,12 @@
 page_title: "datapower_raidvolume Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  RAID Array (default domain only)
-  CLI Alias: raid-volume
+  
 ---
 
 # datapower_raidvolume (Resource)
 
-RAID Array (`default` domain only)
+<p>Configure a RAID volume for data storage.</p><ol><li>The access permission to files on the storage volume. With the B2B feature, access permission must be read/write. B2B storage requires write access. Setting to read-only is ignored but generates a warning.</li><li>The subdirectory where files on the storage volume are available in the <tt>local:</tt> and <tt>logstore:</tt> directories. Each domain contains these subdirectories, and these subdirectories are not shared across domains.</li></ol>
   - CLI Alias: `raid-volume`
 
 ## Example Usage
@@ -25,12 +24,12 @@ resource "datapower_raidvolume" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `directory` (String) Directory
+- `directory` (String) The subdirectory where the files on the storage volume are available. The name can be up to 64 characters long. The name cannot start with a period. The name can use all alphanumeric characters and the following special characters: . - _.
   - CLI Alias: `directory`
-- `read_only` (Boolean) Set to read-only
+- `read_only` (Boolean) <p>The access permission to files on the storage volume.</p><ul><li>When enabled, access permission is read-only. With the B2B feature, access permission must be read/write. B2B storage requires write access to the RAID volume. Setting to read-only is ignored but generates a warning.</li><li>When disabled, the default value, access permission is read/write.</li></ul>
   - CLI Alias: `read-only`
   - Default value: `false`
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

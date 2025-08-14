@@ -3,13 +3,13 @@
 page_title: "datapower_sshdomainclientprofile Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SSH domain client profile
+  The SSH domain client profile defines the cipher suites.
   CLI Alias: sshdomainclientprofile
 ---
 
 # datapower_sshdomainclientprofile (Resource)
 
-SSH domain client profile
+The SSH domain client profile defines the cipher suites.
   - CLI Alias: `sshdomainclientprofile`
 
 ## Example Usage
@@ -29,17 +29,17 @@ resource "datapower_sshdomainclientprofile" "test" {
 
 ### Optional
 
-- `ciphers` (List of String) Ciphers
+- `ciphers` (List of String) Specify the SSH cipher suites to support.
   - CLI Alias: `ciphers`
   - Choices: `CHACHA20-POLY1305_AT_OPENSSH.COM`, `AES128-CTR`, `AES192-CTR`, `AES256-CTR`, `AES128-GCM_AT_OPENSSH.COM`, `AES256-GCM_AT_OPENSSH.COM`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `kex_alg` (List of String) Key exchange algorithms
+- `kex_alg` (List of String) Specify the key exchange (KEX) algorithms to support.
   - CLI Alias: `kex-alg`
   - Choices: `DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256`, `ECDH-SHA2-NISTP256`, `ECDH-SHA2-NISTP384`, `ECDH-SHA2-NISTP521`, `CURVE25519-SHA256_AT_LIBSSH.ORG`
-- `mac_alg` (List of String) Message authentication codes
+- `mac_alg` (List of String) Specify the message authentication codes (MAC) to support.
   - CLI Alias: `mac-alg`
   - Choices: `HMAC-SHA1`, `HMAC-SHA2-256`, `HMAC-SHA2-512`, `UMAC-64_AT_OPENSSH.COM`, `UMAC-128_AT_OPENSSH.COM`, `HMAC-SHA1-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-256-ETM_AT_OPENSSH.COM`, `HMAC-SHA2-512-ETM_AT_OPENSSH.COM`, `UMAC-64-ETM_AT_OPENSSH.COM`, `UMAC-128-ETM_AT_OPENSSH.COM`
 - `user_summary` (String) Comments

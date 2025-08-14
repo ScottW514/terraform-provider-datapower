@@ -1,51 +1,63 @@
 name: HTTPInputConversionMap
-description: 'HTTP Input Conversion Map'
-cli_alias: 'input-conversion-map'
-cmd_group: 'input-conversion'
-rest_endpoint: '/mgmt/config/{domain}/HTTPInputConversionMap'
+description: This defines the rules for handling HTTP to XML conversion of form values
+  in an HTTP GET or POST of a form. There are different conversion (Encoding) rules
+  for the values. They control how the value is mapped to the contents of its &lt;arg>
+  element in the resulting XML. There is a default Encoding, which is all that is
+  required. There can also be specific Encodings applied to values based on the name
+  associated with a value, which is done using an ordered list of PCREs.
+cli_alias: input-conversion-map
+cmd_group: input-conversion
+rest_endpoint: /mgmt/config/{domain}/HTTPInputConversionMap
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestHTTPInputConversionMap"'
-    test_expect_ds: '"_webappfw_sql-json"'
-    example: 'HTTPInputConversionMapName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: DefaultInputEncoding
-    type: String
-    enum:
-      - 'plain'
-      - 'urlencoded'
-      - 'xml'
-      - 'urlencoded-xml'
-      - 'base64'
-      - 'base64-text'
-      - 'base64-xml'
-      - 'json'
-    description: 'Default Encoding'
-    cli_alias: default-encoding
-  - name: InputEncoding
-    type: List
-    element_type: DmInputEncoding
-    description: 'Encoding Map'
-    cli_alias: rule
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestHTTPInputConversionMap"'
+  test_expect_ds: '"_webappfw_sql-json"'
+  example: HTTPInputConversionMapName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: DefaultInputEncoding
+  type: String
+  enum:
+  - plain
+  - urlencoded
+  - xml
+  - urlencoded-xml
+  - base64
+  - base64-text
+  - base64-xml
+  - json
+  description: Select the default encoding to use for any name-value pair in an HTTP
+    form where the name does not match any of the patterns in the Encoding Map.
+  cli_alias: default-encoding
+- name: InputEncoding
+  type: List
+  element_type: DmInputEncoding
+  description: This allows selecting the Encoding for values based on their name.
+    The names are matched by PCREs. Each PCRE is associated with an Encoding that
+    controls how the value is mapped to the contents of an &lt;arg> element in the
+    resulting XML. This is an ordered list, comparision of the name proceeds until
+    the first match. If there is no match, the Encoding will be selected by the Default
+    Encoding of this HTTP Input Conversion Map.
+  cli_alias: rule

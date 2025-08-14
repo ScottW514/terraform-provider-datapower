@@ -3,13 +3,12 @@
 page_title: "datapower_xslproxyservice Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XSL Proxy
-  CLI Alias: xslproxyAccepted Dependency Actions: quiesce
+  
 ---
 
 # datapower_xslproxyservice (Resource)
 
-XSL Proxy
+<p>The XSL Proxy is obsolete.</p>
   - CLI Alias: `xslproxy`
   - Accepted Dependency Actions: `quiesce`
 
@@ -35,144 +34,135 @@ resource "datapower_xslproxyservice" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_port` (Number) Port Number
+- `local_port` (Number) Specify the local port to monitor for incoming client requests.
   - CLI Alias: `port`
   - Range: `1`-`65535`
-- `remote_address` (String) Remote Host
+- `remote_address` (String) Specify the host name or IP address of the specific server supported by this DataPower service. If using load balancers, specify the name of the Load Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load balancer groups and the On Demand Router can be used only when Type is static-backend.
   - CLI Alias: `remote-ip-address`
-- `remote_port` (Number) Remote Port
+- `remote_port` (Number) Specify the port number to monitor. Used only when Type is static-backend.
   - CLI Alias: `remote-port`
   - Range: `1`-`65535`
 
 ### Optional
 
-- `acl` (String) Access Control List
+- `acl` (String) This Access Control List will be used to allow or deny access to this service based on the IP address of the client. When attached to a service, an Access Control List (ACL) denies all access by default. To deny access to only selected addresses, first grant access to all addresses (allow 0.0.0.0) and then create deny entries for the desired hosts.
   - CLI Alias: `acl`
   - Reference to: `datapower_accesscontrollist:id`
-- `always_show_errors` (Boolean) Always provide full errors
+- `always_show_errors` (Boolean) If set, HTTP responses may be generated with errors appended to partially generated documents. If not set error responses will only be sent to the browser if no other output has been created.
   - CLI Alias: `always-show-errors`
   - Default value: `false`
-- `count_monitors` (List of String) Count Monitors
+- `count_monitors` (List of String) Count Monitors watch for defined messaging events and increment counters each time the event occurs. When a certain threshold is reached, the monitor can either post a notification to a log or block service for a configured amount of time. Select a Count Monitor from the list to activate that monitor for this firewall. Click the + button to create a new Count Monitor.
   - CLI Alias: `monitor-count`
   - Reference to: `datapower_countmonitor:id`
-- `credential_charset` (String) Credential Character Set
-  - CLI Alias: `credential-charset`
+- `credential_charset` (String) - CLI Alias: `credential-charset`
   - Choices: `protocol`, `ascii`, `utf8`, `big5`, `cp1250`, `cp1251`, `cp1252`, `cp1253`, `cp1254`, `cp1255`, `cp1256`, `cp1257`, `cp1258`, `euc_jp`, `euc_kr`, `gb18030`, `gb2312`, `iso2022_jp`, `iso2022_kr`, `iso8859_1`, `iso8859_2`, `iso8859_4`, `iso8859_5`, `iso8859_6`, `iso8859_7`, `iso8859_8`, `iso8859_9`, `iso8859_15`, `sjis`, `tis620`, `unicode_le`
   - Default value: `protocol`
-- `debug_history` (Number) Transaction History
+- `debug_history` (Number) Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.
   - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
-- `debug_mode` (String) Probe setting
+- `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
   - Default value: `off`
-- `debug_trigger` (Attributes List) Probe Triggers
+- `debug_trigger` (Attributes List) The probe captures transactions that meet one or more of the conditions defined by the triggers. These triggers examine the direction or type of the message flow and examine the message for an XPath expression match. When a message meets one of these conditions, the transaction is captured in diagnostics mode and becomes part of the list of transactions that can be viewed.
   - CLI Alias: `debug-trigger` (see [below for nested schema](#nestedatt--debug_trigger))
-- `default_param_namespace` (String) Default parameter namespace
+- `default_param_namespace` (String) If a stylesheet parameter is defined without a namespace (or without explicitly specifying the null namespace), then this is the namespace into which the parameter will be assigned.
   - CLI Alias: `default-param-namespace`
   - Default value: `http://www.datapower.com/param/config`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `disallow_empty_response` (Boolean) Don't allow empty response bodies
+- `disallow_empty_response` (Boolean) If set, only responses with message bodies are allowed (that is, not 304 and so forth).
   - CLI Alias: `disallow-empty-reply`
   - Default value: `false`
-- `disallow_get` (Boolean) Disallow GET (and HEAD)
+- `disallow_get` (Boolean) If set, only methods with incoming data (such as POST) are allowed.
   - CLI Alias: `disallow-get`
   - Default value: `false`
-- `do_chunked_upload` (Boolean) Allow Chunked Uploads
+- `do_chunked_upload` (Boolean) Use the radio buttons to enable (on) or disable (off) the ability to send Content-Type Chunked Encoded documents to the back end server. When the device employs the HTTP/1.1 protocol, the body of the document can be delimited by either Content-Length or chunked encodings. While all servers will understand how to interpret Content-Length, many applications will fail to understand Chunked encoding. For this reason, Content-Length is the standard method used. However doing so interferes with the ability of the device to fully stream. To stream full documents towards the back end server, this property should be turned on. However, the back end server must be RFC 2616 compatible, because this feature cannot be renegotiated at run time, unlike all other HTTP/1.1 features which can be negotiated down at runtime if necessary. This property can also be enabled by configuring a User Agent to enable it on a per-URL basis.
   - CLI Alias: `chunked-uploads`
   - Default value: `false`
-- `do_host_rewrite` (Boolean) Host Rewrite
+- `do_host_rewrite` (Boolean) When enabled, the device will rewrite the Host: header to be the address of the back-end server. This is not what a strict proxy would do, and may not be appropriate for all topologies.
   - CLI Alias: `host-rewriting`
   - Default value: `true`
-- `duration_monitors` (List of String) Duration Monitors
+- `duration_monitors` (List of String) Duration Monitors watch for events meeting or exceeding a configured duration. When a duration is met or exceeded, the monitor can either post a notification to a log or block service for a configured amount of time. Select a Duration Monitor from the list to activate that monitor for this firewall. Click the + button to create a new Duration Monitor.
   - CLI Alias: `monitor-duration`
   - Reference to: `datapower_durationmonitor:id`
-- `force_policy_exec` (Boolean) Process Messages Whose Body Is Empty
+- `force_policy_exec` (Boolean) <p>Some message patterns may include bodyless request and response messages. This is common with RESTful web services where messages may or may not include a body but still requires the processing policy to run. To enable this capability for services whose request and response type is XML (or marked as non-XML i.e. JSON), set this option to 'on'. By doing so, the processing policy rules will always be executed.</p>
   - CLI Alias: `force-policy-exec`
   - Default value: `false`
 - `header_injection` (Attributes List) HTTP Header Injection
   - CLI Alias: `inject` (see [below for nested schema](#nestedatt--header_injection))
-- `header_suppression` (Attributes List) HTTP Header Suppression
+- `header_suppression` (Attributes List) HTTP Headers can be suppressed (removed) from the message flow using this property. For example, the Via: header, which contains the name of the DataPower service handling the message, may be suppressed from messages sent by the DataPower device back to the client.
   - CLI Alias: `suppress` (see [below for nested schema](#nestedatt--header_suppression))
-- `http_client_ip_label` (String) HTTP Client IP Label
+- `http_client_ip_label` (String) Retain the default value (X-Client-IP) or provide an other value (for example, X-Forwarded-For).
   - CLI Alias: `client-address`
   - Default value: `X-Client-IP`
-- `http_compression` (Boolean) HTTP Compression
+- `http_compression` (Boolean) Toggle to enable or disable the GZIP compression function.
   - CLI Alias: `compression`
   - Default value: `false`
-- `http_include_response_type_encoding` (Boolean) HTTP Include charset in response-type
+- `http_include_response_type_encoding` (Boolean) Toggle to enable or disable including the character set encoding in the HTTP content-type header produced. For example, when sending a UTF-8 encoded XML document: If this property is disabled, 'content-type=text/xml' will be sent. If this property is enabled, 'content-type=text/xml; charset=UTF-8' will be sent.
   - CLI Alias: `include-response-type-encoding`
   - Default value: `false`
-- `http_log_cor_id_label` (String) HTTP Global Transaction ID Label
+- `http_log_cor_id_label` (String) Enter the name of an HTTP Header to read to determine the global transaction ID for chained services. This value defaults to X-Global-Transaction-ID.
   - CLI Alias: `http-global-tranID-label`
   - Default value: `X-Global-Transaction-ID`
-- `http_persist_timeout` (Number) HTTP Persistent Timeout
+- `http_persist_timeout` (Number) Specifies the maximum number of seconds (within the range 0 through 7200, with a default of 180) that a firewall or proxy maintains an idle TCP connection.
   - CLI Alias: `persistent-timeout`
   - Range: `0`-`7200`
   - Default value: `180`
-- `http_persistent_connections` (Boolean) HTTP Persistent Connections
+- `http_persistent_connections` (Boolean) Toggle to enable or disable HTTP persistent connections.
   - CLI Alias: `persistent-connections`
   - Default value: `true`
-- `http_proxy_host` (String) Proxy Host
+- `http_proxy_host` (String) Specify the host name or IP address of the HTTP proxy to use when the remote server can be accessed only through another HTTP proxy.
   - CLI Alias: `httpproxy-address`
-- `http_proxy_port` (Number) Proxy Port
+- `http_proxy_port` (Number) Specify the port number on the HTTP proxy server.
   - CLI Alias: `httpproxy-port`
   - Range: `1`-`65535`
   - Default value: `800`
-- `http_timeout` (Number) HTTP Timeout
+- `http_timeout` (Number) Specifies the maximum number of seconds (within the range 1 through 86400, with a default of 120) that a firewall or proxy maintains an idle HTTP connection.
   - CLI Alias: `http-timeout`
   - Range: `1`-`86400`
   - Default value: `120`
 - `http_version` (Attributes) HTTP Version
   - CLI Alias: `version` (see [below for nested schema](#nestedatt--http_version))
-- `local_address` (String) Local address
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`
-- `monitor_processing_policy` (String) Monitors evaluation method
+- `monitor_processing_policy` (String) Select the way that the system behaves when more than one monitor is attached to a service.
   - CLI Alias: `monitor-processing-policy`
   - Choices: `terminate-at-first-throttle`, `terminate-at-first-match`
   - Default value: `terminate-at-first-throttle`
-- `priority` (String) Service Priority
+- `priority` (String) Control the service scheduling priority. When system resources are in high demand, "high" priority services will be favored over lower priority services.
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
-- `query_param_namespace` (String) Query parameter namespace
+- `query_param_namespace` (String) The namespace in which to put all parameters that are specified in the URL query string.
   - CLI Alias: `query-param-namespace`
   - Default value: `http://www.datapower.com/param/query`
-- `ssl_client` (String) TLS client profile
-  - CLI Alias: `ssl-client`
+- `ssl_client` (String) - CLI Alias: `ssl-client`
   - Reference to: `datapower_sslclientprofile:id`
-- `ssl_config_type` (String) TLS type
-  - CLI Alias: `ssl-config-type`
+- `ssl_config_type` (String) - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
-- `ssl_server` (String) TLS server profile
-  - CLI Alias: `ssl-server`
+- `ssl_server` (String) - CLI Alias: `ssl-server`
   - Reference to: `datapower_sslserverprofile:id`
-- `sslsni_server` (String) TLS SNI server profile
-  - CLI Alias: `ssl-sni-server`
+- `sslsni_server` (String) - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_sslsniserverprofile:id`
-- `style_policy` (String) Processing Policy
-  - CLI Alias: `stylesheet-policy`
+- `style_policy` (String) - CLI Alias: `stylesheet-policy`
   - Reference to: `datapower_stylepolicy:id`
   - Default value: `default`
-- `stylesheet_parameters` (Attributes List) Stylesheet Parameter
+- `stylesheet_parameters` (Attributes List) Stylesheets used in Processing Policies can take stylesheet parameters. These parameters can be passed in by this object. More than one parameter can be defined.
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--stylesheet_parameters))
-- `suppress_http_warnings` (Boolean) HTTP Warning Suppression
+- `suppress_http_warnings` (Boolean) Toggle to enable or disable the generation of Transformation Applied (Warning Code: 214) messages by the HTTP service.
   - CLI Alias: `silence-warning`
   - Default value: `false`
-- `type` (String) Type
-  - CLI Alias: `type`
+- `type` (String) - CLI Alias: `type`
   - Choices: `static-backend`, `loopback-proxy`, `strict-proxy`, `dynamic-backend`
   - Default value: `static-backend`
-- `url_rewrite_policy` (String) URL Rewrite Policy
-  - CLI Alias: `urlrewrite-policy`
+- `url_rewrite_policy` (String) - CLI Alias: `urlrewrite-policy`
   - Reference to: `datapower_urlrewritepolicy:id`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `xml_manager` (String) XML Manager
-  - CLI Alias: `xml-manager`
+- `xml_manager` (String) - CLI Alias: `xml-manager`
   - Reference to: `datapower_xmlmanager:id`
   - Default value: `default`
 

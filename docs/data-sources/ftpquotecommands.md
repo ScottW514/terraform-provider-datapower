@@ -3,12 +3,12 @@
 page_title: "datapower_ftpquotecommands Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  FTP Quoted Commands
+  The configturation creates a named list of FTP commands to be quoted to a remote FTP server before a file transfer. These commands are referenced by the FTP Policies section of a User Agent configuration.
 ---
 
 # datapower_ftpquotecommands (Data Source)
 
-FTP Quoted Commands
+The configturation creates a named list of FTP commands to be quoted to a remote FTP server before a file transfer. These commands are referenced by the FTP Policies section of a User Agent configuration.
 
 ## Example Usage
 
@@ -39,7 +39,7 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `ftp_quoted_commands` (Attributes List) Quoted Commands (see [below for nested schema](#nestedatt--result--ftp_quoted_commands))
+- `ftp_quoted_commands` (Attributes List) The list of commands to send to the remote FTP server. (see [below for nested schema](#nestedatt--result--ftp_quoted_commands))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
 

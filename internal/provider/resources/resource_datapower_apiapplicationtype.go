@@ -54,7 +54,7 @@ func (r *APIApplicationTypeResource) Metadata(ctx context.Context, req resource.
 
 func (r *APIApplicationTypeResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API application type", "api-application-type", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An API application type for an application to support. An application type provides configurable properties.", "api-application-type", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

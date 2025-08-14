@@ -3,12 +3,12 @@
 page_title: "datapower_mcfcustomrule Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Custom Rule Message Content Filter
+  A custom message content filter calls a processing rule to retrieve a specified value. The filter value is matched to the contents of variable 'var://context/policy/mcf/RULE-NAME'
 ---
 
 # datapower_mcfcustomrule (Data Source)
 
-Custom Rule Message Content Filter
+A custom message content filter calls a processing rule to retrieve a specified value. The filter value is matched to the contents of variable 'var://context/policy/mcf/RULE-NAME'
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `custom_rule_name` (String) Rule
-- `custom_rule_value` (String) Value
+- `custom_rule_value` (String) <p>Enter the value to match against the value that is retrieved from the named processing rule. Enter either a string that must match the outcome of the rule or enter an asterisk (*) to match any value.</p><p>When the value is a string, an identical literal string comparison result is a match. When the value is an asterisk, any value other than NULL or an empty string results in a match.</p>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
 

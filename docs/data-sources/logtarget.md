@@ -3,12 +3,12 @@
 page_title: "datapower_logtarget Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Log Target
+  
 ---
 
 # datapower_logtarget (Data Source)
 
-Log Target
+<p>Log targets capture messages that are posted by the various objects and services. Target types enable additional capabilities.</p><p>Messages in log targets can be filtered by priority, event code, event category, object type, or IP address. By default, a log target cannot accept messages until it is subscribed to one or more events.</p>
 
 ## Example Usage
 
@@ -38,54 +38,54 @@ Optional:
 
 Read-Only:
 
-- `active_timeout` (Number) Active timeout
+- `active_timeout` (Number) Specify the time to wait in seconds before closing an established and active connection to the server. Enter a value in the range 0 - 60. A value of 0 allows the log target to most efficiently send messages to the server by maintaining a healthy connection indefinitely. The default value is 0. <p><b>Attention:</b> If multiple log targets have the following configuration, they might share connections. <ul><li>The same local address and port</li><li>The same remote address and port</li></ul> Because of potential connection-sharing, set the same active timeout value for these log targets.</p>
 - `app_domain` (String) The name of the application domain the object belongs to
 - `archive_mode` (String) Archive mode
-- `backup` (String) Backup log
-- `connect_timeout` (Number) Connect timeout
+- `backup` (String) Sets another Log Target object as a backup to receive redirected events in case of an error on the current file-based log target. This setting has no effect on network-based log targets. For network-based log targets, set a load balancer group as the remote host.
+- `connect_timeout` (Number) Specify the time to wait in seconds for a connection to the server to be established before generating an error. At this time, a log message is generated in the default log and connection retry attempts are made. Enter a value in the range 1 - 90. The default value is 60.
 - `email_address` (String) Recipient email address
-- `event_buffer_size` (String) Buffer size
-- `feedback_detection` (Boolean) Feedback detection
-- `fixed_format` (Boolean) Fixed format
+- `event_buffer_size` (String) Specify the buffer size in number of event entries. The buffer stores log events before they are written to the target. A buffer of this size is allocated for each connection.
+- `feedback_detection` (Boolean) Specify whether to suppress events from the logging subsystem itself. A log target always suppresses its own events, but will record events from other log targets. Under certain circumstances with multiple log targets, these events could create a positive feedback loop that could cause resource contention. Enable to suppress all log events from the logging subsystem and prevent resource contention.
+- `fixed_format` (Boolean) Specify whether to make the format of logs unchanging. The log format fixed at version 6.0.1. New fields added to log formats are ignored.
 - `format` (String) Log format
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `idle_timeout` (Number) Idle timeout
+- `idle_timeout` (Number) Specify the time in seconds to wait before closing an established but inactive connection to the server. Enter a value in the range 1 - 600. The default value is 15. <p><b>Attention:</b> If multiple log targets have the following configuration, they might share connections. <ul><li>The same local address and port</li><li>The same remote address and port</li></ul> Because of potential connection-sharing, set the same idle timeout value for these log targets.</p>
 - `local_address` (String) Local address
-- `local_file` (String) File name
-- `local_identifier` (String) Local identifier
-- `log_event_code` (List of String) Event subscription filter
-- `log_event_filter` (List of String) Event suppression filter
-- `log_events` (Attributes List) Event subscriptions (see [below for nested schema](#nestedatt--result--log_events))
-- `log_ip_filter` (Attributes List) IP address filters (see [below for nested schema](#nestedatt--result--log_ip_filter))
-- `log_objects` (Attributes List) Object filters (see [below for nested schema](#nestedatt--result--log_objects))
-- `log_precision` (String) Log timestamp precision
-- `log_triggers` (Attributes List) Event triggers (see [below for nested schema](#nestedatt--result--log_triggers))
-- `long_retry_interval` (Number) Long retry interval
-- `max_connections` (Number) Maximum connections
-- `nfs_file` (String) NFS file path
+- `local_file` (String) Specify the name of the log file. For example, <tt>logtemp:///filename.log</tt> or <tt>logstore:///filename.log</tt> .
+- `local_identifier` (String) Specify a descriptive string that identifies the log target to remote recipients. For syslog destinations, do not include spaces.
+- `log_event_code` (List of String) Specify specific events to allow in the log. Subscription filters allow only those log messages that contain the configured event codes. With this filter, it is possible to create a log target that collects only log messages for a specific set of event codes.
+- `log_event_filter` (List of String) Specify specific events to suppress in the log. Suppression filters suppress those log messages that contain the configured event codes. With this filter, it is possible to create a log target that collects a wide range of log messages except for a specific set of event codes.
+- `log_events` (Attributes List) <p>Subscribes the log target to particular event categories. Some example categories include:</p><dl><dt>auth</dt><dd>Authorization events</dd><dt>mgmt</dt><dd>Configuration management events</dd><dt>xslt</dt><dd>XSLT processing events</dd></dl><p>For each event category chosen (including the <tt>all</tt> category), you can establish a priority level that must be met before the log message will be captured by the log target. Without event subscriptions, no events are included by default. To allow the log target to capture messages, the configuration must include at least one event subscription. The category can be the <tt>all</tt> category.</p> (see [below for nested schema](#nestedatt--result--log_events))
+- `log_ip_filter` (Attributes List) Specify specific IP addresses to log events for. IP address filters allow only those log messages from specific IP addresses to be written to this log target. (see [below for nested schema](#nestedatt--result--log_ip_filter))
+- `log_objects` (Attributes List) Specify specific objects to log events for. Object filters allow only those log messages for specific objects to be written to this log target. Object filters are based on object classes. With this filter, you can create a log target that collects only log messages generated by particular instances of the specified object classes. (see [below for nested schema](#nestedatt--result--log_objects))
+- `log_precision` (String) Specify the precision for the timestamp of log messages. The default value is seconds.
+- `log_triggers` (Attributes List) Specify event trigger points. Event triggers start actions only when triggered by a specified message ID or event code. With this filter, it is possible to create a log target that collects only the results of the specified trigger action. For example, to trigger the generation of an error report when a certain event occurs use the <b>save error-report</b> command. (see [below for nested schema](#nestedatt--result--log_triggers))
+- `long_retry_interval` (Number) Specify the time to wait in seconds before attempting to reestablish a failed connection to the syslog server after the number of attempts is reached. Enter a value in the range 0 - 600. The default value is 20. <p><b>Note:</b> The long retry interval must be greater than the retry interval or it will take no effect.</p>
+- `max_connections` (Number) Specify the maximum number of concurrent connections that can be opened to the syslog-tcp server. Enter a value in the range 1 - 100. The default value is 1.
+- `nfs_file` (String) Specify the path to the log file. The path is relative to the NFS mount. Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format. Do not end the path with a forward slash (/).
 - `nfs_mount` (String) NFS static mount
-- `priority` (String) Logging priority
-- `rate_limit` (Number) Rate limit
-- `remote_address` (String) Remote address
-- `remote_directory` (String) Remote directory
+- `priority` (String) Specify the priority to control the scheduling of logs. When system resources are in high demand, high priority operations are favored over lower priority operations.
+- `rate_limit` (Number) Specify the maximum number of events to log per second. Enter a value in the range 1 - 1000. The default value is 100. <ul><li>Remote log targets might receive more than this number of events within a second, depending on network latency and buffering. syslog over TCP log targets are exclusive, because only a single TCP connection is made to the server.</li><li>In the case of syslog over TCP log targets, the rate limit is the maximum number of events transmitted over the connection within one second. A value of 0 disables rate-limiting by the logging target.</li></ul>
+- `remote_address` (String) Specify the host name or IP address of the remote server. To establish a secure TLS connection to the server, set this value to the value of the remote host of a TLS proxy service. The local TLS proxy service then securely forwards the log entries to its configured remote server.
+- `remote_directory` (String) Specify an existing writable directory on the remote server to upload files. <ul><li>To denote an absolute directory from the root directory, specify a single forward slash character (/) or equivalent encoded character (%2F) before the fully qualified path. <ul><li>For SCP or SFTP, enter / to resolve to //.</li><li>For FTP, enter %2F to resolve to /%2F.</li></ul></li><li>To denote a directory that is relative to the home directory of a user, do not specify a forward slash character or encoded character before the fully qualified file name.</li></ul>
 - `remote_login` (String) Remote login
-- `remote_password` (String) Remote password
-- `remote_port` (Number) Remote port
-- `retry_attempts` (Number) Retry attempts
-- `retry_interval` (Number) Retry interval
-- `rotate` (Number) Number of rotations
-- `sender_address` (String) Sender email address
-- `size` (Number) Log size
-- `smtp_domain` (String) SMTP client domain
+- `remote_password` (String) Specify the password for the account or username for non-public key authentication. Public key authentication can be configured through the default user agent.
+- `remote_port` (Number) Specify the listening port on the remote server. If using a local TLS proxy service to establish a secure TLS connection, set this value to the value of the remote port of the TLS proxy service.
+- `retry_attempts` (Number) Specify the number of attempts for a failed connection to the syslog server. After the number of attempts is reached, connection attempts use the value set for the long retry interval. When the long interval is disabled, the log target repeatedly attempts to reconnect to the syslog server with the value set for the retry interval. <p><b>Note:</b> 0 means that the long retry interval is never used and retries forever by using the retry interval.</p>
+- `retry_interval` (Number) Specify the time to wait in seconds before attempting to reestablish a failed connection to the syslog server. Enter a value in the range 1 - 600. The default value is 1.
+- `rotate` (Number) Specify the maximum number of rotations. Enter a value in the range 1 - 100. The default value is 3.
+- `sender_address` (String) Specify the email address of the sender. The value must match the email address of the crypto key when email messages are signed.
+- `size` (Number) Specify the maximum size of file-based log targets. Enter a value in the range 100 - 50000. The default value is 500.
+- `smtp_domain` (String) Specify the fully-qualified domain name of the SMTP client. This information is part of the SMTP session initiation (HELO command).
 - `soap_version` (String) SOAP version
 - `ssl_client_config_type` (String) TLS client type
 - `ssl_client_profile` (String) TLS client profile
-- `syslog_facility` (String) syslog facility
-- `timestamp_format` (String) Timestamp format
-- `type` (String) Target type
+- `syslog_facility` (String) Specify the syslog log facility (per RFC 3164) to include in messages sent to the syslog log target.
+- `timestamp_format` (String) Specify the format of the timestamp for log entries. The default format is ISO UTC format.
+- `type` (String) Specify the type of the log target. The default value is file.
 - `upload_method` (String) Upload protocol
-- `url` (String) URL
-- `use_ansi_color` (Boolean) Use ANSI color scheme
+- `url` (String) Specify the HTTP URL to send log entries. Entries are sent with the POST method and uses the default user agent.
+- `use_ansi_color` (Boolean) Specify whether to enable the use of ANSI color scheme. When enabled, ANSI X3.64 escape sequences color-code messages by log level.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

@@ -57,7 +57,7 @@ func (d *APIApplicationTypeDataSource) Metadata(_ context.Context, req datasourc
 
 func (d *APIApplicationTypeDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API application type",
+		MarkdownDescription: "An API application type for an application to support. An application type provides configurable properties.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

@@ -1,41 +1,50 @@
 name: APIExecute
-description: 'Execute API action'
-cli_alias: 'api-execute'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/APIExecute'
+description: The execute API action runs the assembly rule that is identified at the
+  runtime for the incoming API request.
+cli_alias: api-execute
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/APIExecute
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPIExecute"'
-    test_expect_ds: '"AccTest_APIExecute"'
-    example: 'APIExecuteName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: CorrelationPath
-    type: String
-    description: 'Correlation path'
-    cli_alias: correlation-path
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPIExecute"'
+  test_expect_ds: '"AccTest_APIExecute"'
+  example: APIExecuteName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Title
+  type: String
+  description: Title
+  cli_alias: title
+- name: CorrelationPath
+  type: String
+  description: Specify the path that correlates the API action to a specific part
+    of the API specification. The correlation path specifies the part of the API definition
+    that correlates with the API action. This path is exposed in the debug data by
+    the API gateway for use by debugging tools. For example, for an API configuration
+    that is retrieved from API Connect and specified in an OpenAPI document with IBM
+    extensions, this path is the JSON path to the assembly policy in the IBM extensions
+    section of the document. The path can be expressed in any form that the debugging
+    tool can correlate to the API definition.
+  cli_alias: correlation-path

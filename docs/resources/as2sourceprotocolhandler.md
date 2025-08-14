@@ -3,13 +3,13 @@
 page_title: "datapower_as2sourceprotocolhandler Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  AS2 handler
+  An AS2 handler receives HTTP requests and forwards them to the appropriate gateway. This handler conforms to RFC 2616.
   CLI Alias: source-as2Accepted Dependency Actions: quiesce
 ---
 
 # datapower_as2sourceprotocolhandler (Resource)
 
-AS2 handler
+An AS2 handler receives HTTP requests and forwards them to the appropriate gateway. This handler conforms to RFC 2616.
   - CLI Alias: `source-as2`
   - Accepted Dependency Actions: `quiesce`
 
@@ -40,54 +40,54 @@ resource "datapower_as2sourceprotocolhandler" "test" {
 - `acl` (String) Access control list
   - CLI Alias: `acl`
   - Reference to: `datapower_accesscontrollist:id`
-- `allow_compression` (Boolean) Compression
+- `allow_compression` (Boolean) Specify whether to enable GZIP compression with clients. By default, compression is not enabled.
   - CLI Alias: `compression`
   - Default value: `false`
-- `credential_charset` (String) Credential character set
+- `credential_charset` (String) Specify the character encoding of the original basic authentication values. The default value is protocol, which is ISO-8859-1 (Latin 1). <p>Basic authentication credentials are combined and base64 encoded in the HTTP <tt>Authorization</tt> request header. The contents of the <tt>Authorization</tt> header is transcoded to UTF-8.</p>
   - CLI Alias: `credential-charset`
   - Choices: `protocol`, `ascii`, `utf8`, `big5`, `cp1250`, `cp1251`, `cp1252`, `cp1253`, `cp1254`, `cp1255`, `cp1256`, `cp1257`, `cp1258`, `euc_jp`, `euc_kr`, `gb18030`, `gb2312`, `iso2022_jp`, `iso2022_kr`, `iso8859_1`, `iso8859_2`, `iso8859_4`, `iso8859_5`, `iso8859_6`, `iso8859_7`, `iso8859_8`, `iso8859_9`, `iso8859_15`, `sjis`, `tis620`, `unicode_le`
   - Default value: `protocol`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `http_version` (String) HTTP version to client
+- `http_version` (String) Specify the HTTP version for client connection. The default value is HTTP/1.1.
   - CLI Alias: `http-client-version`
   - Choices: `HTTP/1.0`, `HTTP/1.1`
   - Default value: `HTTP/1.1`
-- `local_address` (String) Local IP address
+- `local_address` (String) Specify the local IP address that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses. You can use a local host alias to help ease migration.
   - CLI Alias: `local-address`
   - Default value: `0.0.0.0`
-- `local_port` (Number) Local port
+- `local_port` (Number) Specifies the port that this service monitors. Enter a value in the range 1 - 65535. The default value is 80.
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `80`
-- `max_hdr_count` (Number) Max request headers
+- `max_hdr_count` (Number) Specify the maximum number of headers to allow in client requests. The default value is 0, which means unlimited.
   - CLI Alias: `max-header-count`
   - Range: `0`-`65535`
   - Default value: `0`
-- `max_name_hdr_len` (Number) Max length of header name
+- `max_name_hdr_len` (Number) Specify the maximum length to accept for any header name. A header is expressed as a name-value pair. The default value is 0, which means unlimited.
   - CLI Alias: `max-header-name-len`
   - Range: `0`-`65535`
   - Default value: `0`
 - `max_query_string_len` (Number) Max length of query string
   - CLI Alias: `max-querystring-len`
-- `max_total_hdr_len` (Number) Max total header length
+- `max_total_hdr_len` (Number) Specify the maximum aggregate size of headers in bytes in client requests. Enter a value in the range 5 - 128000. The default value is 128000.
   - CLI Alias: `max-total-header-len`
   - Range: `5`-`128000`
   - Default value: `128000`
-- `max_url_len` (Number) Max URL length
+- `max_url_len` (Number) Specify the maximum URL length in bytes to accept from clients. Enter a value in the range 1 - 128000. The default value is 16384. The length includes any query string or fragment identifier.
   - CLI Alias: `max-url-len`
   - Range: `1`-`128000`
   - Default value: `16384`
-- `max_value_hdr_len` (Number) Max length of header value
+- `max_value_hdr_len` (Number) Specify the maximum length to accept for any header value. A header is expressed as a name-value pair. The default value is 0, which means unlimited.
   - CLI Alias: `max-header-value-len`
   - Range: `0`-`65535`
   - Default value: `0`
-- `persistent_connections` (Boolean) Persistent connections
+- `persistent_connections` (Boolean) Specify whether to enable persistent connections with clients. By default, persistent connections are enabled.
   - CLI Alias: `persistent-connections`
   - Default value: `true`
 - `ssl_server` (String) TLS server profile
   - CLI Alias: `ssl-server`
   - Reference to: `datapower_sslserverprofile:id`
-- `ssl_server_config_type` (String) TLS server type
+- `ssl_server_config_type` (String) Specify the type of TLS profile to secure client connections.
   - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`

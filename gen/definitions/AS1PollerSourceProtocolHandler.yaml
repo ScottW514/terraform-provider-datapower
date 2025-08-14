@@ -1,110 +1,122 @@
 name: AS1PollerSourceProtocolHandler
-description: 'AS1 poller handler'
-cli_alias: 'source-as1-poller'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/AS1PollerSourceProtocolHandler'
+description: The AS1 handler is a Post Office Protocol (POP) handler. The handler
+  manages the polling of a mailbox on a mail server. The mailbox receives mail messages
+  from external partners. The handler retrieves and deletes mail messages on each
+  polling cycle. Each mail message that the handler retrieves results in one transaction.
+cli_alias: source-as1-poller
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/AS1PollerSourceProtocolHandler
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAS1PollerSourceProtocolHandler"'
-    test_expect_ds: '"AccTest_AS1PollerSourceProtocolHandler"'
-    example: 'AS1PollerSourceProtocolHandlerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: MailServer
-    type: String
-    required: true
-    example: 'smtp.host'
-    description: 'Mail server'
-    cli_alias: mail-server
-  - name: Port
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    example: 25
-    required: true
-    description: 'Port'
-    cli_alias: port
-  - name: ConnSecurity
-    type: String
-    enum:
-      - 'none'
-      - 'stls'
-      - 'ssl'
-    required: true
-    default: 'none'
-    description: 'Connection security'
-    cli_alias: connection-security
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: AuthMethod
-    type: String
-    enum:
-      - 'basic'
-      - 'apop'
-    default: 'basic'
-    description: 'Authentication method'
-    cli_alias: auth-method
-  - name: Account
-    type: String
-    required: true
-    example: 'account'
-    description: 'Account name'
-    cli_alias: account
-  # DEPRECATED
-  # - name: Password
-  - name: PasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password alias'
-    cli_alias: password-alias
-  - name: DelayBetweenPolls
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 300
-    description: 'Delay between polls'
-    cli_alias: delay-time
-  - name: MaxMessagesPerPoll
-    type: Int64
-    minimum: 1
-    maximum: 100
-    required: true
-    default: 5
-    description: 'Max messages per poll'
-    cli_alias: max-messages-per-poll
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAS1PollerSourceProtocolHandler"'
+  test_expect_ds: '"AccTest_AS1PollerSourceProtocolHandler"'
+  example: AS1PollerSourceProtocolHandlerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: MailServer
+  type: String
+  required: true
+  example: smtp.host
+  description: The host name or IP address of the mail server.
+  cli_alias: mail-server
+- name: Port
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  example: 25
+  required: true
+  description: The listening port on the mail server. STARTTLS negotiation and an
+    unsecured connection generally use port 110. An implicit, secured connection generally
+    uses port 995.
+  cli_alias: port
+- name: ConnSecurity
+  type: String
+  enum:
+  - none
+  - stls
+  - ssl
+  required: true
+  default: none
+  description: ''
+  cli_alias: connection-security
+- name: AuthMethod
+  type: String
+  enum:
+  - basic
+  - apop
+  default: basic
+  description: The type of authentication to use. If authentication fails, no connection
+    is made.
+  cli_alias: auth-method
+- name: Account
+  type: String
+  required: true
+  example: account
+  description: The name to access the mailbox on the server; for example, user@example.com.
+  cli_alias: account
+- name: PasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: The password alias of the password for the account that accesses the
+    mailbox on the server.
+  cli_alias: password-alias
+- name: DelayBetweenPolls
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 300
+  description: Specify the interval in seconds between polling sequences. A <em>polling
+    sequence</em> is the time to retrieve the messages plus the time to complete their
+    processing. Enter a value in the range 1 - 65535. The default value is 300. <p><b>Note:</b>
+    Some mail servers restrict the number of times an account can establish a connection
+    during a specific time period. Ensure that the configured interval complies with
+    any restriction.</p>
+  cli_alias: delay-time
+- name: MaxMessagesPerPoll
+  type: Int64
+  minimum: 1
+  maximum: 100
+  required: true
+  default: 5
+  description: Specify the maximum number of messages to retrieve in each polling
+    cycle. Enter a value in the range 1 - 100. The default value is 5.
+  cli_alias: max-messages-per-poll
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: The TLS profile type to secure connections between the DataPower Gateway
+    and its targets.
+  cli_alias: ssl-client-type
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: The TLS client profile to secure connections between the DataPower
+    Gateway and its targets.
+  cli_alias: ssl-client

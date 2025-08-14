@@ -3,12 +3,12 @@
 page_title: "datapower_kafkacluster Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Kafka Cluster
+  Define the Kafka cluster that is responsible for the messaging services. The Kafka cluster periodically monitors and polls topics. The Kafka cluster ensures that sent messages are directed to the correct response topic or are routed to another server.
 ---
 
 # datapower_kafkacluster (Data Source)
 
-Kafka Cluster
+Define the Kafka cluster that is responsible for the messaging services. The Kafka cluster periodically monitors and polls topics. The Kafka cluster ensures that sent messages are directed to the correct response topic or are routed to another server.
 
 ## Example Usage
 
@@ -40,16 +40,16 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `auto_retry` (Boolean) Automatic retry
-- `autocommit` (Boolean) Autocommit
-- `endpoint` (Attributes List) Endpoints (see [below for nested schema](#nestedatt--result--endpoint))
+- `autocommit` (Boolean) Specify whether to commit offsets at the defined interval or at process-completion. <ul><li>When enabled, commits offsets at the defined interval. The default interval is 5 seconds. To change the interval, set the <tt>auto.commit.interval.ms</tt> property.</li><li>When disabled, commits offsets at process-completion. You can use the batch size setting for the Kafka handle to define the number of messages to attempt to receive from the consumer.</li></ul>
+- `endpoint` (Attributes List) Specify the endpoints for the bootstrap process. A bootstrap server uses a host name or IP address and a port to define an endpoint address. You can add multiple nondefault bootstrap servers. For failover capability, the endpoints must be members of the same cluster. (see [below for nested schema](#nestedatt--result--endpoint))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `maximum_message_size` (Number) Max message size
-- `memory_threshold` (Number) Memory threshold
+- `maximum_message_size` (Number) Specify the maximum message size in bytes. Enter a value in the range 0 - 1073741824. The default value is 1048576. A value of 0 disables the enforcement of a maximum message size.
+- `memory_threshold` (Number) Specify the maximum memory to allocate in bytes. Enter a value in the range 10485760 - 1073741824. The default value is 268435456.
 - `password_alias` (String) Password alias
-- `property` (Attributes List) Properties (see [below for nested schema](#nestedatt--result--property))
-- `protocol` (String) Protocol
-- `retry_interval` (Number) Retry interval
-- `sasl_mechanism` (String) SASL mechanism
+- `property` (Attributes List) Specify extra property to configure the connection to the Kafka server. Use this property for each extra property that is required. Some properties are unsupported and will cause a configuration failure. (see [below for nested schema](#nestedatt--result--property))
+- `protocol` (String) Specify the transport protocol for the Kafka bootstrap connection. The selected protocol is used for the exchange of information between the Kafka server and the bootstrap server. By default, uses a non-encrypted transport.
+- `retry_interval` (Number) Specify the interval between attempts to reestablish a connection in seconds. Enter a value in the range 1 - 65535. The default value is 10.
+- `sasl_mechanism` (String) Specify the Simple Authentication and Security Layer (SASL) mechanism to communicate with the Kafka cluster. By default, uses a clear text password.
 - `ssl_client` (String) TLS client profile
 - `user_name` (String) Username
 - `user_summary` (String) Comments

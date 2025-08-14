@@ -56,7 +56,7 @@ func (r *ImportPackageResource) Metadata(ctx context.Context, req resource.Metad
 
 func (r *ImportPackageResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Import configuration file", "import-package", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An import package allows the system to import a configuration package from an external server, such as a centralized configuration server, when the configuration is reloaded (such as during a restart). This package can optionally overwrite existing files or objects. <p>An import package specifies a source, content type, and import parameters for a single bundle.</p>", "import-package", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,11 +85,11 @@ func (r *ImportPackageResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL", "source-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the import package. The tool does not support SCP and SFTP protocols. All other URL protocols are available; for example, HTTP, HTTPS, or FTP.", "source-url", "").String,
 				Required:            true,
 			},
 			"import_format": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Format", "import-format", "").AddStringEnum("ZIP", "XML").AddDefaultValue("ZIP").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the format of the import package. The default value is ZIP.", "import-format", "").AddStringEnum("ZIP", "XML").AddDefaultValue("ZIP").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -98,13 +98,13 @@ func (r *ImportPackageResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("ZIP"),
 			},
 			"overwrite_files": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Overwrite files", "overwrite-files", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to overwrite existing files. When enabled, files in the package overwrite any file of the same path and name that already exist. The default behavior is to overwrite files.", "overwrite-files", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"overwrite_objects": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Overwrite objects", "overwrite-objects", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to overwrite existing objects. When enabled, objects in the package overwrite any object of the same class and name that already exist. The default behavior is to overwrite objects.", "overwrite-objects", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -122,13 +122,13 @@ func (r *ImportPackageResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"local_ip_rewrite": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local IP rewrite", "local-ip-rewrite", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to rewrite local IP addresses on import. When enabled, local IP addresses in the import package are rewritten to match the local configuration on import. In other words, a service bound to eth1 in the import package are rewritten to bind to eth1 on the local system on import. The default behavior is to rewrite IP addresses.", "local-ip-rewrite", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"on_startup": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Import on startup", "auto-execute", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to import the import package on startup. The default behavior is to import on startup. <ul><li>When enabled, the import package is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>", "auto-execute", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),

@@ -1,208 +1,262 @@
 name: AssemblyActionUserSecurity
-description: 'User security assembly action'
-cli_alias: 'assembly-user-security'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/AssemblyActionUserSecurity'
+description: The user security assembly actions extracts identity, authenticates,
+  and authorizes end users.
+cli_alias: assembly-user-security
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/AssemblyActionUserSecurity
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAssemblyActionUserSecurity"'
-    test_expect_ds: '"AccTest_AssemblyActionUserSecurity"'
-    example: 'AssemblyActionUserSecurityName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: FactorID
-    type: String
-    required: true
-    default: 'default'
-    description: 'Factor identifier'
-    cli_alias: factor-id
-  - name: ExtractIdentityMethod
-    type: String
-    enum:
-      - 'disabled'
-      - 'basic'
-      - 'context-var'
-      - 'html-form'
-      - 'redirect'
-    required: true
-    default: 'basic'
-    description: 'Identity extraction method'
-    cli_alias: extract-identity-method
-  - name: EIStopOnError
-    type: Bool
-    default: true
-    description: 'Stop on error'
-    cli_alias: ei-stop-on-error
-  - name: UserContextVariable
-    type: String
-    description: 'Username context variable'
-    cli_alias: user-context-var
-  - name: PassContextVariable
-    type: String
-    description: 'Password context variable'
-    cli_alias: pass-context-var
-  - name: RedirectURL
-    type: String
-    description: 'Redirect URL'
-    cli_alias: redirect-url
-  - name: RedirectTimeLimit
-    type: Int64
-    minimum: 10
-    maximum: 6000
-    default: 300
-    description: 'Redirect time limit'
-    cli_alias: redirect-time-limit
-  - name: QueryParameters
-    type: String
-    description: 'Query parameters'
-    cli_alias: query-parameters
-  - name: EIDefaultForm
-    type: Bool
-    default: true
-    description: 'Use default form?'
-    cli_alias: ei-default-form
-  - name: EICustomForm
-    type: String
-    description: 'Custom form location'
-    cli_alias: ei-custom-form
-  - name: EICustomFormClientProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'Custom form TLS client profile'
-    cli_alias: ei-custom-form-tls-client-profile
-  - name: EICustomFormContentSecurityPolicy
-    type: String
-    default: "default-src 'self'"
-    description: 'Custom form CSP header value'
-    cli_alias: ei-custom-form-csp
-  - name: EIFormTimeLimit
-    type: Int64
-    minimum: 10
-    maximum: 600
-    default: 300
-    description: 'HTML form time limit'
-    cli_alias: ei-form-time-limit
-  - name: UserAuthMethod
-    type: String
-    enum:
-      - 'disabled'
-      - 'user-registry'
-    required: true
-    default: 'user-registry'
-    description: 'Authentication method'
-    cli_alias: user-auth-method
-  - name: AUStopOnError
-    type: Bool
-    default: true
-    description: 'Stop on error'
-    cli_alias: au-stop-on-error
-  - name: UserRegistry
-    type: String
-    description: 'User registry'
-    test_value: '"AccTest_APIAuthURLRegistry"'
-    test_bed_value: 'datapower_apiauthurlregistry.acc_test.id'
-    cli_alias: user-registry
-  - name: AuthResponseHeadersPattern
-    type: String
-    default: '(?i)x-api*'
-    description: 'Authentication response headers pattern'
-    cli_alias: auth-response-headers-pattern
-  - name: AuthResponseCredentialHeader
-    type: String
-    default: 'X-API-Authenticated-Credential'
-    description: 'Authenticated credential header'
-    cli_alias: auth-response-header-credential
-  - name: UserAZMethod
-    type: String
-    enum:
-      - 'disabled'
-      - 'authenticated'
-      - 'html-form'
-    required: true
-    default: 'authenticated'
-    description: 'Authorization method'
-    cli_alias: user-az-method
-  - name: AZStopOnError
-    type: Bool
-    default: true
-    description: 'Stop on error'
-    cli_alias: az-stop-on-error
-  - name: AZDefaultForm
-    type: Bool
-    default: true
-    description: 'Use default form?'
-    cli_alias: az-default-form
-  - name: AZCustomForm
-    type: String
-    description: 'Custom form location'
-    cli_alias: az-custom-form
-  - name: AZCustomFormClientProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'Custom form TLS client profile'
-    cli_alias: az-custom-form-tls-client-profile
-  - name: AZCustomFormContentSecurityPolicy
-    type: String
-    default: "default-src 'self'"
-    description: 'Custom form CSP header value'
-    cli_alias: az-custom-form-csp
-  - name: AZFormTimeLimit
-    type: Int64
-    minimum: 10
-    maximum: 600
-    default: 300
-    description: 'HTML form time limit'
-    cli_alias: az-form-time-limit
-  - name: AZTableDisplayCheckboxes
-    type: Bool
-    default: false
-    description: 'Display table check boxes'
-    cli_alias: az-table-display-checkboxes
-  - name: AZTableDynamicEntries
-    type: String
-    default: 'user.default.az.dynamic_entries'
-    description: 'Dynamic table entries'
-    cli_alias: az-table-dynamic-entries
-  - name: AZTableDefaultEntry
-    type: List
-    element_type: DmTableEntry
-    description: 'Default table entry'
-    cli_alias: az-table-default-entry
-  - name: Hostname
-    type: String
-    description: 'Hostname'
-    cli_alias: hostname
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: CorrelationPath
-    type: String
-    description: 'Correlation path'
-    cli_alias: correlation-path
-  - name: ActionDebug
-    type: Bool
-    default: false
-    description: 'Enable debugging'
-    cli_alias: debug
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAssemblyActionUserSecurity"'
+  test_expect_ds: '"AccTest_AssemblyActionUserSecurity"'
+  example: AssemblyActionUserSecurityName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: FactorID
+  type: String
+  required: true
+  default: default
+  description: Factor identifier
+  cli_alias: factor-id
+- name: ExtractIdentityMethod
+  type: String
+  enum:
+  - disabled
+  - basic
+  - context-var
+  - html-form
+  - redirect
+  required: true
+  default: basic
+  description: Identity extraction method
+  cli_alias: extract-identity-method
+- name: EIStopOnError
+  type: Bool
+  default: true
+  description: Specify whether to stop processing if identity extraction fails. If
+    failed, stops the assembly and return an error.
+  cli_alias: ei-stop-on-error
+- name: UserContextVariable
+  type: String
+  description: Username context variable
+  cli_alias: user-context-var
+- name: PassContextVariable
+  type: String
+  description: Password context variable
+  cli_alias: pass-context-var
+- name: RedirectURL
+  type: String
+  description: Specify the URL fragment to redirect the request to obtain user credentials.
+    The value can include one or more runtime context variables in the <tt>$(variable)</tt>
+    format.
+  cli_alias: redirect-url
+- name: RedirectTimeLimit
+  type: Int64
+  minimum: 10
+  maximum: 6000
+  default: 300
+  description: Specify the duration in seconds for a transaction to complete before
+    the redirect fails. Enter a value in the range 10 - 6000. The default value is
+    300.
+  cli_alias: redirect-time-limit
+- name: QueryParameters
+  type: String
+  description: Query parameters
+  cli_alias: query-parameters
+- name: EIDefaultForm
+  type: Bool
+  default: true
+  description: Specify whether to use the default form or a custom form. When enabled,
+    returns the default login page to obtain credentials. When disabled, define the
+    configuration to return the custom login page.
+  cli_alias: ei-default-form
+- name: EICustomForm
+  type: String
+  description: Specify the URL fragment of the custom login page. This page collects
+    user name and password information. The value can include one or more runtime
+    context variables in the <tt>$(variable)</tt> format.
+  cli_alias: ei-custom-form
+- name: EICustomFormClientProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: Custom form TLS client profile
+  cli_alias: ei-custom-form-tls-client-profile
+- name: EICustomFormContentSecurityPolicy
+  type: String
+  default: default-src 'self'
+  description: Specify the value to use for the HTTP <tt>Content-Security-Policy</tt>
+    response header for the custom login page. This response header allows you to
+    control which resources the user agent can load. Generally, you set server origins
+    and script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking,
+    and other injection attacks.
+  cli_alias: ei-custom-form-csp
+- name: EIFormTimeLimit
+  type: Int64
+  minimum: 10
+  maximum: 600
+  default: 300
+  description: Specify the duration in seconds for a transaction to complete before
+    the identity extraction request fails. Enter a value in the range 10 - 600. The
+    default value is 300.
+  cli_alias: ei-form-time-limit
+- name: UserAuthMethod
+  type: String
+  enum:
+  - disabled
+  - user-registry
+  required: true
+  default: user-registry
+  description: Authentication method
+  cli_alias: user-auth-method
+- name: AUStopOnError
+  type: Bool
+  default: true
+  description: Specify whether to stop processing if authentication fails. If failed,
+    stops the assembly and return an error.
+  cli_alias: au-stop-on-error
+- name: UserRegistry
+  type: String
+  description: Specify the API user registry to authenticate incoming API requests.
+    The supported registries are API authentication URL and API LDAP.
+  test_value: '"AccTest_APIAuthURLRegistry"'
+  test_bed_value: datapower_apiauthurlregistry.acc_test.id
+  cli_alias: user-registry
+- name: AuthResponseHeadersPattern
+  type: String
+  default: (?i)x-api*
+  description: Specify the regular expression to select which response headers to
+    add to the API context for access by subsequent actions. The default value is
+    a case-insensitive search on the <tt>x-api</tt> prefix. The value can include
+    one or more runtime context variables in the <tt>$(variable)</tt> format.
+  cli_alias: auth-response-headers-pattern
+- name: AuthResponseCredentialHeader
+  type: String
+  default: X-API-Authenticated-Credential
+  description: Specify the response header that contains the authenticated credentials.
+    The default value is <tt>X-API-Authenticated-Credential</tt> . The value can include
+    one or more runtime context variables in the <tt>$(variable)</tt> format.
+  cli_alias: auth-response-header-credential
+- name: UserAZMethod
+  type: String
+  enum:
+  - disabled
+  - authenticated
+  - html-form
+  required: true
+  default: authenticated
+  description: Authorization method
+  cli_alias: user-az-method
+- name: AZStopOnError
+  type: Bool
+  default: true
+  description: Specify whether to stop processing if authorization fails. If failed,
+    stops the assembly and return an error.
+  cli_alias: az-stop-on-error
+- name: AZDefaultForm
+  type: Bool
+  default: true
+  description: Specify whether to use the default form or a custom form. When enabled,
+    returns the default authorization page to obtain authorization. When disabled,
+    define the configuration to return the custom authorization page.
+  cli_alias: az-default-form
+- name: AZCustomForm
+  type: String
+  description: Specify the URL fragment of the custom authorization page. This page
+    obtains permission from the end user. The value can include one or more runtime
+    context variables in the <tt>$(variable)</tt> format.
+  cli_alias: az-custom-form
+- name: AZCustomFormClientProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: Custom form TLS client profile
+  cli_alias: az-custom-form-tls-client-profile
+- name: AZCustomFormContentSecurityPolicy
+  type: String
+  default: default-src 'self'
+  description: Specify the value for the HTTP <tt>Content-Security-Policy</tt> response
+    header for the custom authorization page. This response header allows you to control
+    which resources the user agent can load. Generally, you set server origins and
+    script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking,
+    and other injection attacks.
+  cli_alias: az-custom-form-csp
+- name: AZFormTimeLimit
+  type: Int64
+  minimum: 10
+  maximum: 600
+  default: 300
+  description: Specify the duration in seconds for a transaction to complete before
+    the authorization request fails. Enter a value in the range 10 - 600. The default
+    value is 300.
+  cli_alias: az-form-time-limit
+- name: AZTableDisplayCheckboxes
+  type: Bool
+  default: false
+  description: Display table check boxes
+  cli_alias: az-table-display-checkboxes
+- name: AZTableDynamicEntries
+  type: String
+  default: user.default.az.dynamic_entries
+  description: Specify the period-delimited context variable that adds dynamic entries
+    to display. This context variable supports space delimited names, a JSON array
+    of names, or a JSON array of objects with name and description.
+  cli_alias: az-table-dynamic-entries
+- name: AZTableDefaultEntry
+  type: List
+  element_type: DmTableEntry
+  description: Default table entry
+  cli_alias: az-table-default-entry
+- name: Hostname
+  type: String
+  description: Hostname
+  cli_alias: hostname
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Title
+  type: String
+  description: Title
+  cli_alias: title
+- name: CorrelationPath
+  type: String
+  description: Specify the path that correlates the API action to a specific part
+    of the API specification. The correlation path specifies the part of the API definition
+    that correlates with the API action. This path is exposed in the debug data by
+    the API gateway for use by debugging tools. For example, for an API configuration
+    that is retrieved from API Connect and specified in an OpenAPI document with IBM
+    extensions, this path is the JSON path to the assembly policy in the IBM extensions
+    section of the document. The path can be expressed in any form that the debugging
+    tool can correlate to the API definition.
+  cli_alias: correlation-path
+- name: ActionDebug
+  type: Bool
+  default: false
+  description: <p>Specify whether to enable the GatewayScript debugger to troubleshoot
+    the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript
+    file that is called from the GatewayScript assembly action.</li><li>Troubleshoot
+    a GatewayScript file that is called from an XSLT assembly action that uses the
+    <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript
+    script that is called through the <tt>value</tt> or <tt>default</tt> property
+    in the JSON file from the map assembly action.</li></ul><p>To debug a file or
+    script, the following conditions must be met.</p><ul><li>The file contains one
+    or more <tt>debugger;</tt> statements at the points in your script where you want
+    to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You
+    run the <tt>debug-action</tt> command.</p>
+  cli_alias: debug

@@ -3,12 +3,12 @@
 page_title: "datapower_cryptosskey Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Shared secret key
+  A shared secret key is a sequence of characters that is pre-shared between users for use with symmetric encryption.
 ---
 
 # datapower_cryptosskey (Data Source)
 
-Shared secret key
+A shared secret key is a sequence of characters that is pre-shared between users for use with symmetric encryption.
 
 ## Example Usage
 
@@ -39,7 +39,7 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `filename` (String) File name
+- `filename` (String) Specify the file that contains the shared secret key. If the file begins with <tt>0x</tt> , processing assumes that the rest of the file contains bytes in hex. You can access the file in the <tt>cert:</tt> or <tt>local:</tt> directory. <p><b>Attention:</b> Any file in the <tt>local:</tt> directory can be downloaded or included in an export. Therefore, consider whether to store crypto files in this directory.</p>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 
 <a id="nestedatt--result--dependency_actions"></a>

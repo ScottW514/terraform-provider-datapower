@@ -55,7 +55,7 @@ func (r *LunaHAGroupResource) Metadata(ctx context.Context, req resource.Metadat
 
 func (r *LunaHAGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SafeNet Luna HSM HA group", "luna-ha-group", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An HA group on the SafeNet Luna Network HSM appliance allows you to define multiple Luna HSM partitions as a group for load balancing and failover.", "luna-ha-group", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,16 +84,16 @@ func (r *LunaHAGroupResource) Schema(ctx context.Context, req resource.SchemaReq
 				Optional:            true,
 			},
 			"group_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Label", "group", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the label that identifies the HA group on the Luna HSM. The HA group appears as one single logical partition that is identified by the label on the Luna HSM. The minimum length of the label is one character. The maximum length is 32 characters. The group name must be unique across domains.", "group", "").String,
 				Required:            true,
 			},
 			"member": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Members", "member", "lunapartition").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the members for HA group. An HA group member is an HSM partition that the system can access. The first member is the primary member. The Luna HSM balances cryptographic requests across the members in the HA group.", "member", "lunapartition").String,
 				ElementType:         types.StringType,
 				Required:            true,
 			},
 			"standby": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Standby members", "standby", "lunapartition").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the standby HSM partition. Standby members are not active for load balancing until all non-standby members fail. You must add the HSM partition as a member of the HA group before you can specify the partition as standby.", "standby", "lunapartition").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

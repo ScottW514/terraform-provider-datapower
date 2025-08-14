@@ -3,13 +3,13 @@
 page_title: "datapower_peergroup Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Peer group
+  A collection of systems that automatically update each other with real time data of the selected type. For example, members in the group exchange data to allow the enforcement of a policy across the collection.
   CLI Alias: peer-group
 ---
 
 # datapower_peergroup (Resource)
 
-Peer group
+A collection of systems that automatically update each other with real time data of the selected type. For example, members in the group exchange data to allow the enforcement of a policy across the collection.
   - CLI Alias: `peer-group`
 
 ## Example Usage
@@ -41,11 +41,11 @@ resource "datapower_peergroup" "test" {
   - CLI Alias: `type`
   - Choices: `slm`, `slm-multicast`
   - Default value: `slm`
-- `update_interval` (Number) Update interval
+- `update_interval` (Number) Specify the update interval in milliseconds that data is transmitted among peers.
   - CLI Alias: `update-interval`
   - Range: `1`-`10000`
   - Default value: `10`
-- `url` (List of String) URL
+- `url` (List of String) Specify the URL of each peer in the <tt>protocol://address:port</tt> format for an Ethernet interface or a VLAN interface. For unicast peering, peers exchange SLM data over the XML management interface as SOAP over HTTPS. Multicast peering shares the initial SLM state using SOAP over HTTPS; the data transfers are done using multicast. <p>The default port for the XML Management Interface is 5550. If this port is changed on any peer, the URL must reflect the correct port.</p><p>Define all peers, which includes the local system.</p>
   - CLI Alias: `url`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

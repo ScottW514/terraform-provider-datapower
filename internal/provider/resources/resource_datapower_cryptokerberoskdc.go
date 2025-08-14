@@ -82,25 +82,25 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter a brief, descriptive comment.", "summary", "").String,
 				Optional:            true,
 			},
 			"realm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Kerberos realm name", "realm", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name of the Kerberos realm that the KDC is serving.", "realm", "").String,
 				Required:            true,
 			},
 			"server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Kerberos KDC Server", "server", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote Kerberos KDC server. Click Ping verify network connectivity.", "server", "").String,
 				Required:            true,
 			},
 			"use_tcp": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use TCP", "tcp", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select to control whether to contact the Kerberos KDC server with UDP (the default, off) or TCP (on).", "tcp", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"server_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Server Port Number", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("88").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the UDP or TCP listening port on the Kerberos KDC server. Use a value in the range 1 - 65535. The default value is 88.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("88").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -110,7 +110,7 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				Default: int64default.StaticInt64(88),
 			},
 			"udp_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("UDP Timeout", "udp-timeout", "").AddIntegerRange(1, 60).AddDefaultValue("5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The number of seconds to wait for a UDP response from the KDC before declaring failure.", "udp-timeout", "").AddIntegerRange(1, 60).AddDefaultValue("5").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -120,13 +120,13 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				Default: int64default.StaticInt64(5),
 			},
 			"cache_tickets": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Cache Service Tickets", "cache-tickets", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to cache Kerberos service tickets when generating AP-REQ tokens in this realm.", "cache-tickets", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"max_cached_tickets": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum Number of Cached Service Tickets", "max-cached-tickets", "").AddIntegerRange(1, 65535).AddDefaultValue("32").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of Kerberos service tickets per owner principal to cache in this realm.", "max-cached-tickets", "").AddIntegerRange(1, 65535).AddDefaultValue("32").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -136,7 +136,7 @@ func (r *CryptoKerberosKDCResource) Schema(ctx context.Context, req resource.Sch
 				Default: int64default.StaticInt64(32),
 			},
 			"min_cached_ticket_validity": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Minimum Cached Ticket Validity", "min-cached-ticket-validity", "").AddIntegerRange(1, 65535).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum amount of validity time in seconds that must remain on a Kerberos service ticket for it to be reused from the ticket cache.", "min-cached-ticket-validity", "").AddIntegerRange(1, 65535).AddDefaultValue("60").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

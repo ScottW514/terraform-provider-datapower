@@ -50,14 +50,14 @@ func (d *ProbeDataSource) Metadata(_ context.Context, req datasource.MetadataReq
 
 func (d *ProbeDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Probe settings",
+		MarkdownDescription: "The domain-specific configuration that define the settings for the probe that you can use to troubleshoot the processing of transactions by services.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
 				Required:            true,
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -65,15 +65,15 @@ func (d *ProbeDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 				Computed:            true,
 			},
 			"max_records": schema.Int64Attribute{
-				MarkdownDescription: "Max records",
+				MarkdownDescription: "Specify the maximum number of records to allow. Enter a value in the range 1 - 10000. The default value is 1000.",
 				Computed:            true,
 			},
 			"expiration": schema.Int64Attribute{
-				MarkdownDescription: "Expiration",
+				MarkdownDescription: "Specify the duration in seconds to retain the troubleshooting data. Enter a value in the range 60 - 86400. The default value is 3600.",
 				Computed:            true,
 			},
 			"gateway_peering": schema.StringAttribute{
-				MarkdownDescription: "Gateway peering",
+				MarkdownDescription: "Specify the gateway-peering instance for the probe. This instance synchronizes the captured data across the members. If you do not want to persist data across a restart, store the data in memory.",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

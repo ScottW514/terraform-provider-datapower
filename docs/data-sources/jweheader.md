@@ -3,12 +3,12 @@
 page_title: "datapower_jweheader Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  JWE Header
+  JWE header object.
 ---
 
 # datapower_jweheader (Data Source)
 
-JWE Header
+JWE header object.
 
 ## Example Usage
 
@@ -40,10 +40,10 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `jwe_protected_header` (Attributes List) Protected Header (see [below for nested schema](#nestedatt--result--jwe_protected_header))
-- `jwe_shared_unprotected_header` (Attributes List) Shared Unprotected Header (see [below for nested schema](#nestedatt--result--jwe_shared_unprotected_header))
-- `recipient` (String) Recipient
-- `user_summary` (String) Comments
+- `jwe_protected_header` (Attributes List) Add a JWE protected header to a JWE encrypt action. (see [below for nested schema](#nestedatt--result--jwe_protected_header))
+- `jwe_shared_unprotected_header` (Attributes List) Add a JWE shared unprotected header to a JWE encrypt action. (see [below for nested schema](#nestedatt--result--jwe_shared_unprotected_header))
+- `recipient` (String) Add a JWE recipient object to a JWE encrypt action.
+- `user_summary` (String) A descriptive summary for the configuration.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

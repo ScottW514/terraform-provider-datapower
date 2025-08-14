@@ -3,13 +3,13 @@
 page_title: "datapower_graphqlschemaoptions Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  GraphQL schema options
+  GraphQL schema options define a list of schema elements to remove during validation and introspection.
   CLI Alias: graphql-schema-options
 ---
 
 # datapower_graphqlschemaoptions (Resource)
 
-GraphQL schema options
+GraphQL schema options define a list of schema elements to remove during validation and introspection.
   - CLI Alias: `graphql-schema-options`
 
 ## Example Usage

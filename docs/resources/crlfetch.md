@@ -24,9 +24,9 @@ resource "datapower_crlfetch" "test" {
 
 ### Optional
 
-- `crl_fetch_config` (Attributes List) CRL update policy (see [below for nested schema](#nestedatt--crl_fetch_config))
+- `crl_fetch_config` (Attributes List) Define the configuration of an HTTP-enabled or an LDAP-enabled CRL (Certificate Revocation List) update policy. When HTTP, specify the Fetch URL. When LDAP, specify the LDAP bind information. For both, specify the validation credentials. (see [below for nested schema](#nestedatt--crl_fetch_config))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
 

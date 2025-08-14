@@ -57,7 +57,7 @@ func (d *NameValueProfileDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *NameValueProfileDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Name-Value Profile",
+		MarkdownDescription: "Many HTTP things are expressed as name value pairs. These include HTTP headers, cookie values, url-encoded query strings, and url-encoded request messages. This profile provides a mechanism for what kinds of names are expected and for each kind of name what properties should be enforced on the corresponding values. When a name-value pair is not validated successfully that may generate an error, the pair might be stripped from the transaction, or the value may be mapped to another default value.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,40 +81,40 @@ func (d *NameValueProfileDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"max_attributes": schema.Int64Attribute{
-							MarkdownDescription: "Maximum Count",
+							MarkdownDescription: "The maximum number of name value pairs allowed in a single entity (header, cookie set, body, and so forth).",
 							Computed:            true,
 						},
 						"max_aggregate_size": schema.Int64Attribute{
-							MarkdownDescription: "Total Size",
+							MarkdownDescription: "The lengths of all the names and values in a single entity (header, cookie set, body, query string, and so forth) in aggregate must not exceed this property.",
 							Computed:            true,
 						},
 						"max_name_size": schema.Int64Attribute{
-							MarkdownDescription: "Maximum Name Length",
+							MarkdownDescription: "The maximum size of a name attribute used in this profile.",
 							Computed:            true,
 						},
 						"max_value_size": schema.Int64Attribute{
-							MarkdownDescription: "Maximum Value Length",
+							MarkdownDescription: "The maximum size of a value attribute used in this profile.",
 							Computed:            true,
 						},
 						"validation_list": schema.ListNestedAttribute{
-							MarkdownDescription: "Validation List",
+							MarkdownDescription: "Each pair submitted to this profile consults this validation list, looking for the first regular expression match of the name against the name expression in the list. When that is found, the corresponding value constraint is matched against the value portion of the name-value pair. If that does not match, the policy applies the 'fixup' attribute to the submitted value. That may result in no change, the pair being removed, an error being generated, or the value being mapped to a known constant.",
 							NestedObject:        models.DmValidationTypeDataSourceSchema,
 							Computed:            true,
 						},
 						"default_fixup": schema.StringAttribute{
-							MarkdownDescription: "No Match Policy",
+							MarkdownDescription: "Select the action to taken when no matching entry in the validation list is found. The default is Strip.",
 							Computed:            true,
 						},
 						"default_map_value": schema.StringAttribute{
-							MarkdownDescription: "No Match Map Value",
+							MarkdownDescription: "An value that does not have a matching entry in the validation list is changed to this value if the no match policy is 'set'.",
 							Computed:            true,
 						},
 						"default_xss": schema.BoolAttribute{
-							MarkdownDescription: "No Match XSS Policy",
+							MarkdownDescription: "This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.",
 							Computed:            true,
 						},
 						"no_match_xss_patterns_file": schema.StringAttribute{
-							MarkdownDescription: "XSS (Cross Site Scripting) Protection Patterns File",
+							MarkdownDescription: "Specifies the patterns file that will be used by the XSS filter when No Match XSS is selected. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

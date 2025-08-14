@@ -58,7 +58,7 @@ func (r *WSRRSubscriptionResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *WSRRSubscriptionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("WSRR subscription", "wsrr-subscription", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The WSRR (WebSphere Service Registry and Repository) subscription is useful when you want to deploy web services with a direct reference to a service document. The configuration references a WSRR server, the name of the WSRR resource, and its namespace. If more than one version of the service document exists, you must specify the version to reference. <p>The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.</p>", "wsrr-subscription", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -87,7 +87,7 @@ func (r *WSRRSubscriptionResource) Schema(ctx context.Context, req resource.Sche
 				Required:            true,
 			},
 			"namespace": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Namespace", "namespace", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the namespace to unambiguously identify the WSRR resource. This property is used with the object name.", "namespace", "").String,
 				Optional:            true,
 			},
 			"object_type": schema.StringAttribute{
@@ -98,7 +98,7 @@ func (r *WSRRSubscriptionResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"object_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Object name", "object-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the object name to unambiguously identify the WSRR resource. This property is used with the namespace.", "object-name", "").String,
 				Required:            true,
 			},
 			"method": schema.StringAttribute{
@@ -111,7 +111,7 @@ func (r *WSRRSubscriptionResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("poll"),
 			},
 			"refresh_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Refresh interval", "refresh-interval", "").AddIntegerRange(60, 4294967).AddDefaultValue("86400").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.", "refresh-interval", "").AddIntegerRange(60, 4294967).AddDefaultValue("86400").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -121,7 +121,7 @@ func (r *WSRRSubscriptionResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(86400),
 			},
 			"use_version": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use object version", "use-version", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to query the registry for a specific object version. Set this property when the registry contains more than one version of an object.", "use-version", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -131,7 +131,7 @@ func (r *WSRRSubscriptionResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"fetch_policy_attachments": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Fetch policy attachments", "fetch-policy-attachments", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to fetch external policy attachments. When enabled, the registry is queried for external policy attachments for retrieved resources. These policies are processed when the service allow external policy attachments.", "fetch-policy-attachments", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

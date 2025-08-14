@@ -56,7 +56,7 @@ func (r *WebSphereJMSSourceProtocolHandlerResource) Metadata(ctx context.Context
 
 func (r *WebSphereJMSSourceProtocolHandlerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("WebSphere JMS handler", "source-wasjms", "").AddActions("quiesce").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure the WebSphere JMS handler to manage WebSphere JMS protocol communications.", "source-wasjms", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -81,19 +81,19 @@ func (r *WebSphereJMSSourceProtocolHandlerResource) Schema(ctx context.Context, 
 				},
 			},
 			"server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WebSphere JMS server", "server", "webspherejmsserver").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the WebSphere JMS server object supported by this handler.", "server", "webspherejmsserver").String,
 				Required:            true,
 			},
 			"request_topic_space": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Topic space for request", "request-topic-space", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Use this property to disambiguate a topic if the request destination is a topic whose name appears in multiple topic spaces.</p><p>A topic space is a hierarchy of topics used for publish/subscribe messaging. Topics with the same name can exist in multiple topic spaces, but there can be only one topic space with a given name in a service integration bus.</p><p>For example, consider a topic hierarchy split into the following topic spaces:</p><ul><li>library - topics for document management</li><li>sales - topics for marketing and sales tracking</li><li>engineering - topics for engineering and technology</li></ul><p>The topic <em>volumes</em> can appear in all three topic spaces, and have a different meaning in each.</p><p>Enter the name of the target topic space if necessary.</p>", "request-topic-space", "").String,
 				Optional:            true,
 			},
 			"reply_topic_space": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Topic space for reply", "reply-topic-space", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Use this property to disambiguate a topic if the response destination is a topic whose name appears in multiple topic spaces.</p><p>A topic space is a hierarchy of topics used for publish/subscribe messaging. Topics with the same name can exist in multiple topic spaces, but there can be only one topic space with a given name in a service integration bus.</p><p>For example, consider a topic hierarchy split into the following topic spaces:</p><ul><li>library - topics for document management</li><li>sales - topics for marketing and sales tracking</li><li>engineering - topics for engineering and technology</li></ul><p>The topic <em>volumes</em> can appear in all three topic spaces, and have a different meaning in each.</p><p>Enter the name of the target topic space if necessary.</p>", "reply-topic-space", "").String,
 				Optional:            true,
 			},
 			"strict_message_order": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Strict message ordering", "strict-message-order", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enable to work smoothly with WebSphere server when the \"Strict Message Ordering\" option in the corresponding destination is checked.</p>", "strict-message-order", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -103,19 +103,19 @@ func (r *WebSphereJMSSourceProtocolHandlerResource) Schema(ctx context.Context, 
 				Optional:            true,
 			},
 			"get_queue": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Get queue", "get-queue", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the name of the get queue associated with the WebSphere JMS or TIBCO EMS object supported by this handler.</p><p>The handler monitors the get queue for incoming client requests. Upon message receipt, The handler forwards the extracted message to the DataPower object that will gateway the message to a remote message provider.</p>", "get-queue", "").String,
 				Required:            true,
 			},
 			"put_queue": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Put queue", "put-queue", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the name of the put queue associated with the WebSphere JMS or TIBCO EMS object supported by this handler.</p><p>The put queue contains server-originated WAS JMS or TIBCO EMS reply messages.</p><p>Such messages are originated by a remote WAS JMS or TIBCO EMS message provider and put into this queue by a local WebSphere JMS or TIBCO EMS object.</p><p>Configuration of a put queue is optional.</p><p>A put queue should be configured if server replies are expected; if reply messages are not expected, a put queue need not be configured.</p><p>In the absence of a put queue, any received replies are dropped.</p>", "put-queue", "").String,
 				Optional:            true,
 			},
 			"selector": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Selector", "selector", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Provide an SQL-like expression to filter messages from the GET queue.</p><p>For example, <tt>DeliveryMode LIKE PERSISTENT</tt></p><p>This expression specifies that only client requests that have a DeliveryMode of PERSISTENT are forwarded to the WebSphere JMS or TIBCO EMS object for processing; all other messages are dropped from the get queue.</p><p>The message selector is a conditional expression based on a subset of SQL92 conditional expression syntax. The conditional expression enables the handler to identify <em>messages of interest</em> .</p><p>The conditional expression does not operate on the body of the message, rather it examines message headers and properties (proprietary user-created headers that might appear between the required headers and the message body).</p><p>The required headers are as follows:</p><ul><li><tt>Destination</tt> - contains the destination (queue) to which the message is being sent</li><li><tt>DeliveryMode</tt> - contains the delivery mode (PERSISTENT or NON_PERSISTENT)</li><li><tt>Expiration</tt> - contains a message TTL or a value of 0 indicating an unlimited TTL</li><li><tt>Priority</tt> - contains the message priority expressed as a digit from 0 (lowest priority) to 9 (highest priority)</li><li><tt>MessageID</tt> - contains a unique message identifier starting with the prefix ID:, or a null value, effectively disabling message ID</li><li><tt>Timestamp</tt> - contains the time the message was handed off for transmission, not the time it was actually sent</li><li><tt>CorrelationID</tt> - contains a means of associating one message (for example, a response) with another message (for example, the original request)</li><li><tt>ReplyTo</tt> - contains the destination (queue) to which a reply to this message should be sent</li><li><tt>Type</tt> - contains a message identifier provided by the application</li><li><tt>Redelivered</tt> - contains a boolean indicating that the message has been delivered in the past, but not yet acknowledged</li></ul><p>Configuration of a message selector is optional. If a message selector is not specified, all incoming client request messages are transferred by The handler to the DataPower object for processing.</p>", "selector", "").String,
 				Optional:            true,
 			},
 			"async_message_processing": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Asynchronous message processing", "async-message-processing", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>If enabled messages taken from the get queue will be processed not necessarily in the same order as they were queued.</p><p>This property may be set to improve performance only if associated Multi-Protocol Gateway or WS-Proxy isn't configured to process messages in order.</p>", "async-message-processing", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

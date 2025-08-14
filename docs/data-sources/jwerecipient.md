@@ -3,12 +3,12 @@
 page_title: "datapower_jwerecipient Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  JWE Recipient
+  JWE recipient object includes several values required by the JWE JSON Serialization object.
 ---
 
 # datapower_jwerecipient (Data Source)
 
-JWE Recipient
+JWE recipient object includes several values required by the JWE JSON Serialization object.
 
 ## Example Usage
 
@@ -38,13 +38,13 @@ Optional:
 
 Read-Only:
 
-- `algorithm` (String) Algorithm
+- `algorithm` (String) JWE key management algorithm for the JWE recipient.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `certificate` (String) Certificate
+- `certificate` (String) Certificate.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ss_key` (String) Shared Secret Key
-- `unprotected_header` (Attributes List) Unprotected Header (see [below for nested schema](#nestedatt--result--unprotected_header))
-- `user_summary` (String) Comments
+- `ss_key` (String) Shared secret key.
+- `unprotected_header` (Attributes List) Unprotected header for the JWE recipient. (see [below for nested schema](#nestedatt--result--unprotected_header))
+- `user_summary` (String) A descriptive summary for the configuration.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

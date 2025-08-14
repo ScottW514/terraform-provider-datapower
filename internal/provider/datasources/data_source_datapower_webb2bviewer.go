@@ -50,10 +50,10 @@ func (d *WebB2BViewerDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *WebB2BViewerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "B2B viewer management service (`default` domain only)",
+		MarkdownDescription: "Configure web access to the B2B transaction viewer. If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -61,7 +61,7 @@ func (d *WebB2BViewerDataSource) Schema(ctx context.Context, req datasource.Sche
 				Computed:            true,
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: "Port Number",
+				MarkdownDescription: "Specify the TCP port that the B2B viewer monitors. The default value is 9091.",
 				Computed:            true,
 			},
 			"user_agent": schema.StringAttribute{
@@ -69,11 +69,11 @@ func (d *WebB2BViewerDataSource) Schema(ctx context.Context, req datasource.Sche
 				Computed:            true,
 			},
 			"idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: "Idle timeout",
+				MarkdownDescription: "Specify the time after which an idle session is invalidated, which requires reauthentication. To disable the idle timer, enter 0.",
 				Computed:            true,
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: "Access control list",
+				MarkdownDescription: "Edit the <tt>web-b2b-viewer</tt> access control list to define the client IP addresses to allow or deny.",
 				Computed:            true,
 			},
 			"ssl_server_config_type": schema.StringAttribute{
@@ -89,7 +89,7 @@ func (d *WebB2BViewerDataSource) Schema(ctx context.Context, req datasource.Sche
 				Computed:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: "Local address",
+				MarkdownDescription: "<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

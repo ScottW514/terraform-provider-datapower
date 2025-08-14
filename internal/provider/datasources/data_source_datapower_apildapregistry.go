@@ -57,7 +57,7 @@ func (d *APILDAPRegistryDataSource) Metadata(_ context.Context, req datasource.M
 
 func (d *APILDAPRegistryDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API LDAP registry",
+		MarkdownDescription: "Configure and manage the API LDAP registry.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -85,7 +85,7 @@ func (d *APILDAPRegistryDataSource) Schema(ctx context.Context, req datasource.S
 							Computed:            true,
 						},
 						"ldap_port": schema.Int64Attribute{
-							MarkdownDescription: "Port",
+							MarkdownDescription: "Specify the listening port on the LDAP server. The default value is 636.",
 							Computed:            true,
 						},
 						"ssl_client_profile": schema.StringAttribute{
@@ -93,11 +93,11 @@ func (d *APILDAPRegistryDataSource) Schema(ctx context.Context, req datasource.S
 							Computed:            true,
 						},
 						"ldap_version": schema.StringAttribute{
-							MarkdownDescription: "LDAP version",
+							MarkdownDescription: "Specify the LDAP protocol version for bind operation. The default value is v3.",
 							Computed:            true,
 						},
 						"ldap_auth_method": schema.StringAttribute{
-							MarkdownDescription: "LDAP authentication method",
+							MarkdownDescription: "Specify the method to create the user for authentication. <ul><li>When compose DN, the DN can be composed from the username. For example, <tt>uid=john,ou=People,dc=company,dc=com</tt> is a DN format that can be composed from the username.</li><li>When compose UPN, the UPN can be composed from the username. For example, <tt>john@example.com</tt> is a UPN format that can be composed from the username.</li><li>When search DN, the DN cannot be composed from the username. You must use an LDAP search to retrieve information that matches the username.</li></ul><p>By default, queries the LDAP server to retrieve user information. Before deciding on the method, contact your LDAP administrator.</p>",
 							Computed:            true,
 						},
 						"ldap_bind_dn": schema.StringAttribute{
@@ -113,35 +113,35 @@ func (d *APILDAPRegistryDataSource) Schema(ctx context.Context, req datasource.S
 							Computed:            true,
 						},
 						"ldap_read_timeout": schema.Int64Attribute{
-							MarkdownDescription: "LDAP read timeout",
+							MarkdownDescription: "Specify the time to wait for a response from the LDAP server before the connection is closed. Enter a value in the range 0 - 86400. The default value is 60. A value of 0 indicates that the connection never times out.",
 							Computed:            true,
 						},
 						"ldap_group_auth_enabled": schema.BoolAttribute{
-							MarkdownDescription: "Enable LDAP group authentication",
+							MarkdownDescription: "Specify whether to enable LDAP group authentication to use to check group membership for a user. The default value is off.",
 							Computed:            true,
 						},
 						"ldap_group_auth_type": schema.StringAttribute{
-							MarkdownDescription: "LDAP group authentication type",
+							MarkdownDescription: "Specify the type of group authentication configuration to use. The default value is static.",
 							Computed:            true,
 						},
 						"ldap_group_scope": schema.StringAttribute{
-							MarkdownDescription: "LDAP group scope",
+							MarkdownDescription: "Specify the depth of the LDAP group search. The default value is subtree.",
 							Computed:            true,
 						},
 						"ldap_group_base_dn": schema.StringAttribute{
-							MarkdownDescription: "LDAP static group base DN",
+							MarkdownDescription: "Specify the base DN name to begin the group authentication search. This value identifies the entry level of the tree used by the LDAP group scope.",
 							Computed:            true,
 						},
 						"ldap_group_filter_prefix": schema.StringAttribute{
-							MarkdownDescription: "LDAP static group filter prefix",
+							MarkdownDescription: "Specify the prefix of the LDAP group filter expression. An LDAP group filter expression is composed by <tt>prefix + user DN + suffix</tt> . <p>When the prefix is <tt>(&amp;(objectclass=group)(member=</tt> and the user DN is <tt>CN=bob,DN=ibm,DN=com</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com))</tt> .</p>",
 							Computed:            true,
 						},
 						"ldap_group_filter_suffix": schema.StringAttribute{
-							MarkdownDescription: "LDAP static group filter suffix",
+							MarkdownDescription: "Specify the suffix of the LDAP group filter expression. <p>When the prefix is <tt>&amp;(objectclass=group)(member=</tt> , the user DN is <tt>CN=bob,DN=ibm,DN=com</tt> , and the suffix is <tt>)(CN=ibm-group))</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com)(CN=ibm-group))</tt> .</p>",
 							Computed:            true,
 						},
 						"ldap_group_dynamic_filter": schema.StringAttribute{
-							MarkdownDescription: "LDAP dynamic filter",
+							MarkdownDescription: "Specify the filter expression of the LDAP dynamic group configuration. Only for dynamic. <p>When the filter is <tt>(memberOf=CN=ibm-group,DC=ibm,DC=com)</tt> , the value is used verbatim for LDAP group dynamic search.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

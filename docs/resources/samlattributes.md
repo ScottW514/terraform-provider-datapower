@@ -3,13 +3,13 @@
 page_title: "datapower_samlattributes Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SAML Attributes
+  Define a list of SAML attributes for the SAML Assertion generator.
   CLI Alias: samlattrs
 ---
 
 # datapower_samlattributes (Resource)
 
-SAML Attributes
+Define a list of SAML attributes for the SAML Assertion generator.
   - CLI Alias: `samlattrs`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_samlattributes" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `saml_attribute` (Attributes List) SAML Attribute Definition
+- `saml_attribute` (Attributes List) Define an attribute by selecting the source type and specifying the data source and SAML attribute name.
   - CLI Alias: `attribute` (see [below for nested schema](#nestedatt--saml_attribute))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

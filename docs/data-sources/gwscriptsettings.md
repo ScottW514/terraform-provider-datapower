@@ -3,12 +3,12 @@
 page_title: "datapower_gwscriptsettings Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  GatewayScript Settings (default domain only)
+  You can configure the following GatewayScript settings. Whether to freeze the GatewayScript built-in objects.How to manage untrusted code mitigation to protect against SSCA.The maximum allowed duration that a GatewayScript action can continuously use the CPU.
 ---
 
 # datapower_gwscriptsettings (Data Source)
 
-GatewayScript Settings (`default` domain only)
+You can configure the following GatewayScript settings. <ul><li>Whether to freeze the GatewayScript built-in objects.</li><li>How to manage untrusted code mitigation to protect against SSCA.</li><li>The maximum allowed duration that a GatewayScript action can continuously use the CPU.</li></ul>
 
 ## Example Usage
 
@@ -26,11 +26,11 @@ data "datapower_gwscriptsettings" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
-- `frozen_enabled` (Boolean) Freeze prototype
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `frozen_enabled` (Boolean) Specify whether to freeze the GatewayScript built-in object prototypes. <ul><li>When frozen, you cannot modify, add, or remove prototypes. This setting is the default setting.</li><li>When not frozen, you can manipulate prototypes.</li></ul><p>If you change and persist this property, the change is pending and requires a firmware reload.</p>
 - `reload_needed` (Boolean) System reload needed
-- `terminate_time` (Number) Max processing duration
-- `untrusted_code_mitigated` (Boolean) Untrusted code mitigation
+- `terminate_time` (Number) Specify the maximum duration in seconds that a GatewayScript action can continuously use CPU without yielding back to the system event loop. When the processing of a GatewayScript action exceeds the duration, processing is stopped and an error is logged. Enter a value in the range 1 - 300. The default value is 0, which indicates unlimited.
+- `untrusted_code_mitigated` (Boolean) Specify whether to enable untrusted code mitigation to protect against Speculative Side-Channel Attacks (SSCA). <ul><li>When enabled, protects untrusted code against SSCA. This setting is the default setting.</li><li>When disabled, does not protect untrusted code against SSCA.</li></ul><p>If you change and persist this property, the change is pending and requires a firmware reload.</p>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

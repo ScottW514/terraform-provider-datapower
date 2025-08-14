@@ -3,12 +3,12 @@
 page_title: "datapower_webtokenservice Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web Token Service
+  The web token service provides on-box HTTP services.
 ---
 
 # datapower_webtokenservice (Data Source)
 
-Web Token Service
+The web token service provides on-box HTTP services.
 
 ## Example Usage
 
@@ -39,23 +39,23 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `debug_history` (Number) Transaction history
-- `debug_mode` (String) Probe setting
-- `delay_errors` (Boolean) Delay error messages
-- `delay_errors_duration` (Number) Duration to delay error messages
-- `front_http_version` (String) HTTP version to client
-- `front_persistent_timeout` (Number) Front persistent timeout
-- `front_side` (Attributes List) Source addresses (see [below for nested schema](#nestedatt--result--front_side))
-- `front_timeout` (Number) Front side timeout
-- `http_client_ip_label` (String) HTTP client IP label
-- `http_log_cor_id_label` (String) HTTP global transaction ID label
+- `debug_history` (Number) Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.
+- `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
+- `delay_errors` (Boolean) The timing difference of the error messages returned after a decryption action can provide an attacker with enough information to determine the contents of the plain-text data. When enabled, the default, the appliance delays error messages for the defined duration. When disabled, the appliance does not delay error messages.
+- `delay_errors_duration` (Number) When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000 ms, the appliance will not send error messages to the client until 3 seconds have elapsed since the appliance performed decryption on the requests. Enter any value in the range 250 - 300000. The default value is 1000.
+- `front_http_version` (String) Set the HTTP version for client-to-service connections. If the client submits an HTTP/1.0 request, the service on the DataPower appliance always replies with HTTP/1.0 compatible responses regardless of this setting. The default version is HTTP 1.1.
+- `front_persistent_timeout` (Number) Set the inter-transaction timeout for Web Token Service to client connections. This value is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction on the Web Token Service to client connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.
+- `front_side` (Attributes List) Define the addresses and ports that the service listens on. You can define listening sources for HTTP and HTTPS requests. For HTTPS request, set the listening source to use TLS parameter and assign the TLS profile. (see [below for nested schema](#nestedatt--result--front_side))
+- `front_timeout` (Number) Set the intra-transaction timeout for Web Token Service to client connections. This value is the maximum idle time to allow in a transaction on the Web Token Service to client connection. This timer monitors idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.
+- `http_client_ip_label` (String) Set the HTTP header that contains the client IP address. When defined, the client IP address is read from this HTTP header. This IP address will then be used for monitoring and logging. Retain the default value <tt>X-Client-IP</tt> or specify another value; for example, <tt>X-Forwarded-For</tt> .
+- `http_log_cor_id_label` (String) Enter the name of an HTTP Header to read to determine the global transaction ID for chained services. This value defaults to X-Global-Transaction-ID.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `priority` (String) Service priority
-- `request_type` (String) Request type
-- `rewrite_errors` (Boolean) Rewrite error messages
-- `style_policy` (String) Processing policy
-- `user_summary` (String) Comments
-- `xml_manager` (String) XML manager
+- `priority` (String) Set the service-level priority. When resources are in high demand, the appliance handles transactions for higher priority services over lower priority services.
+- `request_type` (String) Characterizes the traffic that originates from the client. The default is Non-XML.
+- `rewrite_errors` (Boolean) Error messages after a decryption action can provide an attacker who is using the padding oracle attack method with enough information to determine the contents of the plain-text data. When enabled, the default, the client receives error messages without the internal information that could lead to a discovery. When disabled, the client receives the original message with this information.
+- `style_policy` (String) Assign the processing policy to the service. The processing policy defines the actions to perform on security token requests.
+- `user_summary` (String) Specify a brief, descriptive comment.
+- `xml_manager` (String) Assign the XML manager that obtains and manages documents on behalf of the service. The user agent, which is referenced by this XML manager, controls access to remote destinations. Unless you have service-specific needs, use the <tt>default</tt> XML manager.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

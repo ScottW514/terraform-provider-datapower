@@ -83,35 +83,35 @@ func (r *B2BCPACollaborationResource) Schema(ctx context.Context, req resource.S
 				Optional:            true,
 			},
 			"internal_role": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Internal role", "internal-role", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the authorized role of the internal partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Buyer</tt> role has the authority for purchasing actions.", "internal-role", "").String,
 				Optional:            true,
 			},
 			"external_role": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("External role", "external-role", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the authorized role of the external partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Supplier</tt> role has the authority for selling actions.", "external-role", "").String,
 				Optional:            true,
 			},
 			"process_specification": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Process Specification", "process-spec", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the location of the process specification document that defines the interactions between the internal and external partners. For example, <tt>http://www.rosettanet.org/processes/3A4</tt> .", "process-spec", "").String,
 				Optional:            true,
 			},
 			"service": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Service", "service", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the service that acts on the message. The value is used to specify and identify the value of the Service element in the outbound and inbound ebMS message header. The service is one of the following types. <ul><li>A business collaboration service for exchanging business messages.</li><li>An MSH signal service for exchanging MSH signals.</li></ul><p>The value of <tt>urn:oasis:names:tc:ebxml-msg:service;</tt> is an MSH signal service. Any other value represents a business collaboration service.</p>", "service", "").String,
 				Required:            true,
 			},
 			"service_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Service Type", "service-type", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the service type. If you specify the type, the value is present in the type attribute of the <tt>Service</tt> element within the message to be sent. If the type is empty, the value of the <tt>Service</tt> element must be a URI.", "service-type", "").String,
 				Optional:            true,
 			},
 			"sender_msh_setting": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Default MSH signal sender", "sender-msh-setting", "b2bcpasendersetting").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the default MSH signal sender to send ebMS MSH signals to send MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .", "sender-msh-setting", "b2bcpasendersetting").String,
 				Optional:            true,
 			},
 			"receiver_msh_setting": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Default MSH signal receiver", "receiver-msh-setting", "b2bcpareceiversetting").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the default MSH signal receiver to receive ebMS MSH signals to receive MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .", "receiver-msh-setting", "b2bcpareceiversetting").String,
 				Optional:            true,
 			},
 			"actions": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Actions", "action", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify CPA actions to bind. For a business collaboration, each action entry identifies a business message that a party can send or receive. For a collaboration of MSH level signal, the action overrides the sending or receiving behaviors of the default sender setting or default receiver setting.", "action", "").String,
 				NestedObject:        models.DmCPACollaborationActionResourceSchema,
 				Required:            true,
 			},

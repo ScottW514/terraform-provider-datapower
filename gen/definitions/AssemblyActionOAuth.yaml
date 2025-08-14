@@ -1,56 +1,79 @@
 name: AssemblyActionOAuth
-description: 'OAuth assembly action'
-cli_alias: 'assembly-oauth'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/AssemblyActionOAuth'
+description: The OAuth assembly action processes the requested OAuth flow based on
+  the defined OAuth provider settings.
+cli_alias: assembly-oauth
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/AssemblyActionOAuth
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAssemblyActionOAuth"'
-    test_expect_ds: '"AccTest_AssemblyActionOAuth"'
-    example: 'AssemblyActionOAuthName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: OAuthProviderSettingsReference
-    dm_type: DmDynamicOAuthProviderSettingsReference
-    description: 'OAuth token provider settings'
-    test_value: '{"Default": "AccTest_OAuthProviderSettings"}'
-    test_bed_value: '{"Default": datapower_oauthprovidersettings.acc_test.id}'
-    cli_alias: oauth-provider-settings-ref
-  - name: SupportedOAuthComponents
-    dm_type: DmOAuthComponents
-    description: 'Supported OAuth components'
-    cli_alias: supported-oauth-components
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: CorrelationPath
-    type: String
-    description: 'Correlation path'
-    cli_alias: correlation-path
-  - name: ActionDebug
-    type: Bool
-    default: false
-    description: 'Enable debugging'
-    cli_alias: debug
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAssemblyActionOAuth"'
+  test_expect_ds: '"AccTest_AssemblyActionOAuth"'
+  example: AssemblyActionOAuthName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: OAuthProviderSettingsReference
+  dm_type: DmDynamicOAuthProviderSettingsReference
+  description: Specify the OAuth token provider settings to use for OAuth action.
+    You can use one or more methods. Precedence rules apply when you configure the
+    same aspect of the OAuth provider settings through multiple methods.
+  test_value: '{"Default": "AccTest_OAuthProviderSettings"}'
+  test_bed_value: '{"Default": datapower_oauthprovidersettings.acc_test.id}'
+  cli_alias: oauth-provider-settings-ref
+- name: SupportedOAuthComponents
+  dm_type: DmOAuthComponents
+  description: Specify the OAuth components that the action supports. When the action
+    does not support a component but that component is requested, the unsupported
+    component is not run.
+  cli_alias: supported-oauth-components
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Title
+  type: String
+  description: Title
+  cli_alias: title
+- name: CorrelationPath
+  type: String
+  description: Specify the path that correlates the API action to a specific part
+    of the API specification. The correlation path specifies the part of the API definition
+    that correlates with the API action. This path is exposed in the debug data by
+    the API gateway for use by debugging tools. For example, for an API configuration
+    that is retrieved from API Connect and specified in an OpenAPI document with IBM
+    extensions, this path is the JSON path to the assembly policy in the IBM extensions
+    section of the document. The path can be expressed in any form that the debugging
+    tool can correlate to the API definition.
+  cli_alias: correlation-path
+- name: ActionDebug
+  type: Bool
+  default: false
+  description: <p>Specify whether to enable the GatewayScript debugger to troubleshoot
+    the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript
+    file that is called from the GatewayScript assembly action.</li><li>Troubleshoot
+    a GatewayScript file that is called from an XSLT assembly action that uses the
+    <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript
+    script that is called through the <tt>value</tt> or <tt>default</tt> property
+    in the JSON file from the map assembly action.</li></ul><p>To debug a file or
+    script, the following conditions must be met.</p><ul><li>The file contains one
+    or more <tt>debugger;</tt> statements at the points in your script where you want
+    to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You
+    run the <tt>debug-action</tt> command.</p>
+  cli_alias: debug

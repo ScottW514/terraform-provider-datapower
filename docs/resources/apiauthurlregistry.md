@@ -3,13 +3,13 @@
 page_title: "datapower_apiauthurlregistry Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API authentication URL registry
+  Configure and manage the API authentication URL registry.
   CLI Alias: api-auth-url-reg
 ---
 
 # datapower_apiauthurlregistry (Resource)
 
-API authentication URL registry
+Configure and manage the API authentication URL registry.
   - CLI Alias: `api-auth-url-reg`
 
 ## Example Usage
@@ -28,7 +28,7 @@ resource "datapower_apiauthurlregistry" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `auth_url` (String) Authentication URL
+- `auth_url` (String) Specify the URL of the authentication endpoint to authenticate credentials. The user credentials in the authorization header are validated by the authentication endpoint. When the user is authenticated, DataPower expects the authentication endpoint to return an HTTP 200 status code. All other status codes result in an authentication failure, and access is denied.
   - CLI Alias: `auth-url`
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 

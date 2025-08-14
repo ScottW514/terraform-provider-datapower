@@ -3,12 +3,12 @@
 page_title: "datapower_countmonitor Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Count Monitor
+  On-Line Help for Message-Count Monitors
 ---
 
 # datapower_countmonitor (Data Source)
 
-Message Count Monitor
+On-Line Help for Message-Count Monitors
 
 ## Example Usage
 
@@ -39,14 +39,14 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `filter` (Attributes List) Thresholds/Filters (see [below for nested schema](#nestedatt--result--filter))
-- `header` (String) Header
+- `filter` (Attributes List) Click this tab to define a message-count monitor threshold and assign an action (Message Filter Action) that is taken when the threshold is reached. (see [below for nested schema](#nestedatt--result--filter))
+- `header` (String) The name of the HTTP header to read to determine the value of the source IP address.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `max_sources` (Number) Maximum Distinct Sources
-- `measure` (String) Measure
-- `message_type` (String) Message Type
-- `source` (String) Source
-- `user_summary` (String) Comments
+- `max_sources` (Number) When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.
+- `measure` (String) Select the action that advances the counter. The default is Requests.
+- `message_type` (String) Select the message type monitored by this message-count monitor.
+- `source` (String) Select how monitoring is applied to IP addresses. This setting is meaningful only if an associated traffic definition contains and inclusive or exclusive IP address criterion. The default is All.
+- `user_summary` (String) A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

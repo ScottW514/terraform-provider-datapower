@@ -56,7 +56,7 @@ func (r *SMTPServerConnectionResource) Metadata(ctx context.Context, req resourc
 
 func (r *SMTPServerConnectionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SMTP Server Connection", "smtp-server-connection", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>The SMTP server connection defines the connection details for a Simple Mail Transport Protocol (SMTP) server. The DataPower Gateway uses the SMTP server connection for the following purposes</p><ul><li>B2B partners use this configuration to send an e-mail message to an AS1 or ESMTP destination.</li><li>B2B gateways use this configuration to request an AS1 MDN.</li></ul><p>For ease of configuration, the DataPower Gateway provides the <tt>default</tt> SMTP server connection configuration in each domain. By default, this configuration is empty and disabled.</p>", "smtp-server-connection", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,18 +85,18 @@ func (r *SMTPServerConnectionResource) Schema(ctx context.Context, req resource.
 				Optional:            true,
 			},
 			"mail_server_host": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Outgoing Mail Server (SMTP) Host", "server-host", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The IP address or host name of the SMTP server to send outgoing e-mail messages.", "server-host", "").String,
 				Required:            true,
 			},
 			"mail_server_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Mail Server Port", "server-port", "").AddDefaultValue("25").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The listening port on the SMTP server to send outgoing e-mail messages.", "server-port", "").AddDefaultValue("25").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(25),
 			},
-			"options": models.GetDmSMTPOptionsResourceSchema("Options", "options", "", false),
+			"options": models.GetDmSMTPOptionsResourceSchema("The SMTP options to enable for the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.", "options", "", false),
 			"auth": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authentication Method", "auth", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("With the client authentication option, the method to authenticate the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.", "auth", "").AddStringEnum("plain", "login").AddDefaultValue("plain").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -105,15 +105,15 @@ func (r *SMTPServerConnectionResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("plain"),
 			},
 			"account_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Account Name", "username", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The account or user name of the SMTP client to authenticate on the SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If blank, the configuration uses the setting from the basic authentication policy in the associated user agent.", "username", "").String,
 				Optional:            true,
 			},
 			"account_password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Account Password Alias", "password-alias", "passwordalias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The password alias of the password for the SMTP client account or the user name that is authenticated to the SMTP server. If password or alias are blank, the configuration uses the setting from the basic authentication policy in the associated user agent.", "password-alias", "passwordalias").String,
 				Optional:            true,
 			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -122,7 +122,7 @@ func (r *SMTPServerConnectionResource) Schema(ctx context.Context, req resource.
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "sslclientprofile").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

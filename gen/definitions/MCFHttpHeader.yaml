@@ -1,45 +1,47 @@
 name: MCFHttpHeader
-description: 'HTTP Header Message Content Filter'
-cli_alias: 'mcf-httpheader'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/MCFHttpHeader'
+description: Filter based on HTTP header. A specific header value is used to match
+  the request message.
+cli_alias: mcf-httpheader
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/MCFHttpHeader
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestMCFHttpHeader"'
-    test_expect_ds: '"AccTest_MCFHttpHeader"'
-    example: 'MCFHttpHeaderName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: HttpName
-    type: String
-    required: true
-    example: 'HEADERNAME'
-    description: 'HTTP Header Name'
-    cli_alias: location
-  - name: HttpValue
-    type: String
-    required: true
-    description: 'Header Value'
-    example: 'HEADERVALUE'
-    cli_alias: value
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestMCFHttpHeader"'
+  test_expect_ds: '"AccTest_MCFHttpHeader"'
+  example: MCFHttpHeaderName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: HttpName
+  type: String
+  required: true
+  example: HEADERNAME
+  description: HTTP Header Name
+  cli_alias: location
+- name: HttpValue
+  type: String
+  required: true
+  description: Header Value
+  example: HEADERVALUE
+  cli_alias: value
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary

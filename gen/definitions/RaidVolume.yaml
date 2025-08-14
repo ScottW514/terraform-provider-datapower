@@ -1,21 +1,33 @@
 name: RaidVolume
-description: 'RAID Array (`default` domain only)'
-cli_alias: 'raid-volume'
-cmd_group: 'device-management'
-rest_endpoint: '/mgmt/config/default/RaidVolume/raid0'
+description: <p>Configure a RAID volume for data storage.</p><ol><li>The access permission
+  to files on the storage volume. With the B2B feature, access permission must be
+  read/write. B2B storage requires write access. Setting to read-only is ignored but
+  generates a warning.</li><li>The subdirectory where files on the storage volume
+  are available in the <tt>local:</tt> and <tt>logstore:</tt> directories. Each domain
+  contains these subdirectories, and these subdirectories are not shared across domains.</li></ol>
+cli_alias: raid-volume
+cmd_group: device-management
+rest_endpoint: /mgmt/config/default/RaidVolume/raid0
 update_only: true
 default_domain_only: true
 attributes:
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: ReadOnly
-    type: Bool
-    default: false
-    description: 'Set to read-only'
-    cli_alias: read-only
-  - name: Directory
-    type: String
-    description: 'Directory'
-    cli_alias: directory
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the configuration.
+  cli_alias: summary
+- name: ReadOnly
+  type: Bool
+  default: false
+  description: <p>The access permission to files on the storage volume.</p><ul><li>When
+    enabled, access permission is read-only. With the B2B feature, access permission
+    must be read/write. B2B storage requires write access to the RAID volume. Setting
+    to read-only is ignored but generates a warning.</li><li>When disabled, the default
+    value, access permission is read/write.</li></ul>
+  cli_alias: read-only
+- name: Directory
+  type: String
+  description: 'The subdirectory where the files on the storage volume are available.
+    The name can be up to 64 characters long. The name cannot start with a period.
+    The name can use all alphanumeric characters and the following special characters:
+    . - _.'
+  cli_alias: directory

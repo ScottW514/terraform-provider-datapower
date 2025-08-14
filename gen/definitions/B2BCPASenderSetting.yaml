@@ -1,214 +1,226 @@
 name: B2BCPASenderSetting
-description: 'CPA sender setting'
-cli_alias: 'cpa-sender-setting'
-cmd_group: 'b2b'
-rest_endpoint: '/mgmt/config/{domain}/B2BCPASenderSetting'
+description: CPA sender setting
+cli_alias: cpa-sender-setting
+cmd_group: b2b
+rest_endpoint: /mgmt/config/{domain}/B2BCPASenderSetting
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestB2BCPASenderSetting"'
-    test_expect_ds: '"AccTest_B2BCPASenderSetting"'
-    example: 'B2BCPASenderSettingName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: EnabledDocType
-    dm_type: DmB2BEnabledDocType
-    default: 'EnableXML+EnableX12+EnableEDIFACT+EnableBinary'
-    description: 'Enabled document types'
-    cli_alias: enabled-doc-type
-  - name: DestEndpointURL
-    type: String
-    description: 'Destination URL'
-    cli_alias: dest-url
-    test_value: '"ebms2://somehost/url"'
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: UserName
-    type: String
-    description: 'Username'
-    cli_alias: username
-  # DEPRECATED
-  # - name: Password
-  - name: PasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password alias'
-    cli_alias: password-alias
-  - name: ConnectionTimeout
-    type: Int64
-    minimum: 3
-    maximum: 7200
-    default: 300
-    description: 'Connection timeout'
-    cli_alias: timeout
-  - name: SyncReplyMode
-    type: String
-    enum:
-      - 'mshSignalsOnly'
-      - 'none'
-    default: 'none'
-    description: 'Sync reply mode'
-    cli_alias: syncreply-mode
-  - name: DuplicateElimination
-    type: String
-    enum:
-      - 'never'
-      - 'always'
-    default: 'always'
-    description: 'Duplicate elimination'
-    cli_alias: duplicate-elimination
-  - name: AckRequested
-    type: String
-    enum:
-      - 'never'
-      - 'always'
-    default: 'never'
-    description: 'Request acknowledgment'
-    cli_alias: ack-requested
-  - name: AckSignatureRequested
-    type: String
-    enum:
-      - 'never'
-      - 'always'
-    default: 'never'
-    description: 'Request signed acknowledgment'
-    cli_alias: ack-signature-requested
-  - name: Retry
-    type: Bool
-    default: false
-    description: 'Retransmit unacknowledged messages'
-    cli_alias: retry
-  - name: MaxRetries
-    type: Int64
-    minimum: 1
-    maximum: 30
-    default: 3
-    description: 'Retransmit attempts'
-    cli_alias: max-retries
-  - name: RetryInterval
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    default: 1800
-    description: 'Retransmit interval'
-    cli_alias: retry-interval
-  - name: PersistDuration
-    type: Int64
-    maximum: 6000000
-    description: 'Persistence duration'
-    cli_alias: persist-duration
-  - name: IncludeTimeToLive
-    type: Bool
-    default: true
-    description: 'Include TimeToLive element'
-    cli_alias: include-time-to-live
-  - name: EncryptionRequired
-    type: Bool
-    default: false
-    description: 'Require encryption'
-    cli_alias: encrypt-required
-  - name: EncryptCert
-    type: String
-    reference_to: CryptoCertificate
-    description: 'Encryption certificate'
-    cli_alias: encrypt-cert
-  - name: EncryptAlgorithm
-    type: String
-    enum:
-      - 'http://www.w3.org/2001/04/xmlenc#tripledes-cbc'
-      - 'http://www.w3.org/2001/04/xmlenc#aes128-cbc'
-      - 'http://www.w3.org/2001/04/xmlenc#aes192-cbc'
-      - 'http://www.w3.org/2001/04/xmlenc#aes256-cbc'
-      - 'http://www.w3.org/2009/xmlenc11#aes128-gcm'
-      - 'http://www.w3.org/2009/xmlenc11#aes192-gcm'
-      - 'http://www.w3.org/2009/xmlenc11#aes256-gcm'
-    default: 'http://www.w3.org/2001/04/xmlenc#tripledes-cbc'
-    description: 'Encryption algorithm'
-    cli_alias: encrypt-algorithm
-  - name: SignatureRequired
-    type: Bool
-    default: false
-    description: 'Require signature'
-    cli_alias: sign-required
-  - name: SignIdCred
-    type: String
-    reference_to: CryptoIdentCred
-    description: 'Signature identification credentials'
-    cli_alias: sign-idcred
-  - name: SignatureAlgorithm
-    type: String
-    enum:
-      - 'dsa-sha1'
-      - 'rsa-sha1'
-      - 'rsa-sha256'
-      - 'rsa-sha384'
-      - 'rsa-sha512'
-      - 'rsa-ripemd160'
-      - 'rsa-ripemd160-2010'
-      - 'sha256-rsa-MGF1'
-      - 'rsa-md5'
-      - 'ecdsa-sha1'
-      - 'ecdsa-sha224'
-      - 'ecdsa-sha256'
-      - 'ecdsa-sha384'
-      - 'ecdsa-sha512'
-    default: 'rsa-sha1'
-    description: 'Signature algorithm'
-    cli_alias: sign-algorithm
-  - name: SignDigestAlgorithm
-    type: String
-    enum:
-      - 'sha1'
-      - 'sha256'
-      - 'sha512'
-      - 'ripemd160'
-      - 'sha224'
-      - 'sha384'
-      - 'md5'
-    default: 'sha1'
-    description: 'Signing digest algorithm'
-    cli_alias: sign-digest-algorithm
-  - name: SignatureC14NAlgorithm
-    type: String
-    enum:
-      - 'c14n'
-      - 'exc-c14n'
-      - 'c14n-comments'
-      - 'exc-c14n-comments'
-      - 'c14n11'
-      - 'c14n11-comments'
-    default: 'exc-c14n'
-    description: 'Signature canonicalization method'
-    cli_alias: sign-c14n-algorithm
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestB2BCPASenderSetting"'
+  test_expect_ds: '"AccTest_B2BCPASenderSetting"'
+  example: B2BCPASenderSettingName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: EnabledDocType
+  dm_type: DmB2BEnabledDocType
+  default: EnableXML+EnableX12+EnableEDIFACT+EnableBinary
+  description: Enabled document types
+  cli_alias: enabled-doc-type
+- name: DestEndpointURL
+  type: String
+  description: Specify the destination URL for sending the message to the external
+    party endpoint. For load distribution, use the name of the load-balancing group
+    instead of the address-port pair in the URL.
+  cli_alias: dest-url
+  test_value: '"ebms2://somehost/url"'
+- name: UserName
+  type: String
+  description: Username
+  cli_alias: username
+- name: PasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: Password alias
+  cli_alias: password-alias
+- name: ConnectionTimeout
+  type: Int64
+  minimum: 3
+  maximum: 7200
+  default: 300
+  description: Specify the duration in seconds to maintain an idle connection. Enter
+    a value in the range 3 - 7200. The default value is 300.
+  cli_alias: timeout
+- name: SyncReplyMode
+  type: String
+  enum:
+  - mshSignalsOnly
+  - none
+  default: none
+  description: Sync reply mode
+  cli_alias: syncreply-mode
+- name: DuplicateElimination
+  type: String
+  enum:
+  - never
+  - always
+  default: always
+  description: For an outbound ebMS message, specify whether the internal sending
+    party requests the external receiving party to check duplicate elimination. The
+    request is made by presenting the <tt>DuplicateElimination</tt> element in the
+    <tt>MessageHeader</tt> element in the ebMS SOAP header. <p>When imported from
+    CPA, the <tt>duplicateElimination</tt> attribute on the internal party <tt>DeliveryChannel</tt>
+    element in the <tt>MessagingCharacteristics</tt> element.</p>
+  cli_alias: duplicate-elimination
+- name: AckRequested
+  type: String
+  enum:
+  - never
+  - always
+  default: never
+  description: Request acknowledgment
+  cli_alias: ack-requested
+- name: AckSignatureRequested
+  type: String
+  enum:
+  - never
+  - always
+  default: never
+  description: Request signed acknowledgment
+  cli_alias: ack-signature-requested
+- name: Retry
+  type: Bool
+  default: false
+  description: Retransmit unacknowledged messages
+  cli_alias: retry
+- name: MaxRetries
+  type: Int64
+  minimum: 1
+  maximum: 30
+  default: 3
+  description: Specify the number of attempts to retransmit an unacknowledged message.
+    Enter a value in the range 1 - 30. The default value is 3.
+  cli_alias: max-retries
+- name: RetryInterval
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  default: 1800
+  description: Specify the interval in seconds between retransmit attempts. Enter
+    a value in the range 1 - 86400. The default value in 1800.
+  cli_alias: retry-interval
+- name: PersistDuration
+  type: Int64
+  maximum: 6000000
+  description: Specify the duration in seconds to retain messages in persistent storage.
+    This value is used to compute the <tt>TimeToLive</tt> value. Until the value of
+    the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
+  cli_alias: persist-duration
+- name: IncludeTimeToLive
+  type: Bool
+  default: true
+  description: Specify whether to include the <tt>TimeToLive</tt> element in the outbound
+    messages. This element indicates when the message expires. The receiving partner
+    can accept the message only when it has not expired.
+  cli_alias: include-time-to-live
+- name: EncryptionRequired
+  type: Bool
+  default: false
+  description: Specify whether to encrypt outbound messages. Encryption does not apply
+    to MSH level signals.
+  cli_alias: encrypt-required
+- name: EncryptCert
+  type: String
+  reference_to: CryptoCertificate
+  description: Encryption certificate
+  cli_alias: encrypt-cert
+- name: EncryptAlgorithm
+  type: String
+  enum:
+  - http://www.w3.org/2001/04/xmlenc#tripledes-cbc
+  - http://www.w3.org/2001/04/xmlenc#aes128-cbc
+  - http://www.w3.org/2001/04/xmlenc#aes192-cbc
+  - http://www.w3.org/2001/04/xmlenc#aes256-cbc
+  - http://www.w3.org/2009/xmlenc11#aes128-gcm
+  - http://www.w3.org/2009/xmlenc11#aes192-gcm
+  - http://www.w3.org/2009/xmlenc11#aes256-gcm
+  default: http://www.w3.org/2001/04/xmlenc#tripledes-cbc
+  description: Encryption algorithm
+  cli_alias: encrypt-algorithm
+- name: SignatureRequired
+  type: Bool
+  default: false
+  description: Require signature
+  cli_alias: sign-required
+- name: SignIdCred
+  type: String
+  reference_to: CryptoIdentCred
+  description: Signature identification credentials
+  cli_alias: sign-idcred
+- name: SignatureAlgorithm
+  type: String
+  enum:
+  - dsa-sha1
+  - rsa-sha1
+  - rsa-sha256
+  - rsa-sha384
+  - rsa-sha512
+  - rsa-ripemd160
+  - rsa-ripemd160-2010
+  - sha256-rsa-MGF1
+  - rsa-md5
+  - ecdsa-sha1
+  - ecdsa-sha224
+  - ecdsa-sha256
+  - ecdsa-sha384
+  - ecdsa-sha512
+  default: rsa-sha1
+  description: Signature algorithm
+  cli_alias: sign-algorithm
+- name: SignDigestAlgorithm
+  type: String
+  enum:
+  - sha1
+  - sha256
+  - sha512
+  - ripemd160
+  - sha224
+  - sha384
+  - md5
+  default: sha1
+  description: Signing digest algorithm
+  cli_alias: sign-digest-algorithm
+- name: SignatureC14NAlgorithm
+  type: String
+  enum:
+  - c14n
+  - exc-c14n
+  - c14n-comments
+  - exc-c14n-comments
+  - c14n11
+  - c14n11-comments
+  default: exc-c14n
+  description: Signature canonicalization method
+  cli_alias: sign-c14n-algorithm
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: TLS client type
+  cli_alias: ssl-client-type
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: ssl-client

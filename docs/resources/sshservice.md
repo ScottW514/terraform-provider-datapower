@@ -3,13 +3,13 @@
 page_title: "datapower_sshservice Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SSH service (default domain only)
+  Modify the configuration of the SSH server.
   CLI Alias: ssh
 ---
 
 # datapower_sshservice (Resource)
 
-SSH service (`default` domain only)
+Modify the configuration of the SSH server.
   - CLI Alias: `ssh`
 
 ## Example Usage
@@ -26,22 +26,22 @@ resource "datapower_sshservice" "test" {
 
 ### Optional
 
-- `acl` (String) Access control list
+- `acl` (String) Edit the <tt>ssh</tt> access control list to define IP addresses to allow or deny.
   - CLI Alias: `acl`
   - Reference to: `datapower_accesscontrollist:id`
   - Default value: `ssh`
-- `connection_limit` (Number) Concurrent connections
+- `connection_limit` (Number) Specify the maximum number of concurrent SSH CLI connections. Enter a value in the range 0 - 1000. The default value is 0, which means no limit.
   - CLI Alias: `maximum-connections`
   - Range: `0`-`1000`
   - Default value: `0`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `local_address` (String) Local address
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`
-- `local_port` (Number) Port number
+- `local_port` (Number) Specify the TCP port that the service monitors. The default value is 22.
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `22`

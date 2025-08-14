@@ -3,13 +3,13 @@
 page_title: "datapower_gitops Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  GitOps
+  Each DataPower domain supports a single GitOps instance that operates in either read-only mode or read/write mode. The DataPower GitOps integration helps to automate configuration management through version control. This integration supports industry-standard GitOps practices and authoring experiences.
   CLI Alias: gitops
 ---
 
 # datapower_gitops (Resource)
 
-GitOps
+Each DataPower domain supports a single GitOps instance that operates in either read-only mode or read/write mode. The DataPower GitOps integration helps to automate configuration management through version control. This integration supports industry-standard GitOps practices and authoring experiences.
   - CLI Alias: `gitops`
 
 ## Example Usage
@@ -38,42 +38,42 @@ resource "datapower_gitops" "test" {
 
 ### Optional
 
-- `commit_identifier_type` (String) Commit identifier type
+- `commit_identifier_type` (String) Specify the branch, commit hash, or tag for read and write GitOps operations against the repository. Use of branch is the default setting.
   - CLI Alias: `commit-id-type`
   - Choices: `branch`, `tag`, `commit`
   - Default value: `branch`
-- `connection_type` (String) Connection type
+- `connection_type` (String) Specify the protocol to secure the connection. HTTPS is the default protocol.
   - CLI Alias: `type`
   - Choices: `https`, `ssh`
   - Default value: `https`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `git_email` (String) Git email
+- `git_email` (String) Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt> .
   - CLI Alias: `email`
-- `git_user` (String) Git user
+- `git_user` (String) Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt> .
   - CLI Alias: `name`
-- `interval` (Number) Sync Interval
+- `interval` (Number) Specify the interval in minutes to poll the repository for changes. Enter a value in the range 0 - 1440. The default value is 5. To disable polling, specify 0.
   - CLI Alias: `interval`
   - Range: `0`-`1440`
   - Default value: `5`
 - `json_parse_settings` (String) JSON parse settings
   - CLI Alias: `json-settings`
   - Reference to: `datapower_jsonsettings:id`
-- `mode` (String) Operation mode
+- `mode` (String) Specify the operational mode of the Git repository. The default mode is read-only.
   - CLI Alias: `mode`
   - Choices: `read-only`, `read-write`
   - Default value: `read-write`
 - `password` (String) Password
   - CLI Alias: `password`
   - Reference to: `datapower_passwordalias:id`
-- `ssh_authorized_keys_file` (String) SSH authorized key file
+- `ssh_authorized_keys_file` (String) Specify the file that contains the authorized SSH keys. This file must be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.
   - CLI Alias: `ssh-authorized-keyfile`
 - `ssh_client_profile` (String) SSH client profile
   - CLI Alias: `ssh-client-profile`
   - Reference to: `datapower_sshclientprofile:id`
-- `template_policies` (Attributes List) Template policies
+- `template_policies` (Attributes List) Specify the list of template policy for GitOps processing. The policy processing is in the order of the read or write GitOps operation.
   - CLI Alias: `template-policy` (see [below for nested schema](#nestedatt--template_policies))
 - `tls_valcred` (String) HTTPS validation credentials
   - CLI Alias: `https-valcred`

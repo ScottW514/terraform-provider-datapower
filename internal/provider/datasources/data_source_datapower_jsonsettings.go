@@ -57,7 +57,7 @@ func (d *JSONSettingsDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *JSONSettingsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "JSON settings",
+		MarkdownDescription: "The JSON settings specify constraints for parsing JSON messages. JSON settings work in conjunction with the parser limits in the XML manager. The more restrictive limits apply.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,23 +81,23 @@ func (d *JSONSettingsDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"json_max_nesting_depth": schema.Int64Attribute{
-							MarkdownDescription: "Max nesting depth",
+							MarkdownDescription: "Specify the maximum nesting depth in levels of label-value pairs. Enter a value in the range 64 - 256. The default value is 64.",
 							Computed:            true,
 						},
 						"json_max_label_length": schema.Int64Attribute{
-							MarkdownDescription: "Max label length",
+							MarkdownDescription: "Specify the maximum length in bytes of the label portion of label-value pair. The length includes any white space between quotation marks. Enter a value in the range 256 - 8192. The default value is 256.",
 							Computed:            true,
 						},
 						"json_max_value_length": schema.Int64Attribute{
-							MarkdownDescription: "Max value length for strings",
+							MarkdownDescription: "Specify the maximum number in bytes for string values of label-value pairs. The length includes any white space between quotation marks. Enter a value in the range 8192 - 5368709121. The default value is 8192.",
 							Computed:            true,
 						},
 						"json_max_number_length": schema.Int64Attribute{
-							MarkdownDescription: "Max value length for numbers",
+							MarkdownDescription: "Specify the maximum number in bytes for number values of label-value pairs. The number must be a contiguous string of bytes that contain no white space. The number can include a minus sign and a positive or negative exponent. Enter a value in the range 128 - 256. The default value is 128.",
 							Computed:            true,
 						},
 						"json_document_size": schema.Int64Attribute{
-							MarkdownDescription: "Max document size",
+							MarkdownDescription: "Specify the maximum document size in bytes for the body of the JSON message. If the message is converted to JSONx, the maximum document size specifies the size before the conversion to JSONx. <b>Note:</b> The document size of the JSON message and the size of the JSONx equivalent might differ. Enter a value in the range 4194304 - 5368709121. The default value is 4194304.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

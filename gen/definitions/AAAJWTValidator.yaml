@@ -1,144 +1,201 @@
 name: AAAJWTValidator
-description: 'JWT Validator'
-cli_alias: 'jwt-validator'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/AAAJWTValidator'
+description: <p>The JSON Web Token (JWT) Validator specifies credentials and different
+  methods to validate a JWT.</p>
+cli_alias: jwt-validator
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/AAAJWTValidator
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAAAJWTValidator"'
-    test_expect_ds: '"AccTest_AAAJWTValidator"'
-    example: 'AAAJWTValidatorName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Issuer
-    type: String
-    description: 'Issuer'
-    cli_alias: iss
-  - name: Aud
-    type: String
-    description: 'Audience'
-    cli_alias: aud
-  - name: ValMethod
-    dm_type: DmJWTValMethod
-    description: 'Validation method'
-    cli_alias: validate-method
-  - name: CustomizedScript
-    type: String
-    description: 'Custom validation method processing'
-    cli_alias: customized-script
-  - name: DecryptCredentialType
-    type: String
-    enum:
-      - 'pkix'
-      - 'ssecret'
-      - 'jwk'
-      - 'jwk-remote'
-      - 'custom'
-    description: 'Decrypt method'
-    cli_alias: decrypt-type
-  - name: DecryptKey
-    type: String
-    reference_to: CryptoKey
-    description: 'Decrypt key'
-    cli_alias: decrypt-key
-  - name: DecryptSSecret
-    type: String
-    reference_to: CryptoSSKey
-    description: 'Decrypt shared secret'
-    cli_alias: decrypt-ssecret
-  - name: DecryptJWK
-    type: String
-    description: 'Decrypt JWK'
-    cli_alias: decrypt-jwk
-  - name: DecryptFetchCredURL
-    type: String
-    default: 'http://example.com/v3/key'
-    example: 'https://example.com/v3/key'
-    description: 'Decrypt credential URL'
-    cli_alias: decrypt-fetch-cred-url
-  - name: DecryptFetchCredSSLProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'Decrypt credential TLS client profile'
-    cli_alias: decrypt-fetch-cred-sslprofile
-  - name: ValidateCustom
-    type: String
-    description: 'Custom decrypt/verify processing'
-    cli_alias: validate-custom
-  - name: VerifyCredentialType
-    type: String
-    enum:
-      - 'pkix'
-      - 'ssecret'
-      - 'jwk'
-      - 'jwk-remote'
-      - 'custom'
-    description: 'Verify method'
-    cli_alias: verify-type
-  - name: VerifyCertificate
-    type: String
-    reference_to: CryptoCertificate
-    description: 'Verify certificate'
-    cli_alias: verify-certificate
-  - name: VerifyCertificateAgainstValCred
-    type: Bool
-    default: false
-    description: 'Signature validation credentials'
-    cli_alias: verify-certificate-against-valcred
-  - name: VerifyValCred
-    type: String
-    reference_to: CryptoValCred
-    description: 'Validation credentials'
-    cli_alias: valcred
-  - name: VerifySSecret
-    type: String
-    reference_to: CryptoSSKey
-    description: 'Verify shared secret'
-    cli_alias: verify-ssecret
-  - name: VerifyJWK
-    type: String
-    description: 'Verify JWK'
-    cli_alias: verify-jwk
-  - name: VerifyFetchCredURL
-    type: String
-    default: 'http://example.com/v3/certs'
-    example: 'https://example.com/v3/certs'
-    description: 'Verify credential URL'
-    cli_alias: verify-fetch-cred-url
-  - name: VerifyFetchCredSSLProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'Verify credential TLS client profile'
-    cli_alias: verify-fetch-cred-sslprofile
-  - name: Claims
-    type: List
-    element_type: DmClaim
-    description: 'Validate claims'
-    cli_alias: claims
-  - name: UsernameClaim
-    type: String
-    required: true
-    default: 'sub'
-    description: 'Claim used as username'
-    cli_alias: username-claim
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAAAJWTValidator"'
+  test_expect_ds: '"AccTest_AAAJWTValidator"'
+  example: AAAJWTValidatorName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the JWT Validator configuration.
+  cli_alias: summary
+- name: Issuer
+  type: String
+  description: The optional issuer claim. The "iss" PCRE can be used to verify the
+    JWT. The maximum length of the value is 256 characters.
+  cli_alias: iss
+- name: Aud
+  type: String
+  description: The optional audience claim. The "aud" PCRE can be used to verify the
+    JWT. The maximum length of the value is 256 characters.
+  cli_alias: aud
+- name: ValMethod
+  dm_type: DmJWTValMethod
+  description: Various methods can be used to validate the JWT. You can decrypt the
+    JWT, verify the JWT signature, and process a custom GatewayScript or XSLT file
+    for further processing.
+  cli_alias: validate-method
+- name: CustomizedScript
+  type: String
+  description: A custom GatewayScript or XSLT file is processed to validate the JWT.
+    The GatewayScript or XSLT file must be stored in the <tt>local:</tt> (the default)
+    or <tt>store:</tt> directory. This field is meaningful when you select <tt>Custom
+    processing</tt> in the Validation method field.
+  cli_alias: customized-script
+- name: DecryptCredentialType
+  type: String
+  enum:
+  - pkix
+  - ssecret
+  - jwk
+  - jwk-remote
+  - custom
+  description: Various decryption methods (such as PKIX, shared secret key, JSON Web
+    Key (JWK), custom processing, remotely retrieve JWK) can be used to decrypt the
+    JWT. The default method is PKIX. This field is meaningful when you select <tt>Decrypt</tt>
+    in the Validation method field.
+  cli_alias: decrypt-type
+- name: DecryptKey
+  type: String
+  reference_to: CryptoKey
+  description: The private key can be used to decrypt the JWT. You can get the key
+    alias by configuring the Crypto Key. This field is meaningful when you select
+    <tt>Decrypt</tt> in the Validation Method field and choose <tt>PKIX</tt> from
+    the Decrypt method list.
+  cli_alias: decrypt-key
+- name: DecryptSSecret
+  type: String
+  reference_to: CryptoSSKey
+  description: The shared secret key can be used to decrypt the JWT. You can get the
+    shared secret key alias by configuring the Crypto Shared Secret Key. This field
+    is meaningful when you select <tt>Decrypt</tt> in the Validation method field
+    and choose <tt>Shared secret</tt> from the Decrypt method list.
+  cli_alias: decrypt-ssecret
+- name: DecryptJWK
+  type: String
+  description: 'The file containing the JWK or key set is fetched to decrypt the JWT.
+    The file must be stored in the local: or store: directory. This field is meaningful
+    when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>JWK</tt>
+    from the Decrypt method list.'
+  cli_alias: decrypt-jwk
+- name: DecryptFetchCredURL
+  type: String
+  default: http://example.com/v3/key
+  example: https://example.com/v3/key
+  description: The URL indicates the source location where the decryption credentials
+    can be fetched for decrypting the JWT. The URL must be in the format of http or
+    https. By default, the URL is http://example.com/v3/key. This field is meaningful
+    when you choose <tt>Decrypt</tt> in the Validation method field and choose <tt>Remotely
+    retrieve JWK</tt> from the Decrypt method list.
+  cli_alias: decrypt-fetch-cred-url
+- name: DecryptFetchCredSSLProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: The TLS client profile is specified for fetching the decryption credentials.
+    This field is meaningful when you select <tt>Decrypt</tt> in the Validation method
+    field and choose <tt>Remotely retrieve JWK</tt> from the Decrypt method list.
+  cli_alias: decrypt-fetch-cred-sslprofile
+- name: ValidateCustom
+  type: String
+  description: A custom GatewayScript or XSLT file provides the key material information
+    to decrypt or verify the JWT. This field is meaningful when you select <tt>Custom</tt>
+    for the Decrypt method or Verify method list.
+  cli_alias: validate-custom
+- name: VerifyCredentialType
+  type: String
+  enum:
+  - pkix
+  - ssecret
+  - jwk
+  - jwk-remote
+  - custom
+  description: Various methods (such as PKIX, shared secret key, JWK, custom processing,
+    remotely retrieve JWK) can be used to verify the JWT signature. The default method
+    is PKIX. This field is meaningful when you select <tt>Verify</tt> in the Validation
+    method field.
+  cli_alias: verify-type
+- name: VerifyCertificate
+  type: String
+  reference_to: CryptoCertificate
+  description: The certificate can be used to verify the JWT signature. You can get
+    the certificate by configuring the Crypto Certificate. This field is meaningful
+    when you select <tt>Verify</tt> in the Validation method field and choose <tt>PKIX</tt>
+    from the Verify method field.
+  cli_alias: verify-certificate
+- name: VerifyCertificateAgainstValCred
+  type: Bool
+  default: false
+  description: You decide whether to use validation credentials to verify the JWT
+    signature. This field is meaningful when you select <tt>Verify</tt> in the Validation
+    method field and choose <tt>PKIX</tt> from the Verify method list.
+  cli_alias: verify-certificate-against-valcred
+- name: VerifyValCred
+  type: String
+  reference_to: CryptoValCred
+  description: The validation credentials can be used to verify the signers' certificate
+    for the JWT. You can get credentials by configuring the Crypto Validation Credentials.
+    This field is meaningful when you select <tt>on</tt> in the Signature validation
+    credentials field.
+  cli_alias: valcred
+- name: VerifySSecret
+  type: String
+  reference_to: CryptoSSKey
+  description: The shared secret key can be used to verify the JWT signature. This
+    field is meaningful when you select <tt>Verify</tt> in the Validation method field
+    and choose <tt>Shared secret</tt> from the Verify method list.
+  cli_alias: verify-ssecret
+- name: VerifyJWK
+  type: String
+  description: 'The file containing the JWK or key set is fetched to verify the JWT
+    signature. The file must be stored in the local: or store: directory. This field
+    is meaningful when you select <tt>Verify</tt> in the Validation method field and
+    choose <tt>JWK</tt> from the Verify method list.'
+  cli_alias: verify-jwk
+- name: VerifyFetchCredURL
+  type: String
+  default: http://example.com/v3/certs
+  example: https://example.com/v3/certs
+  description: The URL indicates the source location where the verification credentials
+    can be fetched for verifying the JWT signature. The URL must be in the format
+    of http or https. By default, the URL is http://example.com/v3/certs. This field
+    is meaningful when you select <tt>Verify</tt> in the Validation method field and
+    choose <tt>Remotely retrieve JWK</tt> from the Verify method list.
+  cli_alias: verify-fetch-cred-url
+- name: VerifyFetchCredSSLProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: The TLS client profile is provided for fetching the verification credentials.
+    This field is meaningful when you select <tt>Verify</tt> in the Validation method
+    field and choose <tt>Remotely retrieve JWK</tt> from the Verify method list.
+  cli_alias: verify-fetch-cred-sslprofile
+- name: Claims
+  type: List
+  element_type: DmClaim
+  description: JWT claims need to be validated. You must enter the claim name, value,
+    and data type. If the data type is string, specify the PCRE regular expression
+    to verify the claim value.
+  cli_alias: claims
+- name: UsernameClaim
+  type: String
+  required: true
+  default: sub
+  description: This field is applicable only when the JWT Validator is used in the
+    AAA identity extraction phase. By default, the value of the "sub" claim is populated
+    as the username element of the identity extraction output. Ensure that the claim
+    specified in this field is present in the incoming JWT. If no match is found,
+    no username is populated in the AAA processing.
+  cli_alias: username-claim

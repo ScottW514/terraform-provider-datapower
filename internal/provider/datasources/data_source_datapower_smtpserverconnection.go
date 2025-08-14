@@ -57,7 +57,7 @@ func (d *SMTPServerConnectionDataSource) Metadata(_ context.Context, req datasou
 
 func (d *SMTPServerConnectionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SMTP Server Connection",
+		MarkdownDescription: "<p>The SMTP server connection defines the connection details for a Simple Mail Transport Protocol (SMTP) server. The DataPower Gateway uses the SMTP server connection for the following purposes</p><ul><li>B2B partners use this configuration to send an e-mail message to an AS1 or ESMTP destination.</li><li>B2B gateways use this configuration to request an AS1 MDN.</li></ul><p>For ease of configuration, the DataPower Gateway provides the <tt>default</tt> SMTP server connection configuration in each domain. By default, this configuration is empty and disabled.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,32 +81,32 @@ func (d *SMTPServerConnectionDataSource) Schema(ctx context.Context, req datasou
 							Computed:            true,
 						},
 						"mail_server_host": schema.StringAttribute{
-							MarkdownDescription: "Outgoing Mail Server (SMTP) Host",
+							MarkdownDescription: "The IP address or host name of the SMTP server to send outgoing e-mail messages.",
 							Computed:            true,
 						},
 						"mail_server_port": schema.Int64Attribute{
-							MarkdownDescription: "Mail Server Port",
+							MarkdownDescription: "The listening port on the SMTP server to send outgoing e-mail messages.",
 							Computed:            true,
 						},
-						"options": models.GetDmSMTPOptionsDataSourceSchema("Options", "options", ""),
+						"options": models.GetDmSMTPOptionsDataSourceSchema("The SMTP options to enable for the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.", "options", ""),
 						"auth": schema.StringAttribute{
-							MarkdownDescription: "Authentication Method",
+							MarkdownDescription: "With the client authentication option, the method to authenticate the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.",
 							Computed:            true,
 						},
 						"account_name": schema.StringAttribute{
-							MarkdownDescription: "Account Name",
+							MarkdownDescription: "The account or user name of the SMTP client to authenticate on the SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If blank, the configuration uses the setting from the basic authentication policy in the associated user agent.",
 							Computed:            true,
 						},
 						"account_password_alias": schema.StringAttribute{
-							MarkdownDescription: "Account Password Alias",
+							MarkdownDescription: "The password alias of the password for the SMTP client account or the user name that is authenticated to the SMTP server. If password or alias are blank, the configuration uses the setting from the basic authentication policy in the associated user agent.",
 							Computed:            true,
 						},
 						"ssl_client_config_type": schema.StringAttribute{
-							MarkdownDescription: "TLS client type",
+							MarkdownDescription: "The TLS profile type to secure connections between the DataPower Gateway and its targets.",
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{
-							MarkdownDescription: "TLS client profile",
+							MarkdownDescription: "The TLS client profile to secure connections between the DataPower Gateway and its targets.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

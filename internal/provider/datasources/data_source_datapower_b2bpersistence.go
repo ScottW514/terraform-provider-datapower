@@ -50,10 +50,10 @@ func (d *B2BPersistenceDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *B2BPersistenceDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "B2B persistence (`default` domain only)",
+		MarkdownDescription: "Define the data storage for B2B transaction data.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -61,15 +61,15 @@ func (d *B2BPersistenceDataSource) Schema(ctx context.Context, req datasource.Sc
 				Computed:            true,
 			},
 			"raid_volume": schema.StringAttribute{
-				MarkdownDescription: "RAID volume",
+				MarkdownDescription: "Specify the location of the data store. The location must be the <tt>raid0</tt> RAID volume. During firmware initialization, the <tt>raid0</tt> volume is associated with persistent storage.",
 				Computed:            true,
 			},
 			"storage_size": schema.Int64Attribute{
-				MarkdownDescription: "Storage size",
+				MarkdownDescription: "Specify the maximum size for the data store in MB. Enter a value in the range 1024 - 65536. The default is 1024. <p>This data store is for all B2B gateway services. These services store transaction metadata on the unencrypted partition of the RAID volume. These services store copies of the messages on the encrypted portion of the RAID volume.</p><p>The storage location for messages is defined on a service-by-service basis during the configuration of the B2B gateway.</p><p><b>Attention:</b> The maximum size for the persistent data store cannot be changed to a smaller value. Changing to a larger value might interrupt transactions that are in flight.</p>",
 				Computed:            true,
 			},
 			"ha_enabled": schema.BoolAttribute{
-				MarkdownDescription: "Enable high availability",
+				MarkdownDescription: "When on, the appliance is in active-passive high availability mode with the configured 'Alternate Host'.",
 				Computed:            true,
 			},
 			"ha_other_hosts": models.GetDmB2BHAHostDataSourceSchema("Alternate host", "ha-other-hosts", ""),

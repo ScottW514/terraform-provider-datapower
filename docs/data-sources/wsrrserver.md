@@ -3,12 +3,12 @@
 page_title: "datapower_wsrrserver Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WSRR server
+  Configuration required to locate and access WSRR (WebSphere Service Registry and Repository).
 ---
 
 # datapower_wsrrserver (Data Source)
 
-WSRR server
+Configuration required to locate and access WSRR (WebSphere Service Registry and Repository).
 
 ## Example Usage
 
@@ -40,13 +40,13 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `password_alias` (String) Password alias
+- `password_alias` (String) Specify the password alias for authentication with the server. The password alias references the password. Leave blank when authentication is not required.
 - `server_prefix` (String) WSRR instance prefix
-- `soap_url` (String) SOAP URL
+- `soap_url` (String) Specify the URL of SOAP API endpoint on the WSRR server. The port in the URL depends on whether the server has enabled global security. A typical default URL is similar to <tt>https://192.18.1.120:9443/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> or <tt>http://192.18.1.120:9080/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> .
 - `ssl_client` (String) TLS client profile
 - `ssl_client_config_type` (String) TLS client type
 - `user_summary` (String) Comments
-- `username` (String) Username
+- `username` (String) Specify the username for authentication with the server. Leave blank when authentication is not required.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

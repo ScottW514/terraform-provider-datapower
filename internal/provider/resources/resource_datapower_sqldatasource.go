@@ -58,7 +58,7 @@ func (r *SQLDataSourceResource) Metadata(ctx context.Context, req resource.Metad
 
 func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SQL data source", "sql-source", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>An SQL data source the configuration to establish a direct connection to a database instance on a remote data server. When configured, a DataPower service can dynamically run database operations, such as <tt>SELECT</tt> and <tt>INSERT</tt> , on the remote database.</p><p>An SQL data source is used by SQL actions in processing policies. The SQL action retrieves the data for further processing. Conversely, the processing policy can store the processed data in the configured database instance.</p><p>When you configure an SQL data source, you can define valid configuration parameters for your data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some configuration parameters in the configuration file are informational and define characteristics about the environment. These configuration parameters cannot be modified.</p>", "sql-source", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -94,15 +94,15 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				},
 			},
 			"username": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Connection username", "username", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user to establish the connection to the SQL database. The server maintains this information.", "username", "").String,
 				Required:            true,
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Connection password alias", "password-alias", "passwordalias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the user password to establish connection with the SQL database. The password alias looks up the password for the user. The server maintains the password.", "password-alias", "passwordalias").String,
 				Required:            true,
 			},
 			"data_source_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Data source ID", "id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the identifier of the data source. The terminology differs by vendor. <ul><li><b>Db2</b> - The IBM Db2 database alias.</li><li><b>IMS</b> - The name of the IBM IMS data store.</li><li><b>Microsoft SQL Server</b> - The name of the Microsoft SQL Server data source.</li><li><b>Oracle</b> - The Oracle system identifier (SID) or service name.</li><li><b>Sybase</b> - The name of the Sybase database.</li></ul>", "id", "").String,
 				Required:            true,
 			},
 			"data_source_host": schema.StringAttribute{
@@ -114,13 +114,13 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Required:            true,
 			},
 			"limit_returned_data": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Limit returned data", "limit", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to limit the data from a <b>SELECT</b> statement. By default, the response size is not limited.", "limit", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"limit_returned_data_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Returned data size limit", "limit-size", "").AddIntegerRange(1, 65535).AddDefaultValue("128").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the limit in KB on returned data from a <b>SELECT</b> statement. The default value is 128.", "limit-size", "").AddIntegerRange(1, 65535).AddDefaultValue("128").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -130,12 +130,12 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: int64default.StaticInt64(128),
 			},
 			"sql_data_source_config_nv_pairs": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Advanced configuration parameters", "sql-config-param", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify configuration parameters for the data server connection. Configuration parameters modify the behavior of the services that run with a data server. Some parameters in the configuration file are informational and define characteristics about the environment. These parameters cannot be modified.", "sql-config-param", "").String,
 				NestedObject:        models.DmSQLDataSourceConfigNVPairResourceSchema,
 				Optional:            true,
 			},
 			"max_connection": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max connections", "maximum-connections", "").AddIntegerRange(1, 65535).AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of concurrent SQL connections. Enter a value in the range 1 - 65535. The default value is 10.", "maximum-connections", "").AddIntegerRange(1, 65535).AddDefaultValue("10").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -154,29 +154,29 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("SID"),
 			},
 			"connect_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Connection timeout", "connect-timeout", "").AddDefaultValue("15").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the duration in seconds to wait to establish a connection to the data server. Enter a value in the range 0 - 4294967295. The value of 0 disables the timeout. The default value is 15.</p><p>A new connection is the initial connection and each new connection from the connection pool. Reuse of a connection from the connection pool is not considered establishing a new connection.</p><p>The connection timeout must be less than the query timeout. With this configuration, the initial query has time to establish the connection to the data server.</p>", "connect-timeout", "").AddDefaultValue("15").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(15),
 			},
 			"query_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Query timeout", "query-timeout", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to wait for an SQL request to complete. Enter a value in the range 0 - 4294967295. The default value is 0, which uses the standard timeout in the user agent. <p>The duration is from when the service sends the request to when the service receives the results.</p><p>The query timeout must be greater than the connection timeout. With this configuration, the initial query has time to establish the connection to the remote data server.</p>", "query-timeout", "").String,
 				Required:            true,
 			},
 			"idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Idle connection timeout", "idle-timeout", "").AddDefaultValue("180").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration that a connection from the connection pool can remain idle before the connection is released. Enter a value in the range 0 - 4294967295. The default value is 180. The value of 0 disables the timer.", "idle-timeout", "").AddDefaultValue("180").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(180),
 			},
 			"load_balancing": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Load distribution - Db2 for z/OS", "load-balancing", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable Db2 workload balancing and automatic client reroute for Db2 for z/OS. <p>When enabled, this feature set uses the z/OS Sysplex Distributor for real-time load distribution of SQL calls to the sysplex-aware Db2 instance.</p><p>When enabled, you must specify the sysplex DVIPA as the data source host.</p>", "load-balancing", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"encryption_method_mssql": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encryption method - SQL Server", "mssql-encryption-method", "").AddStringEnum("NoEncryption", "SSL", "RequestSSL", "LoginSSL").AddDefaultValue("NoEncryption").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for a Microsoft SQL Server database. When the server does not support the specified encryption method, the connection fails.", "mssql-encryption-method", "").AddStringEnum("NoEncryption", "SSL", "RequestSSL", "LoginSSL").AddDefaultValue("NoEncryption").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -185,7 +185,7 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("NoEncryption"),
 			},
 			"encryption_method_oracle": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encryption method - Oracle", "oracle-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an Oracle database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "oracle-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -194,7 +194,7 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("NoEncryption"),
 			},
 			"encryption_method_db2": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Encryption method - Db2", "db2-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS encryption method for an IBM Db2 database. When the server does not support the specified encryption method, the connection fails. The default behavior is to not encrypt or decrypt data.", "db2-encryption-method", "").AddStringEnum("NoEncryption", "SSL").AddDefaultValue("NoEncryption").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -216,11 +216,11 @@ func (r *SQLDataSourceResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("Enabled"),
 			},
 			"host_name_in_certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Hostname in certificate", "hostname-in-certificate", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the hostname that the certificate must contain for hostname validation. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.", "hostname-in-certificate", "").String,
 				Optional:            true,
 			},
 			"validate_host_name": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validate hostname", "validate-host-name", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to validate the hostname against the hostname in the server certificate. Hostname validate uses the value of the data source host. Hostname validation provides extra security against man-in-the-middle (MITM) attacks by ensuring that the connection is to the requested server.", "validate-host-name", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),

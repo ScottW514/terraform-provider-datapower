@@ -1,19 +1,23 @@
 name: CRLFetch
-description: 'CRL Retrieval (`default` domain only)'
-cli_alias: 'crl'
-cmd_group: 'crl'
-rest_endpoint: '/mgmt/config/default/CRLFetch/CRL-Settings'
+description: CRL Retrieval (`default` domain only)
+cli_alias: crl
+cmd_group: crl
+rest_endpoint: /mgmt/config/default/CRLFetch/CRL-Settings
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: CRLFetchConfig
-    type: List
-    element_type: DmCRLFetchConfig
-    description: 'CRL update policy'
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: CRLFetchConfig
+  type: List
+  element_type: DmCRLFetchConfig
+  description: Define the configuration of an HTTP-enabled or an LDAP-enabled CRL
+    (Certificate Revocation List) update policy. When HTTP, specify the Fetch URL.
+    When LDAP, specify the LDAP bind information. For both, specify the validation
+    credentials.

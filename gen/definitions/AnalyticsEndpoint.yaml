@@ -1,143 +1,173 @@
 name: AnalyticsEndpoint
-description: 'Analytics endpoint'
-cli_alias: 'analytics-endpoint'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/AnalyticsEndpoint'
+description: An analytics endpoint buffers API event data and offloads the collected
+  data as a bulk activity log to a remote server. When offloaded, you can use this
+  data for display and analysis.
+cli_alias: analytics-endpoint
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/AnalyticsEndpoint
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAnalyticsEndpoint"'
-    test_expect_ds: '"AccTest_AnalyticsEndpoint"'
-    example: 'AnalyticsEndpointName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: AnalyticsServerURL
-    type: String
-    required: true
-    description: 'Analytics server URL'
-    example: 'https://localhost'
-    cli_alias: analytics-server-url
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    test_value: '"AccTest_SSLClientProfile"'
-    test_bed_value: 'datapower_sslclientprofile.acc_test.id'
-    cli_alias: ssl-client
-  - name: RequestTopic
-    type: String
-    description: 'Request topic'
-    cli_alias: request-topic
-  - name: MaxRecords
-    type: Int64
-    minimum: 256
-    maximum: 65536
-    required: true
-    default: 1024
-    description: 'Maximum records'
-    cli_alias: max-records
-  - name: MaxRecordsMemoryKB
-    type: Int64
-    minimum: 4
-    maximum: 1024
-    required: true
-    default: 512
-    description: 'Maximum size for each record'
-    cli_alias: max-record-size
-  - name: MaxDeliveryMemoryMB
-    type: Int64
-    minimum: 1
-    maximum: 1024
-    required: true
-    default: 512
-    description: 'Maximum size for each delivery'
-    cli_alias: max-delivery-size
-  - name: Interval
-    type: Int64
-    minimum: 1
-    maximum: 3600
-    default: 600
-    description: 'Interval'
-    cli_alias: interval
-  - name: DeliveryConnections
-    type: Int64
-    minimum: 1
-    maximum: 100
-    default: 1
-    description: 'Connections per delivery'
-    cli_alias: delivery-connections
-  - name: EnableJWT
-    type: Bool
-    default: false
-    description: 'Enable JWT'
-    cli_alias: enable-jwt
-  - name: ManagementURL
-    type: String
-    description: 'Management platform endpoint'
-    cli_alias: management-url
-  - name: ManagementURL_SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'Management platform TLS client profile'
-    cli_alias: management-ssl-client
-  - name: ClientID
-    type: String
-    description: 'Client ID'
-    cli_alias: clientid
-  - name: ClientSecretAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Client secret'
-    cli_alias: client-secret-alias
-  - name: GrantType
-    type: String
-    enum:
-      - 'implicit'
-      - 'password'
-      - 'application'
-      - 'accessCode'
-    description: 'Grant type'
-    cli_alias: grant-type
-  - name: Scope
-    type: String
-    description: 'Scope'
-    cli_alias: scope
-  - name: PersistentConnection
-    type: Bool
-    default: true
-    description: 'Negotiate persistent connections'
-    cli_alias: persistent-connection
-  - name: Timeout
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    default: 90
-    description: 'Timeout'
-    cli_alias: timeout
-  - name: PersistentTimeout
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    default: 60
-    description: 'Persistent timeout'
-    cli_alias: persistent-timeout
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAnalyticsEndpoint"'
+  test_expect_ds: '"AccTest_AnalyticsEndpoint"'
+  example: AnalyticsEndpointName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: AnalyticsServerURL
+  type: String
+  required: true
+  description: Specify the URL to offload the collected API event data. The URL can
+    start with <tt>http</tt> or <tt>https</tt> for an Elasticsearch server or start
+    with <tt>dpkafka</tt> for a Kafka server. <ul><li>For an Elasticsearch server,
+    specify the full URL to the endpoint starting with the <tt>http</tt> or <tt>https</tt>
+    protocol identifier. With HTTPS, you must assign a TLS client profile.</li><li>For
+    a Kafka server, specify only the name of the existing Kafka cluster configuration
+    after the <tt>dpkafka</tt> protocol identifier. To complete the URL, you must
+    specify which request topic to offload analytics data.</li></ul>
+  example: https://localhost
+  cli_alias: analytics-server-url
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  test_value: '"AccTest_SSLClientProfile"'
+  test_bed_value: datapower_sslclientprofile.acc_test.id
+  cli_alias: ssl-client
+- name: RequestTopic
+  type: String
+  description: Request topic
+  cli_alias: request-topic
+- name: MaxRecords
+  type: Int64
+  minimum: 256
+  maximum: 65536
+  required: true
+  default: 1024
+  description: Specify the maximum number of records that can be buffered for each
+    API gateway. The collected analytics data for an API gateway is offloaded when
+    80% of this value or the defined interval is reached. The value must be a power
+    of 2. Enter a value in the range 256 - 65536. The default value is 1024.
+  cli_alias: max-records
+- name: MaxRecordsMemoryKB
+  type: Int64
+  minimum: 4
+  maximum: 1024
+  required: true
+  default: 512
+  description: Specify the maximum size for each record in KB. Enter a value in the
+    range 4 - 1024. The default value is 512.
+  cli_alias: max-record-size
+- name: MaxDeliveryMemoryMB
+  type: Int64
+  minimum: 1
+  maximum: 1024
+  required: true
+  default: 512
+  description: Specify the maximum size for each delivery in MB. Enter a value in
+    the range 1 - 1024. The default value is 512.
+  cli_alias: max-delivery-size
+- name: Interval
+  type: Int64
+  minimum: 1
+  maximum: 3600
+  default: 600
+  description: Specify the interval in seconds between offloads. Data is offloaded
+    at this interval or when an API gateway reaches 80% of the value set for maximum
+    records. Enter a value in the range 1 - 3600. The default value is 600
+  cli_alias: interval
+- name: DeliveryConnections
+  type: Int64
+  minimum: 1
+  maximum: 100
+  default: 1
+  description: Specify the number of connections to establish per delivery to the
+    remote server to offload analytics data. Each connection can carry a bulk activity
+    log. Enter a value in the range 1 - 100. The default value is 1.
+  cli_alias: delivery-connections
+- name: EnableJWT
+  type: Bool
+  default: false
+  description: Enable JWT feature sending logs to analytics server.
+  cli_alias: enable-jwt
+- name: ManagementURL
+  type: String
+  description: Specify the URL of management platform endpoint to retrieve a JWT.
+    The URL must use the <tt>http</tt> or <tt>https</tt> protocol.
+  cli_alias: management-url
+- name: ManagementURL_SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: Management platform TLS client profile
+  cli_alias: management-ssl-client
+- name: ClientID
+  type: String
+  description: Client ID
+  cli_alias: clientid
+- name: ClientSecretAlias
+  type: String
+  reference_to: PasswordAlias
+  description: Client secret
+  cli_alias: client-secret-alias
+- name: GrantType
+  type: String
+  enum:
+  - implicit
+  - password
+  - application
+  - accessCode
+  description: Specify the grant type for requesting JWT tokens. Only the client credentials
+    grant type is supported.
+  cli_alias: grant-type
+- name: Scope
+  type: String
+  description: Specify the scope for requesting JWT tokens. The value is in the <tt>openid
+    analytics_subsystem_ID/name</tt> format.
+  cli_alias: scope
+- name: PersistentConnection
+  type: Bool
+  default: true
+  description: Specify whether to negotiate persistent connections. By default, persistent
+    connections are enabled. The HTTP/2 protocol controls persistent connections and
+    reuse. Therefore, these settings are ignored.
+  cli_alias: persistent-connection
+- name: Timeout
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  default: 90
+  description: Specify the intra-transaction timeout for connections, which is the
+    maximum idle time to allow in a transaction. This timer monitors idle time in
+    the data transfer process. When the idle time is exceeded, the connection is torn
+    down. Enter a value in the range 1 - 86400. The default value is 90.
+  cli_alias: timeout
+- name: PersistentTimeout
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  default: 60
+  description: Specify the inter-transaction timeout for connections, which is the
+    maximum idle time to allow between the completion of a TCP transaction and the
+    initiation of a new TCP transaction. When the idle time is exceeded, the connection
+    is torn down. Enter a value in the range 1 - 86400. The default value is 60.
+  cli_alias: persistent-timeout

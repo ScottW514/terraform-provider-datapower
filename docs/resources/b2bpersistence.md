@@ -3,13 +3,13 @@
 page_title: "datapower_b2bpersistence Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  B2B persistence (default domain only)
+  Define the data storage for B2B transaction data.
   CLI Alias: b2b-persistence
 ---
 
 # datapower_b2bpersistence (Resource)
 
-B2B persistence (`default` domain only)
+Define the data storage for B2B transaction data.
   - CLI Alias: `b2b-persistence`
 
 ## Example Usage
@@ -27,17 +27,17 @@ resource "datapower_b2bpersistence" "test" {
 
 ### Required
 
-- `raid_volume` (String) RAID volume
+- `raid_volume` (String) Specify the location of the data store. The location must be the <tt>raid0</tt> RAID volume. During firmware initialization, the <tt>raid0</tt> volume is associated with persistent storage.
   - CLI Alias: `raid-volume`
   - Reference to: `datapower_raidvolume:id`
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `ha_enabled` (Boolean) Enable high availability
+- `ha_enabled` (Boolean) When on, the appliance is in active-passive high availability mode with the configured 'Alternate Host'.
   - CLI Alias: `ha-enabled`
   - Default value: `false`
 - `ha_local_ip` (String) Replication address
@@ -49,7 +49,7 @@ resource "datapower_b2bpersistence" "test" {
   - CLI Alias: `ha-other-hosts` (see [below for nested schema](#nestedatt--ha_other_hosts))
 - `ha_virtual_ip` (String) Virtual IP address
   - CLI Alias: `ha-virtual-ip`
-- `storage_size` (Number) Storage size
+- `storage_size` (Number) Specify the maximum size for the data store in MB. Enter a value in the range 1024 - 65536. The default is 1024. <p>This data store is for all B2B gateway services. These services store transaction metadata on the unencrypted partition of the RAID volume. These services store copies of the messages on the encrypted portion of the RAID volume.</p><p>The storage location for messages is defined on a service-by-service basis during the configuration of the B2B gateway.</p><p><b>Attention:</b> The maximum size for the persistent data store cannot be changed to a smaller value. Changing to a larger value might interrupt transactions that are in flight.</p>
   - CLI Alias: `storage-size`
   - Range: `1024`-`65536`
   - Default value: `1024`

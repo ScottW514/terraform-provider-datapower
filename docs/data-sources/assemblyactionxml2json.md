@@ -3,12 +3,12 @@
 page_title: "datapower_assemblyactionxml2json Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XML to JSON assembly action
+  The XML to JSON assembly action converts the payload of a message from XML to its equivalent JSON.
 ---
 
 # datapower_assemblyactionxml2json (Data Source)
 
-XML to JSON assembly action
+The XML to JSON assembly action converts the payload of a message from XML to its equivalent JSON.
 
 ## Example Usage
 
@@ -38,13 +38,13 @@ Optional:
 
 Read-Only:
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
 - `app_domain` (String) The name of the application domain the object belongs to
-- `conversion_format` (String) Conversion type
-- `correlation_path` (String) Correlation path
+- `conversion_format` (String) Specify the conversion type. The default setting is BadgerFish.
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `input` (String) Input message
-- `output` (String) Output message
+- `input` (String) Specify the variable in the API context that contains the input message. The content of the <tt>body</tt> field is the input. With the default variable of <tt>message</tt> , the input is <tt>message.body</tt> .
+- `output` (String) Specify the variable in the API context to store the converted output message. The results are written to the <tt>body</tt> field of the specified variable. The output variable cannot be a read-only variable. <p>When you want the converted output to be returned to the client, you must use <tt>message</tt> as the output variable.</p><ul><li>Without an output variable, the output variable matches the input variable. For example, if the input variable is <tt>message</tt> , the output variable is <tt>message</tt> . Therefore, if the input variable is <tt>foo</tt> , the output variable is <tt>foo</tt> .</li><li>When the output variable is not <tt>message</tt> , the content is converted but not returned to the client.</li></ul>
 - `title` (String) Title
 - `user_summary` (String) Comments
 

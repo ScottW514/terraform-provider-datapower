@@ -59,7 +59,7 @@ func (r *XTCProtocolHandlerResource) Metadata(ctx context.Context, req resource.
 
 func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Stateful raw XML handler", "source-stateful-tcp", "").AddActions("quiesce").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The configuration for the stateful TCP protocol handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed. The source protocol also specifies the destination address and any single TCP connection will use the same TCP session on the backside for all of its transactions (one transaction per document). <p>Any gateway that employs one of these handlers must use a dynamic backend.</p>", "source-stateful-tcp", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -88,13 +88,13 @@ func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local IP address", "local-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses. You can use a local host alias to help ease migration.", "local-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("3000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the port that this service monitors. Enter a value in the range 1 - 65535. The default value is 3000.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("3000").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -118,7 +118,7 @@ func (r *XTCProtocolHandlerResource) Schema(ctx context.Context, req resource.Sc
 				Default: int64default.StaticInt64(12000),
 			},
 			"close_on_fault": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Close session on fault", "close-on-fault", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to close the session on fault. When enabled, TCP connections between clients and servers are closed when the system generates a fault. Otherwise, the session is closed at only connection termination, timeout, or error.", "close-on-fault", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

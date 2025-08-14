@@ -3,13 +3,13 @@
 page_title: "datapower_zosnssclient Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  NSS Client
+  The z/OS NSS client object provides the parameters for authentication with SAF on a z/OS Communications Server.
   CLI Alias: zos-nss
 ---
 
 # datapower_zosnssclient (Resource)
 
-NSS Client
+The z/OS NSS client object provides the parameters for authentication with SAF on a z/OS Communications Server.
   - CLI Alias: `zos-nss`
 
 ## Example Usage
@@ -32,34 +32,34 @@ resource "datapower_zosnssclient" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `client_id` (String) Client ID
+- `client_id` (String) <p>Specifies the client ID to be used for registration with the NSS server. Minimum length is 1. Maximum length is 24.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Client ID identifies the client ID to register the appliance with the NSS server. The NSS client ID is a unique string used by the NSS Server to track clients.</p><p>The Client ID does not have to correspond to any preexisting object. It is provided to the server at the time of registration. If another client attempts to register with the same client ID to the same NSS Server, the NSS server will send a heartbeat to the first client. If the first client responds to the heartbeat, the second client's registration will be rejected. If the first client does not respond, the connect to the first client will be severed and the second client will be registered.</p>
   - CLI Alias: `client-id`
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `remote_address` (String) Remote Address
+- `remote_address` (String) Specifies IP address or host name of the NSS server. In conjunction with the Remote Port, identifies the host and listening port of the NSS server. The NSS server must have the XMLAppliance discipline support enabled.
   - CLI Alias: `host`
-- `remote_port` (Number) Remote Port
+- `remote_port` (Number) Specifies NSS server port. In conjunction with the Remote Address, identifies the host and listening port of the NSS server.
   - CLI Alias: `port`
-- `system_name` (String) System Name
+- `system_name` (String) <p>Specifies a name for the NSS client. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The System Name identifies the NSS client to the NSS server. NSS server commands identify NSS clients by system name in the output when displaying information for connected NSS clients.</p>
   - CLI Alias: `system-name`
-- `user_name` (String) User Name
+- `user_name` (String) <p>Specifies a user name to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The user name must match an existing user ID on the NSS Server.</p>
   - CLI Alias: `user-name`
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `password` (String, Sensitive) Password
+- `password` (String, Sensitive) <p>Specifies the password to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Password specifies the password to use in conjunction with the value provided by the User Name.</p>
   - CLI Alias: `password`
-- `password_alias` (String) Password Alias
+- `password_alias` (String) <p>Specifies the password alias of the password to use to authenticate to the NSS server.</p><p>The associated password is used in conjunction with the value provided by the User Name.</p>
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`
-- `ssl_client` (String) TLS client profile
+- `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and the NSS server.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_sslclientprofile:id`
-- `ssl_client_config_type` (String) TLS client type
+- `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and the NSS server.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

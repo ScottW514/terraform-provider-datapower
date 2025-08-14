@@ -54,7 +54,7 @@ func (r *JOSERecipientIdentifierResource) Metadata(ctx context.Context, req reso
 
 func (r *JOSERecipientIdentifierResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Recipient Identifier", "jose-recipient-identifier", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("JOSE Recipient Identifier object for the JSON Web Decrypt.", "jose-recipient-identifier", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -79,26 +79,26 @@ func (r *JOSERecipientIdentifierResource) Schema(ctx context.Context, req resour
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Brief summary for user annotation.", "summary", "").String,
 				Optional:            true,
 			},
 			"type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key Material Type", "type", "").AddStringEnum("key", "sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Key material type used to verify the recipient.", "type", "").AddStringEnum("key", "sskey").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("key", "sskey"),
 				},
 			},
 			"key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key Material", "key", "cryptokey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the private key to verify the recipient.", "key", "cryptokey").String,
 				Optional:            true,
 			},
 			"ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key Material", "sskey", "cryptosskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the recipient.", "sskey", "cryptosskey").String,
 				Optional:            true,
 			},
 			"header_param": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Header Parameters", "header-param", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The JOSE header parameters used to identify the recipient.", "header-param", "").String,
 				NestedObject:        models.DmJOSEHeaderResourceSchema,
 				Required:            true,
 			},

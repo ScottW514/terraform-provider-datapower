@@ -56,7 +56,7 @@ func (r *MPGWErrorActionResource) Metadata(ctx context.Context, req resource.Met
 
 func (r *MPGWErrorActionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Multi-Protocol Gateway Error Action", "mpgw-error-action", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Define how the Multi-Protocol gateway handles errors and generates error responses to the client.", "mpgw-error-action", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,7 +85,7 @@ func (r *MPGWErrorActionResource) Schema(ctx context.Context, req resource.Schem
 				Optional:            true,
 			},
 			"type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Mode", "type", "").AddStringEnum("error-rule", "proxy", "redirect", "static").AddDefaultValue("static").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select which mode to handle the errors and generate the responses. The default mode is \"Static (Local)\".", "type", "").AddStringEnum("error-rule", "proxy", "redirect", "static").AddDefaultValue("static").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -94,19 +94,19 @@ func (r *MPGWErrorActionResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("static"),
 			},
 			"remote_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Remote URL", "remote-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the remote error page.", "remote-url", "").String,
 				Optional:            true,
 			},
 			"local_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local page location", "local-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the local error page.", "local-url", "").String,
 				Optional:            true,
 			},
 			"error_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Error Rule", "rule", "stylepolicyrule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the custom error rule that the appliance runs to handle errors.", "rule", "stylepolicyrule").String,
 				Optional:            true,
 			},
 			"status_code": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Response Code", "status-code", "").AddIntegerRange(100, 999).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP status code that the appliance returns to the client. Enter a value in the range 0 - 999.", "status-code", "").AddIntegerRange(100, 999).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 
@@ -114,11 +114,11 @@ func (r *MPGWErrorActionResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"reason_phrase": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Reason Phrase", "reason-phrase", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP reason phrase that the appliance returns to the client. For a proxy mode, the specified reason phrase overrides the fetched value.", "reason-phrase", "").String,
 				Optional:            true,
 			},
 			"header_injection": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTTP Header Injection", "header-inject", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name and the value for the HTTP header that the appliance injects.", "header-inject", "").String,
 				NestedObject:        models.DmWebGWErrorRespHeaderInjectionResourceSchema,
 				Optional:            true,
 			},

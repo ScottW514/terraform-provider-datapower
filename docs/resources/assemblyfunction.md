@@ -3,13 +3,13 @@
 page_title: "datapower_assemblyfunction Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Assembly function
+  An assembly function augments the assembly actions that the API gateway uses during processing. You can implement an assembly function in one of the following ways. Define an assembly function to add custom logic to an assembly. After you define the assembly function, you can add it to a function call assembly action.When you configure the API Connect gateway service as not V5 compatible, use an assembly function to specify a user-defined policy (UDP) that API Connect advertises and makes available in the API Connect assembly editor. A UDP provides custom processing control of APIs in the gateway server.
   CLI Alias: assembly-function
 ---
 
 # datapower_assemblyfunction (Resource)
 
-Assembly function
+An assembly function augments the assembly actions that the API gateway uses during processing. You can implement an assembly function in one of the following ways. <ul><li>Define an assembly function to add custom logic to an assembly. After you define the assembly function, you can add it to a function call assembly action.</li><li>When you configure the API Connect gateway service as not V5 compatible, use an assembly function to specify a user-defined policy (UDP) that API Connect advertises and makes available in the API Connect assembly editor. A UDP provides custom processing control of APIs in the gateway server.</li></ul>
   - CLI Alias: `assembly-function`
 
 ## Example Usage
@@ -31,18 +31,18 @@ resource "datapower_assemblyfunction" "test" {
 
 ### Optional
 
-- `assembly` (String) Assembly
+- `assembly` (String) Specify the assembly to apply to calls to the assembly function. An assembly comprises a rule that defines the actions to run against the call and how to handle errors during processing.
   - CLI Alias: `assembly`
   - Reference to: `datapower_assembly:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `description` (String) Description
+- `description` (String) Specify the description of the assembly function to advertise to API developers. When not provided, the DataPower Gateway provides the description to advertise to API Connect.
   - CLI Alias: `description`
 - `parameter` (Attributes List) Parameters
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--parameter))
 - `scope` (String) Scope
   - CLI Alias: `scope`
   - Choices: `all`, `api`, `catalog`
-- `title` (String) Title
+- `title` (String) Specify the title of the assembly function to advertise to API developers. When not provided, the DataPower Gateway provides the title to advertise to API Connect.
   - CLI Alias: `title`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

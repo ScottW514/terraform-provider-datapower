@@ -3,12 +3,12 @@
 page_title: "datapower_assemblyfunction Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Assembly function
+  An assembly function augments the assembly actions that the API gateway uses during processing. You can implement an assembly function in one of the following ways. Define an assembly function to add custom logic to an assembly. After you define the assembly function, you can add it to a function call assembly action.When you configure the API Connect gateway service as not V5 compatible, use an assembly function to specify a user-defined policy (UDP) that API Connect advertises and makes available in the API Connect assembly editor. A UDP provides custom processing control of APIs in the gateway server.
 ---
 
 # datapower_assemblyfunction (Data Source)
 
-Assembly function
+An assembly function augments the assembly actions that the API gateway uses during processing. You can implement an assembly function in one of the following ways. <ul><li>Define an assembly function to add custom logic to an assembly. After you define the assembly function, you can add it to a function call assembly action.</li><li>When you configure the API Connect gateway service as not V5 compatible, use an assembly function to specify a user-defined policy (UDP) that API Connect advertises and makes available in the API Connect assembly editor. A UDP provides custom processing control of APIs in the gateway server.</li></ul>
 
 ## Example Usage
 
@@ -39,12 +39,12 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `assembly` (String) Assembly
-- `description` (String) Description
+- `assembly` (String) Specify the assembly to apply to calls to the assembly function. An assembly comprises a rule that defines the actions to run against the call and how to handle errors during processing.
+- `description` (String) Specify the description of the assembly function to advertise to API developers. When not provided, the DataPower Gateway provides the description to advertise to API Connect.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `parameter` (Attributes List) Parameters (see [below for nested schema](#nestedatt--result--parameter))
 - `scope` (String) Scope
-- `title` (String) Title
+- `title` (String) Specify the title of the assembly function to advertise to API developers. When not provided, the DataPower Gateway provides the title to advertise to API Connect.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

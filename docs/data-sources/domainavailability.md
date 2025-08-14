@@ -3,12 +3,12 @@
 page_title: "datapower_domainavailability Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Domain availability (updates restart domain)
+  Domain availability monitors each multiprotocol gateway and web service proxy in the domain. When the operational state of any service in the domain is in the down state, the operational state for domain availability is down to indicate that these services are not ready to accept traffic. At startup, domain availability maintains all handlers in a quiesced state until their associated services are fully configured. When these services are ready to accept traffic, an event is written to the log that indicates that the domain is ready to process traffic.
 ---
 
 # datapower_domainavailability (Data Source)
 
-Domain availability (updates restart domain)
+Domain availability monitors each multiprotocol gateway and web service proxy in the domain. When the operational state of any service in the domain is in the down state, the operational state for domain availability is down to indicate that these services are not ready to accept traffic. At startup, domain availability maintains all handlers in a quiesced state until their associated services are fully configured. When these services are ready to accept traffic, an event is written to the log that indicates that the domain is ready to process traffic.
 
 ## Example Usage
 
@@ -31,7 +31,7 @@ data "datapower_domainavailability" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

@@ -3,12 +3,12 @@
 page_title: "datapower_accesscontrollist Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Access control list
+  An access control list (ACL) consists of a sequence of allow and deny clauses. Each clause identifies an IP address or range of addresses that grants or denies access to a service. Candidate addresses are sequentially evaluated against each clause. A candidate address is granted or denied access in accordance with the first clause that matches. Consequently, the order of the clauses is vital.An ACL with only deny clauses effectively disables the service. To complete the configuration, include an allow clause to ensure that all addresses that are not explicitly denied access are granted access.
 ---
 
 # datapower_accesscontrollist (Data Source)
 
-Access control list
+An access control list (ACL) consists of a sequence of allow and deny clauses. Each clause identifies an IP address or range of addresses that grants or denies access to a service. <p>Candidate addresses are sequentially evaluated against each clause. A candidate address is granted or denied access in accordance with the first clause that matches. Consequently, the order of the clauses is vital.</p><p>An ACL with only deny clauses effectively disables the service. To complete the configuration, include an allow clause to ensure that all addresses that are not explicitly denied access are granted access.</p>
 
 ## Example Usage
 
@@ -38,7 +38,7 @@ Optional:
 
 Read-Only:
 
-- `access_control_entry` (Attributes List) Entry (see [below for nested schema](#nestedatt--result--access_control_entry))
+- `access_control_entry` (Attributes List) Specify allow and deny clauses. (see [below for nested schema](#nestedatt--result--access_control_entry))
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 

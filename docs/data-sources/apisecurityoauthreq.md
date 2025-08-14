@@ -3,12 +3,12 @@
 page_title: "datapower_apisecurityoauthreq Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API security OAuth requirement
+  An OAuth security requirement defines the allowed scopes for controlling access to APIs or operations through the token-based OAuth protocol. By using an OAuth token, a user can grant websites or applications to access their data that are stored with another service provider, without sharing their personal credentials. Note: You cannot apply more than one OAuth security requirement to an API or operation.
 ---
 
 # datapower_apisecurityoauthreq (Data Source)
 
-API security OAuth requirement
+An OAuth security requirement defines the allowed scopes for controlling access to APIs or operations through the token-based OAuth protocol. By using an OAuth token, a user can grant websites or applications to access their data that are stored with another service provider, without sharing their personal credentials. <p><b>Note:</b> You cannot apply more than one OAuth security requirement to an API or operation.</p>
 
 ## Example Usage
 
@@ -41,7 +41,7 @@ Read-Only:
 - `api_security_o_auth_def` (String) OAuth security definition
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `o_auth_allowed_scope` (String) Allowed scopes
+- `o_auth_allowed_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The allowed scopes must be a subset of the allowed scopes set for the OAuth provider settings.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

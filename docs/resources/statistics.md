@@ -3,13 +3,13 @@
 page_title: "datapower_statistics Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Statistic settings
+  Manages whether the system collects and presents statistics to help you determine whether the system correctly processes the transactions.
   CLI Alias: statistics
 ---
 
 # datapower_statistics (Resource)
 
-Statistic settings
+Manages whether the system collects and presents statistics to help you determine whether the system correctly processes the transactions.
   - CLI Alias: `statistics`
 
 ## Example Usage
@@ -30,10 +30,10 @@ resource "datapower_statistics" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `load_interval` (Number) Load interval (can only be set in `default` domain)
+- `load_interval` (Number) Specifies the measurement interval for load estimation in milliseconds. Enter a value in the range 500 - 5000. The default value is 1000. During this interval, the system load reported by the <tt>show load</tt> command is estimated and expressed as a percentage. <p><b>Note:</b> You can modify this property in only the <tt>default</tt> domain. In application domains, this property is read-only.</p>
   - CLI Alias: `load-interval`
   - Range: `500`-`5000`
   - Default value: `1000`

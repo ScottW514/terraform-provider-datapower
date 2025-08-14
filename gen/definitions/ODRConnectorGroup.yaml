@@ -1,63 +1,75 @@
 name: ODRConnectorGroup
-description: 'ODR Connector Group (`default` domain only)'
-cli_alias: 'odr-connector-group'
-cmd_group: 'network'
-rest_endpoint: '/mgmt/config/default/ODRConnectorGroup'
+description: A collection of on demand router (ODR) connectors used to communicate
+  with the Intelligent Management service.
+cli_alias: odr-connector-group
+cmd_group: network
+rest_endpoint: /mgmt/config/default/ODRConnectorGroup
 default_domain_only: true
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestODRConnectorGroup"'
-    test_expect_ds: '"AccTest_ODRConnectorGroup"'
-    example: 'ODRConnectorGroupName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: ODRGroupConnectors
-    type: List
-    element_type: DmODRConnector
-    description: 'ODR connectors'
-    cli_alias: odr-connector
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: MaxRetryInterval
-    type: Int64
-    minimum: 1
-    maximum: 120
-    default: 60
-    description: 'Maximum retry interval'
-    cli_alias: max-retry-interval
-  - name: XMLManager
-    type: String
-    reference_to: XMLManager
-    required: true
-    default: 'default'
-    test_value: '"default"'
-    description: 'XML manager'
-    cli_alias: xml-manager
-  - name: ODRConnGroupProperties
-    type: List
-    element_type: DmODRConnProperty
-    description: 'Custom properties'
-    cli_alias: odr-conn-group-properties
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestODRConnectorGroup"'
+  test_expect_ds: '"AccTest_ODRConnectorGroup"'
+  example: ODRConnectorGroupName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: ODRGroupConnectors
+  type: List
+  element_type: DmODRConnector
+  description: The ODR connectors that are used to retrieve ODR information. An ODR
+    connector defines a connection to the Intelligent Management service. The DataPower
+    Gateway retrieves topology, weights, session affinity, and other information from
+    the WebSphere cell over the connection. If multiple connectors are configured,
+    the top most connection is tried first, followed by the second, and so on. After
+    a connection is established, other endpoints might be retrieved and used if the
+    configured connector endpoint is down. You must define at least one connector
+    in an ODR connector group but cannot define more than 16 connectors.
+  cli_alias: odr-connector
+- name: MaxRetryInterval
+  type: Int64
+  minimum: 1
+  maximum: 120
+  default: 60
+  description: The time to wait before attempting to reestablish a connection to the
+    Intelligent Management Service. Enter a value in the range 1 - 120. The default
+    value is 60.
+  cli_alias: max-retry-interval
+- name: XMLManager
+  type: String
+  reference_to: XMLManager
+  required: true
+  default: default
+  test_value: '"default"'
+  description: The XML manager to use when processing transactions with the Intelligent
+    management service.
+  cli_alias: xml-manager
+- name: ODRConnGroupProperties
+  type: List
+  element_type: DmODRConnProperty
+  description: The custom properties that are associated with the ODR connector group.
+  cli_alias: odr-conn-group-properties
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: The TLS profile type to secure connections between the DataPower Gateway
+    and its targets.
+  cli_alias: ssl-client-type
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: The TLS client profile to secure connections between the DataPower
+    Gateway and its targets.
+  cli_alias: ssl-client

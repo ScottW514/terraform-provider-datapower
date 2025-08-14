@@ -3,12 +3,12 @@
 page_title: "datapower_domain Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Application domain
+  An application domain contains the resources that support DataPower services. The DataPower Gateway supports multiple domains. Domains can share read access to files in their local: directory. All domains share the contents of the store: directory. After a user logs in to a domain, everything the user does applies to only this domain.Except for the default domain, all domains can be restarted independently. For the default domain, you must restart the DataPower Gateway. When an domain or the DataPower Gateway is restarted, the persisted configuration is used. The persisted configuration can differ from the running configuration.The configuration of a domain can be locally stored or can be retrieved from a remote server. The use of a remote configuration file enables centralized management of domains.
 ---
 
 # datapower_domain (Data Source)
 
-Application domain
+An application domain contains the resources that support DataPower services. The DataPower Gateway supports multiple domains. Domains can share read access to files in their <tt>local:</tt> directory. All domains share the contents of the <tt>store:</tt> directory. <p>After a user logs in to a domain, everything the user does applies to only this domain.</p><p>Except for the <tt>default</tt> domain, all domains can be restarted independently. For the <tt>default</tt> domain, you must restart the DataPower Gateway. When an domain or the DataPower Gateway is restarted, the persisted configuration is used. The persisted configuration can differ from the running configuration.</p><p>The configuration of a domain can be locally stored or can be retrieved from a remote server. The use of a remote configuration file enables centralized management of domains.</p>
 
 ## Example Usage
 
@@ -34,22 +34,22 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `config_dir` (String) Configuration directory
+- `config_dir` (String) Specify where the configuration file for this domain is stored. This property is read-only because it is configured in domain settings.
 - `config_mode` (String) Configuration mode
 - `config_permissions_mode` (String) Configuration permissions mode
 - `config_permissions_profile` (String) Global permissions profile
 - `deployment_policy` (String) Deployment policy
 - `deployment_policy_parameters` (String) Deployment policy variables
-- `domain_user` (List of String) CLI user access
-- `file_map` (Attributes) File permission to the local: directory
+- `domain_user` (List of String) Specify the set of CLI users who can access this domain. These users can log into this domain through the CLI. This setting can be superseded by an existing access policy of the user.
+- `file_map` (Attributes) Specify the file permissions to apply to the <tt>local:</tt> directory. When access permissions are defined and with role-based management, users are granted the lesser privilege.
   - CLI Alias: `file-permissions` (see [below for nested schema](#nestedatt--result--file_map))
 - `import_format` (String) Import format
 - `import_url` (String) Import URL
-- `local_ip_rewrite` (Boolean) Rewrite local IP addresses
+- `local_ip_rewrite` (Boolean) Specify whether to rewrite local IP addresses during import. When enabled, local IP addresses in the import package are rewritten to match the local IP address on the DataPower Gateway. In other words, a service that binds to <tt>eth10</tt> in the import package is rewritten to bind to the local IP address of <tt>eth10</tt> on the DataPower Gateway.
 - `max_chkpoints` (Number) Checkpoint limit
 - `monitoring_map` (Attributes) File-monitoring of the local: directory
   - CLI Alias: `file-monitoring` (see [below for nested schema](#nestedatt--result--monitoring_map))
-- `neighbor_domain` (List of String) Visible domains
+- `neighbor_domain` (List of String) Specify which domains have their <tt>local:</tt> directory visible to this domain. <p>References to visible domains are explicit, not bidirectional. If domain <tt>domainB</tt> is made visible to domain <tt>domainA</tt> , the following conditions apply.</p><ul><li>Domain <tt>domainA</tt> has read-only access to the <tt>local:</tt> directory of domain <tt>domainB</tt> .</li><li>Domain <tt>domainB</tt> cannot see domain <tt>domainA</tt> .</li></ul><p>In this case, you cannot make domain <tt>domainA</tt> visible to domain <tt>domainB</tt> . References to visible domains cannot be circular.</p>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

@@ -3,12 +3,12 @@
 page_title: "datapower_webapperrorhandlingpolicy Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web Application Firewall Error Policy
+  Define an error policy for a web application firewall. When the remote web service returns an error, this policy specifies how to handle the response that is sent to the client.
 ---
 
 # datapower_webapperrorhandlingpolicy (Data Source)
 
-Web Application Firewall Error Policy
+Define an error policy for a web application firewall. When the remote web service returns an error, this policy specifies how to handle the response that is sent to the client.
 
 ## Example Usage
 
@@ -42,7 +42,7 @@ Read-Only:
 - `error_monitor` (String) Monitor
 - `error_style_policy_rule` (String) Error rule
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `type` (String) Mode
+- `type` (String) Specify the mode for error handling. The default value is standard.
 - `url` (String) URL
 - `user_summary` (String) Comments
 

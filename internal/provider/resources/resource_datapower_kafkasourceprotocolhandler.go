@@ -57,7 +57,7 @@ func (r *KafkaSourceProtocolHandlerResource) Metadata(ctx context.Context, req r
 
 func (r *KafkaSourceProtocolHandlerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Kafka handler", "source-kafka", "").AddActions("quiesce").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A Kafka handler monitors the request topic for incoming client requests.", "source-kafka", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -90,11 +90,11 @@ func (r *KafkaSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Required:            true,
 			},
 			"request_topic": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Request topic", "request-topic", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the request topic to monitor for incoming client requests. On receipt, the handler forwards the extracted message to the DataPower service for processing.", "request-topic", "").String,
 				Required:            true,
 			},
 			"response_topic": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Response topic", "response-topic", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the response topic to send responses after processing by the DataPower service. When the Kafka server does not expect responses, leave blank. When blank, responses are dropped.", "response-topic", "").String,
 				Optional:            true,
 			},
 			"consumer_group": schema.StringAttribute{
@@ -102,7 +102,7 @@ func (r *KafkaSourceProtocolHandlerResource) Schema(ctx context.Context, req res
 				Required:            true,
 			},
 			"batch_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Batch size", "batch-size", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of messages to retrieve and process as a batch. The handler attempts to retrieve the number of specified messages from the consumer and processes these messages as a batch. Enter a value in the range 1 - 65535. The default value is 1.", "batch-size", "").AddIntegerRange(1, 65535).AddDefaultValue("1").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

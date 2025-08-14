@@ -54,10 +54,10 @@ func (r *WebB2BViewerResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *WebB2BViewerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("B2B viewer management service (`default` domain only)", "b2b-viewer-mgmt", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure web access to the B2B transaction viewer. If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.", "b2b-viewer-mgmt", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -67,7 +67,7 @@ func (r *WebB2BViewerResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Port Number", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("9091").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP port that the B2B viewer monitors. The default value is 9091.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("9091").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -81,7 +81,7 @@ func (r *WebB2BViewerResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Idle timeout", "idle-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time after which an idle session is invalidated, which requires reauthentication. To disable the idle timer, enter 0.", "idle-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -91,7 +91,7 @@ func (r *WebB2BViewerResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: int64default.StaticInt64(600),
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "acl", "accesscontrollist").AddDefaultValue("web-b2b-viewer").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Edit the <tt>web-b2b-viewer</tt> access control list to define the client IP addresses to allow or deny.", "acl", "accesscontrollist").AddDefaultValue("web-b2b-viewer").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("web-b2b-viewer"),
@@ -114,7 +114,7 @@ func (r *WebB2BViewerResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),

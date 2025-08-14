@@ -1,57 +1,80 @@
 name: CookieAttributePolicy
-description: 'Cookie Attribute Policy'
-cli_alias: 'cookie-attribute-policy'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/CookieAttributePolicy'
+description: Cookie attribute policy manages pre-defined and custom attributes of
+  a cookie.
+cli_alias: cookie-attribute-policy
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/CookieAttributePolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestCookieAttributePolicy"'
-    test_expect_ds: '"AccTest_CookieAttributePolicy"'
-    example: 'CookieAttributePolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: CookieAttribute
-    dm_type: DmCookieAttribute
-    description: 'Cookie attributes'
-    cli_alias: cookie-attribute
-  - name: Domain
-    type: String
-    description: 'Domain'
-    cli_alias: domain
-  - name: Path
-    type: String
-    default: '/'
-    description: 'Path'
-    cli_alias: path
-  - name: Interval
-    type: Int64
-    minimum: 1
-    maximum: 2678400
-    default: 3600
-    description: 'Relative expiration interval'
-    cli_alias: interval
-  - name: CustomAttribute
-    type: String
-    description: 'Custom attributes'
-    cli_alias: custom-attribute
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestCookieAttributePolicy"'
+  test_expect_ds: '"AccTest_CookieAttributePolicy"'
+  example: CookieAttributePolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the configuration.
+  cli_alias: summary
+- name: CookieAttribute
+  dm_type: DmCookieAttribute
+  description: Specifies the attributes to include in the cookie. Acceptable values
+    include domain, path, secure, httponly, max-age, expires, and custom. When an
+    attribute is enabled, you can enter its value in the corresponding property and
+    the enabled attribute is included in the cookie.
+  cli_alias: cookie-attribute
+- name: Domain
+  type: String
+  description: Identifies domain to which a cookie belongs. A browser accepts cookies
+    only when the current domain matches the value you enter here. The maximum length
+    of the domain is 256 characters.
+  cli_alias: domain
+- name: Path
+  type: String
+  default: /
+  description: Identifies path attribute of a cookie. A browser accepts cookies only
+    when the current path matches the value you enter there. If this policy object
+    is attached to HTML Forms Login Policy, this property overrides Form POST Action
+    URL property. The maximum length of the path is 256 characters.
+  cli_alias: path
+- name: Interval
+  type: Int64
+  minimum: 1
+  maximum: 2678400
+  default: 3600
+  description: <p>Sets the cookie's maximum age and/or the cookie's expiration date
+    as an interval of seconds, relative to the time the transaction occurred on the
+    object. For example, if this value is set to 3600 and the transaction on this
+    object occurred on Feb 10, 2014 12:00:00 GMT, then the maximum age of the cookie
+    is 3600 seconds and the expiration date is Feb 10, 2014 13:00:00 GMT, depending
+    on whether the Max-Age and the Expires attribute are included.</p><p>When the
+    maximum age or the expiration date is reached, the cookie is deleted. Enter a
+    value in the range 1 - 2678400. The default value is 3600. Note that the Max-Age
+    attribute in this policy overrides Inactivity Timeout and Session Lifetime attributes
+    in HTML Forms Login policy.</p>
+  cli_alias: interval
+- name: CustomAttribute
+  type: String
+  description: The additional attributes to include in the cookie. Enter each attribute
+    in name-value pair. When you enter multiple pairs, use a semicolon (;) to separate
+    them. A name-value pair with an empty value (name-only portion) can also be specified
+    here. You can use variables instead of name-value pair(s). Enter a context variable
+    as var://variablename
+  cli_alias: custom-attribute

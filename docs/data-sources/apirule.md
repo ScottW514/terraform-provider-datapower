@@ -3,12 +3,12 @@
 page_title: "datapower_apirule Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API rule
+  An API rule completes the processing of API requests or completes the operations that are required by the API requests.
 ---
 
 # datapower_apirule (Data Source)
 
-API rule
+An API rule completes the processing of API requests or completes the operations that are required by the API requests.
 
 ## Example Usage
 
@@ -38,10 +38,10 @@ Optional:
 
 Read-Only:
 
-- `actions` (List of String) API actions
+- `actions` (List of String) Specify the processing actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `dynamic_actions` (Attributes List) API dynamic actions (see [below for nested schema](#nestedatt--result--dynamic_actions))
-- `dynamic_actions_mode` (Boolean) Use dynamic actions
+- `dynamic_actions` (Attributes List) Specify the dynamic actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence. (see [below for nested schema](#nestedatt--result--dynamic_actions))
+- `dynamic_actions_mode` (Boolean) Specify whether to use dynamic actions instead of explicit actions. Dynamic actions take configuration values at run time and override the default properties in API actions. API rules that contain dynamic actions can be included in user-defined policies that API Connect advertises and makes available in the API Connect assembly editor.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
 

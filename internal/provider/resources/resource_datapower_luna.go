@@ -54,7 +54,7 @@ func (r *LunaResource) Metadata(ctx context.Context, req resource.MetadataReques
 
 func (r *LunaResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SafeNet Luna HSM (`default` domain only)", "luna", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("You can use a network-attached SafeNet Luna Network HSM appliance as the HSM to provide secure storage for RSA keys and accelerate RSA operations remotely. The configuration of the Luna HSM sets up the connection with the Luna HSM.", "luna", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -80,7 +80,7 @@ func (r *LunaResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Required:            true,
 			},
 			"security_option": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Security option", "option", "").AddStringEnum("none", "htl").AddDefaultValue("none").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the security option for connection.", "option", "").AddStringEnum("none", "htl").AddDefaultValue("none").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

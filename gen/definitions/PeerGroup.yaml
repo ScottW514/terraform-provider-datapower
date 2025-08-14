@@ -1,60 +1,70 @@
 name: PeerGroup
-description: 'Peer group'
-cli_alias: 'peer-group'
-cmd_group: 'config-management'
-rest_endpoint: '/mgmt/config/{domain}/PeerGroup'
+description: A collection of systems that automatically update each other with real
+  time data of the selected type. For example, members in the group exchange data
+  to allow the enforcement of a policy across the collection.
+cli_alias: peer-group
+cmd_group: config-management
+rest_endpoint: /mgmt/config/{domain}/PeerGroup
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestPeerGroup"'
-    test_expect_ds: '"AccTest_PeerGroup"'
-    example: 'PeerGroupName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Type
-    type: String
-    enum:
-      - 'slm'
-      - 'slm-multicast'
-    required: true
-    default: 'slm'
-    description: 'Type'
-    cli_alias: type
-  - name: URL
-    type: List
-    element_type: String
-    description: 'URL'
-    test_value: '["http://localhost"]'
-    cli_alias: url
-  - name: IPMulticast
-    type: String
-    reference_to: IPMulticast
-    description: 'IP multicast'
-    cli_alias: ip-multicast
-  - name: UpdateInterval
-    type: Int64
-    minimum: 1
-    maximum: 10000
-    default: 10
-    description: 'Update interval'
-    cli_alias: update-interval
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestPeerGroup"'
+  test_expect_ds: '"AccTest_PeerGroup"'
+  example: PeerGroupName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Type
+  type: String
+  enum:
+  - slm
+  - slm-multicast
+  required: true
+  default: slm
+  description: Type
+  cli_alias: type
+- name: URL
+  type: List
+  element_type: String
+  description: Specify the URL of each peer in the <tt>protocol://address:port</tt>
+    format for an Ethernet interface or a VLAN interface. For unicast peering, peers
+    exchange SLM data over the XML management interface as SOAP over HTTPS. Multicast
+    peering shares the initial SLM state using SOAP over HTTPS; the data transfers
+    are done using multicast. <p>The default port for the XML Management Interface
+    is 5550. If this port is changed on any peer, the URL must reflect the correct
+    port.</p><p>Define all peers, which includes the local system.</p>
+  test_value: '["http://localhost"]'
+  cli_alias: url
+- name: IPMulticast
+  type: String
+  reference_to: IPMulticast
+  description: IP multicast
+  cli_alias: ip-multicast
+- name: UpdateInterval
+  type: Int64
+  minimum: 1
+  maximum: 10000
+  default: 10
+  description: Specify the update interval in milliseconds that data is transmitted
+    among peers.
+  cli_alias: update-interval

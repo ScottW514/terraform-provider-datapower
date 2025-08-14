@@ -54,7 +54,7 @@ func (r *SchemaExceptionMapResource) Metadata(ctx context.Context, req resource.
 
 func (r *SchemaExceptionMapResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Schema Exception Map", "schema-exception-map", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("This object describes exceptions to an XML Schema by identifying elements of the schema that may be encrypted in an instance document. When Schema Validation is performed on the document using this Exception Map, encrypted elements are considered valid when they appear in place of the specified elements.", "schema-exception-map", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -79,11 +79,11 @@ func (r *SchemaExceptionMapResource) Schema(ctx context.Context, req resource.Sc
 				},
 			},
 			"original_schema_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Original Schema URL", "original-schema", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the location of the full original schema document. This is required. This may reside on or off the device.", "original-schema", "").String,
 				Required:            true,
 			},
 			"schema_exception_rules": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rules", "rule", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Rules describe what elements may be excepted from the schema validation when the Original Schema is used for Schema Validation.", "rule", "").String,
 				NestedObject:        models.DmSchemaExceptionRuleResourceSchema,
 				Required:            true,
 			},

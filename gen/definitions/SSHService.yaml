@@ -1,41 +1,50 @@
 name: SSHService
-description: 'SSH service (`default` domain only)'
-cli_alias: 'ssh'
-cmd_group: 'device-management'
-rest_endpoint: '/mgmt/config/default/SSHService/SSH Service'
+description: Modify the configuration of the SSH server.
+cli_alias: ssh
+cmd_group: device-management
+rest_endpoint: /mgmt/config/default/SSHService/SSH Service
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: LocalPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 22
-    description: 'Port number'
-    cli_alias: port
-  - name: ACL
-    type: String
-    reference_to: AccessControlList
-    default: 'ssh'
-    description: 'Access control list'
-    cli_alias: acl
-  - name: ConnectionLimit
-    type: Int64
-    maximum: 1000
-    default: 0
-    description: 'Concurrent connections'
-    cli_alias: maximum-connections
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local address'
-    cli_alias: ip-address
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 22
+  description: Specify the TCP port that the service monitors. The default value is
+    22.
+  cli_alias: port
+- name: ACL
+  type: String
+  reference_to: AccessControlList
+  default: ssh
+  description: Edit the <tt>ssh</tt> access control list to define IP addresses to
+    allow or deny.
+  cli_alias: acl
+- name: ConnectionLimit
+  type: Int64
+  maximum: 1000
+  default: 0
+  description: Specify the maximum number of concurrent SSH CLI connections. Enter
+    a value in the range 0 - 1000. The default value is 0, which means no limit.
+  cli_alias: maximum-connections
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: '<p>Enter a host alias or the IP address that the service listens on.
+    Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0
+    indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4
+    and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the
+    value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate
+    management traffic from application data traffic.</p>'
+  cli_alias: ip-address

@@ -54,7 +54,7 @@ func (r *GitOpsTemplateResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *GitOpsTemplateResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("GitOps template", "gitops-template", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A core capability of the GitOps feature is to replace placeholder or template values with environment or device-specific values. This feature is analogous to deployment policies but differs in implementation.", "gitops-template", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *GitOpsTemplateResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"templates": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Templates", "template", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the GitOps templates to modify the DataPower configuration. Template processing is in the order of the read or write GitOps operation.", "template", "").String,
 				NestedObject:        models.DmGitOpsTemplateEntryResourceSchema,
 				Optional:            true,
 			},

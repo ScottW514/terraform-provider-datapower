@@ -3,13 +3,13 @@
 page_title: "datapower_lunapartition Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SafeNet Luna HSM partition
+  The SafeNet Luna Network HSM appliance stores the RSA keys in independent partitions. The configuration of the Luna HSM partition specifies the partition that the system accesses in the Luna HSM.
   CLI Alias: luna-partition
 ---
 
 # datapower_lunapartition (Resource)
 
-SafeNet Luna HSM partition
+The SafeNet Luna Network HSM appliance stores the RSA keys in independent partitions. The configuration of the Luna HSM partition specifies the partition that the system accesses in the Luna HSM.
   - CLI Alias: `luna-partition`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_lunapartition" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `partition_name` (String) Partition name
+- `partition_name` (String) Specify the partition name for key storage. The name identifies the Luna partition. The minimum length is 1 character. The maximum length is 32 characters.
   - CLI Alias: `partition`
 - `partition_serial` (String) Partition serial
   - CLI Alias: `serial`

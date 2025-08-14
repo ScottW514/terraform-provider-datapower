@@ -1,266 +1,342 @@
 name: APIDefinition
-description: 'API definition'
-cli_alias: 'api-definition'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APIDefinition'
+description: An API definition uses HTTP requests to GET, PUT, POST, and DELETE data.
+cli_alias: api-definition
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APIDefinition
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPIDefinition"'
-    test_expect_ds: '"AccTest_APIDefinition"'
-    example: 'APIDefinitionName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: ApiId
-    path: 'ID'
-    type: String
-    description: 'API ID'
-    cli_alias: id
-  - name: Name
-    type: String
-    description: 'API name'
-    cli_alias: name
-  - name: Version
-    type: String
-    default: '1.0.0'
-    description: 'API version'
-    cli_alias: version
-  - name: BasePath
-    type: String
-    required: true
-    default: '/'
-    description: 'Base path'
-    cli_alias: base-path
-  - name: HtmlPage
-    type: String
-    description: 'HTML page'
-    cli_alias: html-page
-  - name: Type
-    type: String
-    enum:
-      - 'standard'
-      - 'wsdl'
-      - 'graphql'
-    default: 'standard'
-    description: 'Type'
-    cli_alias: type
-  - name: Assembly
-    type: String
-    reference_to: Assembly
-    description: 'Assembly'
-    cli_alias: assembly
-  - name: Path
-    type: List
-    reference_to: APIPath
-    element_type: String
-    required: true
-    test_value: '["AccTest_APIPath"]'
-    test_bed_value: '[datapower_apipath.acc_test.id]'
-    description: 'Paths'
-    cli_alias: path
-  - name: Consume
-    type: List
-    element_type: String
-    description: 'Consumes'
-    cli_alias: consume
-  - name: Produce
-    type: List
-    element_type: String
-    description: 'Produces'
-    cli_alias: produce
-  - name: SwaggerLocation
-    type: String
-    description: 'OpenAPI document'
-    cli_alias: swagger-location
-  - name: GraphQLSchema
-    type: String
-    reference_to: APISchema
-    description: 'GraphQL schema location'
-    cli_alias: graphql-schema
-  - name: WsdlAdvertisedSchemaLocation
-    type: String
-    description: 'WSDL advertised schema location'
-    cli_alias: wsdl-advertised-schema-location
-  - name: WsdlValidationSchema
-    type: String
-    reference_to: APISchema
-    description: 'WSDL validation schema location'
-    cli_alias: wsdl-validation-schema
-  - name: SecurityRequirement
-    type: List
-    reference_to: APISecurityRequirement
-    element_type: String
-    description: 'Security requirements'
-    cli_alias: security-req
-  - name: RequireAPIMutualTLS
-    type: Bool
-    default: false
-    description: 'API protection'
-    cli_alias: require-api-mutual-tls
-  - name: APIMutualTLSSource
-    type: List
-    enum:
-      - 'header'
-      - 'tls_cert'
-    element_type: String
-    description: 'API protection sources'
-    cli_alias: api-mutual-tls-source
-  - name: APIMutualTLSHeaderName
-    type: String
-    default: 'X-Client-Certificate'
-    description: 'API protection HTTP header'
-    cli_alias: api-mutual-tls-header-name
-  - name: Properties
-    type: List
-    element_type: DmAPIProperty
-    description: 'Custom properties'
-    cli_alias: property
-  - name: Schemas
-    type: List
-    element_type: DmAPIDataTypeDefinition
-    description: 'Schemas'
-    cli_alias: schema
-  - name: CORSToggle
-    type: Bool
-    default: false
-    description: 'Enable CORS'
-    cli_alias: cors
-  - name: CORSPolicy
-    type: String
-    reference_to: CORSPolicy
-    description: 'CORS policy'
-    cli_alias: cors-policy
-  - name: ActivityLogToggle
-    type: Bool
-    default: false
-    description: 'Enable logging'
-    cli_alias: activity-log
-  - name: Content
-    type: String
-    enum:
-      - 'none'
-      - 'activity'
-      - 'header'
-      - 'payload'
-    required: true
-    default: 'activity'
-    description: 'Content on success'
-    cli_alias: success-content
-  - name: ErrorContent
-    type: String
-    enum:
-      - 'none'
-      - 'activity'
-      - 'header'
-      - 'payload'
-    required: true
-    default: 'payload'
-    description: 'Content on error'
-    cli_alias: error-content
-  - name: PreservedRequestHeader
-    type: List
-    element_type: String
-    description: 'Request headers to preserve'
-    cli_alias: preserved-request-header
-  - name: PreservedResponseHeader
-    type: List
-    element_type: String
-    description: 'Response header to preserve'
-    cli_alias: preserved-response-header
-  - name: MessageBuffering
-    type: Bool
-    default: false
-    description: 'Enable message buffering'
-    cli_alias: message-buffering
-  - name: DeploymentState
-    type: String
-    enum:
-      - 'running'
-      - 'suspended'
-    default: 'running'
-    description: 'Deployment state'
-    cli_alias: deployment-state
-  - name: ShareRateLimitCount
-    type: String
-    enum:
-      - 'unset'
-      - 'yes'
-      - 'no'
-    default: 'unset'
-    description: 'Share rate limit count'
-    cli_alias: share-count
-  - name: ReturnV5Responses
-    type: Bool
-    default: false
-    description: 'Return v5 responses'
-    cli_alias: return-v5-responses
-  - name: CopyIdHeadersToMessage
-    type: Bool
-    default: false
-    description: 'Copy ID headers to message'
-    cli_alias: copy-id-headers-to-message
-  - name: EnforceRequiredParams
-    type: Bool
-    default: true
-    description: 'Enforce required parameters'
-    cli_alias: enforce-required-params
-  - name: AllowChunkedUploads
-    type: Bool
-    default: true
-    description: 'Allow chunked uploads'
-    cli_alias: allow-chunked-uploads
-  - name: SetV5RequestHeaders
-    type: Bool
-    default: false
-    description: 'Set v5 request headers'
-    cli_alias: set-v5-request-headers
-  - name: GetRawBodyValue
-    type: Bool
-    default: false
-    description: 'Get raw body value'
-    cli_alias: get-raw-body-value
-  - name: AllowedAPIProtocols
-    dm_type: DmAPIProtocols
-    default: 'http+https+ws+wss'
-    description: 'Allowed API protocols'
-    cli_alias: allowed-api-protocols
-  - name: AllowTrailingSlash
-    type: Bool
-    default: false
-    description: 'Allow trailing slash'
-    cli_alias: allow-trailing-slash
-  - name: EnforceAllHeadersCaseInsensitive
-    type: Bool
-    default: false
-    description: 'Enforce all headers as case-insensitive'
-    cli_alias: enforce-all-headers-case-insensitive
-  - name: EnforceFormDataParameter
-    type: Bool
-    default: true
-    description: 'Enforce form data parameter'
-    cli_alias: enforce-form-data-parameter
-  - name: ForceHttp500ForSoap11
-    type: Bool
-    default: false
-    description: 'Force HTTP 500 for SOAP 1.1'
-    cli_alias: force-http-500-for-soap11
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPIDefinition"'
+  test_expect_ds: '"AccTest_APIDefinition"'
+  example: APIDefinitionName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: ApiId
+  path: ID
+  type: String
+  description: API ID
+  cli_alias: id
+- name: Name
+  type: String
+  description: API name
+  cli_alias: name
+- name: Version
+  type: String
+  default: 1.0.0
+  description: API version
+  cli_alias: version
+- name: BasePath
+  type: String
+  required: true
+  default: /
+  description: Specify the base path on which the API is served, which is relative
+    to the host. When the base path is not specified, the APIs are served directly
+    under the host. The base path does not include the hostname or any additional
+    segments for paths or operations. The base path must start but not end with slash
+    (/). All resources in a REST API are defined relative to its base path.
+  cli_alias: base-path
+- name: HtmlPage
+  type: String
+  description: Specify the name and location of a static HTML page that the API can
+    return. Import the file to the <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt>
+    DataPower directory.
+  cli_alias: html-page
+- name: Type
+  type: String
+  enum:
+  - standard
+  - wsdl
+  - graphql
+  default: standard
+  description: Type
+  cli_alias: type
+- name: Assembly
+  type: String
+  reference_to: Assembly
+  description: Specify the assembly to apply to API calls. An assembly is a rule that
+    defines the actions to run against API requests and how to handle the processing
+    errors.
+  cli_alias: assembly
+- name: Path
+  type: List
+  reference_to: APIPath
+  element_type: String
+  required: true
+  test_value: '["AccTest_APIPath"]'
+  test_bed_value: '[datapower_apipath.acc_test.id]'
+  description: Specify the paths through which users access the API operations. A
+    path consists of one or more HTTP operations.
+  cli_alias: path
+- name: Consume
+  type: List
+  element_type: String
+  description: Specify the MIME types that the API can consume. These MIME types apply
+    to all API operations. You can override the setting for specific operations in
+    the API operation.
+  cli_alias: consume
+- name: Produce
+  type: List
+  element_type: String
+  description: Specify the MIME types that the API can produce. These MIME types apply
+    to all API operations. You can override the setting for specific operations in
+    the API operation.
+  cli_alias: produce
+- name: SwaggerLocation
+  type: String
+  description: Specify the name and location of the OpenAPI document when you create
+    the API definition from an OpenAPI document. Prepare the document as follows before
+    you specify the location. <ol><li>When the OpenAPI document is a YAML file, convert
+    it to JSON.</li><li>Import the JSON file to the <tt>local:</tt> or <tt>temporary:</tt>
+    DataPower directory.</li></ol><p>When you create the API definition with API properties,
+    this property is not applicable.</p>
+  cli_alias: swagger-location
+- name: GraphQLSchema
+  type: String
+  reference_to: APISchema
+  description: GraphQL schema location
+  cli_alias: graphql-schema
+- name: WsdlAdvertisedSchemaLocation
+  type: String
+  description: WSDL advertised schema location
+  cli_alias: wsdl-advertised-schema-location
+- name: WsdlValidationSchema
+  type: String
+  reference_to: APISchema
+  description: WSDL validation schema location
+  cli_alias: wsdl-validation-schema
+- name: SecurityRequirement
+  type: List
+  reference_to: APISecurityRequirement
+  element_type: String
+  description: Specify the alternative security requirements to enforce for the API
+    as a whole. In other words, processing applies a logical <tt>OR</tt> between the
+    security requirements. By default, the security requirement is applied to all
+    operations in the API. However, for each API operation, you can override the API-level
+    security by separately specifying security schemes to enforce at the operation
+    level.
+  cli_alias: security-req
+- name: RequireAPIMutualTLS
+  type: Bool
+  default: false
+  description: API protection
+  cli_alias: require-api-mutual-tls
+- name: APIMutualTLSSource
+  type: List
+  enum:
+  - header
+  - tls_cert
+  element_type: String
+  description: Specify the sources to obtain the client certificate for mutual TLS.
+    Because you can define multiple ways to obtain the source, ensure that you sequence
+    the methods appropriately.
+  cli_alias: api-mutual-tls-source
+- name: APIMutualTLSHeaderName
+  type: String
+  default: X-Client-Certificate
+  description: Specify the HTTP header that contains the client certificate for mutual
+    TLS. The default value is <tt>X-Client-Certificate</tt> .
+  cli_alias: api-mutual-tls-header-name
+- name: Properties
+  type: List
+  element_type: DmAPIProperty
+  description: Specify custom entries for API properties. An API property is a type
+    of context variable whose value is dependent on the collection that the API is
+    provisioned in. Collection-specific API properties allow you to use the same API
+    definition in different collections when a property in a collection requires a
+    unique or different value. A custom property entry defines a property and its
+    value for one collection. For each custom property or property that needs a different
+    value for another collection, add another entry.
+  cli_alias: property
+- name: Schemas
+  type: List
+  element_type: DmAPIDataTypeDefinition
+  description: Specify the API schemas that define data types for request or message
+    validation. An API data type consists of a name and its API schema.
+  cli_alias: schema
+- name: CORSToggle
+  type: Bool
+  default: false
+  description: Specify whether to enable the API gateway to handle cross-origin resource
+    sharing (CORS) requests. <ul><li>When enabled, the API gateway runs the API CORS
+    action to handle all CORS requests for the API.</li><li>The routing API action
+    matches the API to process, determines that the request is a preflight CORS request,
+    and sets the <tt>request.attributes.isCORSPreflight</tt> flag to <tt>true</tt>
+    .</li><li>When CORS is enabled and a preflight request is received, all assembly
+    actions and many API actions are skipped. Only the following API actions are processed.</li><ul><li>The
+    CORS API action configures the appropriate response headers.</li><li>The result
+    API action sets the response headers.</li></ul><li>For all preflight requests,
+    the security and client identification actions are always skipped.</li></ul>
+  cli_alias: cors
+- name: CORSPolicy
+  type: String
+  reference_to: CORSPolicy
+  description: CORS policy
+  cli_alias: cors-policy
+- name: ActivityLogToggle
+  type: Bool
+  default: false
+  description: Specify whether to enable API activity logging. The API gateway runs
+    the activity log API action to generate logs. To generate log data for calls,
+    you must enable this property and ensure that the following conditions are met.
+    <ul><li>The logging type is not set to none.</li><li>The activity log action is
+    added in the API rule for the API definition.</li></ul><p>When disabled, the API
+    gateway does not generate log data.</p>
+  cli_alias: activity-log
+- name: Content
+  type: String
+  enum:
+  - none
+  - activity
+  - header
+  - payload
+  required: true
+  default: activity
+  description: Specify the content to log on success. When set to payload data, you
+    must enable message buffering to capture all request and response data.
+  cli_alias: success-content
+- name: ErrorContent
+  type: String
+  enum:
+  - none
+  - activity
+  - header
+  - payload
+  required: true
+  default: payload
+  description: Specify the content to log on error. When set to payload data, you
+    must enable message buffering to capture all request and response data.
+  cli_alias: error-content
+- name: PreservedRequestHeader
+  type: List
+  element_type: String
+  description: Request headers to preserve
+  cli_alias: preserved-request-header
+- name: PreservedResponseHeader
+  type: List
+  element_type: String
+  description: Response header to preserve
+  cli_alias: preserved-response-header
+- name: MessageBuffering
+  type: Bool
+  default: false
+  description: Specify whether to buffer requests and responses before processing.
+    <ul><li>When enabled, requests and responses are buffered before processing. The
+    message payload and the output of the invoke assembly action are read as a binary
+    large object (BLOB).</li><li>When disabled, requests and responses are streamed.
+    Only an asynchronous API call can read the streamed data. If the message processing
+    requires data to be parsed at the payload level, buffering is used to capture
+    the data.</li></ul><p>If you enable activity logging to capture payload data,
+    you must enable message buffering to capture all request and response data.</p>
+  cli_alias: message-buffering
+- name: DeploymentState
+  type: String
+  enum:
+  - running
+  - suspended
+  default: running
+  description: Specify the deployment state of the API. By default, the deployment
+    state is running instead of suspended.
+  cli_alias: deployment-state
+- name: ShareRateLimitCount
+  type: String
+  enum:
+  - unset
+  - 'yes'
+  - 'no'
+  default: unset
+  description: Share rate limit count
+  cli_alias: share-count
+- name: ReturnV5Responses
+  type: Bool
+  default: false
+  description: Specify whether to return v5-compatible responses, such as OAuth and
+    client security error responses.
+  cli_alias: return-v5-responses
+- name: CopyIdHeadersToMessage
+  type: Bool
+  default: false
+  description: Copy ID headers to message
+  cli_alias: copy-id-headers-to-message
+- name: EnforceRequiredParams
+  type: Bool
+  default: true
+  description: Enforce required parameters
+  cli_alias: enforce-required-params
+- name: AllowChunkedUploads
+  type: Bool
+  default: true
+  description: 'Specify whether to transfer documents to the server in chunks, which
+    is based on the <tt>Transfer-Encoding: chunked</tt> header. This setting applies
+    only to the <tt>invoke</tt> 1.5.0 policy that is deployed from API Connect from
+    using the migration utility.'
+  cli_alias: allow-chunked-uploads
+- name: SetV5RequestHeaders
+  type: Bool
+  default: false
+  description: Specify whether to populate v5-compatible headers such as <tt>X-Client-IP</tt>
+    and <tt>X-Global-Transaction-ID</tt> in the <tt>request.headers</tt> context variable.
+  cli_alias: set-v5-request-headers
+- name: GetRawBodyValue
+  type: Bool
+  default: false
+  description: Specify whether the GatewayScript <tt>apim.getvariable()</tt> APIreturns
+    the raw body instead of parsing. This setting applies only when the context is
+    other than <tt>message</tt> .
+  cli_alias: get-raw-body-value
+- name: AllowedAPIProtocols
+  dm_type: DmAPIProtocols
+  default: http+https+ws+wss
+  description: Allowed API protocols
+  cli_alias: allowed-api-protocols
+- name: AllowTrailingSlash
+  type: Bool
+  default: false
+  description: Allow trailing slash
+  cli_alias: allow-trailing-slash
+- name: EnforceAllHeadersCaseInsensitive
+  type: Bool
+  default: false
+  description: Specify whether to enforce all headers in case-insensitive. By default,
+    the following behavior applies to headers. <ul><li>Headers in the <tt>message.headers</tt>
+    and <tt>request.headers</tt> contexts are case-insensitive.</li><li>Headers in
+    a custom context, such as <tt>foo.headers</tt> , are case-sensitive. For example,
+    <tt>foo.headers.bar</tt> and <tt>foo.headers.Bar</tt> are different headers.</li></ul>
+  cli_alias: enforce-all-headers-case-insensitive
+- name: EnforceFormDataParameter
+  type: Bool
+  default: true
+  description: Specify whether to resolve and populate the form data parameter. <ul><li>When
+    enabled and the operation of the API path configures any form data, resolve the
+    payload as BLOB data and populate the corresponding fields as context variables
+    during routing. Applicable when the <tt>Content-Type</tt> header is <tt>application/x-www-form-urlencoded</tt>
+    or <tt>multipart/form-data</tt> .</li><li>When disabled and no required form-data
+    parameter is specified, processing does not resolve as a BLOB and populate the
+    parameter. Applicable when the <tt>Content-Type</tt> header is <tt>application/x-www-form-urlencoded</tt>
+    or <tt>multipart/form-data</tt> .</li></ul>
+  cli_alias: enforce-form-data-parameter
+- name: ForceHttp500ForSoap11
+  type: Bool
+  default: false
+  description: Force HTTP 500 for SOAP 1.1
+  cli_alias: force-http-500-for-soap11

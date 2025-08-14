@@ -3,12 +3,12 @@
 page_title: "datapower_kafkasourceprotocolhandler Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Kafka handler
+  A Kafka handler monitors the request topic for incoming client requests.
 ---
 
 # datapower_kafkasourceprotocolhandler (Data Source)
 
-Kafka handler
+A Kafka handler monitors the request topic for incoming client requests.
 
 ## Example Usage
 
@@ -39,12 +39,12 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `batch_size` (Number) Batch size
+- `batch_size` (Number) Specify the number of messages to retrieve and process as a batch. The handler attempts to retrieve the number of specified messages from the consumer and processes these messages as a batch. Enter a value in the range 1 - 65535. The default value is 1.
 - `cluster` (String) Kafka cluster
 - `consumer_group` (String) Consumer group
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `request_topic` (String) Request topic
-- `response_topic` (String) Response topic
+- `request_topic` (String) Specify the name of the request topic to monitor for incoming client requests. On receipt, the handler forwards the extracted message to the DataPower service for processing.
+- `response_topic` (String) Specify the name of the response topic to send responses after processing by the DataPower service. When the Kafka server does not expect responses, leave blank. When blank, responses are dropped.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

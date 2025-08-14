@@ -3,12 +3,12 @@
 page_title: "datapower_messagematching Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Matching
+  
 ---
 
 # datapower_messagematching (Data Source)
 
-Message Matching
+<p>Message Matching determines what messages will be monitored by any monitor that uses the Message Matching object. It is a definition of the traffic flow that is monitored.</p><p>To capture all messages, set the HTTP Method field to 'any' and leave all other fields blank.</p>
 
 ## Example Usage
 
@@ -39,13 +39,13 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `http_header` (Attributes List) HTTP Headers (see [below for nested schema](#nestedatt--result--http_header))
-- `http_header_exclude` (Attributes List) Excluded HTTP Headers (see [below for nested schema](#nestedatt--result--http_header_exclude))
-- `http_method` (String) HTTP Method
+- `http_header` (Attributes List) Click this tab to add match criteria for inclusive HTTP header fields to the traffic definition. The field with its corresponding value must appear in the HTTP header of the message to qualify for inclusion. (see [below for nested schema](#nestedatt--result--http_header))
+- `http_header_exclude` (Attributes List) Click this tab to add match criteria for exclusive HTTP header field to the traffic definition. The field with its corresponding value cannot appear in the HTTP header of the message to qualify for exclusion. (see [below for nested schema](#nestedatt--result--http_header_exclude))
+- `http_method` (String) Select the HTTP method included in this traffic definition. The default value is any, which indicates that HTTP method is not a match criteria.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ip_address` (String) IP Addresses
-- `ip_exclude` (String) Excluded IP Addresses
-- `request_url` (String) Request URL
+- `ip_address` (String) Use an IP network address and prefix length to define a contiguous range of IP addresses included in this traffic definition (for example, 10.10.100.0/28 specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies a single host address).
+- `ip_exclude` (String) Use an IP network address and prefix length to define a contiguous range of IP addresses excluded from this traffic definition (for example, 10.10.100.0/28 specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies a single host address).
+- `request_url` (String) Provide a literal or wildcard expression to define a URL set included in this traffic definition. The following wildcard characters are available when defining the URL set. <table><tr><td valign="top">asterisk (*)</td><td valign="top">Matches 0 or more occurrences of any character</td></tr><tr><td valign="top">question mark (?)</td><td valign="top">Matches one occurrence of any single character</td></tr><tr><td valign="top">brackets ( [ ] )</td><td valign="top">Defines a character or numeric range. For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or xsl.</td></tr></table>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

@@ -50,14 +50,14 @@ func (d *APISecurityTokenManagerDataSource) Metadata(_ context.Context, req data
 
 func (d *APISecurityTokenManagerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API security token manager",
+		MarkdownDescription: "<p>The API security token manager provides the storage configuration for security objects, which include OAuth providers and user security. Each domain has the <tt>default</tt> API security token manager. This instance is used by the domain to store and manage API details.</p><p>The API security token service uses gateway-peering instances for the internal and external token stores.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
 				Required:            true,
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -65,11 +65,11 @@ func (d *APISecurityTokenManagerDataSource) Schema(ctx context.Context, req data
 				Computed:            true,
 			},
 			"gateway_peering": schema.StringAttribute{
-				MarkdownDescription: "Internal token store",
+				MarkdownDescription: "Specify the gateway-peering instance to store and manage internal OAuth token data in this domain. Native OAuth tokens that are managed by an external token management service are not stored in this gateway-peering instance. This gateway-peering instance must be configured to persist data across a restart.",
 				Computed:            true,
 			},
 			"gateway_peering_external": schema.StringAttribute{
-				MarkdownDescription: "External token store",
+				MarkdownDescription: "Specify the gateway-peering instance to store and manage responses from external OAuth token management services in this domain. This gateway-peering instance does not require that data persist across a restart.",
 				Computed:            true,
 			},
 			"expired_token_cleanup_interval": schema.Int64Attribute{

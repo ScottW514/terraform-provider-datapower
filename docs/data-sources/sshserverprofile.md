@@ -3,12 +3,12 @@
 page_title: "datapower_sshserverprofile Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SSH server profile
+  The SSH domain client profile defines the cipher suites.
 ---
 
 # datapower_sshserverprofile (Data Source)
 
-SSH server profile
+The SSH domain client profile defines the cipher suites.
 
 ## Example Usage
 
@@ -31,14 +31,14 @@ data "datapower_sshserverprofile" "test" {
 
 ### Read-Only
 
-- `ciphers` (List of String) Ciphers
-- `enabled` (Boolean) Administrative state
+- `ciphers` (List of String) Specify the SSH cipher suites to support.
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `host_key_alg` (Attributes) Host key algorithms
   - CLI Alias: `host-key-alg` (see [below for nested schema](#nestedatt--host_key_alg))
-- `kex_alg` (List of String) Key exchange algorithms
-- `mac_alg` (List of String) Message authentication codes
-- `pre_auth_msg` (String) Preauthentication message
-- `send_pre_auth_msg` (Boolean) Include SSH preauthentication message
+- `kex_alg` (List of String) Specify the key exchange (KEX) algorithms to support.
+- `mac_alg` (List of String) Specify the message authentication codes (MAC) to support.
+- `pre_auth_msg` (String) Specify the banner message to display to users before the login prompt. White space characters ( <tt>\n</tt> , <tt>\t</tt> ) are recognized and escaped. The banner message must be at least one character. The banner message is truncated at 4096 characters.
+- `send_pre_auth_msg` (Boolean) Specify whether to include a banner message during SSH preauthentication. The banner message contains the text to display to users before the login prompt.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

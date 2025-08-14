@@ -1,65 +1,111 @@
 name: OAuthSupportedClientGroup
-description: 'OAuth Client Group'
-cli_alias: 'oauth-supported-client-group'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/OAuthSupportedClientGroup'
+description: <p>To support the OAuth 2.0 protocol, an AAA policy requires the configuration
+  of an OAuth client group. An OAuth client group contains the configured OAuth clients
+  that the DataPower Gateway accepts requests from.</p><p>When creating an OAuth client
+  group for an AAA policy, the OAuth client group consists of one or more OAuth clients
+  with the same OAuth roles.</p>
+cli_alias: oauth-supported-client-group
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/OAuthSupportedClientGroup
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestOAuthSupportedClientGroup"'
-    test_expect_ds: '"AccTest_OAuthSupportedClientGroup"'
-    example: 'OAuthSupportedClientGroupName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Customized
-    type: Bool
-    default: false
-    description: 'Customized OAuth'
-    cli_alias: customized
-  - name: CustomizedType
-    type: String
-    enum:
-      - 'custom'
-      - 'template'
-    default: 'custom'
-    description: 'Customization Type'
-    cli_alias: customized-type
-  - name: OAuthRole
-    dm_type: DmOAuthRole
-    description: 'OAuth Role'
-    cli_alias: oauth-role
-  - name: Client
-    type: List
-    reference_to: OAuthSupportedClient
-    element_type: String
-    description: 'Client'
-    cli_alias: client
-  - name: TemplateProcessUrl
-    type: String
-    description: 'OAuth Template Process'
-    cli_alias: template-process-url
-  - name: ClientTemplate
-    type: String
-    reference_to: OAuthSupportedClient
-    description: 'OAuth Client Template'
-    cli_alias: client-template
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestOAuthSupportedClientGroup"'
+  test_expect_ds: '"AccTest_OAuthSupportedClientGroup"'
+  example: OAuthSupportedClientGroupName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Specifies a brief comment that describes the configuration.
+  cli_alias: summary
+- name: Customized
+  type: Bool
+  default: false
+  description: Indicates whether the configuration is for a customized OAuth client
+    group.
+  cli_alias: customized
+- name: CustomizedType
+  type: String
+  enum:
+  - custom
+  - template
+  default: custom
+  description: Sets the method to customize an OAuth client.
+  cli_alias: customized-type
+- name: OAuthRole
+  dm_type: DmOAuthRole
+  description: Identifies the roles of clients in the group. This property is mutually
+    exclusive to the <b>Customized OAuth</b> property.
+  cli_alias: oauth-role
+- name: Client
+  type: List
+  reference_to: OAuthSupportedClient
+  element_type: String
+  description: Manages the group of OAuth clients. Use the controls to add or remove
+    clients from the group.
+  cli_alias: client
+- name: TemplateProcessUrl
+  type: String
+  description: '<p>Specifies the location of the stylesheet or GatewayScript file
+    that defines the OAuth client. You can define parts of the configuration parameters
+    in the stylesheet or GatewayScript file and then specify an OAuth client template
+    to derive the remaining information. Note that the stylesheet or GatewayScript
+    file must at least provide the "client-id" node. The stylesheet or GatewayScript
+    file must be in the local: or store: directory.</p><p>The stylesheet or GatewayScript
+    file must follow the guidelines when it returns the information: <ul><li>The stylesheet
+    or GatewayScript file must return the &lt;client-id> element.</li><li>If the &lt;customized>
+    element value is set to "on", the &lt;customized-process-url> element value must
+    be provided by either the stylesheet or GatewayScript file or the template.</li><li>If
+    the &lt;customized> element value is set to "on" in the client template, the &lt;customized-process-url>
+    element cannot unset this value.</li><li>If the &lt;use-validation-url> element
+    value is set to "on", the &lt;validation-url> element value must be provided by
+    either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;custom-scope-check>
+    element value is set to "on", the &lt;scope-url> element value must be provided
+    by either the stylesheet or GatewayScript file or the template.</li><li>If the
+    &lt;custom-resource-owner> element value is set to "on", the &lt;resource-owner-url>
+    element value must be provided by either the stylesheet or GatewayScript file
+    or the template.</li><li>If the &lt;role> element value is set, the value must
+    be the same or a subset of what is defined in the template.</li><li>If the &lt;client-type>
+    element value is set, the value must be the same or a subset of what is defined
+    in the template.</li><li>If the &lt;az-grant> element value is set, the value
+    must be the same or a subset of what is defined in the template.</li><li>If the
+    &lt;az-grant> element value is set to "+code+" or "+token+", the &lt;local-az-page-url>
+    element value must be provided by either the stylesheet or GatewayScript file
+    or the template.</li><li>If the &lt;caching> element value is set to "custom",
+    the &lt;additional-oauth-processing-url> element value must be provided by either
+    the stylesheet or GatewayScript file or the template.</li><li>If the &lt;refresh-token-allowed>
+    is set to a non-zero value, the &lt;refresh-token-lifetime> element value must
+    be provided by either the stylesheet or GatewayScript file or the template.</li><li>If
+    the &lt;check-client-credential> element value is set to "on", the &lt;client-authen-method>
+    element value must be provided by either the stylesheet or GatewayScript file
+    or the template.</li><li>If the &lt;client-authen-method> element value is set
+    to "secret", the &lt;client-secret> element value must be provided by either the
+    stylesheet or GatewayScript file or the template.</li><li>If the &lt;client-authen-method>
+    element value is set to "ssl", the &lt;client-valcred> element value must be provided
+    by either the stylesheet or GatewayScript file or the template.</li></ul></p>'
+  cli_alias: template-process-url
+- name: ClientTemplate
+  type: String
+  reference_to: OAuthSupportedClient
+  description: <p>Specifies the OAuth client template that is used to derive the configuration
+    parameters that are not specified in the stylesheet or GatewayScript file of the
+    OAuth client.</p>
+  cli_alias: client-template

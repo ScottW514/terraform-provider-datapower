@@ -3,13 +3,13 @@
 page_title: "datapower_apisecurity Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Security API action
+  The security API action enforces the security requirements that are defined for the target API or operation.
   CLI Alias: api-security
 ---
 
 # datapower_apisecurity (Resource)
 
-Security API action
+The security API action enforces the security requirements that are defined for the target API or operation.
   - CLI Alias: `api-security`
 
 ## Example Usage
@@ -31,7 +31,7 @@ resource "datapower_apisecurity" "test" {
 
 ### Optional
 
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
   - CLI Alias: `correlation-path`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `title` (String) Title

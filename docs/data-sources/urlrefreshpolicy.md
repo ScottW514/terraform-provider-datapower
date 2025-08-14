@@ -3,12 +3,12 @@
 page_title: "datapower_urlrefreshpolicy Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  URL Refresh Policy
+  Configure/Edit URL Refresh Policies
 ---
 
 # datapower_urlrefreshpolicy (Data Source)
 
-URL Refresh Policy
+Configure/Edit URL Refresh Policies
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `url_refresh_rule` (Attributes List) URL Refresh Rule (see [below for nested schema](#nestedatt--result--url_refresh_rule))
+- `url_refresh_rule` (Attributes List) Add, edit or delete a refresh rule (see [below for nested schema](#nestedatt--result--url_refresh_rule))
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

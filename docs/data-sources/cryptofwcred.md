@@ -3,12 +3,12 @@
 page_title: "datapower_cryptofwcred Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Firewall credentials
+  The set of crypto credentials (private keys, shared secret keys, and certificates) that are usable by an XML firewall when calling security extension functions to perform actions such as encryption, decryption, digital signing, and verification. If a firewall uses firewall credentials and a particular certificate or key is not included in this list, the crypto operation attempting to use the key or certificate fails.
 ---
 
 # datapower_cryptofwcred (Data Source)
 
-Firewall credentials
+The set of crypto credentials (private keys, shared secret keys, and certificates) that are usable by an XML firewall when calling security extension functions to perform actions such as encryption, decryption, digital signing, and verification. If a firewall uses firewall credentials and a particular certificate or key is not included in this list, the crypto operation attempting to use the key or certificate fails.
 
 ## Example Usage
 

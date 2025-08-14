@@ -57,7 +57,7 @@ func (d *SSLSNIServerProfileDataSource) Metadata(_ context.Context, req datasour
 
 func (d *SSLSNIServerProfileDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "TLS SNI server profile",
+		MarkdownDescription: "The TLS Server Name Indication (SNI) server profile secures connections with clients.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -86,16 +86,16 @@ func (d *SSLSNIServerProfileDataSource) Schema(ctx context.Context, req datasour
 							Computed:            true,
 						},
 						"sni_server_default": schema.StringAttribute{
-							MarkdownDescription: "Default server profile",
+							MarkdownDescription: "Specify the TLS server profile to process requests when the client does not send a <tt>ClientHello</tt> SNI extension. <p>The request is rejected when either of the following conditions apply. <ul><li>The client sends a <tt>ClientHello</tt> SNI extension that does not match a hostname in the map.</li><li>The client does not send a <tt>ClientHello</tt> SNI extension</li></ul></p>",
 							Computed:            true,
 						},
-						"ssl_options": models.GetDmSSLOptionsDataSourceSchema("Advanced TLS options", "ssl-options", ""),
+						"ssl_options": models.GetDmSSLOptionsDataSourceSchema("Specify the options to apply to the TLS connection that override settings in the TLS server profiles. These options have negative impact on the performance.", "ssl-options", ""),
 						"max_ssl_duration": schema.Int64Attribute{
-							MarkdownDescription: "Maximum TLS session duration",
+							MarkdownDescription: "Specify the maximum duration in seconds for an established TLS session. After the duration is reached, the TLS connection is closed. Enter a value in the range 1 - 691200. The default value is 3600.",
 							Computed:            true,
 						},
 						"number_of_renegotiation_allowed": schema.Int64Attribute{
-							MarkdownDescription: "Maximum client initiated renegotiations",
+							MarkdownDescription: "Specify the maximum number of client initiated renegotiations. Enter a value in the range 0 - 512. The default value is 0, which indicates client initiated renegotiation is not allowed.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

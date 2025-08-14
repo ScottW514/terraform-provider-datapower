@@ -56,7 +56,7 @@ func (d *ODRConnectorGroupDataSource) Metadata(_ context.Context, req datasource
 
 func (d *ODRConnectorGroupDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "ODR Connector Group (`default` domain only)",
+		MarkdownDescription: "A collection of on demand router (ODR) connectors used to communicate with the Intelligent Management service.",
 		Attributes: map[string]schema.Attribute{
 			"result": schema.ListNestedAttribute{
 				MarkdownDescription: "List of objects",
@@ -72,29 +72,29 @@ func (d *ODRConnectorGroupDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"odr_group_connectors": schema.ListNestedAttribute{
-							MarkdownDescription: "ODR connectors",
+							MarkdownDescription: "The ODR connectors that are used to retrieve ODR information. An ODR connector defines a connection to the Intelligent Management service. The DataPower Gateway retrieves topology, weights, session affinity, and other information from the WebSphere cell over the connection. If multiple connectors are configured, the top most connection is tried first, followed by the second, and so on. After a connection is established, other endpoints might be retrieved and used if the configured connector endpoint is down. You must define at least one connector in an ODR connector group but cannot define more than 16 connectors.",
 							NestedObject:        models.DmODRConnectorDataSourceSchema,
 							Computed:            true,
 						},
 						"max_retry_interval": schema.Int64Attribute{
-							MarkdownDescription: "Maximum retry interval",
+							MarkdownDescription: "The time to wait before attempting to reestablish a connection to the Intelligent Management Service. Enter a value in the range 1 - 120. The default value is 60.",
 							Computed:            true,
 						},
 						"xml_manager": schema.StringAttribute{
-							MarkdownDescription: "XML manager",
+							MarkdownDescription: "The XML manager to use when processing transactions with the Intelligent management service.",
 							Computed:            true,
 						},
 						"odr_conn_group_properties": schema.ListNestedAttribute{
-							MarkdownDescription: "Custom properties",
+							MarkdownDescription: "The custom properties that are associated with the ODR connector group.",
 							NestedObject:        models.DmODRConnPropertyDataSourceSchema,
 							Computed:            true,
 						},
 						"ssl_client_config_type": schema.StringAttribute{
-							MarkdownDescription: "TLS client type",
+							MarkdownDescription: "The TLS profile type to secure connections between the DataPower Gateway and its targets.",
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{
-							MarkdownDescription: "TLS client profile",
+							MarkdownDescription: "The TLS client profile to secure connections between the DataPower Gateway and its targets.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -59,7 +59,7 @@ func (r *SSLServerProfileResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The TLS server profile secures connections with clients.", "ssl-server", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -89,7 +89,7 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 			},
 			"protocols": models.GetDmSSLProtoVersionsBitmapResourceSchema("Protocols", "protocols", "", false),
 			"ciphers": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Ciphers", "ciphers", "").AddStringEnum("RSA_WITH_NULL_MD5", "RSA_WITH_NULL_SHA", "RSA_WITH_RC4_128_MD5", "RSA_WITH_RC4_128_SHA", "RSA_WITH_DES_CBC_SHA", "RSA_WITH_3DES_EDE_CBC_SHA", "DHE_DSS_WITH_DES_CBC_SHA", "DHE_DSS_WITH_3DES_EDE_CBC_SHA", "DHE_RSA_WITH_DES_CBC_SHA", "DHE_RSA_WITH_3DES_EDE_CBC_SHA", "RSA_WITH_AES_128_CBC_SHA", "DHE_DSS_WITH_AES_128_CBC_SHA", "DHE_RSA_WITH_AES_128_CBC_SHA", "RSA_WITH_AES_256_CBC_SHA", "DHE_DSS_WITH_AES_256_CBC_SHA", "DHE_RSA_WITH_AES_256_CBC_SHA", "RSA_WITH_NULL_SHA256", "RSA_WITH_AES_128_CBC_SHA256", "RSA_WITH_AES_256_CBC_SHA256", "DHE_DSS_WITH_AES_128_CBC_SHA256", "DHE_RSA_WITH_AES_128_CBC_SHA256", "DHE_DSS_WITH_AES_256_CBC_SHA256", "DHE_RSA_WITH_AES_256_CBC_SHA256", "RSA_WITH_AES_128_GCM_SHA256", "RSA_WITH_AES_256_GCM_SHA384", "DHE_RSA_WITH_AES_128_GCM_SHA256", "DHE_RSA_WITH_AES_256_GCM_SHA384", "DHE_DSS_WITH_AES_128_GCM_SHA256", "DHE_DSS_WITH_AES_256_GCM_SHA384", "AES_128_GCM_SHA256", "AES_256_GCM_SHA384", "CHACHA20_POLY1305_SHA256", "AES_128_CCM_SHA256", "AES_128_CCM_8_SHA256", "ECDHE_RSA_WITH_NULL_SHA", "ECDHE_RSA_WITH_RC4_128_SHA", "ECDHE_RSA_WITH_3DES_EDE_CBC_SHA", "ECDHE_RSA_WITH_AES_128_CBC_SHA", "ECDHE_RSA_WITH_AES_256_CBC_SHA", "ECDHE_RSA_WITH_AES_128_CBC_SHA256", "ECDHE_RSA_WITH_AES_256_CBC_SHA384", "ECDHE_RSA_WITH_AES_128_GCM_SHA256", "ECDHE_RSA_WITH_AES_256_GCM_SHA384", "ECDHE_ECDSA_WITH_NULL_SHA", "ECDHE_ECDSA_WITH_RC4_128_SHA", "ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA", "ECDHE_ECDSA_WITH_AES_128_CBC_SHA", "ECDHE_ECDSA_WITH_AES_256_CBC_SHA", "ECDHE_ECDSA_WITH_AES_128_CBC_SHA256", "ECDHE_ECDSA_WITH_AES_256_CBC_SHA384", "ECDHE_ECDSA_WITH_AES_128_GCM_SHA256", "ECDHE_ECDSA_WITH_AES_256_GCM_SHA384").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the cipher suites to support in preference order. Ensure that the order of cipher suites are in preference order. Otherwise, change the sequence order to meet your preference.", "ciphers", "").AddStringEnum("RSA_WITH_NULL_MD5", "RSA_WITH_NULL_SHA", "RSA_WITH_RC4_128_MD5", "RSA_WITH_RC4_128_SHA", "RSA_WITH_DES_CBC_SHA", "RSA_WITH_3DES_EDE_CBC_SHA", "DHE_DSS_WITH_DES_CBC_SHA", "DHE_DSS_WITH_3DES_EDE_CBC_SHA", "DHE_RSA_WITH_DES_CBC_SHA", "DHE_RSA_WITH_3DES_EDE_CBC_SHA", "RSA_WITH_AES_128_CBC_SHA", "DHE_DSS_WITH_AES_128_CBC_SHA", "DHE_RSA_WITH_AES_128_CBC_SHA", "RSA_WITH_AES_256_CBC_SHA", "DHE_DSS_WITH_AES_256_CBC_SHA", "DHE_RSA_WITH_AES_256_CBC_SHA", "RSA_WITH_NULL_SHA256", "RSA_WITH_AES_128_CBC_SHA256", "RSA_WITH_AES_256_CBC_SHA256", "DHE_DSS_WITH_AES_128_CBC_SHA256", "DHE_RSA_WITH_AES_128_CBC_SHA256", "DHE_DSS_WITH_AES_256_CBC_SHA256", "DHE_RSA_WITH_AES_256_CBC_SHA256", "RSA_WITH_AES_128_GCM_SHA256", "RSA_WITH_AES_256_GCM_SHA384", "DHE_RSA_WITH_AES_128_GCM_SHA256", "DHE_RSA_WITH_AES_256_GCM_SHA384", "DHE_DSS_WITH_AES_128_GCM_SHA256", "DHE_DSS_WITH_AES_256_GCM_SHA384", "AES_128_GCM_SHA256", "AES_256_GCM_SHA384", "CHACHA20_POLY1305_SHA256", "AES_128_CCM_SHA256", "AES_128_CCM_8_SHA256", "ECDHE_RSA_WITH_NULL_SHA", "ECDHE_RSA_WITH_RC4_128_SHA", "ECDHE_RSA_WITH_3DES_EDE_CBC_SHA", "ECDHE_RSA_WITH_AES_128_CBC_SHA", "ECDHE_RSA_WITH_AES_256_CBC_SHA", "ECDHE_RSA_WITH_AES_128_CBC_SHA256", "ECDHE_RSA_WITH_AES_256_CBC_SHA384", "ECDHE_RSA_WITH_AES_128_GCM_SHA256", "ECDHE_RSA_WITH_AES_256_GCM_SHA384", "ECDHE_ECDSA_WITH_NULL_SHA", "ECDHE_ECDSA_WITH_RC4_128_SHA", "ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA", "ECDHE_ECDSA_WITH_AES_128_CBC_SHA", "ECDHE_ECDSA_WITH_AES_256_CBC_SHA", "ECDHE_ECDSA_WITH_AES_128_CBC_SHA256", "ECDHE_ECDSA_WITH_AES_256_CBC_SHA384", "ECDHE_ECDSA_WITH_AES_128_GCM_SHA256", "ECDHE_ECDSA_WITH_AES_256_GCM_SHA384").String,
 				ElementType:         types.StringType,
 				Required:            true,
 				Validators: []validator.List{
@@ -107,7 +107,7 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(false),
 			},
 			"require_client_auth": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Require client authentication", "require-client-auth", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require client authentication during the TLS handshake. When enabled, the handshake is aborted if the client certificate is not provided. Otherwise, the request does not fail when there is no client certificate.", "require-client-auth", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -135,7 +135,7 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(true),
 			},
 			"cache_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Session cache timeout", "cache-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of seconds that TLS sessions are allowed to remain in the TLS session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.", "cache-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("300").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -145,7 +145,7 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(300),
 			},
 			"cache_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Session cache size", "cache-size", "").AddIntegerRange(1, 500).AddDefaultValue("20").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of entries (multiplied by 1024) in the session cache. Enter a value in the range 1 - 500. The default value is 20.", "cache-size", "").AddIntegerRange(1, 500).AddDefaultValue("20").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -154,9 +154,9 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				},
 				Default: int64default.StaticInt64(20),
 			},
-			"ssl_options": models.GetDmSSLOptionsResourceSchema("Advanced TLS options", "ssl-options", "", false),
+			"ssl_options": models.GetDmSSLOptionsResourceSchema("Specify the options to apply to the TLS connection. These options have negative impact on the performance.", "ssl-options", "", false),
 			"max_ssl_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum TLS session duration", "max-duration", "").AddIntegerRange(1, 11520).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration of an established TLS session. The TLS connection terminates when the duration is reached. Enter a value in the range 1 - 11520. The default value is 60.", "max-duration", "").AddIntegerRange(1, 11520).AddDefaultValue("60").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -172,7 +172,7 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(false),
 			},
 			"number_of_renegotiation_allowed": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum client initiated renegotiations", "max-renegotiation-allowed", "").AddIntegerRange(0, 512).AddDefaultValue("0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of client initiated renegotiations to allow. Enter a value in the range 0 - 512. The default value is 0, which indicates TLS client initiated renegotiation is not allowed.", "max-renegotiation-allowed", "").AddIntegerRange(0, 512).AddDefaultValue("0").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -188,13 +188,13 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default:             booldefault.StaticBool(false),
 			},
 			"compression": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable compression", "compression", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable TLS compression. TLS compression in HTTPS is dangerous because the connection becomes vulnerable to the CRIME attack.", "compression", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"allow_legacy_renegotiation": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Allow legacy renegotiation", "allow-legacy-renegotiation", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow TLS renegotiation with TLS clients that do not support RFC 5746. By default, this support is disabled because renegotiation is vulnerable to man-in-the-middle attacks as documented in CVE-2009-3555. Renegotiation with TLS clients that support RFC 5746 is permitted regardless of the setting.", "allow-legacy-renegotiation", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -214,13 +214,13 @@ func (r *SSLServerProfileResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"prioritize_cha_cha": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Prioritize ChaCha20-Poly1305 cipher", "prioritize-chacha", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to move ChaCha20-Poly1305 cipher to the top of preference list sent to the client when this cipher is at the top of client cipher list When server cipher suite preferences is in effect, enabling this property temporarily moves the ChaCha20-Poly1305 cipher to the top of preference list when clients that present ChaCha20-Poly1305 cipher have this cipher at the top of their preference list. This setting allows the client to negotiate ChaCha20-Poly1305 cipher while other clients can use other ciphers.", "prioritize-chacha", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"sig_algs": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Signature algorithms", "sign-alg", "").AddStringEnum("ecdsa_secp256r1_sha256", "ecdsa_secp384r1_sha384", "ecdsa_secp521r1_sha512", "ed25519", "ed448", "ecdsa_sha224", "ecdsa_sha1", "rsa_pss_rsae_sha256", "rsa_pss_rsae_sha384", "rsa_pss_rsae_sha512", "rsa_pss_pss_sha256", "rsa_pss_pss_sha384", "rsa_pss_pss_sha512", "rsa_pkcs1_sha256", "rsa_pkcs1_sha384", "rsa_pkcs1_sha512", "rsa_pkcs1_sha224", "rsa_pkcs1_sha1", "dsa_sha256", "dsa_sha384", "dsa_sha512", "dsa_sha224", "dsa_sha1").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the signature algorithms to advertise and support. An empty list uses the default algorithms.", "sign-alg", "").AddStringEnum("ecdsa_secp256r1_sha256", "ecdsa_secp384r1_sha384", "ecdsa_secp521r1_sha512", "ed25519", "ed448", "ecdsa_sha224", "ecdsa_sha1", "rsa_pss_rsae_sha256", "rsa_pss_rsae_sha384", "rsa_pss_rsae_sha512", "rsa_pss_pss_sha256", "rsa_pss_pss_sha384", "rsa_pss_pss_sha512", "rsa_pkcs1_sha256", "rsa_pkcs1_sha384", "rsa_pkcs1_sha512", "rsa_pkcs1_sha224", "rsa_pkcs1_sha1", "dsa_sha256", "dsa_sha384", "dsa_sha512", "dsa_sha224", "dsa_sha1").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{

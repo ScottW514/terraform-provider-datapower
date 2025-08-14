@@ -3,12 +3,12 @@
 page_title: "datapower_mqmanagergroup Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  IBM MQ v9+ queue manager group
+  
 ---
 
 # datapower_mqmanagergroup (Data Source)
 
-IBM MQ v9+ queue manager group
+<p>An IBM MQ queue manager group enables automatic failover between queue managers when a queue manager becomes unavailable. When you define multiple backup queue managers, the first active queue manager in the group replaces the primary queue manager.</p><p>You can configure the queue manager to work with the multi-instance feature in the IBM MQ server. Connect the primary queue manager to one of the instances of a queue manager in the IBM MQ server, and the backup queue manager to the other instance. All connections for the queue manager group go to the queue manager connected to the active instance. If the active instance in the IBM MQ server fails, the queue manager connected to the standby instance automatically takes over all the data and logs from the queue manager connected to the original active instance.</p>
 
 ## Example Usage
 
@@ -39,9 +39,9 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `backup_queue_managers` (List of String) Backup queue managers
+- `backup_queue_managers` (List of String) Specify one or more queue managers to be backup queue managers for redundancy if the primary queue manager becomes unreachable.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `primary_queue_manager` (String) Primary queue manager
+- `primary_queue_manager` (String) Specify the queue manager to be the primary queue manager for the group. All connections for the group go to this queue manager. If the primary queue manager becomes unreachable, a backup queue manager is selected.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

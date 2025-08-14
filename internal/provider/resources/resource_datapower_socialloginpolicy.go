@@ -56,7 +56,7 @@ func (r *SocialLoginPolicyResource) Metadata(ctx context.Context, req resource.M
 
 func (r *SocialLoginPolicyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Social Login Policy", "social-login-policy", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("DataPower can act as an OpenID Connect client. In this case, a social login policy enables DataPower to redirect the user to a social login provider like Google for user authentication and consent for authorization.", "social-login-policy", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -81,65 +81,65 @@ func (r *SocialLoginPolicyResource) Schema(ctx context.Context, req resource.Sch
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter a descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"client_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "client-id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the ID of DataPower that is registered with the social login provider.", "client-id", "").String,
 				Required:            true,
 			},
 			"client_secret": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client secret", "client-secret", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the secret of DataPower that is registered with the social login provider.", "client-secret", "").String,
 				Required:            true,
 			},
 			"client_grant": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client grant type", "client-grant", "").AddStringEnum("code", "implicit", "password", "client", "code-id_token").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Controls how DataPower generates the client request to the social login provider.", "client-grant", "").AddStringEnum("code", "implicit", "password", "client", "code-id_token").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("code", "implicit", "password", "client", "code-id_token"),
 				},
 			},
 			"client_scope": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Scope", "client-scope", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the scope value that defines what access privileges are requested for access tokens, ID tokens, or both. Use space separated strings. For example, <tt>openid email</tt> .", "client-scope", "").String,
 				Optional:            true,
 			},
 			"client_redirect_uri": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client redirection URI", "client-redirect-uri", "").AddDefaultValue("URL-in/social-login-callback").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the URI that the social login policy redirects the client to after the client obtains a code or an access token. The URI must match with what is registered at the social login provider for DataPower as the OAuth/OIDC client. The URI is included in the OAuth/OIDC client request that DataPower generates.</p><p>Note that the social login provider Google mandates that the redirect URI must be a fully qualified host name instead of an IP address.</p><p>Note that the redirect URI should end with the suffix '/social-login-callback' in the pathname in order to differentiate between the callback requests and other types of requests coming into the service.</p><p>You can specify the value of this redirect URI in the following forms.</p><ul><li>Static string. Enter a static string as the redirect URI. Must end with the suffix '/social-login-callback'.</li><li>URL-in/suffix. In this case, it takes the value from the inbound URL service variable var://service/URL-in and then suffixes the value with whatever is specified after <tt>URL-in</tt> as the redirect URI. For example, the value of this property is 'URL-in/social-login-callback' and the incoming URL is 'https://datapower.ibm.com:10087/getresources', then the redirect URI is constructed as 'https://datapower.ibm.com:10087/getresources/social-login-callback'.</li><li>Context variable. You can set a context variable before you invoke this AAA action and specify the context variable name for this value. For example, var://context/AAA/social-login-redirect-uri</li></ul>", "client-redirect-uri", "").AddDefaultValue("URL-in/social-login-callback").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("URL-in/social-login-callback"),
 			},
 			"client_optional_query_params": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client Optional Query Parameters", "client-opt-query-params", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the optional query parameters to include in the initial OAuth/OIDC request that DataPower sends to the social login provider. Enter the optional query parameters as name=value pairs and separate each pair with an ampersand. For example, prompt=consent&amp;login_hint=jsmith@example.com&amp;openid.realm=example.comi&amp;hd=example.com.", "client-opt-query-params", "").String,
 				Optional:            true,
 			},
 			"client_ssl_profile": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "client-ssl", "sslclientprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the TLS client profile to secure connections when DataPower obtains an access token from the social login provider.", "client-ssl", "sslclientprofile").String,
 				Required:            true,
 			},
 			"social_provider": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Social login provider", "provider", "").AddStringEnum("google", "oidc", "facebook", "custom").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Controls which social login provider to use.", "provider", "").AddStringEnum("google", "oidc", "facebook", "custom").String,
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("google", "oidc", "facebook", "custom"),
 				},
 			},
 			"provider_az_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authorization endpoint URL", "provider-az-endpoint", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the provider's endpoint URL that accepts an authorization request from a client to perform social login with the provider. When the provider is Google, you can retrieve the authorization endpoint URL from the Discovery document for Google's OpenID Connect service.", "provider-az-endpoint", "").String,
 				Required:            true,
 			},
 			"provider_token_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Token endpoint URL", "provider-token-endpoint", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the provider's endpoint URL that accepts an authorization grant, or code, from a client in exchange for an access token from the social login provider. When the provider is Google, you can retrieve the token endpoint URL from the Discovery document for Google's OpenID Connect service.", "provider-token-endpoint", "").String,
 				Required:            true,
 			},
 			"validate_jwt_token": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable JWT token validation", "validate-jwt-token", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Controls whether to validate the JWT token (ID token)from the provider. If yes, it is recommended that you validate the ID token that is obtained from Google by defining the following settings in the JWT Validator configuration.</p><p><ol><li>Verify the signature by fetching the certs from https://www.googleapis.com/oauth2/v3/certs</li><li>Verify that the <tt>aud</tt> claim matches the client ID of DataPower.</li><li>Verify that the <tt>iss</tt> claim matches accounts.google.com or https://accounts.google.com</li></ol></p><p>For other recommendations on validating the ID token from Google, see https://developers.google.com/identity/protocols/OpenIDConnect.</p>", "validate-jwt-token", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"jwt_validator": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("JWT Validator", "jwt-validator", "aaajwtvalidator").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the JWT Validator configuration that defines how to validate and verify the ID token.", "jwt-validator", "aaajwtvalidator").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -3,13 +3,13 @@
 page_title: "datapower_webtokenservice Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web Token Service
+  The web token service provides on-box HTTP services.
   CLI Alias: web-token-serviceAccepted Dependency Actions: quiesce
 ---
 
 # datapower_webtokenservice (Resource)
 
-Web Token Service
+The web token service provides on-box HTTP services.
   - CLI Alias: `web-token-service`
   - Accepted Dependency Actions: `quiesce`
 
@@ -36,64 +36,64 @@ resource "datapower_webtokenservice" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `front_side` (Attributes List) Source addresses
+- `front_side` (Attributes List) Define the addresses and ports that the service listens on. You can define listening sources for HTTP and HTTPS requests. For HTTPS request, set the listening source to use TLS parameter and assign the TLS profile.
   - CLI Alias: `listen-on` (see [below for nested schema](#nestedatt--front_side))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 
 ### Optional
 
-- `debug_history` (Number) Transaction history
+- `debug_history` (Number) Set the number of records for transaction diagnostic mode in the probe. Enter a value in the range 10 - 250. The default value is 25.
   - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
-- `debug_mode` (String) Probe setting
+- `debug_mode` (String) <p>Select the diagnostic mode for processing policies. When enabled, you can view details about the state of variables and contexts for a captured transaction in the probe. The default value is <tt>off</tt> .</p><p>Transaction diagnostic mode is not intended for use in a production environment. Transaction diagnostic mode consumes significant resources that can slow down transaction processing.</p>
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
   - Default value: `off`
-- `delay_errors` (Boolean) Delay error messages
+- `delay_errors` (Boolean) The timing difference of the error messages returned after a decryption action can provide an attacker with enough information to determine the contents of the plain-text data. When enabled, the default, the appliance delays error messages for the defined duration. When disabled, the appliance does not delay error messages.
   - CLI Alias: `delay-errors`
   - Default value: `true`
-- `delay_errors_duration` (Number) Duration to delay error messages
+- `delay_errors_duration` (Number) When enabling the delay of error messages, specify the delay duration in milliseconds. If delaying messages for 3000 ms, the appliance will not send error messages to the client until 3 seconds have elapsed since the appliance performed decryption on the requests. Enter any value in the range 250 - 300000. The default value is 1000.
   - CLI Alias: `delay-errors-duration`
   - Range: `250`-`300000`
   - Default value: `1000`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `front_http_version` (String) HTTP version to client
+- `front_http_version` (String) Set the HTTP version for client-to-service connections. If the client submits an HTTP/1.0 request, the service on the DataPower appliance always replies with HTTP/1.0 compatible responses regardless of this setting. The default version is HTTP 1.1.
   - CLI Alias: `http-front-version`
   - Choices: `HTTP/1.0`, `HTTP/1.1`
   - Default value: `HTTP/1.1`
-- `front_persistent_timeout` (Number) Front persistent timeout
+- `front_persistent_timeout` (Number) Set the inter-transaction timeout for Web Token Service to client connections. This value is the maximum idle time to allow between the completion of a TCP transaction and the initiation of a new TCP transaction on the Web Token Service to client connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.
   - CLI Alias: `front-persistent-timeout`
   - Range: `0`-`86400`
   - Default value: `180`
-- `front_timeout` (Number) Front side timeout
+- `front_timeout` (Number) Set the intra-transaction timeout for Web Token Service to client connections. This value is the maximum idle time to allow in a transaction on the Web Token Service to client connection. This timer monitors idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.
   - CLI Alias: `front-timeout`
   - Range: `1`-`86400`
   - Default value: `120`
-- `http_client_ip_label` (String) HTTP client IP label
+- `http_client_ip_label` (String) Set the HTTP header that contains the client IP address. When defined, the client IP address is read from this HTTP header. This IP address will then be used for monitoring and logging. Retain the default value <tt>X-Client-IP</tt> or specify another value; for example, <tt>X-Forwarded-For</tt> .
   - CLI Alias: `http-client-ip-label`
   - Default value: `X-Client-IP`
-- `http_log_cor_id_label` (String) HTTP global transaction ID label
+- `http_log_cor_id_label` (String) Enter the name of an HTTP Header to read to determine the global transaction ID for chained services. This value defaults to X-Global-Transaction-ID.
   - CLI Alias: `http-global-tranID-label`
   - Default value: `X-Global-Transaction-ID`
-- `priority` (String) Service priority
+- `priority` (String) Set the service-level priority. When resources are in high demand, the appliance handles transactions for higher priority services over lower priority services.
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
-- `request_type` (String) Request type
+- `request_type` (String) Characterizes the traffic that originates from the client. The default is Non-XML.
   - CLI Alias: `request-type`
   - Choices: `soap`, `xml`, `unprocessed`, `preprocessed`, `json`
   - Default value: `preprocessed`
-- `rewrite_errors` (Boolean) Rewrite error messages
+- `rewrite_errors` (Boolean) Error messages after a decryption action can provide an attacker who is using the padding oracle attack method with enough information to determine the contents of the plain-text data. When enabled, the default, the client receives error messages without the internal information that could lead to a discovery. When disabled, the client receives the original message with this information.
   - CLI Alias: `rewrite-errors`
   - Default value: `true`
-- `style_policy` (String) Processing policy
+- `style_policy` (String) Assign the processing policy to the service. The processing policy defines the actions to perform on security token requests.
   - CLI Alias: `stylepolicy`
   - Reference to: `datapower_stylepolicy:id`
   - Default value: `default`
-- `user_summary` (String) Comments
+- `user_summary` (String) Specify a brief, descriptive comment.
   - CLI Alias: `summary`
-- `xml_manager` (String) XML manager
+- `xml_manager` (String) Assign the XML manager that obtains and manages documents on behalf of the service. The user agent, which is referenced by this XML manager, controls access to remote destinations. Unless you have service-specific needs, use the <tt>default</tt> XML manager.
   - CLI Alias: `xml-manager`
   - Reference to: `datapower_xmlmanager:id`
   - Default value: `default`

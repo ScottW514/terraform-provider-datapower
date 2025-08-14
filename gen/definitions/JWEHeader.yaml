@@ -1,51 +1,52 @@
 name: JWEHeader
-description: 'JWE Header'
-cli_alias: 'jwe-header'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/JWEHeader'
+description: JWE header object.
+cli_alias: jwe-header
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/JWEHeader
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestJWEHeader"'
-    test_expect_ds: '"AccTest_JWEHeader"'
-    example: 'JWEHeaderName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: JWEProtectedHeader
-    type: List
-    element_type: DmJOSEHeader
-    description: 'Protected Header'
-    cli_alias: protected-header
-  - name: JWESharedUnprotectedHeader
-    type: List
-    element_type: DmJOSEHeader
-    description: 'Shared Unprotected Header'
-    cli_alias: shared-unprotected-header
-  - name: Recipient
-    type: String
-    reference_to: JWERecipient
-    required: true
-    test_value: '"AccTest_JWERecipient"'
-    test_bed_value: 'datapower_jwerecipient.acc_test.id'
-    description: 'Recipient'
-    cli_alias: recipient
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestJWEHeader"'
+  test_expect_ds: '"AccTest_JWEHeader"'
+  example: JWEHeaderName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the configuration.
+  cli_alias: summary
+- name: JWEProtectedHeader
+  type: List
+  element_type: DmJOSEHeader
+  description: Add a JWE protected header to a JWE encrypt action.
+  cli_alias: protected-header
+- name: JWESharedUnprotectedHeader
+  type: List
+  element_type: DmJOSEHeader
+  description: Add a JWE shared unprotected header to a JWE encrypt action.
+  cli_alias: shared-unprotected-header
+- name: Recipient
+  type: String
+  reference_to: JWERecipient
+  required: true
+  test_value: '"AccTest_JWERecipient"'
+  test_bed_value: datapower_jwerecipient.acc_test.id
+  description: Add a JWE recipient object to a JWE encrypt action.
+  cli_alias: recipient

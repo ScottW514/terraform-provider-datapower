@@ -41,21 +41,21 @@ Read-Only:
 - `ack_requested` (String) Request acknowledgment
 - `ack_signature_requested` (String) Request signed acknowledgment
 - `app_domain` (String) The name of the application domain the object belongs to
-- `connection_timeout` (Number) Connection timeout
-- `dest_endpoint_url` (String) Destination URL
-- `duplicate_elimination` (String) Duplicate elimination
+- `connection_timeout` (Number) Specify the duration in seconds to maintain an idle connection. Enter a value in the range 3 - 7200. The default value is 300.
+- `dest_endpoint_url` (String) Specify the destination URL for sending the message to the external party endpoint. For load distribution, use the name of the load-balancing group instead of the address-port pair in the URL.
+- `duplicate_elimination` (String) For an outbound ebMS message, specify whether the internal sending party requests the external receiving party to check duplicate elimination. The request is made by presenting the <tt>DuplicateElimination</tt> element in the <tt>MessageHeader</tt> element in the ebMS SOAP header. <p>When imported from CPA, the <tt>duplicateElimination</tt> attribute on the internal party <tt>DeliveryChannel</tt> element in the <tt>MessagingCharacteristics</tt> element.</p>
 - `enabled_doc_type` (Attributes) Enabled document types
   - CLI Alias: `enabled-doc-type` (see [below for nested schema](#nestedatt--result--enabled_doc_type))
 - `encrypt_algorithm` (String) Encryption algorithm
 - `encrypt_cert` (String) Encryption certificate
-- `encryption_required` (Boolean) Require encryption
+- `encryption_required` (Boolean) Specify whether to encrypt outbound messages. Encryption does not apply to MSH level signals.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `include_time_to_live` (Boolean) Include TimeToLive element
-- `max_retries` (Number) Retransmit attempts
+- `include_time_to_live` (Boolean) Specify whether to include the <tt>TimeToLive</tt> element in the outbound messages. This element indicates when the message expires. The receiving partner can accept the message only when it has not expired.
+- `max_retries` (Number) Specify the number of attempts to retransmit an unacknowledged message. Enter a value in the range 1 - 30. The default value is 3.
 - `password_alias` (String) Password alias
-- `persist_duration` (Number) Persistence duration
+- `persist_duration` (Number) Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
 - `retry` (Boolean) Retransmit unacknowledged messages
-- `retry_interval` (Number) Retransmit interval
+- `retry_interval` (Number) Specify the interval in seconds between retransmit attempts. Enter a value in the range 1 - 86400. The default value in 1800.
 - `sign_digest_algorithm` (String) Signing digest algorithm
 - `sign_id_cred` (String) Signature identification credentials
 - `signature_algorithm` (String) Signature algorithm

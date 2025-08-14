@@ -57,7 +57,7 @@ func (d *ImportPackageDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *ImportPackageDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Import configuration file",
+		MarkdownDescription: "An import package allows the system to import a configuration package from an external server, such as a centralized configuration server, when the configuration is reloaded (such as during a restart). This package can optionally overwrite existing files or objects. <p>An import package specifies a source, content type, and import parameters for a single bundle.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,19 +81,19 @@ func (d *ImportPackageDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"url": schema.StringAttribute{
-							MarkdownDescription: "URL",
+							MarkdownDescription: "Specify the URL of the import package. The tool does not support SCP and SFTP protocols. All other URL protocols are available; for example, HTTP, HTTPS, or FTP.",
 							Computed:            true,
 						},
 						"import_format": schema.StringAttribute{
-							MarkdownDescription: "Format",
+							MarkdownDescription: "Specify the format of the import package. The default value is ZIP.",
 							Computed:            true,
 						},
 						"overwrite_files": schema.BoolAttribute{
-							MarkdownDescription: "Overwrite files",
+							MarkdownDescription: "Specify whether to overwrite existing files. When enabled, files in the package overwrite any file of the same path and name that already exist. The default behavior is to overwrite files.",
 							Computed:            true,
 						},
 						"overwrite_objects": schema.BoolAttribute{
-							MarkdownDescription: "Overwrite objects",
+							MarkdownDescription: "Specify whether to overwrite existing objects. When enabled, objects in the package overwrite any object of the same class and name that already exist. The default behavior is to overwrite objects.",
 							Computed:            true,
 						},
 						"destination_domain": schema.StringAttribute{
@@ -109,11 +109,11 @@ func (d *ImportPackageDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"local_ip_rewrite": schema.BoolAttribute{
-							MarkdownDescription: "Local IP rewrite",
+							MarkdownDescription: "Specify whether to rewrite local IP addresses on import. When enabled, local IP addresses in the import package are rewritten to match the local configuration on import. In other words, a service bound to eth1 in the import package are rewritten to bind to eth1 on the local system on import. The default behavior is to rewrite IP addresses.",
 							Computed:            true,
 						},
 						"on_startup": schema.BoolAttribute{
-							MarkdownDescription: "Import on startup",
+							MarkdownDescription: "Specify whether to import the import package on startup. The default behavior is to import on startup. <ul><li>When enabled, the import package is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

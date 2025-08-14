@@ -57,7 +57,7 @@ func (d *WebAppSessionPolicyDataSource) Metadata(_ context.Context, req datasour
 
 func (d *WebAppSessionPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Session Management Policy",
+		MarkdownDescription: "Session policy - specify a series of start pages that the a web application firewall protected host use as initial browsing points. Accessing these pages issues a signed and time limited cookie which must be presented for accessing any pages not designated as a starting point.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,19 +81,19 @@ func (d *WebAppSessionPolicyDataSource) Schema(ctx context.Context, req datasour
 							Computed:            true,
 						},
 						"auto_renew": schema.BoolAttribute{
-							MarkdownDescription: "Auto Renew",
+							MarkdownDescription: "If this property is enabled, the session lifetime is renewed on each use of the session. Otherwise the session lifetime is the total amount of time allowed before returning to the login sections.",
 							Computed:            true,
 						},
 						"timeout": schema.Int64Attribute{
-							MarkdownDescription: "Session Lifetime",
+							MarkdownDescription: "The login cookie is only good for the amount of time specified by this property. It may be automatically renewed during activity depending on the value of the Auto Renew property.",
 							Computed:            true,
 						},
 						"address_agnostic_cookie": schema.BoolAttribute{
-							MarkdownDescription: "Address Independent Sessions",
+							MarkdownDescription: "Normally the session cookie contains the client IP address and this prevents them from using the session on any other host. Some proxy server environments may make this undesirable. Turning this property on will make the session cookie address independent.",
 							Computed:            true,
 						},
 						"start_matches": schema.StringAttribute{
-							MarkdownDescription: "Start Pages",
+							MarkdownDescription: "Select the matching rule that is used to identify start pages. Start pages are pages that can be accessed without a session cookie and if their security policy passes will issue a session cookie.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

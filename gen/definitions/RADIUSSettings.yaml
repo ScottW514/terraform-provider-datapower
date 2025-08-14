@@ -1,43 +1,49 @@
 name: RADIUSSettings
-description: 'RADIUS settings (`default` domain only)'
-cli_alias: 'radius'
-cmd_group: 'radius'
-rest_endpoint: '/mgmt/config/default/RADIUSSettings/RADIUS-Settings'
+description: RADIUS settings define RADIUS servers. You can use RADIUS servers to
+  authenticate access with RBM or in a AAA policy. The DataPower Gateway is a client
+  to RADIUS servers.
+cli_alias: radius
+cmd_group: radius
+rest_endpoint: /mgmt/config/default/RADIUSSettings/RADIUS-Settings
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: IdgId
-    tf_name: id
-    type: String
-  - name: Timeout
-    type: Int64
-    minimum: 1
-    maximum: 30000
-    default: 1000
-    description: 'Timeout'
-    cli_alias: timeout
-  - name: Retries
-    type: Int64
-    minimum: 1
-    maximum: 10
-    default: 3
-    description: 'Retries'
-    cli_alias: retries
-# DEPRECATED
-#  - name: Servers
-  - name: AAAServers
-    type: List
-    element_type: DmRadiusServer
-    description: 'AAA and RBM'
-    cli_alias: aaaserver
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: IdgId
+  tf_name: id
+  type: String
+- name: Timeout
+  type: Int64
+  minimum: 1
+  maximum: 30000
+  default: 1000
+  description: Specify the RADIUS retransmit interval in milliseconds. This timeout
+    is the duration that the RADIUS client waits before an unacknowledged request
+    is retransmitted. Enter a value in the range of 1 - 30000. The default value is
+    1000.
+  cli_alias: timeout
+- name: Retries
+  type: Int64
+  minimum: 1
+  maximum: 10
+  default: 3
+  description: Specify the maximum number of times that the RADIUS client can retransmit
+    an unacknowledged request to a server. Enter a value in the range 1 - 10. The
+    default value is 3.
+  cli_alias: retries
+- name: AAAServers
+  type: List
+  element_type: DmRadiusServer
+  description: AAA and RBM
+  cli_alias: aaaserver

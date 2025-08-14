@@ -57,7 +57,7 @@ func (d *JOSESignatureIdentifierDataSource) Metadata(_ context.Context, req data
 
 func (d *JOSESignatureIdentifierDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Signature Identifier",
+		MarkdownDescription: "JOSE Signature Identifier object for the JSON Web Verify.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,28 +77,28 @@ func (d *JOSESignatureIdentifierDataSource) Schema(ctx context.Context, req data
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A descriptive summary for the configuration.",
 							Computed:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: "Key Material Type",
+							MarkdownDescription: "Key material type used to verify the signature.",
 							Computed:            true,
 						},
 						"ss_key": schema.StringAttribute{
-							MarkdownDescription: "Key Material",
+							MarkdownDescription: "Use the shared secret key to verify the signature.",
 							Computed:            true,
 						},
 						"certificate": schema.StringAttribute{
-							MarkdownDescription: "Key Material",
+							MarkdownDescription: "Use the certificate to verify the signature.",
 							Computed:            true,
 						},
 						"valid_algorithms": schema.ListAttribute{
-							MarkdownDescription: "Valid algorithms",
+							MarkdownDescription: "Specifies an array of algorithm values that are valid for signature verification. When specified, the JWS <tt>alg</tt> header parameter value must match a value in this set. By default, all allowed JWS <tt>alg</tt> header parameters values are valid.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"header_param": schema.ListNestedAttribute{
-							MarkdownDescription: "Header Parameters",
+							MarkdownDescription: "The JOSE header parameters used to identify the signature.",
 							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
 							Computed:            true,
 						},

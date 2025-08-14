@@ -57,7 +57,7 @@ func (r *XACMLPDPResource) Metadata(ctx context.Context, req resource.MetadataRe
 
 func (r *XACMLPDPResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("XACML Policy Decision Point", "xacml-pdp", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The XACML policies can be evaluated on a DataPower device, This on-box XACML Policy Decision Point (PDP) allows customers to define the necessary information so that it can evaluate the corresponding XACML policies against a XACML request for an XACML Policy Enforcement Point (PEP). The DataPower PEP is implemented with AAA action.", "xacml-pdp", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -86,34 +86,34 @@ func (r *XACMLPDPResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 			},
 			"equal_policies": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Evaluate Individual Policies Equally", "equal-policies", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("In case of a top level policy-set is undefined, all policies are evaluated equally, PDP will use the PolicyCombiningAlg for the final decision.", "equal-policies", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"general_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("General Policy File", "general-policy", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The URL of top level XACML policy/policy-set file, if there is one. This file may reside on the local device (typically as local:///file) or on a remote server. Attempts to retrieve this file from remote servers may be governed by the User Agent in use by the XML Manager of the service. This may be useful for TLS connections, for example.", "general-policy", "").String,
 				Optional:            true,
 			},
 			"combining_alg": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Dependent Policies Combining", "combining-alg", "").AddStringEnum("first-applicable", "deny-overrides", "permit-overrides", "only-one-applicable").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the policy-combining algorithm when not using a top-level comprehensive XACML policy file. The default is First Applicable.", "combining-alg", "").AddStringEnum("first-applicable", "deny-overrides", "permit-overrides", "only-one-applicable").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("first-applicable", "deny-overrides", "permit-overrides", "only-one-applicable"),
 				},
 			},
 			"dependent_policy": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Dependent Policy Files", "dependent-policy", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Some of the XACML Policies/Policy-Sets are indirectly needed when the PDP evaluates a request. They are called Dependent Policy Files. Specify their URLs with this setting.", "dependent-policy", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"directory": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Other Policy Files from Directory", "directory", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("List directories that contain dependent files. In these directories, all files with the xml or xacml extension are available to the XACML PDP. Use this option when there are too many policy files to identify independently.", "directory", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"cache_ttl": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XACML Policies Cache Lifetime", "cache-ttl", "").AddIntegerRange(0, 2678400).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This sets the explicit time to live (TTL) for cached XACML policies, either raw or compiled. The default value 0 means the cache never expire unless PDP explicitly refreshes the policies. The maximum TTL is 31 days (2,678,400 seconds).", "cache-ttl", "").AddIntegerRange(0, 2678400).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 

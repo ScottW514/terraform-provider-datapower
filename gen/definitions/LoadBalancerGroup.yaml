@@ -1,122 +1,159 @@
 name: LoadBalancerGroup
-description: 'Load Balancer Group'
-cli_alias: 'loadbalancer-group'
-cmd_group: 'load-balancer'
-rest_endpoint: '/mgmt/config/{domain}/LoadBalancerGroup'
+description: '<p>The DataPower device distributes traffic to members of a Load Balancer
+  Group. These are back end servers and not additional DataPower devices. A Load Balancer
+  Group lists members of a virtual server group and sets the algorithm for balancing
+  them. Periodic health checks can be performed. Load Balancers may also be used to
+  provide redundant LDAP server access.</p><p>When created, a DataPower service can
+  use a Load Balancer Group by associating it with an XML manager that is associated
+  with this service.</p><p>The back end destination URL is set to the name of the
+  Load Balancer Group (example: "BackEndServers").</p>'
+cli_alias: loadbalancer-group
+cmd_group: load-balancer
+rest_endpoint: /mgmt/config/{domain}/LoadBalancerGroup
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestLoadBalancerGroup"'
-    test_expect_ds: '"AccTest_LoadBalancerGroup"'
-    example: 'LoadBalancerGroupName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Algorithm
-    type: String
-    enum:
-      - 'round-robin'
-      - 'weighted-round-robin'
-      - 'hash'
-      - 'least-connections'
-      - 'first-alive'
-      - 'weighted-least-connections'
-    required: true
-    default: 'round-robin'
-    description: 'Algorithm'
-    cli_alias: algorithm
-  - name: RetrieveInfo
-    type: Bool
-    default: false
-    required: true
-    description: 'Retrieve Workload Management Information'
-    cli_alias: retrieve-wlm-info
-  - name: WLMRetrieval
-    type: String
-    enum:
-      - 'use-websphere'
-    default: 'use-websphere'
-    description: 'Workload Management Retrieval'
-    cli_alias: wlm-type
-  - name: WebSphereCellConfig
-    type: String
-    reference_to: WCCService
-    description: 'WebSphere Cell'
-    cli_alias: websphere-cell
-  - name: WLMGroup
-    type: String
-    description: 'Workload Management Group Name'
-    cli_alias: wlm-group
-  - name: WLMTransport
-    type: String
-    enum:
-      - 'http'
-      - 'https'
-    default: 'http'
-    description: 'Protocol'
-    cli_alias: wlm-transport
-  - name: Damp
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    required: true
-    default: 120
-    description: 'Damp Time'
-    cli_alias: damp
-  - name: NeverReturnSickMember
-    type: Bool
-    default: false
-    description: 'Do not Bypass Down State'
-    cli_alias: giveup-when-all-members-down
-  - name: LBGroupMembers
-    type: List
-    element_type: DmLBGroupMember
-    description: 'Members'
-    cli_alias: server
-  - name: TryEveryServerBeforeFailing
-    type: Bool
-    default: false
-    description: 'Try Every Server Before Failing'
-    cli_alias: try-every-server
-  - name: LBGroupChecks
-    dm_type: DmLBGroupCheck
-    description: 'Health Checks'
-    cli_alias: health-check
-  - name: MasqueradeMember
-    type: Bool
-    default: false
-    description: 'Masquerade As Group Name'
-    cli_alias: masquerade
-  - name: ApplicationRouting
-    type: Bool
-    default: false
-    description: 'Enable Application Routing'
-    cli_alias: appl-routing
-  - name: LBGroupAffinityConf
-    dm_type: DmLBGroupAffinity
-    description: 'Session Affinity'
-    cli_alias: session-affinity
-  - name: MonitoredCookies
-    type: List
-    element_type: String
-    description: 'Monitored Cookies'
-    cli_alias: monitored-cookie
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestLoadBalancerGroup"'
+  test_expect_ds: '"AccTest_LoadBalancerGroup"'
+  example: LoadBalancerGroupName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Algorithm
+  type: String
+  enum:
+  - round-robin
+  - weighted-round-robin
+  - hash
+  - least-connections
+  - first-alive
+  - weighted-least-connections
+  required: true
+  default: round-robin
+  description: Select the algorithm to use to balance the real servers.
+  cli_alias: algorithm
+- name: RetrieveInfo
+  type: Bool
+  default: false
+  required: true
+  description: Use this setting to control whether this Load Balancer Group has membership
+    and weight information automatically retrieved from the work load management repository
+    WebSphere Cell. When disabled, the static configuration is used.
+  cli_alias: retrieve-wlm-info
+- name: WLMRetrieval
+  type: String
+  enum:
+  - use-websphere
+  default: use-websphere
+  description: Contains the back end work load management repository selection type.
+    Select 'WebSphere Cell' if your back-end is a WebSphere Application Server (WAS)
+    Network Deployment (ND) or WAS Virtual Enterprise (VE).
+  cli_alias: wlm-type
+- name: WebSphereCellConfig
+  type: String
+  reference_to: WCCService
+  description: If you selected 'WebSphere Cell' for Workload Management Retrieval,
+    you need to select a WebSphere Cell object that retrieves this information. If
+    no objects are available in the pull down, you must create one.
+  cli_alias: websphere-cell
+- name: WLMGroup
+  type: String
+  description: The Workload Management Group Name is used to define a group. In a
+    WebSphere Application Server environment, the back end group is a cluster name.
+    Once specified, the Load Balancer Group will be populated with the members and
+    weights retrieved from the back end.
+  cli_alias: wlm-group
+- name: WLMTransport
+  type: String
+  enum:
+  - http
+  - https
+  default: http
+  description: Specify either HTTP or HTTPS for the Load Balancer Group protocol.
+    This protocol is used to forward traffic between the DataPower Gateway and the
+    members of the Load Balancer Group.
+  cli_alias: wlm-transport
+- name: Damp
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  required: true
+  default: 120
+  description: When a real server is observed to be non-functioning, it is temporarily
+    disabled. When the damp time has elapsed, it is re-enabled. Allowable values are
+    in the range 1 - 86400.
+  cli_alias: damp
+- name: NeverReturnSickMember
+  type: Bool
+  default: false
+  description: During normal operation, when all members of the load-balancing group
+    are down and a new request for that group is made, the first member of the group
+    is automatically selected. If this property is turned on, no attempt will be made
+    to connect under these circumstances.
+  cli_alias: giveup-when-all-members-down
+- name: LBGroupMembers
+  type: List
+  element_type: DmLBGroupMember
+  description: Members
+  cli_alias: server
+- name: TryEveryServerBeforeFailing
+  type: Bool
+  default: false
+  description: This property applies only when none of the group members are in the
+    "up" state. If this value is set, every server in the group is tried before failing
+    the connection attempt. It is a "last best-effort" attempt.
+  cli_alias: try-every-server
+- name: LBGroupChecks
+  dm_type: DmLBGroupCheck
+  description: The members of a Load Balancer Group can be periodically polled to
+    verify the health of the server. If the server is found to be unresponsive, it
+    is removed from the list of actively available servers until the unresponsive
+    server passes a health check.
+  cli_alias: health-check
+- name: MasqueradeMember
+  type: Bool
+  default: false
+  description: If you set this value, the host name presented to the server will be
+    the name of the group instead of the name of the member being used for that specific
+    transaction.
+  cli_alias: masquerade
+- name: ApplicationRouting
+  type: Bool
+  default: false
+  description: <p>If set to on, the load balancer group will route to the back end
+    cluster depending on the following conditions.</p><ul><li>the application for
+    which this request is targeted</li><li>the application status on the back end
+    servers</li></ul><p>Application Routing is required for Application Edition (group
+    or atomic) rollout. If you need Application Edition support, set the Update Type
+    to Subscribe in the WebSphere Cell object.</p>
+  cli_alias: appl-routing
+- name: LBGroupAffinityConf
+  dm_type: DmLBGroupAffinity
+  description: Session affinity allows applications to maintain sessions with clients.
+  cli_alias: session-affinity
+- name: MonitoredCookies
+  type: List
+  element_type: String
+  description: The DataPower Gateway enforces session affinity when the application
+    server attempts to establish session affinity using one of these cookie names.
+  cli_alias: monitored-cookie

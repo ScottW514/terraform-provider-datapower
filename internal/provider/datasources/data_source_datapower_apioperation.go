@@ -57,7 +57,7 @@ func (d *APIOperationDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *APIOperationDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API operation",
+		MarkdownDescription: "An API operation describes the actions to perform against the resource.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -89,16 +89,16 @@ func (d *APIOperationDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"remove_consume": schema.BoolAttribute{
-							MarkdownDescription: "Remove consume",
+							MarkdownDescription: "Specify whether to remove the API-level consume declaration. By default, the API-level consume declaration is applied to the operation. When removed, the operation can always be performed regardless of the content type.",
 							Computed:            true,
 						},
 						"consume": schema.ListAttribute{
-							MarkdownDescription: "Consumes",
+							MarkdownDescription: "Specify MIME types that the operation can consume. This setting overrides the API-level consume declaration that is defined in the API definition.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"produce": schema.ListAttribute{
-							MarkdownDescription: "Produces",
+							MarkdownDescription: "Specify MIME types that the operation can produce. This setting overrides the API-level produce declaration that is defined in the API definition.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
@@ -112,16 +112,16 @@ func (d *APIOperationDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"parameter": schema.ListNestedAttribute{
-							MarkdownDescription: "Parameters",
+							MarkdownDescription: "Specify applicable parameters for the API operation. This setting overrides the setting in the API path configuration for the same parameter.",
 							NestedObject:        models.DmAPIParameterDataSourceSchema,
 							Computed:            true,
 						},
 						"remove_security": schema.BoolAttribute{
-							MarkdownDescription: "Remove security",
+							MarkdownDescription: "Specify whether to remove the API-level security declaration that is defined for the API. By default, the API-level security declaration is applied to the operation. When removed, the operation can be performed without security check.",
 							Computed:            true,
 						},
 						"security": schema.ListAttribute{
-							MarkdownDescription: "Security requirements",
+							MarkdownDescription: "Specify the alternative security requirements to enforce for the operation (that is, there is a logical OR between the security requirements). This setting overrides any declared API-level security.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

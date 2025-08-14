@@ -3,12 +3,12 @@
 page_title: "datapower_policyparameters Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Policy Parameters
+  Configuration to persist the values of ws-policy parameters.
 ---
 
 # datapower_policyparameters (Data Source)
 
-Policy Parameters
+Configuration to persist the values of ws-policy parameters.
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `policy_parameter` (Attributes List) Policy Parameter (see [below for nested schema](#nestedatt--result--policy_parameter))
+- `policy_parameter` (Attributes List) A key-value pair. The key specifies a policy parameter in a policy mapping stylesheet formatted {policy-domain-ns}key. (see [below for nested schema](#nestedatt--result--policy_parameter))
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

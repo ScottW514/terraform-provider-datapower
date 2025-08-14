@@ -3,13 +3,13 @@
 page_title: "datapower_assemblyactionratelimit Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Rate limit assembly action
+  The rate limit assembly action applies rate limit, burst limits, count limits, or any combination to subsequent actions in the assembly. This action is not supported in IBM Cloud. Any assembly that includes it will fail.
   CLI Alias: assembly-rate-limit
 ---
 
 # datapower_assemblyactionratelimit (Resource)
 
-Rate limit assembly action
+The rate limit assembly action applies rate limit, burst limits, count limits, or any combination to subsequent actions in the assembly. <p>This action is not supported in IBM Cloud. Any assembly that includes it will fail.</p>
   - CLI Alias: `assembly-rate-limit`
 
 ## Example Usage
@@ -32,17 +32,17 @@ resource "datapower_assemblyactionratelimit" "test" {
 
 ### Optional
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
   - CLI Alias: `debug`
   - Default value: `false`
 - `burst_limit` (List of String) Burst limits
   - CLI Alias: `burst-limit`
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
   - CLI Alias: `correlation-path`
 - `count_limit` (Attributes List) Count limits
   - CLI Alias: `count-limit` (see [below for nested schema](#nestedatt--count_limit))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `group_action` (String) Group action
+- `group_action` (String) Specify the action to take for rate limits in the group. Each rate limit definition that the group references is consumed or replenished based on this setting. The default value is consume.
   - CLI Alias: `group-action`
   - Choices: `consume`, `replenish`
   - Default value: `consume`
@@ -53,7 +53,7 @@ resource "datapower_assemblyactionratelimit" "test" {
 - `rate_limit_group` (String) Rate limit group
   - CLI Alias: `rate-limit-group`
   - Reference to: `datapower_ratelimitdefinitiongroup:id`
-- `source` (String) Source
+- `source` (String) Specify the source of the limits to apply to the assembly. By default, rate limits and burst limits in the API plan are applied.
   - CLI Alias: `source`
   - Choices: `plan-default`, `collection-named`, `plan-named`, `gateway-named`, `domain-named`, `group`
   - Default value: `plan-default`

@@ -57,7 +57,7 @@ func (d *LoadBalancerGroupDataSource) Metadata(_ context.Context, req datasource
 
 func (d *LoadBalancerGroupDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Load Balancer Group",
+		MarkdownDescription: "<p>The DataPower device distributes traffic to members of a Load Balancer Group. These are back end servers and not additional DataPower devices. A Load Balancer Group lists members of a virtual server group and sets the algorithm for balancing them. Periodic health checks can be performed. Load Balancers may also be used to provide redundant LDAP server access.</p><p>When created, a DataPower service can use a Load Balancer Group by associating it with an XML manager that is associated with this service.</p><p>The back end destination URL is set to the name of the Load Balancer Group (example: \"BackEndServers\").</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,35 +81,35 @@ func (d *LoadBalancerGroupDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"algorithm": schema.StringAttribute{
-							MarkdownDescription: "Algorithm",
+							MarkdownDescription: "Select the algorithm to use to balance the real servers.",
 							Computed:            true,
 						},
 						"retrieve_info": schema.BoolAttribute{
-							MarkdownDescription: "Retrieve Workload Management Information",
+							MarkdownDescription: "Use this setting to control whether this Load Balancer Group has membership and weight information automatically retrieved from the work load management repository WebSphere Cell. When disabled, the static configuration is used.",
 							Computed:            true,
 						},
 						"wlm_retrieval": schema.StringAttribute{
-							MarkdownDescription: "Workload Management Retrieval",
+							MarkdownDescription: "Contains the back end work load management repository selection type. Select 'WebSphere Cell' if your back-end is a WebSphere Application Server (WAS) Network Deployment (ND) or WAS Virtual Enterprise (VE).",
 							Computed:            true,
 						},
 						"web_sphere_cell_config": schema.StringAttribute{
-							MarkdownDescription: "WebSphere Cell",
+							MarkdownDescription: "If you selected 'WebSphere Cell' for Workload Management Retrieval, you need to select a WebSphere Cell object that retrieves this information. If no objects are available in the pull down, you must create one.",
 							Computed:            true,
 						},
 						"wlm_group": schema.StringAttribute{
-							MarkdownDescription: "Workload Management Group Name",
+							MarkdownDescription: "The Workload Management Group Name is used to define a group. In a WebSphere Application Server environment, the back end group is a cluster name. Once specified, the Load Balancer Group will be populated with the members and weights retrieved from the back end.",
 							Computed:            true,
 						},
 						"wlm_transport": schema.StringAttribute{
-							MarkdownDescription: "Protocol",
+							MarkdownDescription: "Specify either HTTP or HTTPS for the Load Balancer Group protocol. This protocol is used to forward traffic between the DataPower Gateway and the members of the Load Balancer Group.",
 							Computed:            true,
 						},
 						"damp": schema.Int64Attribute{
-							MarkdownDescription: "Damp Time",
+							MarkdownDescription: "When a real server is observed to be non-functioning, it is temporarily disabled. When the damp time has elapsed, it is re-enabled. Allowable values are in the range 1 - 86400.",
 							Computed:            true,
 						},
 						"never_return_sick_member": schema.BoolAttribute{
-							MarkdownDescription: "Do not Bypass Down State",
+							MarkdownDescription: "During normal operation, when all members of the load-balancing group are down and a new request for that group is made, the first member of the group is automatically selected. If this property is turned on, no attempt will be made to connect under these circumstances.",
 							Computed:            true,
 						},
 						"lb_group_members": schema.ListNestedAttribute{
@@ -118,21 +118,21 @@ func (d *LoadBalancerGroupDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"try_every_server_before_failing": schema.BoolAttribute{
-							MarkdownDescription: "Try Every Server Before Failing",
+							MarkdownDescription: "This property applies only when none of the group members are in the \"up\" state. If this value is set, every server in the group is tried before failing the connection attempt. It is a \"last best-effort\" attempt.",
 							Computed:            true,
 						},
-						"lb_group_checks": models.GetDmLBGroupCheckDataSourceSchema("Health Checks", "health-check", ""),
+						"lb_group_checks": models.GetDmLBGroupCheckDataSourceSchema("The members of a Load Balancer Group can be periodically polled to verify the health of the server. If the server is found to be unresponsive, it is removed from the list of actively available servers until the unresponsive server passes a health check.", "health-check", ""),
 						"masquerade_member": schema.BoolAttribute{
-							MarkdownDescription: "Masquerade As Group Name",
+							MarkdownDescription: "If you set this value, the host name presented to the server will be the name of the group instead of the name of the member being used for that specific transaction.",
 							Computed:            true,
 						},
 						"application_routing": schema.BoolAttribute{
-							MarkdownDescription: "Enable Application Routing",
+							MarkdownDescription: "<p>If set to on, the load balancer group will route to the back end cluster depending on the following conditions.</p><ul><li>the application for which this request is targeted</li><li>the application status on the back end servers</li></ul><p>Application Routing is required for Application Edition (group or atomic) rollout. If you need Application Edition support, set the Update Type to Subscribe in the WebSphere Cell object.</p>",
 							Computed:            true,
 						},
-						"lb_group_affinity_conf": models.GetDmLBGroupAffinityDataSourceSchema("Session Affinity", "session-affinity", ""),
+						"lb_group_affinity_conf": models.GetDmLBGroupAffinityDataSourceSchema("Session affinity allows applications to maintain sessions with clients.", "session-affinity", ""),
 						"monitored_cookies": schema.ListAttribute{
-							MarkdownDescription: "Monitored Cookies",
+							MarkdownDescription: "The DataPower Gateway enforces session affinity when the application server attempts to establish session affinity using one of these cookie names.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

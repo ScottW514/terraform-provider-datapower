@@ -57,7 +57,7 @@ func (d *AppSecurityPolicyDataSource) Metadata(_ context.Context, req datasource
 
 func (d *AppSecurityPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Application Security Policy",
+		MarkdownDescription: "An Application Security Policy establishes the rules to use to enforce security for a Web Application Firewall service. This policy employs request maps, response maps, and error maps that provide a detailed security configuration. Each of these maps, in turn, matches to a Web Request Profile, Web Request Profile, or Error Policy, as the case might be.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,17 +81,17 @@ func (d *AppSecurityPolicyDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"request_maps": schema.ListNestedAttribute{
-							MarkdownDescription: "Request Maps",
+							MarkdownDescription: "A list of Web Request Profile objects and their matching criteria. If the client request meets the matching criteria, its Web Request Profile runs.",
 							NestedObject:        models.DmWebAppRequestPolicyMapDataSourceSchema,
 							Computed:            true,
 						},
 						"response_maps": schema.ListNestedAttribute{
-							MarkdownDescription: "Response Maps",
+							MarkdownDescription: "A list of Web Response Profile objects and their matching criteria. If the server response meets the matching criteria, its Web Response Profile runs.",
 							NestedObject:        models.DmWebAppResponsePolicyMapDataSourceSchema,
 							Computed:            true,
 						},
 						"error_maps": schema.ListNestedAttribute{
-							MarkdownDescription: "Error Maps",
+							MarkdownDescription: "A list of Error Policy objects (Processing Rules) and their matching criteria. If an error meets the matching criteria, its Error Policy runs.",
 							NestedObject:        models.DmPolicyMapDataSourceSchema,
 							Computed:            true,
 						},

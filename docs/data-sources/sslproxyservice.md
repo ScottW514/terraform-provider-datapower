@@ -3,12 +3,12 @@
 page_title: "datapower_sslproxyservice Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  TLS proxy service
+  
 ---
 
 # datapower_sslproxyservice (Data Source)
 
-TLS proxy service
+<p>Creates a TLS proxy service. This service can be used to wrap or unwrap a TCP stream in TLS.</p><p>This service requires TLS profiles to secure the connections.</p><ul><li>When the system is a client, use a TLS client profile to secure connections with targets.</li><li>When the system is a server, use a a TLS server profile to secure connections with clients. When the server supports Server Name Indication (SNI), use a TLS SNI server profile.</li><li>When the system is both client and server, use TLS client and server profiles to secure both connections.</li></ul>
 
 ## Example Usage
 
@@ -39,12 +39,12 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `back_timeout` (Number) Server-side timeout
-- `conn_limit` (Number) Max client connections
-- `conn_timeout` (Number) Transaction timeout
-- `front_timeout` (Number) Client-side timeout
+- `back_timeout` (Number) Specify the maximum idle time for server connections. This timer monitors the idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The value of 0 indicates that the timer is disabled. The default value is 0.
+- `conn_limit` (Number) Specify the maximum number of concurrent client connections. Enter a value in the range of 0 - 65535. The value of 0 indicates an unlimited number of connections. The default value is 100.
+- `conn_timeout` (Number) Specify the maximum duration in seconds for transactions. This timer monitors the duration of end-to-end transactions. If the specified connection time is exceeded, the client connection is torn down. Enter a value in the range of 0 - 86400. The value of 0 indicates that the timer is disabled. The default value is 0.
+- `front_timeout` (Number) Specify the maximum idle time in seconds for client connections. This timer monitors the idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The value of 0 indicates that the timer is disabled. The default value is 0.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_address` (String) Local address
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
 - `local_port` (Number) Local port
 - `priority` (String) Service priority
 - `remote_address` (String) Remote host

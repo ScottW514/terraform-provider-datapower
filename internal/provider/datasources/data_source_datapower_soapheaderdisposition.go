@@ -57,7 +57,7 @@ func (d *SOAPHeaderDispositionDataSource) Metadata(_ context.Context, req dataso
 
 func (d *SOAPHeaderDispositionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SOAP Header Disposition Table",
+		MarkdownDescription: "The list of instructions provided by customers to control how the SOAP headers and/or children elements are handled. This object is used by store:///soap-refine.xsl transform stylesheet.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *SOAPHeaderDispositionDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"refine": schema.ListNestedAttribute{
-							MarkdownDescription: "SOAP Header Refine Instruction",
+							MarkdownDescription: "Customer specifically asks this transformation to simply remove/keep/fault a SOAP header; or indicates whether a header was processed or not by the prior action, then this action will take the default behaviors.",
 							NestedObject:        models.DmSOAPHeaderDispositionItemDataSourceSchema,
 							Computed:            true,
 						},

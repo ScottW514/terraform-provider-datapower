@@ -55,7 +55,7 @@ func (r *SLMPolicyResource) Metadata(ctx context.Context, req resource.MetadataR
 
 func (r *SLMPolicyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SLM policy", "slm-policy", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>An SLM policy counts messages or measures latency for messages that match a set of select criteria and that pass through the appliance during a configured interval. The policy can take action when configured thresholds are reached.</p><p>Messages can be selected based on credential class, resource class, or both. If neither, all messages are selected.</p><p>A policy consists of one or more statements. Each statement establishes the credential class, resource class, thresholds, and actions to take when thresholds are met during an interval.</p><p>Examples:</p><ul><li>A policy that throttles all traffic that arrives at a rate faster than 1000 messages per second.</li><li>A policy that generates a log message for all messages that arrive during the last elapsed second that originated from a specific IP address and requested use of a specific resource.</li></ul>", "slm-policy", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *SLMPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 			},
 			"execution_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Evaluation method", "eval-method", "").AddStringEnum("terminate-at-first-reject", "terminate-at-first-action", "execute-all-statements").AddDefaultValue("execute-all-statements").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the operational behavior of the policy. The default behavior is to process all policy statements.", "eval-method", "").AddStringEnum("terminate-at-first-reject", "terminate-at-first-action", "execute-all-statements").AddDefaultValue("execute-all-statements").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -93,12 +93,12 @@ func (r *SLMPolicyResource) Schema(ctx context.Context, req resource.SchemaReque
 				Default: stringdefault.StaticString("execute-all-statements"),
 			},
 			"statement": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Statement", "statement", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the policy statement that establishes criteria to select messages, to set a measurement interval, to set thresholds, and to determine the action to take when the threshold is met. A policy can have multiple statements that run in the sequence defined by the statement identifier.", "statement", "").String,
 				NestedObject:        models.DmSLMStatementResourceSchema,
 				Optional:            true,
 			},
 			"peer_group": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Peer group", "peer-group", "peergroup").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the peer group that share in load distribution of traffic that is destined for the same resources. A peer group establishes a data-sharing protocol among members where each member has the data to determine whether a threshold is reached.", "peer-group", "peergroup").String,
 				Optional:            true,
 			},
 			"api_mgmt": schema.BoolAttribute{

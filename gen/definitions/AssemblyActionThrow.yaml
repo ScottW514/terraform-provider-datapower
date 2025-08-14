@@ -1,64 +1,98 @@
 name: AssemblyActionThrow
-description: 'Throw assembly action'
-cli_alias: 'assembly-throw'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/AssemblyActionThrow'
+description: The throw assembly action customizes an error. When triggered, the custom
+  error is thrown. Subsequent actions in the assembly are not processed. The custom
+  error, including the error identifier and text, is saved in the API context.
+cli_alias: assembly-throw
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/AssemblyActionThrow
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAssemblyActionThrow"'
-    test_expect_ds: '"AccTest_AssemblyActionThrow"'
-    example: 'AssemblyActionThrowName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: ErrorID
-    type: String
-    required: true
-    example: 'errorid'
-    description: 'Error identifier'
-    cli_alias: error-id
-  - name: ErrorText
-    type: String
-    description: 'Error text'
-    cli_alias: error-text
-  - name: ErrorStatusCode
-    type: String
-    description: 'Error status code'
-    cli_alias: error-status-code
-  - name: ErrorStatusReason
-    type: String
-    description: 'Error reason phrase'
-    cli_alias: error-status-reason
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: CorrelationPath
-    type: String
-    description: 'Correlation path'
-    cli_alias: correlation-path
-  - name: ActionDebug
-    type: Bool
-    default: false
-    description: 'Enable debugging'
-    cli_alias: debug
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAssemblyActionThrow"'
+  test_expect_ds: '"AccTest_AssemblyActionThrow"'
+  example: AssemblyActionThrowName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: ErrorID
+  type: String
+  required: true
+  example: errorid
+  description: Specify the identifier of the custom error. The maximum value length
+    is 64 characters. The following characters are valid. <ul><li>a - z</li><li>A
+    - Z</li><li>0 - 9</li><li>_</li><li>-</li></ul><p>You can reference a custom API
+    property that resolves as the value. To reference an API property, use the <tt>$(api.properties.
+    <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the
+    name of the property to reference. You can use the short form <tt>$( <i>property_name</i>
+    )</tt> when the assembly action does not have a property with the same name.</p>
+  cli_alias: error-id
+- name: ErrorText
+  type: String
+  description: Specify the text for the error message. You can reference a custom
+    API property that resolves as the value. To reference an API property, use the
+    <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt>
+    is the name of the property to reference. You can use the short form <tt>$( <i>property_name</i>
+    )</tt> when the assembly action does not have a property with the same name.
+  cli_alias: error-text
+- name: ErrorStatusCode
+  type: String
+  description: Specify the HTTP status code to return to the client for the error.
+    You can reference a variable in the API context with the <tt>$( <i>variable</i>
+    )</tt> format, such as <tt>$(message.status.code)</tt> .
+  cli_alias: error-status-code
+- name: ErrorStatusReason
+  type: String
+  description: Specify the HTTP reason phrase to return to the client for the error.
+    You can reference a variable in the API context with the <tt>$( <i>variable</i>
+    )</tt> format, such as <tt>$(message.status.reason)</tt> .
+  cli_alias: error-status-reason
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Title
+  type: String
+  description: Title
+  cli_alias: title
+- name: CorrelationPath
+  type: String
+  description: Specify the path that correlates the API action to a specific part
+    of the API specification. The correlation path specifies the part of the API definition
+    that correlates with the API action. This path is exposed in the debug data by
+    the API gateway for use by debugging tools. For example, for an API configuration
+    that is retrieved from API Connect and specified in an OpenAPI document with IBM
+    extensions, this path is the JSON path to the assembly policy in the IBM extensions
+    section of the document. The path can be expressed in any form that the debugging
+    tool can correlate to the API definition.
+  cli_alias: correlation-path
+- name: ActionDebug
+  type: Bool
+  default: false
+  description: <p>Specify whether to enable the GatewayScript debugger to troubleshoot
+    the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript
+    file that is called from the GatewayScript assembly action.</li><li>Troubleshoot
+    a GatewayScript file that is called from an XSLT assembly action that uses the
+    <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript
+    script that is called through the <tt>value</tt> or <tt>default</tt> property
+    in the JSON file from the map assembly action.</li></ul><p>To debug a file or
+    script, the following conditions must be met.</p><ul><li>The file contains one
+    or more <tt>debugger;</tt> statements at the points in your script where you want
+    to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You
+    run the <tt>debug-action</tt> command.</p>
+  cli_alias: debug

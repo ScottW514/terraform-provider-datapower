@@ -57,7 +57,7 @@ func (d *CryptoSSKeyDataSource) Metadata(_ context.Context, req datasource.Metad
 
 func (d *CryptoSSKeyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Shared secret key",
+		MarkdownDescription: "A shared secret key is a sequence of characters that is pre-shared between users for use with symmetric encryption.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,7 +77,7 @@ func (d *CryptoSSKeyDataSource) Schema(ctx context.Context, req datasource.Schem
 							Computed:            true,
 						},
 						"filename": schema.StringAttribute{
-							MarkdownDescription: "File name",
+							MarkdownDescription: "Specify the file that contains the shared secret key. If the file begins with <tt>0x</tt> , processing assumes that the rest of the file contains bytes in hex. You can access the file in the <tt>cert:</tt> or <tt>local:</tt> directory. <p><b>Attention:</b> Any file in the <tt>local:</tt> directory can be downloaded or included in an export. Therefore, consider whether to store crypto files in this directory.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

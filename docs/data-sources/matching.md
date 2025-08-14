@@ -39,11 +39,11 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `combine_with_or` (Boolean) Combine with Boolean OR
+- `combine_with_or` (Boolean) <p>Whether to use Boolean OR or AND operations during evaluation.</p><ul><li>When enabled, combine with OR semantics. Only one match must evaluate to true for success.</li><li>When disabled, combine with AND semantics. All matches must evaluate to true for success.</li></ul>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `match_rules` (Attributes List) Rules (see [below for nested schema](#nestedatt--result--match_rules))
-- `match_with_pcre` (Boolean) Match with PCRE
-- `user_summary` (String) Comments
+- `match_rules` (Attributes List) The rules in the matching rule. (see [below for nested schema](#nestedatt--result--match_rules))
+- `match_with_pcre` (Boolean) Whether the evaluation uses shell style expressions or PCREs. This setting does not apply to XPath or HTTP method evaluations.
+- `user_summary` (String) A descriptive summary for the configuration.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

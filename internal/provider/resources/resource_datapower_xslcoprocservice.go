@@ -59,7 +59,7 @@ func (r *XSLCoprocServiceResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("XSL Coprocessor", "xslcoproc", "").AddActions("quiesce").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>The XSL Coprocessor is obsolete.</p>", "xslcoproc", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,11 +84,11 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "summary", "").String,
 				Optional:            true,
 			},
 			"priority": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Service Priority", "priority", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "priority", "").AddStringEnum("unknown", "high-min", "high", "high-max", "normal-min", "normal", "normal-max", "low-min", "low", "low-max").AddDefaultValue("normal").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -97,7 +97,7 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("normal"),
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Port Number", "port", "").AddIntegerRange(1, 65535).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "port", "").AddIntegerRange(1, 65535).String,
 				Required:            true,
 				Validators: []validator.Int64{
 
@@ -105,21 +105,21 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"xml_manager": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML Manager", "xml-manager", "xmlmanager").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "xml-manager", "xmlmanager").AddDefaultValue("default").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"url_rewrite_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL Rewrite Policy", "urlrewrite-policy", "urlrewritepolicy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "urlrewrite-policy", "urlrewritepolicy").String,
 				Optional:            true,
 			},
 			"style_policy_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Processing Rule", "stylesheet-rule", "stylepolicyrule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "stylesheet-rule", "stylepolicyrule").String,
 				Optional:            true,
 			},
 			"connection_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Connection Timeout", "connection-timeout", "").AddIntegerRange(3, 7200).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "connection-timeout", "").AddIntegerRange(3, 7200).AddDefaultValue("60").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -129,7 +129,7 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(60),
 			},
 			"intermediate_result_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Intermediate Result Timeout", "intermediate-result-timeout", "").AddIntegerRange(1, 600).AddDefaultValue("20").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "intermediate-result-timeout", "").AddIntegerRange(1, 600).AddDefaultValue("20").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -139,31 +139,31 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(20),
 			},
 			"cache_relative_url": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Cache Relative URL", "cache-relative-url", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "cache-relative-url", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"use_client_uri_resolver": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use URI Resolver", "use-client-resolver", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "use-client-resolver", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"crypto_extensions": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Crypto Extensions", "crypto-extensions", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "crypto-extensions", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"default_param_namespace": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Default parameter namespace", "default-param-namespace", "").AddDefaultValue("http://www.datapower.com/param/config").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "default-param-namespace", "").AddDefaultValue("http://www.datapower.com/param/config").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("http://www.datapower.com/param/config"),
 			},
 			"debug_mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Probe setting", "debug-mode", "").AddStringEnum("on", "off", "unbounded").AddDefaultValue("off").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "debug-mode", "").AddStringEnum("on", "off", "unbounded").AddDefaultValue("off").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -172,7 +172,7 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("off"),
 			},
 			"debug_history": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Transaction History", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "debug-history", "").AddIntegerRange(10, 250).AddDefaultValue("25").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -182,12 +182,12 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(25),
 			},
 			"debug_trigger": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Probe Triggers", "debug-trigger", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "debug-trigger", "").String,
 				NestedObject:        models.DmMSDebugTriggerTypeResourceSchema,
 				Optional:            true,
 			},
 			"ssl_server_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -196,15 +196,15 @@ func (r *XSLCoprocServiceResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "sslserverprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-server", "sslserverprofile").String,
 				Optional:            true,
 			},
 			"sslsni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "sslsniserverprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("", "ssl-sni-server", "sslsniserverprofile").String,
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),

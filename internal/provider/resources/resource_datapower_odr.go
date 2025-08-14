@@ -51,31 +51,31 @@ func (r *ODRResource) Metadata(ctx context.Context, req resource.MetadataRequest
 
 func (r *ODRResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("On Demand Router (`default` domain only)", "odr", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies an on demand router (ODR). The ODR feature acts as a collection of load balancer groups that distribute traffic to various clusters within a WebSphere cell or Liberty Collective. If multiple ODR connector groups are defined, the ODR distributes traffic to any of the clusters.</p><p>The ODR feature on the DataPower Gateway supports a subset of On Demand Router in Intelligent Management.</p>", "odr", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter a descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"odr_server_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ODR routing rules server name", "odr-server-name", "").AddDefaultValue("dp_set").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the name of the ODR routing rules server that is used to determine whether routing rules are delivered to the DataPower Gateway. If the DataPower Gateway is not using routing rules, you can use any server name.</p><p>You must define the <tt>RoutingRulesConnectorClusterName</tt> custom property to set the name of the ODR connector group from which routing rules are accepted.</p><p>The web server name is configured in on one of the following ways. <ul><li>In a Liberty Collective, defined as an attribute of the <tt>routingRules</tt> element.</li><li>In a WebSphere cell as the value of the <tt>serverName</tt> parameter of <tt>WebServerRoutingRule</tt> command.</li></ul></p>", "odr-server-name", "").AddDefaultValue("dp_set").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("dp_set"),
 			},
 			"odr_connector_groups": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Connector groups", "odr-connector-groups", "odrconnectorgroup").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Define one ODR connector group for each WebSphere cell or Liberty Collective. Each connector group establishes the communications with an Intelligent management service. The DataPower Gateway retrieves topology information, application information, routing rules, and other information over the connectors in the connector group.", "odr-connector-groups", "odrconnectorgroup").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"odr_custom_properties": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom properties", "odr-custom-properties", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Defines custom property name-value strings to connect to Liberty Collective or WebSphere cell to define which ODR connection group accepts routing rules.</p><ul><li>The scheme that the DataPower ODR feature uses to connect to WebSphere Application Server does not apply to Liberty Collective. For any HTTP or HTTPS request to connect to Liberty Collective, you must define the <tt>profileType</tt> property. <ol><li>Set the <b>Name</b> to <tt>profileType</tt> .</li><li>Set the <b>Value</b> to <tt>Liberty</tt> .</li></ol></li><li>To set the name of the ODR connector group from which routing rules are accepted, you must define the <tt>RoutingRulesConnectorClusterName</tt> property. The following example shows setting the <tt>liberty-collective-node03</tt> connector group as the group that accepts routing rules. <ol><li>Set the <b>Name</b> to <tt>RoutingRulesConnectorClusterName</tt> .</li><li>Set the <b>Value</b> to <tt>liberty-collective-node03</tt> .</li></ol></li></ul><p>Beyond these situations, use custom properties only when directed by IBM Support.</p>", "odr-custom-properties", "").String,
 				NestedObject:        models.DmODRPropertyResourceSchema,
 				Optional:            true,
 			},

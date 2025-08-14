@@ -55,7 +55,7 @@ func (r *URLRewritePolicyResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *URLRewritePolicyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("URL Rewrite Policy", "urlrewrite", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure/Edit URL Rewrite Policies", "urlrewrite", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -80,7 +80,7 @@ func (r *URLRewritePolicyResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"direction": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL Rewrite Direction", "direction", "").AddStringEnum("all", "request", "response").AddDefaultValue("all").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Restricts the URL Rewrite Policy to a specified direction. Direction is applied at the service object level and has no effect on policies used from multistep or elsewhere.", "direction", "").AddStringEnum("all", "request", "response").AddDefaultValue("all").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -89,7 +89,7 @@ func (r *URLRewritePolicyResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("all"),
 			},
 			"url_rewrite_rule": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL Rewrite Rule", "rule", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit, or delete a URL rewrite rule", "rule", "").String,
 				NestedObject:        models.DmURLRewriteRuleResourceSchema,
 				Optional:            true,
 			},

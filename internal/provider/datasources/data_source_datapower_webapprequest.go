@@ -57,7 +57,7 @@ func (d *WebAppRequestDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *WebAppRequestDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Web Request Profile",
+		MarkdownDescription: "The web request profile specifies various properties about the request side of the transaction that must be satisfied.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,121 +81,121 @@ func (d *WebAppRequestDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"policy_type": schema.StringAttribute{
-							MarkdownDescription: "Style",
+							MarkdownDescription: "Select the satisfaction policy for the profile. The default value is Admission.",
 							Computed:            true,
 						},
 						"ssl_policy": schema.StringAttribute{
-							MarkdownDescription: "Allow SSL",
+							MarkdownDescription: "Select how the client side of the inspected transaction handles SSL. The default value is Allow.",
 							Computed:            true,
 						},
 						"aaa": schema.StringAttribute{
-							MarkdownDescription: "AAA Policy",
+							MarkdownDescription: "If this property references a AAA policy, then that AAA policy will be run as a filter on this transaction and the success of that AAA run will be required to continue processing. Any input to this transaction as XML, application/www-url-encoded, or multipart/form-data MIME types will be automatically provided to the AAA processing policy.",
 							Computed:            true,
 						},
 						"ss_key": schema.StringAttribute{
-							MarkdownDescription: "Shared Secret Key",
+							MarkdownDescription: "Select the Shared Secret Key for both signing or encrypting.",
 							Computed:            true,
 						},
 						"rate_limiter": schema.StringAttribute{
-							MarkdownDescription: "Rate Limiting",
+							MarkdownDescription: "A rate limiting policy restricts identities (as determined by AAA or the client IP address if AAA is not available) to a specific number of transactions per second.",
 							Computed:            true,
 						},
 						"acl": schema.StringAttribute{
-							MarkdownDescription: "Access Control List",
+							MarkdownDescription: "This Access Control List will be used to allow or deny access to this service based on the IP address of the client. When attached to a service, an Access Control List (ACL) denies all access by default. To deny access to only selected addresses, first grant access to all addresses (allow 0.0.0.0) and then create deny entries for the desired hosts.",
 							Computed:            true,
 						},
-						"ok_methods":  models.GetDmHTTPRequestMethodsDataSourceSchema("Methods", "request-methods", ""),
-						"ok_versions": models.GetDmHTTPVersionMaskDataSourceSchema("Versions", "request-versions", ""),
+						"ok_methods":  models.GetDmHTTPRequestMethodsDataSourceSchema("Specify which HTTP methods are acceptable from the client acceptable.", "request-methods", ""),
+						"ok_versions": models.GetDmHTTPVersionMaskDataSourceSchema("Specify which HTTP versions are acceptable from the client.", "request-versions", ""),
 						"min_body_size": schema.Int64Attribute{
-							MarkdownDescription: "Minimum Size",
+							MarkdownDescription: "Specify the minimum size of the request body.",
 							Computed:            true,
 						},
 						"max_body_size": schema.Int64Attribute{
-							MarkdownDescription: "Maximum Size",
+							MarkdownDescription: "Specify the maximum size of the request body.",
 							Computed:            true,
 						},
 						"xml_policy": schema.StringAttribute{
-							MarkdownDescription: "XML Processing",
+							MarkdownDescription: "Specify how the device handles requests that contain an XML MIME type.",
 							Computed:            true,
 						},
 						"xml_rule": schema.StringAttribute{
-							MarkdownDescription: "XML Transformation Rule",
+							MarkdownDescription: "This is the transformation rule that is run when the request contains an XML MIME type and the XML processing policy is set to XML or SOAP.",
 							Computed:            true,
 						},
 						"non_xml_policy": schema.StringAttribute{
-							MarkdownDescription: "Non-XML Processing",
+							MarkdownDescription: "Specify how the device handles requests that do not contain an XML MIME type.",
 							Computed:            true,
 						},
 						"non_xml_rule": schema.StringAttribute{
-							MarkdownDescription: "Non-XML Processing Rule",
+							MarkdownDescription: "This is the transformation rule that is run when the request does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.",
 							Computed:            true,
 						},
 						"error_policy": schema.StringAttribute{
-							MarkdownDescription: "Error Policy",
+							MarkdownDescription: "If this request policy is violated the firewall error policy will be invoked unless this more specific error policy is provided, in which case this policy takes precedence.",
 							Computed:            true,
 						},
 						"session_management_profile": schema.StringAttribute{
-							MarkdownDescription: "Session Policy",
+							MarkdownDescription: "The session management policy enforces the start pages acceptable for requests that match this security profile. If no policy is referenced, any page is an acceptable start page.",
 							Computed:            true,
 						},
 						"header_gnvc": schema.StringAttribute{
-							MarkdownDescription: "Header Name-Value Profile",
+							MarkdownDescription: "The name-value profile allows you to specify what headers are expected, what headers should be stripped, and what headers should be mapped to known values. If no profile is specified, any header is allowed.",
 							Computed:            true,
 						},
 						"url_encoded_gnvc": schema.StringAttribute{
-							MarkdownDescription: "URL-Encoded Body Name-Value Profile",
+							MarkdownDescription: "The name-value profile allows you to specify what form elements are expected, what form elements should be stripped, and what form elements should be mapped to known values. If no profile is specified, any set of pairs is allowed.",
 							Computed:            true,
 						},
 						"query_string_policy": schema.StringAttribute{
-							MarkdownDescription: "Allow Query String",
+							MarkdownDescription: "Select how the client URL handles query strings. The default is Allow.",
 							Computed:            true,
 						},
 						"query_string_gnvc": schema.StringAttribute{
-							MarkdownDescription: "QueryString Name-Value Profile",
+							MarkdownDescription: "The name-value profile for query-string. If not present, no profile is enforced. The profile allows you to validate data members of the query string, filter out unknown ones, or map certain names to known values.",
 							Computed:            true,
 						},
 						"sql_injection": schema.BoolAttribute{
-							MarkdownDescription: "SQL Injection Filter",
+							MarkdownDescription: "Data parameters from the query string, application/www-urlencoded requests, and multipart/form-data requests will be passed through the standard SQL Injection filter if this property is enabled.",
 							Computed:            true,
 						},
 						"max_uri_size": schema.Int64Attribute{
-							MarkdownDescription: "Maximum URI Length",
+							MarkdownDescription: "The URI may be no longer than the value specified here.",
 							Computed:            true,
 						},
 						"uri_filter_unicode": schema.BoolAttribute{
-							MarkdownDescription: "Filter Unicode",
+							MarkdownDescription: "If Unicode is detected in the URI and this property is enabled then the transaction will be rejected",
 							Computed:            true,
 						},
 						"uri_filter_dot_dot": schema.BoolAttribute{
-							MarkdownDescription: "Filter Dot Dot",
+							MarkdownDescription: "Filter Requests with .. in the URI after URI normalization",
 							Computed:            true,
 						},
 						"uri_filter_exe": schema.BoolAttribute{
-							MarkdownDescription: "Filter .exe",
+							MarkdownDescription: "Filter Requests with .exe in the URI after URI normalization",
 							Computed:            true,
 						},
 						"uri_filter_fragment": schema.StringAttribute{
-							MarkdownDescription: "Fragmented URI Policy",
+							MarkdownDescription: "Select how to handle URI fragments in requests. A URI fragment is the portion of a URI after the # symbol. The default is Truncate",
 							Computed:            true,
 						},
 						"content_types": schema.ListAttribute{
-							MarkdownDescription: "Content-Type List",
+							MarkdownDescription: "A list of PCRE regular expressions that indicate acceptable content-type MIME headers on the request. If this list is empty, any content-type is acceptable. If the request does not have a content type that will be represented as an empty string for matching purposes. Requests without a body (GET, HEAD, and so forth) are not subject to this constraint. An empty list will match all content types.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"multipart_form_data": models.GetDmMultipartFormDataProfileDataSourceSchema("Multipart/Form-Data Profile", "multipart-form-data", ""),
-						"cookie_profile":      models.GetDmCookieProfileDataSourceSchema("Cookie Profile", "cookie-policy", ""),
+						"cookie_profile":      models.GetDmCookieProfileDataSourceSchema("The cookie management profile allows you to specify validation profiles for incoming cookies, whether cookies should be allowed at all, and the signature and encryption policies for cookies.", "cookie-policy", ""),
 						"process_all_cookie": schema.BoolAttribute{
-							MarkdownDescription: "Sign or Encrypt All Cookies",
+							MarkdownDescription: "The process will sign or encrypt all cookies when enabled. The default is enabled.",
 							Computed:            true,
 						},
 						"cookie_name_vector": schema.ListAttribute{
-							MarkdownDescription: "Cookie Names",
+							MarkdownDescription: "The list of cookies, by name, that the process signs and encrypts.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"sql_injection_patterns_file": schema.StringAttribute{
-							MarkdownDescription: "SQL Injection Patterns File",
+							MarkdownDescription: "The patterns file that the SQL injection filter uses.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -57,7 +57,7 @@ func (d *JWSSignatureDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *JWSSignatureDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "JWS Signature",
+		MarkdownDescription: "JWS signature object.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,28 +77,28 @@ func (d *JWSSignatureDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A descriptive summary for the configuration.",
 							Computed:            true,
 						},
 						"algorithm": schema.StringAttribute{
-							MarkdownDescription: "Algorithm",
+							MarkdownDescription: "Algorithm.",
 							Computed:            true,
 						},
 						"key": schema.StringAttribute{
-							MarkdownDescription: "Private Key",
+							MarkdownDescription: "Private key.",
 							Computed:            true,
 						},
 						"ss_key": schema.StringAttribute{
-							MarkdownDescription: "Shared Secret Key",
+							MarkdownDescription: "Shared secret key.",
 							Computed:            true,
 						},
 						"protected_header": schema.ListNestedAttribute{
-							MarkdownDescription: "Protected Header",
+							MarkdownDescription: "Add a protected header to the JWS Sign action.",
 							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
 							Computed:            true,
 						},
 						"unprotected_header": schema.ListNestedAttribute{
-							MarkdownDescription: "Unprotected Header",
+							MarkdownDescription: "Add an unprotected header to the JWS Sign action.",
 							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
 							Computed:            true,
 						},

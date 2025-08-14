@@ -3,13 +3,13 @@
 page_title: "datapower_dnsnameservice Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  DNS settings (default domain only)
+  Configure the DNS client with the DNS servers to contact to resolve hostnames to IP addresses.
   CLI Alias: dns
 ---
 
 # datapower_dnsnameservice (Resource)
 
-DNS settings (`default` domain only)
+Configure the DNS client with the DNS servers to contact to resolve hostnames to IP addresses.
   - CLI Alias: `dns`
 
 ## Example Usage
@@ -26,29 +26,29 @@ resource "datapower_dnsnameservice" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `force_ip_preference` (Boolean) Force IP preference
+- `force_ip_preference` (Boolean) Specify whether to restrict DNS queries to the preferred IP version to resolve hostnames. You want to force the IP preference except when both IPv4 and IPv6 addresses are in use. When not forced, the device resolves each hostname by querying A and AAAA records and waiting for both responses or a timeout. Waiting for the response or timeout for both records can introduce unnecessary latency in DNS resolution.
   - CLI Alias: `force-ip-preference`
   - Default value: `false`
-- `ip_preference` (String) IP preference
+- `ip_preference` (String) Specify the preferred IP version to resolve hostnames. When a hostname resolves to both IPv4 and IPv6 addresses, this setting determines which version to use.
   - CLI Alias: `ip-preference`
   - Choices: `4`, `6`
-- `load_balance_algorithm` (String) Load distribution algorithm
+- `load_balance_algorithm` (String) Specify the load distribution algorithm to resolve hostnames. The default algorithm is first-alive.
   - CLI Alias: `load-balance`
   - Choices: `round-robin`, `first-alive`
   - Default value: `first-alive`
-- `max_retries` (Number) Attempts
+- `max_retries` (Number) For the first alive algorithm, specify the maximum number of resolution attempts to send a query to the list of name servers before an error is returned. By default, an unacknowledged resolution request is attempted 3 times.
   - CLI Alias: `retries`
   - Default value: `2`
-- `name_servers` (Attributes List) DNS servers
+- `name_servers` (Attributes List) Specify the list of DNS servers to contact to resolve hostnames. If you define multiple servers, ensure that the sequence to contact the servers is your preferred order.
   - CLI Alias: `name-server` (see [below for nested schema](#nestedatt--name_servers))
-- `search_domains` (Attributes List) Search domains
+- `search_domains` (Attributes List) Specify the list of search domains to resolve partial hostnames.
   - CLI Alias: `search-domain` (see [below for nested schema](#nestedatt--search_domains))
-- `static_hosts` (Attributes List) Static hosts
+- `static_hosts` (Attributes List) Specify the static map of hostnames to IP addresses that do not use DNS resolution. Because the local resolver uses a cache, static hosts do not improve performance.
   - CLI Alias: `static-host` (see [below for nested schema](#nestedatt--static_hosts))
-- `timeout` (Number) Timeout
+- `timeout` (Number) For the first alive algorithm, specify the duration in seconds that the resolver waits for a response from a DNS server. After expiry, the resolver attempts the query to a different DNS server. The default value is 5.
   - CLI Alias: `timeout`
   - Default value: `5`
 - `user_summary` (String) Comments

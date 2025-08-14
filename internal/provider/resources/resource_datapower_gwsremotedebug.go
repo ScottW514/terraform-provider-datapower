@@ -53,20 +53,20 @@ func (r *GWSRemoteDebugResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *GWSRemoteDebugResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("GatewayScript Remote Debugger (`default` domain only)", "gatewayscript-remote-debug", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Modify the connection details for a remote GatewayScript debugger. This configuration defines the local GatewayScript debug endpoint for remote debugging.", "gatewayscript-remote-debug", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a brief descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local port", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("9229").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Sets the port that the local GatewayScript debug endpoint monitors. The default value is 9229.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("9229").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -76,7 +76,7 @@ func (r *GWSRemoteDebugResource) Schema(ctx context.Context, req resource.Schema
 				Default: int64default.StaticInt64(9229),
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),

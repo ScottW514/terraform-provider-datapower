@@ -1,118 +1,179 @@
 name: AssemblyActionJWTGenerate
-description: 'JWT generate assembly action'
-cli_alias: 'assembly-jwt-generate'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/AssemblyActionJWTGenerate'
+description: The JWT generate assembly action generates JWT claims and specifies the
+  crypto material to generate a JWT during processing.
+cli_alias: assembly-jwt-generate
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/AssemblyActionJWTGenerate
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAssemblyActionJWTGenerate"'
-    test_expect_ds: '"AccTest_AssemblyActionJWTGenerate"'
-    example: 'AssemblyActionJWTGenerateName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: JWT
-    type: String
-    default: 'generated.jwt'
-    description: 'JWT output location'
-    cli_alias: jwt
-  - name: JWTIDClaims
-    type: Bool
-    default: false
-    description: 'JWT ID claims'
-    cli_alias: jti-claim
-  - name: IssuerClaim
-    type: String
-    required: true
-    default: 'iss.claim'
-    description: 'Issuer claim'
-    cli_alias: iss-claim
-  - name: SubjectClaim
-    type: String
-    description: 'Subject claim'
-    cli_alias: sub-claim
-  - name: AudienceClaim
-    type: String
-    description: 'Audience claim'
-    cli_alias: aud-claim
-  - name: ValidityPeriod
-    type: Int64
-    minimum: 1
-    maximum: 31622400
-    required: true
-    default: 3600
-    description: 'Validity period'
-    cli_alias: exp-claim
-  - name: PrivateClaim
-    type: String
-    description: 'Private claim'
-    cli_alias: private-claims
-  - name: SignJWK
-    type: String
-    description: 'JWK for JWT signature'
-    cli_alias: jws-jwk
-  - name: CryptoAlgorithm
-    type: String
-    description: 'Crypto algorithm for JWT signature'
-    cli_alias: jws-alg
-  - name: SignCrypto
-    type: String
-    description: 'Crypto object for JWT signature'
-    cli_alias: jws-crypto
-  - name: CustomKIDValueJWS
-    type: String
-    description: 'Key ID value for JWS'
-    cli_alias: custom-kid-value-jws
-  - name: EncryptAlgorithm
-    type: String
-    description: 'Encrypt algorithm for JWT encryption'
-    cli_alias: jwe-enc
-  - name: EncryptJWK
-    type: String
-    description: 'JWK for JWT encryption'
-    cli_alias: jwe-jwk
-  - name: KeyEncryptAlgorithm
-    type: String
-    description: 'Key encrypt algorithm for JWT encryption'
-    cli_alias: jwe-alg
-  - name: EncryptCrypto
-    type: String
-    description: 'Crypto object for JWT encryption'
-    cli_alias: jwe-crypto
-  - name: CustomKIDValueJWE
-    type: String
-    description: 'Key ID value for JWE'
-    cli_alias: custom-kid-value-jwe
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: CorrelationPath
-    type: String
-    description: 'Correlation path'
-    cli_alias: correlation-path
-  - name: ActionDebug
-    type: Bool
-    default: false
-    description: 'Enable debugging'
-    cli_alias: debug
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAssemblyActionJWTGenerate"'
+  test_expect_ds: '"AccTest_AssemblyActionJWTGenerate"'
+  example: AssemblyActionJWTGenerateName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: JWT
+  type: String
+  default: generated.jwt
+  description: Specify the variable to store the generated JWT. The default value
+    is <tt>generated.jwt</tt> . When the variable is not set, the generated JWT is
+    written to the Authorization Header as a Bearer token.
+  cli_alias: jwt
+- name: JWTIDClaims
+  type: Bool
+  default: false
+  description: Specify whether to add a JWT ID (jti) claim to the JWT. When enabled,
+    a UUID is generated and set as the value of the JWT ID claim.
+  cli_alias: jti-claim
+- name: IssuerClaim
+  type: String
+  required: true
+  default: iss.claim
+  description: Specify the variable from which to retrieve the issuer (iss) claim
+    value. The default value is <tt>iss.claim</tt> . The maximum value length is 256
+    characters.
+  cli_alias: iss-claim
+- name: SubjectClaim
+  type: String
+  description: Specify the variable from which to retrieve the subject (sub) claim
+    value. The maximum value length is 256 characters.
+  cli_alias: sub-claim
+- name: AudienceClaim
+  type: String
+  description: Specify the variable from which to retrieve the audience (aud) claim
+    value. The maximum value length is 256 characters. This value can be a single
+    string, a comma-separated string of values, or an array of one or more values
+    when you set the variable through GatewayScript processing.
+  cli_alias: aud-claim
+- name: ValidityPeriod
+  type: Int64
+  minimum: 1
+  maximum: 31622400
+  required: true
+  default: 3600
+  description: Specify the validity period in seconds to calculate the expiration
+    (exp) claim. This value is added to the current date and time to be the value
+    for the "exp" claim. The JWT is considered valid until expiry. Enter a value in
+    the range 1 - 31622400. The default value is 3600.
+  cli_alias: exp-claim
+- name: PrivateClaim
+  type: String
+  description: Specify the variable from which to retrieve a valid set of JSON claims.
+    These claims are added to any set of claims that are specified previously.
+  cli_alias: private-claims
+- name: SignJWK
+  type: String
+  description: JWK for JWT signature
+  cli_alias: jws-jwk
+- name: CryptoAlgorithm
+  type: String
+  description: Specify the crypto algorithm to use. Use one of the following values.
+    <ul><li><tt>HS256</tt> - HMAC using SHA-256</li><li><tt>HS384</tt> - HMAC using
+    SHA-384</li><li><tt>HS512</tt> - HMAC using SHA-512</li><li><tt>RS256</tt> - RSASSA-PKCS-v1_5
+    using SHA-256</li><li><tt>RS384</tt> - RSASSA-PKCS-v1_5 using SHA 384</li><li><tt>RS512</tt>
+    - RSASSA-PKCS-v1_5 using SHA-512</li><li><tt>ES256</tt> - ECDSA using P-256 and
+    SHA-256</li><li><tt>ES384</tt> - ECDSA using P-384 and SHA-384</li><li><tt>ES512</tt>
+    - ECDSA using P-521 and SHA-512</li><li><tt>none</tt> - Do not sign the JWT, which
+    is unsecured and provides no integrity protection but can be used for a nest JWT</li><li>An
+    inline parameter to read at runtime</li></ul>
+  cli_alias: jws-alg
+- name: SignCrypto
+  type: String
+  description: Specify the crypto object (a shared secret key or certificate) to use
+    to sign the JWT.
+  cli_alias: jws-crypto
+- name: CustomKIDValueJWS
+  type: String
+  description: Specify the value of the <tt>kid</tt> claim of the JWT for JWS. The
+    maximum length is 256 characters. This value can be a single string, a comma-separated
+    string of values, or an array of values when you set the variable through GatewayScript
+    processing.
+  cli_alias: custom-kid-value-jws
+- name: EncryptAlgorithm
+  type: String
+  description: Specify the encryption algorithm to use. Use one of the following values.
+    <ul><li><tt>A128CBC-HS256</tt> - AES_128_CBC_HMAC_SHA_256 authenticated encryption
+    algorithm</li><li><tt>A192CBC-HS384</tt> - AES_192_CBC_HMAC_SHA_384 authenticated
+    encryption algorithm</li><li><tt>A256CBC-HS512</tt> - AES_256_CBC_HMAC_SHA_512
+    authenticated encryption algorithm</li><li><tt>A128GCM</tt> - AES GCM using 128-bit
+    key</li><li><tt>A192GCM</tt> - AES GCM using 192-bit key</li><li><tt>A256GCM</tt>
+    - AES GCM using 256-bit key</li><li>An inline parameter to read at runtime</li></ul>
+  cli_alias: jwe-enc
+- name: EncryptJWK
+  type: String
+  description: JWK for JWT encryption
+  cli_alias: jwe-jwk
+- name: KeyEncryptAlgorithm
+  type: String
+  description: Specify the key encryption algorithm to use. Use one of the following
+    values. <ul><li><tt>RSA1_5</tt> - RSAES-PKCS1-V1_5</li><li><tt>RSA-OAEP</tt> -
+    RSAES OAEP using default parameters</li><li><tt>RSA-OAEP-256</tt> - RSAES OAEP
+    using SHA-256 and MGF1 with SHA-256</li><li><tt>A128KW</tt> - AES Key Wrap with
+    default initial value using 128 bit key</li><li><tt>A192KW</tt> - AES Key Wrap
+    with default initial value using 192 bit key</li><li><tt>A256KW</tt> - AES Key
+    Wrap with default initial value using 256 bit key</li><li><tt>dir</tt> - Direct
+    use of a shared symmetric key as the CEK</li><li>An inline parameter to read at
+    runtime</li></ul>
+  cli_alias: jwe-alg
+- name: EncryptCrypto
+  type: String
+  description: Crypto object for JWT encryption
+  cli_alias: jwe-crypto
+- name: CustomKIDValueJWE
+  type: String
+  description: Specify the value of the <tt>kid</tt> claim of the JWT for JWE. The
+    maximum length is 256 characters. This value can be a single string, a comma-separated
+    string of values, or an array of values when you set the variable through GatewayScript
+    processing.
+  cli_alias: custom-kid-value-jwe
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Title
+  type: String
+  description: Title
+  cli_alias: title
+- name: CorrelationPath
+  type: String
+  description: Specify the path that correlates the API action to a specific part
+    of the API specification. The correlation path specifies the part of the API definition
+    that correlates with the API action. This path is exposed in the debug data by
+    the API gateway for use by debugging tools. For example, for an API configuration
+    that is retrieved from API Connect and specified in an OpenAPI document with IBM
+    extensions, this path is the JSON path to the assembly policy in the IBM extensions
+    section of the document. The path can be expressed in any form that the debugging
+    tool can correlate to the API definition.
+  cli_alias: correlation-path
+- name: ActionDebug
+  type: Bool
+  default: false
+  description: <p>Specify whether to enable the GatewayScript debugger to troubleshoot
+    the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript
+    file that is called from the GatewayScript assembly action.</li><li>Troubleshoot
+    a GatewayScript file that is called from an XSLT assembly action that uses the
+    <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript
+    script that is called through the <tt>value</tt> or <tt>default</tt> property
+    in the JSON file from the map assembly action.</li></ul><p>To debug a file or
+    script, the following conditions must be met.</p><ul><li>The file contains one
+    or more <tt>debugger;</tt> statements at the points in your script where you want
+    to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You
+    run the <tt>debug-action</tt> command.</p>
+  cli_alias: debug

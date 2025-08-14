@@ -3,12 +3,12 @@
 page_title: "datapower_sslclientprofile Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  TLS client profile
+  A TLS client profile define how to secure a connection remote endpoint.
 ---
 
 # datapower_sslclientprofile (Data Source)
 
-TLS client profile
+A TLS client profile define how to secure a connection remote endpoint.
 
 ## Example Usage
 
@@ -39,26 +39,26 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `cache_size` (Number) Session cache size
-- `cache_timeout` (Number) Session cache timeout
+- `cache_size` (Number) Specify the maximum number of entries of the session cache. Enter a value in the range 1 - 500000. The default value is 100.
+- `cache_timeout` (Number) Specify the duration in seconds that TLS sessions remain in the session cache before they are removed. Enter a value in the range 1 - 86400. The default value is 300.
 - `caching` (Boolean) Enable session caching
-- `ciphers` (List of String) Ciphers
+- `ciphers` (List of String) Specify the list of cipher suites to support in preference order. Ensure that the displayed order of cipher suites are in preference order. Otherwise, change the sequence to meet your preference.
 - `custom_sni_hostname` (String) Custom SNI hostname
 - `disable_renegotiation` (Boolean) Disable renegotiation
 - `elliptic_curves` (List of String) Elliptic curves
-- `enable_tls13_compat` (Boolean) Enable TLSv1.3 compatibility
-- `hostname_validation_fail_on_error` (Boolean) Hostname validation fail on error
-- `hostname_validation_flags` (Attributes) Hostname validation flags
+- `enable_tls13_compat` (Boolean) Specify whether to send extra TLS messages to look more like TLSv1.2. Some network middleboxes might not recognize TLSv1.3 and drop the connection. Enable this option to send dummy Change Cipher Spec messages, which makes TLSv1.3 look more like TLSv1.2.
+- `hostname_validation_fail_on_error` (Boolean) Specify whether to terminate the handshake when hostname validation fails or to ignore the failure, log an event, and continue with server certificate validation. The default behavior is to ignore the failure, log an event, and continue with any configured server certificate validation.
+- `hostname_validation_flags` (Attributes) Specify the flags that fine tune the validation methods and settings during the handshake. The default behavior uses the subject DN only when the <tt>Subject Alternative Name</tt> (SAN) extension contains no DNS name.
   - CLI Alias: `hostname-validation-flags` (see [below for nested schema](#nestedatt--result--hostname_validation_flags))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `idcred` (String) Identification credentials
 - `protocols` (Attributes) Protocols
   - CLI Alias: `protocols` (see [below for nested schema](#nestedatt--result--protocols))
 - `require_closure_notification` (Boolean) Require closure notification
-- `sig_algs` (List of String) Signature algorithms
+- `sig_algs` (List of String) Specify the list of signature algorithms to advertise and support. An empty list implies the use of all of the default algorithms.
 - `ssl_client_features` (Attributes) Features
   - CLI Alias: `ssl-client-features` (see [below for nested schema](#nestedatt--result--ssl_client_features))
-- `use_custom_sni_hostname` (Boolean) Use custom SNI host name
+- `use_custom_sni_hostname` (Boolean) Specify whether to use a custom server name in the SNI extension in the TLS client <tt>hello</tt> message. By default, the hostname of the target is used in the SNI extension.
 - `user_summary` (String) Comments
 - `valcred` (String) Validation credentials
 - `validate_hostname` (Boolean) Validate server hostname

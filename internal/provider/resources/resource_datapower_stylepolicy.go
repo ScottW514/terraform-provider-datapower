@@ -55,7 +55,7 @@ func (r *StylePolicyResource) Metadata(ctx context.Context, req resource.Metadat
 
 func (r *StylePolicyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Processing Policy", "stylepolicy", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Create, Edit or Delete a Processing Policy. A policy consists of one or more Processing Rules. Rules execute depending upon the direction of the message and on whether or not a corresponding matching rule selects the document for processing. A service may have only one policy active at a time. Click Services in the left-hand navigation menu and then click the appropriate policy link to use the graphical interface to create and edit policies.", "stylepolicy", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -80,29 +80,29 @@ func (r *StylePolicyResource) Schema(ctx context.Context, req resource.SchemaReq
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter a comment. This appears on the Policy catalog page.", "summary", "").String,
 				Optional:            true,
 			},
 			"def_stylesheet_for_soap": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Default style sheet for SOAP", "filter", "").AddDefaultValue("store:///filter-reject-all.xsl").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Identify the default style sheet used for SOAP filtering. The default rejects all SOAP documents.", "filter", "").AddDefaultValue("store:///filter-reject-all.xsl").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("store:///filter-reject-all.xsl"),
 			},
 			"def_stylesheet_for_xsl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Default style sheet for XSL transforms", "xsldefault", "").AddDefaultValue("store:///identity.xsl").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Identify the default style sheet used for XSL transformation. The default mirrors all documents.", "xsldefault", "").AddDefaultValue("store:///identity.xsl").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("store:///identity.xsl"),
 			},
 			"def_x_query_for_json": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Default XQuery style sheet for JSON", "xquerydefault", "").AddDefaultValue("store:///reject-all-json.xq").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Identify the default XQuery style sheet used for JSON transformation. The default rejects all JSON documents.", "xquerydefault", "").AddDefaultValue("store:///reject-all-json.xq").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("store:///reject-all-json.xq"),
 			},
 			"policy_maps": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Policy Maps", "match", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A list of processing rules their corresponding matching rule that this policy will evaluate. If a match is found, the corresponding processing rule is run. The policy runs the first processing rule with a successful match. Therefore, the order of rules in this list is important.", "match", "").String,
 				NestedObject:        models.DmPolicyMapResourceSchema,
 				Optional:            true,
 			},

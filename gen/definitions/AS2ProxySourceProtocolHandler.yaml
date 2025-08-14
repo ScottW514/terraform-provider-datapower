@@ -1,243 +1,302 @@
 name: AS2ProxySourceProtocolHandler
-description: 'MEIG AS2 proxy handler'
-cli_alias: 'source-as2-proxy'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/AS2ProxySourceProtocolHandler'
+description: A MEIG AS2 proxy handler receives AS2 requests over HTTP or HTTPS and
+  forwards them to the back end which is assumed to be an IBM Multi-Enterprise Integration
+  Gateway (MEIG) server. AS2 proxy handlers conform to gateway specifications of RFC
+  2616 and AS2 specification of RFC 4130.
+cli_alias: source-as2-proxy
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/AS2ProxySourceProtocolHandler
 skip_test: true
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAS2ProxySourceProtocolHandler"'
-    test_expect_ds: '"AccTest_AS2ProxySourceProtocolHandler"'
-    example: 'AS2ProxySourceProtocolHandlerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local address'
-    cli_alias: local-address
-  - name: LocalPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 80
-    description: 'Port'
-    cli_alias: port
-  - name: HTTPVersion
-    type: String
-    enum:
-      - 'HTTP/1.0'
-      - 'HTTP/1.1'
-    default: 'HTTP/1.1'
-    description: 'HTTP version to client'
-    cli_alias: http-client-version
-  - name: AllowedFeatures
-    dm_type: DmSourceAS2FeatureType
-    description: 'Allowed methods and versions'
-    cli_alias: allowed-features
-  - name: PersistentConnections
-    type: Bool
-    default: true
-    description: 'Negotiate persistent connections'
-    cli_alias: persistent-connections
-  - name: MaxPersistentConnectionsReuse
-    type: Int64
-    description: 'Max persistent reuse'
-    cli_alias: max-persistent-reuse
-  - name: AllowCompression
-    type: Bool
-    default: false
-    description: 'Enable compression'
-    cli_alias: compression
-  - name: MaxURLLen
-    type: Int64
-    minimum: 1
-    maximum: 128000
-    default: 16384
-    description: 'Max URL length'
-    cli_alias: max-url-len
-  - name: MaxTotalHdrLen
-    type: Int64
-    minimum: 5
-    maximum: 128000
-    default: 128000
-    description: 'Max total header length'
-    cli_alias: max-total-header-len
-  - name: MaxHdrCount
-    type: Int64
-    minimum: 0
-    maximum: 65535
-    default: 0
-    description: 'Max number of headers'
-    cli_alias: max-header-count
-  - name: MaxNameHdrLen
-    type: Int64
-    minimum: 0
-    maximum: 65535
-    default: 0
-    description: 'Max header name length'
-    cli_alias: max-header-name-len
-  - name: MaxValueHdrLen
-    type: Int64
-    minimum: 0
-    maximum: 65535
-    default: 0
-    description: 'Max header value length'
-    cli_alias: max-header-value-len
-  - name: ACL
-    type: String
-    reference_to: AccessControlList
-    description: 'Access control list'
-    cli_alias: acl
-  - name: CredentialCharset
-    type: String
-    enum:
-      - 'protocol'
-      - 'ascii'
-      - 'utf8'
-      - 'big5'
-      - 'cp1250'
-      - 'cp1251'
-      - 'cp1252'
-      - 'cp1253'
-      - 'cp1254'
-      - 'cp1255'
-      - 'cp1256'
-      - 'cp1257'
-      - 'cp1258'
-      - 'euc_jp'
-      - 'euc_kr'
-      - 'gb18030'
-      - 'gb2312'
-      - 'iso2022_jp'
-      - 'iso2022_kr'
-      - 'iso8859_1'
-      - 'iso8859_2'
-      - 'iso8859_4'
-      - 'iso8859_5'
-      - 'iso8859_6'
-      - 'iso8859_7'
-      - 'iso8859_8'
-      - 'iso8859_9'
-      - 'iso8859_15'
-      - 'sjis'
-      - 'tis620'
-      - 'unicode_le'
-    default: 'protocol'
-    description: 'Credential character set'
-    cli_alias: credential-charset
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: RemoteAddress
-    type: String
-    required: true
-    example: '10.10.10.10'
-    description: 'Host'
-    cli_alias: remote-hostname
-  - name: RemotePort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    example: 8888
-    required: true
-    description: 'Port'
-    cli_alias: remote-port
-  # DEPRECATED
-  # - name: RemoteSSLProxy
-  - name: RemoteConnectionTimeout
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    required: true
-    default: 60
-    description: 'Connection timeout'
-    cli_alias: remote-connect-timeout
-  - name: XMLManager
-    type: String
-    reference_to: XMLManager
-    required: true
-    default: 'default'
-    test_value: '"default"'
-    description: 'XML manager'
-    cli_alias: xml-manager
-  - name: EnablePassthrough
-    type: Bool
-    default: true
-    description: 'Enable passthrough'
-    cli_alias: enable-passthrough
-  - name: EnableVisibilityEvent
-    type: Bool
-    default: true
-    description: 'Send visibility event'
-    cli_alias: enable-visibility-event
-  - name: VisibilityEventEndpoint
-    type: String
-    description: 'Visibility event endpoint'
-    cli_alias: visibility-event-endpoint
-  - name: EnableHmacAuthentication
-    type: Bool
-    default: true
-    description: 'Enable HMAC authentication'
-    cli_alias: enable-hmac-authentication
-  # DEPRECATED
-  # - name: HmacPassphrase
-  - name: HmacPassphraseAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'HMAC passphrase alias'
-    cli_alias: hmac-passphrase-alias
-  - name: SSLServerConfigType
-    type: String
-    enum:
-      - 'server'
-      - 'sni'
-    default: 'server'
-    description: 'TLS server type'
-    cli_alias: ssl-config-type
-  - name: SSLServer
-    type: String
-    reference_to: SSLServerProfile
-    description: 'TLS server profile'
-    cli_alias: ssl-server
-  - name: SSLSNIServer
-    type: String
-    reference_to: SSLSNIServerProfile
-    description: 'TLS SNI server profile'
-    cli_alias: ssl-sni-server
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAS2ProxySourceProtocolHandler"'
+  test_expect_ds: '"AccTest_AS2ProxySourceProtocolHandler"'
+  example: AS2ProxySourceProtocolHandlerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: Specify the IP address or host alias that the service listens. The
+    default value indicates that the service listens on all IP addresses.
+  cli_alias: local-address
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 80
+  description: Specify the port that the service listens. Enter a value in the range
+    1 - 65535. The default value is 80.
+  cli_alias: port
+- name: HTTPVersion
+  type: String
+  enum:
+  - HTTP/1.0
+  - HTTP/1.1
+  default: HTTP/1.1
+  description: Specify the HTTP version for client connections. The default value
+    is HTTP/1.1.
+  cli_alias: http-client-version
+- name: AllowedFeatures
+  dm_type: DmSourceAS2FeatureType
+  description: Allowed methods and versions
+  cli_alias: allowed-features
+- name: PersistentConnections
+  type: Bool
+  default: true
+  description: Specify whether to negotiate persistent connections with clients. The
+    default value is enabled.
+  cli_alias: persistent-connections
+- name: MaxPersistentConnectionsReuse
+  type: Int64
+  description: 'Specify the maximum number of times a client can reuse a persistent
+    connection. When the maximum reuse count is reached, an explicit <tt>HTTP Connection:
+    close</tt> header is sent in the response and the TCP connection is closed. The
+    default value is 0, which means unlimited reuse.'
+  cli_alias: max-persistent-reuse
+- name: AllowCompression
+  type: Bool
+  default: false
+  description: Specify whether to negotiate GZIP compression for client connections.
+    The default value to not negoitate compression. When enabled and the <tt>Accept-Encoding</tt>
+    HTTP header indicates that compressed documents can be processed, the service
+    uses GZIP to compress HTTP transmissions. The <tt>Transfer-Encoding</tt> HTTP
+    header indicates compression.
+  cli_alias: compression
+- name: MaxURLLen
+  type: Int64
+  minimum: 1
+  maximum: 128000
+  default: 16384
+  description: Specify the length in bytes of the longest incoming URL to accept.
+    The length includes any query string or fragment identifier. Enter a value in
+    the range 1 - 128000. The default value is 16384.
+  cli_alias: max-url-len
+- name: MaxTotalHdrLen
+  type: Int64
+  minimum: 5
+  maximum: 128000
+  default: 128000
+  description: Specify the maximum aggregate length of incoming HTTP headers in bytes
+    to allow. Enter a value in the range 5 - 128000. The default value is 128000.
+  cli_alias: max-total-header-len
+- name: MaxHdrCount
+  type: Int64
+  minimum: 0
+  maximum: 65535
+  default: 0
+  description: Specify the maximum number of headers to allow in requests. The default
+    value is 0, which indicates no limit.
+  cli_alias: max-header-count
+- name: MaxNameHdrLen
+  type: Int64
+  minimum: 0
+  maximum: 65535
+  default: 0
+  description: Specify the maximum length of header names in bytes to allow. Each
+    HTTP header is expressed as a name-value pair. This setting specifies the maximum
+    length of the name portion for HTTP headers. The default value is 0, which indicates
+    no limit.
+  cli_alias: max-header-name-len
+- name: MaxValueHdrLen
+  type: Int64
+  minimum: 0
+  maximum: 65535
+  default: 0
+  description: Specify the maximum length of HTTP header values in bytes to allow.
+    Each HTTP header is expressed as a name-value pair. This setting specifies the
+    maximum length of the value portion of that header. The default value is 0, which
+    indicates no limit.
+  cli_alias: max-header-value-len
+- name: ACL
+  type: String
+  reference_to: AccessControlList
+  description: Specifies the access control list to allow or deny access to this service
+    based on the IP address of the client. When attached to a service, an access control
+    list denies all access by default. To deny access to only selected addresses,
+    first grant access to all addresses (allow 0.0.0.0) and then create deny entries
+    for the desired hosts.
+  cli_alias: acl
+- name: CredentialCharset
+  type: String
+  enum:
+  - protocol
+  - ascii
+  - utf8
+  - big5
+  - cp1250
+  - cp1251
+  - cp1252
+  - cp1253
+  - cp1254
+  - cp1255
+  - cp1256
+  - cp1257
+  - cp1258
+  - euc_jp
+  - euc_kr
+  - gb18030
+  - gb2312
+  - iso2022_jp
+  - iso2022_kr
+  - iso8859_1
+  - iso8859_2
+  - iso8859_4
+  - iso8859_5
+  - iso8859_6
+  - iso8859_7
+  - iso8859_8
+  - iso8859_9
+  - iso8859_15
+  - sjis
+  - tis620
+  - unicode_le
+  default: protocol
+  description: Specifies the character encoding of the original basic authentication
+    values. Basic authentication credentials are combined and base64 encoded in the
+    authorization header of the request. The DataPower Gateway transcodes the contents
+    of the authorization header to UTF-8. The default value is Protocol, which represents
+    ISO-8859-1, Latin 1.
+  cli_alias: credential-charset
+- name: RemoteAddress
+  type: String
+  required: true
+  example: 10.10.10.10
+  description: Specifies the IP address, host name, or name of a load balancer group
+    of the Multi-Enterprise Integration Gateway server.
+  cli_alias: remote-hostname
+- name: RemotePort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  example: 8888
+  required: true
+  description: Specifies the destination port on the Multi-Enterprise Integration
+    Gateway server.
+  cli_alias: remote-port
+- name: RemoteConnectionTimeout
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  required: true
+  default: 60
+  description: Specify the duration in seconds to wait to establish a connection with
+    the server. Enter a value in the range 1 - 86400. The default value is 60.
+  cli_alias: remote-connect-timeout
+- name: XMLManager
+  type: String
+  reference_to: XMLManager
+  required: true
+  default: default
+  test_value: '"default"'
+  description: Specifies an existing XML manager. An XML manager obtains and manages
+    XML documents, stylesheets, and other document resources on behalf of one or more
+    services.
+  cli_alias: xml-manager
+- name: EnablePassthrough
+  type: Bool
+  default: true
+  description: Controls whether to pass the original AS2 requests to the processing
+    policy of DataPower service. <ul><li>When enabled, the AS2 proxy handler passes
+    the original AS2 requests to DataPower service processing policy.</li><li>When
+    disabled, the AS2 proxy handler first uses the cryptographic information in the
+    partner exchange profile to decrypt the incoming AS2 requests and verify the signature.
+    The AS2 proxy handler then passes the decrypted request body with signature removed
+    to DataPower service for processing.</li></ul>
+  cli_alias: enable-passthrough
+- name: EnableVisibilityEvent
+  type: Bool
+  default: true
+  description: Controls whether to send the visibility events generated by the AS2
+    proxy handler to the MEIG visibility event endpoint. These visibility events are
+    correlated to those generated by the Multi-Enterprise Integration Gateway server
+    in one transaction thread.
+  cli_alias: enable-visibility-event
+- name: VisibilityEventEndpoint
+  type: String
+  description: Specifies the URL of the MEIG visibility event endpoint. Enter the
+    URL in the format of static IBM MQ URL that provides the information about the
+    IBM MQ server name, queue manager name, and name of the channel configured in
+    the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT
+  cli_alias: visibility-event-endpoint
+- name: EnableHmacAuthentication
+  type: Bool
+  default: true
+  description: Controls whether to use Hash-based Message Authentication Code (HMAC)
+    to secure all visibility events sent to the visibility event endpoint. If HMAC
+    is enabled in the Multi-Enterprise Integration Gateway server, you must enable
+    HMAC authentication in the AS2 proxy handler to avoid message rejection.
+  cli_alias: enable-hmac-authentication
+- name: HmacPassphraseAlias
+  type: String
+  reference_to: PasswordAlias
+  description: Specifies the password alias of the passphrase used to calculate the
+    HMAC token for message authentication and integrity checking in the Multi-Enterprise
+    Integration Gateway server.
+  cli_alias: hmac-passphrase-alias
+- name: SSLServerConfigType
+  type: String
+  enum:
+  - server
+  - sni
+  default: server
+  description: The TLS profile type to secure connections between clients and the
+    DataPower Gateway.
+  cli_alias: ssl-config-type
+- name: SSLServer
+  type: String
+  reference_to: SSLServerProfile
+  description: The TLS server profile to secure connections between clients and the
+    DataPower Gateway.
+  cli_alias: ssl-server
+- name: SSLSNIServer
+  type: String
+  reference_to: SSLSNIServerProfile
+  description: The TLS SNI server profile to secure connections between clients and
+    the DataPower Gateway.
+  cli_alias: ssl-sni-server
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: <p>The TLS profile type to secure connections between the DataPower
+    Gateway and the remote Multi-Enterprise Integration Gateway server. This communication
+    must be TLS protected. You can define the TLS proxy profile for this communication
+    in one of the following places:</p><ul><li>Define the TLS profile in the user
+    agent that is assigned to the XML manager for the DataPower service service.</li><li>Define
+    the TLS profile here.</li></ul><p>Ensure that the TLS profile is defined in one
+    of these places. Without the remote TLS profile, processing is stopped and an
+    error is logged.</p>
+  cli_alias: ssl-client-type
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: ssl-client

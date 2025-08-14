@@ -57,7 +57,7 @@ func (d *MPGWErrorActionDataSource) Metadata(_ context.Context, req datasource.M
 
 func (d *MPGWErrorActionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Multi-Protocol Gateway Error Action",
+		MarkdownDescription: "Define how the Multi-Protocol gateway handles errors and generates error responses to the client.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,31 +81,31 @@ func (d *MPGWErrorActionDataSource) Schema(ctx context.Context, req datasource.S
 							Computed:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: "Mode",
+							MarkdownDescription: "Select which mode to handle the errors and generate the responses. The default mode is \"Static (Local)\".",
 							Computed:            true,
 						},
 						"remote_url": schema.StringAttribute{
-							MarkdownDescription: "Remote URL",
+							MarkdownDescription: "Specify the URL of the remote error page.",
 							Computed:            true,
 						},
 						"local_url": schema.StringAttribute{
-							MarkdownDescription: "Local page location",
+							MarkdownDescription: "Specify the URL of the local error page.",
 							Computed:            true,
 						},
 						"error_rule": schema.StringAttribute{
-							MarkdownDescription: "Error Rule",
+							MarkdownDescription: "Specify the custom error rule that the appliance runs to handle errors.",
 							Computed:            true,
 						},
 						"status_code": schema.Int64Attribute{
-							MarkdownDescription: "Response Code",
+							MarkdownDescription: "Specify the HTTP status code that the appliance returns to the client. Enter a value in the range 0 - 999.",
 							Computed:            true,
 						},
 						"reason_phrase": schema.StringAttribute{
-							MarkdownDescription: "Reason Phrase",
+							MarkdownDescription: "Specify the HTTP reason phrase that the appliance returns to the client. For a proxy mode, the specified reason phrase overrides the fetched value.",
 							Computed:            true,
 						},
 						"header_injection": schema.ListNestedAttribute{
-							MarkdownDescription: "HTTP Header Injection",
+							MarkdownDescription: "Specify the name and the value for the HTTP header that the appliance injects.",
 							NestedObject:        models.DmWebGWErrorRespHeaderInjectionDataSourceSchema,
 							Computed:            true,
 						},

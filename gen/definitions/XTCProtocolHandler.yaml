@@ -1,98 +1,107 @@
 name: XTCProtocolHandler
-description: 'Stateful raw XML handler'
-cli_alias: 'source-stateful-tcp'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/XTCProtocolHandler'
+description: The configuration for the stateful TCP protocol handler. This protocol
+  uses raw XML - where the close of the root node delineates the document - PI and
+  comments outside of the root node are not allowed. The source protocol also specifies
+  the destination address and any single TCP connection will use the same TCP session
+  on the backside for all of its transactions (one transaction per document). <p>Any
+  gateway that employs one of these handlers must use a dynamic backend.</p>
+cli_alias: source-stateful-tcp
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/XTCProtocolHandler
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestXTCProtocolHandler"'
-    test_expect_ds: '"AccTest_XTCProtocolHandler"'
-    example: 'XTCProtocolHandlerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local IP address'
-    cli_alias: local-address
-  - name: LocalPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 3000
-    description: 'Local port'
-    cli_alias: port
-  - name: RemoteAddress
-    type: String
-    required: true
-    example: '10.10.10.10'
-    description: 'Remote host'
-    cli_alias: remote-address
-  - name: RemotePort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 12000
-    description: 'Remote port'
-    cli_alias: remote-port
-  - name: CloseOnFault
-    type: Bool
-    default: false
-    description: 'Close session on fault'
-    cli_alias: close-on-fault
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: ACL
-    type: String
-    reference_to: AccessControlList
-    description: 'Access control list'
-    cli_alias: acl
-  - name: SSLConfigType
-    type: String
-    enum:
-      - 'server'
-      - 'sni'
-    default: 'server'
-    description: 'TLS type'
-    cli_alias: ssl-config-type
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
-  - name: SSLServer
-    type: String
-    reference_to: SSLServerProfile
-    description: 'TLS server profile'
-    cli_alias: ssl-server
-  - name: SSLSNIServer
-    type: String
-    reference_to: SSLSNIServerProfile
-    description: 'TLS SNI server profile'
-    cli_alias: ssl-sni-server
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestXTCProtocolHandler"'
+  test_expect_ds: '"AccTest_XTCProtocolHandler"'
+  example: XTCProtocolHandlerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: Specify the local IP address that the service listens. The default
+    value is 0.0.0.0, which indicates that the service is active on all addresses.
+    You can use a local host alias to help ease migration.
+  cli_alias: local-address
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 3000
+  description: Specifies the port that this service monitors. Enter a value in the
+    range 1 - 65535. The default value is 3000.
+  cli_alias: port
+- name: RemoteAddress
+  type: String
+  required: true
+  example: 10.10.10.10
+  description: Remote host
+  cli_alias: remote-address
+- name: RemotePort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 12000
+  description: Remote port
+  cli_alias: remote-port
+- name: CloseOnFault
+  type: Bool
+  default: false
+  description: Specify whether to close the session on fault. When enabled, TCP connections
+    between clients and servers are closed when the system generates a fault. Otherwise,
+    the session is closed at only connection termination, timeout, or error.
+  cli_alias: close-on-fault
+- name: ACL
+  type: String
+  reference_to: AccessControlList
+  description: Access control list
+  cli_alias: acl
+- name: SSLConfigType
+  type: String
+  enum:
+  - server
+  - sni
+  default: server
+  description: TLS type
+  cli_alias: ssl-config-type
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: ssl-client
+- name: SSLServer
+  type: String
+  reference_to: SSLServerProfile
+  description: TLS server profile
+  cli_alias: ssl-server
+- name: SSLSNIServer
+  type: String
+  reference_to: SSLSNIServerProfile
+  description: TLS SNI server profile
+  cli_alias: ssl-sni-server

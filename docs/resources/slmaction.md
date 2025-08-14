@@ -3,13 +3,13 @@
 page_title: "datapower_slmaction Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SLM action
+  An SLM action defines the control procedure to trigger for transactions in excess of the threshold. As part of any control procedure, the monitor writes an event to the log for each transaction that exceeds a threshold.
   CLI Alias: slm-action
 ---
 
 # datapower_slmaction (Resource)
 
-SLM action
+An SLM action defines the control procedure to trigger for transactions in excess of the threshold. As part of any control procedure, the monitor writes an event to the log for each transaction that exceeds a threshold.
   - CLI Alias: `slm-action`
 
 ## Example Usage
@@ -37,7 +37,7 @@ resource "datapower_slmaction" "test" {
   - CLI Alias: `log-priority`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
   - Default value: `debug`
-- `type` (String) Type
+- `type` (String) Specify the administrative sanction to trigger for transactions in excess of the threshold. This action is beyond the generation of a log message.
   - CLI Alias: `type`
   - Choices: `log-only`, `reject`, `shape`
   - Default value: `log-only`

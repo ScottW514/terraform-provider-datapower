@@ -1,59 +1,73 @@
 name: AssemblyFunction
-description: 'Assembly function'
-cli_alias: 'assembly-function'
-cmd_group: 'assembly'
-rest_endpoint: '/mgmt/config/{domain}/AssemblyFunction'
+description: An assembly function augments the assembly actions that the API gateway
+  uses during processing. You can implement an assembly function in one of the following
+  ways. <ul><li>Define an assembly function to add custom logic to an assembly. After
+  you define the assembly function, you can add it to a function call assembly action.</li><li>When
+  you configure the API Connect gateway service as not V5 compatible, use an assembly
+  function to specify a user-defined policy (UDP) that API Connect advertises and
+  makes available in the API Connect assembly editor. A UDP provides custom processing
+  control of APIs in the gateway server.</li></ul>
+cli_alias: assembly-function
+cmd_group: assembly
+rest_endpoint: /mgmt/config/{domain}/AssemblyFunction
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAssemblyFunction"'
-    test_expect_ds: '"AccTest_AssemblyFunction"'
-    example: 'AssemblyFunctionName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Title
-    type: String
-    description: 'Title'
-    cli_alias: title
-  - name: Description
-    type: String
-    description: 'Description'
-    cli_alias: description
-  - name: Scope
-    type: String
-    enum:
-      - 'all'
-      - 'api'
-      - 'catalog'
-    description: 'Scope'
-    cli_alias: scope
-  - name: Parameter
-    type: List
-    element_type: DmAssemblyFunctionParameter
-    description: 'Parameters'
-    cli_alias: parameter
-  - name: Assembly
-    type: String
-    reference_to: Assembly
-    description: 'Assembly'
-    cli_alias: assembly
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAssemblyFunction"'
+  test_expect_ds: '"AccTest_AssemblyFunction"'
+  example: AssemblyFunctionName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Title
+  type: String
+  description: Specify the title of the assembly function to advertise to API developers.
+    When not provided, the DataPower Gateway provides the title to advertise to API
+    Connect.
+  cli_alias: title
+- name: Description
+  type: String
+  description: Specify the description of the assembly function to advertise to API
+    developers. When not provided, the DataPower Gateway provides the description
+    to advertise to API Connect.
+  cli_alias: description
+- name: Scope
+  type: String
+  enum:
+  - all
+  - api
+  - catalog
+  description: Scope
+  cli_alias: scope
+- name: Parameter
+  type: List
+  element_type: DmAssemblyFunctionParameter
+  description: Parameters
+  cli_alias: parameter
+- name: Assembly
+  type: String
+  reference_to: Assembly
+  description: Specify the assembly to apply to calls to the assembly function. An
+    assembly comprises a rule that defines the actions to run against the call and
+    how to handle errors during processing.
+  cli_alias: assembly

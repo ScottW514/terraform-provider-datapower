@@ -3,12 +3,12 @@
 page_title: "datapower_webb2bviewer Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  B2B viewer management service (default domain only)
+  Configure web access to the B2B transaction viewer. If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.
 ---
 
 # datapower_webb2bviewer (Data Source)
 
-B2B viewer management service (`default` domain only)
+Configure web access to the B2B transaction viewer. If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.
 
 ## Example Usage
 
@@ -26,11 +26,11 @@ data "datapower_webb2bviewer" "test" {
 
 ### Read-Only
 
-- `acl` (String) Access control list
-- `enabled` (Boolean) Administrative state
-- `idle_timeout` (Number) Idle timeout
-- `local_address` (String) Local address
-- `local_port` (Number) Port Number
+- `acl` (String) Edit the <tt>web-b2b-viewer</tt> access control list to define the client IP addresses to allow or deny.
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `idle_timeout` (Number) Specify the time after which an idle session is invalidated, which requires reauthentication. To disable the idle timer, enter 0.
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
+- `local_port` (Number) Specify the TCP port that the B2B viewer monitors. The default value is 9091.
 - `ssl_server` (String) Custom TLS server profile
 - `ssl_server_config_type` (String) Custom TLS server type
 - `sslsni_server` (String) Custom TLS SNI server profile

@@ -54,7 +54,7 @@ func (r *GraphQLSchemaOptionsResource) Metadata(ctx context.Context, req resourc
 
 func (r *GraphQLSchemaOptionsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("GraphQL schema options", "graphql-schema-options", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("GraphQL schema options define a list of schema elements to remove during validation and introspection.", "graphql-schema-options", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

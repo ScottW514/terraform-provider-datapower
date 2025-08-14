@@ -3,12 +3,12 @@
 page_title: "datapower_sshdomainclientprofile Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SSH domain client profile
+  The SSH domain client profile defines the cipher suites.
 ---
 
 # datapower_sshdomainclientprofile (Data Source)
 
-SSH domain client profile
+The SSH domain client profile defines the cipher suites.
 
 ## Example Usage
 
@@ -31,10 +31,10 @@ data "datapower_sshdomainclientprofile" "test" {
 
 ### Read-Only
 
-- `ciphers` (List of String) Ciphers
-- `enabled` (Boolean) Administrative state
-- `kex_alg` (List of String) Key exchange algorithms
-- `mac_alg` (List of String) Message authentication codes
+- `ciphers` (List of String) Specify the SSH cipher suites to support.
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `kex_alg` (List of String) Specify the key exchange (KEX) algorithms to support.
+- `mac_alg` (List of String) Specify the message authentication codes (MAC) to support.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

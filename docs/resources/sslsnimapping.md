@@ -3,13 +3,13 @@
 page_title: "datapower_sslsnimapping Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  TLS hostname map
+  A TLS hostname map defines the SNI map for TLS server profiles.
   CLI Alias: ssl-sni-mapping
 ---
 
 # datapower_sslsnimapping (Resource)
 
-TLS hostname map
+A TLS hostname map defines the SNI map for TLS server profiles.
   - CLI Alias: `ssl-sni-mapping`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_sslsnimapping" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `sni_mapping` (Attributes List) SNI mapping
+- `sni_mapping` (Attributes List) Specify a match pattern to select the TLS server profile based on the SNI hostname sent by the TLS client. The map allows virtual TLS server configuration where different server profiles are used in response to the hostname value in the <tt>ClientHello</tt> SNI extension from the TLS client. In this way, a single IP address and port can be used to host multiple TLS servers with separate crypto keys and certificates.
   - CLI Alias: `sni-mapping` (see [below for nested schema](#nestedatt--sni_mapping))
 
 ### Optional

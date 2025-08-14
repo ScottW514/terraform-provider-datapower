@@ -57,7 +57,7 @@ func (r *NFSDynamicMountsResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("NFS dynamic mounts", "nfs-dynamic-mounts", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure parameters of dynamic NFS mounts for dpnfs URL calls. These mounts support URL access in the form <tt>dpnfs://&lt;host>/&lt;path>/&lt;file></tt> . The system automatically mounts any dynamic mounts. Dynamic mounts remain mounted until the inactivity timer elapses.", "nfs-dynamic-mounts", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -71,7 +71,7 @@ func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -81,7 +81,7 @@ func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"version": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("NFS version", "version", "").AddIntegerRange(2, 4).AddDefaultValue("3").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the preferred NFS protocol version. Enter a value in the range 2 - 4. The default value is 3. <ul><li>If version 3 and the server only implements version 2, the client falls back to version 2.</li><li>If version 4, the remote export paths are different and prevents fallback.</li></ul>", "version", "").AddIntegerRange(2, 4).AddDefaultValue("3").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -91,7 +91,7 @@ func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(3),
 			},
 			"transport": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Transport protocol", "transport", "").AddStringEnum("tcp", "udp").AddDefaultValue("tcp").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the transport protocol. The default transport protocol is TCP.", "transport", "").AddStringEnum("tcp", "udp").AddDefaultValue("tcp").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -100,7 +100,7 @@ func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("tcp"),
 			},
 			"mount_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Mount type", "mount-type", "").AddStringEnum("hard", "soft").AddDefaultValue("hard").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of NFS mount. The default mount type is a hard mount.", "mount-type", "").AddStringEnum("hard", "soft").AddDefaultValue("hard").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -109,13 +109,13 @@ func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("hard"),
 			},
 			"read_only": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Read-Only", "read-only", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the mount is read-only. By default, the mount is not read-only.", "read-only", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"read_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Read size", "rsize", "").AddIntegerRange(1024, 32768).AddDefaultValue("4096").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the size in bytes for NFS read operations. Enter a value in the range 1024 - 32768. The default value is 4096.", "rsize", "").AddIntegerRange(1024, 32768).AddDefaultValue("4096").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -125,7 +125,7 @@ func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(4096),
 			},
 			"write_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Write size", "wsize", "").AddIntegerRange(1024, 32768).AddDefaultValue("4096").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the size in bytes for NFS write operations. Enter a value in the range 1024 - 32768. The default value is 4096.", "wsize", "").AddIntegerRange(1024, 32768).AddDefaultValue("4096").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -135,7 +135,7 @@ func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(4096),
 			},
 			"timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Retransmission timeout", "timeo", "").AddIntegerRange(1, 600).AddDefaultValue("7").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time in tenths of seconds until the first retransmission on RPC times out. Enter a value in the range 1 - 600. The default value is 7.", "timeo", "").AddIntegerRange(1, 600).AddDefaultValue("7").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -145,7 +145,7 @@ func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(7),
 			},
 			"retransmissions": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max retransmissions", "retrans", "").AddIntegerRange(1, 60).AddDefaultValue("3").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of minor RPC timeouts and retransmissions until a major timeout. Enter a value in the range 1 - 60. The default value is 3.", "retrans", "").AddIntegerRange(1, 60).AddDefaultValue("3").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -155,13 +155,13 @@ func (r *NFSDynamicMountsResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(3),
 			},
 			"idle_unmount_seconds": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Inactivity timeout", "inactivity-timeout", "").AddDefaultValue("900").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the inactivity duration in seconds to wait before the mount is unmounted. The default value is 900. The value of 0 disables the timer.", "inactivity-timeout", "").AddDefaultValue("900").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(900),
 			},
 			"mount_timeout_seconds": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Mount timeout", "mount-timeout", "").AddIntegerRange(10, 240).AddDefaultValue("30").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to attempt to mount a dynamic mount. When the timer elapses, related file open operations fail.", "mount-timeout", "").AddIntegerRange(10, 240).AddDefaultValue("30").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

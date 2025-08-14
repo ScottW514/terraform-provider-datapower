@@ -3,13 +3,13 @@
 page_title: "datapower_kafkasourceprotocolhandler Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Kafka handler
+  A Kafka handler monitors the request topic for incoming client requests.
   CLI Alias: source-kafkaAccepted Dependency Actions: quiesce
 ---
 
 # datapower_kafkasourceprotocolhandler (Resource)
 
-Kafka handler
+A Kafka handler monitors the request topic for incoming client requests.
   - CLI Alias: `source-kafka`
   - Accepted Dependency Actions: `quiesce`
 
@@ -37,17 +37,17 @@ resource "datapower_kafkasourceprotocolhandler" "test" {
 - `consumer_group` (String) Consumer group
   - CLI Alias: `consumer-group`
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `request_topic` (String) Request topic
+- `request_topic` (String) Specify the name of the request topic to monitor for incoming client requests. On receipt, the handler forwards the extracted message to the DataPower service for processing.
   - CLI Alias: `request-topic`
 
 ### Optional
 
-- `batch_size` (Number) Batch size
+- `batch_size` (Number) Specify the number of messages to retrieve and process as a batch. The handler attempts to retrieve the number of specified messages from the consumer and processes these messages as a batch. Enter a value in the range 1 - 65535. The default value is 1.
   - CLI Alias: `batch-size`
   - Range: `1`-`65535`
   - Default value: `1`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `response_topic` (String) Response topic
+- `response_topic` (String) Specify the name of the response topic to send responses after processing by the DataPower service. When the Kafka server does not expect responses, leave blank. When blank, responses are dropped.
   - CLI Alias: `response-topic`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

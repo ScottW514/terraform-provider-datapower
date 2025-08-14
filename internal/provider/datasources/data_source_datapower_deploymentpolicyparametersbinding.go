@@ -57,7 +57,7 @@ func (d *DeploymentPolicyParametersBindingDataSource) Metadata(_ context.Context
 
 func (d *DeploymentPolicyParametersBindingDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Deployment Policy Variables",
+		MarkdownDescription: "Configuration to persist the values of the deployment policy variables.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *DeploymentPolicyParametersBindingDataSource) Schema(ctx context.Context
 							Computed:            true,
 						},
 						"deployment_policy_parameter": schema.ListNestedAttribute{
-							MarkdownDescription: "Deployment Policy Variables",
+							MarkdownDescription: "A list of name-value pairs. The name specifies a variable in a deployment policy, which will be replaced by its associated value before applying the policy to a configuration import.",
 							NestedObject:        models.DmDeploymentPolicyParameterDataSourceSchema,
 							Computed:            true,
 						},

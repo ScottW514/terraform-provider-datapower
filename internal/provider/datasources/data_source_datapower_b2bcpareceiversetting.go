@@ -101,7 +101,7 @@ func (d *B2BCPAReceiverSettingDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"persist_duration": schema.Int64Attribute{
-							MarkdownDescription: "Persistence duration",
+							MarkdownDescription: "Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.",
 							Computed:            true,
 						},
 						"encryption_required": schema.BoolAttribute{
@@ -121,7 +121,7 @@ func (d *B2BCPAReceiverSettingDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"default_signer_cert": schema.StringAttribute{
-							MarkdownDescription: "Default signature certificate",
+							MarkdownDescription: "Specify the default certificate to verify the signature. This certificate is used when either the <tt>keyInfo</tt> element is missing or the signature method is not supported.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -57,7 +57,7 @@ func (d *APIAuthURLRegistryDataSource) Metadata(_ context.Context, req datasourc
 
 func (d *APIAuthURLRegistryDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API authentication URL registry",
+		MarkdownDescription: "Configure and manage the API authentication URL registry.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *APIAuthURLRegistryDataSource) Schema(ctx context.Context, req datasourc
 							Computed:            true,
 						},
 						"auth_url": schema.StringAttribute{
-							MarkdownDescription: "Authentication URL",
+							MarkdownDescription: "Specify the URL of the authentication endpoint to authenticate credentials. The user credentials in the authorization header are validated by the authentication endpoint. When the user is authenticated, DataPower expects the authentication endpoint to return an HTTP 200 status code. All other status codes result in an authentication failure, and access is denied.",
 							Computed:            true,
 						},
 						"tls_client_profile": schema.StringAttribute{

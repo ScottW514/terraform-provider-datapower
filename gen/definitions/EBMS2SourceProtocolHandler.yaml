@@ -1,176 +1,193 @@
 name: EBMS2SourceProtocolHandler
-description: 'ebMS2 handler'
-cli_alias: 'source-ebms2'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/EBMS2SourceProtocolHandler'
+description: The configuration for an ebMS2 handler.
+cli_alias: source-ebms2
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/EBMS2SourceProtocolHandler
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestEBMS2SourceProtocolHandler"'
-    test_expect_ds: '"AccTest_EBMS2SourceProtocolHandler"'
-    example: 'EBMS2SourceProtocolHandlerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local IP address'
-    cli_alias: local-address
-  - name: LocalPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 80
-    description: 'Local port'
-    cli_alias: port
-  - name: HTTPVersion
-    type: String
-    enum:
-      - 'HTTP/1.0'
-      - 'HTTP/1.1'
-    default: 'HTTP/1.1'
-    description: 'HTTP version to client'
-    cli_alias: http-client-version
-  - name: PersistentConnections
-    type: Bool
-    default: true
-    description: 'Persistent connections'
-    cli_alias: persistent-connections
-  - name: AllowCompression
-    type: Bool
-    default: false
-    description: 'Compression'
-    cli_alias: compression
-  - name: MaxURLLen
-    type: Int64
-    minimum: 1
-    maximum: 128000
-    default: 16384
-    description: 'Max URL length'
-    cli_alias: max-url-len
-  - name: MaxTotalHdrLen
-    type: Int64
-    minimum: 5
-    maximum: 128000
-    default: 128000
-    description: 'Max total header length'
-    cli_alias: max-total-header-len
-  - name: MaxHdrCount
-    type: Int64
-    minimum: 0
-    maximum: 65535
-    default: 0
-    description: 'Max request headers'
-    cli_alias: max-header-count
-  - name: MaxNameHdrLen
-    type: Int64
-    minimum: 0
-    maximum: 65535
-    default: 0
-    description: 'Max length of header name'
-    cli_alias: max-header-name-len
-  - name: MaxValueHdrLen
-    type: Int64
-    minimum: 0
-    maximum: 65535
-    default: 0
-    description: 'Max length of header value'
-    cli_alias: max-header-value-len
-  - name: MaxQueryStringLen
-    type: Int64
-    minimum: 0
-    maximum: 65535
-    default: 0
-    description: 'Max length of query string'
-    cli_alias: max-querystring-len
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: ACL
-    type: String
-    reference_to: AccessControlList
-    description: 'Access control list'
-    cli_alias: acl
-  - name: AAAPolicy
-    type: String
-    reference_to: AAAPolicy
-    description: 'AAA policy'
-    cli_alias: aaa-policy
-  - name: CredentialCharset
-    type: String
-    enum:
-      - 'protocol'
-      - 'ascii'
-      - 'utf8'
-      - 'big5'
-      - 'cp1250'
-      - 'cp1251'
-      - 'cp1252'
-      - 'cp1253'
-      - 'cp1254'
-      - 'cp1255'
-      - 'cp1256'
-      - 'cp1257'
-      - 'cp1258'
-      - 'euc_jp'
-      - 'euc_kr'
-      - 'gb18030'
-      - 'gb2312'
-      - 'iso2022_jp'
-      - 'iso2022_kr'
-      - 'iso8859_1'
-      - 'iso8859_2'
-      - 'iso8859_4'
-      - 'iso8859_5'
-      - 'iso8859_6'
-      - 'iso8859_7'
-      - 'iso8859_8'
-      - 'iso8859_9'
-      - 'iso8859_15'
-      - 'sjis'
-      - 'tis620'
-      - 'unicode_le'
-    default: 'protocol'
-    description: 'Credential character set'
-    cli_alias: credential-charset
-  - name: SSLServerConfigType
-    type: String
-    enum:
-      - 'server'
-      - 'sni'
-    default: 'server'
-    description: 'TLS server type'
-    cli_alias: ssl-config-type
-  - name: SSLServer
-    type: String
-    reference_to: SSLServerProfile
-    description: 'TLS server profile'
-    cli_alias: ssl-server
-  - name: SSLSNIServer
-    type: String
-    reference_to: SSLSNIServerProfile
-    description: 'TLS SNI server profile'
-    cli_alias: ssl-sni-server
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestEBMS2SourceProtocolHandler"'
+  test_expect_ds: '"AccTest_EBMS2SourceProtocolHandler"'
+  example: EBMS2SourceProtocolHandlerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: Specify the local IP address that the service listens. The default
+    value is 0.0.0.0, which indicates that the service is active on all addresses.
+    You can use a local host alias to help ease migration.
+  cli_alias: local-address
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 80
+  description: Specifies the port that this service monitors. Enter a value in the
+    range 1 - 65535. The default value is 80.
+  cli_alias: port
+- name: HTTPVersion
+  type: String
+  enum:
+  - HTTP/1.0
+  - HTTP/1.1
+  default: HTTP/1.1
+  description: Specify the HTTP version for client connection. The default value is
+    HTTP/1.1.
+  cli_alias: http-client-version
+- name: PersistentConnections
+  type: Bool
+  default: true
+  description: Specify whether to enable persistent connections with clients. By default,
+    persistent connections are enabled.
+  cli_alias: persistent-connections
+- name: AllowCompression
+  type: Bool
+  default: false
+  description: Specify whether to enable GZIP compression with clients. By default,
+    compression is not enabled.
+  cli_alias: compression
+- name: MaxURLLen
+  type: Int64
+  minimum: 1
+  maximum: 128000
+  default: 16384
+  description: Specify the maximum URL length in bytes to accept from clients. Enter
+    a value in the range 1 - 128000. The default value is 16384. The length includes
+    any query string or fragment identifier.
+  cli_alias: max-url-len
+- name: MaxTotalHdrLen
+  type: Int64
+  minimum: 5
+  maximum: 128000
+  default: 128000
+  description: Specify the maximum aggregate size of headers in bytes in client requests.
+    Enter a value in the range 5 - 128000. The default value is 128000.
+  cli_alias: max-total-header-len
+- name: MaxHdrCount
+  type: Int64
+  minimum: 0
+  maximum: 65535
+  default: 0
+  description: Specify the maximum number of headers to allow in client requests.
+    The default value is 0, which means unlimited.
+  cli_alias: max-header-count
+- name: MaxNameHdrLen
+  type: Int64
+  minimum: 0
+  maximum: 65535
+  default: 0
+  description: Specify the maximum length to accept for any header name. A header
+    is expressed as a name-value pair. The default value is 0, which means unlimited.
+  cli_alias: max-header-name-len
+- name: MaxValueHdrLen
+  type: Int64
+  minimum: 0
+  maximum: 65535
+  default: 0
+  description: Specify the maximum length to accept for any header value. A header
+    is expressed as a name-value pair. The default value is 0, which means unlimited.
+  cli_alias: max-header-value-len
+- name: MaxQueryStringLen
+  type: Int64
+  minimum: 0
+  maximum: 65535
+  default: 0
+  description: Specify the maximum length of the query string. The query string is
+    the portion of the URL after the <tt>?</tt> character. The default value is 0,
+    which indicates no limit.
+  cli_alias: max-querystring-len
+- name: ACL
+  type: String
+  reference_to: AccessControlList
+  description: Access control list
+  cli_alias: acl
+- name: AAAPolicy
+  type: String
+  reference_to: AAAPolicy
+  description: AAA policy
+  cli_alias: aaa-policy
+- name: CredentialCharset
+  type: String
+  enum:
+  - protocol
+  - ascii
+  - utf8
+  - big5
+  - cp1250
+  - cp1251
+  - cp1252
+  - cp1253
+  - cp1254
+  - cp1255
+  - cp1256
+  - cp1257
+  - cp1258
+  - euc_jp
+  - euc_kr
+  - gb18030
+  - gb2312
+  - iso2022_jp
+  - iso2022_kr
+  - iso8859_1
+  - iso8859_2
+  - iso8859_4
+  - iso8859_5
+  - iso8859_6
+  - iso8859_7
+  - iso8859_8
+  - iso8859_9
+  - iso8859_15
+  - sjis
+  - tis620
+  - unicode_le
+  default: protocol
+  description: Specify the character encoding of the original basic authentication
+    values. The default value is protocol, which is ISO-8859-1 (Latin 1). <p>Basic
+    authentication credentials are combined and base64 encoded in the HTTP <tt>Authorization</tt>
+    request header. The contents of the <tt>Authorization</tt> header is transcoded
+    to UTF-8.</p>
+  cli_alias: credential-charset
+- name: SSLServerConfigType
+  type: String
+  enum:
+  - server
+  - sni
+  default: server
+  description: Specify the type of TLS profile to secure client connections.
+  cli_alias: ssl-config-type
+- name: SSLServer
+  type: String
+  reference_to: SSLServerProfile
+  description: TLS server profile
+  cli_alias: ssl-server
+- name: SSLSNIServer
+  type: String
+  reference_to: SSLSNIServerProfile
+  description: TLS SNI server profile
+  cli_alias: ssl-sni-server

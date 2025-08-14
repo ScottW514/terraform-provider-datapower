@@ -54,7 +54,7 @@ func (r *LogLabelResource) Metadata(ctx context.Context, req resource.MetadataRe
 
 func (r *LogLabelResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Log category", "logging category", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configuration of custom log categories.", "logging category", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

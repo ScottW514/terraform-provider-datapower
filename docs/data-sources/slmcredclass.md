@@ -3,12 +3,12 @@
 page_title: "datapower_slmcredclass Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SLM credential class
+  An SLM credentials class identifies a set of users (credentials) to be subject to an SLM policy. An SLM credentials class consists of the following types and properties. A credential type that specifies the manner to obtain user credentials.A match type that determines the credentials to apply to the policy.Depending on the credentials and match type, properties that identify specific instances of credentials.
 ---
 
 # datapower_slmcredclass (Data Source)
 
-SLM credential class
+An SLM credentials class identifies a set of users (credentials) to be subject to an SLM policy. An SLM credentials class consists of the following types and properties. <ul><li>A credential type that specifies the manner to obtain user credentials.</li><li>A match type that determines the credentials to apply to the policy.</li><li>Depending on the credentials and match type, properties that identify specific instances of credentials.</li></ul>
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `cred_match_type` (String) Match Type
-- `cred_type` (String) Credential Type
+- `cred_type` (String) Specify the manner to obtain the credentials (user identity) for each transaction. The default value is mapped credentials from an AAA action.
 - `cred_value` (List of String) Credential value
 - `header` (String) Request header
 - `id` (String) Name of the object. Must be unique among object types in application domain.

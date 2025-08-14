@@ -1,50 +1,58 @@
 name: AppSecurityPolicy
-description: 'Application Security Policy'
-cli_alias: 'application-security-policy'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/AppSecurityPolicy'
+description: An Application Security Policy establishes the rules to use to enforce
+  security for a Web Application Firewall service. This policy employs request maps,
+  response maps, and error maps that provide a detailed security configuration. Each
+  of these maps, in turn, matches to a Web Request Profile, Web Request Profile, or
+  Error Policy, as the case might be.
+cli_alias: application-security-policy
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/AppSecurityPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAppSecurityPolicy"'
-    test_expect_ds: '"AccTest_AppSecurityPolicy"'
-    example: 'AppSecurityPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: RequestMaps
-    type: List
-    element_type: DmWebAppRequestPolicyMap
-    required: true
-    description: 'Request Maps'
-    cli_alias: request-match
-  - name: ResponseMaps
-    type: List
-    element_type: DmWebAppResponsePolicyMap
-    required: true
-    description: 'Response Maps'
-    cli_alias: response-match
-  - name: ErrorMaps
-    type: List
-    element_type: DmPolicyMap
-    description: 'Error Maps'
-    cli_alias: error-match
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAppSecurityPolicy"'
+  test_expect_ds: '"AccTest_AppSecurityPolicy"'
+  example: AppSecurityPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: RequestMaps
+  type: List
+  element_type: DmWebAppRequestPolicyMap
+  required: true
+  description: A list of Web Request Profile objects and their matching criteria.
+    If the client request meets the matching criteria, its Web Request Profile runs.
+  cli_alias: request-match
+- name: ResponseMaps
+  type: List
+  element_type: DmWebAppResponsePolicyMap
+  required: true
+  description: A list of Web Response Profile objects and their matching criteria.
+    If the server response meets the matching criteria, its Web Response Profile runs.
+  cli_alias: response-match
+- name: ErrorMaps
+  type: List
+  element_type: DmPolicyMap
+  description: A list of Error Policy objects (Processing Rules) and their matching
+    criteria. If an error meets the matching criteria, its Error Policy runs.
+  cli_alias: error-match

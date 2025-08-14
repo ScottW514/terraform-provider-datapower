@@ -3,13 +3,13 @@
 page_title: "datapower_urlmap Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  URL Map
+  Configure/Edit URL maps. URL Maps are used by Processing Actions and by XML Manager Compile Options Policies.
   CLI Alias: urlmap
 ---
 
 # datapower_urlmap (Resource)
 
-URL Map
+Configure/Edit URL maps. URL Maps are used by Processing Actions and by XML Manager Compile Options Policies.
   - CLI Alias: `urlmap`
 
 ## Example Usage
@@ -31,7 +31,7 @@ resource "datapower_urlmap" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `url_map_rule` (Attributes List) URL Map Rule
+- `url_map_rule` (Attributes List) Add, edit or delete a URL map match pattern
   - CLI Alias: `match` (see [below for nested schema](#nestedatt--url_map_rule))
 
 ### Optional

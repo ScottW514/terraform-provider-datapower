@@ -1,57 +1,64 @@
 name: DocumentCryptoMap
-description: 'Document Crypto Map'
-cli_alias: 'document-crypto-map'
-cmd_group: 'document-crypto-map'
-rest_endpoint: '/mgmt/config/{domain}/DocumentCryptoMap'
+description: A Document Crypto Map indicates which elements, of a complete schema,
+  to encrypt or decrypt. The indicated element or elements may also be signed.
+cli_alias: document-crypto-map
+cmd_group: document-crypto-map
+rest_endpoint: /mgmt/config/{domain}/DocumentCryptoMap
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestDocumentCryptoMap"'
-    test_expect_ds: '"AccTest_DocumentCryptoMap"'
-    example: 'DocumentCryptoMapName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Operation
-    type: String
-    enum:
-      - 'encrypt'
-      - 'encrypt-wssec'
-      - 'decrypt'
-      - 'sign-wssec'
-    required: true
-    default: 'encrypt'
-    description: 'Operation'
-    cli_alias: operation
-  - name: XPath
-    type: List
-    element_type: String
-    required: true
-    list_example:
-      - '*'
-    description: 'XPath Expression'
-    cli_alias: select
-  - name: NameSpaceMappings
-    type: List
-    element_type: DmNamespaceMapping
-    description: 'Namespace Mappings'
-    cli_alias: namespace-mapping
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestDocumentCryptoMap"'
+  test_expect_ds: '"AccTest_DocumentCryptoMap"'
+  example: DocumentCryptoMapName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Operation
+  type: String
+  enum:
+  - encrypt
+  - encrypt-wssec
+  - decrypt
+  - sign-wssec
+  required: true
+  default: encrypt
+  description: Select the operation to perform on the selected document nodes.
+  cli_alias: operation
+- name: XPath
+  type: List
+  element_type: String
+  required: true
+  list_example:
+  - '*'
+  description: <p>Enter the XPath expression identifying the elements on which to
+    operate in the blank field in front of the Add button. Click Add to add the expression
+    to those included in the map.</p><p>Click the XPath Tool button to use the graphically
+    oriented XPath Tool to construct the message. You will need to upload an example
+    document to use this tool. Note that this example should be the encrypted document
+    when the operation is decrypt.</p>
+  cli_alias: select
+- name: NameSpaceMappings
+  type: List
+  element_type: DmNamespaceMapping
+  description: The prefix and URI for namespaces that might be encountered in requests.
+  cli_alias: namespace-mapping
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary

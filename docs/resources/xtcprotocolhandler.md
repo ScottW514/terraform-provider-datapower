@@ -3,13 +3,13 @@
 page_title: "datapower_xtcprotocolhandler Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Stateful raw XML handler
+  The configuration for the stateful TCP protocol handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed. The source protocol also specifies the destination address and any single TCP connection will use the same TCP session on the backside for all of its transactions (one transaction per document). Any gateway that employs one of these handlers must use a dynamic backend.
   CLI Alias: source-stateful-tcpAccepted Dependency Actions: quiesce
 ---
 
 # datapower_xtcprotocolhandler (Resource)
 
-Stateful raw XML handler
+The configuration for the stateful TCP protocol handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed. The source protocol also specifies the destination address and any single TCP connection will use the same TCP session on the backside for all of its transactions (one transaction per document). <p>Any gateway that employs one of these handlers must use a dynamic backend.</p>
   - CLI Alias: `source-stateful-tcp`
   - Accepted Dependency Actions: `quiesce`
 
@@ -41,14 +41,14 @@ resource "datapower_xtcprotocolhandler" "test" {
 - `acl` (String) Access control list
   - CLI Alias: `acl`
   - Reference to: `datapower_accesscontrollist:id`
-- `close_on_fault` (Boolean) Close session on fault
+- `close_on_fault` (Boolean) Specify whether to close the session on fault. When enabled, TCP connections between clients and servers are closed when the system generates a fault. Otherwise, the session is closed at only connection termination, timeout, or error.
   - CLI Alias: `close-on-fault`
   - Default value: `false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `local_address` (String) Local IP address
+- `local_address` (String) Specify the local IP address that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses. You can use a local host alias to help ease migration.
   - CLI Alias: `local-address`
   - Default value: `0.0.0.0`
-- `local_port` (Number) Local port
+- `local_port` (Number) Specifies the port that this service monitors. Enter a value in the range 1 - 65535. The default value is 3000.
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `3000`

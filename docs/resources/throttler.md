@@ -3,13 +3,13 @@
 page_title: "datapower_throttler Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Throttle settings (default domain only)
+  Define throttle settings that monitor memory, temporary file space, XML names, and JSON keys. The system responds to low conditions by refusing to accept new connections. If the refusal does not free sufficient resources after the defined duration, the system restarts.
   CLI Alias: throttle
 ---
 
 # datapower_throttler (Resource)
 
-Throttle settings (`default` domain only)
+Define throttle settings that monitor memory, temporary file space, XML names, and JSON keys. The system responds to low conditions by refusing to accept new connections. If the refusal does not free sufficient resources after the defined duration, the system restarts.
   - CLI Alias: `throttle`
 
 ## Example Usage
@@ -30,48 +30,48 @@ resource "datapower_throttler" "test" {
 
 ### Optional
 
-- `backlog_size` (Number) Backlog size
+- `backlog_size` (Number) Specify the size of the backlog queue where incoming requests are routed if a throttling threshold is reached. Enter a value in the range 0 - 500. The default value is 0, which indicates that no requests are routed to the backlog queue.
   - CLI Alias: `backlog-size`
   - Range: `0`-`500`
   - Default value: `0`
-- `backlog_timeout` (Number) Backlog timeout
+- `backlog_timeout` (Number) Specify the duration in seconds that a request remains in the backlog queue before it is rejected if a throttling threshold is reached. Specify a value that is less than the timeout value of your browser. The default value is 30.
   - CLI Alias: `backlog-timeout`
   - Default value: `30`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `environmental_log` (Boolean) Monitor sensors
+- `environmental_log` (Boolean) Specify whether to collect messages about fans and power supplies and generate messages if a failure event occurs. By default, monitoring is enabled.
   - CLI Alias: `sensors-log`
   - Default value: `true`
-- `log_level` (String) Log level
+- `log_level` (String) Specify the criticality level for throttle messages. By default, logging is at debug level.
   - CLI Alias: `status-loglevel`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
   - Default value: `debug`
-- `qname_warn_at` (Number) XML names and JSON keys threshold
+- `qname_warn_at` (Number) <p>Specify the threshold as a percentage of available XML names and JSON keys before the system writes an alert to the logs. This threshold is when the number of available XML names or JSON keys in any pool is less than the threshold. Enter a value in the range 5 - 100. The default value is 10.</p><p>As this threshold is approached, the system attempts to free unused resources to prevent this threshold from being reached. If you receive this alert, schedule a reload as soon as possible to prevent an unscheduled restart. If the percentage for any resource pool is less than 5%, the system reboots.</p>
   - CLI Alias: `qcode-warn`
   - Range: `5`-`100`
   - Default value: `10`
-- `statistics` (Boolean) Status log
+- `statistics` (Boolean) Specify whether to collect throttle log messages. By default, logging is disabled.
   - CLI Alias: `status-log`
   - Default value: `false`
-- `temp_fs_terminate_at` (Number) Temporary file space terminate threshold
+- `temp_fs_terminate_at` (Number) Specify the terminate threshold as a percentage of available temporary file space. At this threshold, the system reboots. Enter a value in the range 0 - 100. The default value is 0.
   - CLI Alias: `temp-fs-terminate`
   - Range: `0`-`100`
   - Default value: `0`
-- `temp_fs_throttle_at` (Number) Temporary file space throttle threshold
+- `temp_fs_throttle_at` (Number) Specify the throttle threshold as a percentage of available temporary file space. At this threshold, the system rejects new connections for the timeout period to allow temporary file space usage to recover. Enter a value in the range 0 - 100. The default value is 0.
   - CLI Alias: `temp-fs-throttle`
   - Range: `0`-`100`
   - Default value: `0`
-- `terminate_at` (Number) Memory terminate threshold
+- `terminate_at` (Number) Specify the terminate threshold as a percentage of available memory. At this threshold, the system reboots. Enter a value in the range 0 - 100. The default value is 5.
   - CLI Alias: `memory-terminate`
   - Range: `0`-`100`
   - Default value: `0`
-- `throttle_at` (Number) Memory throttle threshold
+- `throttle_at` (Number) Specify the throttle threshold as a percentage of available memory. At this threshold, the system rejects new connections for the timeout period to allow memory usage to recover. Enter a value in the range 0 - 100. The default value is 20.
   - CLI Alias: `memory-throttle`
   - Range: `0`-`100`
   - Default value: `0`
-- `timeout` (Number) Timeout
+- `timeout` (Number) Specify the duration in seconds to reject new connections after a throttle threshold is reached. The default value is 30.
   - CLI Alias: `timeout`
   - Default value: `30`
 - `user_summary` (String) Comments

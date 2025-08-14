@@ -3,13 +3,13 @@
 page_title: "datapower_documentcryptomap Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Document Crypto Map
+  A Document Crypto Map indicates which elements, of a complete schema, to encrypt or decrypt. The indicated element or elements may also be signed.
   CLI Alias: document-crypto-map
 ---
 
 # datapower_documentcryptomap (Resource)
 
-Document Crypto Map
+A Document Crypto Map indicates which elements, of a complete schema, to encrypt or decrypt. The indicated element or elements may also be signed.
   - CLI Alias: `document-crypto-map`
 
 ## Example Usage
@@ -30,15 +30,15 @@ resource "datapower_documentcryptomap" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `x_path` (List of String) XPath Expression
+- `x_path` (List of String) <p>Enter the XPath expression identifying the elements on which to operate in the blank field in front of the Add button. Click Add to add the expression to those included in the map.</p><p>Click the XPath Tool button to use the graphically oriented XPath Tool to construct the message. You will need to upload an example document to use this tool. Note that this example should be the encrypted document when the operation is decrypt.</p>
   - CLI Alias: `select`
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `name_space_mappings` (Attributes List) Namespace Mappings
+- `name_space_mappings` (Attributes List) The prefix and URI for namespaces that might be encountered in requests.
   - CLI Alias: `namespace-mapping` (see [below for nested schema](#nestedatt--name_space_mappings))
-- `operation` (String) Operation
+- `operation` (String) Select the operation to perform on the selected document nodes.
   - CLI Alias: `operation`
   - Choices: `encrypt`, `encrypt-wssec`, `decrypt`, `sign-wssec`
   - Default value: `encrypt`

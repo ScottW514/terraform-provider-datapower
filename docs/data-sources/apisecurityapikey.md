@@ -3,12 +3,12 @@
 page_title: "datapower_apisecurityapikey Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API security API key
+  An API key security definition defines the credentials that an API client must provide to the API gateway to identify itself when calling the API operations. You can require that the client must provide only the client ID, or both the client ID and client secret. When you require the client to provide both the client ID and client secret, you must define two separate configurations, one of type ID and the other of type secret.
 ---
 
 # datapower_apisecurityapikey (Data Source)
 
-API security API key
+An API key security definition defines the credentials that an API client must provide to the API gateway to identify itself when calling the API operations. You can require that the client must provide only the client ID, or both the client ID and client secret. When you require the client to provide both the client ID and client secret, you must define two separate configurations, one of type ID and the other of type secret.
 
 ## Example Usage
 
@@ -43,7 +43,7 @@ Read-Only:
 - `key_name` (String) Key name
 - `type` (String) Type
 - `user_summary` (String) Comments
-- `where` (String) Where
+- `where` (String) Specify the location of the client credentials. An API call fails if the credentials are not included in the specified location. <b>Note:</b> Regardless of where the client credentials are sent, you must specify the same location for the client ID and client secret.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

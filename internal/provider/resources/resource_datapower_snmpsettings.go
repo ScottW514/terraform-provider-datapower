@@ -54,10 +54,10 @@ func (r *SNMPSettingsResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SNMP Settings (`default` domain only)", "snmp", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Use this page to establish SNMP connectivity to the device, and to set values used by SNMP.", "snmp", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -67,13 +67,13 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local IP Address", "ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A specific IP address monitored by the SNMP agent or engine for incoming SNMP requests. The default value of 0.0.0.0 allows the agent or engine to listen on all interfaces. Selecting the address of one interface restricts SNMP to that interface.", "ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local Port", "port", "").AddDefaultValue("161").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A specific UDP port monitored by the SNMP agent or engine for incoming SNMP requests. By default, the agent or engine monitors port 161.", "port", "").AddDefaultValue("161").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(161),
@@ -94,17 +94,17 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"users": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SNMPv3 Users", "user", "user").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The name of a user (which must have SNMP credential parameters) which is authorized to use SNMPv3 to access the MIBs on this system.", "user", "user").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"contexts": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SNMPv3 Contexts", "context", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("SNMPv3 context definitions, which provide SNMPv3 access to non-default application domains.", "context", "").String,
 				NestedObject:        models.DmSnmpContextResourceSchema,
 				Optional:            true,
 			},
 			"security_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SNMPv3 Security Level", "security-level", "").AddStringEnum("noAuthNoPriv", "authNoPriv", "authPriv").AddDefaultValue("authPriv").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The minimum security level required for incoming SNMPv3 Get and Set requests. The default is Authentication, Privacy.", "security-level", "").AddStringEnum("noAuthNoPriv", "authNoPriv", "authPriv").AddDefaultValue("authPriv").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -113,7 +113,7 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("authPriv"),
 			},
 			"access_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SNMPv3 Access Level", "access-level", "").AddStringEnum("none", "read-only", "read-write").AddDefaultValue("read-only").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The type of access allowed to MIB objects for incoming SNMPv3 Get and Set requests.", "access-level", "").AddStringEnum("none", "read-only", "read-write").AddDefaultValue("read-only").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -122,13 +122,13 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("read-only"),
 			},
 			"enable_default_trap_subscriptions": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable Default Event Subscriptions", "trap-default-subscriptions", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable or Disable the default list of event codes that generate traps. The default is Enable Trap Subscriptions.", "trap-default-subscriptions", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"trap_priority": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Minimum Priority", "trap-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select a minimum trap event priority. The priorities are hierarchical. The lowest is listed last. Set to the minimum that is required for your trap events.", "trap-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("warn").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -137,7 +137,7 @@ func (r *SNMPSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("warn"),
 			},
 			"trap_event_code": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Event Subscriptions", "trap-code", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The list of event codes generating traps. You can add event codes which will be triggering traps send to the configured trap targets.", "trap-code", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

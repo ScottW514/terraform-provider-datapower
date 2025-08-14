@@ -3,12 +3,12 @@
 page_title: "datapower_mcfhttpmethod Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  HTTP Method Message Content Filter
+  Filter based on the HTTP method. The filter value is matched to the HTTP method in the request message.
 ---
 
 # datapower_mcfhttpmethod (Data Source)
 
-HTTP Method Message Content Filter
+Filter based on the HTTP method. The filter value is matched to the HTTP method in the request message.
 
 ## Example Usage
 

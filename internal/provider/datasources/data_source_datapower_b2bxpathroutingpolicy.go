@@ -89,11 +89,11 @@ func (d *B2BXPathRoutingPolicyDataSource) Schema(ctx context.Context, req dataso
 							Computed:            true,
 						},
 						"document_idx_path": schema.StringAttribute{
-							MarkdownDescription: "Document ID XPath",
+							MarkdownDescription: "Specify the XPath expression for the unique identifier of the exchange. With the partner IDs, the XPath expression uniquely identifies a specific XML EDI message.",
 							Computed:            true,
 						},
 						"date_time_x_path": schema.StringAttribute{
-							MarkdownDescription: "Transaction Timestamp XPath",
+							MarkdownDescription: "Specify the XPath expression to select the timestamp from the message. The results of this expression must be in the form of an <tt>xs:dateTime</tt> type.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

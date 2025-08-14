@@ -57,7 +57,7 @@ func (d *CountMonitorDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *CountMonitorDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Message Count Monitor",
+		MarkdownDescription: "On-Line Help for Message-Count Monitors",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,32 +77,32 @@ func (d *CountMonitorDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"measure": schema.StringAttribute{
-							MarkdownDescription: "Measure",
+							MarkdownDescription: "Select the action that advances the counter. The default is Requests.",
 							Computed:            true,
 						},
 						"source": schema.StringAttribute{
-							MarkdownDescription: "Source",
+							MarkdownDescription: "Select how monitoring is applied to IP addresses. This setting is meaningful only if an associated traffic definition contains and inclusive or exclusive IP address criterion. The default is All.",
 							Computed:            true,
 						},
 						"header": schema.StringAttribute{
-							MarkdownDescription: "Header",
+							MarkdownDescription: "The name of the HTTP header to read to determine the value of the source IP address.",
 							Computed:            true,
 						},
 						"filter": schema.ListNestedAttribute{
-							MarkdownDescription: "Thresholds/Filters",
+							MarkdownDescription: "Click this tab to define a message-count monitor threshold and assign an action (Message Filter Action) that is taken when the threshold is reached.",
 							NestedObject:        models.DmCountMonitorFilterDataSourceSchema,
 							Computed:            true,
 						},
 						"max_sources": schema.Int64Attribute{
-							MarkdownDescription: "Maximum Distinct Sources",
+							MarkdownDescription: "When utilizing the each-ip aggregate addressing policy the system organizes the counts per address by the addresses most recently used. When too many distinct counts have been observed, the Addresses not seen in the longest time are discarded. This parameter specifies how many distinct addresses are tracked.",
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).",
 							Computed:            true,
 						},
 						"message_type": schema.StringAttribute{
-							MarkdownDescription: "Message Type",
+							MarkdownDescription: "Select the message type monitored by this message-count monitor.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

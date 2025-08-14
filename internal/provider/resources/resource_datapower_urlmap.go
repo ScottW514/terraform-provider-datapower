@@ -54,7 +54,7 @@ func (r *URLMapResource) Metadata(ctx context.Context, req resource.MetadataRequ
 
 func (r *URLMapResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("URL Map", "urlmap", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure/Edit URL maps. URL Maps are used by Processing Actions and by XML Manager Compile Options Policies.", "urlmap", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *URLMapResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"url_map_rule": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL Map Rule", "match", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit or delete a URL map match pattern", "match", "").String,
 				NestedObject:        models.DmURLMapRuleResourceSchema,
 				Required:            true,
 			},

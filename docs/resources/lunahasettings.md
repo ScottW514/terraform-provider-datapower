@@ -3,13 +3,13 @@
 page_title: "datapower_lunahasettings Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SafeNet Luna HSM HA settings (default domain only)
+  Defines the high availability (HA) settings for the SafeNet Luna Network HSM HA group.
   CLI Alias: luna-ha-settings
 ---
 
 # datapower_lunahasettings (Resource)
 
-SafeNet Luna HSM HA settings (`default` domain only)
+Defines the high availability (HA) settings for the SafeNet Luna Network HSM HA group.
   - CLI Alias: `luna-ha-settings`
 
 ## Example Usage
@@ -25,18 +25,18 @@ resource "datapower_lunahasettings" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `interval` (Number) Recovery interval
+- `interval` (Number) Specify the interval in seconds between recovery attempts for failed members in the HA group. Enter a value in the range 60 - 1200. The default value is 60.
   - CLI Alias: `recovery-interval`
   - Range: `60`-`1200`
   - Default value: `60`
-- `mode` (String) Recovery mode
+- `mode` (String) Specify the HA recovery mode. The default value is activeBasic.
   - CLI Alias: `recovery-mode`
   - Choices: `activeBasic`, `activeEnhanced`
   - Default value: `activeBasic`
-- `recovery_count` (Number) Recovery count
+- `recovery_count` (Number) Specify the number of recovery attempts for failed members in the HA group. Enter a value in the range 0 - 500. The default value is 0, which disables automatic recovery.
   - CLI Alias: `recovery-count`
   - Range: `-1`-`500`
 

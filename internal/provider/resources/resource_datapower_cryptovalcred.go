@@ -57,7 +57,7 @@ func (r *CryptoValCredResource) Metadata(ctx context.Context, req resource.Metad
 
 func (r *CryptoValCredResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Validation credentials", "valcred", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>Validation credentials authenticate certificates that are received from TLS peers. Validation credentials can be used to validate certificates that are used in digital signature and encryption operations.</p><p>a TLS client requires validation credentials only when it authenticates the certificate that is presented by the remote TLS server. The TLS standard does not require authentication of the server certificate.</p><p>a TLS server requires validation credentials only when it authenticates remote TLS clients. The TLS standard does not require authentication of the client certificate.</p>", "valcred", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -82,7 +82,7 @@ func (r *CryptoValCredResource) Schema(ctx context.Context, req resource.SchemaR
 				},
 			},
 			"certificate": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Certificates", "certificate", "cryptocertificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of certificates for the validation credentials. Each certificate in the validation credentials is the certificate that a TLS peer might send or is the certificate of the certification authority (CA) that signed the certificate that is sent by a peer or is the root certificate.", "certificate", "cryptocertificate").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
@@ -96,19 +96,19 @@ func (r *CryptoValCredResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("legacy"),
 			},
 			"use_crl": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use CRL", "use-crl", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to check certificate revocation lists (CRLs) during certificate validation. When enabled, CRLs are checked. Otherwise, CRLs are not checked.", "use-crl", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"require_crl": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Require CRL", "require-crl", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.", "require-crl", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"crldp_handling": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CRL distribution points handling", "crldp", "").AddStringEnum("ignore", "require").AddDefaultValue("ignore").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the support of certificate extensions for X.509 certificate distribution points. This certificate extension specifies how to obtain CRL information. For more information, see RFC 2527 and RFC 3280.", "crldp", "").AddStringEnum("ignore", "require").AddDefaultValue("ignore").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -117,18 +117,18 @@ func (r *CryptoValCredResource) Schema(ctx context.Context, req resource.SchemaR
 				Default: stringdefault.StaticString("ignore"),
 			},
 			"initial_policy_set": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Initial certificate policy set", "initial-policy-set", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the unique object identifiers for the certificate policy. <p>RFC 3280 refers to the input variable for certificate chain validation as <tt>user-initial-policy-set</tt> . These OIDs specify the allow values of certificate policies. To use this functionality, you need to require an explicit certificate policy. Otherwise, this set is used only if there are policy constraint extensions in the certificate chain.</p><p>By default, the initial certificate policy set consists of the single OID 2.5.29.32.0, which identifies <tt>anyPolicy</tt> .</p>", "initial-policy-set", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"explicit_policy": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Require explicit certificate policy", "explicit-policy", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify support for the initial explicit policy variable as defined by RFC 3280. When enabled, the chain validation algorithm must end with a non-empty policy tree. Otherwise, the algorithm can end with an empty policy tree unless policy constraint extensions in the chain require an explicit policy.", "explicit-policy", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"check_dates": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Check dates", "check-dates", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to check dates during certificate validation. This validation checks the current date and time against the <tt>notBefore</tt> and <tt>notAfter</tt> values in certificates and CRLs. When enabled, the date values are checked and expired certificates cause validation to fail. Otherwise, the date values are ignored and and do not cause validation to fail when a certificate is expired.", "check-dates", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),

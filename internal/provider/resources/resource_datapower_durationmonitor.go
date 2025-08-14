@@ -55,7 +55,7 @@ func (r *DurationMonitorResource) Metadata(ctx context.Context, req resource.Met
 
 func (r *DurationMonitorResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Message Duration Monitor", "monitor-duration", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("On-Line Help for Message-Duration Monitors. Duration Monitors observe the duration, or amount of time, taken to process submissions.", "monitor-duration", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -80,7 +80,7 @@ func (r *DurationMonitorResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"measure": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Measure", "measure", "").AddStringEnum("messages", "requests", "server", "responses").AddDefaultValue("messages").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select which portion of the transaction cycle to monitor. The default is Messages.", "measure", "").AddStringEnum("messages", "requests", "server", "responses").AddDefaultValue("messages").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -89,16 +89,16 @@ func (r *DurationMonitorResource) Schema(ctx context.Context, req resource.Schem
 				Default: stringdefault.StaticString("messages"),
 			},
 			"filter": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Thresholds/Filters", "filter", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Click this tab to define a message-duration monitor threshold and assign an action taken when the threshold is reached.", "filter", "").String,
 				NestedObject:        models.DmDurationMonitorFilterResourceSchema,
 				Optional:            true,
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).", "summary", "").String,
 				Optional:            true,
 			},
 			"message_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Message Type", "message-type", "messagetype").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the message type monitored by this message-count monitor.", "message-type", "messagetype").String,
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

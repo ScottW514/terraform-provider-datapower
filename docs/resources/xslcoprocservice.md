@@ -3,13 +3,12 @@
 page_title: "datapower_xslcoprocservice Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XSL Coprocessor
-  CLI Alias: xslcoprocAccepted Dependency Actions: quiesce
+  
 ---
 
 # datapower_xslcoprocservice (Resource)
 
-XSL Coprocessor
+<p>The XSL Coprocessor is obsolete.</p>
   - CLI Alias: `xslcoproc`
   - Accepted Dependency Actions: `quiesce`
 
@@ -32,70 +31,52 @@ resource "datapower_xslcoprocservice" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_port` (Number) Port Number
-  - CLI Alias: `port`
+- `local_port` (Number) - CLI Alias: `port`
   - Range: `1`-`65535`
 
 ### Optional
 
-- `cache_relative_url` (Boolean) Cache Relative URL
-  - CLI Alias: `cache-relative-url`
+- `cache_relative_url` (Boolean) - CLI Alias: `cache-relative-url`
   - Default value: `false`
-- `connection_timeout` (Number) Connection Timeout
-  - CLI Alias: `connection-timeout`
+- `connection_timeout` (Number) - CLI Alias: `connection-timeout`
   - Range: `3`-`7200`
   - Default value: `60`
-- `crypto_extensions` (Boolean) Crypto Extensions
-  - CLI Alias: `crypto-extensions`
+- `crypto_extensions` (Boolean) - CLI Alias: `crypto-extensions`
   - Default value: `false`
-- `debug_history` (Number) Transaction History
-  - CLI Alias: `debug-history`
+- `debug_history` (Number) - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
-- `debug_mode` (String) Probe setting
-  - CLI Alias: `debug-mode`
+- `debug_mode` (String) - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
   - Default value: `off`
-- `debug_trigger` (Attributes List) Probe Triggers
-  - CLI Alias: `debug-trigger` (see [below for nested schema](#nestedatt--debug_trigger))
-- `default_param_namespace` (String) Default parameter namespace
-  - CLI Alias: `default-param-namespace`
+- `debug_trigger` (Attributes List) - CLI Alias: `debug-trigger` (see [below for nested schema](#nestedatt--debug_trigger))
+- `default_param_namespace` (String) - CLI Alias: `default-param-namespace`
   - Default value: `http://www.datapower.com/param/config`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `intermediate_result_timeout` (Number) Intermediate Result Timeout
-  - CLI Alias: `intermediate-result-timeout`
+- `intermediate_result_timeout` (Number) - CLI Alias: `intermediate-result-timeout`
   - Range: `1`-`600`
   - Default value: `20`
-- `local_address` (String) Local address
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`
-- `priority` (String) Service Priority
-  - CLI Alias: `priority`
+- `priority` (String) - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
-- `ssl_server` (String) TLS server profile
-  - CLI Alias: `ssl-server`
+- `ssl_server` (String) - CLI Alias: `ssl-server`
   - Reference to: `datapower_sslserverprofile:id`
-- `ssl_server_config_type` (String) TLS type
-  - CLI Alias: `ssl-config-type`
+- `ssl_server_config_type` (String) - CLI Alias: `ssl-config-type`
   - Choices: `server`, `sni`
   - Default value: `server`
-- `sslsni_server` (String) TLS SNI server profile
-  - CLI Alias: `ssl-sni-server`
+- `sslsni_server` (String) - CLI Alias: `ssl-sni-server`
   - Reference to: `datapower_sslsniserverprofile:id`
-- `style_policy_rule` (String) Processing Rule
-  - CLI Alias: `stylesheet-rule`
+- `style_policy_rule` (String) - CLI Alias: `stylesheet-rule`
   - Reference to: `datapower_stylepolicyrule:id`
-- `url_rewrite_policy` (String) URL Rewrite Policy
-  - CLI Alias: `urlrewrite-policy`
+- `url_rewrite_policy` (String) - CLI Alias: `urlrewrite-policy`
   - Reference to: `datapower_urlrewritepolicy:id`
-- `use_client_uri_resolver` (Boolean) Use URI Resolver
-  - CLI Alias: `use-client-resolver`
+- `use_client_uri_resolver` (Boolean) - CLI Alias: `use-client-resolver`
   - Default value: `true`
-- `user_summary` (String) Comments
-  - CLI Alias: `summary`
-- `xml_manager` (String) XML Manager
-  - CLI Alias: `xml-manager`
+- `user_summary` (String) - CLI Alias: `summary`
+- `xml_manager` (String) - CLI Alias: `xml-manager`
   - Reference to: `datapower_xmlmanager:id`
   - Default value: `default`
 

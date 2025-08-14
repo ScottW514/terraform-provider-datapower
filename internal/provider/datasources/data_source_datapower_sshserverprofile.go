@@ -51,14 +51,14 @@ func (d *SSHServerProfileDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *SSHServerProfileDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SSH server profile",
+		MarkdownDescription: "The SSH domain client profile defines the cipher suites.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
 				Required:            true,
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -66,26 +66,26 @@ func (d *SSHServerProfileDataSource) Schema(ctx context.Context, req datasource.
 				Computed:            true,
 			},
 			"ciphers": schema.ListAttribute{
-				MarkdownDescription: "Ciphers",
+				MarkdownDescription: "Specify the SSH cipher suites to support.",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"kex_alg": schema.ListAttribute{
-				MarkdownDescription: "Key exchange algorithms",
+				MarkdownDescription: "Specify the key exchange (KEX) algorithms to support.",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"mac_alg": schema.ListAttribute{
-				MarkdownDescription: "Message authentication codes",
+				MarkdownDescription: "Specify the message authentication codes (MAC) to support.",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
 			"send_pre_auth_msg": schema.BoolAttribute{
-				MarkdownDescription: "Include SSH preauthentication message",
+				MarkdownDescription: "Specify whether to include a banner message during SSH preauthentication. The banner message contains the text to display to users before the login prompt.",
 				Computed:            true,
 			},
 			"pre_auth_msg": schema.StringAttribute{
-				MarkdownDescription: "Preauthentication message",
+				MarkdownDescription: "Specify the banner message to display to users before the login prompt. White space characters ( <tt>\\n</tt> , <tt>\\t</tt> ) are recognized and escaped. The banner message must be at least one character. The banner message is truncated at 4096 characters.",
 				Computed:            true,
 			},
 			"host_key_alg":       models.GetDmHostKeyAlgorithmsDataSourceSchema("Host key algorithms", "host-key-alg", ""),

@@ -3,12 +3,12 @@
 page_title: "datapower_assemblyactionwebsocketupgrade Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WebSocket upgrade assembly action
+  The WebSocket upgrade assembly action processes API requests and responses through a WebSocket connection.
 ---
 
 # datapower_assemblyactionwebsocketupgrade (Data Source)
 
-WebSocket upgrade assembly action
+The WebSocket upgrade assembly action processes API requests and responses through a WebSocket connection.
 
 ## Example Usage
 
@@ -38,24 +38,24 @@ Optional:
 
 Read-Only:
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
 - `api_request_processing_assembly` (String) API request processing assembly
 - `api_response_processing_assembly` (String) API response processing assembly
 - `app_domain` (String) The name of the application domain the object belongs to
-- `correlation_path` (String) Correlation path
-- `decode_request_params` (Boolean) Decode request parameters
-- `encode_plus_char` (Boolean) Encode + characters in query
-- `follow_redirects` (Boolean) Follow redirects
-- `header_control_list` (String) Header control list
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
+- `decode_request_params` (Boolean) Specify whether to decode request parameters in the target URL. When enabled, request parameters are decoded. The default behavior is to not decode request parameters.
+- `encode_plus_char` (Boolean) Specify whether to encode + characters in query strings. When enabled, + characters are encoded to <tt>%2F</tt> . The default behavior is to not encode + characters.
+- `follow_redirects` (Boolean) Specify whether to follow the redirects. When enabled, attempts to resolve any redirect transparently.
+- `header_control_list` (String) Specify the control list that manages whether to accept or reject headers. The default behavior is to accept all headers.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `inject_proxy_headers` (Boolean) Inject proxy headers
+- `inject_proxy_headers` (Boolean) Specify whether to inject proxy-related headers when not found in the request. The proxy-related headers are <tt>X-Forwarded-For</tt> , <tt>X-Forwarded-Host</tt> , and <tt>X-Forwarded-Port</tt> .
 - `inject_user_agent_header` (Boolean) Inject User-Agent header
-- `parameter_control_list` (String) Parameter control list
+- `parameter_control_list` (String) Specify the control list that manages whether to accept or reject URL parameters. The default behavior is to reject all URL parameters.
 - `password` (String) Password alias
 - `ssl_client` (String) TLS client profile
-- `timeout` (Number) Timeout
+- `timeout` (Number) Specify the duration in seconds to wait for a reply from the target. The default value is 60.
 - `title` (String) Title
-- `url` (String) URL
+- `url` (String) Specify the URL to invoke. You can reference a custom API property that resolves as the value. To reference an API property, use the <tt>$(api.properties. <i>property_name</i> )</tt> format, where <tt><i>property_name</i></tt> is the name of the property to reference. You can use the short <tt>$( <i>property_name</i> )</tt> format when the assembly action does not have a property with the same name.
 - `user_name` (String) User name
 - `user_summary` (String) Comments
 

@@ -3,13 +3,13 @@
 page_title: "datapower_webappresponse Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web Response Profile
+  The web response profile specifies various properties about the response side of the transaction that must be satisfied.
   CLI Alias: webapp-response-profile
 ---
 
 # datapower_webappresponse (Resource)
 
-Web Response Profile
+The web response profile specifies various properties about the response side of the transaction that must be satisfied.
   - CLI Alias: `webapp-response-profile`
 
 ## Example Usage
@@ -32,42 +32,42 @@ resource "datapower_webappresponse" "test" {
 
 ### Optional
 
-- `content_types` (List of String) Content-Type List
+- `content_types` (List of String) A list of PCRE regular expressions that indicate acceptable content-type MIME headers on the response. If this list is empty, any content-type is acceptable. If the response does not have a content type that will be represented as an empty string for matching purposes. An empty list will match all content types.
   - CLI Alias: `response-content-type`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `error_policy` (String) Error Policy
+- `error_policy` (String) If this response policy is violated the firewall error policy will be invoked unless this more specific error policy is provided, in which case this policy takes precedence.
   - CLI Alias: `error-policy-override`
   - Reference to: `datapower_webapperrorhandlingpolicy:id`
-- `header_gnvc` (String) Header Name-Value Profile
+- `header_gnvc` (String) The validation profile allows you to specify what headers are expected, what headers should be stripped, and what headers should be mapped to known values. If no profile is specified, any header is allowed.
   - CLI Alias: `response-header-profile`
   - Reference to: `datapower_namevalueprofile:id`
-- `max_body_size` (Number) Maximum Size
+- `max_body_size` (Number) Specify the maximum size of the response body.
   - CLI Alias: `response-body-max`
   - Default value: `128000000`
-- `min_body_size` (Number) Minimum Size
+- `min_body_size` (Number) Specify the minimum size of the response body.
   - CLI Alias: `response-body-min`
-- `non_xml_policy` (String) Non-XML Processing
+- `non_xml_policy` (String) Specify how the device handles responses that do not contain an XML MIME type.
   - CLI Alias: `response-nonxml-policy`
   - Choices: `nothing`, `side`, `binary`
   - Default value: `nothing`
-- `non_xml_rule` (String) Non-XML Processing Rule
+- `non_xml_rule` (String) This is the transformation rule that is run when the response does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.
   - CLI Alias: `response-nonxml-rule`
   - Reference to: `datapower_stylepolicyrule:id`
-- `ok_codes` (Attributes) Response Codes
+- `ok_codes` (Attributes) Specify which response codes from the backend server are acceptable.
   - CLI Alias: `response-codes` (see [below for nested schema](#nestedatt--ok_codes))
-- `ok_versions` (Attributes) Response Versions
+- `ok_versions` (Attributes) Specify which HTTP versions are acceptable from the backend server.
   - CLI Alias: `response-versions` (see [below for nested schema](#nestedatt--ok_versions))
-- `policy_type` (String) Style
+- `policy_type` (String) Select the satisfaction policy for the profile. The default is Admission.
   - CLI Alias: `policy-type`
   - Choices: `pre-requisite`, `admission`
   - Default value: `admission`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `xml_policy` (String) XML Processing
+- `xml_policy` (String) Specify how the device handles responses that contain an XML MIME type.
   - CLI Alias: `response-xml-policy`
   - Choices: `nothing`, `xml`, `soap`
   - Default value: `nothing`
-- `xml_rule` (String) XML Transformation Rule
+- `xml_rule` (String) This is the transformation rule that is run when the response contains an XML MIME type and the XML processing policy is set to XML or SOAP.
   - CLI Alias: `response-xml-rule`
   - Reference to: `datapower_stylepolicyrule:id`
 

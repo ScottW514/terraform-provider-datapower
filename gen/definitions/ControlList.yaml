@@ -1,50 +1,57 @@
 name: ControlList
-description: 'Control List'
-cli_alias: 'control-list'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/ControlList'
+description: <p>A control list uses a value-matching pattern to determine whether
+  values are on the allowlist or blocklist.</p><p>The value-matching pattern is defined
+  by a PCRE. When you define the control list, you can indicates whether evaluation
+  is case-sensitive or case-insensitive.</p>
+cli_alias: control-list
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/ControlList
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestControlList"'
-    test_expect_ds: '"AccTest_ControlList"'
-    example: 'ControlListName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Type
-    type: String
-    enum:
-      - 'blocklist'
-      - 'allowlist'
-    description: 'Type'
-    cli_alias: type
-  - name: Value
-    type: List
-    element_type: String
-    description: 'Value'
-    cli_alias: value
-  - name: CaseInsensitive
-    type: Bool
-    default: false
-    description: 'Case-insensitive'
-    cli_alias: case-insensitive
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestControlList"'
+  test_expect_ds: '"AccTest_ControlList"'
+  example: ControlListName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the configuration.
+  cli_alias: summary
+- name: Type
+  type: String
+  enum:
+  - blocklist
+  - allowlist
+  description: Specifies whether values are accepted or rejected.
+  cli_alias: type
+- name: Value
+  type: List
+  element_type: String
+  description: <p>Specifies the PCRE to evaluate values.</p><ul><li>An entry of <tt>^foo</tt>
+    indicates a match against only values that start with <tt>foo</tt> .</li><li>An
+    empty list indicates no match against any value.</li><li>A list with only <tt>.*</tt>
+    indicates a match against all values.</li></ul>
+  cli_alias: value
+- name: CaseInsensitive
+  type: Bool
+  default: false
+  description: Indicates whether the specified values are case-sensitive or case-insensitive.
+  cli_alias: case-insensitive

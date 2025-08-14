@@ -56,7 +56,7 @@ func (r *SSLSNIServerProfileResource) Metadata(ctx context.Context, req resource
 
 func (r *SSLSNIServerProfileResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The TLS Server Name Indication (SNI) server profile secures connections with clients.", "ssl-sni-server", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -90,12 +90,12 @@ func (r *SSLSNIServerProfileResource) Schema(ctx context.Context, req resource.S
 				Required:            true,
 			},
 			"sni_server_default": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Default server profile", "sni-server-default", "sslserverprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS server profile to process requests when the client does not send a <tt>ClientHello</tt> SNI extension. <p>The request is rejected when either of the following conditions apply. <ul><li>The client sends a <tt>ClientHello</tt> SNI extension that does not match a hostname in the map.</li><li>The client does not send a <tt>ClientHello</tt> SNI extension</li></ul></p>", "sni-server-default", "sslserverprofile").String,
 				Optional:            true,
 			},
-			"ssl_options": models.GetDmSSLOptionsResourceSchema("Advanced TLS options", "ssl-options", "", false),
+			"ssl_options": models.GetDmSSLOptionsResourceSchema("Specify the options to apply to the TLS connection that override settings in the TLS server profiles. These options have negative impact on the performance.", "ssl-options", "", false),
 			"max_ssl_duration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum TLS session duration", "max-duration", "").AddIntegerRange(1, 691200).AddDefaultValue("3600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in seconds for an established TLS session. After the duration is reached, the TLS connection is closed. Enter a value in the range 1 - 691200. The default value is 3600.", "max-duration", "").AddIntegerRange(1, 691200).AddDefaultValue("3600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -105,7 +105,7 @@ func (r *SSLSNIServerProfileResource) Schema(ctx context.Context, req resource.S
 				Default: int64default.StaticInt64(3600),
 			},
 			"number_of_renegotiation_allowed": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum client initiated renegotiations", "max-renegotiation-allowed", "").AddIntegerRange(0, 512).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of client initiated renegotiations. Enter a value in the range 0 - 512. The default value is 0, which indicates client initiated renegotiation is not allowed.", "max-renegotiation-allowed", "").AddIntegerRange(0, 512).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 

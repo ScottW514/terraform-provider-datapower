@@ -57,7 +57,7 @@ func (d *WXSGridDataSource) Metadata(_ context.Context, req datasource.MetadataR
 
 func (d *WXSGridDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "eXtreme Scale Grid",
+		MarkdownDescription: "The configuration of an eXtreme Scale Grid defines the connection details to an eXtreme Scale grid in an eXtreme Scale collective. To define this configuration, you must define the eXtreme Scale collective, the grid name, and the user and password for the user account who connects to the eXtreme Scale. If you need to secure connections to eXtreme Scale, you must assign a TLS Proxy Profile.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,51 +77,51 @@ func (d *WXSGridDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "Specify a brief, but descriptive, summary of the configuration.",
 							Computed:            true,
 						},
 						"collective": schema.StringAttribute{
-							MarkdownDescription: "Collective",
+							MarkdownDescription: "Specify the Load Balancer Group that contains members in the collective of eXtreme Scale. You must define at least one member in the collective.",
 							Computed:            true,
 						},
 						"grid": schema.StringAttribute{
-							MarkdownDescription: "Grid Name",
+							MarkdownDescription: "Specify the name of the eXtreme Scale grid. The value cannot contain whitespace or the following characters: <tt>^ . \\ / , # $ @ : ; * ? &lt; > | = + &amp; % [ ] \" '</tt> .",
 							Computed:            true,
 						},
 						"user_name": schema.StringAttribute{
-							MarkdownDescription: "User",
+							MarkdownDescription: "<p>Specify the user account of the eXtreme Scale user who connects to the eXtreme Scale collective. The value can be up to 64 characters in length and cannot be blank. You can use all alphanumeric characters and most special characters. You cannot use spaces or the following special characters: <tt># &lt;</tt> .</p><p>The user must have sufficient eXtreme Scale permissions to access the grid.</p>",
 							Computed:            true,
 						},
 						"password_alias": schema.StringAttribute{
-							MarkdownDescription: "Password Alias",
+							MarkdownDescription: "Specify the password alias to use to look up the password of the eXtreme Scale user who connects to the eXtreme Scale collective.",
 							Computed:            true,
 						},
 						"timeout": schema.Int64Attribute{
-							MarkdownDescription: "Timeout",
+							MarkdownDescription: "Specify the maximum time to wait to establish a connection to an eXtreme Scale. If unable to establish a connection, the operation fails. Enter a value in the range 10 - 86400000. The default value is 1000.",
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{
-							MarkdownDescription: "TLS client profile",
+							MarkdownDescription: "The TLS client profile to secure connections between the DataPower Gateway and its targets.",
 							Computed:            true,
 						},
 						"encrypt": schema.BoolAttribute{
-							MarkdownDescription: "Encrypted Data",
+							MarkdownDescription: "Indicates whether the data in the eXtreme Scale data grid is encrypted. If encrypted, the data is encrypted, when writing to, and decrypted, when reading from, the eXtreme Scale data grid.",
 							Computed:            true,
 						},
 						"encrypt_ss_key": schema.StringAttribute{
-							MarkdownDescription: "Shared Secret Key for Encryption and Decryption",
+							MarkdownDescription: "Specify the shared secret for PKCS #7 encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.",
 							Computed:            true,
 						},
 						"encrypt_alg": schema.StringAttribute{
-							MarkdownDescription: "PKCS #7 algorithm for encryption and decryption",
+							MarkdownDescription: "Specify the PKCS #7 algorithm for encryption and decryption. When writing data to the data grid, encrypts the data. When reading data from the eXtreme Scale data grid, decrypts the data.",
 							Computed:            true,
 						},
 						"key_obfuscation": schema.BoolAttribute{
-							MarkdownDescription: "Hash Key Obfuscation",
+							MarkdownDescription: "Indicate whether to apply a hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.",
 							Computed:            true,
 						},
 						"key_obfuscation_alg": schema.StringAttribute{
-							MarkdownDescription: "Hash Algorithm for Key Obfuscation",
+							MarkdownDescription: "Specify the hash algorithm to obfuscate keys before reading data from or writing data to the eXtreme Scale data grid.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

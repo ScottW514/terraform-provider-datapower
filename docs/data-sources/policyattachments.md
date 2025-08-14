@@ -3,12 +3,12 @@
 page_title: "datapower_policyattachments Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Policy Attachment
+  Create and configure ws-policy attachments for WSDLs
 ---
 
 # datapower_policyattachments (Data Source)
 
-Policy Attachment
+Create and configure ws-policy attachments for WSDLs
 
 ## Example Usage
 
@@ -39,12 +39,12 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `enforcement_mode` (String) Policy Enforcement Mode
-- `external_policy` (Attributes List) External Policy (see [below for nested schema](#nestedatt--result--external_policy))
+- `enforcement_mode` (String) Enforcement Mode defines how the service uses WS-Policy to ensure that messages meet security requirements. The default behavior is enforce.
+- `external_policy` (Attributes List) Associate an external policy with a service. (see [below for nested schema](#nestedatt--result--external_policy))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ignored_policy_attachment_points` (Attributes List) Ignore Embedded Policy (see [below for nested schema](#nestedatt--result--ignored_policy_attachment_points))
-- `policy_references` (Boolean) Policy References
-- `sla_enforcement_mode` (String) SLA Enforcement Mode
+- `ignored_policy_attachment_points` (Attributes List) Disable all policies attached by policy references at a configured attachment point leaving other policy references intact. (see [below for nested schema](#nestedatt--result--ignored_policy_attachment_points))
+- `policy_references` (Boolean) Enable policies attached to WSDL using PolicyURI attributes and PolicyReference elements. These attachments are sometimes called XML element attachments. If 'off', all PolicyURI attributes and PolicyReference elements are ignored and only external policies are enforced.
+- `sla_enforcement_mode` (String) SLA Enforcement Mode controls the application of SLA Policies to transactions. Transactions are either allowed or rejected based on whether an SLA rule is applied to the transaction.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

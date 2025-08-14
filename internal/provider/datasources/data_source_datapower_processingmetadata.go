@@ -57,7 +57,7 @@ func (d *ProcessingMetadataDataSource) Metadata(_ context.Context, req datasourc
 
 func (d *ProcessingMetadataDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Processing Metadata",
+		MarkdownDescription: "A Processing Metadata object contains a list of metadata items extracted from a message, such as protocol header values, or from the device processing scope, such as system variables. This list, or manifest, of item values is then returned by the metadata object in an XML nodeset. Currently used by an AAA Policy for Identity and Resource extraction.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *ProcessingMetadataDataSource) Schema(ctx context.Context, req datasourc
 							Computed:            true,
 						},
 						"meta_item": schema.ListNestedAttribute{
-							MarkdownDescription: "Metadata Item",
+							MarkdownDescription: "Define a metadata item by selecting one from the predefined items for a Processing Metadata Category, or configure a custom metadata item for a \"customizable\" category to retrieve value from any arbitrary headers or variables.",
 							NestedObject:        models.DmMetaItemDataSourceSchema,
 							Computed:            true,
 						},

@@ -52,10 +52,10 @@ func (r *FileSystemUsageMonitorResource) Metadata(ctx context.Context, req resou
 
 func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("File system usage monitor (`default` domain only)", "fs-usage-monitor", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The file system usage monitor is a utility that checks file systems to determine how much space is available and generates log events to report the usage of each file system. When initially enabled, the monitor immediately checks the file systems.", "fs-usage-monitor", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -65,7 +65,7 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 				Optional:            true,
 			},
 			"polling_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Polling interval", "poll", "").AddIntegerRange(15, 65535).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in minutes between file system checks for their usage. Enter a value in the range 15 - 65535. The default value is 60.", "poll", "").AddIntegerRange(15, 65535).AddDefaultValue("60").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -75,13 +75,13 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 				Default: int64default.StaticInt64(60),
 			},
 			"all_system": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Monitor all system file systems", "all-system", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the utility checks all or only a subset of system file systems. By default, all file systems are scanned. <ul><li>When enabled, you can define specific file systems that override their default thresholds.</li><li>When not enabled, define the file systems to check with their thresholds.</li></ul>", "all-system", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"all_system_warning_threshold": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Warning threshold for all system file systems", "all-system-warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-system-warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -91,7 +91,7 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 				Default: int64default.StaticInt64(75),
 			},
 			"all_system_critical_threshold": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Critical threshold for all system file systems", "all-system-critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event when the check is against all system file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-system-critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -101,12 +101,12 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 				Default: int64default.StaticInt64(90),
 			},
 			"system": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("System file systems", "system", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the system file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all system file systems.", "system", "").String,
 				NestedObject:        models.DmFileSystemUsageResourceSchema,
 				Optional:            true,
 			},
 			"all_qm_warning_threshold": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Warning threshold for queue manager file systems", "all-qm-warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a warning event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the warning threshold must be less than the critical threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-qm-warning", "").AddIntegerRange(0, 100).AddDefaultValue("75").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -116,7 +116,7 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 				Default: int64default.StaticInt64(75),
 			},
 			"all_qm_critical_threshold": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Critical threshold for queue manager file systems", "all-qm-critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage threshold to generate a critical event when the check is against all queue manager file systems. The threshold is the percentage of the file system that is full. The value for the critical threshold must be greater than the warning threshold. Enter a value in the range 0 - 100. The default value is 75.", "all-qm-critical", "").AddIntegerRange(0, 100).AddDefaultValue("90").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -126,7 +126,7 @@ func (r *FileSystemUsageMonitorResource) Schema(ctx context.Context, req resourc
 				Default: int64default.StaticInt64(90),
 			},
 			"queue_manager": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Queue manager file systems", "qm", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the queue manager file systems to check with their usage thresholds. These thresholds override the thresholds that are defined for all queue manager file systems.", "qm", "").String,
 				NestedObject:        models.DmQMFileSystemUsageResourceSchema,
 				Optional:            true,
 			},

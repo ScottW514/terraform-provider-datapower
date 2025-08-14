@@ -3,13 +3,13 @@
 page_title: "datapower_stylepolicyrule Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Processing Rule
+  Create, edit, or delete processing policy rules. Rules can also be created and edited using a drag and drop interface by opening the Services menu area on the left-hand navigation bar. Click the appropriate Policy link which will then present an opportunity to create both Rules and Actions.
   CLI Alias: rule
 ---
 
 # datapower_stylepolicyrule (Resource)
 
-Processing Rule
+Create, edit, or delete processing policy rules. Rules can also be created and edited using a drag and drop interface by opening the Services menu area on the left-hand navigation bar. Click the appropriate Policy link which will then present an opportunity to create both Rules and Actions.
   - CLI Alias: `rule`
 
 ## Example Usage
@@ -34,26 +34,26 @@ resource "datapower_stylepolicyrule" "test" {
 
 ### Optional
 
-- `actions` (List of String) Rule Action
+- `actions` (List of String) Define XSL filters and/or transformations. Select the desired existing action from the list and click Add to add the action to the rule. Actions are executed in the order (top to bottom) in which they are listed in the box. Click the + button to create a new Action; select an action and click the ... button to edit an existing action. To delete an action, select it from the list and click Delete.
   - CLI Alias: `action`
   - Reference to: `datapower_stylepolicyaction:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `direction` (String) Rule Direction
+- `direction` (String) Select a rule type. The default is Rule.
   - CLI Alias: `type`
   - Choices: `rule`, `request-rule`, `response-rule`, `error-rule`
   - Default value: `rule`
-- `input_format` (String) Input Filter
+- `input_format` (String) Select a decompression algorithm to apply to all messages before any other processing occurs (a preprocess step). All messages are decompressed using the selected algorithm. If the message is not compressed with this algorithm, an error is raised. This setting is independent of transport-level decompression. The default is None.
   - CLI Alias: `input-filter`
   - Choices: `none`, `gzip`, `pkzip`
   - Default value: `none`
-- `non_xml_processing` (Boolean) Non-XML Processing
+- `non_xml_processing` (Boolean) Normally, processing is only performed on XML content. This option allows processing actions to be performed on Non-XML content as well.
   - CLI Alias: `non-xml-processing`
   - Default value: `false`
-- `output_format` (String) Output Filter
+- `output_format` (String) Select a compression algorithm to apply to all messages after any other processing occurs (a post-process step). All messages are compressed using the selected algorithm. The resulting archive contains only one file. This setting is independent of transport-level compression. The default is None.
   - CLI Alias: `output-filter`
   - Choices: `none`, `gzip`, `pkzip`
   - Default value: `none`
-- `unprocessed` (Boolean) Unprocessed
+- `unprocessed` (Boolean) Permit rule to pass-through data unprocessed
   - CLI Alias: `unprocessed`
   - Default value: `false`
 - `user_summary` (String) Comments

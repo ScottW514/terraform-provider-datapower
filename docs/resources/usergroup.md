@@ -3,13 +3,13 @@
 page_title: "datapower_usergroup Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  User group (default domain only)
+  Create or edit user groups and their access privileges.
   CLI Alias: usergroup
 ---
 
 # datapower_usergroup (Resource)
 
-User group (`default` domain only)
+Create or edit user groups and their access privileges.
   - CLI Alias: `usergroup`
 
 ## Example Usage
@@ -30,9 +30,9 @@ resource "datapower_usergroup" "test" {
 
 ### Optional
 
-- `access_policies` (List of String) Access policies
+- `access_policies` (List of String) Specify the access policies that define privileges for the access profile. When more than one policy applies to a resource, the most specific policy is used. To create access policies, enter a policy statement in the following format. <p><tt><i>address</i> / <i>domain</i> / <i>resource</i> ?Access= <i>privileges</i> &amp; <i>field</i> = <i>value</i></tt></p><dl><dt><i>address</i></dt><dd>The complete local IP address or host alias. Use the * character to designate all addresses.</dd><dt><i>domain</i></dt><dd>The complete domain name. Use the * character to designate all domains.</dd><dt>resource</dt><dd>The complete value for the resource type. Use the * character to designate all resource types.</dd><dt><i>privileges</i></dt><dd>The privileges to apply. Separate permissions with the + character. For example, <tt>a+d+x+r+w</tt> defines add, delete, execute, read, and write privileges.</dd><dt><i>field</i></dt><dd>The complete name of a specific property in the configuration; for example, <tt>Name</tt> .</dd><dt><i>value</i></dt><dd>The PCRE match for the property value; For example, <tt>foo(.*)bar</tt> .</dd></dl>
   - CLI Alias: `access-policy`
-- `command_group` (List of String) Command group
+- `command_group` (List of String) Specify the command groups to which the user group has CLI access. This property is superseded by the access profile when role-based management is applied to the CLI.
   - CLI Alias: `add`
   - Choices: `aaapolicy`, `acl`, `assembly`, `b2b`, `common`, `compile-options`, `config-management`, `configuration`, `crl`, `quota-enforcement`, `crypto`, `device-management`, `diagnostics`, `document-crypto-map`, `domain`, `failure-notification`, `file-management`, `firewallcred`, `flash`, `httpserv`, `input-conversion`, `interface`, `load-balancer`, `logging`, `matching`, `messages`, `monitors`, `mpgw`, `mq-qm`, `idg-mqqm`, `network`, `radius`, `rbm`, `schema-exception-map`, `service-monitor`, `snmp`, `sql`, `sslforwarder`, `stylesheetaction`, `stylesheetpolicy`, `stylesheetrule`, `system`, `tam`, `tcpproxy`, `urlmap`, `urlrefresh`, `urlrewrite`, `useragent`, `usergroup`, `validation`, `webservice`, `wsm-agent`, `xmlfirewall`, `xmlmgr`, `xpath-routing`, `xslcoproc`, `xslproxy`, `http`, `document-cache`, `parserlimit`, `rule`, `password-change`, `reserved50`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))

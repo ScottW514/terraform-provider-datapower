@@ -3,13 +3,13 @@
 page_title: "datapower_webb2bviewer Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  B2B viewer management service (default domain only)
+  Configure web access to the B2B transaction viewer. If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.
   CLI Alias: b2b-viewer-mgmt
 ---
 
 # datapower_webb2bviewer (Resource)
 
-B2B viewer management service (`default` domain only)
+Configure web access to the B2B transaction viewer. If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.
   - CLI Alias: `b2b-viewer-mgmt`
 
 ## Example Usage
@@ -27,22 +27,22 @@ resource "datapower_webb2bviewer" "test" {
 
 ### Optional
 
-- `acl` (String) Access control list
+- `acl` (String) Edit the <tt>web-b2b-viewer</tt> access control list to define the client IP addresses to allow or deny.
   - CLI Alias: `acl`
   - Reference to: `datapower_accesscontrollist:id`
   - Default value: `web-b2b-viewer`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `idle_timeout` (Number) Idle timeout
+- `idle_timeout` (Number) Specify the time after which an idle session is invalidated, which requires reauthentication. To disable the idle timer, enter 0.
   - CLI Alias: `idle-timeout`
   - Range: `0`-`65535`
   - Default value: `600`
-- `local_address` (String) Local address
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`
-- `local_port` (Number) Port Number
+- `local_port` (Number) Specify the TCP port that the B2B viewer monitors. The default value is 9091.
   - CLI Alias: `port`
   - Range: `1`-`65535`
   - Default value: `9091`

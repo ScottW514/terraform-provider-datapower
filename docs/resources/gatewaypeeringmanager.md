@@ -3,13 +3,12 @@
 page_title: "datapower_gatewaypeeringmanager Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Gateway-peering manager
-  CLI Alias: gateway-peering-manager
+  
 ---
 
 # datapower_gatewaypeeringmanager (Resource)
 
-Gateway-peering manager
+<p>The gateway-peering manager defines the gateway-peering instances that store data for synchronization across a peer group. With the gateway-peering manager, you specify the gateway-peering instance to use the feature-specific data store. The gateway-peering instance are for API rate limits, API subscribers, API probe data, and the GatweayScript <tt>ratelimit</tt> module.</p>
   - CLI Alias: `gateway-peering-manager`
 
 ## Example Usage
@@ -46,7 +45,7 @@ resource "datapower_gatewaypeeringmanager" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
 - `user_summary` (String) Comments

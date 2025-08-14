@@ -3,12 +3,12 @@
 page_title: "datapower_webservicemonitor Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web service monitor
+  A service level monitor (SLM) for a web service watches web services traffic to a specific endpoint.
 ---
 
 # datapower_webservicemonitor (Data Source)
 
-Web service monitor
+A service level monitor (SLM) for a web service watches web services traffic to a specific endpoint.
 
 ## Example Usage
 
@@ -41,12 +41,12 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `endpoint_name` (String) Endpoint
 - `endpoint_url` (String) Endpoint URL
-- `frontend_url` (String) Front URL
+- `frontend_url` (String) Specify the URL that clients use to access the web service. This value cannot be the same value as the endpoint URL.. Wildcards are supported.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `operations` (Attributes List) Operations to monitor (see [below for nested schema](#nestedatt--result--operations))
-- `transport` (String) Transport type
+- `transport` (String) Specify the transport type for the endpoint. The transport type must agree with the transport type in the WSDL file.
 - `user_summary` (String) Comments
-- `wsdlurl` (String) WSDL URL
+- `wsdlurl` (String) Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

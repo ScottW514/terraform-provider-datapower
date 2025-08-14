@@ -56,7 +56,7 @@ func (r *APIRuleResource) Metadata(ctx context.Context, req resource.MetadataReq
 
 func (r *APIRuleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API rule", "api-rule", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An API rule completes the processing of API requests or completes the operations that are required by the API requests.", "api-rule", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -81,18 +81,18 @@ func (r *APIRuleResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"dynamic_actions_mode": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use dynamic actions", "dynamic-actions-mode", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use dynamic actions instead of explicit actions. Dynamic actions take configuration values at run time and override the default properties in API actions. API rules that contain dynamic actions can be included in user-defined policies that API Connect advertises and makes available in the API Connect assembly editor.", "dynamic-actions-mode", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"actions": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("API actions", "action", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the processing actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.", "action", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"dynamic_actions": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("API dynamic actions", "dynamic-action", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the dynamic actions for the rule. With multiple actions, ensure that the actions are in the correct processing sequence.", "dynamic-action", "").String,
 				NestedObject:        models.DmDynamicStylePolicyActionBaseReferenceResourceSchema,
 				Optional:            true,
 			},

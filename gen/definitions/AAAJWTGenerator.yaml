@@ -1,130 +1,154 @@
 name: AAAJWTGenerator
-description: 'JWT Generator'
-cli_alias: 'jwt-generator'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/AAAJWTGenerator'
+description: <p>The JSON Web Token (JWT) Generator specifies the JWT content and the
+  cryptographic methods, such as signing and encryption methods, used for generating
+  a JWT during the AAA postprocessing phase.</p>
+cli_alias: jwt-generator
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/AAAJWTGenerator
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAAAJWTGenerator"'
-    test_expect_ds: '"AccTest_AAAJWTGenerator"'
-    example: 'AAAJWTGeneratorName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Issuer
-    type: String
-    default: 'idg'
-    description: 'Issuer'
-    cli_alias: iss
-  - name: Duration
-    type: Int64
-    minimum: 1
-    maximum: 31622400
-    default: 3600
-    description: 'Validity period'
-    cli_alias: duration
-  - name: AdditionalClaims
-    dm_type: DmJWTClaims
-    description: 'Additional claims'
-    cli_alias: add-claims
-  - name: Audience
-    type: List
-    element_type: String
-    description: 'Audience claim'
-    cli_alias: aud
-  - name: NotBefore
-    type: Int64
-    maximum: 480
-    description: 'Delta for not before claim'
-    cli_alias: nbf
-  - name: CustomClaims
-    type: String
-    description: 'Custom claims'
-    cli_alias: custom-claims
-  - name: GenMethod
-    dm_type: DmJWTGenMethod
-    description: 'JWT generation method'
-    cli_alias: generate-method
-  - name: SignAlgorithm
-    type: String
-    enum:
-      - 'HS256'
-      - 'HS384'
-      - 'HS512'
-      - 'RS256'
-      - 'RS384'
-      - 'RS512'
-      - 'ES256'
-      - 'ES384'
-      - 'ES512'
-      - 'PS256'
-      - 'PS384'
-      - 'PS512'
-    default: 'RS256'
-    description: 'Signing algorithm'
-    cli_alias: sign-alg
-  - name: SignKey
-    type: String
-    reference_to: CryptoKey
-    description: 'Signing key'
-    cli_alias: sign-key
-  - name: SignSSKey
-    type: String
-    reference_to: CryptoSSKey
-    description: 'Signing shared secret'
-    cli_alias: sign-sskey
-  - name: EncAlgorithm
-    type: String
-    enum:
-      - 'A128CBC-HS256'
-      - 'A192CBC-HS384'
-      - 'A256CBC-HS512'
-      - 'A128GCM'
-      - 'A192GCM'
-      - 'A256GCM'
-    default: 'A128CBC-HS256'
-    description: 'Encryption algorithm'
-    cli_alias: enc
-  - name: EncryptAlgorithm
-    type: String
-    enum:
-      - 'RSA1_5'
-      - 'RSA-OAEP'
-      - 'RSA-OAEP-256'
-      - 'A128KW'
-      - 'A192KW'
-      - 'A256KW'
-      - 'dir'
-    default: 'RSA1_5'
-    description: 'Key management algorithm'
-    cli_alias: enc-alg
-  - name: EncryptCertificate
-    type: String
-    reference_to: CryptoCertificate
-    description: 'Encryption certificate'
-    cli_alias: enc-cert
-  - name: EncryptSSKey
-    type: String
-    reference_to: CryptoSSKey
-    description: 'Encryption key'
-    cli_alias: enc-sskey
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAAAJWTGenerator"'
+  test_expect_ds: '"AccTest_AAAJWTGenerator"'
+  example: AAAJWTGeneratorName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the JWT Generator configuration.
+  cli_alias: summary
+- name: Issuer
+  type: String
+  default: idg
+  description: The issuer claim, "iss", identifies the principal that issues the JWT.
+    The maximum length is 256 characters. The default value is <tt>idg</tt> .
+  cli_alias: iss
+- name: Duration
+  type: Int64
+  minimum: 1
+  maximum: 31622400
+  default: 3600
+  description: The validity period identifies the expiration time, "exp" claim. Enter
+    a value in the range 1 - 31622400. The default value is 3600.
+  cli_alias: duration
+- name: AdditionalClaims
+  dm_type: DmJWTClaims
+  description: <p>Additional JWT claims, such as audience "aud" claim, not before
+    "nbf" claim, issued at "iat" claim, JWT ID "jit" claim, "nonce" claim, and custom
+    claim, can be added for JWT.</p><p>The subject, "sub" claim is added by default.
+    You can override the subject claim value by specifying the "sub" claim in the
+    Custom claims field.</p>
+  cli_alias: add-claims
+- name: Audience
+  type: List
+  element_type: String
+  description: The audience, "aud", claim identifies the recipients that the JWT is
+    intended for. The maximum length of the Audience claim is 256 characters.
+  cli_alias: aud
+- name: NotBefore
+  type: Int64
+  maximum: 480
+  description: The not before claim, "nbf", indicates the time before which the JWT
+    must not be accepted for processing. Enter a value in the range 0 - 480. The default
+    value is 0.
+  cli_alias: nbf
+- name: CustomClaims
+  type: String
+  description: The GatewayScript or XSLT file is processed to specify the custom claim.
+    The GatewayScript or XSLT file must be stored in the <tt>local:</tt> or <tt>store:</tt>
+    directory.
+  cli_alias: custom-claims
+- name: GenMethod
+  dm_type: DmJWTGenMethod
+  description: The signing and encryption methods can be used to secure and generate
+    a JWT.
+  cli_alias: generate-method
+- name: SignAlgorithm
+  type: String
+  enum:
+  - HS256
+  - HS384
+  - HS512
+  - RS256
+  - RS384
+  - RS512
+  - ES256
+  - ES384
+  - ES512
+  - PS256
+  - PS384
+  - PS512
+  default: RS256
+  description: Various signing algorithms can be used to generate the JWT signature,
+    such as HS256, HS384, HS512, RS256, RS384, and RS512. The default value is RS256.
+  cli_alias: sign-alg
+- name: SignKey
+  type: String
+  reference_to: CryptoKey
+  description: The key alias can be used to sign the JWT. You can get a key alias
+    by configuring the Crypto Key.
+  cli_alias: sign-key
+- name: SignSSKey
+  type: String
+  reference_to: CryptoSSKey
+  description: The shared secret key alias can be used to sign the JWT. You can get
+    the shared secret key alias by configuring the Crypto Shared Secret Key.
+  cli_alias: sign-sskey
+- name: EncAlgorithm
+  type: String
+  enum:
+  - A128CBC-HS256
+  - A192CBC-HS384
+  - A256CBC-HS512
+  - A128GCM
+  - A192GCM
+  - A256GCM
+  default: A128CBC-HS256
+  description: Various encryption algorithms can be used to encrypt the JWT, such
+    as A128CBC-HS256, A192CBC-HS384, A256CBC-HS512, A128GCM, A192GCM, and A256GCM.
+    The default value is A128CBC-HS256.
+  cli_alias: enc
+- name: EncryptAlgorithm
+  type: String
+  enum:
+  - RSA1_5
+  - RSA-OAEP
+  - RSA-OAEP-256
+  - A128KW
+  - A192KW
+  - A256KW
+  - dir
+  default: RSA1_5
+  description: Various key management algorithms can be used to encrypt the JWT, such
+    as RSA1_5, RSA-OAEP, RSA-OAEP-256, A128KW, A192KW, A256KW, and dir. The default
+    value is RSA1_5.
+  cli_alias: enc-alg
+- name: EncryptCertificate
+  type: String
+  reference_to: CryptoCertificate
+  description: The certificate alias can be used to encrypt the JWT. You can get the
+    certificate alias by configuring the Crypto Certificate.
+  cli_alias: enc-cert
+- name: EncryptSSKey
+  type: String
+  reference_to: CryptoSSKey
+  description: The shared secret key alias can be used to encrypt the JWT. You can
+    get the shared secret key alias by configuring the Crypto Shared Secret Key.
+  cli_alias: enc-sskey

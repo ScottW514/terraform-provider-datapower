@@ -28,19 +28,19 @@ resource "datapower_cryptokerberoskeytab" "test" {
 ### Required
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `filename` (String) File Name
+- `filename` (String) <p>The file containing the Kerberos keytab. You can access the keytab file in the cert: or local: directory.</p><p><b>Attention:</b> Any file in the local: directory can be downloaded or included in an export. Therefore, consider carefully before you store cryptographic files in this directory.</p>
   - CLI Alias: `file-name`
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `generate_gss_checksum` (Boolean) Generate GSS-API Checksum in AP-REQ
+- `generate_gss_checksum` (Boolean) Whether to generate a GSS-API checksum when generating AP-REQ tokens with this keytab.
   - CLI Alias: `generate-gss-checksum`
   - Default value: `false`
-- `gss_checksum_flags` (Attributes) GSS-API Checksum Flags
+- `gss_checksum_flags` (Attributes) Which flags to set in GSS-API checksums when generating AP-REQ tokens with this keytab. Refer to RFC 4121 for the flag definitions.
   - CLI Alias: `gss-checksum-flags` (see [below for nested schema](#nestedatt--gss_checksum_flags))
-- `use_replay_cache` (Boolean) Use Replay Cache
+- `use_replay_cache` (Boolean) Whether to cache authenticator values from AP-REQ tokens that were verified with this keytab. Caching prevents replay attacks.
   - CLI Alias: `use-replay-cache`
   - Default value: `true`
 - `user_summary` (String) Comments

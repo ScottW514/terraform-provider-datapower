@@ -57,7 +57,7 @@ func (d *SchemaExceptionMapDataSource) Metadata(_ context.Context, req datasourc
 
 func (d *SchemaExceptionMapDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Schema Exception Map",
+		MarkdownDescription: "This object describes exceptions to an XML Schema by identifying elements of the schema that may be encrypted in an instance document. When Schema Validation is performed on the document using this Exception Map, encrypted elements are considered valid when they appear in place of the specified elements.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,11 +77,11 @@ func (d *SchemaExceptionMapDataSource) Schema(ctx context.Context, req datasourc
 							Computed:            true,
 						},
 						"original_schema_url": schema.StringAttribute{
-							MarkdownDescription: "Original Schema URL",
+							MarkdownDescription: "This is the location of the full original schema document. This is required. This may reside on or off the device.",
 							Computed:            true,
 						},
 						"schema_exception_rules": schema.ListNestedAttribute{
-							MarkdownDescription: "Rules",
+							MarkdownDescription: "Rules describe what elements may be excepted from the schema validation when the Original Schema is used for Schema Validation.",
 							NestedObject:        models.DmSchemaExceptionRuleDataSourceSchema,
 							Computed:            true,
 						},

@@ -57,7 +57,7 @@ func (d *AMQPBrokerDataSource) Metadata(_ context.Context, req datasource.Metada
 
 func (d *AMQPBrokerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "AMQP broker",
+		MarkdownDescription: "In AMQP, distributed source and target termini are managed by a broker. The broker provides messaging services for communicating applications by periodically monitoring and polling termini. The broker ensures that sent messages are directed to the correct target terminus or are routed to another server. The AMQP broker configuration corresponds to an AMQP broker that is running on another host in the network. The configured properties enable communication between the DataPower Gateway and the remote AMQP broker.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -89,7 +89,7 @@ func (d *AMQPBrokerDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"xml_manager": schema.StringAttribute{
-							MarkdownDescription: "XML manager",
+							MarkdownDescription: "Specify the XML manager to control access to the remote AMQP server. The XML manager obtains and manages documents.",
 							Computed:            true,
 						},
 						"container_id": schema.StringAttribute{
@@ -97,7 +97,7 @@ func (d *AMQPBrokerDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"authorization": schema.StringAttribute{
-							MarkdownDescription: "Authorization",
+							MarkdownDescription: "Specify the SASL layer that the AMQP broker uses to authenticate with the AMQP server. The default setting in no authentication.",
 							Computed:            true,
 						},
 						"user_name": schema.StringAttribute{
@@ -109,27 +109,27 @@ func (d *AMQPBrokerDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"maximum_frame_size": schema.Int64Attribute{
-							MarkdownDescription: "Max frame size",
+							MarkdownDescription: "Specify the maximum frame size in bytes to allow. Frames Frames that are larger are rejected. When rejected, the connection is closed. Enter a value in the range 512 - 104857600. The default value is 104857600.",
 							Computed:            true,
 						},
 						"auto_retry": schema.BoolAttribute{
-							MarkdownDescription: "Automatic retry",
+							MarkdownDescription: "Specify whether to enable the automatic retry procedure after an AMQP connection failure. By default, the automatic retry behavior is enabled. This setting does not affect attempts over an established connection.",
 							Computed:            true,
 						},
 						"retry_interval": schema.Int64Attribute{
-							MarkdownDescription: "Retry Interval",
+							MarkdownDescription: "Specify the interval in seconds to wait before attempting to reestablish a failed connection. After the number of attempts is reached, attempts to reestablish a failed connection use the interval that is defined by the long retry interval. Enter a value in the range 1 - 65535. The default value is 10. <p>This setting does not affect attempts over an established connection.</p>",
 							Computed:            true,
 						},
 						"retry_attempts": schema.Int64Attribute{
-							MarkdownDescription: "Retry attempts",
+							MarkdownDescription: "Specify the number of attempts for a failed connection to the remote AMQP server. After the number of attempts is reached, the long retry interval is used. Enter a value in the range 0 - 65535. The default value is 6. The special value of 0 disables the long interval, where the retry interval is used forever.",
 							Computed:            true,
 						},
 						"long_retry_interval": schema.Int64Attribute{
-							MarkdownDescription: "Long retry interval",
+							MarkdownDescription: "Specify the interval in seconds to use after the number of attempts is reached to attempt to reestablish a failed connection. Enter a value in the range 1 - 65535. The default value is 600. <p>This setting does not affect attempts over an established connection.</p>",
 							Computed:            true,
 						},
 						"reporting_interval": schema.Int64Attribute{
-							MarkdownDescription: "Reporting interval",
+							MarkdownDescription: "Specify the interval in seconds between the writing of identical log message. Enter a value in the range 1 - 65535. The default value is 10.",
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{

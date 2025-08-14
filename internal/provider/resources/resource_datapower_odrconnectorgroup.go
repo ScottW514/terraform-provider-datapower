@@ -56,7 +56,7 @@ func (r *ODRConnectorGroupResource) Metadata(ctx context.Context, req resource.M
 
 func (r *ODRConnectorGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("ODR Connector Group (`default` domain only)", "odr-connector-group", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A collection of on demand router (ODR) connectors used to communicate with the Intelligent Management service.", "odr-connector-group", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -74,12 +74,12 @@ func (r *ODRConnectorGroupResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 			},
 			"odr_group_connectors": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ODR connectors", "odr-connector", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The ODR connectors that are used to retrieve ODR information. An ODR connector defines a connection to the Intelligent Management service. The DataPower Gateway retrieves topology, weights, session affinity, and other information from the WebSphere cell over the connection. If multiple connectors are configured, the top most connection is tried first, followed by the second, and so on. After a connection is established, other endpoints might be retrieved and used if the configured connector endpoint is down. You must define at least one connector in an ODR connector group but cannot define more than 16 connectors.", "odr-connector", "").String,
 				NestedObject:        models.DmODRConnectorResourceSchema,
 				Optional:            true,
 			},
 			"max_retry_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum retry interval", "max-retry-interval", "").AddIntegerRange(1, 120).AddDefaultValue("60").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The time to wait before attempting to reestablish a connection to the Intelligent Management Service. Enter a value in the range 1 - 120. The default value is 60.", "max-retry-interval", "").AddIntegerRange(1, 120).AddDefaultValue("60").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -89,18 +89,18 @@ func (r *ODRConnectorGroupResource) Schema(ctx context.Context, req resource.Sch
 				Default: int64default.StaticInt64(60),
 			},
 			"xml_manager": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML manager", "xml-manager", "xmlmanager").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The XML manager to use when processing transactions with the Intelligent management service.", "xml-manager", "xmlmanager").AddDefaultValue("default").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("default"),
 			},
 			"odr_conn_group_properties": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom properties", "odr-conn-group-properties", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The custom properties that are associated with the ODR connector group.", "odr-conn-group-properties", "").String,
 				NestedObject:        models.DmODRConnPropertyResourceSchema,
 				Optional:            true,
 			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and its targets.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -109,7 +109,7 @@ func (r *ODRConnectorGroupResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and its targets.", "ssl-client", "sslclientprofile").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -54,10 +54,10 @@ func (r *MgmtInterfaceResource) Metadata(ctx context.Context, req resource.Metad
 
 func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("XML management interface (`default` domain only)", "xml-mgmt", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Modify the configuration of the XML management interface. This interface is described in the <tt>store:///xml-mgmt.wsdl</tt> file in the <tt>default</tt> domain. <p>If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.</p>", "xml-mgmt", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -67,7 +67,7 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Port number", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("5550").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP port that the interface monitors. The default value is 5550.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("5550").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -81,7 +81,7 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "acl", "accesscontrollist").AddDefaultValue("xml-mgmt").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Edit the <tt>xml-mgmt</tt> access control list to define the client IP addresses to allow or deny.", "acl", "accesscontrollist").AddDefaultValue("xml-mgmt").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("xml-mgmt"),
@@ -92,7 +92,7 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				Computed:            true,
 				Default:             int64default.StaticInt64(10),
 			},
-			"mode": models.GetDmXMLMgmtModesResourceSchema("Enabled services", "mode", "", false),
+			"mode": models.GetDmXMLMgmtModesResourceSchema("Specify which service endpoints to enable. For each enabled endpoint, the interface listens for requests from those services.", "mode", "", false),
 			"ssl_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Custom TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
 				Optional:            true,
@@ -111,7 +111,7 @@ func (r *MgmtInterfaceResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),

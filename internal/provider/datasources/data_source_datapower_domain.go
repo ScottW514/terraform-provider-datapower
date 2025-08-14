@@ -56,7 +56,7 @@ func (d *DomainDataSource) Metadata(_ context.Context, req datasource.MetadataRe
 
 func (d *DomainDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Application domain",
+		MarkdownDescription: "An application domain contains the resources that support DataPower services. The DataPower Gateway supports multiple domains. Domains can share read access to files in their <tt>local:</tt> directory. All domains share the contents of the <tt>store:</tt> directory. <p>After a user logs in to a domain, everything the user does applies to only this domain.</p><p>Except for the <tt>default</tt> domain, all domains can be restarted independently. For the <tt>default</tt> domain, you must restart the DataPower Gateway. When an domain or the DataPower Gateway is restarted, the persisted configuration is used. The persisted configuration can differ from the running configuration.</p><p>The configuration of a domain can be locally stored or can be retrieved from a remote server. The use of a remote configuration file enables centralized management of domains.</p>",
 		Attributes: map[string]schema.Attribute{
 			"result": schema.ListNestedAttribute{
 				MarkdownDescription: "List of objects",
@@ -72,20 +72,20 @@ func (d *DomainDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 							Computed:            true,
 						},
 						"config_dir": schema.StringAttribute{
-							MarkdownDescription: "Configuration directory",
+							MarkdownDescription: "Specify where the configuration file for this domain is stored. This property is read-only because it is configured in domain settings.",
 							Computed:            true,
 						},
 						"neighbor_domain": schema.ListAttribute{
-							MarkdownDescription: "Visible domains",
+							MarkdownDescription: "Specify which domains have their <tt>local:</tt> directory visible to this domain. <p>References to visible domains are explicit, not bidirectional. If domain <tt>domainB</tt> is made visible to domain <tt>domainA</tt> , the following conditions apply.</p><ul><li>Domain <tt>domainA</tt> has read-only access to the <tt>local:</tt> directory of domain <tt>domainB</tt> .</li><li>Domain <tt>domainB</tt> cannot see domain <tt>domainA</tt> .</li></ul><p>In this case, you cannot make domain <tt>domainA</tt> visible to domain <tt>domainB</tt> . References to visible domains cannot be circular.</p>",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"domain_user": schema.ListAttribute{
-							MarkdownDescription: "CLI user access",
+							MarkdownDescription: "Specify the set of CLI users who can access this domain. These users can log into this domain through the CLI. This setting can be superseded by an existing access policy of the user.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
-						"file_map":       models.GetDmDomainFileMapDataSourceSchema("File permission to the local: directory", "file-permissions", ""),
+						"file_map":       models.GetDmDomainFileMapDataSourceSchema("Specify the file permissions to apply to the <tt>local:</tt> directory. When access permissions are defined and with role-based management, users are granted the lesser privilege.", "file-permissions", ""),
 						"monitoring_map": models.GetDmDomainMonitoringMapDataSourceSchema("File-monitoring of the local: directory", "file-monitoring", ""),
 						"config_mode": schema.StringAttribute{
 							MarkdownDescription: "Configuration mode",
@@ -108,7 +108,7 @@ func (d *DomainDataSource) Schema(ctx context.Context, req datasource.SchemaRequ
 							Computed:            true,
 						},
 						"local_ip_rewrite": schema.BoolAttribute{
-							MarkdownDescription: "Rewrite local IP addresses",
+							MarkdownDescription: "Specify whether to rewrite local IP addresses during import. When enabled, local IP addresses in the import package are rewritten to match the local IP address on the DataPower Gateway. In other words, a service that binds to <tt>eth10</tt> in the import package is rewritten to bind to the local IP address of <tt>eth10</tt> on the DataPower Gateway.",
 							Computed:            true,
 						},
 						"max_chkpoints": schema.Int64Attribute{

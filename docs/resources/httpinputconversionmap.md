@@ -3,13 +3,13 @@
 page_title: "datapower_httpinputconversionmap Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  HTTP Input Conversion Map
+  This defines the rules for handling HTTP to XML conversion of form values in an HTTP GET or POST of a form. There are different conversion (Encoding) rules for the values. They control how the value is mapped to the contents of its &lt;arg> element in the resulting XML. There is a default Encoding, which is all that is required. There can also be specific Encodings applied to values based on the name associated with a value, which is done using an ordered list of PCREs.
   CLI Alias: input-conversion-map
 ---
 
 # datapower_httpinputconversionmap (Resource)
 
-HTTP Input Conversion Map
+This defines the rules for handling HTTP to XML conversion of form values in an HTTP GET or POST of a form. There are different conversion (Encoding) rules for the values. They control how the value is mapped to the contents of its &lt;arg> element in the resulting XML. There is a default Encoding, which is all that is required. There can also be specific Encodings applied to values based on the name associated with a value, which is done using an ordered list of PCREs.
   - CLI Alias: `input-conversion-map`
 
 ## Example Usage
@@ -31,11 +31,11 @@ resource "datapower_httpinputconversionmap" "test" {
 
 ### Optional
 
-- `default_input_encoding` (String) Default Encoding
+- `default_input_encoding` (String) Select the default encoding to use for any name-value pair in an HTTP form where the name does not match any of the patterns in the Encoding Map.
   - CLI Alias: `default-encoding`
   - Choices: `plain`, `urlencoded`, `xml`, `urlencoded-xml`, `base64`, `base64-text`, `base64-xml`, `json`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `input_encoding` (Attributes List) Encoding Map
+- `input_encoding` (Attributes List) This allows selecting the Encoding for values based on their name. The names are matched by PCREs. Each PCRE is associated with an Encoding that controls how the value is mapped to the contents of an &lt;arg> element in the resulting XML. This is an ordered list, comparision of the name proceeds until the first match. If there is no match, the Encoding will be selected by the Default Encoding of this HTTP Input Conversion Map.
   - CLI Alias: `rule` (see [below for nested schema](#nestedatt--input_encoding))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

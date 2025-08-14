@@ -57,7 +57,7 @@ func (d *AAAPolicyDataSource) Metadata(_ context.Context, req datasource.Metadat
 
 func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "AAA policy",
+		MarkdownDescription: "<p>Define the support to authenticate users and authorize their access to resources. An AAA policy consists of the following phases.</p><ul><li>During AAA processing, the identity extraction phase defines which methods the AAA policy uses to extract the claimed identity of the service requester.</li><li>After the claimed identity of the service requester is extracted, an AAA policy authenticates the claimed identity. The authentication process can use internal or external resources.</li><li>After authentication credentials are received, an AAA policy can map these credentials.</li><li>After client authentication, an AAA policy identifies the specific resource that is being requested by that client.</li><li>After requested resources are identified, you might need to map extracted resource to a form that is compatible with the authorization method.</li><li>After the service requester is authenticated from the extracted identity, an AAA policy authorizes the client to the requested resource.</li><li>After client-authorization, an AAA policy can run postprocessing activities.</li></ul>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,37 +81,37 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"authorized_counter": schema.StringAttribute{
-							MarkdownDescription: "Authorized counter",
+							MarkdownDescription: "Specify the monitor for authorized messages. Ensure that this count monitor is configured with an XPath as the measure.",
 							Computed:            true,
 						},
 						"rejected_counter": schema.StringAttribute{
-							MarkdownDescription: "Rejected counter",
+							MarkdownDescription: "Specify the monitor for rejected messages. Ensure that this count monitor is configured with an XPath as the measure.",
 							Computed:            true,
 						},
 						"namespace_mapping": schema.ListNestedAttribute{
-							MarkdownDescription: "Namespace mapping",
+							MarkdownDescription: "Define XML namespace maps. Each map is a prefix with its URI.",
 							NestedObject:        models.DmNamespaceMappingDataSourceSchema,
 							Computed:            true,
 						},
-						"extract_identity": models.GetDmAAAPExtractIdentityDataSourceSchema("Identity extraction", "extract-identity", ""),
-						"authenticate":     models.GetDmAAAPAuthenticateDataSourceSchema("Authentication", "authenticate", ""),
-						"map_credentials":  models.GetDmAAAPMapCredentialsDataSourceSchema("Credential mapping", "map-credentials", ""),
-						"extract_resource": models.GetDmAAAPExtractResourceDataSourceSchema("Resource extraction", "extract-resource", ""),
-						"map_resource":     models.GetDmAAAPMapResourceDataSourceSchema("Resource mapping", "map-resource", ""),
-						"authorize":        models.GetDmAAAPAuthorizeDataSourceSchema("Authorization", "authorize", ""),
-						"post_process":     models.GetDmAAAPPostProcessDataSourceSchema("Postprocessing", "post-process", ""),
+						"extract_identity": models.GetDmAAAPExtractIdentityDataSourceSchema("Specify the methods to extract the identity of the service requester. For some methods, you must define more properties.", "extract-identity", ""),
+						"authenticate":     models.GetDmAAAPAuthenticateDataSourceSchema("Specify the method to authenticate the extracted identity. For some methods, you must define more properties.", "authenticate", ""),
+						"map_credentials":  models.GetDmAAAPMapCredentialsDataSourceSchema("Specify the method to map credentials for authorization. For some methods, you must define more properties.", "map-credentials", ""),
+						"extract_resource": models.GetDmAAAPExtractResourceDataSourceSchema("Specify the methods to extract the identity of a requested resource. For some methods, you must define more properties.", "extract-resource", ""),
+						"map_resource":     models.GetDmAAAPMapResourceDataSourceSchema("Specify the method to map resources for authorization. For some methods, you must define more properties.", "map-resource", ""),
+						"authorize":        models.GetDmAAAPAuthorizeDataSourceSchema("Specify the method to authorize the identity to resources. For some methods, you must define more properties.", "authorize", ""),
+						"post_process":     models.GetDmAAAPPostProcessDataSourceSchema("Specify postprocessing activities. For some methods, you must define more properties.", "post-process", ""),
 						"saml_attribute": schema.ListNestedAttribute{
-							MarkdownDescription: "SAML attributes",
+							MarkdownDescription: "Specify SAML attributes. Each attribute consists of its namespace URI, local name, and expected value.",
 							NestedObject:        models.DmSAMLAttributeNameAndValueDataSourceSchema,
 							Computed:            true,
 						},
 						"ltpa_attributes": schema.ListNestedAttribute{
-							MarkdownDescription: "LTPA user attributes",
+							MarkdownDescription: "<p>Specify user attributes to include in the LTPA token. Attributes are relevant for only WebSphere tokens.</p><p>For each attribute, its value can be static or resolved at run time. <ul><li>When static, its value is a fixed value.</li><li>When resolved at run time, its value is resolved at run time with an XPath expression.</li></ul></p>",
 							NestedObject:        models.DmLTPAUserAttributeNameAndValueDataSourceSchema,
 							Computed:            true,
 						},
 						"transaction_priority": schema.ListNestedAttribute{
-							MarkdownDescription: "Transaction priority",
+							MarkdownDescription: "Define the transactional priority for users. For each user, you must specify the name of the output credentials, their priority for scheduling or resource allocation, and whether authorization is required.",
 							NestedObject:        models.DmAAATransactionPriorityDataSourceSchema,
 							Computed:            true,
 						},
@@ -120,39 +120,39 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"saml_signing_key": schema.StringAttribute{
-							MarkdownDescription: "SAML message signing key",
+							MarkdownDescription: "Specify the key to sign SAML messages. To sign messages, you must specify a key and a certificate.",
 							Computed:            true,
 						},
 						"saml_signing_cert": schema.StringAttribute{
-							MarkdownDescription: "SAML message signing certificate",
+							MarkdownDescription: "Specify the certificate to sign SAML messages. To sign messages, you must specify a key and a certificate.",
 							Computed:            true,
 						},
 						"saml_signing_hash_alg": schema.StringAttribute{
-							MarkdownDescription: "SAML signing message digest algorithm",
+							MarkdownDescription: "Specify the algorithm to calculate the message digest for signing. The default value is sha1.",
 							Computed:            true,
 						},
 						"saml_signing_alg": schema.StringAttribute{
-							MarkdownDescription: "SAML message signing algorithm",
+							MarkdownDescription: "Specify the algorithm to sign SAML messages. The default value is rsa.",
 							Computed:            true,
 						},
 						"lda_psuffix": schema.StringAttribute{
-							MarkdownDescription: "LDAP suffix",
+							MarkdownDescription: "Specify the LDAP suffix to add to the username to form the base distinguished name (DN) for authentication. The suffix and the username are separated with a comma. If the suffix is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the DN is <tt>CN=Bob,O=example.com</tt> .",
 							Computed:            true,
 						},
 						"log_allowed": schema.BoolAttribute{
-							MarkdownDescription: "Log allowed",
+							MarkdownDescription: "Whether to log successful AAA operations. When enabled and if needed, modify the default logging level from informational.",
 							Computed:            true,
 						},
 						"log_allowed_level": schema.StringAttribute{
-							MarkdownDescription: "Log allowed level",
+							MarkdownDescription: "Set the logging level for successful AAA operations. The default level is informational.",
 							Computed:            true,
 						},
 						"log_rejected": schema.BoolAttribute{
-							MarkdownDescription: "Log rejected",
+							MarkdownDescription: "Whether to log unsuccessful AAA operations. When enabled and if needed, modify the default logging level from warning.",
 							Computed:            true,
 						},
 						"log_rejected_level": schema.StringAttribute{
-							MarkdownDescription: "Log rejected level",
+							MarkdownDescription: "Set the logging level for unsuccessful AAA operations. The default level is warning.",
 							Computed:            true,
 						},
 						"ws_secure_conversation_crypto_key": schema.StringAttribute{
@@ -160,53 +160,53 @@ func (d *AAAPolicyDataSource) Schema(ctx context.Context, req datasource.SchemaR
 							Computed:            true,
 						},
 						"saml_source_id_mapping_file": schema.StringAttribute{
-							MarkdownDescription: "SAML Artifact mapping file",
+							MarkdownDescription: "Specify the location of the SAML artifact-mapping file that provides a mapping of SAML artifact source IDs to artifact retrieval endpoints. Use this setting when artifacts are retrieved from multiple endpoints and the source ID for these endpoints are encoded in the artifact itself. If only one artifact retrieval URL exists, it can be specified by the SAML artifact responder URL in the authentication phase.",
 							Computed:            true,
 						},
 						"ping_identity_compatibility": schema.BoolAttribute{
-							MarkdownDescription: "PingFederate compatibility",
+							MarkdownDescription: "Control compatibility with a PingFederate identity server. By default, compatibility is disabled. Enable compatibility for SAML authentication or authorization.",
 							Computed:            true,
 						},
 						"saml2_metadata_file": schema.StringAttribute{
-							MarkdownDescription: "SAML 2.0 metadata file",
+							MarkdownDescription: "Specify the location of the SAML 2.0 metadata file for SAML 2.0 protocol message exchanges. The metadata in this file identifies identity provider endpoints and certificates to secure message exchanges. The file must have a root-level &lt;md:EntitiesDescriptor> element with an &lt;EntityDescriptor> child element for each identity provider.",
 							Computed:            true,
 						},
 						"do_s_valve": schema.Int64Attribute{
-							MarkdownDescription: "DoS flooding attack valve",
+							MarkdownDescription: "<p>Specify the number of times to process the same request to protect against a denial of service (DoS) attack. Enter a value in the range 1 - 1000. The default value is 3.</p><p>With the default value, AAA processes only the first 3 signature and each signature can contain up to 3 reference URIs. Additional signatures or reference URIs are ignored.</p><p>XML processing includes encryption, decryption, message signing, and signature validation. The AAA policy supports only identity extraction with subject DN from certificate in message signature and authorization with signer certificate for digitally signed messages.</p>",
 							Computed:            true,
 						},
 						"ldap_version": schema.StringAttribute{
-							MarkdownDescription: "LDAP version",
+							MarkdownDescription: "Specify the LDAP version to access the LDAP server. The default value is v2.",
 							Computed:            true,
 						},
 						"enforce_soap_actor": schema.BoolAttribute{
-							MarkdownDescription: "Enforce actor or role for WS-Security message",
+							MarkdownDescription: "Whether to enforce the <tt>S11:actor</tt> or <tt>S12:role</tt> on WS-Security messages. In general, a WS-Security message has a <tt>S11:actor</tt> or <tt>S12:role</tt> attribute for its <tt>Security</tt> header. Processing can enforce these attributes when the AAA policy tries to use the <tt>Security</tt> header. For example, the <tt>Security</tt> element has only one actor or role. In this case, the AAA policy processes only the <tt>Security</tt> header for this actor or role identifier. This setting applies to all AAA phases, except postprocessing. For postprocessing, the activity generally generates a new message for next SOAP node.",
 							Computed:            true,
 						},
 						"ws_sec_actor_role_id": schema.StringAttribute{
-							MarkdownDescription: "WS-Security actor or role identifier",
+							MarkdownDescription: "Set the assumed <tt>S11:actor</tt> or <tt>S12:role</tt> identifier. The AAA policy acts as the assumed actor or role when it consumes <tt>Security</tt> headers. This setting takes effect only when the AAA policy attempts to process the incoming message before it makes an authorization decision. Postprocessing does not use this setting. Postprocessing uses its own setting in generating the message for the next SOAP node. The default value is an empty string. <table border=\"1\"><tr><td valign=\"left\"><tt>http://schemas.xmlsoap.org/soap/actor/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/none</tt></td><td>No one can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\"><tt>http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</tt></td><td>The ultimate receiver can process the <tt>Security</tt> header.</td></tr><tr><td valign=\"left\">No value, which is an empty string</td><td>The empty string (without quotation marks) indicates that no \"actor/role\" identifier is configured. With a configured actor/role, the ultimate receiver is assumed for the message. No actor/role attribute is added during the generation of the <tt>Security</tt> header. More than one <tt>Security</tt> header cannot omit the actor/role identifier.</td></tr><tr><td valign=\"left\"><tt>USE_MESSAGE_BASE_URI</tt></td><td>The identifier is the base URL of the message. When the SOAP message is transported, the base URI is the request-URI of the HTTP request.</td></tr><tr><td valign=\"left\">A string value</td><td>Any string to identify the actor or role of the <tt>Security</tt> header.</td></tr></table>",
 							Computed:            true,
 						},
 						"ausmhttp_header": schema.ListAttribute{
-							MarkdownDescription: "HTTP headers",
+							MarkdownDescription: "Specify HTTP headers from CA Single Sign-On authentication responses. These headers are included as request or response headers based on the CA Single Sign-on header flow.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"azsmhttp_header": schema.ListAttribute{
-							MarkdownDescription: "HTTP headers",
+							MarkdownDescription: "Specify HTTP headers from CA Single Sign-On authorization responses. These headers are included as request or response headers based on the CA Single Sign-On header flow.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"dyn_config": schema.StringAttribute{
-							MarkdownDescription: "Dynamic configuration type",
+							MarkdownDescription: "Specify how to obtain the AAA policy configuration dynamically. With dynamic configuration, you can configure the AAA policy at run time. When enabled, the configuration of AAA is determined dynamically based on the template AAA policy and the parameters that the dynamic configuration custom URL returns. By default, uses no template.",
 							Computed:            true,
 						},
 						"external_aaa_template": schema.StringAttribute{
-							MarkdownDescription: "External AAA policy template",
+							MarkdownDescription: "Specify another AAA policy to use as the template. When specified, this AAA policy overwrites the current AAA policy.",
 							Computed:            true,
 						},
 						"dyn_config_custom_url": schema.StringAttribute{
-							MarkdownDescription: "Dynamic configuration custom URL",
+							MarkdownDescription: "<p>Specify the location of the custom stylesheet or GatewayScript file. The configuration of the AAA policy is obtained dynamically from this file. The obtained configuration overwrites the configuration in the template AAA policy.</p><p>In the custom file, modify only the properties to dynamically overwrite. See the <tt>ModifyAAAPolicy</tt> element in the <tt>store:///xml-mgmt.xsd</tt> schema to construct a schema-compliant AAA configuration.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

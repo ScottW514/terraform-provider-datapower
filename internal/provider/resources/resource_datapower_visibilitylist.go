@@ -56,7 +56,7 @@ func (r *VisibilityListResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *VisibilityListResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Visibility list", "visibility-list", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A visibility list specifies elements in a GraphQL schema to remove from introspection and validation.", "visibility-list", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -90,7 +90,7 @@ func (r *VisibilityListResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("remove"),
 			},
 			"value": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Value", "value", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path to a GraphQL schema element. For example, <tt>Account.number</tt> uniquely identifies the <tt>number</tt> field of the <tt>Account</tt> type.", "value", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

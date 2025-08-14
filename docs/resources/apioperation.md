@@ -3,13 +3,13 @@
 page_title: "datapower_apioperation Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API operation
+  An API operation describes the actions to perform against the resource.
   CLI Alias: api-operation
 ---
 
 # datapower_apioperation (Resource)
 
-API operation
+An API operation describes the actions to perform against the resource.
   - CLI Alias: `api-operation`
 
 ## Example Usage
@@ -32,7 +32,7 @@ resource "datapower_apioperation" "test" {
 
 ### Optional
 
-- `consume` (List of String) Consumes
+- `consume` (List of String) Specify MIME types that the operation can consume. This setting overrides the API-level consume declaration that is defined in the API definition.
   - CLI Alias: `consume`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `method` (String) Method
@@ -41,14 +41,14 @@ resource "datapower_apioperation" "test" {
   - Default value: `GET`
 - `operation_id` (String) Operation ID
   - CLI Alias: `operation-id`
-- `parameter` (Attributes List) Parameters
+- `parameter` (Attributes List) Specify applicable parameters for the API operation. This setting overrides the setting in the API path configuration for the same parameter.
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--parameter))
-- `produce` (List of String) Produces
+- `produce` (List of String) Specify MIME types that the operation can produce. This setting overrides the API-level produce declaration that is defined in the API definition.
   - CLI Alias: `produce`
-- `remove_consume` (Boolean) Remove consume
+- `remove_consume` (Boolean) Specify whether to remove the API-level consume declaration. By default, the API-level consume declaration is applied to the operation. When removed, the operation can always be performed regardless of the content type.
   - CLI Alias: `remove-consume`
   - Default value: `false`
-- `remove_security` (Boolean) Remove security
+- `remove_security` (Boolean) Specify whether to remove the API-level security declaration that is defined for the API. By default, the API-level security declaration is applied to the operation. When removed, the operation can be performed without security check.
   - CLI Alias: `remove-security`
   - Default value: `false`
 - `request_schema` (String) Request schema
@@ -56,7 +56,7 @@ resource "datapower_apioperation" "test" {
   - Reference to: `datapower_apischema:id`
 - `response_schema` (Attributes List) Response schema
   - CLI Alias: `response-schema` (see [below for nested schema](#nestedatt--response_schema))
-- `security` (List of String) Security requirements
+- `security` (List of String) Specify the alternative security requirements to enforce for the operation (that is, there is a logical OR between the security requirements). This setting overrides any declared API-level security.
   - CLI Alias: `security`
   - Reference to: `datapower_apisecurityrequirement:id`
 - `soap_action` (String) SOAP action

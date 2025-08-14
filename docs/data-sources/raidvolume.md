@@ -3,12 +3,12 @@
 page_title: "datapower_raidvolume Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  RAID Array (default domain only)
+  
 ---
 
 # datapower_raidvolume (Data Source)
 
-RAID Array (`default` domain only)
+<p>Configure a RAID volume for data storage.</p><ol><li>The access permission to files on the storage volume. With the B2B feature, access permission must be read/write. B2B storage requires write access. Setting to read-only is ignored but generates a warning.</li><li>The subdirectory where files on the storage volume are available in the <tt>local:</tt> and <tt>logstore:</tt> directories. Each domain contains these subdirectories, and these subdirectories are not shared across domains.</li></ol>
 
 ## Example Usage
 
@@ -26,9 +26,9 @@ data "datapower_raidvolume" "test" {
 
 ### Read-Only
 
-- `directory` (String) Directory
-- `read_only` (Boolean) Set to read-only
-- `user_summary` (String) Comments
+- `directory` (String) The subdirectory where the files on the storage volume are available. The name can be up to 64 characters long. The name cannot start with a period. The name can use all alphanumeric characters and the following special characters: . - _.
+- `read_only` (Boolean) <p>The access permission to files on the storage volume.</p><ul><li>When enabled, access permission is read-only. With the B2B feature, access permission must be read/write. B2B storage requires write access to the RAID volume. Setting to read-only is ignored but generates a warning.</li><li>When disabled, the default value, access permission is read/write.</li></ul>
+- `user_summary` (String) A descriptive summary for the configuration.
 
 <a id="nestedatt--dependency_actions"></a>
 ### Nested Schema for `dependency_actions`

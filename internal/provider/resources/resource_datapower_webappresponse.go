@@ -59,7 +59,7 @@ func (r *WebAppResponseResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Web Response Profile", "webapp-response-profile", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The web response profile specifies various properties about the response side of the transaction that must be satisfied.", "webapp-response-profile", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -88,7 +88,7 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"policy_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Style", "policy-type", "").AddStringEnum("pre-requisite", "admission").AddDefaultValue("admission").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the satisfaction policy for the profile. The default is Admission.", "policy-type", "").AddStringEnum("pre-requisite", "admission").AddDefaultValue("admission").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -96,24 +96,24 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 				},
 				Default: stringdefault.StaticString("admission"),
 			},
-			"ok_codes":    models.GetDmHTTPResponseCodesResourceSchema("Response Codes", "response-codes", "", false),
-			"ok_versions": models.GetDmHTTPVersionMaskResourceSchema("Response Versions", "response-versions", "", false),
+			"ok_codes":    models.GetDmHTTPResponseCodesResourceSchema("Specify which response codes from the backend server are acceptable.", "response-codes", "", false),
+			"ok_versions": models.GetDmHTTPVersionMaskResourceSchema("Specify which HTTP versions are acceptable from the backend server.", "response-versions", "", false),
 			"min_body_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Minimum Size", "response-body-min", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum size of the response body.", "response-body-min", "").String,
 				Optional:            true,
 			},
 			"max_body_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum Size", "response-body-max", "").AddDefaultValue("128000000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum size of the response body.", "response-body-max", "").AddDefaultValue("128000000").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(128000000),
 			},
 			"header_gnvc": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Header Name-Value Profile", "response-header-profile", "namevalueprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The validation profile allows you to specify what headers are expected, what headers should be stripped, and what headers should be mapped to known values. If no profile is specified, any header is allowed.", "response-header-profile", "namevalueprofile").String,
 				Optional:            true,
 			},
 			"content_types": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Content-Type List", "response-content-type", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A list of PCRE regular expressions that indicate acceptable content-type MIME headers on the response. If this list is empty, any content-type is acceptable. If the response does not have a content type that will be represented as an empty string for matching purposes. An empty list will match all content types.", "response-content-type", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Computed:            true,
@@ -122,7 +122,7 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 				})),
 			},
 			"xml_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML Processing", "response-xml-policy", "").AddStringEnum("nothing", "xml", "soap").AddDefaultValue("nothing").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the device handles responses that contain an XML MIME type.", "response-xml-policy", "").AddStringEnum("nothing", "xml", "soap").AddDefaultValue("nothing").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -131,11 +131,11 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("nothing"),
 			},
 			"xml_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML Transformation Rule", "response-xml-rule", "stylepolicyrule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the response contains an XML MIME type and the XML processing policy is set to XML or SOAP.", "response-xml-rule", "stylepolicyrule").String,
 				Optional:            true,
 			},
 			"non_xml_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Non-XML Processing", "response-nonxml-policy", "").AddStringEnum("nothing", "side", "binary").AddDefaultValue("nothing").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the device handles responses that do not contain an XML MIME type.", "response-nonxml-policy", "").AddStringEnum("nothing", "side", "binary").AddDefaultValue("nothing").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -144,11 +144,11 @@ func (r *WebAppResponseResource) Schema(ctx context.Context, req resource.Schema
 				Default: stringdefault.StaticString("nothing"),
 			},
 			"non_xml_rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Non-XML Processing Rule", "response-nonxml-rule", "stylepolicyrule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This is the transformation rule that is run when the response does not contain an XML MIME type and the Non-XML processing policy is set to binary or side-effect.", "response-nonxml-rule", "stylepolicyrule").String,
 				Optional:            true,
 			},
 			"error_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Error Policy", "error-policy-override", "webapperrorhandlingpolicy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("If this response policy is violated the firewall error policy will be invoked unless this more specific error policy is provided, in which case this policy takes precedence.", "error-policy-override", "webapperrorhandlingpolicy").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

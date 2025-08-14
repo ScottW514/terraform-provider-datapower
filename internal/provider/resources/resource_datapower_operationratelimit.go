@@ -55,7 +55,7 @@ func (r *OperationRateLimitResource) Metadata(ctx context.Context, req resource.
 
 func (r *OperationRateLimitResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API operation rate limit", "api-operation-rate-limit", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An API operation rate limit defines the operation-specific rate limit scheme. Operation specific rate limits override the schemes in the API plan.", "api-operation-rate-limit", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

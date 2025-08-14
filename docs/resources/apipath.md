@@ -3,13 +3,13 @@
 page_title: "datapower_apipath Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API path
+  An API Path configuration describes the operations that are available on a single path.
   CLI Alias: api-path
 ---
 
 # datapower_apipath (Resource)
 
-API path
+An API Path configuration describes the operations that are available on a single path.
   - CLI Alias: `api-path`
 
 ## Example Usage
@@ -33,12 +33,12 @@ resource "datapower_apipath" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `operation` (List of String) Operation
+- `operation` (List of String) Specify the available operations for the path. Without a defined operation, all operations are accepted.
   - CLI Alias: `operation`
   - Reference to: `datapower_apioperation:id`
-- `parameter` (Attributes List) Parameters
+- `parameter` (Attributes List) Specify the applicable parameters for all operations. The setting can be overridden for the same parameter by the setting in the API operation configuration.
   - CLI Alias: `parameter` (see [below for nested schema](#nestedatt--parameter))
-- `path` (String) Path
+- `path` (String) Specify the relative path to access the REST APIs. The path is appended to the base path to construct the full URI. The path must start with a / character. When the path contains a parameter, ensure that you define the path parameter at either or both the path and operation levels. <ul><li>A parameter at the end of the path can contain a + qualifier to match one or more levels as in the following example. <p><tt>/petstore/{type}/{+category}</tt></p><p>The <tt>{type}</tt> parameter matches one path level. The <tt>{+category}</tt> parameter matches multiple levels. The following paths match this path template.</p><ul><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li><li>A parameter at the end of the path can contain a * qualifier to match zero or more levels as in the following example. <p><tt>/petstore/{type}/{*category}</tt></p><p>The <tt>{type}</tt> parameter matches one path level. The <tt>{*category}</tt> parameter matches multiple levels. The following paths match this path template.</p><ul><li><tt>/petstore/cats/</tt></li><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li></ul>
   - CLI Alias: `path`
   - Default value: `/`
 - `request_schema` (String) Request schema

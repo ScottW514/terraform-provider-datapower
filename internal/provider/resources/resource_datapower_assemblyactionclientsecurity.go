@@ -81,19 +81,19 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 				},
 			},
 			"stop_on_error": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Stop on error", "stop-on-error", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if client security fails. If failed, stops the assembly and return an error.", "stop-on-error", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"secret_required": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Secret required", "secret-required", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to require the client secret. When required, the secret is compared to the registered secret on the application that is identified by the client ID.", "secret-required", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"extract_credential_method": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Credentials extraction method", "extract-credential-method", "").AddStringEnum("header", "query", "form", "cookie", "http", "context-var").AddDefaultValue("header").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the method to extract client credentials from the request.</p><ul><li>For all methods except HTTP, use the ID name and the secret name to specify the locations that contains the ID and the location that contain the secret. <ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul></li><li>For the HTTP method, use the HTTP type to specify the format of the <tt>Authorization</tt> header, which expects the basic form in the <tt>Basic <i>base64_id:secret</i></tt> format.</li></ul>", "extract-credential-method", "").AddStringEnum("header", "query", "form", "cookie", "http", "context-var").AddDefaultValue("header").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -102,11 +102,11 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 				Default: stringdefault.StaticString("header"),
 			},
 			"id_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("ID name", "id-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location where to find the client ID to extract.</p><ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul>", "id-name", "").String,
 				Optional:            true,
 			},
 			"secret_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Secret name", "secret-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the location where to find the secret to extract.</p><ul><li>When cookie, specify which cookie.</li><li>When context variable, specify which runtime context variable.</li><li>When form data, specify the form data.</li><li>When header, specify which header.</li><li>When query parameter, specify which query parameter.</li></ul>", "secret-name", "").String,
 				Optional:            true,
 			},
 			"http_type": schema.StringAttribute{
@@ -119,7 +119,7 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 				Default: stringdefault.StaticString("basic"),
 			},
 			"authenticate_client_method": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authenticate client method", "client-auth-method", "").AddStringEnum("native", "third-party").AddDefaultValue("native").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the method to authenticate the extracted client credentials. When third-party, specify the user-registry to authenticate the extracted client credentials.", "client-auth-method", "").AddStringEnum("native", "third-party").AddDefaultValue("native").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -128,7 +128,7 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 				Default: stringdefault.StaticString("native"),
 			},
 			"user_registry": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("User registry", "user-registry", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API registry to authenticate the extracted client credentials. The supported registries are API authentication URL and API LDAP.", "user-registry", "").String,
 				Optional:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -140,11 +140,11 @@ func (r *AssemblyActionClientSecurityResource) Schema(ctx context.Context, req r
 				Optional:            true,
 			},
 			"correlation_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Correlation path", "correlation-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.", "correlation-path", "").String,
 				Optional:            true,
 			},
 			"action_debug": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable debugging", "debug", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

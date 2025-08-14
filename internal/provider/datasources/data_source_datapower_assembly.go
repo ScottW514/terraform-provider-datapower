@@ -57,7 +57,7 @@ func (d *AssemblyDataSource) Metadata(_ context.Context, req datasource.Metadata
 
 func (d *AssemblyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Assembly",
+		MarkdownDescription: "An assembly specifies the API rule to apply to the API call and how to handle errors during the assembly execution. The API rule for the assembly comprises only assembly actions that are executed in order to control a specific aspect of processing such as data transformation during API call at run time. When an API is identified for the incoming request, its assembly is executed.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,24 +77,24 @@ func (d *AssemblyDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A descriptive summary for the assembly configuration.",
 							Computed:            true,
 						},
 						"rule": schema.StringAttribute{
-							MarkdownDescription: "Rule",
+							MarkdownDescription: "Specifies the API rule that comprises only assembly actions to apply to the API call.",
 							Computed:            true,
 						},
 						"catch": schema.ListNestedAttribute{
-							MarkdownDescription: "Catch",
+							MarkdownDescription: "Specifies how to handle a specific error when it occurs during the assembly execution.",
 							NestedObject:        models.DmAssemblyCatchDataSourceSchema,
 							Computed:            true,
 						},
 						"default_catch": schema.StringAttribute{
-							MarkdownDescription: "Default catch",
+							MarkdownDescription: "Specifies how to handle errors that are not caught by the catch setting during the assembly execution.",
 							Computed:            true,
 						},
 						"finally": schema.StringAttribute{
-							MarkdownDescription: "Finally",
+							MarkdownDescription: "Specifies the final API rule to apply to the API call after the main rule, catch rule, or both have finished executing. The final API rule comprises only assembly actions.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

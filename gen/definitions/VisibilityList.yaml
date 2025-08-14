@@ -1,41 +1,44 @@
 name: VisibilityList
-description: 'Visibility list'
-cli_alias: 'visibility-list'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/VisibilityList'
+description: A visibility list specifies elements in a GraphQL schema to remove from
+  introspection and validation.
+cli_alias: visibility-list
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/VisibilityList
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestVisibilityList"'
-    test_expect_ds: '"AccTest_VisibilityList"'
-    example: 'VisibilityListName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Type
-    type: String
-    enum:
-      - 'remove'
-    default: 'remove'
-    description: 'Type'
-    cli_alias: type
-  - name: Value
-    type: List
-    element_type: String
-    description: 'Value'
-    cli_alias: value
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestVisibilityList"'
+  test_expect_ds: '"AccTest_VisibilityList"'
+  example: VisibilityListName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Type
+  type: String
+  enum:
+  - remove
+  default: remove
+  description: Type
+  cli_alias: type
+- name: Value
+  type: List
+  element_type: String
+  description: Specify the path to a GraphQL schema element. For example, <tt>Account.number</tt>
+    uniquely identifies the <tt>number</tt> field of the <tt>Account</tt> type.
+  cli_alias: value

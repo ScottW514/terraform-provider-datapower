@@ -3,13 +3,13 @@
 page_title: "datapower_b2bgateway Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  B2B gateway
+  A B2B gateway can handle B2B messages transmitted over a variety of AS and non-AS protocols for inbound and outbound flows, as well as MDN messages.
   CLI Alias: b2bgwAccepted Dependency Actions: quiesce
 ---
 
 # datapower_b2bgateway (Resource)
 
-B2B gateway
+A B2B gateway can handle B2B messages transmitted over a variety of AS and non-AS protocols for inbound and outbound flows, as well as MDN messages.
   - CLI Alias: `b2bgw`
   - Accepted Dependency Actions: `quiesce`
 
@@ -35,38 +35,38 @@ resource "datapower_b2bgateway" "test" {
 
 ### Optional
 
-- `archive_backup_documents` (Attributes) Document types to archive
+- `archive_backup_documents` (Attributes) Specify the types of documents to archive. This property does not indicate the inbound or outbound transaction to archive.
   - CLI Alias: `arch-backup-documents` (see [below for nested schema](#nestedatt--archive_backup_documents))
-- `archive_document_age` (Number) Document age
+- `archive_document_age` (Number) Specify the maximum duration in days to retain processed documents. Enter a value in the range 1 - 3650. The default value is 90.
   - CLI Alias: `arch-document-age`
   - Range: `1`-`3650`
   - Default value: `90`
-- `archive_file_name` (String) Archive file base name
+- `archive_file_name` (String) Specify the base file name for archive file. When archiving, the operation appends the current timestamp.
   - CLI Alias: `arch-file`
-- `archive_location` (String) Archive location
+- `archive_location` (String) Specify the location for archive file. Enter the fully qualified name of the directory. To copy the archive file to an FTP server, ensure that the FTP policies in the XML manager enable image (binary) data transfer.
   - CLI Alias: `arch-dir`
-- `archive_minimum_documents` (Number) Min documents
+- `archive_minimum_documents` (Number) Specify the minimum number of documents to retain in document storage after archival. The minimum value is 1. The default value is 100.
   - CLI Alias: `arch-minimum-documents`
   - Range: `1`-`65535`
   - Default value: `100`
-- `archive_minimum_size` (Number) Min size
+- `archive_minimum_size` (Number) Specify the minimum remaining size in KB of document storage that triggers archival. The default value is 1024.
   - CLI Alias: `arch-minimum-size`
   - Default value: `1024`
 - `archive_mode` (String) Purge mode
   - CLI Alias: `arch-mode`
   - Choices: `archpurge`, `purgeonly`
   - Default value: `archpurge`
-- `archive_monitor` (Boolean) Monitor during archival
+- `archive_monitor` (Boolean) Specify whether to use a monitor during archival. The monitor limits the message injection rate to prevent problems in a critical situation like performance testing or on a heavily loaded system.
   - CLI Alias: `arch-monitor`
   - Default value: `true`
-- `as1mdn_email` (String) Default AS1 MDN return email
+- `as1mdn_email` (String) For AS1 asynchronous MDN scenarios, specify the default email address for the AS1 asynchronous MDN. When sending outbound AS1 email messages that request an MDN, this email address can be the default email address for the response MDN. An email address in the destination overrides this value.
   - CLI Alias: `as1-mdn-email`
-- `as1mdnsmtp_server_connection` (String) AS1 MDN SMTP server connection
+- `as1mdnsmtp_server_connection` (String) When an incoming AS1 message requests an MDN as an email request, specify the SMTP server connection for asynchronous MDN responses.
   - CLI Alias: `as1-mdn-smtp-server-connection`
   - Reference to: `datapower_smtpserverconnection:id`
-- `as2mdnurl` (String) Default AS2 MDN Return URL
+- `as2mdnurl` (String) For AS2 asynchronous MDN scenarios, specify the default URL for the AS2 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
   - CLI Alias: `as2-mdn-url`
-- `as3mdnurl` (String) Default AS3 MDN return URL
+- `as3mdnurl` (String) For AS3 asynchronous MDN scenarios, specify the default URL for the AS3 asynchronous MDN. This URL can point to that gateway itself or a firewall or proxy that routes the message to the gateway. A URL in the destination overrides this value.
   - CLI Alias: `as3-mdn-url`
 - `as_front_protocol` (Attributes List) Protocol handlers
   - CLI Alias: `as-fsph` (see [below for nested schema](#nestedatt--as_front_protocol))
@@ -74,47 +74,47 @@ resource "datapower_b2bgateway" "test" {
   - CLI Alias: `b2b-group` (see [below for nested schema](#nestedatt--b2b_groups))
 - `b2b_profiles` (Attributes List) Active partner profiles
   - CLI Alias: `b2b-profile` (see [below for nested schema](#nestedatt--b2b_profiles))
-- `cpa_entries` (Attributes List) CPA
+- `cpa_entries` (Attributes List) Specify CPA entries. Each CPA entry binds an ebXML messaging service (ebMS) to provide partnership interactions between the internal and partner.
   - CLI Alias: `cpa-entry` (see [below for nested schema](#nestedatt--cpa_entries))
-- `debug_history` (Number) Transaction history
+- `debug_history` (Number) Specify the number of transactions to capture for diagnostics. Enter a value in the range 10 - 250. The default value is 25.
   - CLI Alias: `debug-history`
   - Range: `10`-`250`
   - Default value: `25`
-- `debug_mode` (String) Probe setting
+- `debug_mode` (String) Specify whether to enable diagnostics. Diagnostics are not intended for use in production environments. Diagnostics consume significant resources that can slow down processing.
   - CLI Alias: `debug-mode`
   - Choices: `on`, `off`, `unbounded`
   - Default value: `off`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `disk_use_check_interval` (Number) Check interval
+- `disk_use_check_interval` (Number) Specify the interval in minutes between checks for documents that exceed the maximum age. During the check, documents that exceed the maximum age are purged. Enter a value in the range 1 - 1440. The default value is 60.
   - CLI Alias: `diskuse-check-interval`
   - Range: `1`-`1440`
   - Default value: `60`
-- `doc_store_location` (String) Document storage location
+- `doc_store_location` (String) Specify the location for document storage, which saves copies of inbound, outbound, and intermediate documents that might be needed for a retransmit operation. If unspecified, documents are stored in the encrypted area on the RAID volume. For storage on the RAID volume, set the maximum disk usage to 30 GB.
   - CLI Alias: `doc-location`
   - Default value: `(default)`
-- `document_routing_preprocessor` (String) File location
+- `document_routing_preprocessor` (String) Specify the location of the document-routing preprocessor file, which is a stylesheet or a GatewayScript file to run against transactions that cannot be handled by B2B-specific handlers. <ul><li>A stylesheet examines information from transport headers and other non-content sources to select relevant trading partners. The default stylesheet is <tt>store:///b2b-routing.xsl</tt> .</li><li>A GatewayScript examines information from transport headers and payloads to select relevant trading partners. A GatewayScript can parse messages of different data types, such as JSON, XML, and non-XML. A sample GatewayScript file is <tt>store:///gateayscript/example-b2b-routing.js</tt> .</li></ul>
   - CLI Alias: `document-routing-preprocessor`
   - Default value: `store:///b2b-routing.xsl`
-- `document_routing_preprocessor_debug` (Boolean) Enable GatewayScript debugger
+- `document_routing_preprocessor_debug` (Boolean) Specify whether to enable the GatewayScript debugger to detect and diagnose errors in the document routing preprocessor file. To debug a file, ensure that the file contains one or more <tt>debugger;</tt> statements where you want to start debugging.
   - CLI Alias: `document-routing-preprocessor-debug`
   - Default value: `false`
-- `document_routing_preprocessor_type` (String) Processor type
+- `document_routing_preprocessor_type` (String) Specify the file type of the document-routing preprocessor file to run against messages that are not received through AS or ebMS protocols. The default value is stylesheet.
   - CLI Alias: `document-routing-preprocessor-type`
   - Choices: `stylesheet`, `gatewayscript`
   - Default value: `stylesheet`
-- `front_side_timeout` (Number) Front timeout
+- `front_side_timeout` (Number) Specify the duration that a client connection can be idle before the connection is closed. For outbound transactions, this connection is between an internal application and the B2B gateway. For inbound transaction, this connection is between an external partner and a B2B gateway.
   - CLI Alias: `front-side-timeout`
   - Range: `1`-`86400`
   - Default value: `120`
-- `max_document_disk_use` (Number) Max document storage
+- `max_document_disk_use` (Number) Specify the maximum size in KB for document storage. When storage exceeds this value, documents are purged. The default value is 25165824.
   - CLI Alias: `max-diskuse`
   - Range: `1`-`4294967295`
   - Default value: `25165824`
-- `priority` (String) Service priority
+- `priority` (String) Specify the priority of service-scheduling. When system resources are in high demand, high priority services are favored over lower priority services.
   - CLI Alias: `priority`
   - Choices: `unknown`, `high-min`, `high`, `high-max`, `normal-min`, `normal`, `normal-max`, `low-min`, `low`, `low-max`
   - Default value: `normal`
-- `shaping_threshold` (Number) Monitor threshold
+- `shaping_threshold` (Number) Specify the maximum TPS to allow during archival. When the threshold is reached, the service queues transactions. When the queue is full, the service rejects transactions and generates a log message. Enter a value in the range 10 - 10000. The default value is 200.
   - CLI Alias: `arch-shaping-threshold`
   - Range: `10`-`10000`
   - Default value: `200`

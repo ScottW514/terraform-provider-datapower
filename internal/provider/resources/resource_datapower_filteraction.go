@@ -55,7 +55,7 @@ func (r *FilterActionResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *FilterActionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Message Filter Action", "monitor-action", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A message filter action defines the administrative action to take. Filters can be cautionary or stringent.", "monitor-action", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *FilterActionResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Type", "type", "").AddStringEnum("notify", "reject", "shape").AddDefaultValue("notify").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the action to take The default is notify.", "type", "").AddStringEnum("notify", "reject", "shape").AddDefaultValue("notify").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -93,7 +93,7 @@ func (r *FilterActionResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("notify"),
 			},
 			"log_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Log priority", "log-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("debug").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority of the log message that is generated when a monitored message type exceeds a threshold value.", "log-priority", "").AddStringEnum("emerg", "alert", "critic", "error", "warn", "notice", "info", "debug").AddDefaultValue("debug").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -102,7 +102,7 @@ func (r *FilterActionResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("debug"),
 			},
 			"block_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Block interval", "block-interval", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify an optional interval during which an over-threshold message type is denied service. Meaningful only when the message is rejected due to policy or shaping queue overflow. This value is the duration of service denial in milliseconds. The default value is 0, indicates that over-threshold messages are dropped but no service denial penalty is imposed.", "block-interval", "").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

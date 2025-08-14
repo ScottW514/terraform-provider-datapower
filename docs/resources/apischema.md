@@ -3,13 +3,13 @@
 page_title: "datapower_apischema Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API schema
+  An API schema defines the schemas to validate JSON, XML, WSDL, or SOAP messages.
   CLI Alias: api-schema
 ---
 
 # datapower_apischema (Resource)
 
-API schema
+An API schema defines the schemas to validate JSON, XML, WSDL, or SOAP messages.
   - CLI Alias: `api-schema`
 
 ## Example Usage
@@ -33,23 +33,23 @@ resource "datapower_apischema" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `graph_ql_schema` (String) GraphQL schema URL
+- `graph_ql_schema` (String) Specify the schema URL for GraphQL message validation. For example, <tt>local:///petstore-Pet.graphql</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
   - CLI Alias: `graphql-schema`
-- `json_schema` (String) JSON schema URL
+- `json_schema` (String) Specify the schema URL for JSON message validation. For example, <tt>local:///petstore.json#/definitions/Pet</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
   - CLI Alias: `json-schema`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `wsdl_attachment_part` (String) WSDL attachment part
+- `wsdl_attachment_part` (String) Specify the mime:content to validate in the format <tt>mime:content/@part</tt> . The value must be the unqualified name of the message part. The name is the same as the part attribute on the corresponding <tt>mime:content</tt> component in the WSDL file. When not specified or <tt>*</tt> , the root MIME part is validated. The root MIME part is bound to a <tt>soap:Body</tt> .
   - CLI Alias: `wsdl-attachment-part`
-- `wsdl_message_direction_or_name` (String) WSDL direction or name
+- `wsdl_message_direction_or_name` (String) Specify the <tt>wsdl:input</tt> , <tt>wsdl:output</tt> , or <tt>wsdl:fault</tt> for the traffic to validate. The value must be the name of one or more WSDL input, output, or fault components, or <tt>#input</tt> or <tt>#output</tt> for the request and response directions respectively, or <tt>*</tt> for all inputs, outputs, and faults in the WSDL file. When specified and not <tt>*</tt> , only messages that match the specified direction or name are valid. Faults are valid for the response direction.
   - CLI Alias: `wsdl-message-direction-or-name`
-- `wsdl_operation_name` (String) WSDL operation
+- `wsdl_operation_name` (String) Specify the <tt>wsdl:operation</tt> for the traffic to validate. The value should be the unqualified name of the operation or <tt>*</tt> for all operations in the WSDL file. When specified and not <tt>*</tt> , only messages for the named operation are valid.
   - CLI Alias: `wsdl-operation`
-- `wsdl_port_q_name` (String) WSDL port
+- `wsdl_port_q_name` (String) Specify the <tt>wsdl:port</tt> for the traffic to validate. The value should be a QName in the form <tt>{namespace-uri}local-part</tt> or <tt>*</tt> for all ports in the WSDL file. When specified and not <tt>*</tt> , only messages for the named port are valid.
   - CLI Alias: `wsdl-port`
-- `wsdl_schema_url` (String) WSDL schema URL
+- `wsdl_schema_url` (String) Specify the schema URL for WSDL message validation. For example, <tt>local:///petstore-Pet.wsdl</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
   - CLI Alias: `wsdl-schema-url`
-- `xml_schema_url` (String) XML schema URL
+- `xml_schema_url` (String) Specify the schema URL for XML message validation. For example, <tt>local:///petstore-Pet.xsd</tt> . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject all input, use the string <tt>reject</tt> instead of a URL.
   - CLI Alias: `xml-schema-url`
 - `xml_type` (String) XML type
   - CLI Alias: `xml-type`

@@ -1,72 +1,80 @@
 name: WebB2BViewer
-description: 'B2B viewer management service (`default` domain only)'
-cli_alias: 'b2b-viewer-mgmt'
-cmd_group: 'device-management'
-rest_endpoint: '/mgmt/config/default/WebB2BViewer/WebB2BViewer-Settings'
+description: Configure web access to the B2B transaction viewer. If you do not assign
+  a TLS profile, the service uses a profile with a self-signed certificate.
+cli_alias: b2b-viewer-mgmt
+cmd_group: device-management
+rest_endpoint: /mgmt/config/default/WebB2BViewer/WebB2BViewer-Settings
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: LocalPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 9091
-    description: 'Port Number'
-    cli_alias: port
-# DEPRECATED
-#  - name: SSLProxy
-  - name: UserAgent
-    type: String
-    reference_to: HTTPUserAgent
-    description: 'Custom user agent'
-    cli_alias: user-agent
-  - name: IdleTimeout
-    type: Int64
-    maximum: 65535
-    required: true
-    default: 600
-    description: 'Idle timeout'
-    cli_alias: idle-timeout
-  - name: ACL
-    type: String
-    reference_to: AccessControlList
-    default: 'web-b2b-viewer'
-    description: 'Access control list'
-    cli_alias: acl
-  - name: SSLServerConfigType
-    type: String
-    enum:
-      - 'server'
-      - 'sni'
-    default: 'server'
-    test_expect_ds: '"proxy"'
-    description: 'Custom TLS server type'
-    cli_alias: ssl-config-type
-  - name: SSLServer
-    type: String
-    reference_to: SSLServerProfile
-    description: 'Custom TLS server profile'
-    cli_alias: ssl-server
-  - name: SSLSNIServer
-    type: String
-    reference_to: SSLSNIServerProfile
-    description: 'Custom TLS SNI server profile'
-    cli_alias: ssl-sni-server
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local address'
-    cli_alias: ip-address
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 9091
+  description: Specify the TCP port that the B2B viewer monitors. The default value
+    is 9091.
+  cli_alias: port
+- name: UserAgent
+  type: String
+  reference_to: HTTPUserAgent
+  description: Custom user agent
+  cli_alias: user-agent
+- name: IdleTimeout
+  type: Int64
+  maximum: 65535
+  required: true
+  default: 600
+  description: Specify the time after which an idle session is invalidated, which
+    requires reauthentication. To disable the idle timer, enter 0.
+  cli_alias: idle-timeout
+- name: ACL
+  type: String
+  reference_to: AccessControlList
+  default: web-b2b-viewer
+  description: Edit the <tt>web-b2b-viewer</tt> access control list to define the
+    client IP addresses to allow or deny.
+  cli_alias: acl
+- name: SSLServerConfigType
+  type: String
+  enum:
+  - server
+  - sni
+  default: server
+  test_expect_ds: '"proxy"'
+  description: Custom TLS server type
+  cli_alias: ssl-config-type
+- name: SSLServer
+  type: String
+  reference_to: SSLServerProfile
+  description: Custom TLS server profile
+  cli_alias: ssl-server
+- name: SSLSNIServer
+  type: String
+  reference_to: SSLSNIServerProfile
+  description: Custom TLS SNI server profile
+  cli_alias: ssl-sni-server
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: '<p>Enter a host alias or the IP address that the service listens on.
+    Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0
+    indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4
+    and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the
+    value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate
+    management traffic from application data traffic.</p>'
+  cli_alias: ip-address

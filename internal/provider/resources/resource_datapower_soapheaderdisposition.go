@@ -54,7 +54,7 @@ func (r *SOAPHeaderDispositionResource) Metadata(ctx context.Context, req resour
 
 func (r *SOAPHeaderDispositionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SOAP Header Disposition Table", "soap-disposition", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The list of instructions provided by customers to control how the SOAP headers and/or children elements are handled. This object is used by store:///soap-refine.xsl transform stylesheet.", "soap-disposition", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Identifier", "id", "").String,
@@ -79,7 +79,7 @@ func (r *SOAPHeaderDispositionResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"refine": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SOAP Header Refine Instruction", "refine", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Customer specifically asks this transformation to simply remove/keep/fault a SOAP header; or indicates whether a header was processed or not by the prior action, then this action will take the default behaviors.", "refine", "").String,
 				NestedObject:        models.DmSOAPHeaderDispositionItemResourceSchema,
 				Optional:            true,
 			},

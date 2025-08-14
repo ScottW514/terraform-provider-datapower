@@ -82,7 +82,7 @@ func (d *B2BCPASenderSettingDataSource) Schema(ctx context.Context, req datasour
 						},
 						"enabled_doc_type": models.GetDmB2BEnabledDocTypeDataSourceSchema("Enabled document types", "enabled-doc-type", ""),
 						"dest_endpoint_url": schema.StringAttribute{
-							MarkdownDescription: "Destination URL",
+							MarkdownDescription: "Specify the destination URL for sending the message to the external party endpoint. For load distribution, use the name of the load-balancing group instead of the address-port pair in the URL.",
 							Computed:            true,
 						},
 						"user_name": schema.StringAttribute{
@@ -94,7 +94,7 @@ func (d *B2BCPASenderSettingDataSource) Schema(ctx context.Context, req datasour
 							Computed:            true,
 						},
 						"connection_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Connection timeout",
+							MarkdownDescription: "Specify the duration in seconds to maintain an idle connection. Enter a value in the range 3 - 7200. The default value is 300.",
 							Computed:            true,
 						},
 						"sync_reply_mode": schema.StringAttribute{
@@ -102,7 +102,7 @@ func (d *B2BCPASenderSettingDataSource) Schema(ctx context.Context, req datasour
 							Computed:            true,
 						},
 						"duplicate_elimination": schema.StringAttribute{
-							MarkdownDescription: "Duplicate elimination",
+							MarkdownDescription: "For an outbound ebMS message, specify whether the internal sending party requests the external receiving party to check duplicate elimination. The request is made by presenting the <tt>DuplicateElimination</tt> element in the <tt>MessageHeader</tt> element in the ebMS SOAP header. <p>When imported from CPA, the <tt>duplicateElimination</tt> attribute on the internal party <tt>DeliveryChannel</tt> element in the <tt>MessagingCharacteristics</tt> element.</p>",
 							Computed:            true,
 						},
 						"ack_requested": schema.StringAttribute{
@@ -118,23 +118,23 @@ func (d *B2BCPASenderSettingDataSource) Schema(ctx context.Context, req datasour
 							Computed:            true,
 						},
 						"max_retries": schema.Int64Attribute{
-							MarkdownDescription: "Retransmit attempts",
+							MarkdownDescription: "Specify the number of attempts to retransmit an unacknowledged message. Enter a value in the range 1 - 30. The default value is 3.",
 							Computed:            true,
 						},
 						"retry_interval": schema.Int64Attribute{
-							MarkdownDescription: "Retransmit interval",
+							MarkdownDescription: "Specify the interval in seconds between retransmit attempts. Enter a value in the range 1 - 86400. The default value in 1800.",
 							Computed:            true,
 						},
 						"persist_duration": schema.Int64Attribute{
-							MarkdownDescription: "Persistence duration",
+							MarkdownDescription: "Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.",
 							Computed:            true,
 						},
 						"include_time_to_live": schema.BoolAttribute{
-							MarkdownDescription: "Include TimeToLive element",
+							MarkdownDescription: "Specify whether to include the <tt>TimeToLive</tt> element in the outbound messages. This element indicates when the message expires. The receiving partner can accept the message only when it has not expired.",
 							Computed:            true,
 						},
 						"encryption_required": schema.BoolAttribute{
-							MarkdownDescription: "Require encryption",
+							MarkdownDescription: "Specify whether to encrypt outbound messages. Encryption does not apply to MSH level signals.",
 							Computed:            true,
 						},
 						"encrypt_cert": schema.StringAttribute{

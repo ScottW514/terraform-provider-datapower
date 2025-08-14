@@ -3,13 +3,13 @@
 page_title: "datapower_apicollection Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API collection
+  An API collection is a logical partition of an API gateway that packages the plans and subscribers to make APIs available to a specific group of clients. An API collection corresponds to a catalog in the API manager.
   CLI Alias: api-collectionAccepted Dependency Actions: flush_cache
 ---
 
 # datapower_apicollection (Resource)
 
-API collection
+An API collection is a logical partition of an API gateway that packages the plans and subscribers to make APIs available to a specific group of clients. An API collection corresponds to a catalog in the API manager.
   - CLI Alias: `api-collection`
   - Accepted Dependency Actions: `flush_cache`
 
@@ -41,10 +41,10 @@ resource "datapower_apicollection" "test" {
   - CLI Alias: `organization-id`
 - `org_name` (String) Organization name
   - CLI Alias: `organization-name`
-- `plan` (List of String) Plans
+- `plan` (List of String) Specify the API plans for the collection. Each plan contains a list of APIs and defines the rate limit for the API operations.
   - CLI Alias: `plan`
   - Reference to: `datapower_apiplan:id`
-- `routing_prefix` (Attributes List) Routing prefixes
+- `routing_prefix` (Attributes List) Specify the routing prefix to determine which API collection to route the request. You can use routing prefixes to organize your APIs and plans into collections and subcollections. For example, if you have a collection of APIs serving for a certain purpose, and the APIs are to be used by two segments of your organization, you might create two API collections with the organization name, purpose name, and segment name in the routing prefix. If the organization name is <tt>myorg</tt> , the APIs serve for purpose <tt>purpose1</tt> , and the two segments under the organization is <tt>section1</tt> and <tt>section2</tt> , the resulting URL routing prefixes are <tt>/myorg/purpose1/section1</tt> and <tt>/myorg/purpose1/section2</tt> . The resulting hostname routing prefixes are <tt>section1.purpose1.myorg</tt> and <tt>section2.purpose1.myorg</tt> . <p>The API gateway uses the routing prefix to form the complete URI <tt>routing_prefix/base_path/operation_path</tt> and accepts only the incoming requests with this URI. In the complete URI, <tt>base_path</tt> is the base path on which the API is served, and <tt>operation_path</tt> is the relative path to the base path where the operations are available.</p><p>The default routing prefix is slash (/) when the type is URI and blank when the type is hostname. An API collection becomes the default API collection in the API Gateway when the API collection has a default routing prefix. The API gateway routes a request to the default API collection when other API collections do not match. An API gateway can have only one default API collection. Therefore, regardless of the prefix type, only one API collection can be configured with the default routing prefix.</p>
   - CLI Alias: `routing-prefix` (see [below for nested schema](#nestedatt--routing_prefix))
 
 ### Optional
@@ -52,11 +52,11 @@ resource "datapower_apicollection" "test" {
 - `analytics_endpoint` (String) Analytic endpoint
   - CLI Alias: `analytics-endpoint`
   - Reference to: `datapower_analyticsendpoint:id`
-- `api_error_rule` (String) API error rule
+- `api_error_rule` (String) Specify the processing rule to handle errors during API processing. When your collection requires custom processing, use API Connect global policies to define the custom rules.
   - CLI Alias: `error-rule`
   - Reference to: `datapower_apirule:id`
   - Default value: `default-api-error-rule`
-- `api_processing_rule` (String) API processing rule
+- `api_processing_rule` (String) Specify the processing rule to process API requests. When your collection requires custom processing, use API Connect global policies to define the custom rules.
   - CLI Alias: `processing-rule`
   - Reference to: `datapower_apirule:id`
   - Default value: `default-api-rule`
@@ -67,15 +67,15 @@ resource "datapower_apicollection" "test" {
   - CLI Alias: `assembly-burst-limit` (see [below for nested schema](#nestedatt--assembly_burst_limit))
 - `assembly_count_limit` (Attributes List) Assembly count limit
   - CLI Alias: `assembly-count-limit` (see [below for nested schema](#nestedatt--assembly_count_limit))
-- `assembly_postflow` (String) Assembly postprocessing
+- `assembly_postflow` (String) Specify the processing rule to run after the assembly rule. When your collection requires custom processing, use API Connect global policies to configure the assembly.
   - CLI Alias: `assembly-postprocessing`
   - Reference to: `datapower_assembly:id`
-- `assembly_preflow` (String) Assembly preprocessing
+- `assembly_preflow` (String) Specify the processing rule to run before the assembly rule. When your collection requires custom processing, use API Connect global policies to configure the assembly.
   - CLI Alias: `assembly-preprocessing`
   - Reference to: `datapower_assembly:id`
 - `assembly_rate_limit` (Attributes List) Assembly rate limit
   - CLI Alias: `assembly-rate-limit` (see [below for nested schema](#nestedatt--assembly_rate_limit))
-- `cache_capacity` (Number) Subscriber cache capacity
+- `cache_capacity` (Number) Specify the maximum number of subscriber entries to cache. Enter a value in the range 8 - 51200. The default value is 128. When the limit is exceeded, the least recently used (LRU) entry is removed.
   - CLI Alias: `cache-capacity`
   - Range: `8`-`51200`
   - Default value: `128`
@@ -85,20 +85,20 @@ resource "datapower_apicollection" "test" {
 - `catalog_name` (String) Catalog name
   - CLI Alias: `catalog-name`
   - Default value: `default`
-- `default_rate_limit` (Attributes List) Default rate limit
+- `default_rate_limit` (Attributes List) Specify the default rate limit scheme for API requests without API keys for client identification. When not defined, requests without API keys are rejected.
   - CLI Alias: `default-rate-limit` (see [below for nested schema](#nestedatt--default_rate_limit))
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `dev_portal_endpoint` (String) Developer Portal endpoint
+- `dev_portal_endpoint` (String) Specify the URL of the Developer Portal endpoint. This endpoint can be used to provide security credentials for access to an API.
   - CLI Alias: `dev-portal-endpoint`
-- `enforce_pre_assembly_rate_limits` (Boolean) Enforce preassembly rate limits
+- `enforce_pre_assembly_rate_limits` (Boolean) Specify whether to enforce the API rate and burst limits from the plan. When disabled, only the limits specified in a rate limit assembly action are applied to this API.
   - CLI Alias: `enforce-pre-assembly-rate-limits`
   - Default value: `true`
-- `parse_settings_reference` (Attributes) Parse settings
+- `parse_settings_reference` (Attributes) Specify the constraints to parse documents. Precedence rules apply when the constraint for the same aspect of an input document is configured with more than one method. <ul><li>You can specify a URL reference from which to retrieve the constraints definition.</li><li>You can specify a literal configuration string in XML management interface or REST management interface format that contains the constraints definition.</li><li>You can specify a parse settings configuration object to retrieve the constraints definition.</li></ul>
   - CLI Alias: `parse-settings-reference` (see [below for nested schema](#nestedatt--parse_settings_reference))
-- `rate_limit_group` (String) Rate limit group
+- `rate_limit_group` (String) Specify the default rate limit group for API requests without API keys for client identification. When not defined, requests without API keys are rejected.
   - CLI Alias: `rate-limit-group`
   - Reference to: `datapower_ratelimitdefinitiongroup:id`
-- `sandbox` (Boolean) Sandbox
+- `sandbox` (Boolean) Specify whether the APIs in this catalog are for test purposes. By default, a catalog is not for test purposes.
   - CLI Alias: `sandbox`
   - Default value: `false`
 - `use_rate_limit_group` (Boolean) Use rate limit group

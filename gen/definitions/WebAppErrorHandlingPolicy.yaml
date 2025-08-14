@@ -1,57 +1,60 @@
 name: WebAppErrorHandlingPolicy
-description: 'Web Application Firewall Error Policy'
-cli_alias: 'webapp-error-handling'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/WebAppErrorHandlingPolicy'
+description: Define an error policy for a web application firewall. When the remote
+  web service returns an error, this policy specifies how to handle the response that
+  is sent to the client.
+cli_alias: webapp-error-handling
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/WebAppErrorHandlingPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestWebAppErrorHandlingPolicy"'
-    test_expect_ds: '"AccTest_WebAppErrorHandlingPolicy"'
-    example: 'WebAppErrorHandlingPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Type
-    type: String
-    enum:
-      - 'standard'
-      - 'redirect'
-      - 'proxy'
-      - 'error-rule'
-    default: 'standard'
-    description: 'Mode'
-    cli_alias: type
-  - name: URL
-    type: String
-    description: 'URL'
-    cli_alias: error-url
-  - name: ErrorStylePolicyRule
-    type: String
-    reference_to: StylePolicyRule
-    description: 'Error rule'
-    cli_alias: error-rule
-  - name: ErrorMonitor
-    type: String
-    reference_to: CountMonitor
-    description: 'Monitor'
-    cli_alias: error-monitor
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestWebAppErrorHandlingPolicy"'
+  test_expect_ds: '"AccTest_WebAppErrorHandlingPolicy"'
+  example: WebAppErrorHandlingPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Type
+  type: String
+  enum:
+  - standard
+  - redirect
+  - proxy
+  - error-rule
+  default: standard
+  description: Specify the mode for error handling. The default value is standard.
+  cli_alias: type
+- name: URL
+  type: String
+  description: URL
+  cli_alias: error-url
+- name: ErrorStylePolicyRule
+  type: String
+  reference_to: StylePolicyRule
+  description: Error rule
+  cli_alias: error-rule
+- name: ErrorMonitor
+  type: String
+  reference_to: CountMonitor
+  description: Monitor
+  cli_alias: error-monitor

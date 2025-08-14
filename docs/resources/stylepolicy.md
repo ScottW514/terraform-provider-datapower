@@ -3,13 +3,13 @@
 page_title: "datapower_stylepolicy Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Processing Policy
+  Create, Edit or Delete a Processing Policy. A policy consists of one or more Processing Rules. Rules execute depending upon the direction of the message and on whether or not a corresponding matching rule selects the document for processing. A service may have only one policy active at a time. Click Services in the left-hand navigation menu and then click the appropriate policy link to use the graphical interface to create and edit policies.
   CLI Alias: stylepolicy
 ---
 
 # datapower_stylepolicy (Resource)
 
-Processing Policy
+Create, Edit or Delete a Processing Policy. A policy consists of one or more Processing Rules. Rules execute depending upon the direction of the message and on whether or not a corresponding matching rule selects the document for processing. A service may have only one policy active at a time. Click Services in the left-hand navigation menu and then click the appropriate policy link to use the graphical interface to create and edit policies.
   - CLI Alias: `stylepolicy`
 
 ## Example Usage
@@ -31,19 +31,19 @@ resource "datapower_stylepolicy" "test" {
 
 ### Optional
 
-- `def_stylesheet_for_soap` (String) Default style sheet for SOAP
+- `def_stylesheet_for_soap` (String) Identify the default style sheet used for SOAP filtering. The default rejects all SOAP documents.
   - CLI Alias: `filter`
   - Default value: `store:///filter-reject-all.xsl`
-- `def_stylesheet_for_xsl` (String) Default style sheet for XSL transforms
+- `def_stylesheet_for_xsl` (String) Identify the default style sheet used for XSL transformation. The default mirrors all documents.
   - CLI Alias: `xsldefault`
   - Default value: `store:///identity.xsl`
-- `def_x_query_for_json` (String) Default XQuery style sheet for JSON
+- `def_x_query_for_json` (String) Identify the default XQuery style sheet used for JSON transformation. The default rejects all JSON documents.
   - CLI Alias: `xquerydefault`
   - Default value: `store:///reject-all-json.xq`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `policy_maps` (Attributes List) Policy Maps
+- `policy_maps` (Attributes List) A list of processing rules their corresponding matching rule that this policy will evaluate. If a match is found, the corresponding processing rule is run. The policy runs the first processing rule with a successful match. Therefore, the order of rules in this list is important.
   - CLI Alias: `match` (see [below for nested schema](#nestedatt--policy_maps))
-- `user_summary` (String) Comments
+- `user_summary` (String) Enter a comment. This appears on the Policy catalog page.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

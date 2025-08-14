@@ -3,12 +3,12 @@
 page_title: "datapower_webgui Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web management service (default domain only)
+  Modify the configuration of the web management service. If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.
 ---
 
 # datapower_webgui (Data Source)
 
-Web management service (`default` domain only)
+Modify the configuration of the web management service. <p>If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.</p>
 
 ## Example Usage
 
@@ -26,13 +26,13 @@ data "datapower_webgui" "test" {
 
 ### Read-Only
 
-- `acl` (String) Access control list
-- `enable_sts` (Boolean) Enable HTTP Strict Transport Security
-- `enabled` (Boolean) Administrative state
-- `idle_timeout` (Number) Idle timeout
-- `local_address` (String) Local address
-- `local_port` (Number) Port number
-- `save_config_overwrites` (Boolean) Save configuration overwrites
+- `acl` (String) Edit the <tt>web-mgmt</tt> access control list to define the client IP addresses to allow or deny.
+- `enable_sts` (Boolean) Specify whether to enable HTTP Strict Transport Security headers. When enabled, responses inject HTTP Strict Transport Security headers.
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `idle_timeout` (Number) Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535. The default value is 600. A value of 0 disables the timer.
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
+- `local_port` (Number) Specify the TCP port that the service monitors. The default value is 9090.
+- `save_config_overwrites` (Boolean) Specify whether saving the configuration overwrites the startup configuration. <ul><li>When enable, saving the configuration overwrites the startup configuration with the running configuration.</li><li>When not enabled, a manual step is required that prevents overwriting the manually edited startup configuration.</li></ul>
 - `ssl_server` (String) Custom TLS server profile
 - `ssl_server_config_type` (String) Custom TLS server type
 - `sslsni_server` (String) Custom TLS SNI server profile

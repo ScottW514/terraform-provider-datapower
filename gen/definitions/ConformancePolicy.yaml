@@ -1,118 +1,145 @@
 name: ConformancePolicy
-description: 'Conformance Policy'
-cli_alias: 'conformancepolicy'
-cmd_group: 'logging'
-rest_endpoint: '/mgmt/config/{domain}/ConformancePolicy'
+description: Conformance Policy
+cli_alias: conformancepolicy
+cmd_group: logging
+rest_endpoint: /mgmt/config/{domain}/ConformancePolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestConformancePolicy"'
-    test_expect_ds: '"AccTest_ConformancePolicy"'
-    example: 'ConformancePolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Profiles
-    dm_type: DmConformanceProfiles
-    description: 'Profiles'
-    cli_alias: profiles
-  - name: IgnoredRequirements
-    type: List
-    element_type: String
-    description: 'Ignored Requirements'
-    cli_alias: ignored-requirements
-  - name: FixupStylesheets
-    type: List
-    element_type: String
-    description: 'Corrective Stylesheets'
-    cli_alias: fixup-stylesheets
-  - name: AssertBP10Conformance
-    type: Bool
-    default: false
-    description: 'BP1.0 Conformance Claim Assertion'
-    cli_alias: assert-bp10-conformance
-  - name: ReportLevel
-    type: String
-    enum:
-      - 'never'
-      - 'failure'
-      - 'warning'
-      - 'always'
-    default: 'never'
-    description: 'Record Report'
-    cli_alias: report-level
-  - name: LogTarget
-    type: String
-    description: 'Destination'
-    cli_alias: report-target
-  - name: RejectLevel
-    type: String
-    enum:
-      - 'never'
-      - 'failure'
-      - 'warning'
-    default: 'never'
-    description: 'Reject non-conforming messages'
-    cli_alias: reject-level
-  - name: RejectIncludeSummary
-    type: Bool
-    default: false
-    description: 'Include error summary'
-    cli_alias: reject-include-summary
-  - name: ResultIsConformanceReport
-    type: Bool
-    default: false
-    description: 'Use analysis as result'
-    cli_alias: result-is-conformance-report
-  - name: ResponsePropertiesEnabled
-    type: Bool
-    default: false
-    description: 'Distinct response behavior'
-    cli_alias: response-properties-enabled
-  - name: ResponseReportLevel
-    type: String
-    enum:
-      - 'never'
-      - 'failure'
-      - 'warning'
-      - 'always'
-    default: 'never'
-    description: 'Record Report (response direction)'
-    cli_alias: response-report-level
-  - name: ResponseLogTarget
-    type: String
-    description: 'Destination'
-    cli_alias: response-report-target
-  - name: ResponseRejectLevel
-    type: String
-    enum:
-      - 'never'
-      - 'failure'
-      - 'warning'
-    default: 'never'
-    description: 'Reject non-conforming response messages'
-    cli_alias: response-reject-level
-  - name: ResponseRejectIncludeSummary
-    type: Bool
-    default: false
-    description: 'Include response error summary'
-    cli_alias: response-reject-include-summary
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestConformancePolicy"'
+  test_expect_ds: '"AccTest_ConformancePolicy"'
+  example: ConformancePolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Profiles
+  dm_type: DmConformanceProfiles
+  description: Profiles against which to check conformance
+  cli_alias: profiles
+- name: IgnoredRequirements
+  type: List
+  element_type: String
+  description: Requirements that should not be validated. A requirement is specified
+    by a string of the form "&lt;profile>:&lt;reqid>", where &lt;profile> names the
+    profile and is one of BP1.0, BP1.1, BSP1.0 or AP1.0, and &lt;reqid> names the
+    requirement within that profile, and follows the naming convention used by the
+    profile itself. For example, requirement R4221 in the Basic Security Profile 1.0
+    would be named as "BSP1.0:R4221".
+  cli_alias: ignored-requirements
+- name: FixupStylesheets
+  type: List
+  element_type: String
+  description: Stylesheets to invoke after conformance analysis. These stylesheets
+    can manipulate the analysis results or repair instances of nonconformance.
+  cli_alias: fixup-stylesheets
+- name: AssertBP10Conformance
+  type: Bool
+  default: false
+  description: Attach a Basic Profile 1.0 conformance assertion to messages that conform
+    to BP 1.0, or remove a Basic Profile 1.0 conformance assertion to the messages
+    that don't conform to BP 1.0.
+  cli_alias: assert-bp10-conformance
+- name: ReportLevel
+  type: String
+  enum:
+  - never
+  - failure
+  - warning
+  - always
+  default: never
+  description: Select the degree of nonconformance to cause a conformance report to
+    be recorded.
+  cli_alias: report-level
+- name: LogTarget
+  type: String
+  description: Target URL to which conformance reports will be sent
+  cli_alias: report-target
+- name: RejectLevel
+  type: String
+  enum:
+  - never
+  - failure
+  - warning
+  default: never
+  description: Select the degree of nonconformance to cause the message to be rejected.
+  cli_alias: reject-level
+- name: RejectIncludeSummary
+  type: Bool
+  default: false
+  description: Usually, a rejection response contains little information about the
+    reason that the message was rejected. Setting this property causes the conformance
+    action to include summary information about the conformance errors found.
+  cli_alias: reject-include-summary
+- name: ResultIsConformanceReport
+  type: Bool
+  default: false
+  description: The normal behavior of the conformance action is to deliver the original
+    message, possibly modified by one or more stylesheets, to the next multistep stage.
+    Setting this property will instead cause the analysis result to be used as the
+    output. This is primarily intended for use within a loopback firewall, which will
+    return the analysis results to the client.
+  cli_alias: result-is-conformance-report
+- name: ResponsePropertiesEnabled
+  type: Bool
+  default: false
+  description: When placed inside a single conformance check action (as is typical
+    in an XML gateway), a single set of logging and behavior parameters is sufficent.
+    However, sometimes (as in the case of auto-generated WS-Proxy conformance checking),
+    the same policy is used in checks in both the request and response directions.
+    In this case, the conformance reports should likely be sent to different targets.
+    This toggle allows for an alternate set of logging and rejection parameters to
+    be specified for messages in the response direction.
+  cli_alias: response-properties-enabled
+- name: ResponseReportLevel
+  type: String
+  enum:
+  - never
+  - failure
+  - warning
+  - always
+  default: never
+  description: Select the degree of nonconformance in a response message to cause
+    a conformance report to be recorded.
+  cli_alias: response-report-level
+- name: ResponseLogTarget
+  type: String
+  description: Target URL to which response conformance reports will be sent
+  cli_alias: response-report-target
+- name: ResponseRejectLevel
+  type: String
+  enum:
+  - never
+  - failure
+  - warning
+  default: never
+  description: Select the degree of nonconformance to cause a response message to
+    be rejected.
+  cli_alias: response-reject-level
+- name: ResponseRejectIncludeSummary
+  type: Bool
+  default: false
+  description: Usually, a rejection response contains little information about the
+    reason that the message was rejected. Setting this property causes the conformance
+    action to include summary information about the conformance errors found in response
+    messages.
+  cli_alias: response-reject-include-summary

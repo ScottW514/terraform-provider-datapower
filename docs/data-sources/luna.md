@@ -3,12 +3,12 @@
 page_title: "datapower_luna Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SafeNet Luna HSM (default domain only)
+  You can use a network-attached SafeNet Luna Network HSM appliance as the HSM to provide secure storage for RSA keys and accelerate RSA operations remotely. The configuration of the Luna HSM sets up the connection with the Luna HSM.
 ---
 
 # datapower_luna (Data Source)
 
-SafeNet Luna HSM (`default` domain only)
+You can use a network-attached SafeNet Luna Network HSM appliance as the HSM to provide secure storage for RSA keys and accelerate RSA operations remotely. The configuration of the Luna HSM sets up the connection with the Luna HSM.
 
 ## Example Usage
 
@@ -35,7 +35,7 @@ Read-Only:
 
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `remote_address` (String) Host
-- `security_option` (String) Security option
+- `security_option` (String) Specify the security option for connection.
 - `server_cert` (String) Encryption certificate
 - `user_summary` (String) Comments
 

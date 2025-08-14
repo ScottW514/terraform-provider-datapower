@@ -3,12 +3,12 @@
 page_title: "datapower_samlattributes Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SAML Attributes
+  Define a list of SAML attributes for the SAML Assertion generator.
 ---
 
 # datapower_samlattributes (Data Source)
 
-SAML Attributes
+Define a list of SAML attributes for the SAML Assertion generator.
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `saml_attribute` (Attributes List) SAML Attribute Definition (see [below for nested schema](#nestedatt--result--saml_attribute))
+- `saml_attribute` (Attributes List) Define an attribute by selecting the source type and specifying the data source and SAML attribute name. (see [below for nested schema](#nestedatt--result--saml_attribute))
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

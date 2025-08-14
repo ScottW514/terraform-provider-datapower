@@ -57,7 +57,7 @@ func (d *MQManagerGroupDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *MQManagerGroupDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "IBM MQ v9+ queue manager group",
+		MarkdownDescription: "<p>An IBM MQ queue manager group enables automatic failover between queue managers when a queue manager becomes unavailable. When you define multiple backup queue managers, the first active queue manager in the group replaces the primary queue manager.</p><p>You can configure the queue manager to work with the multi-instance feature in the IBM MQ server. Connect the primary queue manager to one of the instances of a queue manager in the IBM MQ server, and the backup queue manager to the other instance. All connections for the queue manager group go to the queue manager connected to the active instance. If the active instance in the IBM MQ server fails, the queue manager connected to the standby instance automatically takes over all the data and logs from the queue manager connected to the original active instance.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,11 +81,11 @@ func (d *MQManagerGroupDataSource) Schema(ctx context.Context, req datasource.Sc
 							Computed:            true,
 						},
 						"primary_queue_manager": schema.StringAttribute{
-							MarkdownDescription: "Primary queue manager",
+							MarkdownDescription: "Specify the queue manager to be the primary queue manager for the group. All connections for the group go to this queue manager. If the primary queue manager becomes unreachable, a backup queue manager is selected.",
 							Computed:            true,
 						},
 						"backup_queue_managers": schema.ListAttribute{
-							MarkdownDescription: "Backup queue managers",
+							MarkdownDescription: "Specify one or more queue managers to be backup queue managers for redundancy if the primary queue manager becomes unreachable.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

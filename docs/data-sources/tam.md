@@ -3,12 +3,12 @@
 page_title: "datapower_tam Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Access Manager Client
+  
 ---
 
 # datapower_tam (Data Source)
 
-Access Manager Client
+<p>A DataPower Gateway can support multiple IBM Security Access Manager registry types: LDAP or Microsoft Active Directory. Support for the registry type is established for each Access Manager client that starts according to its configuration.</p>
 
 ## Example Usage
 
@@ -38,40 +38,40 @@ Optional:
 
 Read-Only:
 
-- `ad_configuration_file` (String) Configuration File for Directories
-- `ad_use_ad` (Boolean) Use Active Directory
+- `ad_configuration_file` (String) Select the location of the configuration file for user directories. To be available for selection, files must have .conf or .cfg as their file extension.
+- `ad_use_ad` (Boolean) <p>Select whether the Access Manager client uses Microsoft Active Directory instead of LDAP as the registry. The default registry for an Access Manager deployment is LDAP. This selection will cause this client to use Microsoft Active Directory. Active Directory type is not supported after ISAM 7.0 .</p><p><b>Note:</b> The type of registry that an Access Manager deployment supports is determined by the configuration of the Access Manager server. The registry that you define in this configuration is for a client and must match the registry of the server.</p>
 - `app_domain` (String) The name of the application domain the object belongs to
-- `auto_retry` (Boolean) Enable Automatic Restart Attempts
-- `configuration_file` (String) Configuration File for Access Manager
+- `auto_retry` (Boolean) <p>Select whether to attempt starting the Access Manager client after an initial failure. The DataPower Gateway automatically attempts to start the client after a critical error. This property controls the behavior after the initial attempt to restart.</p><ul><li>When enabled, the DataPower Gateway attempts to start the client with the defined configuration.</li><li>When disabled, the client is marked as <tt>down</tt> .</li></ul><p>The default behavior is to not attempt to start the client after an initial failure.</p>
+- `configuration_file` (String) Select the location of the configuration file for the Access Manager client. To be available for selection, files must have .conf or .cfg as their file extension.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ldap_use_ssl` (Boolean) Use TLS with Registry Server
-- `ldapssl_key_file` (String) Registry Server TLS Key File
-- `ldapssl_key_file_label` (String) Registry Server TLS Key File Label
-- `ldapssl_key_file_password_alias` (String) Registry Server TLS Key File Password Alias
-- `ldapssl_port` (Number) LDAP TLS Port
-- `listen_mode` (Boolean) Accept Update Notifications
-- `listen_port` (Number) Update Notification Port
-- `long_retry_interval` (Number) Long Attempt Interval
-- `poll_interval` (String) Local Database Refresh Interval
-- `retry_attempts` (Number) Number of Attempts
-- `retry_interval` (Number) Attempt Interval
-- `returning_user_attributes` (Boolean) Return User Attributes
-- `ssl_key_file` (String) TLS Key File
-- `ssl_key_stash_file` (String) TLS Key Stash File
-- `tam_choose_nist` (String) Select a NIST Compliance Mode
-- `tam_fed_dirs` (Attributes List) Federated directories (see [below for nested schema](#nestedatt--result--tam_fed_dirs))
-- `tam_use_basic_user` (Boolean) Enable basic user mode
-- `tam_use_fips` (Boolean) Run in FIPS Mode
-- `tam_version` (String) Access Manager Client Version
-- `tamaz_replicas` (Attributes List) Authorization Server Replicas (see [below for nested schema](#nestedatt--result--tamaz_replicas))
-- `tamras_trace` (Attributes) Trace Logging
+- `ldap_use_ssl` (Boolean) Select whether to use TLS communication between the Access Manager client and the LDAP or Active Directory server.
+- `ldapssl_key_file` (String) <p>Select the location of the key file that contains the certificates for TLS communication with the registry server.</p><ul><li>For server-only authentication, the key file must contain the signer certificate for the registry server.</li><li>For mutual authentication, the key file must also contain a personal certificate that the registry server can validate. If the personal certificate is not the default personal certificate in the key file, you must enter the label of the personal certificate.</li></ul><p>This file must be in the cert: or the sharedcert: directory.</p>
+- `ldapssl_key_file_label` (String) <p>Enter the label of the personal certificate in the key file for client authentication.</p><ul><li>When using mutual authentication with the registry server and the personal certificate is not the default personal certificate in the key file, enter the label of the personal certificate. The personal certificate allows client authentication.</li><li>For server-only authentication, do not enter a value.</li></ul>
+- `ldapssl_key_file_password_alias` (String) Enter the password alias of the password for the key file that contains the certificates for TLS communication with the registry server.
+- `ldapssl_port` (Number) Enter the listening port that the LDAP server uses for TLS communication. This property does not apply for TLS communication with an Active Directory server.
+- `listen_mode` (Boolean) Select whether to accept notifications to update the local policy database from the policy server. When you set this property, it overrides the behavior defined in configuration files for the Access Manager client.
+- `listen_port` (Number) Enter the listening port on the DataPower Gateway to receive update notifications from the remote policy server.
+- `long_retry_interval` (Number) Specifies the number of seconds to wait after reaching the number of retry attempts. Enter a value in the range 1 - 65535. The default value is 900.
+- `poll_interval` (String) Enter the interval between requests to update the local policy database from the remote policy server. <ul><li><b>default</b> - Uses the default value, which is 600 seconds.</li><li><b>disable</b> - Disables requests to the policy database for requests.</li><li><i>seconds</i> - Specifies the time interval in seconds.</li></ul>
+- `retry_attempts` (Number) Enter the number of attempts to perform for the Access Manager client. After performing these attempts and the client did not start, each additional attempt waits the number of seconds defined by the long interval. Enter a value in the range 0 - 65535. A value of 0 disables the long interval. The default value is 3.
+- `retry_interval` (Number) <p>Enter the number of seconds to wait between attempts to start the Access Manager client. Enter a value in the range 1 - 65535. The default value is 180.</p>
+- `returning_user_attributes` (Boolean) Select whether the registry returns users attributes for successful authorization requests. When set, the registry returns user attributes.
+- `ssl_key_file` (String) Select the location of the key file for TLS communication. To be available for selection, files must have .kdb as their file extension. Generally, these files are in the cert: directory or the sharedcert: directory.
+- `ssl_key_stash_file` (String) Select the location of the key stash file for TLS communication. To be available for selection, files must have .sth as their file extension. Generally, these files are in the cert: directory or the sharedcert: directory.
+- `tam_choose_nist` (String) In FIPS mode, there is a mandatory NIST compliance level to select. Select a level that is compatible with the corresponding Access Manager servers and registry servers. Note that the NIST and NSA options are available only in Access Manager versions 7.0 and later.
+- `tam_fed_dirs` (Attributes List) Specify a list of federated directories. Each entry describes a unique set of LDAP suffixes and LDAP server. Federated directories define all the suffixes that can be searched for user identities. (see [below for nested schema](#nestedatt--result--tam_fed_dirs))
+- `tam_use_basic_user` (Boolean) Control whether to support basic users in the client. When enabled, you can use LDAP user entries for authentication or authorization without importing them into the ISAM domain.
+- `tam_use_fips` (Boolean) Select whether the secure communication between the Access Manager client and the authorization server runs in FIPS mode.
+- `tam_version` (String) <p>Select the Access Manager client version to use. The default value is Default.</p>
+- `tamaz_replicas` (Attributes List) <p>Replicas indicate the network location of remote authorization servers. You must configure at least one replica. You can configure additional replicas for failover purposes.</p><p><b>Note:</b> If you uploaded a file that was created previously, it must define at least one replica.</p> (see [below for nested schema](#nestedatt--result--tamaz_replicas))
+- `tamras_trace` (Attributes) <p>Trace logging is a useful debugging tool. By default, trace logging is not enabled. Trace logging collects large amounts of data in a short amount of time and might result in a significant performance degradation. Enable trace logging only at the direction of IBM Support.</p><p>When enabled, the DataPower Gateway creates two trace files for each library. The DataPower Gateway writes the files cyclically. Double the size of the files to obtain the total allowable file size.</p>
   - CLI Alias: `tam-ras-trace` (see [below for nested schema](#nestedatt--result--tamras_trace))
-- `use_local_mode` (Boolean) Use Local Policy Database
-- `user_no_duplicates` (Boolean) Disallow duplicate principals
-- `user_principal_attribute` (String) User principal attribute
-- `user_search_suffixes` (List of String) Principal search suffixes
-- `user_suffix_optimiser` (Boolean) Enable suffix optimization
-- `user_summary` (String) Comments
+- `use_local_mode` (Boolean) Select whether to create a local copy of the policy database. Set this property to cache the policy database locally instead of accessing the remote policy server. This property must match the behavior defined in the configuration files for the Access Manager client.
+- `user_no_duplicates` (Boolean) <p>Control whether to allow duplicate principals.</p><ul><li>When enabled, the search for basic users covers all suffixes to ensure that no users with the same name are found. If duplicate principals are found in this client, the system returns an error.</li><li>When disabled, the search for basic users ignores possible duplicates. By default, duplicate principals are not allowed.</li></ul>
+- `user_principal_attribute` (String) Specify the attribute that identifies the basic user in the LDAP user entry. The default value is uid.
+- `user_search_suffixes` (List of String) <p>Specify the ordered list of LDAP suffixes to be searched for principals. When specified and suffix optimization is disabled, the suffixes are searched in entry order. If suffix optimization is enabled, this order is overridden by the suffix optimization order.</p><p>If you do not specify any suffixes, the system searches all available suffixes.</p>
+- `user_suffix_optimiser` (Boolean) <p>Control whether to search the suffixes in an optimized order.</p><ul><li>When enabled and uplicate principals are allowed, the suffixes are searched in an optimized order based on hit count, with the most hit of the suffix at the head of the search suffix list. This can help reduce the number of suffixes searched. If duplicate principals are not allowed, the suffix optimization setting is disregarded and all suffixes are searched to check for duplicates.</li><li>When disabled, the search order is provided by the order that is defined by the search suffixes property.</li></ul>
+- `user_summary` (String) Enter the descriptive summary for the configuration.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

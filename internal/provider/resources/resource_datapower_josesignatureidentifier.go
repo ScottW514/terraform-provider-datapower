@@ -56,7 +56,7 @@ func (r *JOSESignatureIdentifierResource) Metadata(ctx context.Context, req reso
 
 func (r *JOSESignatureIdentifierResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Signature Identifier", "jose-signature-identifier", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("JOSE Signature Identifier object for the JSON Web Verify.", "jose-signature-identifier", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -81,26 +81,26 @@ func (r *JOSESignatureIdentifierResource) Schema(ctx context.Context, req resour
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key Material Type", "type", "").AddStringEnum("certificate", "sskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Key material type used to verify the signature.", "type", "").AddStringEnum("certificate", "sskey").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("certificate", "sskey"),
 				},
 			},
 			"ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key Material", "sskey", "cryptosskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the shared secret key to verify the signature.", "sskey", "cryptosskey").String,
 				Optional:            true,
 			},
 			"certificate": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key Material", "cert", "cryptocertificate").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Use the certificate to verify the signature.", "cert", "cryptocertificate").String,
 				Optional:            true,
 			},
 			"valid_algorithms": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Valid algorithms", "alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies an array of algorithm values that are valid for signature verification. When specified, the JWS <tt>alg</tt> header parameter value must match a value in this set. By default, all allowed JWS <tt>alg</tt> header parameters values are valid.", "alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{
@@ -108,7 +108,7 @@ func (r *JOSESignatureIdentifierResource) Schema(ctx context.Context, req resour
 				},
 			},
 			"header_param": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Header Parameters", "header-param", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The JOSE header parameters used to identify the signature.", "header-param", "").String,
 				NestedObject:        models.DmJOSEHeaderResourceSchema,
 				Required:            true,
 			},

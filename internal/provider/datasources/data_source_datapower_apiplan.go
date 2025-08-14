@@ -57,7 +57,7 @@ func (d *APIPlanDataSource) Metadata(_ context.Context, req datasource.MetadataR
 
 func (d *APIPlanDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API plan",
+		MarkdownDescription: "An API plan packages a list of APIs to expose. An API is not exposed unless you add the API to a plan. When you configure an API plan, define the rate limit schemes to enforce against APIs. By default, the rate limit scheme in the plan applies to all operations. You can override plan-level rate limit schemes with operation-specific rate limit schemes.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -85,7 +85,7 @@ func (d *APIPlanDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 							Computed:            true,
 						},
 						"product_id": schema.StringAttribute{
-							MarkdownDescription: "Product ID",
+							MarkdownDescription: "Specify the product ID for the plan. A product makes a set of APIs and plans into one offering to make available to API developers.",
 							Computed:            true,
 						},
 						"product_name": schema.StringAttribute{
@@ -105,12 +105,12 @@ func (d *APIPlanDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 							Computed:            true,
 						},
 						"rate_limit": schema.ListNestedAttribute{
-							MarkdownDescription: "Rate limit",
+							MarkdownDescription: "Specify the rate limit scheme to enforce. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.",
 							NestedObject:        models.DmAPIRateLimitDataSourceSchema,
 							Computed:            true,
 						},
 						"burst_limit": schema.ListNestedAttribute{
-							MarkdownDescription: "Burst limit",
+							MarkdownDescription: "Specify the burst limit scheme to enforce. This scheme defines the maximum burst rate to allow during a specified interval. The burst limit helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme.",
 							NestedObject:        models.DmAPIBurstLimitDataSourceSchema,
 							Computed:            true,
 						},
@@ -123,45 +123,45 @@ func (d *APIPlanDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 							Computed:            true,
 						},
 						"assembly_burst_limit": schema.ListNestedAttribute{
-							MarkdownDescription: "Assembly burst limit",
+							MarkdownDescription: "Specify the burst limit scheme that the rate limit assembly action enforces. This scheme defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme.",
 							NestedObject:        models.DmAPIBurstLimitDataSourceSchema,
 							Computed:            true,
 						},
 						"assembly_burst_limit_definition": schema.ListNestedAttribute{
-							MarkdownDescription: "Assembly burst limit definition",
+							MarkdownDescription: "Specify a burst limit definition that the rate limit assembly action enforces. A burst limit definition defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. A message is first checked against the burst limit scheme and then against the rate limit scheme.",
 							NestedObject:        models.DmDefinitionLinkDataSourceSchema,
 							Computed:            true,
 						},
 						"assembly_rate_limit": schema.ListNestedAttribute{
-							MarkdownDescription: "Assembly rate limit",
+							MarkdownDescription: "Specify the rate limit scheme that the rate limit assembly action enforces. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.",
 							NestedObject:        models.DmAPIRateLimitDataSourceSchema,
 							Computed:            true,
 						},
 						"assembly_rate_limit_definition": schema.ListNestedAttribute{
-							MarkdownDescription: "Assembly rate limit definition",
+							MarkdownDescription: "Specify a rate limit definition that the rate limit assembly action enforces. A rate limit definition defines the maximum rate that is allowed in a specified interval and the actions to take when the limit is exceeded.",
 							NestedObject:        models.DmDefinitionLinkDataSourceSchema,
 							Computed:            true,
 						},
 						"assembly_count_limit": schema.ListNestedAttribute{
-							MarkdownDescription: "Assembly count limit",
+							MarkdownDescription: "Specify the count limit scheme that the rate limit assembly action enforces. This scheme defines the maximum count to allow and the actions to take when the limit is exceeded.",
 							NestedObject:        models.DmAPICountLimitDataSourceSchema,
 							Computed:            true,
 						},
 						"assembly_count_limit_definition": schema.ListNestedAttribute{
-							MarkdownDescription: "Assembly count limit definition",
+							MarkdownDescription: "Specify a count limit definition that the rate limit assembly action enforces. A count limit definition defines the maximum count that is allowed and the actions to take when the limit is exceeded.",
 							NestedObject:        models.DmDefinitionLinkDataSourceSchema,
 							Computed:            true,
 						},
 						"space_id": schema.StringAttribute{
-							MarkdownDescription: "Space ID",
+							MarkdownDescription: "Specify the space ID for the product in the catalog. When space is enabled for a catalog, the catalog can be partitioned to spaces. Spaces enable each team to manage their APIs independently.",
 							Computed:            true,
 						},
 						"space_name": schema.StringAttribute{
-							MarkdownDescription: "Space name",
+							MarkdownDescription: "Specify the space name for the product in the catalog. When space is enabled for a catalog, the catalog can be partitioned to spaces. Spaces enable each team to manage their APIs independently.",
 							Computed:            true,
 						},
 						"api": schema.ListAttribute{
-							MarkdownDescription: "API",
+							MarkdownDescription: "Specify the APIs to package for the plan. An API is exposed through a plan by associating the API to the plan.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
@@ -176,7 +176,7 @@ func (d *APIPlanDataSource) Schema(ctx context.Context, req datasource.SchemaReq
 							Computed:            true,
 						},
 						"rate_limit_scope": schema.StringAttribute{
-							MarkdownDescription: "Rate limit scope",
+							MarkdownDescription: "Specify the scope to apply the rate limit schemes to. You can apply schemes against the application or client ID. For example, <tt>application1</tt> has <tt>client1</tt> and <tt>client2</tt> , and the rate limit is 10 calls per hour. <ul><li>When against the application, <tt>application1</tt> limits 10 calls per hour from either <tt>client1</tt> or <tt>client2.</tt></li><li>When against the client ID, <tt>application1</tt> limits 10 calls per hour from each <tt>client1</tt> and <tt>client2</tt> .</li></ul>",
 							Computed:            true,
 						},
 						"graph_ql_schema_options": schema.ListAttribute{

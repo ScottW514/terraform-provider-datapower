@@ -3,12 +3,12 @@
 page_title: "datapower_graphqlschemaoptions Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  GraphQL schema options
+  GraphQL schema options define a list of schema elements to remove during validation and introspection.
 ---
 
 # datapower_graphqlschemaoptions (Data Source)
 
-GraphQL schema options
+GraphQL schema options define a list of schema elements to remove during validation and introspection.
 
 ## Example Usage
 

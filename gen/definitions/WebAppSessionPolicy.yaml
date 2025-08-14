@@ -1,57 +1,70 @@
 name: WebAppSessionPolicy
-description: 'Session Management Policy'
-cli_alias: 'webapp-session-management'
-cmd_group: 'mpgw'
-rest_endpoint: '/mgmt/config/{domain}/WebAppSessionPolicy'
+description: Session policy - specify a series of start pages that the a web application
+  firewall protected host use as initial browsing points. Accessing these pages issues
+  a signed and time limited cookie which must be presented for accessing any pages
+  not designated as a starting point.
+cli_alias: webapp-session-management
+cmd_group: mpgw
+rest_endpoint: /mgmt/config/{domain}/WebAppSessionPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestWebAppSessionPolicy"'
-    test_expect_ds: '"AccTest_WebAppSessionPolicy"'
-    example: 'WebAppSessionPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: AutoRenew
-    type: Bool
-    default: true
-    description: 'Auto Renew'
-    cli_alias: auto-renew
-  - name: Timeout
-    type: Int64
-    minimum: 1
-    maximum: 864000
-    default: 3600
-    description: 'Session Lifetime'
-    cli_alias: lifetime
-  - name: AddressAgnosticCookie
-    type: Bool
-    default: false
-    description: 'Address Independent Sessions'
-    cli_alias: allow-cookie-sharing
-  - name: StartMatches
-    type: String
-    reference_to: Matching
-    test_value: '"__default-accept-service-providers__"'
-    required: true
-    description: 'Start Pages'
-    cli_alias: matching-policy
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestWebAppSessionPolicy"'
+  test_expect_ds: '"AccTest_WebAppSessionPolicy"'
+  example: WebAppSessionPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: AutoRenew
+  type: Bool
+  default: true
+  description: If this property is enabled, the session lifetime is renewed on each
+    use of the session. Otherwise the session lifetime is the total amount of time
+    allowed before returning to the login sections.
+  cli_alias: auto-renew
+- name: Timeout
+  type: Int64
+  minimum: 1
+  maximum: 864000
+  default: 3600
+  description: The login cookie is only good for the amount of time specified by this
+    property. It may be automatically renewed during activity depending on the value
+    of the Auto Renew property.
+  cli_alias: lifetime
+- name: AddressAgnosticCookie
+  type: Bool
+  default: false
+  description: Normally the session cookie contains the client IP address and this
+    prevents them from using the session on any other host. Some proxy server environments
+    may make this undesirable. Turning this property on will make the session cookie
+    address independent.
+  cli_alias: allow-cookie-sharing
+- name: StartMatches
+  type: String
+  reference_to: Matching
+  test_value: '"__default-accept-service-providers__"'
+  required: true
+  description: Select the matching rule that is used to identify start pages. Start
+    pages are pages that can be accessed without a session cookie and if their security
+    policy passes will issue a session cookie.
+  cli_alias: matching-policy

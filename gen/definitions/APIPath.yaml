@@ -1,55 +1,70 @@
 name: APIPath
-description: 'API path'
-cli_alias: 'api-path'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/APIPath'
+description: An API Path configuration describes the operations that are available
+  on a single path.
+cli_alias: api-path
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/APIPath
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestAPIPath"'
-    test_expect_ds: '"AccTest_APIPath"'
-    example: 'APIPathName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Path
-    type: String
-    required: true
-    default: '/'
-    description: 'Path'
-    cli_alias: path
-  - name: Operation
-    type: List
-    reference_to: APIOperation
-    element_type: String
-    description: 'Operation'
-    cli_alias: operation
-  - name: RequestSchema
-    type: String
-    reference_to: APISchema
-    description: 'Request schema'
-    cli_alias: request-schema
-  - name: Parameter
-    type: List
-    element_type: DmAPIParameter
-    description: 'Parameters'
-    cli_alias: parameter
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestAPIPath"'
+  test_expect_ds: '"AccTest_APIPath"'
+  example: APIPathName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Path
+  type: String
+  required: true
+  default: /
+  description: Specify the relative path to access the REST APIs. The path is appended
+    to the base path to construct the full URI. The path must start with a / character.
+    When the path contains a parameter, ensure that you define the path parameter
+    at either or both the path and operation levels. <ul><li>A parameter at the end
+    of the path can contain a + qualifier to match one or more levels as in the following
+    example. <p><tt>/petstore/{type}/{+category}</tt></p><p>The <tt>{type}</tt> parameter
+    matches one path level. The <tt>{+category}</tt> parameter matches multiple levels.
+    The following paths match this path template.</p><ul><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li><li>A
+    parameter at the end of the path can contain a * qualifier to match zero or more
+    levels as in the following example. <p><tt>/petstore/{type}/{*category}</tt></p><p>The
+    <tt>{type}</tt> parameter matches one path level. The <tt>{*category}</tt> parameter
+    matches multiple levels. The following paths match this path template.</p><ul><li><tt>/petstore/cats/</tt></li><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li></ul>
+  cli_alias: path
+- name: Operation
+  type: List
+  reference_to: APIOperation
+  element_type: String
+  description: Specify the available operations for the path. Without a defined operation,
+    all operations are accepted.
+  cli_alias: operation
+- name: RequestSchema
+  type: String
+  reference_to: APISchema
+  description: Request schema
+  cli_alias: request-schema
+- name: Parameter
+  type: List
+  element_type: DmAPIParameter
+  description: Specify the applicable parameters for all operations. The setting can
+    be overridden for the same parameter by the setting in the API operation configuration.
+  cli_alias: parameter

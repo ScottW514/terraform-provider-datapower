@@ -83,7 +83,7 @@ func (r *B2BCPAResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"cpa_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("CPA ID", "cpa-id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the CPA ID in the ebMS message header. <ul><li>For outbound transactions, specify the CPA ID in the outbound ebMS message to the external partner.</li><li>For inbound transactions, specify the CPA ID to identify the inbound ebMS message.</li></ul>", "cpa-id", "").String,
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

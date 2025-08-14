@@ -3,13 +3,12 @@
 page_title: "datapower_smtpserverconnection Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SMTP Server Connection
-  CLI Alias: smtp-server-connection
+  
 ---
 
 # datapower_smtpserverconnection (Resource)
 
-SMTP Server Connection
+<p>The SMTP server connection defines the connection details for a Simple Mail Transport Protocol (SMTP) server. The DataPower Gateway uses the SMTP server connection for the following purposes</p><ul><li>B2B partners use this configuration to send an e-mail message to an AS1 or ESMTP destination.</li><li>B2B gateways use this configuration to request an AS1 MDN.</li></ul><p>For ease of configuration, the DataPower Gateway provides the <tt>default</tt> SMTP server connection configuration in each domain. By default, this configuration is empty and disabled.</p>
   - CLI Alias: `smtp-server-connection`
 
 ## Example Usage
@@ -30,30 +29,30 @@ resource "datapower_smtpserverconnection" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `mail_server_host` (String) Outgoing Mail Server (SMTP) Host
+- `mail_server_host` (String) The IP address or host name of the SMTP server to send outgoing e-mail messages.
   - CLI Alias: `server-host`
 
 ### Optional
 
-- `account_name` (String) Account Name
+- `account_name` (String) The account or user name of the SMTP client to authenticate on the SMTP server. The account generally takes the <tt>name@domain.com</tt> form. If blank, the configuration uses the setting from the basic authentication policy in the associated user agent.
   - CLI Alias: `username`
-- `account_password_alias` (String) Account Password Alias
+- `account_password_alias` (String) The password alias of the password for the SMTP client account or the user name that is authenticated to the SMTP server. If password or alias are blank, the configuration uses the setting from the basic authentication policy in the associated user agent.
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`
-- `auth` (String) Authentication Method
+- `auth` (String) With the client authentication option, the method to authenticate the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.
   - CLI Alias: `auth`
   - Choices: `plain`, `login`
   - Default value: `plain`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `mail_server_port` (Number) Mail Server Port
+- `mail_server_port` (Number) The listening port on the SMTP server to send outgoing e-mail messages.
   - CLI Alias: `server-port`
   - Default value: `25`
-- `options` (Attributes) Options
+- `options` (Attributes) The SMTP options to enable for the SMTP client. If blank, the configuration uses the setting from the SMTP client policy in the associated user agent.
   - CLI Alias: `options` (see [below for nested schema](#nestedatt--options))
-- `ssl_client` (String) TLS client profile
+- `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client`
   - Reference to: `datapower_sslclientprofile:id`
-- `ssl_client_config_type` (String) TLS client type
+- `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
   - CLI Alias: `ssl-client-type`
   - Choices: `client`
   - Default value: `client`

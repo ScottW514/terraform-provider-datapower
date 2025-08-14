@@ -54,7 +54,7 @@ func (r *AppSecurityPolicyResource) Metadata(ctx context.Context, req resource.M
 
 func (r *AppSecurityPolicyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Application Security Policy", "application-security-policy", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An Application Security Policy establishes the rules to use to enforce security for a Web Application Firewall service. This policy employs request maps, response maps, and error maps that provide a detailed security configuration. Each of these maps, in turn, matches to a Web Request Profile, Web Request Profile, or Error Policy, as the case might be.", "application-security-policy", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,17 +83,17 @@ func (r *AppSecurityPolicyResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 			},
 			"request_maps": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Request Maps", "request-match", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A list of Web Request Profile objects and their matching criteria. If the client request meets the matching criteria, its Web Request Profile runs.", "request-match", "").String,
 				NestedObject:        models.DmWebAppRequestPolicyMapResourceSchema,
 				Required:            true,
 			},
 			"response_maps": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Response Maps", "response-match", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A list of Web Response Profile objects and their matching criteria. If the server response meets the matching criteria, its Web Response Profile runs.", "response-match", "").String,
 				NestedObject:        models.DmWebAppResponsePolicyMapResourceSchema,
 				Required:            true,
 			},
 			"error_maps": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Error Maps", "error-match", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A list of Error Policy objects (Processing Rules) and their matching criteria. If an error meets the matching criteria, its Error Policy runs.", "error-match", "").String,
 				NestedObject:        models.DmPolicyMapResourceSchema,
 				Optional:            true,
 			},

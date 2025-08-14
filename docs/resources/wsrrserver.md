@@ -3,13 +3,13 @@
 page_title: "datapower_wsrrserver Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WSRR server
+  Configuration required to locate and access WSRR (WebSphere Service Registry and Repository).
   CLI Alias: wsrr-server
 ---
 
 # datapower_wsrrserver (Resource)
 
-WSRR server
+Configuration required to locate and access WSRR (WebSphere Service Registry and Repository).
   - CLI Alias: `wsrr-server`
 
 ## Example Usage
@@ -33,12 +33,12 @@ resource "datapower_wsrrserver" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `password_alias` (String) Password alias
+- `password_alias` (String) Specify the password alias for authentication with the server. The password alias references the password. Leave blank when authentication is not required.
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`
 - `server_prefix` (String) WSRR instance prefix
   - CLI Alias: `server-prefix`
-- `soap_url` (String) SOAP URL
+- `soap_url` (String) Specify the URL of SOAP API endpoint on the WSRR server. The port in the URL depends on whether the server has enabled global security. A typical default URL is similar to <tt>https://192.18.1.120:9443/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> or <tt>http://192.18.1.120:9080/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> .
   - CLI Alias: `soap-url`
   - Default value: `https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort`
 - `ssl_client` (String) TLS client profile
@@ -50,7 +50,7 @@ resource "datapower_wsrrserver" "test" {
   - Default value: `client`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `username` (String) Username
+- `username` (String) Specify the username for authentication with the server. Leave blank when authentication is not required.
   - CLI Alias: `username`
 
 <a id="nestedatt--dependency_actions"></a>

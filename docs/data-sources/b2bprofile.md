@@ -39,77 +39,77 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `as_allow_duplicate_message` (String) Allow duplicate AS inbound message
-- `business_i_ds` (List of String) Partner business IDs
-- `business_i_ds_duns` (List of String) Partner business IDs (DUNS)
-- `business_i_ds_duns_plus4` (List of String) Partner business IDs (DUNS+4)
-- `contacts` (Attributes List) Contacts (see [below for nested schema](#nestedatt--result--contacts))
+- `as_allow_duplicate_message` (String) Specify when to allow and reprocess duplicate AS inbound messages. The default behavior is never. This option does not apply to MDN.
+- `business_i_ds` (List of String) Specify the identifier for the partners. When configuring a trading partner, its identifier (ID) must be unique within a specific B2B gateway. The identifiers are equivalent to one of the following values. <ul><li>In AS messages, a value for an <tt>AS*-From</tt> or <tt>AS*-To</tt> header, where * is 1, 2, or 3.</li><li>In ebMS messages, a value for an <tt>PartyID</tt> element, where the PartyID element can be under either From or To element.</li><li>In other messages, a value that is extracted from the body of the EDI message: <tt>SenderID</tt> or <tt>ReceiverID</tt> .</li></ul>
+- `business_i_ds_duns` (List of String) Specify the 9-digit DUNS (Data Universal Numbering System) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.
+- `business_i_ds_duns_plus4` (List of String) Specifies the 13-digit D-U-N-S (Data Universal Numbering System + 4) identification number for the partner. When configuring a trading partner, the identifier (ID) must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4) but also within a specific B2B gateway.
+- `contacts` (Attributes List) Specify the contact information for partners. To define the contact information, you must provide information for at least one property. (see [below for nested schema](#nestedatt--result--contacts))
 - `custom_style_policy` (String) Processing policy
-- `destinations` (Attributes List) Destinations (see [below for nested schema](#nestedatt--result--destinations))
-- `ebms3_allow_duplicate_message` (String) Allow duplicate ebMS3 inbound message
-- `ebms3_default_signer_cert` (String) Default inbound signature validation certificate
-- `ebms3_duplicate_detection_notification` (Boolean) Duplicate detection notification
+- `destinations` (Attributes List) Specify the routing information for the partner. The first destination is the default destination. The gateway uses the default destination when no specific destination is assigned or when no matching destination is found. (see [below for nested schema](#nestedatt--result--destinations))
+- `ebms3_allow_duplicate_message` (String) Specify when to allow and reprocess duplicate ebMS3 inbound messages. The default behavior is never. This option does not apply to the receipt signal messages.
+- `ebms3_default_signer_cert` (String) Specify the default validation certificate to verify the signature of an inbound ebMS3 message or a receipt. This certificate is used when the <tt>keyInfo</tt> element is missing or the signature method is unsupported.
+- `ebms3_duplicate_detection_notification` (Boolean) Specify whether to enable duplicate detection notification. When enabled, send notification to the message consumer when a duplicate message is detected. The default behavior is disabled.
 - `ebms3_inbound_decrypt_id_cred` (String) Inbound decryption identification credentials
-- `ebms3_inbound_require_compressed` (Boolean) Require compression
-- `ebms3_inbound_require_encrypted` (Boolean) Require encryption
-- `ebms3_inbound_require_signed` (Boolean) Require signature
+- `ebms3_inbound_require_compressed` (Boolean) Specify whether internal partners require compressed inbound ebMS3 messages. The default behavior is not to require compression.
+- `ebms3_inbound_require_encrypted` (Boolean) Specify whether inbound ebMS3 messages must be encrypted. The default behavior is off.
+- `ebms3_inbound_require_signed` (Boolean) Specify whether inbound ebMS3 messages must be signed. The default behavior is off.
 - `ebms3_inbound_verify_val_cred` (String) Inbound signature validation credentials
-- `ebms3_outbound_sign` (Boolean) Sign outbound messages
-- `ebms3_outbound_sign_digest_alg` (String) Signing digest algorithm
-- `ebms3_outbound_sign_id_cred` (String) Signing identification credentials
-- `ebms3_outbound_signature_alg` (String) Signature algorithm
-- `ebms3_outbound_signature_c14n_alg` (String) Signature canonicalization method
+- `ebms3_outbound_sign` (Boolean) Specify whether to sign outbound messages. The default behavior is off. <ul><li>When enabled, signs outbound messages with the configured identification credentials and algorithm. If the configuration of a destination indicates to send messages unsigned, messages from this partner to that destination are not signed.</li><li>When disabled, does not sign outbound messages.</li></ul><p>This setting has no effect on outbound receipt signal messages. Regardless of this setting and whether an external partner requests a signed receipt signal, the outbound receipt signal is signed when this internal partner has a configured identification credentials.</p>
+- `ebms3_outbound_sign_digest_alg` (String) Specify the algorithm to hash the payload during signing. The default value is sha1. See http://www.w3.org/TR/xmldsig-core/
+- `ebms3_outbound_sign_id_cred` (String) Specify the identification credentials to sign an outbound message or outbound receipt signal. The outbound receipt signal is signed if requested by a partner and this setting is configured.
+- `ebms3_outbound_signature_alg` (String) Specify the algorithm to sign outbound ebMS3 messages. The default value is dsa-sha1, which is recommended by the ebMS specification.
+- `ebms3_outbound_signature_c14n_alg` (String) Specify the algorithm to canonicalize the SOAP Envelope XML and exclude comments before signing outbound ebMS3 messages. The default value is exc-c14n, which is recommended by the ebMS specification.
 - `ebms3_receipt_ssl_client` (String) Receipt/Error TLS client profile
 - `ebms3_receipt_ssl_client_config_type` (String) Receipt/Error TLS client type
 - `ebms_ack_ssl_client` (String) Acknowledgment/Error TLS client profile
 - `ebms_ack_ssl_client_config_type` (String) Acknowledgment/Error TLS client type
-- `ebms_ack_url` (String) Acknowledgment URL
-- `ebms_action` (String) Default action
-- `ebms_allow_duplicate_message` (String) Allow duplicate ebMS2 inbound message
-- `ebms_cpa_id` (String) Default CPA ID
-- `ebms_default_signer_cert` (String) Default inbound signature validation certificate
-- `ebms_enable_cpa_binding` (Boolean) Enable CPA bindings
-- `ebms_error_url` (String) Error URL
-- `ebms_inbound_decrypt_id_cred` (String) Inbound decryption identification credentials
-- `ebms_inbound_error_url` (String) Error URL
-- `ebms_inbound_receipt_reply_pattern` (String) Receipt reply pattern
-- `ebms_inbound_require_encrypted` (Boolean) Require encryption
-- `ebms_inbound_require_signed` (Boolean) Require signature
-- `ebms_inbound_send_receipt` (Boolean) Reply with receipt
-- `ebms_inbound_send_signed_receipt` (Boolean) Reply with signed receipt
-- `ebms_inbound_verify_val_cred` (String) Inbound signature validation credentials
-- `ebms_message_properties` (Attributes List) ebMS3 message properties (see [below for nested schema](#nestedatt--result--ebms_message_properties))
-- `ebms_notification` (Boolean) Enable notification
+- `ebms_ack_url` (String) Specify the redirection URL to send the acknowledgment message when received ebMS2 message requests an asynchronous response. When an asynchronous reply is requested by the inbound ebMS2 document, this field is required to determine where to send the acknowledgment.
+- `ebms_action` (String) Specify the action to package in the outbound ebMS2 message header. This value is used when the B2B gateway is CPA-enforced.
+- `ebms_allow_duplicate_message` (String) Specify when to allow and reprocess duplicate ebMS2 inbound messages. The default behavior is never. This option does not apply to acknowledgments.
+- `ebms_cpa_id` (String) Specify the CPA ID to package in the outbound ebMS2 message header. This value is used when the B2B gateway is CPA-enforced.
+- `ebms_default_signer_cert` (String) Specify the default validation certificate to verify the signature of an inbound ebMS2 message or an acknowledgment. The default signature validation certificate is used if either the <tt>keyInfo</tt> element is missing or signature method is unsupported.
+- `ebms_enable_cpa_binding` (Boolean) Specify whether to enable CPA bindings. When enabled, the CPA, service, and action that are specified by the matched CPA binding are used for the outbound ebMS2 messages instead of the default CPA, service, and action of the external profile. The CPA binding is matched by the internal partner profile.
+- `ebms_error_url` (String) Specify the redirection URL to send the error message when received ebMS2 message requests an asynchronous response. When an asynchronous reply is requested by the inbound ebMS2 document, this field is used as the error reporting location to send the error message that contains the error code and the description of the problem. Error URL cannot be empty when the acknowledgment URL is specified.
+- `ebms_inbound_decrypt_id_cred` (String) Specify the identification credentials to decrypt inbound ebMS2 messages.
+- `ebms_inbound_error_url` (String) When the error is sent asynchronously, specify the URL to send the error signal.
+- `ebms_inbound_receipt_reply_pattern` (String) Specify the pattern to send the receipt signal. The default behavior is response.
+- `ebms_inbound_require_encrypted` (Boolean) Specify whether inbound ebMS2 messages must be encrypted. The default behavior is off.
+- `ebms_inbound_require_signed` (Boolean) Specify whether inbound ebMS2 messages must be signed. The default behavior is off.
+- `ebms_inbound_send_receipt` (Boolean) Specify whether to reply to the MSH with a receipt signal message for the received ebMS messages. The default behavior is off.
+- `ebms_inbound_send_signed_receipt` (Boolean) Specify whether to reply to the MSH with a signed receipt signal message for the received ebMS3 message. The default behavior is off.
+- `ebms_inbound_verify_val_cred` (String) Specify the validation credentials to verify the signature on an acknowledgment or inbound ebMS2 message. For ebMS2 messages, only <tt>X509Data</tt> and <tt>KeyName</tt> signature methods are supported.
+- `ebms_message_properties` (Attributes List) Specify the <tt>eb:Property</tt> elements to add to the <tt>eb:MessageProperties</tt> node. Define message properties to meet your business needs and the agreement between partners. (see [below for nested schema](#nestedatt--result--ebms_message_properties))
+- `ebms_notification` (Boolean) Specify whether to enable notification. When enabled, send notifications to the message producer or consumer when there are specific errors. The default behavior is off.
 - `ebms_notification_ssl_client` (String) Notification TLS client profile
 - `ebms_notification_ssl_client_config_type` (String) Notification TLS client type
 - `ebms_notification_url` (String) Notification URL
-- `ebms_outbound_sign` (Boolean) Sign outbound messages
-- `ebms_outbound_sign_digest_alg` (String) Signing digest algorithm
-- `ebms_outbound_sign_id_cred` (String) Signing identification credentials
-- `ebms_outbound_signature_alg` (String) Signature algorithm
-- `ebms_outbound_signature_c14n_alg` (String) Signature canonicalization method
-- `ebms_persist_duration` (Number) Persist duration
-- `ebms_profile_cpa_bindings` (Attributes List) CPA bindings (see [below for nested schema](#nestedatt--result--ebms_profile_cpa_bindings))
-- `ebms_receipt_url` (String) Receipt URL
-- `ebms_role` (String) Role
-- `ebms_service` (String) Default service
-- `ebms_start_parameter` (Boolean) Generate start parameter
-- `email_addresses` (List of String) Partner email addresses
+- `ebms_outbound_sign` (Boolean) Specify whether to sign outbound messages. The default behavior is disabled. <ul><li>If enabled, signs outbound messages with the configured identification credentials and algorithm. If the configuration of a destination indicates to send messages unsigned, messages from this partner to that destination are not signed.</li><li>If disabled, does not sign outbound messages.</li></ul><p>This setting has no effect on outbound acknowledgment messages. Regardless of this setting and if a partner requests a signed acknowledgment, the outbound acknowledgment is signed if this partner has a configured identification credentials.</p>
+- `ebms_outbound_sign_digest_alg` (String) Specify the algorithm to hash the payload during signing. The default value is sha1. See http://www.w3.org/TR/xmldsig-core/
+- `ebms_outbound_sign_id_cred` (String) Specify the identification credentials to sign an outbound message or acknowledgment. The outbound acknowledgment is signed if requested by a partner and this setting is configured. For ebMS2 messages, only <tt>X509Data</tt> and <tt>KeyName</tt> signature methods are supported.
+- `ebms_outbound_signature_alg` (String) Specify the algorithm to sign the outbound ebMS2 message. The default value is dsa-sha1, which is recommended by the ebMS specification.
+- `ebms_outbound_signature_c14n_alg` (String) Specify the algorithm to canonicalize the SOAP Envelope XML and exclude comments before signing outbound ebMS2 message. The default value is c14n, which is recommended by the ebMS specification.
+- `ebms_persist_duration` (Number) Specify the duration in seconds to retain messages in persistent storage. This value is used to compute the <tt>TimeToLive</tt> value. Until the value of the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
+- `ebms_profile_cpa_bindings` (Attributes List) Specify the CPA binding for the external partner profile. A CPA binding binds a CPA entry (CPA, service, and action) that you prefer to use. When a CPA entry is matched through the internal partner profile, outbound messages from the internal partner use the CPA, service, and action that are specified by the matched CPA entry. You must have the CPA entry in the ebXML settings of the associated B2B gateway before you add the entry to the CPA bindings list. (see [below for nested schema](#nestedatt--result--ebms_profile_cpa_bindings))
+- `ebms_receipt_url` (String) When the receipt reply pattern is callback, specify the URL to send the receipt signal.
+- `ebms_role` (String) Specify the name of authorized role of the party. When sending outbound message, the role associated with internal partner presents the <tt>From</tt> party and the role associated with external partner presents the <tt>To</tt> party. The value is referencing the <tt>Role</tt> specified in CPA. A <tt>Role</tt> is better defined as a URI, for example, http://rosettanet.org/roles/buyer.
+- `ebms_service` (String) Specify the service to package in the outbound ebMS2 message header. This value is used when when the B2B gateway is CPA-enforced.
+- `ebms_start_parameter` (Boolean) Specify whether to generate a start parameter for the ebMS2 message. The start parameter identifies the root part of the ebMS message. This setting is disabled by default. If enabled, the start parameter is generated with this value enclosed in angle brackets.
+- `email_addresses` (List of String) Specify the identifier (e-mail address) for the partner. When configuring a partner, their email address must be unique within a specific B2B gateway configuration. The email addresses for the partner must be equivalent to one of the following values. <ul><li>In AS1 messages, a value for a <tt>From</tt> or <tt>To</tt> header</li><li>In non-AS1 messages, a value that is extracted from the body of the EDI message - <tt>SenderID</tt> or <tt>ReceiverID</tt> .</li></ul>
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `inbound_decrypt_id_cred` (String) Inbound decryption identification credentials
-- `inbound_require_encrypted` (Boolean) Require encryption
-- `inbound_require_signed` (Boolean) Require signature
+- `inbound_require_encrypted` (Boolean) Specify whether inbound AS messages must be encrypted. The default behavior is off.
+- `inbound_require_signed` (Boolean) Specify whether inbound AS messages must be signed. The default behavior is off.
 - `inbound_verify_val_cred` (String) Inbound signature validation credentials
 - `mdnssl_client` (String) MDN TLS client profile
 - `mdnssl_client_config_type` (String) MDN TLS client type
-- `outbound_sign` (Boolean) Sign outbound messages
+- `outbound_sign` (Boolean) Specify whether to sign outbound messages. The default behavior is off. <ul><li>If enabled, sign outbound messages with the configured identification credentials and algorithm. If the destination indicates to send messages unsigned, messages from this partner to that destination are not signed.</li><li>If disabled, does not sign outbound messages.</li></ul><p>This setting has no effect on outbound MDN messages. Regardless of this setting and if a partner requests a signed MDN, the outbound MDN is signed if this partner has a configured identification credentials.</p>
 - `outbound_sign_digest_alg` (String) Signing digest algorithm
-- `outbound_sign_id_cred` (String) Signing identification credentials
-- `outbound_sign_mic_alg_version` (String) Signing S/MIME version
-- `override_asid` (String) Override AS identifier
-- `preserve_filename` (Boolean) Preserve file name
-- `profile_type` (String) Profile type
-- `response_type` (String) Response traffic type
+- `outbound_sign_id_cred` (String) Specify the identification credentials to sign an outbound message or outbound MDN. The outbound MDN is signed if requested by a partner and this setting is configured.
+- `outbound_sign_mic_alg_version` (String) Specify the S/MIME specification version to generate the micalg parameter value in a multipart/signed message. The following value is a sample <tt>Content-Type</tt> header of the multipart/signed message. <p><tt>Content-Type: multipart/signed;protocol="application/pkcs7-signature";micalg=sha1; boundary=...</tt></p><p>The micalg parameter indicates which message digest algorithm (such as, MD5, SHA-1, SHA-256, SHA-384, and SHA-512) to use in the calculation of the Message Integrity Check (MIC). The formats of the micalg value differ between S/MIME Version 3.1 (RFC 3851) and Version 3.2 (RFC 5751).</p><ul><li>In Version 3.1, the micalg parameter value has micalg=[md5|sha1|sha256|sha384|sha512].</li><li>In Version 3.2, the micalg parameter value has micalg=[md5|sha-1|sha-256|sha-384|sha-512].</li></ul>
+- `override_asid` (String) Specify the override the identifiers in AS message headers. <ul><li>For outbound messages, the value to use for the <tt>AS*-From</tt> or <tt>AS*-To</tt> header, where * is 1, 2, or 3. If blank, the transaction retains the identifiers that were extracted from the message payload.</li><li>For inbound messages, the value becomes another valid identifier for the partner in addition to those already defined for the partner.</li></ul>
+- `preserve_filename` (Boolean) Specify whether to expose the <tt>Content-Disposition</tt> header of inbound AS messages for file name preservation. According to RFC 2183, the file name information is optional in <tt>Content-Disposition</tt> header. When enabled, the <tt>Content-Disposition</tt> header of the inbound AS message is exposed if the inbound AS message is in S/MIME format. Then, the receiving partner can retrieve the original file name that is contained in the header and transfer the received file to its backend system with the received file name.
+- `profile_type` (String) Specify whether the profile is for an internal or external partner. The default value is internal.
+- `response_type` (String) Characterize the traffic that originates from <tt>To</tt> partners. For inbound transaction, this is the traffic type that originates from internal partner. For outbound transaction, this is the traffic type that originates from external partner. The default value is Non-XML.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

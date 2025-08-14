@@ -3,13 +3,13 @@
 page_title: "datapower_configsequence Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Configuration sequence
+  A configuration sequence defines a series of configuration files to load after the startup configuration. By default, changes in configuration files are detected and reloaded.
   CLI Alias: config-sequence
 ---
 
 # datapower_configsequence (Resource)
 
-Configuration sequence
+A configuration sequence defines a series of configuration files to load after the startup configuration. By default, changes in configuration files are detected and reloaded.
   - CLI Alias: `config-sequence`
 
 ## Example Usage
@@ -32,34 +32,34 @@ resource "datapower_configsequence" "test" {
 ### Optional
 
 - `capabilities` (Attributes) Capabilities (see [below for nested schema](#nestedatt--capabilities))
-- `delete_unused` (Boolean) Delete unused
+- `delete_unused` (Boolean) Specify whether to clean up objects that are no longer needed. When enabled, the configuration sequence detects and attempts to delete objects that are no longer modified by any configuration file. By default, the configuration sequence does not delete unneeded objects.
   - CLI Alias: `delete-unused`
   - Default value: `true`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `locations` (Attributes List) Location profiles
+- `locations` (Attributes List) Specify the locations to watch for changes and the permissions for each location. Each entry specifies a directory where the configuration files to match are stored. The DataPower Gateway watches the location and reloads the configuration when a change is detected that match the PCRE match pattern. The entries are processed in the listed order. The assess profile indicates the permissions for processing.
   - CLI Alias: `location` (see [below for nested schema](#nestedatt--locations))
-- `match_pattern` (String) Matching pattern
+- `match_pattern` (String) Specify the PCRE pattern to determine whether a file is considered part of the location match. For example, when the configuration files to match are <tt>NNNNNN.input</tt> , the PCRE pattern is <tt>"([0-9]{6})\.input$"</tt> .
   - CLI Alias: `match-pattern`
   - Default value: `(.*)\\.cfg$`
-- `output_location` (String) Output file location
+- `output_location` (String) Specify the directory to store the output files that processing generates. When not specified, the input file location is used.
   - CLI Alias: `output-location`
   - Default value: `logtemp:///`
-- `result_name_pattern` (String) Result file-naming pattern
+- `result_name_pattern` (String) Specify the PCRE pattern to name the result file. This pattern normally has a back-reference to the base input file name. For example, when input files are <tt>NNNNNN.input</tt> and the wanted result file name is <tt>NNNNNN.result</tt> , the pattern is <tt>"$1.result"</tt> .
   - CLI Alias: `result-name-pattern`
   - Default value: `$1.log`
-- `run_sequence_interval` (Number) Run interval
+- `run_sequence_interval` (Number) Specify the interval in milliseconds between the processing of changes. This delay enables multiple file events to be aggregated and handled within the same sequence run. Enter a value in the range 100 - 60000. The default value is 100.
   - CLI Alias: `run-sequence-interval`
   - Range: `100`-`60000`
   - Default value: `100`
-- `status_name_pattern` (String) Status file-naming pattern
+- `status_name_pattern` (String) Specify the PCRE pattern to name the status file. This pattern normally has a back-reference to the base input file name. For example, when the input files are <tt>NNNNNN.input</tt> and the wanted status file name is <tt>NNNNNN.json</tt> , the pattern is <tt>"$1.json"</tt> .
   - CLI Alias: `status-name-pattern`
   - Default value: `$1.status`
-- `use_output_location` (Boolean) Use output location
+- `use_output_location` (Boolean) Specify whether to place output log and status files in the configured output location after processing. By default, output files are stored in the input file location.
   - CLI Alias: `use-output-location`
   - Default value: `false`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
-- `watch` (Boolean) Watch
+- `watch` (Boolean) Specify whether to watch the specified directory for configuration file changes and automatically reload the configuration when a change is detected. By default, the specified directory is watched.
   - CLI Alias: `watch`
   - Default value: `true`
 

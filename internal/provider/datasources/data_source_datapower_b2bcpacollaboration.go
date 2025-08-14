@@ -81,35 +81,35 @@ func (d *B2BCPACollaborationDataSource) Schema(ctx context.Context, req datasour
 							Computed:            true,
 						},
 						"internal_role": schema.StringAttribute{
-							MarkdownDescription: "Internal role",
+							MarkdownDescription: "Specify the name of the authorized role of the internal partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Buyer</tt> role has the authority for purchasing actions.",
 							Computed:            true,
 						},
 						"external_role": schema.StringAttribute{
-							MarkdownDescription: "External role",
+							MarkdownDescription: "Specify the name of the authorized role of the external partner in a business collaboration service. Each role is authorized for specific actions. For example, a <tt>Supplier</tt> role has the authority for selling actions.",
 							Computed:            true,
 						},
 						"process_specification": schema.StringAttribute{
-							MarkdownDescription: "Process Specification",
+							MarkdownDescription: "Specify the location of the process specification document that defines the interactions between the internal and external partners. For example, <tt>http://www.rosettanet.org/processes/3A4</tt> .",
 							Computed:            true,
 						},
 						"service": schema.StringAttribute{
-							MarkdownDescription: "Service",
+							MarkdownDescription: "Specify the value of the service that acts on the message. The value is used to specify and identify the value of the Service element in the outbound and inbound ebMS message header. The service is one of the following types. <ul><li>A business collaboration service for exchanging business messages.</li><li>An MSH signal service for exchanging MSH signals.</li></ul><p>The value of <tt>urn:oasis:names:tc:ebxml-msg:service;</tt> is an MSH signal service. Any other value represents a business collaboration service.</p>",
 							Computed:            true,
 						},
 						"service_type": schema.StringAttribute{
-							MarkdownDescription: "Service Type",
+							MarkdownDescription: "Specify the value of the service type. If you specify the type, the value is present in the type attribute of the <tt>Service</tt> element within the message to be sent. If the type is empty, the value of the <tt>Service</tt> element must be a URI.",
 							Computed:            true,
 						},
 						"sender_msh_setting": schema.StringAttribute{
-							MarkdownDescription: "Default MSH signal sender",
+							MarkdownDescription: "Specify the name of the default MSH signal sender to send ebMS MSH signals to send MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .",
 							Computed:            true,
 						},
 						"receiver_msh_setting": schema.StringAttribute{
-							MarkdownDescription: "Default MSH signal receiver",
+							MarkdownDescription: "Specify the name of the default MSH signal receiver to receive ebMS MSH signals to receive MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt> .",
 							Computed:            true,
 						},
 						"actions": schema.ListNestedAttribute{
-							MarkdownDescription: "Actions",
+							MarkdownDescription: "Specify CPA actions to bind. For a business collaboration, each action entry identifies a business message that a party can send or receive. For a collaboration of MSH level signal, the action overrides the sending or receiving behaviors of the default sender setting or default receiver setting.",
 							NestedObject:        models.DmCPACollaborationActionDataSourceSchema,
 							Computed:            true,
 						},

@@ -59,7 +59,7 @@ func (r *StatelessTCPSourceProtocolHandlerResource) Metadata(ctx context.Context
 
 func (r *StatelessTCPSourceProtocolHandlerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Stateless raw XML handler", "source-raw", "").AddActions("quiesce").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>The configuration for the stateless TCP handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed.</p>", "source-raw", "").AddActions("quiesce").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -88,13 +88,13 @@ func (r *StatelessTCPSourceProtocolHandlerResource) Schema(ctx context.Context, 
 				Optional:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local IP address", "local-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The address on which the service listens. The default of 0.0.0.0 indicates that the service is active on all addresses. Click Select Alias to use an alias for this value. Local host aliases help to ease migration tasks between machines. See Local Host Alias under Networking for more.", "local-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Port", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("4000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("An integer (within the range 1 through 65535, with a default of 4000) that specifies the port monitored by the service.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("4000").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -104,17 +104,17 @@ func (r *StatelessTCPSourceProtocolHandlerResource) Schema(ctx context.Context, 
 				Default: int64default.StaticInt64(4000),
 			},
 			"persistent_connections": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Persistent connections", "persistent-connections", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enable or disable persistent connections where appropriate the front end.", "persistent-connections", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "acl", "accesscontrollist").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This Access Control List will be used to allow or deny access to this service based on the IP address of the client. When attached to a service, an Access Control List (ACL) denies all access by default. To deny access to only selected addresses, first grant access to all addresses (allow 0.0.0.0) and then create deny entries for the desired hosts.", "acl", "accesscontrollist").String,
 				Optional:            true,
 			},
 			"ssl_server_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS server type", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between clients and the DataPower Gateway.", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -123,11 +123,11 @@ func (r *StatelessTCPSourceProtocolHandlerResource) Schema(ctx context.Context, 
 				Default: stringdefault.StaticString("server"),
 			},
 			"ssl_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS server profile", "ssl-server", "sslserverprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS server profile to secure connections between clients and the DataPower Gateway.", "ssl-server", "sslserverprofile").String,
 				Optional:            true,
 			},
 			"sslsni_server": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS SNI server profile", "ssl-sni-server", "sslsniserverprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS SNI server profile to secure connections between clients and the DataPower Gateway.", "ssl-sni-server", "sslsniserverprofile").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

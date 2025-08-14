@@ -3,13 +3,13 @@
 page_title: "datapower_mqv9plussourceprotocolhandler Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  IBM MQ v9+ handler
+  Configure the IBM MQ v9+ handler to manage IBM MQ protocol communications.
   CLI Alias: source-idg-mqAccepted Dependency Actions: quiesce
 ---
 
 # datapower_mqv9plussourceprotocolhandler (Resource)
 
-IBM MQ v9+ handler
+Configure the IBM MQ v9+ handler to manage IBM MQ protocol communications.
   - CLI Alias: `source-idg-mq`
   - Accepted Dependency Actions: `quiesce`
 
@@ -30,23 +30,23 @@ resource "datapower_mqv9plussourceprotocolhandler" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `queue_manager` (String) Queue manager (reference to MQManger or MQManagerGroup)
+- `queue_manager` (String) Specify the name of the queue manager that provides messaging services for communicating applications by periodically monitoring or polling queues and by ensuring that messages are directed to the correct receive queue or routed to another queue manager. The local queue manager corresponds to a queue manager running on another host on the network.
   - CLI Alias: `queue-manager`
 
 ### Optional
 
-- `async_put` (Boolean) Async put
+- `async_put` (Boolean) Specify whether to asynchronously put a message to a queue without waiting for a response from the queue manager.
   - CLI Alias: `async-put`
   - Default value: `false`
-- `batch_size` (Number) Batch size
+- `batch_size` (Number) Specify the number of messages to process as a batch. The handler gathers the specified number of messages and processes them as a batch.
   - CLI Alias: `batch-size`
   - Range: `0`-`65535`
   - Default value: `0`
-- `code_page` (Number) CCSI
+- `code_page` (Number) <p>Specify the coded character set identifier to which the remote IBM MQ queue manager converts output data. This property is meaningful only when the queue manager has the convert property set to on. The CCSI will be put in the CodeCharSetId field of MQMD.</p><p>The default CCSI is for ISO-8859-1 (latin-1).</p><p>For MQCCSI_EMBEDDED enter 4294967295; for MQCCSI_INHERIT enter 4294967294. For the other CCSIDs, refer to the IBM Code Pages.</p>
   - CLI Alias: `ccsi`
   - Range: `0`-`4294967295`
   - Default value: `0`
-- `concurrent_connections` (Number) Concurrent conversations
+- `concurrent_connections` (Number) Specify the number of concurrent IBM MQ conversations to allocate. The default value is 1 but can be increased to improve performance.
   - CLI Alias: `concurrent-connections`
   - Range: `1`-`65535`
   - Default value: `1`
@@ -57,35 +57,35 @@ resource "datapower_mqv9plussourceprotocolhandler" "test" {
 - `content_type_x_path` (String) XPath expression to extract Content-Type from IBM MQ header
   - CLI Alias: `content-type-xpath`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `exclude_headers` (Attributes) Exclude message headers
+- `exclude_headers` (Attributes) Specify the headers after MQMD to strip from the message. By default only the MQMD header is parsed.
   - CLI Alias: `exclude-headers` (see [below for nested schema](#nestedatt--exclude_headers))
-- `get_message_options` (Number) Get message options
+- `get_message_options` (Number) Specify the cumulative value of the MQGET options that are applicable to an IBM MQ message in decimal or hex format. The value is passed directly to the IBM MQ API. The default value is 1, which is the decimal value for the MQGMO_WAIT option.
   - CLI Alias: `get-message-options`
   - Range: `0`-`4294967295`
   - Default value: `1`
-- `get_queue` (String) Get queue
+- `get_queue` (String) Specify the name of the get queue associated with the queue manager. The handler gets messages from this queue.
   - CLI Alias: `get-queue`
-- `message_selector` (String) Selector
+- `message_selector` (String) Specify the selector that filters the messages from a queue or a subscription by their properties. The selector uses the SQL92 conditional expression syntax. The selector enables the handler to filter messages from a queue or a subscription.
   - CLI Alias: `selector`
-- `parse_properties` (Boolean) Parse properties
+- `parse_properties` (Boolean) Specify whether to parse the properties of the incoming messages from a queue or a subscription. By default, properties are not parsed.
   - CLI Alias: `parse-properties`
   - Default value: `false`
-- `polling_interval` (Number) Polling interval
+- `polling_interval` (Number) Specify the duration in seconds to wait after processing all messages before attempting to retrieve messages from the get queue.
   - CLI Alias: `polling-interval`
   - Range: `0`-`65535`
   - Default value: `30`
-- `publish_topic_string` (String) Publish topic string
+- `publish_topic_string` (String) Specify the publish topic string associated with the queue manager. The topic string describes the subject of the information that is published in a publish or subscribe message. The handler publishes messages to this topic string. If the put queue is specified, this property is ignored.
   - CLI Alias: `publish-topic-string`
-- `put_queue` (String) Put queue
+- `put_queue` (String) Specify the the name of the put queue associated with the queue manager. The handler puts server-originated reply messages to this queue.
   - CLI Alias: `put-queue`
-- `retrieve_backout_settings` (Boolean) Retrieve backout settings
+- `retrieve_backout_settings` (Boolean) Specify whether to retrieve backout setting from the IBM MQ server. <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue queue name</b> settings from the IBM MQ server and checks these values. On a reattempt, the handler uses the higher priority backout settings from the server. If the server does not contain backout settings, The handler uses any existing backout values, either empty or populated, from the local IBM MQ queue manager. If there are no backout settings, the backout function is disabled.</p><p>When an alias queue is used, its attributes are retrieved, not those of the base queue.</p>
   - CLI Alias: `retrieve-backout-settings`
   - Default value: `false`
-- `subscribe_topic_string` (String) Subscribe topic string
+- `subscribe_topic_string` (String) Specify the the topic string associated with the queue manager. The handler subscribes to this topic string and gets messages from it.
   - CLI Alias: `subscribe-topic-string`
-- `subscription_name` (String) Subscription name
+- `subscription_name` (String) Specify the subscription name of a durable subscription associated with the queue manager. This name identifies the subscription after reestablishing a lost connection.
   - CLI Alias: `sub-name`
-- `use_qm_name_in_url` (Boolean) Use queue manager in URL
+- `use_qm_name_in_url` (Boolean) Specify whether the var://service/URL-in variable returns the name of the local queue manager or queue manager group when this configuration defines a queue manager group as the queue manager. <ul><li>When enabled, the variable returns the name of the queue manager.</li><li>When not enabled, the variable returns the name of the queue manager group. This setting is the default value.</li></ul>
   - CLI Alias: `use-qm-in-url`
   - Default value: `false`
 - `user_summary` (String) Comments

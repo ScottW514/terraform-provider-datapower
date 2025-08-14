@@ -3,13 +3,13 @@
 page_title: "datapower_filteraction Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Filter Action
+  A message filter action defines the administrative action to take. Filters can be cautionary or stringent.
   CLI Alias: monitor-action
 ---
 
 # datapower_filteraction (Resource)
 
-Message Filter Action
+A message filter action defines the administrative action to take. Filters can be cautionary or stringent.
   - CLI Alias: `monitor-action`
 
 ## Example Usage
@@ -32,14 +32,14 @@ resource "datapower_filteraction" "test" {
 
 ### Optional
 
-- `block_interval` (Number) Block interval
+- `block_interval` (Number) Specify an optional interval during which an over-threshold message type is denied service. Meaningful only when the message is rejected due to policy or shaping queue overflow. This value is the duration of service denial in milliseconds. The default value is 0, indicates that over-threshold messages are dropped but no service denial penalty is imposed.
   - CLI Alias: `block-interval`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `log_level` (String) Log priority
+- `log_level` (String) Specify the priority of the log message that is generated when a monitored message type exceeds a threshold value.
   - CLI Alias: `log-priority`
   - Choices: `emerg`, `alert`, `critic`, `error`, `warn`, `notice`, `info`, `debug`
   - Default value: `debug`
-- `type` (String) Type
+- `type` (String) Select the action to take The default is notify.
   - CLI Alias: `type`
   - Choices: `notify`, `reject`, `shape`
   - Default value: `notify`

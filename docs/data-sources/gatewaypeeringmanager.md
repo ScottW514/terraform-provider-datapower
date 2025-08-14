@@ -3,12 +3,12 @@
 page_title: "datapower_gatewaypeeringmanager Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Gateway-peering manager
+  
 ---
 
 # datapower_gatewaypeeringmanager (Data Source)
 
-Gateway-peering manager
+<p>The gateway-peering manager defines the gateway-peering instances that store data for synchronization across a peer group. With the gateway-peering manager, you specify the gateway-peering instance to use the feature-specific data store. The gateway-peering instance are for API rate limits, API subscribers, API probe data, and the GatweayScript <tt>ratelimit</tt> module.</p>
 
 ## Example Usage
 
@@ -32,7 +32,7 @@ data "datapower_gatewaypeeringmanager" "test" {
 ### Read-Only
 
 - `api_connect_gateway_service` (String) API Connect gateway service
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
 - `rate_limit` (String) API rate limits
 - `ratelimit_module` (String) GatewayScript ratelimit module keys
 - `subscription` (String) API subscribers

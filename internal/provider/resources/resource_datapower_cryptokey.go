@@ -54,7 +54,7 @@ func (r *CryptoKeyResource) Metadata(ctx context.Context, req resource.MetadataR
 
 func (r *CryptoKeyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Key", "key", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A private key provides an added layer of security by supplying an indirect reference to a file that contains a private key.", "key", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -79,7 +79,7 @@ func (r *CryptoKeyResource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 			},
 			"filename": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("File", "file-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the file that contains the private key. The name might be the same as the file that contains the public key. <ul><li>When in the public crypto area, the file is in the <tt>pubcert:</tt> directory.</li><li>When in the private crypto area, the file is in the <tt>cert:</tt> directory.</li><li>When in the public area, the file is in the <tt>local:</tt> directory. <p><b>Attention:</b> Any file in the <tt>local:</tt> directory can be downloaded or included in an export. Therefore, consider carefully before you store crypto files in this directory.</p></li><li>When retrieved from z/OS, the file is in the <tt>saf-key:</tt> directory. The key must be a SAF key that is stored in ICSF.</li><li>When on z/OS, the file is in the <tt>saf-remote-key:</tt> directory. The key must be a SAF key that is stored in ICSF.</li><li>When on SafeNet Luna HSM, the file is in a partition of the <tt>luna-key:</tt> directory.</li></ul>", "file-name", "").String,
 				Required:            true,
 			},
 			"alias": schema.StringAttribute{

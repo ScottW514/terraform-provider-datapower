@@ -54,7 +54,7 @@ func (r *SAMLAttributesResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *SAMLAttributesResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SAML Attributes", "samlattrs", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Define a list of SAML attributes for the SAML Assertion generator.", "samlattrs", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *SAMLAttributesResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"saml_attribute": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SAML Attribute Definition", "attribute", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Define an attribute by selecting the source type and specifying the data source and SAML attribute name.", "attribute", "").String,
 				NestedObject:        models.DmSAMLAttributeResourceSchema,
 				Optional:            true,
 			},

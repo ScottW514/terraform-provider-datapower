@@ -3,12 +3,12 @@
 page_title: "datapower_includeconfig Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Include configuration file
+  An include configuration file defines external configuration data to process on startup. The included configuration files can reside locally or on a remote host.
 ---
 
 # datapower_includeconfig (Data Source)
 
-Include configuration file
+An include configuration file defines external configuration data to process on startup. The included configuration files can reside locally or on a remote host.
 
 ## Example Usage
 
@@ -40,9 +40,9 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `interface_detection` (Boolean) Interface detection
-- `on_startup` (Boolean) Import on startup
-- `url` (String) URL
+- `interface_detection` (Boolean) Specify whether to wait for the associated IP interface to be operational. This setting only affects configuration files from remote servers. When enabled, remote files are processed asynchronously after the associated IP interface is operational.
+- `on_startup` (Boolean) Specify whether to import the configuration file on startup. The default behavior is to import on startup. <ul><li>When enabled, the configuration file is imported at startup. The configuration is marked external and cannot be saved locally. This setting is equivalent to 'import-always'.</li><li>When disabled, the import must be started manually. The configuration is not marked external and can be saved locally. This setting is equivalent to 'import-once'.</li></ul>
+- `url` (String) Specify the URL of the configuration file. The file must be a configuration file of type <tt>.cfg</tt> . The URL takes the form 'protocol://username:password@host/path' when a username and password are needed to retrieve the file.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

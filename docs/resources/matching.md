@@ -31,16 +31,16 @@ resource "datapower_matching" "test" {
 
 ### Optional
 
-- `combine_with_or` (Boolean) Combine with Boolean OR
+- `combine_with_or` (Boolean) <p>Whether to use Boolean OR or AND operations during evaluation.</p><ul><li>When enabled, combine with OR semantics. Only one match must evaluate to true for success.</li><li>When disabled, combine with AND semantics. All matches must evaluate to true for success.</li></ul>
   - CLI Alias: `combine-with-or`
   - Default value: `false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `match_rules` (Attributes List) Rules
+- `match_rules` (Attributes List) The rules in the matching rule.
   - CLI Alias: `match` (see [below for nested schema](#nestedatt--match_rules))
-- `match_with_pcre` (Boolean) Match with PCRE
+- `match_with_pcre` (Boolean) Whether the evaluation uses shell style expressions or PCREs. This setting does not apply to XPath or HTTP method evaluations.
   - CLI Alias: `match-with-pcre`
   - Default value: `false`
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

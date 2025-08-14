@@ -1,42 +1,47 @@
 name: CORSPolicy
-description: 'CORS policy'
-cli_alias: 'cors-policy'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/CORSPolicy'
+description: A CORS policy contains one or more CORS rules where you can configure
+  CORS behavior.
+cli_alias: cors-policy
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/CORSPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestCORSPolicy"'
-    test_expect_ds: '"AccTest_CORSPolicy"'
-    example: 'CORSPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Rule
-    type: List
-    reference_to: CORSRule
-    element_type: String
-    required: true
-    test_value: '["AccTest_CORSRule"]'
-    test_bed_value: '[datapower_corsrule.acc_test.id]'
-    description: 'CORS rules'
-    cli_alias: rule
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestCORSPolicy"'
+  test_expect_ds: '"AccTest_CORSPolicy"'
+  example: CORSPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Rule
+  type: List
+  reference_to: CORSRule
+  element_type: String
+  required: true
+  test_value: '["AccTest_CORSRule"]'
+  test_bed_value: '[datapower_corsrule.acc_test.id]'
+  description: Specify the CORS rules to to apply to the CORS policy. A CORS rule
+    defines allowed origins and other CORS properties. The first rule that is valid
+    is applied to the inbound CORS request. If no rule applies, the CORS request is
+    rejected.
+  cli_alias: rule

@@ -3,12 +3,12 @@
 page_title: "datapower_statelesstcpsourceprotocolhandler Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Stateless raw XML handler
+  
 ---
 
 # datapower_statelesstcpsourceprotocolhandler (Data Source)
 
-Stateless raw XML handler
+<p>The configuration for the stateless TCP handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed.</p>
 
 ## Example Usage
 
@@ -38,15 +38,15 @@ Optional:
 
 Read-Only:
 
-- `acl` (String) Access control list
+- `acl` (String) This Access Control List will be used to allow or deny access to this service based on the IP address of the client. When attached to a service, an Access Control List (ACL) denies all access by default. To deny access to only selected addresses, first grant access to all addresses (allow 0.0.0.0) and then create deny entries for the desired hosts.
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_address` (String) Local IP address
-- `local_port` (Number) Port
-- `persistent_connections` (Boolean) Persistent connections
-- `ssl_server` (String) TLS server profile
-- `ssl_server_config_type` (String) TLS server type
-- `sslsni_server` (String) TLS SNI server profile
+- `local_address` (String) The address on which the service listens. The default of 0.0.0.0 indicates that the service is active on all addresses. Click Select Alias to use an alias for this value. Local host aliases help to ease migration tasks between machines. See Local Host Alias under Networking for more.
+- `local_port` (Number) An integer (within the range 1 through 65535, with a default of 4000) that specifies the port monitored by the service.
+- `persistent_connections` (Boolean) Enable or disable persistent connections where appropriate the front end.
+- `ssl_server` (String) The TLS server profile to secure connections between clients and the DataPower Gateway.
+- `ssl_server_config_type` (String) The TLS profile type to secure connections between clients and the DataPower Gateway.
+- `sslsni_server` (String) The TLS SNI server profile to secure connections between clients and the DataPower Gateway.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

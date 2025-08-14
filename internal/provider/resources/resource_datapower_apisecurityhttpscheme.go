@@ -54,7 +54,7 @@ func (r *APISecurityHTTPSchemeResource) Metadata(ctx context.Context, req resour
 
 func (r *APISecurityHTTPSchemeResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API security HTTP scheme", "api-sec-http-scheme", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure and manage an HTTP bearer authentication security definition with the Bearer authentication security scheme in an API as defined in OpenAPI 3.0. Bearer authentication is an HTTP Authentication scheme and was originally part of RFC 6750: The OAuth 2.0 Authorization Framework: Bearer Token Usage.", "api-sec-http-scheme", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,14 +83,14 @@ func (r *APISecurityHTTPSchemeResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"scheme": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Scheme", "http-scheme", "").AddStringEnum("bearer").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the HTTP authentication security scheme. The only supported value is <tt>bearer</tt> .", "http-scheme", "").AddStringEnum("bearer").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("bearer"),
 				},
 			},
 			"bearer_format": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Bearer format", "bearer-format", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how the bearer token is formatted. The format is primarily a hint.", "bearer-format", "").String,
 				Optional:            true,
 			},
 			"bearer_validation_method": schema.StringAttribute{
@@ -101,11 +101,11 @@ func (r *APISecurityHTTPSchemeResource) Schema(ctx context.Context, req resource
 				},
 			},
 			"bearer_validation_endpoint": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Bearer validation endpoint", "bearer-validation-endpoint", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the validation endpoint. When this connection uses the HTTPS protocol, specify the TLS client profile to secure the connection.", "bearer-validation-endpoint", "").String,
 				Optional:            true,
 			},
 			"bearer_validation_tls_profile": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Bearer validation TLS profile", "bearer-validation-tls-profile", "sslclientprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TLS client profile to secure the connection to the validation endpoint. You must specify a client profile when you connect to the validation endpoint with the HTTPS protocol.", "bearer-validation-tls-profile", "sslclientprofile").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

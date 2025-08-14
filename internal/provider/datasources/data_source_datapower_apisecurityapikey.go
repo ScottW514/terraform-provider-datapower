@@ -57,7 +57,7 @@ func (d *APISecurityAPIKeyDataSource) Metadata(_ context.Context, req datasource
 
 func (d *APISecurityAPIKeyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API security API key",
+		MarkdownDescription: "An API key security definition defines the credentials that an API client must provide to the API gateway to identify itself when calling the API operations. You can require that the client must provide only the client ID, or both the client ID and client secret. When you require the client to provide both the client ID and client secret, you must define two separate configurations, one of type ID and the other of type secret.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *APISecurityAPIKeyDataSource) Schema(ctx context.Context, req datasource
 							Computed:            true,
 						},
 						"where": schema.StringAttribute{
-							MarkdownDescription: "Where",
+							MarkdownDescription: "Specify the location of the client credentials. An API call fails if the credentials are not included in the specified location. <b>Note:</b> Regardless of where the client credentials are sent, you must specify the same location for the client ID and client secret.",
 							Computed:            true,
 						},
 						"type": schema.StringAttribute{

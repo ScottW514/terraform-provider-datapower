@@ -57,7 +57,7 @@ func (d *FTPQuoteCommandsDataSource) Metadata(_ context.Context, req datasource.
 
 func (d *FTPQuoteCommandsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "FTP Quoted Commands",
+		MarkdownDescription: "The configturation creates a named list of FTP commands to be quoted to a remote FTP server before a file transfer. These commands are referenced by the FTP Policies section of a User Agent configuration.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *FTPQuoteCommandsDataSource) Schema(ctx context.Context, req datasource.
 							Computed:            true,
 						},
 						"ftp_quoted_commands": schema.ListNestedAttribute{
-							MarkdownDescription: "Quoted Commands",
+							MarkdownDescription: "The list of commands to send to the remote FTP server.",
 							NestedObject:        models.DmFTPQuotedCommandDataSourceSchema,
 							Computed:            true,
 						},

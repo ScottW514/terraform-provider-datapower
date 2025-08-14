@@ -55,7 +55,7 @@ func (r *WebAppErrorHandlingPolicyResource) Metadata(ctx context.Context, req re
 
 func (r *WebAppErrorHandlingPolicyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Web Application Firewall Error Policy", "webapp-error-handling", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Define an error policy for a web application firewall. When the remote web service returns an error, this policy specifies how to handle the response that is sent to the client.", "webapp-error-handling", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *WebAppErrorHandlingPolicyResource) Schema(ctx context.Context, req reso
 				Optional:            true,
 			},
 			"type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Mode", "type", "").AddStringEnum("standard", "redirect", "proxy", "error-rule").AddDefaultValue("standard").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the mode for error handling. The default value is standard.", "type", "").AddStringEnum("standard", "redirect", "proxy", "error-rule").AddDefaultValue("standard").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

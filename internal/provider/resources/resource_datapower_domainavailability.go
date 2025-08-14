@@ -54,7 +54,7 @@ func (r *DomainAvailabilityResource) Metadata(ctx context.Context, req resource.
 
 func (r *DomainAvailabilityResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Domain availability (updates restart domain)", "domain-availability", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Domain availability monitors each multiprotocol gateway and web service proxy in the domain. When the operational state of any service in the domain is in the down state, the operational state for domain availability is down to indicate that these services are not ready to accept traffic. At startup, domain availability maintains all handlers in a quiesced state until their associated services are fully configured. When these services are ready to accept traffic, an event is written to the log that indicates that the domain is ready to process traffic.", "domain-availability", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -68,7 +68,7 @@ func (r *DomainAvailabilityResource) Schema(ctx context.Context, req resource.Sc
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

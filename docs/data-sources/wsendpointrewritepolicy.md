@@ -3,12 +3,12 @@
 page_title: "datapower_wsendpointrewritepolicy Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WS-Proxy Endpoint Rewrite
+  Create or edit WS Endpoint Rewrite Policy
 ---
 
 # datapower_wsendpointrewritepolicy (Data Source)
 
-WS-Proxy Endpoint Rewrite
+Create or edit WS Endpoint Rewrite Policy
 
 ## Example Usage
 
@@ -41,12 +41,12 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
-- `ws_endpoint_local_rewrite_rule` (Attributes List) Local Rewrite Rules (see [below for nested schema](#nestedatt--result--ws_endpoint_local_rewrite_rule))
-- `ws_endpoint_publish_rewrite_rule` (Attributes List) Publish Rewrite Rules (see [below for nested schema](#nestedatt--result--ws_endpoint_publish_rewrite_rule))
-- `ws_endpoint_remote_rewrite_rule` (Attributes List) Remote Rewrite Rules (see [below for nested schema](#nestedatt--result--ws_endpoint_remote_rewrite_rule))
-- `ws_endpoint_subscription_local_rule` (Attributes List) Subscription Local Rewrite Rule (see [below for nested schema](#nestedatt--result--ws_endpoint_subscription_local_rule))
-- `ws_endpoint_subscription_publish_rule` (Attributes List) Subscription Publish Rewrite Rule (see [below for nested schema](#nestedatt--result--ws_endpoint_subscription_publish_rule))
-- `ws_endpoint_subscription_remote_rule` (Attributes List) Subscription Remote Rewrite Rule (see [below for nested schema](#nestedatt--result--ws_endpoint_subscription_remote_rule))
+- `ws_endpoint_local_rewrite_rule` (Attributes List) Add, edit, or delete a local endpoint rewrite rule. These rules evaluate services in a deployed WSDL file and specify the URL the appliance should use locally for matched services. They convert addresses in WSDL files to local endpoints. (see [below for nested schema](#nestedatt--result--ws_endpoint_local_rewrite_rule))
+- `ws_endpoint_publish_rewrite_rule` (Attributes List) Add, edit, or delete a publish endpoint rewrite rule. These rules evaluate services in deployed WSDL file and specify the URL the appliance should publish when producing its own WSDL files. Use this if you wish to publish an address different from the local address, for example the address of a load balancer in front of appliance. (see [below for nested schema](#nestedatt--result--ws_endpoint_publish_rewrite_rule))
+- `ws_endpoint_remote_rewrite_rule` (Attributes List) Add, edit, or delete a remote endpoint rewrite rule. These rules evaluate services in deployed WSDL file and specify the URL the appliance should use remotely for matched services. They convert address in WSDL files to remote endpoints. (see [below for nested schema](#nestedatt--result--ws_endpoint_remote_rewrite_rule))
+- `ws_endpoint_subscription_local_rule` (Attributes List) Add, edit, or delete a subscription rewrite rule. (see [below for nested schema](#nestedatt--result--ws_endpoint_subscription_local_rule))
+- `ws_endpoint_subscription_publish_rule` (Attributes List) Add, edit, or delete a subscription rewrite rule. (see [below for nested schema](#nestedatt--result--ws_endpoint_subscription_publish_rule))
+- `ws_endpoint_subscription_remote_rule` (Attributes List) Add, edit, or delete a subscription rewrite rule. (see [below for nested schema](#nestedatt--result--ws_endpoint_subscription_remote_rule))
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

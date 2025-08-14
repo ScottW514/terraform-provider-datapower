@@ -54,7 +54,7 @@ func (r *MPGWErrorHandlingPolicyResource) Metadata(ctx context.Context, req reso
 
 func (r *MPGWErrorHandlingPolicyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Multi-Protocol Gateway Error Policy", "mpgw-error-handling", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A Multi-Protocol gateway error policy consists of one or more error actions. A service runs an error action depending on whether or not a corresponding matching rule selects the action for processing. A service can have one policy active at a time. When an error occurs in the Multi-Protocol Gateway from an HTTP or HTTPS request flow and no precedent error handler handles the error, the service calls the error policy.", "mpgw-error-handling", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *MPGWErrorHandlingPolicyResource) Schema(ctx context.Context, req resour
 				Optional:            true,
 			},
 			"policy_maps": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Policy Maps", "match", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The policy maps contain a list of error response action rules and their corresponding matching rules. When the policy evaluates the matching rules and finds a match, it runs the corresponding error response action. The policy runs the first error response action with a successful match.", "match", "").String,
 				NestedObject:        models.DmWebGWErrorPolicyMapResourceSchema,
 				Required:            true,
 			},

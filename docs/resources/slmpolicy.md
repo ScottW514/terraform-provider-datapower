@@ -3,13 +3,12 @@
 page_title: "datapower_slmpolicy Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SLM policy
-  CLI Alias: slm-policy
+  
 ---
 
 # datapower_slmpolicy (Resource)
 
-SLM policy
+<p>An SLM policy counts messages or measures latency for messages that match a set of select criteria and that pass through the appliance during a configured interval. The policy can take action when configured thresholds are reached.</p><p>Messages can be selected based on credential class, resource class, or both. If neither, all messages are selected.</p><p>A policy consists of one or more statements. Each statement establishes the credential class, resource class, thresholds, and actions to take when thresholds are met during an interval.</p><p>Examples:</p><ul><li>A policy that throttles all traffic that arrives at a rate faster than 1000 messages per second.</li><li>A policy that generates a log message for all messages that arrive during the last elapsed second that originated from a specific IP address and requested use of a specific resource.</li></ul>
   - CLI Alias: `slm-policy`
 
 ## Example Usage
@@ -33,14 +32,14 @@ resource "datapower_slmpolicy" "test" {
 
 - `api_mgmt` (Boolean)
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `execution_policy` (String) Evaluation method
+- `execution_policy` (String) Specify the operational behavior of the policy. The default behavior is to process all policy statements.
   - CLI Alias: `eval-method`
   - Choices: `terminate-at-first-reject`, `terminate-at-first-action`, `execute-all-statements`
   - Default value: `execute-all-statements`
-- `peer_group` (String) Peer group
+- `peer_group` (String) Specify the peer group that share in load distribution of traffic that is destined for the same resources. A peer group establishes a data-sharing protocol among members where each member has the data to determine whether a threshold is reached.
   - CLI Alias: `peer-group`
   - Reference to: `datapower_peergroup:id`
-- `statement` (Attributes List) Statement
+- `statement` (Attributes List) Specify the policy statement that establishes criteria to select messages, to set a measurement interval, to set thresholds, and to determine the action to take when the threshold is met. A policy can have multiple statements that run in the sequence defined by the statement identifier.
   - CLI Alias: `statement` (see [below for nested schema](#nestedatt--statement))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

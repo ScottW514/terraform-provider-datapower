@@ -3,12 +3,12 @@
 page_title: "datapower_apicors Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  CORS API action
+  The CORS API action handles cross-origin resource sharing (CORS) requests that are required by the API.
 ---
 
 # datapower_apicors (Data Source)
 
-CORS API action
+The CORS API action handles cross-origin resource sharing (CORS) requests that are required by the API.
 
 ## Example Usage
 
@@ -39,7 +39,7 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `title` (String) Title
 - `user_summary` (String) Comments

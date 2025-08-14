@@ -3,12 +3,12 @@
 page_title: "datapower_gitopstemplate Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  GitOps template
+  A core capability of the GitOps feature is to replace placeholder or template values with environment or device-specific values. This feature is analogous to deployment policies but differs in implementation.
 ---
 
 # datapower_gitopstemplate (Data Source)
 
-GitOps template
+A core capability of the GitOps feature is to replace placeholder or template values with environment or device-specific values. This feature is analogous to deployment policies but differs in implementation.
 
 ## Example Usage
 
@@ -40,7 +40,7 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `templates` (Attributes List) Templates (see [below for nested schema](#nestedatt--result--templates))
+- `templates` (Attributes List) Specify the GitOps templates to modify the DataPower configuration. Template processing is in the order of the read or write GitOps operation. (see [below for nested schema](#nestedatt--result--templates))
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

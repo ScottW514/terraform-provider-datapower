@@ -3,12 +3,12 @@
 page_title: "datapower_b2bprofilegroup Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  B2B partner profile group
+  A group of B2B partner profiles that can be enable or disable at the same time. Each partner profile in the group is identified by its name and destination. Without a destination, the configuration uses the first destination for the partner profile.
 ---
 
 # datapower_b2bprofilegroup (Data Source)
 
-B2B partner profile group
+A group of B2B partner profiles that can be enable or disable at the same time. Each partner profile in the group is identified by its name and destination. Without a destination, the configuration uses the first destination for the partner profile.
 
 ## Example Usage
 

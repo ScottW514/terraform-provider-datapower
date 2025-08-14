@@ -1,51 +1,68 @@
 name: CryptoCertificate
-description: 'Certificate'
-cli_alias: 'certificate'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/CryptoCertificate'
+description: A certificate provides an added layer of security by supplying an indirect
+  reference to a file that contains a public key.
+cli_alias: certificate
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/CryptoCertificate
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestCryptoCertificate"'
-    test_expect_ds: '"AccTest_CryptoCertificate"'
-    example: 'CryptoCertificateName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Filename
-    type: String
-    required: true
-    description: 'File remote path'
-    cli_alias: file-name
-    example: 'cert:///certificate.crt'
-    test_value: '"cert:///acc-test-server.crt"'
-    test_bed_value: 'datapower_file.acc_test_server_crt.remote_path'
-  # DEPRECATED
-  # - name: Password
-  # DEPRECATED
-  # - name: PasswordAlias
-  - name: Alias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password alias'
-    cli_alias: password-alias
-  - name: IgnoreExpiration
-    type: Bool
-    default: false
-    description: 'Ignore expiration dates'
-    cli_alias: ignore-expiration
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestCryptoCertificate"'
+  test_expect_ds: '"AccTest_CryptoCertificate"'
+  example: CryptoCertificateName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Filename
+  type: String
+  required: true
+  description: Specify the file that contains the public key. The name might be the
+    same as the file that contains the private key. <ul><li>When in the public crypto
+    area, the file is in the <tt>pubcert:</tt> directory.</li><li>When in the private
+    crypto area, the file is in the <tt>cert:</tt> directory.</li><li>When in the
+    public area, the file is in the <tt>local:</tt> directory. <p><b>Attention:</b>
+    Any file in the <tt>local:</tt> directory can be downloaded or included in an
+    export. Therefore, consider carefully before you store crypto files in this directory.</p></li><li>When
+    retrieved from z/OS, the file is in the <tt>saf-cert:</tt> directory.</li><li>When
+    on the SafeNet Luna HSM, the file is in a partition of the <tt>luna-cert:</tt>
+    directory.</li></ul>
+  cli_alias: file-name
+  example: cert:///certificate.crt
+  test_value: '"cert:///acc-test-server.crt"'
+  test_bed_value: datapower_file.acc_test_server_crt.remote_path
+- name: Alias
+  type: String
+  reference_to: PasswordAlias
+  description: Password alias
+  cli_alias: password-alias
+- name: IgnoreExpiration
+  type: Bool
+  default: false
+  description: Specify whether to ignore the expiration date of the certificate. When
+    enabled, the certificate remains in the <tt>up</tt> operational state outside
+    of its expiration values. <p>Although the certificate is in the <tt>up</tt> state,
+    other configurations that reference the certificate use the internal expiration
+    values. In other words, the certificate itself is in the <tt>up</tt> state, but
+    any configuration that references the certificate adheres to the internal expiration
+    values.</p><ul><li>If the certificate is for certificate chain validation in validation
+    credentials and the certificate is invalid, validation fails. Expired certificates
+    cause the validation to fail unless you disable check dates in validation credentials.</li><li>If
+    the certificate is in identification credentials, the DataPower Gateway sends
+    the certificate to the peer. The peer can reject the certificate as invalid.</li></ul>
+  cli_alias: ignore-expiration

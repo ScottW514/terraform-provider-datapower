@@ -55,7 +55,7 @@ func (r *LunaPartitionResource) Metadata(ctx context.Context, req resource.Metad
 
 func (r *LunaPartitionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SafeNet Luna HSM partition", "luna-partition", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The SafeNet Luna Network HSM appliance stores the RSA keys in independent partitions. The configuration of the Luna HSM partition specifies the partition that the system accesses in the Luna HSM.", "luna-partition", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,7 +84,7 @@ func (r *LunaPartitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"partition_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Partition name", "partition", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the partition name for key storage. The name identifies the Luna partition. The minimum length is 1 character. The maximum length is 32 characters.", "partition", "").String,
 				Required:            true,
 			},
 			"partition_serial": schema.StringAttribute{

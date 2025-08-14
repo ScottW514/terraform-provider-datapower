@@ -1,354 +1,449 @@
 name: LogTarget
-description: 'Log Target'
-cli_alias: 'logging target'
-cmd_group: 'logging'
-rest_endpoint: '/mgmt/config/{domain}/LogTarget'
+description: <p>Log targets capture messages that are posted by the various objects
+  and services. Target types enable additional capabilities.</p><p>Messages in log
+  targets can be filtered by priority, event code, event category, object type, or
+  IP address. By default, a log target cannot accept messages until it is subscribed
+  to one or more events.</p>
+cli_alias: logging target
+cmd_group: logging
+rest_endpoint: /mgmt/config/{domain}/LogTarget
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTest_LogTarget"'
-    test_expect_ds: '"AccTest_LogTarget"'
-    example: 'LogTargetName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Backup
-    type: String
-    reference_to: LogTarget
-    description: 'Backup log'
-    cli_alias: backup
-  - name: LogEvents
-    type: List
-    element_type: DmLogEvent
-    description: 'Event subscriptions'
-    cli_alias: event
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Type
-    type: String
-    enum:
-      - 'console'
-      - 'cache'
-      - 'syslog'
-      - 'syslog-tcp'
-      - 'smtp'
-      - 'file'
-      - 'soap'
-      - 'snmp'
-      - 'nfs'
-    default: 'file'
-    required: true
-    description: 'Target type'
-    cli_alias: type
-  - name: Priority
-    type: String
-    enum:
-      - 'unknown'
-      - 'high-min'
-      - 'high'
-      - 'high-max'
-      - 'normal-min'
-      - 'normal'
-      - 'normal-max'
-      - 'low-min'
-      - 'low'
-      - 'low-max'
-    default: 'normal'
-    description: 'Logging priority'
-    cli_alias: priority
-  - name: SoapVersion
-    type: String
-    enum:
-      - 'soap11'
-      - 'soap12'
-    default: 'soap11'
-    description: 'SOAP version'
-    cli_alias: soap-version
-  - name: Format
-    type: String
-    enum:
-      - 'text'
-      - 'raw'
-      - 'xml'
-      - 'json-icp'
-      - 'cbe'
-      - 'csv'
-      - 'audit'
-      - 'diag'
-    default: 'xml'
-    description: 'Log format'
-    cli_alias: format
-  - name: TimestampFormat
-    type: String
-    enum:
-      - 'syslog'
-      - 'numeric'
-      - 'zulu'
-    default: 'zulu'
-    description: 'Timestamp format'
-    cli_alias: timestamp
-  - name: FixedFormat
-    type: Bool
-    default: false
-    description: 'Fixed format'
-    cli_alias: fixed-format
-  - name: LocalIdentifier
-    type: String
-    description: 'Local identifier'
-    cli_alias: local-ident
-  - name: EmailAddress
-    type: String
-    description: 'Recipient email address'
-    cli_alias: email-address
-  - name: SenderAddress
-    type: String
-    description: 'Sender email address'
-    cli_alias: sender-address
-  - name: SMTPDomain
-    type: String
-    description: 'SMTP client domain'
-    cli_alias: smtp-domain
-  - name: Size
-    type: Int64
-    minimum: 100
-    maximum: 50000
-    default: 500
-    description: 'Log size'
-    cli_alias: size
-  - name: URL
-    type: String
-    description: 'URL'
-    cli_alias: url
-  - name: NFSMount
-    type: String
-    reference_to: NFSStaticMount
-    description: 'NFS static mount'
-    cli_alias: nfs-static-mount
-  # DEPRECATED
-  # - name: SSLProxyProfile
-  - name: LocalFile
-    type: String
-    example: 'logtemp:///filename.log'
-    description: 'File name'
-    cli_alias: local-file
-  - name: NFSFile
-    type: String
-    example: 'dp-log/filename.log'
-    description: 'NFS file path'
-    cli_alias: nfs-file
-  - name: ArchiveMode
-    type: String
-    enum:
-      - 'rotate'
-      - 'upload'
-    default: 'rotate'
-    description: 'Archive mode'
-    cli_alias: archive-mode
-  - name: UploadMethod
-    type: String
-    enum:
-      - 'ftp'
-      - 'scp'
-      - 'sftp'
-      - 'smtp'
-    default: 'ftp'
-    description: 'Upload protocol'
-    cli_alias: upload-method
-  - name: Rotate
-    type: Int64
-    minimum: 1
-    maximum: 100
-    default: 3
-    description: 'Number of rotations'
-    cli_alias: rotate
-  - name: UseANSIColor
-    type: Bool
-    default: false
-    description: 'Use ANSI color scheme'
-    cli_alias: ansi-color
-  - name: RemoteAddress
-    type: String
-    description: 'Remote address'
-    cli_alias: remote-address
-  - name: RemotePort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    description: 'Remote port'
-    cli_alias: remote-port
-  - name: RemoteLogin
-    type: String
-    description: 'Remote login'
-    cli_alias: remote-login
-  - name: RemotePassword
-    type: String
-    sensitive: true
-    description: 'Remote password'
-  - name: RemoteDirectory
-    type: String
-    description: 'Remote directory'
-    cli_alias: remote-directory
-  - name: LocalAddress
-    type: String
-    description: 'Local address'
-    cli_alias: local-address
-  - name: SyslogFacility
-    type: String
-    enum:
-      - 'user'
-      - 'security'
-      - 'authpriv'
-      - 'local0'
-      - 'local1'
-      - 'local2'
-      - 'local3'
-      - 'local4'
-      - 'local5'
-      - 'local6'
-      - 'local7'
-    default: 'user'
-    description: 'syslog facility'
-    cli_alias: facility
-  - name: RateLimit
-    type: Int64
-    minimum: 0
-    maximum: 1000
-    default: 100
-    description: 'Rate limit'
-    cli_alias: rate-limit
-  - name: MaxConnections
-    type: Int64
-    minimum: 1
-    maximum: 100
-    default: 1
-    description: 'Maximum connections'
-    cli_alias: maximum-connections
-  - name: ConnectTimeout
-    type: Int64
-    minimum: 1
-    maximum: 90
-    default: 60
-    description: 'Connect timeout'
-    cli_alias: connect-timeout
-  - name: IdleTimeout
-    type: Int64
-    minimum: 1
-    maximum: 600
-    default: 15
-    description: 'Idle timeout'
-    cli_alias: idle-timeout
-  - name: ActiveTimeout
-    type: Int64
-    minimum: 0
-    maximum: 60
-    default: 0
-    description: 'Active timeout'
-    cli_alias: active-timeout
-  - name: FeedbackDetection
-    type: Bool
-    default: false
-    description: 'Feedback detection'
-    cli_alias: feedback-detection
-  # DEPRECATED
-  # - name: IdenticalEventSuppression
-  # DEPRECATED
-  # - name: IdenticalEventPeriod
-  - name: LogEventCode
-    type: List
-    element_type: String
-    description: 'Event subscription filter'
-    cli_alias: event-code
-  - name: LogEventFilter
-    type: List
-    element_type: String
-    description: 'Event suppression filter'
-    cli_alias: event-filter
-  - name: LogObjects
-    type: List
-    element_type: DmLogObject
-    description: 'Object filters'
-    cli_alias: object
-  - name: LogIPFilter
-    type: List
-    element_type: DmLogIPFilter
-    description: 'IP address filters'
-    cli_alias: ip-filter
-  - name: LogTriggers
-    type: List
-    element_type: DmLogTrigger
-    description: 'Event triggers'
-    cli_alias: trigger
-  - name: SSLClientProfile
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: RetryInterval
-    type: Int64
-    minimum: 1
-    maximum: 600
-    default: 1
-    description: 'Retry interval'
-    cli_alias: retry-interval
-  - name: RetryAttempts
-    type: Int64
-    minimum: 1
-    maximum: 100
-    default: 1
-    description: 'Retry attempts'
-    cli_alias: retry-attempts
-  - name: LongRetryInterval
-    type: Int64
-    minimum: 1
-    maximum: 600
-    default: 20
-    description: 'Long retry interval'
-    cli_alias: long-retry-interval
-  - name: LogPrecision
-    type: String
-    enum:
-      - 'second'
-      - 'microsecond'
-    default: 'second'
-    description: 'Log timestamp precision'
-    cli_alias: precision
-  - name: EventBufferSize
-    type: String
-    enum:
-      - '2048'
-      - '16384'
-      - '65536'
-      - '131072'
-      - '262144'
-      - '524288'
-      - '1048576'
-      - '2097152'
-      - '4194304'
-      - '8388608'
-    default: '2048'
-    description: 'Buffer size'
-    cli_alias: buffer-size
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTest_LogTarget"'
+  test_expect_ds: '"AccTest_LogTarget"'
+  example: LogTargetName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Backup
+  type: String
+  reference_to: LogTarget
+  description: Sets another Log Target object as a backup to receive redirected events
+    in case of an error on the current file-based log target. This setting has no
+    effect on network-based log targets. For network-based log targets, set a load
+    balancer group as the remote host.
+  cli_alias: backup
+- name: LogEvents
+  type: List
+  element_type: DmLogEvent
+  description: <p>Subscribes the log target to particular event categories. Some example
+    categories include:</p><dl><dt>auth</dt><dd>Authorization events</dd><dt>mgmt</dt><dd>Configuration
+    management events</dd><dt>xslt</dt><dd>XSLT processing events</dd></dl><p>For
+    each event category chosen (including the <tt>all</tt> category), you can establish
+    a priority level that must be met before the log message will be captured by the
+    log target. Without event subscriptions, no events are included by default. To
+    allow the log target to capture messages, the configuration must include at least
+    one event subscription. The category can be the <tt>all</tt> category.</p>
+  cli_alias: event
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Type
+  type: String
+  enum:
+  - console
+  - cache
+  - syslog
+  - syslog-tcp
+  - smtp
+  - file
+  - soap
+  - snmp
+  - nfs
+  default: file
+  required: true
+  description: Specify the type of the log target. The default value is file.
+  cli_alias: type
+- name: Priority
+  type: String
+  enum:
+  - unknown
+  - high-min
+  - high
+  - high-max
+  - normal-min
+  - normal
+  - normal-max
+  - low-min
+  - low
+  - low-max
+  default: normal
+  description: Specify the priority to control the scheduling of logs. When system
+    resources are in high demand, high priority operations are favored over lower
+    priority operations.
+  cli_alias: priority
+- name: SoapVersion
+  type: String
+  enum:
+  - soap11
+  - soap12
+  default: soap11
+  description: SOAP version
+  cli_alias: soap-version
+- name: Format
+  type: String
+  enum:
+  - text
+  - raw
+  - xml
+  - json-icp
+  - cbe
+  - csv
+  - audit
+  - diag
+  default: xml
+  description: Log format
+  cli_alias: format
+- name: TimestampFormat
+  type: String
+  enum:
+  - syslog
+  - numeric
+  - zulu
+  default: zulu
+  description: Specify the format of the timestamp for log entries. The default format
+    is ISO UTC format.
+  cli_alias: timestamp
+- name: FixedFormat
+  type: Bool
+  default: false
+  description: Specify whether to make the format of logs unchanging. The log format
+    fixed at version 6.0.1. New fields added to log formats are ignored.
+  cli_alias: fixed-format
+- name: LocalIdentifier
+  type: String
+  description: Specify a descriptive string that identifies the log target to remote
+    recipients. For syslog destinations, do not include spaces.
+  cli_alias: local-ident
+- name: EmailAddress
+  type: String
+  description: Recipient email address
+  cli_alias: email-address
+- name: SenderAddress
+  type: String
+  description: Specify the email address of the sender. The value must match the email
+    address of the crypto key when email messages are signed.
+  cli_alias: sender-address
+- name: SMTPDomain
+  type: String
+  description: Specify the fully-qualified domain name of the SMTP client. This information
+    is part of the SMTP session initiation (HELO command).
+  cli_alias: smtp-domain
+- name: Size
+  type: Int64
+  minimum: 100
+  maximum: 50000
+  default: 500
+  description: Specify the maximum size of file-based log targets. Enter a value in
+    the range 100 - 50000. The default value is 500.
+  cli_alias: size
+- name: URL
+  type: String
+  description: Specify the HTTP URL to send log entries. Entries are sent with the
+    POST method and uses the default user agent.
+  cli_alias: url
+- name: NFSMount
+  type: String
+  reference_to: NFSStaticMount
+  description: NFS static mount
+  cli_alias: nfs-static-mount
+- name: LocalFile
+  type: String
+  example: logtemp:///filename.log
+  description: Specify the name of the log file. For example, <tt>logtemp:///filename.log</tt>
+    or <tt>logstore:///filename.log</tt> .
+  cli_alias: local-file
+- name: NFSFile
+  type: String
+  example: dp-log/filename.log
+  description: Specify the path to the log file. The path is relative to the NFS mount.
+    Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format.
+    Do not end the path with a forward slash (/).
+  cli_alias: nfs-file
+- name: ArchiveMode
+  type: String
+  enum:
+  - rotate
+  - upload
+  default: rotate
+  description: Archive mode
+  cli_alias: archive-mode
+- name: UploadMethod
+  type: String
+  enum:
+  - ftp
+  - scp
+  - sftp
+  - smtp
+  default: ftp
+  description: Upload protocol
+  cli_alias: upload-method
+- name: Rotate
+  type: Int64
+  minimum: 1
+  maximum: 100
+  default: 3
+  description: Specify the maximum number of rotations. Enter a value in the range
+    1 - 100. The default value is 3.
+  cli_alias: rotate
+- name: UseANSIColor
+  type: Bool
+  default: false
+  description: Specify whether to enable the use of ANSI color scheme. When enabled,
+    ANSI X3.64 escape sequences color-code messages by log level.
+  cli_alias: ansi-color
+- name: RemoteAddress
+  type: String
+  description: Specify the host name or IP address of the remote server. To establish
+    a secure TLS connection to the server, set this value to the value of the remote
+    host of a TLS proxy service. The local TLS proxy service then securely forwards
+    the log entries to its configured remote server.
+  cli_alias: remote-address
+- name: RemotePort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  description: Specify the listening port on the remote server. If using a local TLS
+    proxy service to establish a secure TLS connection, set this value to the value
+    of the remote port of the TLS proxy service.
+  cli_alias: remote-port
+- name: RemoteLogin
+  type: String
+  description: Remote login
+  cli_alias: remote-login
+- name: RemotePassword
+  type: String
+  sensitive: true
+  description: Specify the password for the account or username for non-public key
+    authentication. Public key authentication can be configured through the default
+    user agent.
+- name: RemoteDirectory
+  type: String
+  description: Specify an existing writable directory on the remote server to upload
+    files. <ul><li>To denote an absolute directory from the root directory, specify
+    a single forward slash character (/) or equivalent encoded character (%2F) before
+    the fully qualified path. <ul><li>For SCP or SFTP, enter / to resolve to //.</li><li>For
+    FTP, enter %2F to resolve to /%2F.</li></ul></li><li>To denote a directory that
+    is relative to the home directory of a user, do not specify a forward slash character
+    or encoded character before the fully qualified file name.</li></ul>
+  cli_alias: remote-directory
+- name: LocalAddress
+  type: String
+  description: Local address
+  cli_alias: local-address
+- name: SyslogFacility
+  type: String
+  enum:
+  - user
+  - security
+  - authpriv
+  - local0
+  - local1
+  - local2
+  - local3
+  - local4
+  - local5
+  - local6
+  - local7
+  default: user
+  description: Specify the syslog log facility (per RFC 3164) to include in messages
+    sent to the syslog log target.
+  cli_alias: facility
+- name: RateLimit
+  type: Int64
+  minimum: 0
+  maximum: 1000
+  default: 100
+  description: Specify the maximum number of events to log per second. Enter a value
+    in the range 1 - 1000. The default value is 100. <ul><li>Remote log targets might
+    receive more than this number of events within a second, depending on network
+    latency and buffering. syslog over TCP log targets are exclusive, because only
+    a single TCP connection is made to the server.</li><li>In the case of syslog over
+    TCP log targets, the rate limit is the maximum number of events transmitted over
+    the connection within one second. A value of 0 disables rate-limiting by the logging
+    target.</li></ul>
+  cli_alias: rate-limit
+- name: MaxConnections
+  type: Int64
+  minimum: 1
+  maximum: 100
+  default: 1
+  description: Specify the maximum number of concurrent connections that can be opened
+    to the syslog-tcp server. Enter a value in the range 1 - 100. The default value
+    is 1.
+  cli_alias: maximum-connections
+- name: ConnectTimeout
+  type: Int64
+  minimum: 1
+  maximum: 90
+  default: 60
+  description: Specify the time to wait in seconds for a connection to the server
+    to be established before generating an error. At this time, a log message is generated
+    in the default log and connection retry attempts are made. Enter a value in the
+    range 1 - 90. The default value is 60.
+  cli_alias: connect-timeout
+- name: IdleTimeout
+  type: Int64
+  minimum: 1
+  maximum: 600
+  default: 15
+  description: Specify the time in seconds to wait before closing an established but
+    inactive connection to the server. Enter a value in the range 1 - 600. The default
+    value is 15. <p><b>Attention:</b> If multiple log targets have the following configuration,
+    they might share connections. <ul><li>The same local address and port</li><li>The
+    same remote address and port</li></ul> Because of potential connection-sharing,
+    set the same idle timeout value for these log targets.</p>
+  cli_alias: idle-timeout
+- name: ActiveTimeout
+  type: Int64
+  minimum: 0
+  maximum: 60
+  default: 0
+  description: Specify the time to wait in seconds before closing an established and
+    active connection to the server. Enter a value in the range 0 - 60. A value of
+    0 allows the log target to most efficiently send messages to the server by maintaining
+    a healthy connection indefinitely. The default value is 0. <p><b>Attention:</b>
+    If multiple log targets have the following configuration, they might share connections.
+    <ul><li>The same local address and port</li><li>The same remote address and port</li></ul>
+    Because of potential connection-sharing, set the same active timeout value for
+    these log targets.</p>
+  cli_alias: active-timeout
+- name: FeedbackDetection
+  type: Bool
+  default: false
+  description: Specify whether to suppress events from the logging subsystem itself.
+    A log target always suppresses its own events, but will record events from other
+    log targets. Under certain circumstances with multiple log targets, these events
+    could create a positive feedback loop that could cause resource contention. Enable
+    to suppress all log events from the logging subsystem and prevent resource contention.
+  cli_alias: feedback-detection
+- name: LogEventCode
+  type: List
+  element_type: String
+  description: Specify specific events to allow in the log. Subscription filters allow
+    only those log messages that contain the configured event codes. With this filter,
+    it is possible to create a log target that collects only log messages for a specific
+    set of event codes.
+  cli_alias: event-code
+- name: LogEventFilter
+  type: List
+  element_type: String
+  description: Specify specific events to suppress in the log. Suppression filters
+    suppress those log messages that contain the configured event codes. With this
+    filter, it is possible to create a log target that collects a wide range of log
+    messages except for a specific set of event codes.
+  cli_alias: event-filter
+- name: LogObjects
+  type: List
+  element_type: DmLogObject
+  description: Specify specific objects to log events for. Object filters allow only
+    those log messages for specific objects to be written to this log target. Object
+    filters are based on object classes. With this filter, you can create a log target
+    that collects only log messages generated by particular instances of the specified
+    object classes.
+  cli_alias: object
+- name: LogIPFilter
+  type: List
+  element_type: DmLogIPFilter
+  description: Specify specific IP addresses to log events for. IP address filters
+    allow only those log messages from specific IP addresses to be written to this
+    log target.
+  cli_alias: ip-filter
+- name: LogTriggers
+  type: List
+  element_type: DmLogTrigger
+  description: Specify event trigger points. Event triggers start actions only when
+    triggered by a specified message ID or event code. With this filter, it is possible
+    to create a log target that collects only the results of the specified trigger
+    action. For example, to trigger the generation of an error report when a certain
+    event occurs use the <b>save error-report</b> command.
+  cli_alias: trigger
+- name: SSLClientProfile
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: ssl-client
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: TLS client type
+  cli_alias: ssl-client-type
+- name: RetryInterval
+  type: Int64
+  minimum: 1
+  maximum: 600
+  default: 1
+  description: Specify the time to wait in seconds before attempting to reestablish
+    a failed connection to the syslog server. Enter a value in the range 1 - 600.
+    The default value is 1.
+  cli_alias: retry-interval
+- name: RetryAttempts
+  type: Int64
+  minimum: 1
+  maximum: 100
+  default: 1
+  description: Specify the number of attempts for a failed connection to the syslog
+    server. After the number of attempts is reached, connection attempts use the value
+    set for the long retry interval. When the long interval is disabled, the log target
+    repeatedly attempts to reconnect to the syslog server with the value set for the
+    retry interval. <p><b>Note:</b> 0 means that the long retry interval is never
+    used and retries forever by using the retry interval.</p>
+  cli_alias: retry-attempts
+- name: LongRetryInterval
+  type: Int64
+  minimum: 1
+  maximum: 600
+  default: 20
+  description: Specify the time to wait in seconds before attempting to reestablish
+    a failed connection to the syslog server after the number of attempts is reached.
+    Enter a value in the range 0 - 600. The default value is 20. <p><b>Note:</b> The
+    long retry interval must be greater than the retry interval or it will take no
+    effect.</p>
+  cli_alias: long-retry-interval
+- name: LogPrecision
+  type: String
+  enum:
+  - second
+  - microsecond
+  default: second
+  description: Specify the precision for the timestamp of log messages. The default
+    value is seconds.
+  cli_alias: precision
+- name: EventBufferSize
+  type: String
+  enum:
+  - '2048'
+  - '16384'
+  - '65536'
+  - '131072'
+  - '262144'
+  - '524288'
+  - '1048576'
+  - '2097152'
+  - '4194304'
+  - '8388608'
+  default: '2048'
+  description: Specify the buffer size in number of event entries. The buffer stores
+    log events before they are written to the target. A buffer of this size is allocated
+    for each connection.
+  cli_alias: buffer-size

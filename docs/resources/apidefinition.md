@@ -3,13 +3,13 @@
 page_title: "datapower_apidefinition Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API definition
+  An API definition uses HTTP requests to GET, PUT, POST, and DELETE data.
   CLI Alias: api-definition
 ---
 
 # datapower_apidefinition (Resource)
 
-API definition
+An API definition uses HTTP requests to GET, PUT, POST, and DELETE data.
   - CLI Alias: `api-definition`
 
 ## Example Usage
@@ -32,16 +32,16 @@ resource "datapower_apidefinition" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `path` (List of String) Paths
+- `path` (List of String) Specify the paths through which users access the API operations. A path consists of one or more HTTP operations.
   - CLI Alias: `path`
   - Reference to: `datapower_apipath:id`
 
 ### Optional
 
-- `activity_log_toggle` (Boolean) Enable logging
+- `activity_log_toggle` (Boolean) Specify whether to enable API activity logging. The API gateway runs the activity log API action to generate logs. To generate log data for calls, you must enable this property and ensure that the following conditions are met. <ul><li>The logging type is not set to none.</li><li>The activity log action is added in the API rule for the API definition.</li></ul><p>When disabled, the API gateway does not generate log data.</p>
   - CLI Alias: `activity-log`
   - Default value: `false`
-- `allow_chunked_uploads` (Boolean) Allow chunked uploads
+- `allow_chunked_uploads` (Boolean) Specify whether to transfer documents to the server in chunks, which is based on the <tt>Transfer-Encoding: chunked</tt> header. This setting applies only to the <tt>invoke</tt> 1.5.0 policy that is deployed from API Connect from using the migration utility.
   - CLI Alias: `allow-chunked-uploads`
   - Default value: `true`
 - `allow_trailing_slash` (Boolean) Allow trailing slash
@@ -51,21 +51,21 @@ resource "datapower_apidefinition" "test" {
   - CLI Alias: `allowed-api-protocols` (see [below for nested schema](#nestedatt--allowed_api_protocols))
 - `api_id` (String) API ID
   - CLI Alias: `id`
-- `api_mutual_tls_header_name` (String) API protection HTTP header
+- `api_mutual_tls_header_name` (String) Specify the HTTP header that contains the client certificate for mutual TLS. The default value is <tt>X-Client-Certificate</tt> .
   - CLI Alias: `api-mutual-tls-header-name`
   - Default value: `X-Client-Certificate`
-- `api_mutual_tls_source` (List of String) API protection sources
+- `api_mutual_tls_source` (List of String) Specify the sources to obtain the client certificate for mutual TLS. Because you can define multiple ways to obtain the source, ensure that you sequence the methods appropriately.
   - CLI Alias: `api-mutual-tls-source`
   - Choices: `header`, `tls_cert`
-- `assembly` (String) Assembly
+- `assembly` (String) Specify the assembly to apply to API calls. An assembly is a rule that defines the actions to run against API requests and how to handle the processing errors.
   - CLI Alias: `assembly`
   - Reference to: `datapower_assembly:id`
-- `base_path` (String) Base path
+- `base_path` (String) Specify the base path on which the API is served, which is relative to the host. When the base path is not specified, the APIs are served directly under the host. The base path does not include the hostname or any additional segments for paths or operations. The base path must start but not end with slash (/). All resources in a REST API are defined relative to its base path.
   - CLI Alias: `base-path`
   - Default value: `/`
-- `consume` (List of String) Consumes
+- `consume` (List of String) Specify the MIME types that the API can consume. These MIME types apply to all API operations. You can override the setting for specific operations in the API operation.
   - CLI Alias: `consume`
-- `content` (String) Content on success
+- `content` (String) Specify the content to log on success. When set to payload data, you must enable message buffering to capture all request and response data.
   - CLI Alias: `success-content`
   - Choices: `none`, `activity`, `header`, `payload`
   - Default value: `activity`
@@ -75,39 +75,39 @@ resource "datapower_apidefinition" "test" {
 - `cors_policy` (String) CORS policy
   - CLI Alias: `cors-policy`
   - Reference to: `datapower_corspolicy:id`
-- `cors_toggle` (Boolean) Enable CORS
+- `cors_toggle` (Boolean) Specify whether to enable the API gateway to handle cross-origin resource sharing (CORS) requests. <ul><li>When enabled, the API gateway runs the API CORS action to handle all CORS requests for the API.</li><li>The routing API action matches the API to process, determines that the request is a preflight CORS request, and sets the <tt>request.attributes.isCORSPreflight</tt> flag to <tt>true</tt> .</li><li>When CORS is enabled and a preflight request is received, all assembly actions and many API actions are skipped. Only the following API actions are processed.</li><ul><li>The CORS API action configures the appropriate response headers.</li><li>The result API action sets the response headers.</li></ul><li>For all preflight requests, the security and client identification actions are always skipped.</li></ul>
   - CLI Alias: `cors`
   - Default value: `false`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `deployment_state` (String) Deployment state
+- `deployment_state` (String) Specify the deployment state of the API. By default, the deployment state is running instead of suspended.
   - CLI Alias: `deployment-state`
   - Choices: `running`, `suspended`
   - Default value: `running`
-- `enforce_all_headers_case_insensitive` (Boolean) Enforce all headers as case-insensitive
+- `enforce_all_headers_case_insensitive` (Boolean) Specify whether to enforce all headers in case-insensitive. By default, the following behavior applies to headers. <ul><li>Headers in the <tt>message.headers</tt> and <tt>request.headers</tt> contexts are case-insensitive.</li><li>Headers in a custom context, such as <tt>foo.headers</tt> , are case-sensitive. For example, <tt>foo.headers.bar</tt> and <tt>foo.headers.Bar</tt> are different headers.</li></ul>
   - CLI Alias: `enforce-all-headers-case-insensitive`
   - Default value: `false`
-- `enforce_form_data_parameter` (Boolean) Enforce form data parameter
+- `enforce_form_data_parameter` (Boolean) Specify whether to resolve and populate the form data parameter. <ul><li>When enabled and the operation of the API path configures any form data, resolve the payload as BLOB data and populate the corresponding fields as context variables during routing. Applicable when the <tt>Content-Type</tt> header is <tt>application/x-www-form-urlencoded</tt> or <tt>multipart/form-data</tt> .</li><li>When disabled and no required form-data parameter is specified, processing does not resolve as a BLOB and populate the parameter. Applicable when the <tt>Content-Type</tt> header is <tt>application/x-www-form-urlencoded</tt> or <tt>multipart/form-data</tt> .</li></ul>
   - CLI Alias: `enforce-form-data-parameter`
   - Default value: `true`
 - `enforce_required_params` (Boolean) Enforce required parameters
   - CLI Alias: `enforce-required-params`
   - Default value: `true`
-- `error_content` (String) Content on error
+- `error_content` (String) Specify the content to log on error. When set to payload data, you must enable message buffering to capture all request and response data.
   - CLI Alias: `error-content`
   - Choices: `none`, `activity`, `header`, `payload`
   - Default value: `payload`
 - `force_http500_for_soap11` (Boolean) Force HTTP 500 for SOAP 1.1
   - CLI Alias: `force-http-500-for-soap11`
   - Default value: `false`
-- `get_raw_body_value` (Boolean) Get raw body value
+- `get_raw_body_value` (Boolean) Specify whether the GatewayScript <tt>apim.getvariable()</tt> APIreturns the raw body instead of parsing. This setting applies only when the context is other than <tt>message</tt> .
   - CLI Alias: `get-raw-body-value`
   - Default value: `false`
 - `graph_ql_schema` (String) GraphQL schema location
   - CLI Alias: `graphql-schema`
   - Reference to: `datapower_apischema:id`
-- `html_page` (String) HTML page
+- `html_page` (String) Specify the name and location of a static HTML page that the API can return. Import the file to the <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt> DataPower directory.
   - CLI Alias: `html-page`
-- `message_buffering` (Boolean) Enable message buffering
+- `message_buffering` (Boolean) Specify whether to buffer requests and responses before processing. <ul><li>When enabled, requests and responses are buffered before processing. The message payload and the output of the invoke assembly action are read as a binary large object (BLOB).</li><li>When disabled, requests and responses are streamed. Only an asynchronous API call can read the streamed data. If the message processing requires data to be parsed at the payload level, buffering is used to capture the data.</li></ul><p>If you enable activity logging to capture payload data, you must enable message buffering to capture all request and response data.</p>
   - CLI Alias: `message-buffering`
   - Default value: `false`
 - `name` (String) API name
@@ -116,29 +116,29 @@ resource "datapower_apidefinition" "test" {
   - CLI Alias: `preserved-request-header`
 - `preserved_response_header` (List of String) Response header to preserve
   - CLI Alias: `preserved-response-header`
-- `produce` (List of String) Produces
+- `produce` (List of String) Specify the MIME types that the API can produce. These MIME types apply to all API operations. You can override the setting for specific operations in the API operation.
   - CLI Alias: `produce`
-- `properties` (Attributes List) Custom properties
+- `properties` (Attributes List) Specify custom entries for API properties. An API property is a type of context variable whose value is dependent on the collection that the API is provisioned in. Collection-specific API properties allow you to use the same API definition in different collections when a property in a collection requires a unique or different value. A custom property entry defines a property and its value for one collection. For each custom property or property that needs a different value for another collection, add another entry.
   - CLI Alias: `property` (see [below for nested schema](#nestedatt--properties))
 - `require_api_mutual_tls` (Boolean) API protection
   - CLI Alias: `require-api-mutual-tls`
   - Default value: `false`
-- `return_v5_responses` (Boolean) Return v5 responses
+- `return_v5_responses` (Boolean) Specify whether to return v5-compatible responses, such as OAuth and client security error responses.
   - CLI Alias: `return-v5-responses`
   - Default value: `false`
-- `schemas` (Attributes List) Schemas
+- `schemas` (Attributes List) Specify the API schemas that define data types for request or message validation. An API data type consists of a name and its API schema.
   - CLI Alias: `schema` (see [below for nested schema](#nestedatt--schemas))
-- `security_requirement` (List of String) Security requirements
+- `security_requirement` (List of String) Specify the alternative security requirements to enforce for the API as a whole. In other words, processing applies a logical <tt>OR</tt> between the security requirements. By default, the security requirement is applied to all operations in the API. However, for each API operation, you can override the API-level security by separately specifying security schemes to enforce at the operation level.
   - CLI Alias: `security-req`
   - Reference to: `datapower_apisecurityrequirement:id`
-- `set_v5_request_headers` (Boolean) Set v5 request headers
+- `set_v5_request_headers` (Boolean) Specify whether to populate v5-compatible headers such as <tt>X-Client-IP</tt> and <tt>X-Global-Transaction-ID</tt> in the <tt>request.headers</tt> context variable.
   - CLI Alias: `set-v5-request-headers`
   - Default value: `false`
 - `share_rate_limit_count` (String) Share rate limit count
   - CLI Alias: `share-count`
   - Choices: `unset`, `yes`, `no`
   - Default value: `unset`
-- `swagger_location` (String) OpenAPI document
+- `swagger_location` (String) Specify the name and location of the OpenAPI document when you create the API definition from an OpenAPI document. Prepare the document as follows before you specify the location. <ol><li>When the OpenAPI document is a YAML file, convert it to JSON.</li><li>Import the JSON file to the <tt>local:</tt> or <tt>temporary:</tt> DataPower directory.</li></ol><p>When you create the API definition with API properties, this property is not applicable.</p>
   - CLI Alias: `swagger-location`
 - `type` (String) Type
   - CLI Alias: `type`

@@ -57,7 +57,7 @@ func (r *OAuthSupportedClientGroupResource) Metadata(ctx context.Context, req re
 
 func (r *OAuthSupportedClientGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("OAuth Client Group", "oauth-supported-client-group", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>To support the OAuth 2.0 protocol, an AAA policy requires the configuration of an OAuth client group. An OAuth client group contains the configured OAuth clients that the DataPower Gateway accepts requests from.</p><p>When creating an OAuth client group for an AAA policy, the OAuth client group consists of one or more OAuth clients with the same OAuth roles.</p>", "oauth-supported-client-group", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -82,17 +82,17 @@ func (r *OAuthSupportedClientGroupResource) Schema(ctx context.Context, req reso
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies a brief comment that describes the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"customized": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Customized OAuth", "customized", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the configuration is for a customized OAuth client group.", "customized", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"customized_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Customization Type", "customized-type", "").AddStringEnum("custom", "template").AddDefaultValue("custom").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Sets the method to customize an OAuth client.", "customized-type", "").AddStringEnum("custom", "template").AddDefaultValue("custom").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -100,18 +100,18 @@ func (r *OAuthSupportedClientGroupResource) Schema(ctx context.Context, req reso
 				},
 				Default: stringdefault.StaticString("custom"),
 			},
-			"o_auth_role": models.GetDmOAuthRoleResourceSchema("OAuth Role", "oauth-role", "", false),
+			"o_auth_role": models.GetDmOAuthRoleResourceSchema("Identifies the roles of clients in the group. This property is mutually exclusive to the <b>Customized OAuth</b> property.", "oauth-role", "", false),
 			"client": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client", "client", "oauthsupportedclient").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Manages the group of OAuth clients. Use the controls to add or remove clients from the group.", "client", "oauthsupportedclient").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"template_process_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("OAuth Template Process", "template-process-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the location of the stylesheet or GatewayScript file that defines the OAuth client. You can define parts of the configuration parameters in the stylesheet or GatewayScript file and then specify an OAuth client template to derive the remaining information. Note that the stylesheet or GatewayScript file must at least provide the \"client-id\" node. The stylesheet or GatewayScript file must be in the local: or store: directory.</p><p>The stylesheet or GatewayScript file must follow the guidelines when it returns the information: <ul><li>The stylesheet or GatewayScript file must return the &lt;client-id> element.</li><li>If the &lt;customized> element value is set to \"on\", the &lt;customized-process-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;customized> element value is set to \"on\" in the client template, the &lt;customized-process-url> element cannot unset this value.</li><li>If the &lt;use-validation-url> element value is set to \"on\", the &lt;validation-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;custom-scope-check> element value is set to \"on\", the &lt;scope-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;custom-resource-owner> element value is set to \"on\", the &lt;resource-owner-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;role> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;client-type> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;az-grant> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;az-grant> element value is set to \"+code+\" or \"+token+\", the &lt;local-az-page-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;caching> element value is set to \"custom\", the &lt;additional-oauth-processing-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;refresh-token-allowed> is set to a non-zero value, the &lt;refresh-token-lifetime> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;check-client-credential> element value is set to \"on\", the &lt;client-authen-method> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;client-authen-method> element value is set to \"secret\", the &lt;client-secret> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;client-authen-method> element value is set to \"ssl\", the &lt;client-valcred> element value must be provided by either the stylesheet or GatewayScript file or the template.</li></ul></p>", "template-process-url", "").String,
 				Optional:            true,
 			},
 			"client_template": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("OAuth Client Template", "client-template", "oauthsupportedclient").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the OAuth client template that is used to derive the configuration parameters that are not specified in the stylesheet or GatewayScript file of the OAuth client.</p>", "client-template", "oauthsupportedclient").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

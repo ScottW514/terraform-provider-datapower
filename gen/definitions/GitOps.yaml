@@ -1,115 +1,128 @@
 name: GitOps
-description: 'GitOps'
-cli_alias: 'gitops'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/GitOps/default'
+description: Each DataPower domain supports a single GitOps instance that operates
+  in either read-only mode or read/write mode. The DataPower GitOps integration helps
+  to automate configuration management through version control. This integration supports
+  industry-standard GitOps practices and authoring experiences.
+cli_alias: gitops
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/GitOps/default
 update_only: true
 attributes:
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: ConnectionType
-    type: String
-    enum:
-      - 'https'
-      - 'ssh'
-    required: true
-    default: 'https'
-    description: 'Connection type'
-    cli_alias: type
-  - name: Mode
-    type: String
-    enum:
-      - 'read-only'
-      - 'read-write'
-    required: true
-    default: 'read-write'
-    description: 'Operation mode'
-    cli_alias: mode
-  - name: CommitIdentifierType
-    type: String
-    enum:
-      - 'branch'
-      - 'tag'
-      - 'commit'
-    required: true
-    default: 'branch'
-    description: 'Commit identifier type'
-    cli_alias: commit-id-type
-  - name: CommitIdentifier
-    type: String
-    required: true
-    example: 'main'
-    description: 'Commit identifier'
-    cli_alias: commit-id
-  - name: RemoteLocation
-    type: String
-    required: true
-    example: 'https://github.com/ScottW514/terraform-provider-datapower'
-    description: 'Remote location'
-    cli_alias: location
-  - name: Interval
-    type: Int64
-    maximum: 1440
-    default: 5
-    description: 'Sync Interval'
-    cli_alias: interval
-  - name: SSHClientProfile
-    type: String
-    reference_to: SSHClientProfile
-    description: 'SSH client profile'
-    cli_alias: ssh-client-profile
-  - name: Username
-    type: String
-    description: 'Username'
-    cli_alias: username
-  - name: Password
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password'
-    cli_alias: password
-  - name: SSHAuthorizedKeysFile
-    type: String
-    description: 'SSH authorized key file'
-    cli_alias: ssh-authorized-keyfile
-  - name: TLSValcred
-    type: String
-    reference_to: CryptoValCred
-    description: 'HTTPS validation credentials'
-    cli_alias: https-valcred
-  - name: GitUser
-    type: String
-    description: 'Git user'
-    cli_alias: name
-  - name: GitEmail
-    type: String
-    description: 'Git email'
-    cli_alias: email
-  - name: JSONParseSettings
-    type: String
-    reference_to: JSONSettings
-    description: 'JSON parse settings'
-    cli_alias: json-settings
-  - name: TemplatePolicies
-    type: List
-    element_type: DmGitOpsTemplatePolicy
-    description: 'Template policies'
-    cli_alias: template-policy
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: ConnectionType
+  type: String
+  enum:
+  - https
+  - ssh
+  required: true
+  default: https
+  description: Specify the protocol to secure the connection. HTTPS is the default
+    protocol.
+  cli_alias: type
+- name: Mode
+  type: String
+  enum:
+  - read-only
+  - read-write
+  required: true
+  default: read-write
+  description: Specify the operational mode of the Git repository. The default mode
+    is read-only.
+  cli_alias: mode
+- name: CommitIdentifierType
+  type: String
+  enum:
+  - branch
+  - tag
+  - commit
+  required: true
+  default: branch
+  description: Specify the branch, commit hash, or tag for read and write GitOps operations
+    against the repository. Use of branch is the default setting.
+  cli_alias: commit-id-type
+- name: CommitIdentifier
+  type: String
+  required: true
+  example: main
+  description: Commit identifier
+  cli_alias: commit-id
+- name: RemoteLocation
+  type: String
+  required: true
+  example: https://github.com/ScottW514/terraform-provider-datapower
+  description: Remote location
+  cli_alias: location
+- name: Interval
+  type: Int64
+  maximum: 1440
+  default: 5
+  description: Specify the interval in minutes to poll the repository for changes.
+    Enter a value in the range 0 - 1440. The default value is 5. To disable polling,
+    specify 0.
+  cli_alias: interval
+- name: SSHClientProfile
+  type: String
+  reference_to: SSHClientProfile
+  description: SSH client profile
+  cli_alias: ssh-client-profile
+- name: Username
+  type: String
+  description: Username
+  cli_alias: username
+- name: Password
+  type: String
+  reference_to: PasswordAlias
+  description: Password
+  cli_alias: password
+- name: SSHAuthorizedKeysFile
+  type: String
+  description: Specify the file that contains the authorized SSH keys. This file must
+    be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.
+  cli_alias: ssh-authorized-keyfile
+- name: TLSValcred
+  type: String
+  reference_to: CryptoValCred
+  description: HTTPS validation credentials
+  cli_alias: https-valcred
+- name: GitUser
+  type: String
+  description: Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt>
+    .
+  cli_alias: name
+- name: GitEmail
+  type: String
+  description: Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt>
+    .
+  cli_alias: email
+- name: JSONParseSettings
+  type: String
+  reference_to: JSONSettings
+  description: JSON parse settings
+  cli_alias: json-settings
+- name: TemplatePolicies
+  type: List
+  element_type: DmGitOpsTemplatePolicy
+  description: Specify the list of template policy for GitOps processing. The policy
+    processing is in the order of the read or write GitOps operation.
+  cli_alias: template-policy

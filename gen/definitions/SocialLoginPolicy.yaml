@@ -1,113 +1,155 @@
 name: SocialLoginPolicy
-description: 'Social Login Policy'
-cli_alias: 'social-login-policy'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/SocialLoginPolicy'
+description: DataPower can act as an OpenID Connect client. In this case, a social
+  login policy enables DataPower to redirect the user to a social login provider like
+  Google for user authentication and consent for authorization.
+cli_alias: social-login-policy
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/SocialLoginPolicy
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestSocialLoginPolicy"'
-    test_expect_ds: '"AccTest_SocialLoginPolicy"'
-    example: 'SocialLoginPolicyName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: ClientID
-    type: String
-    required: true
-    example: 'client_id'
-    description: 'Client ID'
-    cli_alias: client-id
-  - name: ClientSecret
-    type: String
-    required: true
-    example: 'client_secret'
-    description: 'Client secret'
-    cli_alias: client-secret
-  - name: ClientGrant
-    type: String
-    enum:
-      - 'code'
-      - 'implicit'
-      - 'password'
-      - 'client'
-      - 'code-id_token'
-    description: 'Client grant type'
-    cli_alias: client-grant
-  - name: ClientScope
-    type: String
-    description: 'Scope'
-    cli_alias: client-scope
-  - name: ClientRedirectURI
-    type: String
-    default: 'URL-in/social-login-callback'
-    example: 'https://datapower.ibm.com:10087/social-login-callback'
-    description: 'Client redirection URI'
-    cli_alias: client-redirect-uri
-  - name: ClientOptionalQueryParams
-    type: String
-    description: 'Client Optional Query Parameters'
-    cli_alias: client-opt-query-params
-  - name: ClientSSLProfile
-    type: String
-    reference_to: SSLClientProfile
-    required: true
-    test_value: '"AccTest_SSLClientProfile"'
-    test_bed_value: 'datapower_sslclientprofile.acc_test.id'
-    description: 'TLS client profile'
-    cli_alias: client-ssl
-  - name: Provider
-    tf_name: social_provider
-    type: String
-    enum:
-      - 'google'
-      - 'oidc'
-      - 'facebook'
-      - 'custom'
-    required: true
-    example: 'google'
-    description: 'Social login provider'
-    cli_alias: provider
-  - name: ProviderAZEndpoint
-    type: String
-    required: true
-    example: 'https://example.com/auth'
-    description: 'Authorization endpoint URL'
-    cli_alias: provider-az-endpoint
-  - name: ProviderTokenEndpoint
-    type: String
-    required: true
-    example: 'https://example.com/token'
-    description: 'Token endpoint URL'
-    cli_alias: provider-token-endpoint
-  - name: ValidateJWTToken
-    type: Bool
-    default: true
-    required: true
-    test_value: 'false'
-    description: 'Enable JWT token validation'
-    cli_alias: validate-jwt-token
-  - name: JWTValidator
-    type: String
-    reference_to: AAAJWTValidator
-    description: 'JWT Validator'
-    cli_alias: jwt-validator
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestSocialLoginPolicy"'
+  test_expect_ds: '"AccTest_SocialLoginPolicy"'
+  example: SocialLoginPolicyName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Enter a descriptive summary for the configuration.
+  cli_alias: summary
+- name: ClientID
+  type: String
+  required: true
+  example: client_id
+  description: Specify the ID of DataPower that is registered with the social login
+    provider.
+  cli_alias: client-id
+- name: ClientSecret
+  type: String
+  required: true
+  example: client_secret
+  description: Specify the secret of DataPower that is registered with the social
+    login provider.
+  cli_alias: client-secret
+- name: ClientGrant
+  type: String
+  enum:
+  - code
+  - implicit
+  - password
+  - client
+  - code-id_token
+  description: Controls how DataPower generates the client request to the social login
+    provider.
+  cli_alias: client-grant
+- name: ClientScope
+  type: String
+  description: Specifies the scope value that defines what access privileges are requested
+    for access tokens, ID tokens, or both. Use space separated strings. For example,
+    <tt>openid email</tt> .
+  cli_alias: client-scope
+- name: ClientRedirectURI
+  type: String
+  default: URL-in/social-login-callback
+  example: https://datapower.ibm.com:10087/social-login-callback
+  description: <p>Specifies the URI that the social login policy redirects the client
+    to after the client obtains a code or an access token. The URI must match with
+    what is registered at the social login provider for DataPower as the OAuth/OIDC
+    client. The URI is included in the OAuth/OIDC client request that DataPower generates.</p><p>Note
+    that the social login provider Google mandates that the redirect URI must be a
+    fully qualified host name instead of an IP address.</p><p>Note that the redirect
+    URI should end with the suffix '/social-login-callback' in the pathname in order
+    to differentiate between the callback requests and other types of requests coming
+    into the service.</p><p>You can specify the value of this redirect URI in the
+    following forms.</p><ul><li>Static string. Enter a static string as the redirect
+    URI. Must end with the suffix '/social-login-callback'.</li><li>URL-in/suffix.
+    In this case, it takes the value from the inbound URL service variable var://service/URL-in
+    and then suffixes the value with whatever is specified after <tt>URL-in</tt> as
+    the redirect URI. For example, the value of this property is 'URL-in/social-login-callback'
+    and the incoming URL is 'https://datapower.ibm.com:10087/getresources', then the
+    redirect URI is constructed as 'https://datapower.ibm.com:10087/getresources/social-login-callback'.</li><li>Context
+    variable. You can set a context variable before you invoke this AAA action and
+    specify the context variable name for this value. For example, var://context/AAA/social-login-redirect-uri</li></ul>
+  cli_alias: client-redirect-uri
+- name: ClientOptionalQueryParams
+  type: String
+  description: Specifies the optional query parameters to include in the initial OAuth/OIDC
+    request that DataPower sends to the social login provider. Enter the optional
+    query parameters as name=value pairs and separate each pair with an ampersand.
+    For example, prompt=consent&amp;login_hint=jsmith@example.com&amp;openid.realm=example.comi&amp;hd=example.com.
+  cli_alias: client-opt-query-params
+- name: ClientSSLProfile
+  type: String
+  reference_to: SSLClientProfile
+  required: true
+  test_value: '"AccTest_SSLClientProfile"'
+  test_bed_value: datapower_sslclientprofile.acc_test.id
+  description: Specifies the TLS client profile to secure connections when DataPower
+    obtains an access token from the social login provider.
+  cli_alias: client-ssl
+- name: Provider
+  tf_name: social_provider
+  type: String
+  enum:
+  - google
+  - oidc
+  - facebook
+  - custom
+  required: true
+  example: google
+  description: Controls which social login provider to use.
+  cli_alias: provider
+- name: ProviderAZEndpoint
+  type: String
+  required: true
+  example: https://example.com/auth
+  description: Specify the provider's endpoint URL that accepts an authorization request
+    from a client to perform social login with the provider. When the provider is
+    Google, you can retrieve the authorization endpoint URL from the Discovery document
+    for Google's OpenID Connect service.
+  cli_alias: provider-az-endpoint
+- name: ProviderTokenEndpoint
+  type: String
+  required: true
+  example: https://example.com/token
+  description: Specify the provider's endpoint URL that accepts an authorization grant,
+    or code, from a client in exchange for an access token from the social login provider.
+    When the provider is Google, you can retrieve the token endpoint URL from the
+    Discovery document for Google's OpenID Connect service.
+  cli_alias: provider-token-endpoint
+- name: ValidateJWTToken
+  type: Bool
+  default: true
+  required: true
+  test_value: 'false'
+  description: <p>Controls whether to validate the JWT token (ID token)from the provider.
+    If yes, it is recommended that you validate the ID token that is obtained from
+    Google by defining the following settings in the JWT Validator configuration.</p><p><ol><li>Verify
+    the signature by fetching the certs from https://www.googleapis.com/oauth2/v3/certs</li><li>Verify
+    that the <tt>aud</tt> claim matches the client ID of DataPower.</li><li>Verify
+    that the <tt>iss</tt> claim matches accounts.google.com or https://accounts.google.com</li></ol></p><p>For
+    other recommendations on validating the ID token from Google, see https://developers.google.com/identity/protocols/OpenIDConnect.</p>
+  cli_alias: validate-jwt-token
+- name: JWTValidator
+  type: String
+  reference_to: AAAJWTValidator
+  description: Specify the JWT Validator configuration that defines how to validate
+    and verify the ID token.
+  cli_alias: jwt-validator

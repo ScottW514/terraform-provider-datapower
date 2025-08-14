@@ -50,22 +50,22 @@ func (d *GWSRemoteDebugDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *GWSRemoteDebugDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "GatewayScript Remote Debugger (`default` domain only)",
+		MarkdownDescription: "Modify the connection details for a remote GatewayScript debugger. This configuration defines the local GatewayScript debug endpoint for remote debugging.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: "Comments",
+				MarkdownDescription: "Specifies a brief descriptive summary for the configuration.",
 				Computed:            true,
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: "Local port",
+				MarkdownDescription: "Sets the port that the local GatewayScript debug endpoint monitors. The default value is 9229.",
 				Computed:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: "Local address",
+				MarkdownDescription: "<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

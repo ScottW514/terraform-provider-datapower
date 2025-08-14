@@ -3,12 +3,12 @@
 page_title: "datapower_assemblyactionusersecurity Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  User security assembly action
+  The user security assembly actions extracts identity, authenticates, and authorizes end users.
 ---
 
 # datapower_assemblyactionusersecurity (Data Source)
 
-User security assembly action
+The user security assembly actions extracts identity, authenticates, and authorizes end users.
 
 ## Example Usage
 
@@ -38,40 +38,40 @@ Optional:
 
 Read-Only:
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
 - `app_domain` (String) The name of the application domain the object belongs to
-- `au_stop_on_error` (Boolean) Stop on error
-- `auth_response_credential_header` (String) Authenticated credential header
-- `auth_response_headers_pattern` (String) Authentication response headers pattern
-- `az_custom_form` (String) Custom form location
+- `au_stop_on_error` (Boolean) Specify whether to stop processing if authentication fails. If failed, stops the assembly and return an error.
+- `auth_response_credential_header` (String) Specify the response header that contains the authenticated credentials. The default value is <tt>X-API-Authenticated-Credential</tt> . The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
+- `auth_response_headers_pattern` (String) Specify the regular expression to select which response headers to add to the API context for access by subsequent actions. The default value is a case-insensitive search on the <tt>x-api</tt> prefix. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
+- `az_custom_form` (String) Specify the URL fragment of the custom authorization page. This page obtains permission from the end user. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
 - `az_custom_form_client_profile` (String) Custom form TLS client profile
-- `az_custom_form_content_security_policy` (String) Custom form CSP header value
-- `az_default_form` (Boolean) Use default form?
-- `az_form_time_limit` (Number) HTML form time limit
-- `az_stop_on_error` (Boolean) Stop on error
+- `az_custom_form_content_security_policy` (String) Specify the value for the HTTP <tt>Content-Security-Policy</tt> response header for the custom authorization page. This response header allows you to control which resources the user agent can load. Generally, you set server origins and script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking, and other injection attacks.
+- `az_default_form` (Boolean) Specify whether to use the default form or a custom form. When enabled, returns the default authorization page to obtain authorization. When disabled, define the configuration to return the custom authorization page.
+- `az_form_time_limit` (Number) Specify the duration in seconds for a transaction to complete before the authorization request fails. Enter a value in the range 10 - 600. The default value is 300.
+- `az_stop_on_error` (Boolean) Specify whether to stop processing if authorization fails. If failed, stops the assembly and return an error.
 - `az_table_default_entry` (Attributes List) Default table entry (see [below for nested schema](#nestedatt--result--az_table_default_entry))
 - `az_table_display_checkboxes` (Boolean) Display table check boxes
-- `az_table_dynamic_entries` (String) Dynamic table entries
-- `correlation_path` (String) Correlation path
-- `ei_custom_form` (String) Custom form location
+- `az_table_dynamic_entries` (String) Specify the period-delimited context variable that adds dynamic entries to display. This context variable supports space delimited names, a JSON array of names, or a JSON array of objects with name and description.
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
+- `ei_custom_form` (String) Specify the URL fragment of the custom login page. This page collects user name and password information. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
 - `ei_custom_form_client_profile` (String) Custom form TLS client profile
-- `ei_custom_form_content_security_policy` (String) Custom form CSP header value
-- `ei_default_form` (Boolean) Use default form?
-- `ei_form_time_limit` (Number) HTML form time limit
-- `ei_stop_on_error` (Boolean) Stop on error
+- `ei_custom_form_content_security_policy` (String) Specify the value to use for the HTTP <tt>Content-Security-Policy</tt> response header for the custom login page. This response header allows you to control which resources the user agent can load. Generally, you set server origins and script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking, and other injection attacks.
+- `ei_default_form` (Boolean) Specify whether to use the default form or a custom form. When enabled, returns the default login page to obtain credentials. When disabled, define the configuration to return the custom login page.
+- `ei_form_time_limit` (Number) Specify the duration in seconds for a transaction to complete before the identity extraction request fails. Enter a value in the range 10 - 600. The default value is 300.
+- `ei_stop_on_error` (Boolean) Specify whether to stop processing if identity extraction fails. If failed, stops the assembly and return an error.
 - `extract_identity_method` (String) Identity extraction method
 - `factor_id` (String) Factor identifier
 - `hostname` (String) Hostname
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `pass_context_variable` (String) Password context variable
 - `query_parameters` (String) Query parameters
-- `redirect_time_limit` (Number) Redirect time limit
-- `redirect_url` (String) Redirect URL
+- `redirect_time_limit` (Number) Specify the duration in seconds for a transaction to complete before the redirect fails. Enter a value in the range 10 - 6000. The default value is 300.
+- `redirect_url` (String) Specify the URL fragment to redirect the request to obtain user credentials. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.
 - `title` (String) Title
 - `user_auth_method` (String) Authentication method
 - `user_az_method` (String) Authorization method
 - `user_context_variable` (String) Username context variable
-- `user_registry` (String) User registry
+- `user_registry` (String) Specify the API user registry to authenticate incoming API requests. The supported registries are API authentication URL and API LDAP.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

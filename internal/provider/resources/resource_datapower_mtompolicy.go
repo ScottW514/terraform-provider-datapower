@@ -56,7 +56,7 @@ func (r *MTOMPolicyResource) Metadata(ctx context.Context, req resource.Metadata
 
 func (r *MTOMPolicyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("MTOM Policy", "mtom", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An MTOM policy provides a mechanism for optimizing the transmission and wire format of an XML/SOAP message. Optimization is performed by selecting elements with base64-encoded character data. The selected elements are decoded and attached as MIME attachment parts before transmission. Decoding before transmission reduces the overhead that is associated with base64-encoded data.", "mtom", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -85,7 +85,7 @@ func (r *MTOMPolicyResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 			},
 			"mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("MTOM Mode", "mode", "").AddStringEnum("encode", "decode").AddDefaultValue("encode").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the optimization mode. <p>The encode option optimizes (serializes) input messages. For serialization, provide an XPath expression or a list of XPath expressions to identify the content to extract. Optionally, per XPath expression, exercise control over the Content Type and Content ID values. These two values can be determined automatically using the xmlmime:contentType declaration and namespace declaration.</p><p>The decode option decodes (deserializes) attachment parts of an optimized message. Deserialization, by default, reassembles the original infoset, which results in either a SOAP document or MIME document depending on whether all attachments were referenced by &lt;Include/> elements. Optionally, you can specify a Content ID to select individual attachment parts to reassemble.</p>", "mode", "").AddStringEnum("encode", "decode").AddDefaultValue("encode").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -94,13 +94,13 @@ func (r *MTOMPolicyResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: stringdefault.StaticString("encode"),
 			},
 			"include_content_type": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Include Content Type", "include-content-type", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Select whether to include the xmlmine:contentType declaration in output messages when the input message does not contain this declaration. If the input message contains this declaration, the MTOM policy passes through the attribute regardless of the setting for this property.</p><ul><li>Select \"on\", the default value, to add the contentType declaration to the output message.</li><li>Select \"off\" to not add the contentType declaration to the output message.</li></ul>", "include-content-type", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"rule": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("MTOM Rules", "rule", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Each MTOM rule describes which message elements to optimize. A single XPath expression selects one or more elements for optimization.", "rule", "").String,
 				NestedObject:        models.DmMtomRuleResourceSchema,
 				Optional:            true,
 			},

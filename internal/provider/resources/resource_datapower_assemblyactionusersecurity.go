@@ -58,7 +58,7 @@ func (r *AssemblyActionUserSecurityResource) Metadata(ctx context.Context, req r
 
 func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("User security assembly action", "assembly-user-security", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The user security assembly actions extracts identity, authenticates, and authorizes end users.", "assembly-user-security", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -98,7 +98,7 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Default: stringdefault.StaticString("basic"),
 			},
 			"ei_stop_on_error": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Stop on error", "ei-stop-on-error", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if identity extraction fails. If failed, stops the assembly and return an error.", "ei-stop-on-error", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -112,11 +112,11 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Optional:            true,
 			},
 			"redirect_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Redirect URL", "redirect-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment to redirect the request to obtain user credentials. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "redirect-url", "").String,
 				Optional:            true,
 			},
 			"redirect_time_limit": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Redirect time limit", "redirect-time-limit", "").AddIntegerRange(10, 6000).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the redirect fails. Enter a value in the range 10 - 6000. The default value is 300.", "redirect-time-limit", "").AddIntegerRange(10, 6000).AddDefaultValue("300").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -130,13 +130,13 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Optional:            true,
 			},
 			"ei_default_form": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use default form?", "ei-default-form", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the default form or a custom form. When enabled, returns the default login page to obtain credentials. When disabled, define the configuration to return the custom login page.", "ei-default-form", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"ei_custom_form": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom form location", "ei-custom-form", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment of the custom login page. This page collects user name and password information. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "ei-custom-form", "").String,
 				Optional:            true,
 			},
 			"ei_custom_form_client_profile": schema.StringAttribute{
@@ -144,13 +144,13 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Optional:            true,
 			},
 			"ei_custom_form_content_security_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom form CSP header value", "ei-custom-form-csp", "").AddDefaultValue("default-src 'self'").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value to use for the HTTP <tt>Content-Security-Policy</tt> response header for the custom login page. This response header allows you to control which resources the user agent can load. Generally, you set server origins and script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking, and other injection attacks.", "ei-custom-form-csp", "").AddDefaultValue("default-src 'self'").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("default-src 'self'"),
 			},
 			"ei_form_time_limit": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTML form time limit", "ei-form-time-limit", "").AddIntegerRange(10, 600).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the identity extraction request fails. Enter a value in the range 10 - 600. The default value is 300.", "ei-form-time-limit", "").AddIntegerRange(10, 600).AddDefaultValue("300").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -169,23 +169,23 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Default: stringdefault.StaticString("user-registry"),
 			},
 			"au_stop_on_error": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Stop on error", "au-stop-on-error", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if authentication fails. If failed, stops the assembly and return an error.", "au-stop-on-error", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"user_registry": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("User registry", "user-registry", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the API user registry to authenticate incoming API requests. The supported registries are API authentication URL and API LDAP.", "user-registry", "").String,
 				Optional:            true,
 			},
 			"auth_response_headers_pattern": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authentication response headers pattern", "auth-response-headers-pattern", "").AddDefaultValue("(?i)x-api*").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the regular expression to select which response headers to add to the API context for access by subsequent actions. The default value is a case-insensitive search on the <tt>x-api</tt> prefix. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "auth-response-headers-pattern", "").AddDefaultValue("(?i)x-api*").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("(?i)x-api*"),
 			},
 			"auth_response_credential_header": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authenticated credential header", "auth-response-header-credential", "").AddDefaultValue("X-API-Authenticated-Credential").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the response header that contains the authenticated credentials. The default value is <tt>X-API-Authenticated-Credential</tt> . The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "auth-response-header-credential", "").AddDefaultValue("X-API-Authenticated-Credential").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("X-API-Authenticated-Credential"),
@@ -200,19 +200,19 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Default: stringdefault.StaticString("authenticated"),
 			},
 			"az_stop_on_error": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Stop on error", "az-stop-on-error", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to stop processing if authorization fails. If failed, stops the assembly and return an error.", "az-stop-on-error", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"az_default_form": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use default form?", "az-default-form", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use the default form or a custom form. When enabled, returns the default authorization page to obtain authorization. When disabled, define the configuration to return the custom authorization page.", "az-default-form", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"az_custom_form": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom form location", "az-custom-form", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL fragment of the custom authorization page. This page obtains permission from the end user. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.", "az-custom-form", "").String,
 				Optional:            true,
 			},
 			"az_custom_form_client_profile": schema.StringAttribute{
@@ -220,13 +220,13 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Optional:            true,
 			},
 			"az_custom_form_content_security_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Custom form CSP header value", "az-custom-form-csp", "").AddDefaultValue("default-src 'self'").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value for the HTTP <tt>Content-Security-Policy</tt> response header for the custom authorization page. This response header allows you to control which resources the user agent can load. Generally, you set server origins and script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking, and other injection attacks.", "az-custom-form-csp", "").AddDefaultValue("default-src 'self'").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("default-src 'self'"),
 			},
 			"az_form_time_limit": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("HTML form time limit", "az-form-time-limit", "").AddIntegerRange(10, 600).AddDefaultValue("300").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds for a transaction to complete before the authorization request fails. Enter a value in the range 10 - 600. The default value is 300.", "az-form-time-limit", "").AddIntegerRange(10, 600).AddDefaultValue("300").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -242,7 +242,7 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Default:             booldefault.StaticBool(false),
 			},
 			"az_table_dynamic_entries": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Dynamic table entries", "az-table-dynamic-entries", "").AddDefaultValue("user.default.az.dynamic_entries").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the period-delimited context variable that adds dynamic entries to display. This context variable supports space delimited names, a JSON array of names, or a JSON array of objects with name and description.", "az-table-dynamic-entries", "").AddDefaultValue("user.default.az.dynamic_entries").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("user.default.az.dynamic_entries"),
@@ -265,11 +265,11 @@ func (r *AssemblyActionUserSecurityResource) Schema(ctx context.Context, req res
 				Optional:            true,
 			},
 			"correlation_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Correlation path", "correlation-path", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.", "correlation-path", "").String,
 				Optional:            true,
 			},
 			"action_debug": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable debugging", "debug", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>", "debug", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

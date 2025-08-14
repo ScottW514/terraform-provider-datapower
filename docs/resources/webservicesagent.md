@@ -3,13 +3,13 @@
 page_title: "datapower_webservicesagent Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Web Services Management agent
+  The Web Services Management agent provides manageability for Web Services by providing status, metrics, and transaction history to external management stations.
   CLI Alias: wsm-agent
 ---
 
 # datapower_webservicesagent (Resource)
 
-Web Services Management agent
+The Web Services Management agent provides manageability for Web Services by providing status, metrics, and transaction history to external management stations.
   - CLI Alias: `wsm-agent`
 
 ## Example Usage
@@ -32,24 +32,24 @@ resource "datapower_webservicesagent" "test" {
 
 ### Optional
 
-- `capture_mode` (String) Capture mode
+- `capture_mode` (String) Specify the mode to capture messages for further analysis. Because not all Web Services Management protocols can accommodate full message-capture, configure this property only when the spooler can forward full messages. <p>Full message-capture incurs a performance penalty.</p>
   - CLI Alias: `capture-mode`
   - Choices: `none`, `faults`, `all-messages`
   - Default value: `faults`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
-- `max_memory_kb` (Number) Max memory for buffer
+- `max_memory_kb` (Number) Specify the maximum memory in KB to buffer transaction records. Buffering controls the behavior of the agent when there are no registered consumers of transaction events. Records are accumulated until they reach the configured threshold. After this threshold is reached, new records are dropped. The loss of records are visible to web service managers that understand the concept.
   - CLI Alias: `max-memory`
   - Default value: `64000`
-- `max_payload_size_kb` (Number) Max payload size
+- `max_payload_size_kb` (Number) Specify the maximum total payload size in KB of a buffered transaction record. The total payload size is the sum of the payloads that are collected at the following points. <ul><li>When the service accepts the request.</li><li>When the service sends the processed request to its target.</li><li>When the service accepts the response.</li><li>When the service sends the processed response to the client.</li></ul><p>A record is dropped when its total payload size exceeds the maximum value. The default value is 0, which indicates no limit.</p>
   - CLI Alias: `max-payload-size`
   - Default value: `0`
-- `max_records` (Number) Max records to buffer
+- `max_records` (Number) Specify the maximum number of transaction records to buffer. Buffering controls the behavior of the agent when there are no registered consumers of transaction events. Records are accumulated until they reach the configured threshold. After this threshold is reached, new records are dropped. The loss of records are visible to web service managers that understand the concept.
   - CLI Alias: `max-records`
   - Default value: `3000`
-- `mediation_metrics` (Boolean) Collect mediation enforcement metrics
+- `mediation_metrics` (Boolean) Specify whether to collect metrics about mediation enforcement. The default behavior is to not collect metrics.
   - CLI Alias: `mediation-enforcement-metrics`
   - Default value: `false`
 - `user_summary` (String) Comments

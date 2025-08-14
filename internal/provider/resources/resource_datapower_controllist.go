@@ -56,7 +56,7 @@ func (r *ControlListResource) Metadata(ctx context.Context, req resource.Metadat
 
 func (r *ControlListResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Control List", "control-list", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>A control list uses a value-matching pattern to determine whether values are on the allowlist or blocklist.</p><p>The value-matching pattern is defined by a PCRE. When you define the control list, you can indicates whether evaluation is case-sensitive or case-insensitive.</p>", "control-list", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -81,23 +81,23 @@ func (r *ControlListResource) Schema(ctx context.Context, req resource.SchemaReq
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Type", "type", "").AddStringEnum("blocklist", "allowlist").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies whether values are accepted or rejected.", "type", "").AddStringEnum("blocklist", "allowlist").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("blocklist", "allowlist"),
 				},
 			},
 			"value": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Value", "value", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the PCRE to evaluate values.</p><ul><li>An entry of <tt>^foo</tt> indicates a match against only values that start with <tt>foo</tt> .</li><li>An empty list indicates no match against any value.</li><li>A list with only <tt>.*</tt> indicates a match against all values.</li></ul>", "value", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"case_insensitive": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Case-insensitive", "case-insensitive", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Indicates whether the specified values are case-sensitive or case-insensitive.", "case-insensitive", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

@@ -3,12 +3,12 @@
 page_title: "datapower_messagecontentfilters Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Content Filters
+  A Message Content Filters is a group of HTTP header-based and XPath-based filters. For HTTP header-based filters, the filter succeeds when the name and value of an HTTP header field match.For XPath-based filters, the filter succeeds when a document matches the element structure and content of the XPath expression and value.
 ---
 
 # datapower_messagecontentfilters (Data Source)
 
-Message Content Filters
+A Message Content Filters is a group of HTTP header-based and XPath-based filters. <ul><li>For HTTP header-based filters, the filter succeeds when the name and value of an HTTP header field match.</li><li>For XPath-based filters, the filter succeeds when a document matches the element structure and content of the XPath expression and value.</li></ul>
 
 ## Example Usage
 
@@ -39,8 +39,8 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `filter_refs` (List of String) Message Content Filter
-- `filters` (Attributes List) Message Content Filter (see [below for nested schema](#nestedatt--result--filters))
+- `filter_refs` (List of String) Defines the group of message content filter objects.
+- `filters` (Attributes List) Defines the group of message content filters. (see [below for nested schema](#nestedatt--result--filters))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `user_summary` (String) Comments
 

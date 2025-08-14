@@ -58,7 +58,7 @@ func (r *NameValueProfileResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Name-Value Profile", "webapp-gnvc", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Many HTTP things are expressed as name value pairs. These include HTTP headers, cookie values, url-encoded query strings, and url-encoded request messages. This profile provides a mechanism for what kinds of names are expected and for each kind of name what properties should be enforced on the corresponding values. When a name-value pair is not validated successfully that may generate an error, the pair might be stripped from the transaction, or the value may be mapped to another default value.", "webapp-gnvc", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -87,7 +87,7 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"max_attributes": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum Count", "max-attributes", "").AddIntegerRange(1, 4294967295).AddDefaultValue("256").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The maximum number of name value pairs allowed in a single entity (header, cookie set, body, and so forth).", "max-attributes", "").AddIntegerRange(1, 4294967295).AddDefaultValue("256").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -97,7 +97,7 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(256),
 			},
 			"max_aggregate_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Total Size", "max-aggregate-size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("128000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The lengths of all the names and values in a single entity (header, cookie set, body, query string, and so forth) in aggregate must not exceed this property.", "max-aggregate-size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("128000").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -107,7 +107,7 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(128000),
 			},
 			"max_name_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum Name Length", "max-name-size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("512").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The maximum size of a name attribute used in this profile.", "max-name-size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("512").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -117,7 +117,7 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(512),
 			},
 			"max_value_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Maximum Value Length", "max-value-size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1024").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The maximum size of a value attribute used in this profile.", "max-value-size", "").AddIntegerRange(1, 4294967295).AddDefaultValue("1024").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -127,12 +127,12 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(1024),
 			},
 			"validation_list": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Validation List", "validation", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Each pair submitted to this profile consults this validation list, looking for the first regular expression match of the name against the name expression in the list. When that is found, the corresponding value constraint is matched against the value portion of the name-value pair. If that does not match, the policy applies the 'fixup' attribute to the submitted value. That may result in no change, the pair being removed, an error being generated, or the value being mapped to a known constant.", "validation", "").String,
 				NestedObject:        models.DmValidationTypeResourceSchema,
 				Optional:            true,
 			},
 			"default_fixup": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("No Match Policy", "unvalidated-fixup-policy", "").AddStringEnum("passthrough", "strip", "error", "set").AddDefaultValue("strip").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the action to taken when no matching entry in the validation list is found. The default is Strip.", "unvalidated-fixup-policy", "").AddStringEnum("passthrough", "strip", "error", "set").AddDefaultValue("strip").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -141,17 +141,17 @@ func (r *NameValueProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default: stringdefault.StaticString("strip"),
 			},
 			"default_map_value": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("No Match Map Value", "unvalidated-fixup-map", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("An value that does not have a matching entry in the validation list is changed to this value if the no match policy is 'set'.", "unvalidated-fixup-map", "").String,
 				Optional:            true,
 			},
 			"default_xss": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("No Match XSS Policy", "unvalidated-xss-check", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("This property allows the value to be checked for Cross Site Scripting (XSS) signatures. These signatures are malicious attempts to input client-side script as the input to a web application. If this client-side script is later displayed in a browser, the script executes and can perform malicious activities. Enable this feature to filter input for malicious content that might get stored and displayed again later, such as the contents of a comment form. The check looks for invalid characters and various forms of the term &lt;script that is often used to engage JavaScript on a browser without the user knowing.", "unvalidated-xss-check", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"no_match_xss_patterns_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XSS (Cross Site Scripting) Protection Patterns File", "unvalidated-xss-patternsfile", "").AddDefaultValue("store:///XSS-Patterns.xml").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the patterns file that will be used by the XSS filter when No Match XSS is selected. The default file, store:///XSS-Patterns.xml, checks for invalid characters and various forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns to be used by the XSS filter.", "unvalidated-xss-patternsfile", "").AddDefaultValue("store:///XSS-Patterns.xml").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("store:///XSS-Patterns.xml"),

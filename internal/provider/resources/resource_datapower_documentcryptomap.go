@@ -56,7 +56,7 @@ func (r *DocumentCryptoMapResource) Metadata(ctx context.Context, req resource.M
 
 func (r *DocumentCryptoMapResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Document Crypto Map", "document-crypto-map", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A Document Crypto Map indicates which elements, of a complete schema, to encrypt or decrypt. The indicated element or elements may also be signed.", "document-crypto-map", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -81,7 +81,7 @@ func (r *DocumentCryptoMapResource) Schema(ctx context.Context, req resource.Sch
 				},
 			},
 			"operation": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Operation", "operation", "").AddStringEnum("encrypt", "encrypt-wssec", "decrypt", "sign-wssec").AddDefaultValue("encrypt").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the operation to perform on the selected document nodes.", "operation", "").AddStringEnum("encrypt", "encrypt-wssec", "decrypt", "sign-wssec").AddDefaultValue("encrypt").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -90,12 +90,12 @@ func (r *DocumentCryptoMapResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("encrypt"),
 			},
 			"x_path": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XPath Expression", "select", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter the XPath expression identifying the elements on which to operate in the blank field in front of the Add button. Click Add to add the expression to those included in the map.</p><p>Click the XPath Tool button to use the graphically oriented XPath Tool to construct the message. You will need to upload an example document to use this tool. Note that this example should be the encrypted document when the operation is decrypt.</p>", "select", "").String,
 				ElementType:         types.StringType,
 				Required:            true,
 			},
 			"name_space_mappings": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Namespace Mappings", "namespace-mapping", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The prefix and URI for namespaces that might be encountered in requests.", "namespace-mapping", "").String,
 				NestedObject:        models.DmNamespaceMappingResourceSchema,
 				Optional:            true,
 			},

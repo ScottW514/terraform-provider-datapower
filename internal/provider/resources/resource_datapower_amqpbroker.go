@@ -58,7 +58,7 @@ func (r *AMQPBrokerResource) Metadata(ctx context.Context, req resource.Metadata
 
 func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("AMQP broker", "amqp-broker", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("In AMQP, distributed source and target termini are managed by a broker. The broker provides messaging services for communicating applications by periodically monitoring and polling termini. The broker ensures that sent messages are directed to the correct target terminus or are routed to another server. The AMQP broker configuration corresponds to an AMQP broker that is running on another host in the network. The configured properties enable communication between the DataPower Gateway and the remote AMQP broker.", "amqp-broker", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -101,7 +101,7 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: int64default.StaticInt64(5672),
 			},
 			"xml_manager": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("XML manager", "xml-manager", "xmlmanager").AddDefaultValue("default").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XML manager to control access to the remote AMQP server. The XML manager obtains and manages documents.", "xml-manager", "xmlmanager").AddDefaultValue("default").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("default"),
@@ -111,7 +111,7 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 			},
 			"authorization": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authorization", "authorization", "").AddStringEnum("none", "anonymous", "plain").AddDefaultValue("none").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SASL layer that the AMQP broker uses to authenticate with the AMQP server. The default setting in no authentication.", "authorization", "").AddStringEnum("none", "anonymous", "plain").AddDefaultValue("none").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -128,7 +128,7 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Optional:            true,
 			},
 			"maximum_frame_size": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max frame size", "maximum-frame-size", "").AddIntegerRange(512, 104857600).AddDefaultValue("104857600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum frame size in bytes to allow. Frames Frames that are larger are rejected. When rejected, the connection is closed. Enter a value in the range 512 - 104857600. The default value is 104857600.", "maximum-frame-size", "").AddIntegerRange(512, 104857600).AddDefaultValue("104857600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -138,13 +138,13 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: int64default.StaticInt64(104857600),
 			},
 			"auto_retry": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Automatic retry", "auto-retry", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable the automatic retry procedure after an AMQP connection failure. By default, the automatic retry behavior is enabled. This setting does not affect attempts over an established connection.", "auto-retry", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"retry_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Retry Interval", "retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds to wait before attempting to reestablish a failed connection. After the number of attempts is reached, attempts to reestablish a failed connection use the interval that is defined by the long retry interval. Enter a value in the range 1 - 65535. The default value is 10. <p>This setting does not affect attempts over an established connection.</p>", "retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("10").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -154,13 +154,13 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: int64default.StaticInt64(10),
 			},
 			"retry_attempts": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Retry attempts", "retry-attempts", "").AddDefaultValue("6").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the number of attempts for a failed connection to the remote AMQP server. After the number of attempts is reached, the long retry interval is used. Enter a value in the range 0 - 65535. The default value is 6. The special value of 0 disables the long interval, where the retry interval is used forever.", "retry-attempts", "").AddDefaultValue("6").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             int64default.StaticInt64(6),
 			},
 			"long_retry_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Long retry interval", "long-retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds to use after the number of attempts is reached to attempt to reestablish a failed connection. Enter a value in the range 1 - 65535. The default value is 600. <p>This setting does not affect attempts over an established connection.</p>", "long-retry-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -170,7 +170,7 @@ func (r *AMQPBrokerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Default: int64default.StaticInt64(600),
 			},
 			"reporting_interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Reporting interval", "reporting-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in seconds between the writing of identical log message. Enter a value in the range 1 - 65535. The default value is 10.", "reporting-interval", "").AddIntegerRange(1, 86400).AddDefaultValue("10").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

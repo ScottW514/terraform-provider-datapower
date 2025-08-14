@@ -3,12 +3,12 @@
 page_title: "datapower_ratelimitdefinition Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Rate limit definition
+  A rate limit definition contains the parameters to enforce a rate limit.
 ---
 
 # datapower_ratelimitdefinition (Data Source)
 
-Rate limit definition
+A rate limit definition contains the parameters to enforce a rate limit.
 
 ## Example Usage
 
@@ -38,28 +38,28 @@ Optional:
 
 Read-Only:
 
-- `allow_cache_fallback` (Boolean) Allow cache fallback
+- `allow_cache_fallback` (Boolean) Specify whether to use the cache as a fallback when gateway-peering instances cannot be contacted. By default, the cache can enforce rate limits when the cache is disabled. When disabled, the cache cannot enforce rate limits.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `auto_replenish` (Boolean) Autoreplenish
-- `dynamic_value` (String) Dynamic value
-- `emulate_burst_headers` (Boolean) Emulate burst headers
-- `hard_limit` (Boolean) Enable hard limit
+- `auto_replenish` (Boolean) Specify whether the count limit is automatically replenished at the end of the transaction. By default, the count limit is automatically replenished. When disabled, the count limit is replenished only by applying a rate limit assembly action that contains the count limit with a replenish operation.
+- `dynamic_value` (String) Specify the dynamic value string for the rate limit, which should contain one or more context variables. The default value is an empty string. <p>The dynamic value makes it possible to use a context variable to enforce the rate limit based on parameters other than those defined in the rate limit scheme, such as a username, incoming IP address, or server name. The context variable can be set in a GatewayScript action and then included in the dynamic value.</p><p>The following example uses the context object in a GatewayScript action to add the <tt>my.server</tt> variable to the API context. The dynamic value can then include the variable <tt>my.server</tt> , which resolves to the server name <tt>server34</tt> .</p><p><tt>context.set("my.server", "server34")</tt></p>
+- `emulate_burst_headers` (Boolean) Specify whether to return information about the rate limit in burst limit response headers instead of in rate limit response headers. By default, the information is in rate limit headers. When enabled, information is in burst limit headers.
+- `hard_limit` (Boolean) Specify whether to reject requests when the specified rate limit is exceeded. By default, requests are rejected when the limit is exceeded. When disabled, requests are accepted but a warning is logged.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `interval` (Number) Interval
-- `is_client` (Boolean) Is client
+- `interval` (Number) Specify the interval for the rate limit. Enter a value that is greater than or equal to 1. The default value is 1.
+- `is_client` (Boolean) Specify whether to apply the rate limit to the client or to an internal component. By default, the rate limit is applied to the client. Client rate limits return a 429 error when exceeded. When disabled, rate limit information is not applied to the client. Non-client rate limits return a 503 error when exceeded.
 - `parameters` (Attributes List) Parameters (see [below for nested schema](#nestedatt--result--parameters))
-- `rate` (Number) Rate
-- `response_headers` (Boolean) Response headers
-- `short_name` (String) Short name
+- `rate` (Number) Specify the maximum number of requests that the API gateway can handle in an interval. The value of 0 indicates no limit.
+- `response_headers` (Boolean) Specify whether response headers include rate limit information. By default, headers include rate limit information. When disabled, headers exclude rate limit information.
+- `short_name` (String) Specify the name shown in rate limit response headers. If not specified, the object name is used in response headers.
 - `type` (String) Limit type
-- `unit` (String) Unit
-- `use_api_name` (Boolean) Use API name
-- `use_app_id` (Boolean) Use application ID
-- `use_cache` (Boolean) Use cache
-- `use_client_id` (Boolean) Use client ID
-- `use_interval_offset` (Boolean) Use interval offset
+- `unit` (String) Specify the time unit for the rate limit. The default value is minute. When type is burst, the unit can be second or minute.
+- `use_api_name` (Boolean) Specify whether to include the API name in the rate limit key. By default, the API name is not included. When enabled, the API name is included.
+- `use_app_id` (Boolean) Specify whether to include the application ID in the rate limit key. By default, the application ID is not included. When enabled, the application ID is included.
+- `use_cache` (Boolean) Specify whether to use a cache to store rate limit information. A cache might be faster when the number of API calls is low. A cache can cause degraded performance when the number of API calls is exceptionally high. By default, a cache cannot store information. When enabled, the cache can store information.
+- `use_client_id` (Boolean) Specify whether to include the client ID in the rate limit key. By default, the client ID is not included. When enabled, the client ID is included.
+- `use_interval_offset` (Boolean) Specify whether to allow limit intervals to start at different offsets. By default, intervals can start at different offsets. When disabled, intervals cannot start at different offsets.
 - `user_summary` (String) Comments
-- `weight` (String) Weight expression
+- `weight` (String) Specify a JSONata expression to assign a weight value to the rate limit. For each API call, the value computed by the weight expression is applied to the rate limit. The default value is 1. If the weight expression evaluates to a value that is less than or equal to 0, it is set to 1. An empty string results in an error.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

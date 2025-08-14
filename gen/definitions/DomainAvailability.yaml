@@ -1,28 +1,35 @@
 name: DomainAvailability
-description: 'Domain availability (updates restart domain)'
-cli_alias: 'domain-availability'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/DomainAvailability/default'
+description: Domain availability monitors each multiprotocol gateway and web service
+  proxy in the domain. When the operational state of any service in the domain is
+  in the down state, the operational state for domain availability is down to indicate
+  that these services are not ready to accept traffic. At startup, domain availability
+  maintains all handlers in a quiesced state until their associated services are fully
+  configured. When these services are ready to accept traffic, an event is written
+  to the log that indicates that the domain is ready to process traffic.
+cli_alias: domain-availability
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/DomainAvailability/default
 update_only: true
 attributes:
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary

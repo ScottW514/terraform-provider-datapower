@@ -54,10 +54,10 @@ func (r *WebGUIResource) Metadata(ctx context.Context, req resource.MetadataRequ
 
 func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Web management service (`default` domain only)", "web-mgmt", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Modify the configuration of the web management service. <p>If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.</p>", "web-mgmt", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -67,7 +67,7 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Port number", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("9090").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the TCP port that the service monitors. The default value is 9090.", "port", "").AddIntegerRange(1, 65535).AddDefaultValue("9090").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -81,13 +81,13 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"save_config_overwrites": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Save configuration overwrites", "save-config-overwrite", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether saving the configuration overwrites the startup configuration. <ul><li>When enable, saving the configuration overwrites the startup configuration with the running configuration.</li><li>When not enabled, a manual step is required that prevents overwriting the manually edited startup configuration.</li></ul>", "save-config-overwrite", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"idle_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Idle timeout", "idle-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time after which to invalidate idle sessions. When invalidated, requires reauthentication. Enter a value in the range 0 - 65535. The default value is 600. A value of 0 disables the timer.", "idle-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -97,7 +97,7 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default: int64default.StaticInt64(600),
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "acl", "accesscontrollist").AddDefaultValue("web-mgmt").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Edit the <tt>web-mgmt</tt> access control list to define the client IP addresses to allow or deny.", "acl", "accesscontrollist").AddDefaultValue("web-mgmt").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("web-mgmt"),
@@ -120,13 +120,13 @@ func (r *WebGUIResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"enable_sts": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable HTTP Strict Transport Security", "enable-sts", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable HTTP Strict Transport Security headers. When enabled, responses inject HTTP Strict Transport Security headers.", "enable-sts", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Local address", "ip-address", "").AddDefaultValue("0.0.0.0").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>", "ip-address", "").AddDefaultValue("0.0.0.0").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             stringdefault.StaticString("0.0.0.0"),

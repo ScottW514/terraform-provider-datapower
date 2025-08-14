@@ -57,7 +57,7 @@ func (d *JOSERecipientIdentifierDataSource) Metadata(_ context.Context, req data
 
 func (d *JOSERecipientIdentifierDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Recipient Identifier",
+		MarkdownDescription: "JOSE Recipient Identifier object for the JSON Web Decrypt.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,23 +77,23 @@ func (d *JOSERecipientIdentifierDataSource) Schema(ctx context.Context, req data
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "Brief summary for user annotation.",
 							Computed:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: "Key Material Type",
+							MarkdownDescription: "Key material type used to verify the recipient.",
 							Computed:            true,
 						},
 						"key": schema.StringAttribute{
-							MarkdownDescription: "Key Material",
+							MarkdownDescription: "Use the private key to verify the recipient.",
 							Computed:            true,
 						},
 						"ss_key": schema.StringAttribute{
-							MarkdownDescription: "Key Material",
+							MarkdownDescription: "Use the shared secret key to verify the recipient.",
 							Computed:            true,
 						},
 						"header_param": schema.ListNestedAttribute{
-							MarkdownDescription: "Header Parameters",
+							MarkdownDescription: "The JOSE header parameters used to identify the recipient.",
 							NestedObject:        models.DmJOSEHeaderDataSourceSchema,
 							Computed:            true,
 						},

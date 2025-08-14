@@ -3,12 +3,12 @@
 page_title: "datapower_loadbalancergroup Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Load Balancer Group
+  
 ---
 
 # datapower_loadbalancergroup (Data Source)
 
-Load Balancer Group
+<p>The DataPower device distributes traffic to members of a Load Balancer Group. These are back end servers and not additional DataPower devices. A Load Balancer Group lists members of a virtual server group and sets the algorithm for balancing them. Periodic health checks can be performed. Load Balancers may also be used to provide redundant LDAP server access.</p><p>When created, a DataPower service can use a Load Balancer Group by associating it with an XML manager that is associated with this service.</p><p>The back end destination URL is set to the name of the Load Balancer Group (example: "BackEndServers").</p>
 
 ## Example Usage
 
@@ -38,26 +38,26 @@ Optional:
 
 Read-Only:
 
-- `algorithm` (String) Algorithm
+- `algorithm` (String) Select the algorithm to use to balance the real servers.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `application_routing` (Boolean) Enable Application Routing
-- `damp` (Number) Damp Time
+- `application_routing` (Boolean) <p>If set to on, the load balancer group will route to the back end cluster depending on the following conditions.</p><ul><li>the application for which this request is targeted</li><li>the application status on the back end servers</li></ul><p>Application Routing is required for Application Edition (group or atomic) rollout. If you need Application Edition support, set the Update Type to Subscribe in the WebSphere Cell object.</p>
+- `damp` (Number) When a real server is observed to be non-functioning, it is temporarily disabled. When the damp time has elapsed, it is re-enabled. Allowable values are in the range 1 - 86400.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `lb_group_affinity_conf` (Attributes) Session Affinity
+- `lb_group_affinity_conf` (Attributes) Session affinity allows applications to maintain sessions with clients.
   - CLI Alias: `session-affinity` (see [below for nested schema](#nestedatt--result--lb_group_affinity_conf))
-- `lb_group_checks` (Attributes) Health Checks
+- `lb_group_checks` (Attributes) The members of a Load Balancer Group can be periodically polled to verify the health of the server. If the server is found to be unresponsive, it is removed from the list of actively available servers until the unresponsive server passes a health check.
   - CLI Alias: `health-check` (see [below for nested schema](#nestedatt--result--lb_group_checks))
 - `lb_group_members` (Attributes List) Members (see [below for nested schema](#nestedatt--result--lb_group_members))
-- `masquerade_member` (Boolean) Masquerade As Group Name
-- `monitored_cookies` (List of String) Monitored Cookies
-- `never_return_sick_member` (Boolean) Do not Bypass Down State
-- `retrieve_info` (Boolean) Retrieve Workload Management Information
-- `try_every_server_before_failing` (Boolean) Try Every Server Before Failing
+- `masquerade_member` (Boolean) If you set this value, the host name presented to the server will be the name of the group instead of the name of the member being used for that specific transaction.
+- `monitored_cookies` (List of String) The DataPower Gateway enforces session affinity when the application server attempts to establish session affinity using one of these cookie names.
+- `never_return_sick_member` (Boolean) During normal operation, when all members of the load-balancing group are down and a new request for that group is made, the first member of the group is automatically selected. If this property is turned on, no attempt will be made to connect under these circumstances.
+- `retrieve_info` (Boolean) Use this setting to control whether this Load Balancer Group has membership and weight information automatically retrieved from the work load management repository WebSphere Cell. When disabled, the static configuration is used.
+- `try_every_server_before_failing` (Boolean) This property applies only when none of the group members are in the "up" state. If this value is set, every server in the group is tried before failing the connection attempt. It is a "last best-effort" attempt.
 - `user_summary` (String) Comments
-- `web_sphere_cell_config` (String) WebSphere Cell
-- `wlm_group` (String) Workload Management Group Name
-- `wlm_retrieval` (String) Workload Management Retrieval
-- `wlm_transport` (String) Protocol
+- `web_sphere_cell_config` (String) If you selected 'WebSphere Cell' for Workload Management Retrieval, you need to select a WebSphere Cell object that retrieves this information. If no objects are available in the pull down, you must create one.
+- `wlm_group` (String) The Workload Management Group Name is used to define a group. In a WebSphere Application Server environment, the back end group is a cluster name. Once specified, the Load Balancer Group will be populated with the members and weights retrieved from the back end.
+- `wlm_retrieval` (String) Contains the back end work load management repository selection type. Select 'WebSphere Cell' if your back-end is a WebSphere Application Server (WAS) Network Deployment (ND) or WAS Virtual Enterprise (VE).
+- `wlm_transport` (String) Specify either HTTP or HTTPS for the Load Balancer Group protocol. This protocol is used to forward traffic between the DataPower Gateway and the members of the Load Balancer Group.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

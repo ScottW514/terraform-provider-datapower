@@ -56,7 +56,7 @@ func (r *ProbeResource) Metadata(ctx context.Context, req resource.MetadataReque
 
 func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Probe settings", "probe-settings", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The domain-specific configuration that define the settings for the probe that you can use to troubleshoot the processing of transactions by services.", "probe-settings", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -70,7 +70,7 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -80,7 +80,7 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				Optional:            true,
 			},
 			"max_records": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max records", "max-records", "").AddIntegerRange(1, 10000).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of records to allow. Enter a value in the range 1 - 10000. The default value is 1000.", "max-records", "").AddIntegerRange(1, 10000).AddDefaultValue("1000").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -90,7 +90,7 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				Default: int64default.StaticInt64(1000),
 			},
 			"expiration": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Expiration", "expiration", "").AddIntegerRange(60, 86400).AddDefaultValue("3600").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds to retain the troubleshooting data. Enter a value in the range 60 - 86400. The default value is 3600.", "expiration", "").AddIntegerRange(60, 86400).AddDefaultValue("3600").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -100,7 +100,7 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				Default: int64default.StaticInt64(3600),
 			},
 			"gateway_peering": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Gateway peering", "gateway-peering", "gatewaypeering").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering instance for the probe. This instance synchronizes the captured data across the members. If you do not want to persist data across a restart, store the data in memory.", "gateway-peering", "gatewaypeering").String,
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

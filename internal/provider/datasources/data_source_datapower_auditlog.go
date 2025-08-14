@@ -50,22 +50,22 @@ func (d *AuditLogDataSource) Metadata(_ context.Context, req datasource.Metadata
 
 func (d *AuditLogDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Audit log settings (`default` domain only)",
+		MarkdownDescription: "<p>The audit log settings control the configuration of the system audit log. These settings controls the level of audit. When set to full, connection information is logged. When the system is in Common Criteria Compliance mode, more information is logged.</p>",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"size": schema.Int64Attribute{
-				MarkdownDescription: "Log size",
+				MarkdownDescription: "Specify the maximum size of audit log rotations in KB. Enter a value in the range 250 - 500000. The default value is 1000.",
 				Computed:            true,
 			},
 			"rotate": schema.Int64Attribute{
-				MarkdownDescription: "Number of rotations",
+				MarkdownDescription: "Specify the maximum number of rotations. Enter a value in the range 1 - 100. The default value is 3.",
 				Computed:            true,
 			},
 			"audit_level": schema.StringAttribute{
-				MarkdownDescription: "Audit level",
+				MarkdownDescription: "Specify the audit level. The default value is for standard logging.",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

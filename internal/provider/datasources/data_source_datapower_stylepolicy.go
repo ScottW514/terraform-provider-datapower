@@ -57,7 +57,7 @@ func (d *StylePolicyDataSource) Metadata(_ context.Context, req datasource.Metad
 
 func (d *StylePolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Processing Policy",
+		MarkdownDescription: "Create, Edit or Delete a Processing Policy. A policy consists of one or more Processing Rules. Rules execute depending upon the direction of the message and on whether or not a corresponding matching rule selects the document for processing. A service may have only one policy active at a time. Click Services in the left-hand navigation menu and then click the appropriate policy link to use the graphical interface to create and edit policies.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,23 +77,23 @@ func (d *StylePolicyDataSource) Schema(ctx context.Context, req datasource.Schem
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "Enter a comment. This appears on the Policy catalog page.",
 							Computed:            true,
 						},
 						"def_stylesheet_for_soap": schema.StringAttribute{
-							MarkdownDescription: "Default style sheet for SOAP",
+							MarkdownDescription: "Identify the default style sheet used for SOAP filtering. The default rejects all SOAP documents.",
 							Computed:            true,
 						},
 						"def_stylesheet_for_xsl": schema.StringAttribute{
-							MarkdownDescription: "Default style sheet for XSL transforms",
+							MarkdownDescription: "Identify the default style sheet used for XSL transformation. The default mirrors all documents.",
 							Computed:            true,
 						},
 						"def_x_query_for_json": schema.StringAttribute{
-							MarkdownDescription: "Default XQuery style sheet for JSON",
+							MarkdownDescription: "Identify the default XQuery style sheet used for JSON transformation. The default rejects all JSON documents.",
 							Computed:            true,
 						},
 						"policy_maps": schema.ListNestedAttribute{
-							MarkdownDescription: "Policy Maps",
+							MarkdownDescription: "A list of processing rules their corresponding matching rule that this policy will evaluate. If a match is found, the corresponding processing rule is run. The policy runs the first processing rule with a successful match. Therefore, the order of rules in this list is important.",
 							NestedObject:        models.DmPolicyMapDataSourceSchema,
 							Computed:            true,
 						},

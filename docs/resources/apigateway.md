@@ -3,13 +3,13 @@
 page_title: "datapower_apigateway Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API gateway
+  An API gateway matches the API to process API requests and to route each request to the matched API.
   CLI Alias: apigwAccepted Dependency Actions: flush_stylesheet_cache, flush_document_cache
 ---
 
 # datapower_apigateway (Resource)
 
-API gateway
+An API gateway matches the API to process API requests and to route each request to the matched API.
   - CLI Alias: `apigw`
   - Accepted Dependency Actions: `flush_stylesheet_cache`, `flush_document_cache`
 
@@ -37,40 +37,39 @@ resource "datapower_apigateway" "test" {
 
 ### Optional
 
-- `api_collection` (List of String) API collection
+- `api_collection` (List of String) Specify the API collections to serve a group of clients. Each collection packages the plans and subscribers to serve a specific group of clients.
   - CLI Alias: `collection`
   - Reference to: `datapower_apicollection:id`
-- `assembly_burst_limit` (Attributes List) Assembly burst limits
-  - CLI Alias: `assembly-burst-limit` (see [below for nested schema](#nestedatt--assembly_burst_limit))
+- `assembly_burst_limit` (Attributes List) - CLI Alias: `assembly-burst-limit` (see [below for nested schema](#nestedatt--assembly_burst_limit))
 - `assembly_count_limit` (Attributes List) Assembly count limits
   - CLI Alias: `assembly-count-limit` (see [below for nested schema](#nestedatt--assembly_count_limit))
 - `assembly_rate_limit` (Attributes List) Assembly rate limits
   - CLI Alias: `assembly-rate-limit` (see [below for nested schema](#nestedatt--assembly_rate_limit))
-- `cache_memory_size` (Number) Stylesheet cache size
+- `cache_memory_size` (Number) Specify the maximum size of the stylesheet cache. The default value is 2147483647. A value of 0 disables caching. Stylesheets are purged when either the cache size or the cache count is reached.
   - CLI Alias: `xsl-cache-memorysize`
   - Default value: `2147483647`
-- `cache_size` (Number) Stylesheet cache count
+- `cache_size` (Number) Specify the maximum number of stylesheets to cache. Enter a value in the range 5 - 250000. The default value is 256. Stylesheets are purged when either the cache size or the cache count is reached.
   - CLI Alias: `xsl-cache-size`
   - Range: `5`-`250000`
   - Default value: `256`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `doc_cache_max_docs` (Number) Document cache count
+- `doc_cache_max_docs` (Number) Specify the maximum number of documents to cache. Enter a value in the range 1 - 250000. The default value is 5000.
   - CLI Alias: `maxdocs`
   - Range: `1`-`250000`
   - Default value: `5000`
-- `doc_cache_policy` (Attributes List) Document cache policy
+- `doc_cache_policy` (Attributes List) Specify the document cache policies to associate a set of URLs with a specific cache policy. A document cache policy allows the administrator to determine how documents are cached. The policy offers time-to-live, priority, and type. The document cache is distinct from the stylesheet cache.
   - CLI Alias: `policy` (see [below for nested schema](#nestedatt--doc_cache_policy))
-- `doc_cache_size` (Number) Document cache size
+- `doc_cache_size` (Number) Specify the maximum size of the document cache. Regardless of the specified size, no document that is greater than 1073741824 bytes is cached. This restriction applies even if the cache has available space.
   - CLI Alias: `size`
-- `doc_max_writes` (Number) Maximum concurrent writes
+- `doc_max_writes` (Number) Specify the maximum number of concurrent write requests to create documents or refresh expired documents in the document cache. Enter a value in the range 1 - 32768. The default value is 32768. After the maximum number is reached, requests are forwarded to the target server and the response is not written to the cache.
   - CLI Alias: `max-writes`
   - Range: `1`-`32768`
   - Default value: `32768`
-- `front_persistent_timeout` (Number) Front persistent timeout
+- `front_persistent_timeout` (Number) Specify the inter-transaction timeout for client connections. This value is the maximum idle time to allow between the completion of a transaction and the initiation of a new transaction for a client connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.
   - CLI Alias: `front-persistent-timeout`
   - Range: `0`-`86400`
   - Default value: `180`
-- `front_timeout` (Number) Front side timeout
+- `front_timeout` (Number) Specify the intra-transaction timeout for client connections. This value is the maximum idle time to allow in a transaction for a client connection. This timer monitors idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.
   - CLI Alias: `front-timeout`
   - Range: `1`-`86400`
   - Default value: `120`
@@ -84,21 +83,21 @@ resource "datapower_apigateway" "test" {
   - Reference to: `datapower_opentelemetry:id`
 - `open_telemetry_resource_attribute` (Attributes List) OpenTelemetry resource attributes
   - CLI Alias: `otel-resource-attribute` (see [below for nested schema](#nestedatt--open_telemetry_resource_attribute))
-- `proxy_policies` (Attributes List) Proxy policy
+- `proxy_policies` (Attributes List) Specify the proxy policies to associate a set of URLs with a specific HTTP proxy. When multiple proxy policies are defined, URLs are evaluated against each policy in order.
   - CLI Alias: `proxy` (see [below for nested schema](#nestedatt--proxy_policies))
-- `scheduled_rule` (Attributes List) Scheduled processing rule
+- `scheduled_rule` (Attributes List) Specify the processing rules to run at defined intervals. Certain applications require the running of a processing rule. For example, the integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager.
   - CLI Alias: `schedule-rule` (see [below for nested schema](#nestedatt--scheduled_rule))
-- `sha1_caching` (Boolean) SHA1 caching
+- `sha1_caching` (Boolean) Specify how to manage SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
   - CLI Alias: `xsl-checksummed-cache`
   - Default value: `true`
 - `share_rate_limit_count` (String) Share rate limit count
   - CLI Alias: `share-count`
   - Choices: `yes`, `no`
   - Default value: `yes`
-- `static_document_calls` (Boolean) Static document calls
+- `static_document_calls` (Boolean) Specify how to manage static document calls. The latest XSLT specifications require that multiple document calls in the same transformation return the same result. Disable this setting to allow all document calls to operate independently.
   - CLI Alias: `static-document-calls`
   - Default value: `true`
-- `url_refresh_policy` (String) URL refresh policy
+- `url_refresh_policy` (String) Specify the stylesheet refresh policy. Stylesheets cached by this gateway are refreshed in accordance with policy rules.
   - CLI Alias: `xslrefresh`
   - Reference to: `datapower_urlrefreshpolicy:id`
 - `user_summary` (String) Comments

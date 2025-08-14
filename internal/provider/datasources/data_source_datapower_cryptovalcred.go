@@ -57,7 +57,7 @@ func (d *CryptoValCredDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *CryptoValCredDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Validation credentials",
+		MarkdownDescription: "<p>Validation credentials authenticate certificates that are received from TLS peers. Validation credentials can be used to validate certificates that are used in digital signature and encryption operations.</p><p>a TLS client requires validation credentials only when it authenticates the certificate that is presented by the remote TLS server. The TLS standard does not require authentication of the server certificate.</p><p>a TLS server requires validation credentials only when it authenticates remote TLS clients. The TLS standard does not require authentication of the client certificate.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,7 +77,7 @@ func (d *CryptoValCredDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"certificate": schema.ListAttribute{
-							MarkdownDescription: "Certificates",
+							MarkdownDescription: "Specify the list of certificates for the validation credentials. Each certificate in the validation credentials is the certificate that a TLS peer might send or is the certificate of the certification authority (CA) that signed the certificate that is sent by a peer or is the root certificate.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
@@ -86,28 +86,28 @@ func (d *CryptoValCredDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"use_crl": schema.BoolAttribute{
-							MarkdownDescription: "Use CRL",
+							MarkdownDescription: "Specify whether to check certificate revocation lists (CRLs) during certificate validation. When enabled, CRLs are checked. Otherwise, CRLs are not checked.",
 							Computed:            true,
 						},
 						"require_crl": schema.BoolAttribute{
-							MarkdownDescription: "Require CRL",
+							MarkdownDescription: "Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.",
 							Computed:            true,
 						},
 						"crldp_handling": schema.StringAttribute{
-							MarkdownDescription: "CRL distribution points handling",
+							MarkdownDescription: "Specify the support of certificate extensions for X.509 certificate distribution points. This certificate extension specifies how to obtain CRL information. For more information, see RFC 2527 and RFC 3280.",
 							Computed:            true,
 						},
 						"initial_policy_set": schema.ListAttribute{
-							MarkdownDescription: "Initial certificate policy set",
+							MarkdownDescription: "Specify the unique object identifiers for the certificate policy. <p>RFC 3280 refers to the input variable for certificate chain validation as <tt>user-initial-policy-set</tt> . These OIDs specify the allow values of certificate policies. To use this functionality, you need to require an explicit certificate policy. Otherwise, this set is used only if there are policy constraint extensions in the certificate chain.</p><p>By default, the initial certificate policy set consists of the single OID 2.5.29.32.0, which identifies <tt>anyPolicy</tt> .</p>",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"explicit_policy": schema.BoolAttribute{
-							MarkdownDescription: "Require explicit certificate policy",
+							MarkdownDescription: "Specify support for the initial explicit policy variable as defined by RFC 3280. When enabled, the chain validation algorithm must end with a non-empty policy tree. Otherwise, the algorithm can end with an empty policy tree unless policy constraint extensions in the chain require an explicit policy.",
 							Computed:            true,
 						},
 						"check_dates": schema.BoolAttribute{
-							MarkdownDescription: "Check dates",
+							MarkdownDescription: "Specify whether to check dates during certificate validation. This validation checks the current date and time against the <tt>notBefore</tt> and <tt>notAfter</tt> values in certificates and CRLs. When enabled, the date values are checked and expired certificates cause validation to fail. Otherwise, the date values are ignored and and do not cause validation to fail when a certificate is expired.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

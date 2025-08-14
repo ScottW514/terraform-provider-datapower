@@ -3,13 +3,13 @@
 page_title: "datapower_assemblyactiongatewayscript Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  GatewayScript assembly action
+  The GatewayScript assembly action runs a GatewayScript file. This action is not supported in IBM Cloud. Any assembly that includes this action fails.
   CLI Alias: assembly-gatewayscript
 ---
 
 # datapower_assemblyactiongatewayscript (Resource)
 
-GatewayScript assembly action
+The GatewayScript assembly action runs a GatewayScript file. This action is not supported in IBM Cloud. Any assembly that includes this action fails.
   - CLI Alias: `assembly-gatewayscript`
 
 ## Example Usage
@@ -29,15 +29,15 @@ resource "datapower_assemblyactiongatewayscript" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `source` (String) GatewayScript file
+- `source` (String) Specify the name and location of the GatewayScript file to process. <p>You can specify the location with a URL or by referencing the variable in the API context with the <tt>$(variable)</tt> format, such as <tt>$(request.headers.URL)</tt> .</p><p>The URL must start with <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt> . For example, <tt>local:///test.js</tt> .</p>
   - CLI Alias: `gatewayscript-location`
 
 ### Optional
 
-- `action_debug` (Boolean) Enable debugging
+- `action_debug` (Boolean) <p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>
   - CLI Alias: `debug`
   - Default value: `false`
-- `correlation_path` (String) Correlation path
+- `correlation_path` (String) Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.
   - CLI Alias: `correlation-path`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `title` (String) Title

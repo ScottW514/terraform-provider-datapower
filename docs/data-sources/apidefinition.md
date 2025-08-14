@@ -3,12 +3,12 @@
 page_title: "datapower_apidefinition Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API definition
+  An API definition uses HTTP requests to GET, PUT, POST, and DELETE data.
 ---
 
 # datapower_apidefinition (Data Source)
 
-API definition
+An API definition uses HTTP requests to GET, PUT, POST, and DELETE data.
 
 ## Example Usage
 
@@ -38,46 +38,46 @@ Optional:
 
 Read-Only:
 
-- `activity_log_toggle` (Boolean) Enable logging
-- `allow_chunked_uploads` (Boolean) Allow chunked uploads
+- `activity_log_toggle` (Boolean) Specify whether to enable API activity logging. The API gateway runs the activity log API action to generate logs. To generate log data for calls, you must enable this property and ensure that the following conditions are met. <ul><li>The logging type is not set to none.</li><li>The activity log action is added in the API rule for the API definition.</li></ul><p>When disabled, the API gateway does not generate log data.</p>
+- `allow_chunked_uploads` (Boolean) Specify whether to transfer documents to the server in chunks, which is based on the <tt>Transfer-Encoding: chunked</tt> header. This setting applies only to the <tt>invoke</tt> 1.5.0 policy that is deployed from API Connect from using the migration utility.
 - `allow_trailing_slash` (Boolean) Allow trailing slash
 - `allowed_api_protocols` (Attributes) Allowed API protocols
   - CLI Alias: `allowed-api-protocols` (see [below for nested schema](#nestedatt--result--allowed_api_protocols))
 - `api_id` (String) API ID
-- `api_mutual_tls_header_name` (String) API protection HTTP header
-- `api_mutual_tls_source` (List of String) API protection sources
+- `api_mutual_tls_header_name` (String) Specify the HTTP header that contains the client certificate for mutual TLS. The default value is <tt>X-Client-Certificate</tt> .
+- `api_mutual_tls_source` (List of String) Specify the sources to obtain the client certificate for mutual TLS. Because you can define multiple ways to obtain the source, ensure that you sequence the methods appropriately.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `assembly` (String) Assembly
-- `base_path` (String) Base path
-- `consume` (List of String) Consumes
-- `content` (String) Content on success
+- `assembly` (String) Specify the assembly to apply to API calls. An assembly is a rule that defines the actions to run against API requests and how to handle the processing errors.
+- `base_path` (String) Specify the base path on which the API is served, which is relative to the host. When the base path is not specified, the APIs are served directly under the host. The base path does not include the hostname or any additional segments for paths or operations. The base path must start but not end with slash (/). All resources in a REST API are defined relative to its base path.
+- `consume` (List of String) Specify the MIME types that the API can consume. These MIME types apply to all API operations. You can override the setting for specific operations in the API operation.
+- `content` (String) Specify the content to log on success. When set to payload data, you must enable message buffering to capture all request and response data.
 - `copy_id_headers_to_message` (Boolean) Copy ID headers to message
 - `cors_policy` (String) CORS policy
-- `cors_toggle` (Boolean) Enable CORS
-- `deployment_state` (String) Deployment state
-- `enforce_all_headers_case_insensitive` (Boolean) Enforce all headers as case-insensitive
-- `enforce_form_data_parameter` (Boolean) Enforce form data parameter
+- `cors_toggle` (Boolean) Specify whether to enable the API gateway to handle cross-origin resource sharing (CORS) requests. <ul><li>When enabled, the API gateway runs the API CORS action to handle all CORS requests for the API.</li><li>The routing API action matches the API to process, determines that the request is a preflight CORS request, and sets the <tt>request.attributes.isCORSPreflight</tt> flag to <tt>true</tt> .</li><li>When CORS is enabled and a preflight request is received, all assembly actions and many API actions are skipped. Only the following API actions are processed.</li><ul><li>The CORS API action configures the appropriate response headers.</li><li>The result API action sets the response headers.</li></ul><li>For all preflight requests, the security and client identification actions are always skipped.</li></ul>
+- `deployment_state` (String) Specify the deployment state of the API. By default, the deployment state is running instead of suspended.
+- `enforce_all_headers_case_insensitive` (Boolean) Specify whether to enforce all headers in case-insensitive. By default, the following behavior applies to headers. <ul><li>Headers in the <tt>message.headers</tt> and <tt>request.headers</tt> contexts are case-insensitive.</li><li>Headers in a custom context, such as <tt>foo.headers</tt> , are case-sensitive. For example, <tt>foo.headers.bar</tt> and <tt>foo.headers.Bar</tt> are different headers.</li></ul>
+- `enforce_form_data_parameter` (Boolean) Specify whether to resolve and populate the form data parameter. <ul><li>When enabled and the operation of the API path configures any form data, resolve the payload as BLOB data and populate the corresponding fields as context variables during routing. Applicable when the <tt>Content-Type</tt> header is <tt>application/x-www-form-urlencoded</tt> or <tt>multipart/form-data</tt> .</li><li>When disabled and no required form-data parameter is specified, processing does not resolve as a BLOB and populate the parameter. Applicable when the <tt>Content-Type</tt> header is <tt>application/x-www-form-urlencoded</tt> or <tt>multipart/form-data</tt> .</li></ul>
 - `enforce_required_params` (Boolean) Enforce required parameters
-- `error_content` (String) Content on error
+- `error_content` (String) Specify the content to log on error. When set to payload data, you must enable message buffering to capture all request and response data.
 - `force_http500_for_soap11` (Boolean) Force HTTP 500 for SOAP 1.1
-- `get_raw_body_value` (Boolean) Get raw body value
+- `get_raw_body_value` (Boolean) Specify whether the GatewayScript <tt>apim.getvariable()</tt> APIreturns the raw body instead of parsing. This setting applies only when the context is other than <tt>message</tt> .
 - `graph_ql_schema` (String) GraphQL schema location
-- `html_page` (String) HTML page
+- `html_page` (String) Specify the name and location of a static HTML page that the API can return. Import the file to the <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt> DataPower directory.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `message_buffering` (Boolean) Enable message buffering
+- `message_buffering` (Boolean) Specify whether to buffer requests and responses before processing. <ul><li>When enabled, requests and responses are buffered before processing. The message payload and the output of the invoke assembly action are read as a binary large object (BLOB).</li><li>When disabled, requests and responses are streamed. Only an asynchronous API call can read the streamed data. If the message processing requires data to be parsed at the payload level, buffering is used to capture the data.</li></ul><p>If you enable activity logging to capture payload data, you must enable message buffering to capture all request and response data.</p>
 - `name` (String) API name
-- `path` (List of String) Paths
+- `path` (List of String) Specify the paths through which users access the API operations. A path consists of one or more HTTP operations.
 - `preserved_request_header` (List of String) Request headers to preserve
 - `preserved_response_header` (List of String) Response header to preserve
-- `produce` (List of String) Produces
-- `properties` (Attributes List) Custom properties (see [below for nested schema](#nestedatt--result--properties))
+- `produce` (List of String) Specify the MIME types that the API can produce. These MIME types apply to all API operations. You can override the setting for specific operations in the API operation.
+- `properties` (Attributes List) Specify custom entries for API properties. An API property is a type of context variable whose value is dependent on the collection that the API is provisioned in. Collection-specific API properties allow you to use the same API definition in different collections when a property in a collection requires a unique or different value. A custom property entry defines a property and its value for one collection. For each custom property or property that needs a different value for another collection, add another entry. (see [below for nested schema](#nestedatt--result--properties))
 - `require_api_mutual_tls` (Boolean) API protection
-- `return_v5_responses` (Boolean) Return v5 responses
-- `schemas` (Attributes List) Schemas (see [below for nested schema](#nestedatt--result--schemas))
-- `security_requirement` (List of String) Security requirements
-- `set_v5_request_headers` (Boolean) Set v5 request headers
+- `return_v5_responses` (Boolean) Specify whether to return v5-compatible responses, such as OAuth and client security error responses.
+- `schemas` (Attributes List) Specify the API schemas that define data types for request or message validation. An API data type consists of a name and its API schema. (see [below for nested schema](#nestedatt--result--schemas))
+- `security_requirement` (List of String) Specify the alternative security requirements to enforce for the API as a whole. In other words, processing applies a logical <tt>OR</tt> between the security requirements. By default, the security requirement is applied to all operations in the API. However, for each API operation, you can override the API-level security by separately specifying security schemes to enforce at the operation level.
+- `set_v5_request_headers` (Boolean) Specify whether to populate v5-compatible headers such as <tt>X-Client-IP</tt> and <tt>X-Global-Transaction-ID</tt> in the <tt>request.headers</tt> context variable.
 - `share_rate_limit_count` (String) Share rate limit count
-- `swagger_location` (String) OpenAPI document
+- `swagger_location` (String) Specify the name and location of the OpenAPI document when you create the API definition from an OpenAPI document. Prepare the document as follows before you specify the location. <ol><li>When the OpenAPI document is a YAML file, convert it to JSON.</li><li>Import the JSON file to the <tt>local:</tt> or <tt>temporary:</tt> DataPower directory.</li></ol><p>When you create the API definition with API properties, this property is not applicable.</p>
 - `type` (String) Type
 - `user_summary` (String) Comments
 - `version` (String) API version

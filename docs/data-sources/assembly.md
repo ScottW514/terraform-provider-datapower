@@ -3,12 +3,12 @@
 page_title: "datapower_assembly Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Assembly
+  An assembly specifies the API rule to apply to the API call and how to handle errors during the assembly execution. The API rule for the assembly comprises only assembly actions that are executed in order to control a specific aspect of processing such as data transformation during API call at run time. When an API is identified for the incoming request, its assembly is executed.
 ---
 
 # datapower_assembly (Data Source)
 
-Assembly
+An assembly specifies the API rule to apply to the API call and how to handle errors during the assembly execution. The API rule for the assembly comprises only assembly actions that are executed in order to control a specific aspect of processing such as data transformation during API call at run time. When an API is identified for the incoming request, its assembly is executed.
 
 ## Example Usage
 
@@ -39,12 +39,12 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `catch` (Attributes List) Catch (see [below for nested schema](#nestedatt--result--catch))
-- `default_catch` (String) Default catch
-- `finally` (String) Finally
+- `catch` (Attributes List) Specifies how to handle a specific error when it occurs during the assembly execution. (see [below for nested schema](#nestedatt--result--catch))
+- `default_catch` (String) Specifies how to handle errors that are not caught by the catch setting during the assembly execution.
+- `finally` (String) Specifies the final API rule to apply to the API call after the main rule, catch rule, or both have finished executing. The final API rule comprises only assembly actions.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `rule` (String) Rule
-- `user_summary` (String) Comments
+- `rule` (String) Specifies the API rule that comprises only assembly actions to apply to the API call.
+- `user_summary` (String) A descriptive summary for the assembly configuration.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

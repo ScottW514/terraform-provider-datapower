@@ -55,7 +55,7 @@ func (r *MessageContentFiltersResource) Metadata(ctx context.Context, req resour
 
 func (r *MessageContentFiltersResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Message Content Filters", "mcfilters", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A Message Content Filters is a group of HTTP header-based and XPath-based filters. <ul><li>For HTTP header-based filters, the filter succeeds when the name and value of an HTTP header field match.</li><li>For XPath-based filters, the filter succeeds when a document matches the element structure and content of the XPath expression and value.</li></ul>", "mcfilters", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,12 +84,12 @@ func (r *MessageContentFiltersResource) Schema(ctx context.Context, req resource
 				Optional:            true,
 			},
 			"filter_refs": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Message Content Filter", "filter", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the group of message content filter objects.", "filter", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"filters": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Message Content Filter", "mcfilter", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Defines the group of message content filters.", "mcfilter", "").String,
 				NestedObject:        models.DmMCFilterResourceSchema,
 				Optional:            true,
 			},

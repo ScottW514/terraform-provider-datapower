@@ -3,12 +3,12 @@
 page_title: "datapower_apisecurityoauth Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API security OAuth
+  An API OAuth security definition defines the applicable settings for an OAuth provider.
 ---
 
 # datapower_apisecurityoauth (Data Source)
 
-API security OAuth
+An API OAuth security definition defines the applicable settings for an OAuth provider.
 
 ## Example Usage
 
@@ -41,10 +41,10 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `o_auth_adv_scope_tls_profile` (String) OAuth TLS profile
-- `o_auth_adv_scope_url` (String) OAuth advanced scope URL
-- `o_auth_flow` (String) OAuth flow
+- `o_auth_adv_scope_url` (String) Specify the URL that overrides the advanced scope URL in the OAuth provider settings. The value must be a properly formatted URL.
+- `o_auth_flow` (String) Specify the OAuth flow to enforce to protect the target. The value must be among the supported grant types that are defined by the referenced OAuth provider.
 - `o_auth_provider` (String) OAuth provider
-- `o_auth_scope` (String) OAuth scopes
+- `o_auth_scope` (String) Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <ul><li>The allowed scopes for this configuration must be a subset of the allowed scopes set for the API OAuth security definition.</li><li>The allowed scopes for the API OAuth security definition must be a subset of the allowed scopes set for the OAuth provider settings.</li></ul><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

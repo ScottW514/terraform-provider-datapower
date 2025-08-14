@@ -3,13 +3,13 @@
 page_title: "datapower_mtompolicy Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  MTOM Policy
+  An MTOM policy provides a mechanism for optimizing the transmission and wire format of an XML/SOAP message. Optimization is performed by selecting elements with base64-encoded character data. The selected elements are decoded and attached as MIME attachment parts before transmission. Decoding before transmission reduces the overhead that is associated with base64-encoded data.
   CLI Alias: mtom
 ---
 
 # datapower_mtompolicy (Resource)
 
-MTOM Policy
+An MTOM policy provides a mechanism for optimizing the transmission and wire format of an XML/SOAP message. Optimization is performed by selecting elements with base64-encoded character data. The selected elements are decoded and attached as MIME attachment parts before transmission. Decoding before transmission reduces the overhead that is associated with base64-encoded data.
   - CLI Alias: `mtom`
 
 ## Example Usage
@@ -32,14 +32,14 @@ resource "datapower_mtompolicy" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `include_content_type` (Boolean) Include Content Type
+- `include_content_type` (Boolean) <p>Select whether to include the xmlmine:contentType declaration in output messages when the input message does not contain this declaration. If the input message contains this declaration, the MTOM policy passes through the attribute regardless of the setting for this property.</p><ul><li>Select "on", the default value, to add the contentType declaration to the output message.</li><li>Select "off" to not add the contentType declaration to the output message.</li></ul>
   - CLI Alias: `include-content-type`
   - Default value: `true`
-- `mode` (String) MTOM Mode
+- `mode` (String) Specify the optimization mode. <p>The encode option optimizes (serializes) input messages. For serialization, provide an XPath expression or a list of XPath expressions to identify the content to extract. Optionally, per XPath expression, exercise control over the Content Type and Content ID values. These two values can be determined automatically using the xmlmime:contentType declaration and namespace declaration.</p><p>The decode option decodes (deserializes) attachment parts of an optimized message. Deserialization, by default, reassembles the original infoset, which results in either a SOAP document or MIME document depending on whether all attachments were referenced by &lt;Include/> elements. Optionally, you can specify a Content ID to select individual attachment parts to reassemble.</p>
   - CLI Alias: `mode`
   - Choices: `encode`, `decode`
   - Default value: `encode`
-- `rule` (Attributes List) MTOM Rules
+- `rule` (Attributes List) Each MTOM rule describes which message elements to optimize. A single XPath expression selects one or more elements for optimization.
   - CLI Alias: `rule` (see [below for nested schema](#nestedatt--rule))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

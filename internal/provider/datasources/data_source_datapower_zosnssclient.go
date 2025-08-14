@@ -57,7 +57,7 @@ func (d *ZosNSSClientDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *ZosNSSClientDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "NSS Client",
+		MarkdownDescription: "The z/OS NSS client object provides the parameters for authentication with SAF on a z/OS Communications Server.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,43 +77,43 @@ func (d *ZosNSSClientDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "A descriptive summary for the configuration.",
 							Computed:            true,
 						},
 						"remote_address": schema.StringAttribute{
-							MarkdownDescription: "Remote Address",
+							MarkdownDescription: "Specifies IP address or host name of the NSS server. In conjunction with the Remote Port, identifies the host and listening port of the NSS server. The NSS server must have the XMLAppliance discipline support enabled.",
 							Computed:            true,
 						},
 						"remote_port": schema.Int64Attribute{
-							MarkdownDescription: "Remote Port",
+							MarkdownDescription: "Specifies NSS server port. In conjunction with the Remote Address, identifies the host and listening port of the NSS server.",
 							Computed:            true,
 						},
 						"client_id": schema.StringAttribute{
-							MarkdownDescription: "Client ID",
+							MarkdownDescription: "<p>Specifies the client ID to be used for registration with the NSS server. Minimum length is 1. Maximum length is 24.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Client ID identifies the client ID to register the appliance with the NSS server. The NSS client ID is a unique string used by the NSS Server to track clients.</p><p>The Client ID does not have to correspond to any preexisting object. It is provided to the server at the time of registration. If another client attempts to register with the same client ID to the same NSS Server, the NSS server will send a heartbeat to the first client. If the first client responds to the heartbeat, the second client's registration will be rejected. If the first client does not respond, the connect to the first client will be severed and the second client will be registered.</p>",
 							Computed:            true,
 						},
 						"system_name": schema.StringAttribute{
-							MarkdownDescription: "System Name",
+							MarkdownDescription: "<p>Specifies a name for the NSS client. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The System Name identifies the NSS client to the NSS server. NSS server commands identify NSS clients by system name in the output when displaying information for connected NSS clients.</p>",
 							Computed:            true,
 						},
 						"user_name": schema.StringAttribute{
-							MarkdownDescription: "User Name",
+							MarkdownDescription: "<p>Specifies a user name to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The user name must match an existing user ID on the NSS Server.</p>",
 							Computed:            true,
 						},
 						"password": schema.StringAttribute{
-							MarkdownDescription: "Password",
+							MarkdownDescription: "<p>Specifies the password to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Password specifies the password to use in conjunction with the value provided by the User Name.</p>",
 							Computed:            true,
 						},
 						"password_alias": schema.StringAttribute{
-							MarkdownDescription: "Password Alias",
+							MarkdownDescription: "<p>Specifies the password alias of the password to use to authenticate to the NSS server.</p><p>The associated password is used in conjunction with the value provided by the User Name.</p>",
 							Computed:            true,
 						},
 						"ssl_client_config_type": schema.StringAttribute{
-							MarkdownDescription: "TLS client type",
+							MarkdownDescription: "The TLS profile type to secure connections between the DataPower Gateway and the NSS server.",
 							Computed:            true,
 						},
 						"ssl_client": schema.StringAttribute{
-							MarkdownDescription: "TLS client profile",
+							MarkdownDescription: "The TLS client profile to secure connections between the DataPower Gateway and the NSS server.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

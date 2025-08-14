@@ -50,22 +50,22 @@ func (d *LunaHASettingsDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *LunaHASettingsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SafeNet Luna HSM HA settings (`default` domain only)",
+		MarkdownDescription: "Defines the high availability (HA) settings for the SafeNet Luna Network HSM HA group.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"mode": schema.StringAttribute{
-				MarkdownDescription: "Recovery mode",
+				MarkdownDescription: "Specify the HA recovery mode. The default value is activeBasic.",
 				Computed:            true,
 			},
 			"recovery_count": schema.Int64Attribute{
-				MarkdownDescription: "Recovery count",
+				MarkdownDescription: "Specify the number of recovery attempts for failed members in the HA group. Enter a value in the range 0 - 500. The default value is 0, which disables automatic recovery.",
 				Computed:            true,
 			},
 			"interval": schema.Int64Attribute{
-				MarkdownDescription: "Recovery interval",
+				MarkdownDescription: "Specify the interval in seconds between recovery attempts for failed members in the HA group. Enter a value in the range 60 - 1200. The default value is 60.",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

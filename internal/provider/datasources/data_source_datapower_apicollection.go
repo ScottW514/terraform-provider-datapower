@@ -57,7 +57,7 @@ func (d *APICollectionDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API collection",
+		MarkdownDescription: "An API collection is a logical partition of an API gateway that packages the plans and subscribers to make APIs available to a specific group of clients. An API collection corresponds to a catalog in the API manager.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"sandbox": schema.BoolAttribute{
-							MarkdownDescription: "Sandbox",
+							MarkdownDescription: "Specify whether the APIs in this catalog are for test purposes. By default, a catalog is not for test purposes.",
 							Computed:            true,
 						},
 						"org_id": schema.StringAttribute{
@@ -101,15 +101,15 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"dev_portal_endpoint": schema.StringAttribute{
-							MarkdownDescription: "Developer Portal endpoint",
+							MarkdownDescription: "Specify the URL of the Developer Portal endpoint. This endpoint can be used to provide security credentials for access to an API.",
 							Computed:            true,
 						},
 						"cache_capacity": schema.Int64Attribute{
-							MarkdownDescription: "Subscriber cache capacity",
+							MarkdownDescription: "Specify the maximum number of subscriber entries to cache. Enter a value in the range 8 - 51200. The default value is 128. When the limit is exceeded, the least recently used (LRU) entry is removed.",
 							Computed:            true,
 						},
 						"routing_prefix": schema.ListNestedAttribute{
-							MarkdownDescription: "Routing prefixes",
+							MarkdownDescription: "Specify the routing prefix to determine which API collection to route the request. You can use routing prefixes to organize your APIs and plans into collections and subcollections. For example, if you have a collection of APIs serving for a certain purpose, and the APIs are to be used by two segments of your organization, you might create two API collections with the organization name, purpose name, and segment name in the routing prefix. If the organization name is <tt>myorg</tt> , the APIs serve for purpose <tt>purpose1</tt> , and the two segments under the organization is <tt>section1</tt> and <tt>section2</tt> , the resulting URL routing prefixes are <tt>/myorg/purpose1/section1</tt> and <tt>/myorg/purpose1/section2</tt> . The resulting hostname routing prefixes are <tt>section1.purpose1.myorg</tt> and <tt>section2.purpose1.myorg</tt> . <p>The API gateway uses the routing prefix to form the complete URI <tt>routing_prefix/base_path/operation_path</tt> and accepts only the incoming requests with this URI. In the complete URI, <tt>base_path</tt> is the base path on which the API is served, and <tt>operation_path</tt> is the relative path to the base path where the operations are available.</p><p>The default routing prefix is slash (/) when the type is URI and blank when the type is hostname. An API collection becomes the default API collection in the API Gateway when the API collection has a default routing prefix. The API gateway routes a request to the default API collection when other API collections do not match. An API gateway can have only one default API collection. Therefore, regardless of the prefix type, only one API collection can be configured with the default routing prefix.</p>",
 							NestedObject:        models.DmRoutingPrefixDataSourceSchema,
 							Computed:            true,
 						},
@@ -118,12 +118,12 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"default_rate_limit": schema.ListNestedAttribute{
-							MarkdownDescription: "Default rate limit",
+							MarkdownDescription: "Specify the default rate limit scheme for API requests without API keys for client identification. When not defined, requests without API keys are rejected.",
 							NestedObject:        models.DmAPIRateLimitDataSourceSchema,
 							Computed:            true,
 						},
 						"rate_limit_group": schema.StringAttribute{
-							MarkdownDescription: "Rate limit group",
+							MarkdownDescription: "Specify the default rate limit group for API requests without API keys for client identification. When not defined, requests without API keys are rejected.",
 							Computed:            true,
 						},
 						"assembly_burst_limit": schema.ListNestedAttribute{
@@ -142,27 +142,27 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"enforce_pre_assembly_rate_limits": schema.BoolAttribute{
-							MarkdownDescription: "Enforce preassembly rate limits",
+							MarkdownDescription: "Specify whether to enforce the API rate and burst limits from the plan. When disabled, only the limits specified in a rate limit assembly action are applied to this API.",
 							Computed:            true,
 						},
 						"api_processing_rule": schema.StringAttribute{
-							MarkdownDescription: "API processing rule",
+							MarkdownDescription: "Specify the processing rule to process API requests. When your collection requires custom processing, use API Connect global policies to define the custom rules.",
 							Computed:            true,
 						},
 						"api_error_rule": schema.StringAttribute{
-							MarkdownDescription: "API error rule",
+							MarkdownDescription: "Specify the processing rule to handle errors during API processing. When your collection requires custom processing, use API Connect global policies to define the custom rules.",
 							Computed:            true,
 						},
 						"assembly_preflow": schema.StringAttribute{
-							MarkdownDescription: "Assembly preprocessing",
+							MarkdownDescription: "Specify the processing rule to run before the assembly rule. When your collection requires custom processing, use API Connect global policies to configure the assembly.",
 							Computed:            true,
 						},
 						"assembly_postflow": schema.StringAttribute{
-							MarkdownDescription: "Assembly postprocessing",
+							MarkdownDescription: "Specify the processing rule to run after the assembly rule. When your collection requires custom processing, use API Connect global policies to configure the assembly.",
 							Computed:            true,
 						},
 						"plan": schema.ListAttribute{
-							MarkdownDescription: "Plans",
+							MarkdownDescription: "Specify the API plans for the collection. Each plan contains a list of APIs and defines the rate limit for the API operations.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
@@ -175,7 +175,7 @@ func (d *APICollectionDataSource) Schema(ctx context.Context, req datasource.Sch
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
-						"parse_settings_reference": models.GetDmDynamicParseSettingsReferenceDataSourceSchema("Parse settings", "parse-settings-reference", ""),
+						"parse_settings_reference": models.GetDmDynamicParseSettingsReferenceDataSourceSchema("Specify the constraints to parse documents. Precedence rules apply when the constraint for the same aspect of an input document is configured with more than one method. <ul><li>You can specify a URL reference from which to retrieve the constraints definition.</li><li>You can specify a literal configuration string in XML management interface or REST management interface format that contains the constraints definition.</li><li>You can specify a parse settings configuration object to retrieve the constraints definition.</li></ul>", "parse-settings-reference", ""),
 						"dependency_actions":       actions.ActionsSchema,
 					},
 				},

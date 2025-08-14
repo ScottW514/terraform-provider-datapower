@@ -57,7 +57,7 @@ func (d *AssemblyActionJWTGenerateDataSource) Metadata(_ context.Context, req da
 
 func (d *AssemblyActionJWTGenerateDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "JWT generate assembly action",
+		MarkdownDescription: "The JWT generate assembly action generates JWT claims and specifies the crypto material to generate a JWT during processing.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,31 +77,31 @@ func (d *AssemblyActionJWTGenerateDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"jwt": schema.StringAttribute{
-							MarkdownDescription: "JWT output location",
+							MarkdownDescription: "Specify the variable to store the generated JWT. The default value is <tt>generated.jwt</tt> . When the variable is not set, the generated JWT is written to the Authorization Header as a Bearer token.",
 							Computed:            true,
 						},
 						"jwtid_claims": schema.BoolAttribute{
-							MarkdownDescription: "JWT ID claims",
+							MarkdownDescription: "Specify whether to add a JWT ID (jti) claim to the JWT. When enabled, a UUID is generated and set as the value of the JWT ID claim.",
 							Computed:            true,
 						},
 						"issuer_claim": schema.StringAttribute{
-							MarkdownDescription: "Issuer claim",
+							MarkdownDescription: "Specify the variable from which to retrieve the issuer (iss) claim value. The default value is <tt>iss.claim</tt> . The maximum value length is 256 characters.",
 							Computed:            true,
 						},
 						"subject_claim": schema.StringAttribute{
-							MarkdownDescription: "Subject claim",
+							MarkdownDescription: "Specify the variable from which to retrieve the subject (sub) claim value. The maximum value length is 256 characters.",
 							Computed:            true,
 						},
 						"audience_claim": schema.StringAttribute{
-							MarkdownDescription: "Audience claim",
+							MarkdownDescription: "Specify the variable from which to retrieve the audience (aud) claim value. The maximum value length is 256 characters. This value can be a single string, a comma-separated string of values, or an array of one or more values when you set the variable through GatewayScript processing.",
 							Computed:            true,
 						},
 						"validity_period": schema.Int64Attribute{
-							MarkdownDescription: "Validity period",
+							MarkdownDescription: "Specify the validity period in seconds to calculate the expiration (exp) claim. This value is added to the current date and time to be the value for the \"exp\" claim. The JWT is considered valid until expiry. Enter a value in the range 1 - 31622400. The default value is 3600.",
 							Computed:            true,
 						},
 						"private_claim": schema.StringAttribute{
-							MarkdownDescription: "Private claim",
+							MarkdownDescription: "Specify the variable from which to retrieve a valid set of JSON claims. These claims are added to any set of claims that are specified previously.",
 							Computed:            true,
 						},
 						"sign_jwk": schema.StringAttribute{
@@ -109,19 +109,19 @@ func (d *AssemblyActionJWTGenerateDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"crypto_algorithm": schema.StringAttribute{
-							MarkdownDescription: "Crypto algorithm for JWT signature",
+							MarkdownDescription: "Specify the crypto algorithm to use. Use one of the following values. <ul><li><tt>HS256</tt> - HMAC using SHA-256</li><li><tt>HS384</tt> - HMAC using SHA-384</li><li><tt>HS512</tt> - HMAC using SHA-512</li><li><tt>RS256</tt> - RSASSA-PKCS-v1_5 using SHA-256</li><li><tt>RS384</tt> - RSASSA-PKCS-v1_5 using SHA 384</li><li><tt>RS512</tt> - RSASSA-PKCS-v1_5 using SHA-512</li><li><tt>ES256</tt> - ECDSA using P-256 and SHA-256</li><li><tt>ES384</tt> - ECDSA using P-384 and SHA-384</li><li><tt>ES512</tt> - ECDSA using P-521 and SHA-512</li><li><tt>none</tt> - Do not sign the JWT, which is unsecured and provides no integrity protection but can be used for a nest JWT</li><li>An inline parameter to read at runtime</li></ul>",
 							Computed:            true,
 						},
 						"sign_crypto": schema.StringAttribute{
-							MarkdownDescription: "Crypto object for JWT signature",
+							MarkdownDescription: "Specify the crypto object (a shared secret key or certificate) to use to sign the JWT.",
 							Computed:            true,
 						},
 						"custom_kid_value_jws": schema.StringAttribute{
-							MarkdownDescription: "Key ID value for JWS",
+							MarkdownDescription: "Specify the value of the <tt>kid</tt> claim of the JWT for JWS. The maximum length is 256 characters. This value can be a single string, a comma-separated string of values, or an array of values when you set the variable through GatewayScript processing.",
 							Computed:            true,
 						},
 						"encrypt_algorithm": schema.StringAttribute{
-							MarkdownDescription: "Encrypt algorithm for JWT encryption",
+							MarkdownDescription: "Specify the encryption algorithm to use. Use one of the following values. <ul><li><tt>A128CBC-HS256</tt> - AES_128_CBC_HMAC_SHA_256 authenticated encryption algorithm</li><li><tt>A192CBC-HS384</tt> - AES_192_CBC_HMAC_SHA_384 authenticated encryption algorithm</li><li><tt>A256CBC-HS512</tt> - AES_256_CBC_HMAC_SHA_512 authenticated encryption algorithm</li><li><tt>A128GCM</tt> - AES GCM using 128-bit key</li><li><tt>A192GCM</tt> - AES GCM using 192-bit key</li><li><tt>A256GCM</tt> - AES GCM using 256-bit key</li><li>An inline parameter to read at runtime</li></ul>",
 							Computed:            true,
 						},
 						"encrypt_jwk": schema.StringAttribute{
@@ -129,7 +129,7 @@ func (d *AssemblyActionJWTGenerateDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"key_encrypt_algorithm": schema.StringAttribute{
-							MarkdownDescription: "Key encrypt algorithm for JWT encryption",
+							MarkdownDescription: "Specify the key encryption algorithm to use. Use one of the following values. <ul><li><tt>RSA1_5</tt> - RSAES-PKCS1-V1_5</li><li><tt>RSA-OAEP</tt> - RSAES OAEP using default parameters</li><li><tt>RSA-OAEP-256</tt> - RSAES OAEP using SHA-256 and MGF1 with SHA-256</li><li><tt>A128KW</tt> - AES Key Wrap with default initial value using 128 bit key</li><li><tt>A192KW</tt> - AES Key Wrap with default initial value using 192 bit key</li><li><tt>A256KW</tt> - AES Key Wrap with default initial value using 256 bit key</li><li><tt>dir</tt> - Direct use of a shared symmetric key as the CEK</li><li>An inline parameter to read at runtime</li></ul>",
 							Computed:            true,
 						},
 						"encrypt_crypto": schema.StringAttribute{
@@ -137,7 +137,7 @@ func (d *AssemblyActionJWTGenerateDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"custom_kid_value_jwe": schema.StringAttribute{
-							MarkdownDescription: "Key ID value for JWE",
+							MarkdownDescription: "Specify the value of the <tt>kid</tt> claim of the JWT for JWE. The maximum length is 256 characters. This value can be a single string, a comma-separated string of values, or an array of values when you set the variable through GatewayScript processing.",
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
@@ -149,11 +149,11 @@ func (d *AssemblyActionJWTGenerateDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -3,12 +3,12 @@
 page_title: "datapower_joserecipientidentifier Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Recipient Identifier
+  JOSE Recipient Identifier object for the JSON Web Decrypt.
 ---
 
 # datapower_joserecipientidentifier (Data Source)
 
-Recipient Identifier
+JOSE Recipient Identifier object for the JSON Web Decrypt.
 
 ## Example Usage
 
@@ -39,12 +39,12 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `header_param` (Attributes List) Header Parameters (see [below for nested schema](#nestedatt--result--header_param))
+- `header_param` (Attributes List) The JOSE header parameters used to identify the recipient. (see [below for nested schema](#nestedatt--result--header_param))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `key` (String) Key Material
-- `ss_key` (String) Key Material
-- `type` (String) Key Material Type
-- `user_summary` (String) Comments
+- `key` (String) Use the private key to verify the recipient.
+- `ss_key` (String) Use the shared secret key to verify the recipient.
+- `type` (String) Key material type used to verify the recipient.
+- `user_summary` (String) Brief summary for user annotation.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

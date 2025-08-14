@@ -3,12 +3,12 @@
 page_title: "datapower_apisecurityhttpscheme Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API security HTTP scheme
+  Configure and manage an HTTP bearer authentication security definition with the Bearer authentication security scheme in an API as defined in OpenAPI 3.0. Bearer authentication is an HTTP Authentication scheme and was originally part of RFC 6750: The OAuth 2.0 Authorization Framework: Bearer Token Usage.
 ---
 
 # datapower_apisecurityhttpscheme (Data Source)
 
-API security HTTP scheme
+Configure and manage an HTTP bearer authentication security definition with the Bearer authentication security scheme in an API as defined in OpenAPI 3.0. Bearer authentication is an HTTP Authentication scheme and was originally part of RFC 6750: The OAuth 2.0 Authorization Framework: Bearer Token Usage.
 
 ## Example Usage
 
@@ -39,12 +39,12 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `bearer_format` (String) Bearer format
-- `bearer_validation_endpoint` (String) Bearer validation endpoint
+- `bearer_format` (String) Specify how the bearer token is formatted. The format is primarily a hint.
+- `bearer_validation_endpoint` (String) Specify the URL of the validation endpoint. When this connection uses the HTTPS protocol, specify the TLS client profile to secure the connection.
 - `bearer_validation_method` (String) Bearer validation method
-- `bearer_validation_tls_profile` (String) Bearer validation TLS profile
+- `bearer_validation_tls_profile` (String) Specify the TLS client profile to secure the connection to the validation endpoint. You must specify a client profile when you connect to the validation endpoint with the HTTPS protocol.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `scheme` (String) Scheme
+- `scheme` (String) Specify the HTTP authentication security scheme. The only supported value is <tt>bearer</tt> .
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

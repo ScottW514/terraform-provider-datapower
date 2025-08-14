@@ -57,7 +57,7 @@ func (r *APIOperationResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API operation", "api-operation", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An API operation describes the actions to perform against the resource.", "api-operation", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -99,18 +99,18 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"remove_consume": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Remove consume", "remove-consume", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to remove the API-level consume declaration. By default, the API-level consume declaration is applied to the operation. When removed, the operation can always be performed regardless of the content type.", "remove-consume", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"consume": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Consumes", "consume", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify MIME types that the operation can consume. This setting overrides the API-level consume declaration that is defined in the API definition.", "consume", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"produce": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Produces", "produce", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify MIME types that the operation can produce. This setting overrides the API-level produce declaration that is defined in the API definition.", "produce", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
@@ -124,18 +124,18 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"parameter": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Parameters", "parameter", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify applicable parameters for the API operation. This setting overrides the setting in the API path configuration for the same parameter.", "parameter", "").String,
 				NestedObject:        models.DmAPIParameterResourceSchema,
 				Optional:            true,
 			},
 			"remove_security": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Remove security", "remove-security", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to remove the API-level security declaration that is defined for the API. By default, the API-level security declaration is applied to the operation. When removed, the operation can be performed without security check.", "remove-security", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"security": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Security requirements", "security", "apisecurityrequirement").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the alternative security requirements to enforce for the operation (that is, there is a logical OR between the security requirements). This setting overrides any declared API-level security.", "security", "apisecurityrequirement").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

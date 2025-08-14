@@ -3,12 +3,12 @@
 page_title: "datapower_dnsnameservice Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  DNS settings (default domain only)
+  Configure the DNS client with the DNS servers to contact to resolve hostnames to IP addresses.
 ---
 
 # datapower_dnsnameservice (Data Source)
 
-DNS settings (`default` domain only)
+Configure the DNS client with the DNS servers to contact to resolve hostnames to IP addresses.
 
 ## Example Usage
 
@@ -26,15 +26,15 @@ data "datapower_dnsnameservice" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
-- `force_ip_preference` (Boolean) Force IP preference
-- `ip_preference` (String) IP preference
-- `load_balance_algorithm` (String) Load distribution algorithm
-- `max_retries` (Number) Attempts
-- `name_servers` (Attributes List) DNS servers (see [below for nested schema](#nestedatt--name_servers))
-- `search_domains` (Attributes List) Search domains (see [below for nested schema](#nestedatt--search_domains))
-- `static_hosts` (Attributes List) Static hosts (see [below for nested schema](#nestedatt--static_hosts))
-- `timeout` (Number) Timeout
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `force_ip_preference` (Boolean) Specify whether to restrict DNS queries to the preferred IP version to resolve hostnames. You want to force the IP preference except when both IPv4 and IPv6 addresses are in use. When not forced, the device resolves each hostname by querying A and AAAA records and waiting for both responses or a timeout. Waiting for the response or timeout for both records can introduce unnecessary latency in DNS resolution.
+- `ip_preference` (String) Specify the preferred IP version to resolve hostnames. When a hostname resolves to both IPv4 and IPv6 addresses, this setting determines which version to use.
+- `load_balance_algorithm` (String) Specify the load distribution algorithm to resolve hostnames. The default algorithm is first-alive.
+- `max_retries` (Number) For the first alive algorithm, specify the maximum number of resolution attempts to send a query to the list of name servers before an error is returned. By default, an unacknowledged resolution request is attempted 3 times.
+- `name_servers` (Attributes List) Specify the list of DNS servers to contact to resolve hostnames. If you define multiple servers, ensure that the sequence to contact the servers is your preferred order. (see [below for nested schema](#nestedatt--name_servers))
+- `search_domains` (Attributes List) Specify the list of search domains to resolve partial hostnames. (see [below for nested schema](#nestedatt--search_domains))
+- `static_hosts` (Attributes List) Specify the static map of hostnames to IP addresses that do not use DNS resolution. Because the local resolver uses a cache, static hosts do not improve performance. (see [below for nested schema](#nestedatt--static_hosts))
+- `timeout` (Number) For the first alive algorithm, specify the duration in seconds that the resolver waits for a response from a DNS server. After expiry, the resolver attempts the query to a different DNS server. The default value is 5.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

@@ -3,13 +3,13 @@
 page_title: "datapower_durationmonitor Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Duration Monitor
+  On-Line Help for Message-Duration Monitors. Duration Monitors observe the duration, or amount of time, taken to process submissions.
   CLI Alias: monitor-duration
 ---
 
 # datapower_durationmonitor (Resource)
 
-Message Duration Monitor
+On-Line Help for Message-Duration Monitors. Duration Monitors observe the duration, or amount of time, taken to process submissions.
   - CLI Alias: `monitor-duration`
 
 ## Example Usage
@@ -30,20 +30,20 @@ resource "datapower_durationmonitor" "test" {
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `message_type` (String) Message Type
+- `message_type` (String) Select the message type monitored by this message-count monitor.
   - CLI Alias: `message-type`
   - Reference to: `datapower_messagetype:id`
 
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `filter` (Attributes List) Thresholds/Filters
+- `filter` (Attributes List) Click this tab to define a message-duration monitor threshold and assign an action taken when the threshold is reached.
   - CLI Alias: `filter` (see [below for nested schema](#nestedatt--filter))
-- `measure` (String) Measure
+- `measure` (String) Select which portion of the transaction cycle to monitor. The default is Messages.
   - CLI Alias: `measure`
   - Choices: `messages`, `requests`, `server`, `responses`
   - Default value: `messages`
-- `user_summary` (String) Comments
+- `user_summary` (String) A Message Monitor observes traffic that is incuded by the Message Type definition (which in turn is a collection of Message Matching objects). The Monitor measures only that traffic selected by the Measure field. On the Filters page, traffic which meets the filter criteria causes the Monitor to take the corresponding action (which is defined by a Message Filter Type object).
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

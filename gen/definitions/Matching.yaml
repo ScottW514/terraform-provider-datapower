@@ -1,48 +1,52 @@
 name: Matching
-description: 'Matching Rule'
-cli_alias: 'matching'
-cmd_group: 'matching'
-rest_endpoint: '/mgmt/config/{domain}/Matching'
+description: Matching Rule
+cli_alias: matching
+cmd_group: matching
+rest_endpoint: /mgmt/config/{domain}/Matching
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestMatching"'
-    test_expect_ds: '"__default-accept-service-providers__"'
-    example: 'MatchingName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: MatchRules
-    type: List
-    element_type: DmMatchRule
-    description: 'Rules'
-    cli_alias: match
-  - name: MatchWithPCRE
-    type: Bool
-    default: false
-    description: 'Match with PCRE'
-    cli_alias: match-with-pcre
-  - name: CombineWithOr
-    type: Bool
-    default: false
-    description: 'Combine with Boolean OR'
-    cli_alias: combine-with-or
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestMatching"'
+  test_expect_ds: '"__default-accept-service-providers__"'
+  example: MatchingName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the configuration.
+  cli_alias: summary
+- name: MatchRules
+  type: List
+  element_type: DmMatchRule
+  description: The rules in the matching rule.
+  cli_alias: match
+- name: MatchWithPCRE
+  type: Bool
+  default: false
+  description: Whether the evaluation uses shell style expressions or PCREs. This
+    setting does not apply to XPath or HTTP method evaluations.
+  cli_alias: match-with-pcre
+- name: CombineWithOr
+  type: Bool
+  default: false
+  description: <p>Whether to use Boolean OR or AND operations during evaluation.</p><ul><li>When
+    enabled, combine with OR semantics. Only one match must evaluate to true for success.</li><li>When
+    disabled, combine with AND semantics. All matches must evaluate to true for success.</li></ul>
+  cli_alias: combine-with-or

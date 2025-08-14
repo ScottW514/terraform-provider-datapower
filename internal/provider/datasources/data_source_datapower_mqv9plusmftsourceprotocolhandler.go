@@ -57,7 +57,7 @@ func (d *MQv9PlusMFTSourceProtocolHandlerDataSource) Metadata(_ context.Context,
 
 func (d *MQv9PlusMFTSourceProtocolHandlerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "IBM MQ v9+ MFT handler",
+		MarkdownDescription: "Configure the IBM MQ v9+ MFT handle to manage IBM MQ MFT protocol communications.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,35 +81,35 @@ func (d *MQv9PlusMFTSourceProtocolHandlerDataSource) Schema(ctx context.Context,
 							Computed:            true,
 						},
 						"queue_manager": schema.StringAttribute{
-							MarkdownDescription: "Queue manager (reference to MQManger or MQManagerGroup)",
+							MarkdownDescription: "Specify the name of the queue manager that provides messaging services for communicating applications by periodically monitoring or polling queues and by ensuring that messages are directed to the correct receive queue or routed to another queue manager. The local queue manager corresponds to a queue manager running on another host on the network.",
 							Computed:            true,
 						},
 						"get_queue": schema.StringAttribute{
-							MarkdownDescription: "Get queue",
+							MarkdownDescription: "Specify the name of the get queue associated with the queue manager. The handler gets messages from this queue.",
 							Computed:            true,
 						},
 						"get_message_options": schema.Int64Attribute{
-							MarkdownDescription: "Get message options",
+							MarkdownDescription: "Specify the cumulative value of the MQGET options that are applicable to an IBM MQ message in decimal or hex format. The value is passed directly to the IBM MQ API. The default value is 32769, which is the decimal value for the <tt>MQGMO_WAIT</tt> and <tt>MQGMO_LOGICAL_ORDER</tt> options.",
 							Computed:            true,
 						},
 						"concurrent_connections": schema.Int64Attribute{
-							MarkdownDescription: "Concurrent conversations",
+							MarkdownDescription: "Specify the number of concurrent IBM MQ conversations to allocate. The default value is 1 but can be increased to improve performance.",
 							Computed:            true,
 						},
 						"polling_interval": schema.Int64Attribute{
-							MarkdownDescription: "Polling interval",
+							MarkdownDescription: "Specify the duration in seconds to wait after processing all messages before attempting to retrieve messages from the get queue.",
 							Computed:            true,
 						},
 						"retrieve_backout_settings": schema.BoolAttribute{
-							MarkdownDescription: "Retrieve backout settings",
+							MarkdownDescription: "Specify whether to retrieve backout setting from the IBM MQ server. <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue queue name</b> settings from the IBM MQ server and checks these values. On a reattempt, the handler uses the higher priority backout settings from the server. If the server does not contain backout settings, The handler uses any existing backout values, either empty or populated, from the local IBM MQ queue manager. If there are no backout settings, the backout function is disabled.</p><p>When an alias queue is used, its attributes are retrieved, not those of the base queue.</p>",
 							Computed:            true,
 						},
 						"ignore_backout_errors": schema.BoolAttribute{
-							MarkdownDescription: "Ignore backout errors",
+							MarkdownDescription: "Specify whether to ignore backout errors. <ul><li>>When enabled, ignore the error in sending the transfer to the backout queue and commit the transfer from the get queue.</li><li>When not enabled roll back and retry the transfer. This setting is the default value.</li></ul>",
 							Computed:            true,
 						},
 						"use_qm_name_in_url": schema.BoolAttribute{
-							MarkdownDescription: "Use queue manager in URL",
+							MarkdownDescription: "Specify whether the var://service/URL-in variable returns the name of the local queue manager or queue manager group when this configuration defines a queue manager group as the queue manager. <ul><li>When enabled, the variable returns the name of the queue manager.</li><li>When not enabled, the variable returns the name of the queue manager group. This setting is the default value.</li></ul>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

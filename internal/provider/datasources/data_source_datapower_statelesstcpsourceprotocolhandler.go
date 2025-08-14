@@ -57,7 +57,7 @@ func (d *StatelessTCPSourceProtocolHandlerDataSource) Metadata(_ context.Context
 
 func (d *StatelessTCPSourceProtocolHandlerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Stateless raw XML handler",
+		MarkdownDescription: "<p>The configuration for the stateless TCP handler. This protocol uses raw XML - where the close of the root node delineates the document - PI and comments outside of the root node are not allowed.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,31 +81,31 @@ func (d *StatelessTCPSourceProtocolHandlerDataSource) Schema(ctx context.Context
 							Computed:            true,
 						},
 						"local_address": schema.StringAttribute{
-							MarkdownDescription: "Local IP address",
+							MarkdownDescription: "The address on which the service listens. The default of 0.0.0.0 indicates that the service is active on all addresses. Click Select Alias to use an alias for this value. Local host aliases help to ease migration tasks between machines. See Local Host Alias under Networking for more.",
 							Computed:            true,
 						},
 						"local_port": schema.Int64Attribute{
-							MarkdownDescription: "Port",
+							MarkdownDescription: "An integer (within the range 1 through 65535, with a default of 4000) that specifies the port monitored by the service.",
 							Computed:            true,
 						},
 						"persistent_connections": schema.BoolAttribute{
-							MarkdownDescription: "Persistent connections",
+							MarkdownDescription: "Enable or disable persistent connections where appropriate the front end.",
 							Computed:            true,
 						},
 						"acl": schema.StringAttribute{
-							MarkdownDescription: "Access control list",
+							MarkdownDescription: "This Access Control List will be used to allow or deny access to this service based on the IP address of the client. When attached to a service, an Access Control List (ACL) denies all access by default. To deny access to only selected addresses, first grant access to all addresses (allow 0.0.0.0) and then create deny entries for the desired hosts.",
 							Computed:            true,
 						},
 						"ssl_server_config_type": schema.StringAttribute{
-							MarkdownDescription: "TLS server type",
+							MarkdownDescription: "The TLS profile type to secure connections between clients and the DataPower Gateway.",
 							Computed:            true,
 						},
 						"ssl_server": schema.StringAttribute{
-							MarkdownDescription: "TLS server profile",
+							MarkdownDescription: "The TLS server profile to secure connections between clients and the DataPower Gateway.",
 							Computed:            true,
 						},
 						"sslsni_server": schema.StringAttribute{
-							MarkdownDescription: "TLS SNI server profile",
+							MarkdownDescription: "The TLS SNI server profile to secure connections between clients and the DataPower Gateway.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

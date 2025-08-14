@@ -57,7 +57,7 @@ func (d *OAuthSupportedClientGroupDataSource) Metadata(_ context.Context, req da
 
 func (d *OAuthSupportedClientGroupDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "OAuth Client Group",
+		MarkdownDescription: "<p>To support the OAuth 2.0 protocol, an AAA policy requires the configuration of an OAuth client group. An OAuth client group contains the configured OAuth clients that the DataPower Gateway accepts requests from.</p><p>When creating an OAuth client group for an AAA policy, the OAuth client group consists of one or more OAuth clients with the same OAuth roles.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,29 +77,29 @@ func (d *OAuthSupportedClientGroupDataSource) Schema(ctx context.Context, req da
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "Specifies a brief comment that describes the configuration.",
 							Computed:            true,
 						},
 						"customized": schema.BoolAttribute{
-							MarkdownDescription: "Customized OAuth",
+							MarkdownDescription: "Indicates whether the configuration is for a customized OAuth client group.",
 							Computed:            true,
 						},
 						"customized_type": schema.StringAttribute{
-							MarkdownDescription: "Customization Type",
+							MarkdownDescription: "Sets the method to customize an OAuth client.",
 							Computed:            true,
 						},
-						"o_auth_role": models.GetDmOAuthRoleDataSourceSchema("OAuth Role", "oauth-role", ""),
+						"o_auth_role": models.GetDmOAuthRoleDataSourceSchema("Identifies the roles of clients in the group. This property is mutually exclusive to the <b>Customized OAuth</b> property.", "oauth-role", ""),
 						"client": schema.ListAttribute{
-							MarkdownDescription: "Client",
+							MarkdownDescription: "Manages the group of OAuth clients. Use the controls to add or remove clients from the group.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
 						"template_process_url": schema.StringAttribute{
-							MarkdownDescription: "OAuth Template Process",
+							MarkdownDescription: "<p>Specifies the location of the stylesheet or GatewayScript file that defines the OAuth client. You can define parts of the configuration parameters in the stylesheet or GatewayScript file and then specify an OAuth client template to derive the remaining information. Note that the stylesheet or GatewayScript file must at least provide the \"client-id\" node. The stylesheet or GatewayScript file must be in the local: or store: directory.</p><p>The stylesheet or GatewayScript file must follow the guidelines when it returns the information: <ul><li>The stylesheet or GatewayScript file must return the &lt;client-id> element.</li><li>If the &lt;customized> element value is set to \"on\", the &lt;customized-process-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;customized> element value is set to \"on\" in the client template, the &lt;customized-process-url> element cannot unset this value.</li><li>If the &lt;use-validation-url> element value is set to \"on\", the &lt;validation-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;custom-scope-check> element value is set to \"on\", the &lt;scope-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;custom-resource-owner> element value is set to \"on\", the &lt;resource-owner-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;role> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;client-type> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;az-grant> element value is set, the value must be the same or a subset of what is defined in the template.</li><li>If the &lt;az-grant> element value is set to \"+code+\" or \"+token+\", the &lt;local-az-page-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;caching> element value is set to \"custom\", the &lt;additional-oauth-processing-url> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;refresh-token-allowed> is set to a non-zero value, the &lt;refresh-token-lifetime> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;check-client-credential> element value is set to \"on\", the &lt;client-authen-method> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;client-authen-method> element value is set to \"secret\", the &lt;client-secret> element value must be provided by either the stylesheet or GatewayScript file or the template.</li><li>If the &lt;client-authen-method> element value is set to \"ssl\", the &lt;client-valcred> element value must be provided by either the stylesheet or GatewayScript file or the template.</li></ul></p>",
 							Computed:            true,
 						},
 						"client_template": schema.StringAttribute{
-							MarkdownDescription: "OAuth Client Template",
+							MarkdownDescription: "<p>Specifies the OAuth client template that is used to derive the configuration parameters that are not specified in the stylesheet or GatewayScript file of the OAuth client.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -3,13 +3,12 @@
 page_title: "datapower_messagematching Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Message Matching
-  CLI Alias: message-matching
+  
 ---
 
 # datapower_messagematching (Resource)
 
-Message Matching
+<p>Message Matching determines what messages will be monitored by any monitor that uses the Message Matching object. It is a definition of the traffic flow that is monitored.</p><p>To capture all messages, set the HTTP Method field to 'any' and leave all other fields blank.</p>
   - CLI Alias: `message-matching`
 
 ## Example Usage
@@ -32,19 +31,19 @@ resource "datapower_messagematching" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `http_header` (Attributes List) HTTP Headers
+- `http_header` (Attributes List) Click this tab to add match criteria for inclusive HTTP header fields to the traffic definition. The field with its corresponding value must appear in the HTTP header of the message to qualify for inclusion.
   - CLI Alias: `http-header` (see [below for nested schema](#nestedatt--http_header))
-- `http_header_exclude` (Attributes List) Excluded HTTP Headers
+- `http_header_exclude` (Attributes List) Click this tab to add match criteria for exclusive HTTP header field to the traffic definition. The field with its corresponding value cannot appear in the HTTP header of the message to qualify for exclusion.
   - CLI Alias: `http-header-exclude` (see [below for nested schema](#nestedatt--http_header_exclude))
-- `http_method` (String) HTTP Method
+- `http_method` (String) Select the HTTP method included in this traffic definition. The default value is any, which indicates that HTTP method is not a match criteria.
   - CLI Alias: `method`
   - Choices: `any`, `OPTIONS`, `GET`, `HEAD`, `POST`, `PUT`, `PATCH`, `DELETE`, `TRACE`, `CONNECT`
   - Default value: `any`
-- `ip_address` (String) IP Addresses
+- `ip_address` (String) Use an IP network address and prefix length to define a contiguous range of IP addresses included in this traffic definition (for example, 10.10.100.0/28 specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies a single host address).
   - CLI Alias: `ip`
-- `ip_exclude` (String) Excluded IP Addresses
+- `ip_exclude` (String) Use an IP network address and prefix length to define a contiguous range of IP addresses excluded from this traffic definition (for example, 10.10.100.0/28 specifies IP addresses 10.10.100.0 through 10.10.100.15, and 10.10.100.19/32 specifies a single host address).
   - CLI Alias: `ip-exclude`
-- `request_url` (String) Request URL
+- `request_url` (String) Provide a literal or wildcard expression to define a URL set included in this traffic definition. The following wildcard characters are available when defining the URL set. <table><tr><td valign="top">asterisk (*)</td><td valign="top">Matches 0 or more occurrences of any character</td></tr><tr><td valign="top">question mark (?)</td><td valign="top">Matches one occurrence of any single character</td></tr><tr><td valign="top">brackets ( [ ] )</td><td valign="top">Defines a character or numeric range. For example, [1-5] matches 1, 2, 3, 4, or 5, while xs[dl] matches xsd or xsl.</td></tr></table>
   - CLI Alias: `request-url`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

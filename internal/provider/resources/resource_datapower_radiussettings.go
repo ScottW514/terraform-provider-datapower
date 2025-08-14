@@ -52,10 +52,10 @@ func (r *RADIUSSettingsResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *RADIUSSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("RADIUS settings (`default` domain only)", "radius", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("RADIUS settings define RADIUS servers. You can use RADIUS servers to authenticate access with RBM or in a AAA policy. The DataPower Gateway is a client to RADIUS servers.", "radius", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -69,7 +69,7 @@ func (r *RADIUSSettingsResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Timeout", "timeout", "").AddIntegerRange(1, 30000).AddDefaultValue("1000").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the RADIUS retransmit interval in milliseconds. This timeout is the duration that the RADIUS client waits before an unacknowledged request is retransmitted. Enter a value in the range of 1 - 30000. The default value is 1000.", "timeout", "").AddIntegerRange(1, 30000).AddDefaultValue("1000").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -79,7 +79,7 @@ func (r *RADIUSSettingsResource) Schema(ctx context.Context, req resource.Schema
 				Default: int64default.StaticInt64(1000),
 			},
 			"retries": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Retries", "retries", "").AddIntegerRange(1, 10).AddDefaultValue("3").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum number of times that the RADIUS client can retransmit an unacknowledged request to a server. Enter a value in the range 1 - 10. The default value is 3.", "retries", "").AddIntegerRange(1, 10).AddDefaultValue("3").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

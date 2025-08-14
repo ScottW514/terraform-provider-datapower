@@ -55,7 +55,7 @@ func (r *MQManagerGroupResource) Metadata(ctx context.Context, req resource.Meta
 
 func (r *MQManagerGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("IBM MQ v9+ queue manager group", "idg-mq-qm-group", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>An IBM MQ queue manager group enables automatic failover between queue managers when a queue manager becomes unavailable. When you define multiple backup queue managers, the first active queue manager in the group replaces the primary queue manager.</p><p>You can configure the queue manager to work with the multi-instance feature in the IBM MQ server. Connect the primary queue manager to one of the instances of a queue manager in the IBM MQ server, and the backup queue manager to the other instance. All connections for the queue manager group go to the queue manager connected to the active instance. If the active instance in the IBM MQ server fails, the queue manager connected to the standby instance automatically takes over all the data and logs from the queue manager connected to the original active instance.</p>", "idg-mq-qm-group", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -84,11 +84,11 @@ func (r *MQManagerGroupResource) Schema(ctx context.Context, req resource.Schema
 				Optional:            true,
 			},
 			"primary_queue_manager": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Primary queue manager", "primary", "mqmanager").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the queue manager to be the primary queue manager for the group. All connections for the group go to this queue manager. If the primary queue manager becomes unreachable, a backup queue manager is selected.", "primary", "mqmanager").String,
 				Required:            true,
 			},
 			"backup_queue_managers": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Backup queue managers", "backup", "mqmanager").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify one or more queue managers to be backup queue managers for redundancy if the primary queue manager becomes unreachable.", "backup", "mqmanager").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

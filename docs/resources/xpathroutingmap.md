@@ -3,13 +3,12 @@
 page_title: "datapower_xpathroutingmap Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XPath Routing Map
-  CLI Alias: xpath-routing
+  
 ---
 
 # datapower_xpathroutingmap (Resource)
 
-XPath Routing Map
+<p>An XPath Routing Map matches XPath expressions with corresponding destination URLs. When the XPath expression evaluates to true when applied to the message submitted, the target destination for the message is set to the corresponding URL.</p><p>Use the Rules tab to establish these mappings. Use the Namespace Mapping tab to determine Namespace URIs for namespaces used in the XPath Expressions.</p>
   - CLI Alias: `xpath-routing`
 
 ## Example Usage
@@ -40,7 +39,7 @@ resource "datapower_xpathroutingmap" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `name_space_mappings` (Attributes List) Namespace Mappings
+- `name_space_mappings` (Attributes List) The prefix and URI for namespaces that might be encountered in requests.
   - CLI Alias: `namespace-mapping` (see [below for nested schema](#nestedatt--name_space_mappings))
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

@@ -57,7 +57,7 @@ func (d *WSStylePolicyDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *WSStylePolicyDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "WS-Proxy Processing Policy",
+		MarkdownDescription: "Create, Edit or Delete a Processing Policy. A policy consists of one or more Processing Rules. Rules execute depending upon the direction of the message and on whether or not a corresponding matching rule selects the document for processing. A service may have only one policy active at a time. Click Services in the left-hand navigation menu and then click the appropriate policy link to use the graphical interface to create and edit policies.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,19 +77,19 @@ func (d *WSStylePolicyDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{
-							MarkdownDescription: "Comments",
+							MarkdownDescription: "Enter a comment. This appears on the Policy catalog page.",
 							Computed:            true,
 						},
 						"def_stylesheet_for_soap": schema.StringAttribute{
-							MarkdownDescription: "Default Stylesheet for SOAP",
+							MarkdownDescription: "Identify the default stylesheet used for SOAP filtering. The default rejects all SOAP documents.",
 							Computed:            true,
 						},
 						"def_stylesheet_for_xsl": schema.StringAttribute{
-							MarkdownDescription: "Default Stylesheet for XSL Transforms",
+							MarkdownDescription: "Identify the default stylesheet used for XSL transformation. The default mirrors all documents.",
 							Computed:            true,
 						},
 						"policy_maps": schema.ListNestedAttribute{
-							MarkdownDescription: "Policy Maps",
+							MarkdownDescription: "A list of Policy Rules and corresponding Matching Rules that this policy will execute. If a Match is found, the corresponding Rule runs. The policy executes the first Rule with a successful Match. The order in this list is therefore important.",
 							NestedObject:        models.DmWSMPolicyMapDataSourceSchema,
 							Computed:            true,
 						},

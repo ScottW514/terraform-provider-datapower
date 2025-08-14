@@ -56,7 +56,7 @@ func (r *GatewayPeeringGroupResource) Metadata(ctx context.Context, req resource
 
 func (r *GatewayPeeringGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Gateway-peering group", "gateway-peering-group", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A gateway-peering group defines members as a group to synchronize data across members. When a group can work in stand-alone mode, peer-based mode, or cluster-based mode. <ul><li>For stand-alone, no peers defined. This mode is for only development or testing purposes.</li><li>For a peer group, add peers and configure the connection among the peers.</li><li>For a cluster, add cluster nodes and the other nodes that are in the same data center.</li></ul>", "gateway-peering-group", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -94,7 +94,7 @@ func (r *GatewayPeeringGroupResource) Schema(ctx context.Context, req resource.S
 				Default: stringdefault.StaticString("peer"),
 			},
 			"peer_nodes": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Peers", "peer-node", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify peers for the the group. To add a peer, enter its local IP address or host alias and its priority.", "peer-node", "").String,
 				NestedObject:        models.DmGatewayPeeringGroupPeerNodeResourceSchema,
 				Optional:            true,
 			},
@@ -108,24 +108,24 @@ func (r *GatewayPeeringGroupResource) Schema(ctx context.Context, req resource.S
 				Default: stringdefault.StaticString("3"),
 			},
 			"cluster_nodes": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Cluster nodes", "cluster-node", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify nodes for the cluster group. To add a node, enter its local IP address or host alias and the comma-separated list of local IP addresses or host aliases of the other nodes that are in the same data center. <p>Because the primary count is 3, the configuration requires a minimum of 6 nodes that are generally in 2 data centers. Each node is defined on a different DataPower Gateway. The minimal configuration is 3 primary-secondary pairs. Each pair is a shard that manages a subset of slots.</p><p>Each primary node can have more than one secondary node, but each primary node requires the same number of secondary nodes. In other words, you can define an environment of 9 nodes, which is a configuration of 3 primary nodes and 6 secondary nodes. In this configuration, each primary node has 2 secondary nodes.</p>", "cluster-node", "").String,
 				NestedObject:        models.DmGatewayPeeringGroupClusterNodeResourceSchema,
 				Optional:            true,
 			},
 			"cluster_auto_config": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Auto manage cluster configuration", "cluster-auto-config", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the cluster configuration is managed automatically. By default, cluster configuration is managed automatically. Unless directed by IBM Support, do not change this setting.", "cluster-auto-config", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"enable_ssl": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enable TLS", "enable-ssl", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. When enabled, ensure that all members use the same TLS configuration.", "enable-ssl", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"idcred": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Identification credentials", "idcred", "cryptoidentcred").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the identification credentials that contains the credentials that the current member uses to identify itself to other peers. Client authentication uses mutual TLS.", "idcred", "cryptoidentcred").String,
 				Optional:            true,
 			},
 			"valcred": schema.StringAttribute{

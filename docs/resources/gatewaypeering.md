@@ -3,13 +3,13 @@
 page_title: "datapower_gatewaypeering Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Gateway peering
+  A gateway-peering instance defines how members synchronize data across members.
   CLI Alias: gateway-peering
 ---
 
 # datapower_gatewaypeering (Resource)
 
-Gateway peering
+A gateway-peering instance defines how members synchronize data across members.
   - CLI Alias: `gateway-peering`
 
 ## Example Usage
@@ -35,32 +35,32 @@ resource "datapower_gatewaypeering" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enable_peer_group` (Boolean) Use peer group
+- `enable_peer_group` (Boolean) Specify whether the gateway-peering instance uses a peer group. <ul><li>When enabled, the instance works in the mode that is set for the peer group. This setting is the default value.</li><li>When not enabled, the instance works in stand-alone mode.</li></ul>
   - CLI Alias: `enable-peer-group`
   - Default value: `true`
-- `enable_ssl` (Boolean) DEPRECATED: LEAVE SET TO FALSE
+- `enable_ssl` (Boolean) Specify whether to use TLS to secure the connection among the members. By default, TLS is enabled. In peer-based mode, ensure that all peers use the same TLS configuration.
   - Default value: `false`
-- `local_address` (String) Local address
+- `local_address` (String) Specify the IP address or host alias that the gateway service listens on. The IP address can be any DataPower network interface that can be accessed by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::.
   - CLI Alias: `local-address`
-- `local_directory` (String) Local directory
+- `local_directory` (String) Specify the directory to store data. For example, <tt>local:///group1</tt> .
   - CLI Alias: `local-directory`
   - Default value: `local:///`
-- `local_port` (Number) Local port
+- `local_port` (Number) Specify the port that the gateway service listens on. The default value is 16380. Ensure that all peers use the same port.
   - CLI Alias: `local-port`
   - Default value: `16380`
-- `max_memory` (Number) Max memory
+- `max_memory` (Number) Specify the maximum memory for the data store. When memory reaches this limit, data is removed by using the least recently used (LRU) algorithm. The default value is 0, which means no limits. Do not over allocate memory.
   - CLI Alias: `max-memory`
   - Range: `0`-`1048576`
-- `monitor_port` (Number) Monitor port
+- `monitor_port` (Number) Specify the port to monitor for state synchronization. The default value is 26380. Ensure that all peers use the same port.
   - CLI Alias: `monitor-port`
   - Default value: `26380`
-- `password_alias` (String) Password alias
+- `password_alias` (String) Specify the password alias to secure the data store. If not specified, a system default is used. The use of the system default is classified as a security vulnerability (CVE-2022-31776).
   - CLI Alias: `password-alias`
   - Reference to: `datapower_passwordalias:id`
 - `peer_group` (String) Gateway-peering group
   - CLI Alias: `peer-group`
   - Reference to: `datapower_gatewaypeeringgroup:id`
-- `persistence_location` (String) Persistence location
+- `persistence_location` (String) Specify where to store data. Ensure that all peers in the group store data in the same location.
   - CLI Alias: `persistence`
   - Choices: `memory`, `local`, `raid`
   - Default value: `memory`

@@ -3,12 +3,12 @@
 page_title: "datapower_odrconnectorgroup Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  ODR Connector Group (default domain only)
+  A collection of on demand router (ODR) connectors used to communicate with the Intelligent Management service.
 ---
 
 # datapower_odrconnectorgroup (Data Source)
 
-ODR Connector Group (`default` domain only)
+A collection of on demand router (ODR) connectors used to communicate with the Intelligent Management service.
 
 ## Example Usage
 
@@ -34,13 +34,13 @@ Optional:
 Read-Only:
 
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `max_retry_interval` (Number) Maximum retry interval
-- `odr_conn_group_properties` (Attributes List) Custom properties (see [below for nested schema](#nestedatt--result--odr_conn_group_properties))
-- `odr_group_connectors` (Attributes List) ODR connectors (see [below for nested schema](#nestedatt--result--odr_group_connectors))
-- `ssl_client` (String) TLS client profile
-- `ssl_client_config_type` (String) TLS client type
+- `max_retry_interval` (Number) The time to wait before attempting to reestablish a connection to the Intelligent Management Service. Enter a value in the range 1 - 120. The default value is 60.
+- `odr_conn_group_properties` (Attributes List) The custom properties that are associated with the ODR connector group. (see [below for nested schema](#nestedatt--result--odr_conn_group_properties))
+- `odr_group_connectors` (Attributes List) The ODR connectors that are used to retrieve ODR information. An ODR connector defines a connection to the Intelligent Management service. The DataPower Gateway retrieves topology, weights, session affinity, and other information from the WebSphere cell over the connection. If multiple connectors are configured, the top most connection is tried first, followed by the second, and so on. After a connection is established, other endpoints might be retrieved and used if the configured connector endpoint is down. You must define at least one connector in an ODR connector group but cannot define more than 16 connectors. (see [below for nested schema](#nestedatt--result--odr_group_connectors))
+- `ssl_client` (String) The TLS client profile to secure connections between the DataPower Gateway and its targets.
+- `ssl_client_config_type` (String) The TLS profile type to secure connections between the DataPower Gateway and its targets.
 - `user_summary` (String) Comments
-- `xml_manager` (String) XML manager
+- `xml_manager` (String) The XML manager to use when processing transactions with the Intelligent management service.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

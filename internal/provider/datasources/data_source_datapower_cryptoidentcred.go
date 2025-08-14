@@ -57,7 +57,7 @@ func (d *CryptoIdentCredDataSource) Metadata(_ context.Context, req datasource.M
 
 func (d *CryptoIdentCredDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Identification credentials",
+		MarkdownDescription: "Identification credentials consist of a key and a certificate. Identification credentials identify the matched public key cryptography to the public and private keys that an object uses for TLS authentication. You use identification credentials for document encryption, document decryption, and digital signature operations.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -85,7 +85,7 @@ func (d *CryptoIdentCredDataSource) Schema(ctx context.Context, req datasource.S
 							Computed:            true,
 						},
 						"ca": schema.ListAttribute{
-							MarkdownDescription: "Intermediate CA certificates",
+							MarkdownDescription: "Specify the list to manage intermediate certificates. Intermediate certificate authority (CA) certificates might be necessary when the CA that is signing this certificate is not widely recognized. If the intermediate CA certificate is also signed by a less recognized CA, another intermediate CA certificate might be necessary for that CA. You can specify up to 10 intermediate certificates. <p>If necessary, use the list of available certificate aliases to establish a verifiable trust chain. A trust chain consists of one or more CA certificates. A trust chain provides a linked path from certificates in the identification credentials to a CA that is trusted by a remote DataPower&#174; Gateway. The trust chain enables the DataPower Gateway to authenticate the certificate.</p>",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},

@@ -54,7 +54,7 @@ func (r *URLRefreshPolicyResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *URLRefreshPolicyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("URL Refresh Policy", "urlrefresh", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure/Edit URL Refresh Policies", "urlrefresh", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *URLRefreshPolicyResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"url_refresh_rule": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("URL Refresh Rule", "rule", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Add, edit or delete a refresh rule", "rule", "").String,
 				NestedObject:        models.DmURLRefreshRuleResourceSchema,
 				Required:            true,
 			},

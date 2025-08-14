@@ -1,35 +1,39 @@
 name: SOAPHeaderDisposition
-description: 'SOAP Header Disposition Table'
-cli_alias: 'soap-disposition'
-cmd_group: 'stylesheetaction'
-rest_endpoint: '/mgmt/config/{domain}/SOAPHeaderDisposition'
+description: The list of instructions provided by customers to control how the SOAP
+  headers and/or children elements are handled. This object is used by store:///soap-refine.xsl
+  transform stylesheet.
+cli_alias: soap-disposition
+cmd_group: stylesheetaction
+rest_endpoint: /mgmt/config/{domain}/SOAPHeaderDisposition
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestSOAPHeaderDisposition"'
-    test_expect_ds: '"AccTest_SOAPHeaderDisposition"'
-    example: 'SOAPHeaderDispositionName'
-    description: 'Identifier'
-    cli_alias: id
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Refine
-    type: List
-    element_type: DmSOAPHeaderDispositionItem
-    description: 'SOAP Header Refine Instruction'
-    cli_alias: refine
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestSOAPHeaderDisposition"'
+  test_expect_ds: '"AccTest_SOAPHeaderDisposition"'
+  example: SOAPHeaderDispositionName
+  description: Identifier
+  cli_alias: id
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Refine
+  type: List
+  element_type: DmSOAPHeaderDispositionItem
+  description: Customer specifically asks this transformation to simply remove/keep/fault
+    a SOAP header; or indicates whether a header was processed or not by the prior
+    action, then this action will take the default behaviors.
+  cli_alias: refine

@@ -3,12 +3,12 @@
 page_title: "datapower_apicollection Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API collection
+  An API collection is a logical partition of an API gateway that packages the plans and subscribers to make APIs available to a specific group of clients. An API collection corresponds to a catalog in the API manager.
 ---
 
 # datapower_apicollection (Data Source)
 
-API collection
+An API collection is a logical partition of an API gateway that packages the plans and subscribers to make APIs available to a specific group of clients. An API collection corresponds to a catalog in the API manager.
 
 ## Example Usage
 
@@ -39,30 +39,30 @@ Optional:
 Read-Only:
 
 - `analytics_endpoint` (String) Analytic endpoint
-- `api_error_rule` (String) API error rule
-- `api_processing_rule` (String) API processing rule
+- `api_error_rule` (String) Specify the processing rule to handle errors during API processing. When your collection requires custom processing, use API Connect global policies to define the custom rules.
+- `api_processing_rule` (String) Specify the processing rule to process API requests. When your collection requires custom processing, use API Connect global policies to define the custom rules.
 - `app_domain` (String) The name of the application domain the object belongs to
 - `application_type` (List of String) Application types
 - `assembly_burst_limit` (Attributes List) Assembly burst limit (see [below for nested schema](#nestedatt--result--assembly_burst_limit))
 - `assembly_count_limit` (Attributes List) Assembly count limit (see [below for nested schema](#nestedatt--result--assembly_count_limit))
-- `assembly_postflow` (String) Assembly postprocessing
-- `assembly_preflow` (String) Assembly preprocessing
+- `assembly_postflow` (String) Specify the processing rule to run after the assembly rule. When your collection requires custom processing, use API Connect global policies to configure the assembly.
+- `assembly_preflow` (String) Specify the processing rule to run before the assembly rule. When your collection requires custom processing, use API Connect global policies to configure the assembly.
 - `assembly_rate_limit` (Attributes List) Assembly rate limit (see [below for nested schema](#nestedatt--result--assembly_rate_limit))
-- `cache_capacity` (Number) Subscriber cache capacity
+- `cache_capacity` (Number) Specify the maximum number of subscriber entries to cache. Enter a value in the range 8 - 51200. The default value is 128. When the limit is exceeded, the least recently used (LRU) entry is removed.
 - `catalog_id` (String) Catalog ID
 - `catalog_name` (String) Catalog name
-- `default_rate_limit` (Attributes List) Default rate limit (see [below for nested schema](#nestedatt--result--default_rate_limit))
-- `dev_portal_endpoint` (String) Developer Portal endpoint
-- `enforce_pre_assembly_rate_limits` (Boolean) Enforce preassembly rate limits
+- `default_rate_limit` (Attributes List) Specify the default rate limit scheme for API requests without API keys for client identification. When not defined, requests without API keys are rejected. (see [below for nested schema](#nestedatt--result--default_rate_limit))
+- `dev_portal_endpoint` (String) Specify the URL of the Developer Portal endpoint. This endpoint can be used to provide security credentials for access to an API.
+- `enforce_pre_assembly_rate_limits` (Boolean) Specify whether to enforce the API rate and burst limits from the plan. When disabled, only the limits specified in a rate limit assembly action are applied to this API.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `org_id` (String) Organization ID
 - `org_name` (String) Organization name
-- `parse_settings_reference` (Attributes) Parse settings
+- `parse_settings_reference` (Attributes) Specify the constraints to parse documents. Precedence rules apply when the constraint for the same aspect of an input document is configured with more than one method. <ul><li>You can specify a URL reference from which to retrieve the constraints definition.</li><li>You can specify a literal configuration string in XML management interface or REST management interface format that contains the constraints definition.</li><li>You can specify a parse settings configuration object to retrieve the constraints definition.</li></ul>
   - CLI Alias: `parse-settings-reference` (see [below for nested schema](#nestedatt--result--parse_settings_reference))
-- `plan` (List of String) Plans
-- `rate_limit_group` (String) Rate limit group
-- `routing_prefix` (Attributes List) Routing prefixes (see [below for nested schema](#nestedatt--result--routing_prefix))
-- `sandbox` (Boolean) Sandbox
+- `plan` (List of String) Specify the API plans for the collection. Each plan contains a list of APIs and defines the rate limit for the API operations.
+- `rate_limit_group` (String) Specify the default rate limit group for API requests without API keys for client identification. When not defined, requests without API keys are rejected.
+- `routing_prefix` (Attributes List) Specify the routing prefix to determine which API collection to route the request. You can use routing prefixes to organize your APIs and plans into collections and subcollections. For example, if you have a collection of APIs serving for a certain purpose, and the APIs are to be used by two segments of your organization, you might create two API collections with the organization name, purpose name, and segment name in the routing prefix. If the organization name is <tt>myorg</tt> , the APIs serve for purpose <tt>purpose1</tt> , and the two segments under the organization is <tt>section1</tt> and <tt>section2</tt> , the resulting URL routing prefixes are <tt>/myorg/purpose1/section1</tt> and <tt>/myorg/purpose1/section2</tt> . The resulting hostname routing prefixes are <tt>section1.purpose1.myorg</tt> and <tt>section2.purpose1.myorg</tt> . <p>The API gateway uses the routing prefix to form the complete URI <tt>routing_prefix/base_path/operation_path</tt> and accepts only the incoming requests with this URI. In the complete URI, <tt>base_path</tt> is the base path on which the API is served, and <tt>operation_path</tt> is the relative path to the base path where the operations are available.</p><p>The default routing prefix is slash (/) when the type is URI and blank when the type is hostname. An API collection becomes the default API collection in the API Gateway when the API collection has a default routing prefix. The API gateway routes a request to the default API collection when other API collections do not match. An API gateway can have only one default API collection. Therefore, regardless of the prefix type, only one API collection can be configured with the default routing prefix.</p> (see [below for nested schema](#nestedatt--result--routing_prefix))
+- `sandbox` (Boolean) Specify whether the APIs in this catalog are for test purposes. By default, a catalog is not for test purposes.
 - `use_rate_limit_group` (Boolean) Use rate limit group
 - `user_summary` (String) Comments
 

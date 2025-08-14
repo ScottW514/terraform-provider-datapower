@@ -1,134 +1,157 @@
 name: SSLProxyService
-description: 'TLS proxy service'
-cli_alias: 'sslforwarder'
-cmd_group: 'sslforwarder'
-rest_endpoint: '/mgmt/config/{domain}/SSLProxyService'
+description: <p>Creates a TLS proxy service. This service can be used to wrap or unwrap
+  a TCP stream in TLS.</p><p>This service requires TLS profiles to secure the connections.</p><ul><li>When
+  the system is a client, use a TLS client profile to secure connections with targets.</li><li>When
+  the system is a server, use a a TLS server profile to secure connections with clients.
+  When the server supports Server Name Indication (SNI), use a TLS SNI server profile.</li><li>When
+  the system is both client and server, use TLS client and server profiles to secure
+  both connections.</li></ul>
+cli_alias: sslforwarder
+cmd_group: sslforwarder
+rest_endpoint: /mgmt/config/{domain}/SSLProxyService
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestSSLProxyService"'
-    test_expect_ds: '"AccTest_SSLProxyService"'
-    example: 'SSLProxyServiceName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Priority
-    type: String
-    enum:
-      - 'unknown'
-      - 'high-min'
-      - 'high'
-      - 'high-max'
-      - 'normal-min'
-      - 'normal'
-      - 'normal-max'
-      - 'low-min'
-      - 'low'
-      - 'low-max'
-    default: 'normal'
-    description: 'Service priority'
-    cli_alias: priority
-  - name: LocalPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    example: 4521
-    required: true
-    description: 'Local port'
-    cli_alias: local-port
-  - name: RemoteAddress
-    type: String
-    required: true
-    example: '10.10.10.10'
-    description: 'Remote host'
-    cli_alias: remote-address
-  - name: RemotePort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    example: 9999
-    required: true
-    description: 'Remote port'
-    cli_alias: remote-port
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: FrontTimeout
-    type: Int64
-    minimum: 0
-    maximum: 86400
-    default: 0
-    description: 'Client-side timeout'
-    cli_alias: front-timeout
-  - name: BackTimeout
-    type: Int64
-    minimum: 0
-    maximum: 86400
-    default: 0
-    description: 'Server-side timeout'
-    cli_alias: back-timeout
-  - name: ConnTimeout
-    type: Int64
-    minimum: 0
-    maximum: 86400
-    default: 0
-    description: 'Transaction timeout'
-    cli_alias: connection-timeout
-  - name: ConnLimit
-    type: Int64
-    minimum: 0
-    maximum: 65535
-    default: 100
-    description: 'Max client connections'
-    cli_alias: maximum-connections
-  - name: SSLConfigType
-    type: String
-    enum:
-      - 'server'
-      - 'sni'
-    default: 'server'
-    description: 'TLS type'
-    cli_alias: ssl-config-type
-  - name: SSLServer
-    type: String
-    reference_to: SSLServerProfile
-    description: 'TLS server profile'
-    test_value: '"AccTest_SSLServerProfile"'
-    test_bed_value: 'datapower_sslserverprofile.acc_test.id'
-    cli_alias: ssl-server
-  - name: SSLSNIServer
-    type: String
-    reference_to: SSLSNIServerProfile
-    description: 'TLS SNI server profile'
-    cli_alias: ssl-sni-server
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local address'
-    cli_alias: ip-address
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestSSLProxyService"'
+  test_expect_ds: '"AccTest_SSLProxyService"'
+  example: SSLProxyServiceName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Priority
+  type: String
+  enum:
+  - unknown
+  - high-min
+  - high
+  - high-max
+  - normal-min
+  - normal
+  - normal-max
+  - low-min
+  - low
+  - low-max
+  default: normal
+  description: Service priority
+  cli_alias: priority
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  example: 4521
+  required: true
+  description: Local port
+  cli_alias: local-port
+- name: RemoteAddress
+  type: String
+  required: true
+  example: 10.10.10.10
+  description: Remote host
+  cli_alias: remote-address
+- name: RemotePort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  example: 9999
+  required: true
+  description: Remote port
+  cli_alias: remote-port
+- name: FrontTimeout
+  type: Int64
+  minimum: 0
+  maximum: 86400
+  default: 0
+  description: Specify the maximum idle time in seconds for client connections. This
+    timer monitors the idle time in the data transfer process. If the specified idle
+    time is exceeded, the connection is torn down. Enter a value in the range 0 -
+    86400. The value of 0 indicates that the timer is disabled. The default value
+    is 0.
+  cli_alias: front-timeout
+- name: BackTimeout
+  type: Int64
+  minimum: 0
+  maximum: 86400
+  default: 0
+  description: Specify the maximum idle time for server connections. This timer monitors
+    the idle time in the data transfer process. If the specified idle time is exceeded,
+    the connection is torn down. Enter a value in the range 0 - 86400. The value of
+    0 indicates that the timer is disabled. The default value is 0.
+  cli_alias: back-timeout
+- name: ConnTimeout
+  type: Int64
+  minimum: 0
+  maximum: 86400
+  default: 0
+  description: Specify the maximum duration in seconds for transactions. This timer
+    monitors the duration of end-to-end transactions. If the specified connection
+    time is exceeded, the client connection is torn down. Enter a value in the range
+    of 0 - 86400. The value of 0 indicates that the timer is disabled. The default
+    value is 0.
+  cli_alias: connection-timeout
+- name: ConnLimit
+  type: Int64
+  minimum: 0
+  maximum: 65535
+  default: 100
+  description: Specify the maximum number of concurrent client connections. Enter
+    a value in the range of 0 - 65535. The value of 0 indicates an unlimited number
+    of connections. The default value is 100.
+  cli_alias: maximum-connections
+- name: SSLConfigType
+  type: String
+  enum:
+  - server
+  - sni
+  default: server
+  description: TLS type
+  cli_alias: ssl-config-type
+- name: SSLServer
+  type: String
+  reference_to: SSLServerProfile
+  description: TLS server profile
+  test_value: '"AccTest_SSLServerProfile"'
+  test_bed_value: datapower_sslserverprofile.acc_test.id
+  cli_alias: ssl-server
+- name: SSLSNIServer
+  type: String
+  reference_to: SSLSNIServerProfile
+  description: TLS SNI server profile
+  cli_alias: ssl-sni-server
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: ssl-client
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: '<p>Enter a host alias or the IP address that the service listens on.
+    Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0
+    indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4
+    and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the
+    value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate
+    management traffic from application data traffic.</p>'
+  cli_alias: ip-address

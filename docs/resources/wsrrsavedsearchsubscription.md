@@ -3,13 +3,13 @@
 page_title: "datapower_wsrrsavedsearchsubscription Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WSRR saved search subscription
+  The WSRR (WebSphere Service Registry and Repository) saved subscription is useful when you want to deploy services with an indirect reference to WSRR resources. The configuration references a WSRR server, a saved search and a saved search or named query on the server. The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.
   CLI Alias: wsrr-saved-search-subscription
 ---
 
 # datapower_wsrrsavedsearchsubscription (Resource)
 
-WSRR saved search subscription
+The WSRR (WebSphere Service Registry and Repository) saved subscription is useful when you want to deploy services with an indirect reference to WSRR resources. The configuration references a WSRR server, a saved search and a saved search or named query on the server. <p>The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.</p>
   - CLI Alias: `wsrr-saved-search-subscription`
 
 ## Example Usage
@@ -39,18 +39,18 @@ resource "datapower_wsrrsavedsearchsubscription" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `fetch_policy_attachments` (Boolean) Fetch policy attachments
+- `fetch_policy_attachments` (Boolean) Specify whether to fetch external policy attachments. When enabled, the registry is queried for external policy attachments for retrieved resources. These policies are processed when the service allow external policy attachments.
   - CLI Alias: `fetch-policy-attachments`
   - Default value: `false`
 - `method` (String) Synchronization method
   - CLI Alias: `method`
   - Choices: `manual`, `poll`, `automatic`
   - Default value: `poll`
-- `refresh_interval` (Number) Refresh interval
+- `refresh_interval` (Number) Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.
   - CLI Alias: `refresh-interval`
   - Range: `60`-`4294967`
   - Default value: `86400`
-- `saved_search_parameters` (List of String) Query parameters
+- `saved_search_parameters` (List of String) Specify the parameters to include in the query. The query to the registry uses these parameters. A parameter can be up to 255 characters in length. You can define a maximum of 9 parameters. <p>If you define parameters and they are not require parameters, an error is logged.</p><p><b>Note:</b> In WSRR, a named query and a saved search can have the same name. WSRR matches named queries before saved searches. Therefore, WSRR never finds a saved search with the same name as a named query.</p>
   - CLI Alias: `params`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`

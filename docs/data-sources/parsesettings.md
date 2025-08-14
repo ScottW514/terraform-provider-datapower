@@ -3,12 +3,12 @@
 page_title: "datapower_parsesettings Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Parse settings
+  Parse settings define the constraints to parsie documents. These constraints overwrite the parser limits in the XML manager. These settings provide threat protection.
 ---
 
 # datapower_parsesettings (Data Source)
 
-Parse settings
+Parse settings define the constraints to parsie documents. These constraints overwrite the parser limits in the XML manager. These settings provide threat protection.
 
 ## Example Usage
 
@@ -39,19 +39,19 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `document_size` (Number) Max document size
-- `document_type` (String) Document type
+- `document_size` (Number) Specify the maximum document size in bytes. A document is rejected when its size exceeds the maximum size. Enter a value in the range 0 - 5368709121. The default value is 4194304. A value of 0 indicates unlimited. When 0, the action does not return the document size. This setting is applicable to binary, JSON, XML, and GraphQL documents.
+- `document_type` (String) Specify the type of document to parse. By default, the document type is automatically detected.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `name_length` (Number) Max name length
-- `nesting_depth` (Number) Max nesting depth
-- `number_length` (Number) Max number length
-- `strict_utf8_encoding` (Boolean) Strict UTF-8 encoding
-- `unique_names` (Number) Max unique names
-- `unique_namespaces` (Number) Max unique namespaces
-- `unique_prefixes` (Number) Max unique prefixes
+- `name_length` (Number) Specify the maximum name length in bytes. A document is rejected when its name length exceeds the maximum length. Enter a value in the range 0 - 8192. The default value is 256. A value of 0 indicates unlimited. When 0, the action does not return the name length. This setting is applicable to XML, JSON, and GraphQL documents. <ul><li>For XML, applies to the length of the name portion of a tag.</li><li>For JSON, applies to the length of the label portion of the JSON label-value pair.</li><li>For GraphQL, applies to the length of the identifiers, which includes field and directive names.</li></ul><p>The length includes any white space between tags in XML or quotation marks in JSON.</p>
+- `nesting_depth` (Number) Specify the maximum level of nested element depth. A document is rejected when its nesting depth exceeds the maximum depth. Enter a value in the range 0 - 4096. The default value is 512. A value of 0 indicates unlimited. When 0, the action does not return the nesting depth. This setting is applicable to XML, JSON, and GraphQL documents. <ul><li>For XML, applies to the maximum level of element depth.</li><li>For JSON, applies to the maximum number of nested label-value pairs, the maximum number of nested arrays, or the maximum number of combination of label-value pairs and arrays.</li><li>For GraphQL, applies to the maximum level of nested selection sets.</li></ul>
+- `number_length` (Number) Specify the maximum number length in bytes for the value portion of a label-value pair when the value is a number. The number must be a contiguous string of bytes that contain no white space. The number can include a minus sign and a positive or negative exponent. A document is rejected when the number length in the document exceeds the maximum length. Enter a value in the range 0 - 256. The default value is 128. A value of 0 indicates unlimited. When 0, the action does not return the number length.
+- `strict_utf8_encoding` (Boolean) Specify whether to enforce strict UTF-8 encoding throughout the entire JSON document. When enabled, the entire document is checked for valid UTF-8 encoding. When disabled, only the first few bytes are checked for proper encoding and the rest of the document is assumed to be in the same encoding.
+- `unique_names` (Number) Specify the maximum number of unique names. A document is rejected when its number of unique names exceeds the maximum number. Enter a value in the range 0 - 1048575. The default value is 1024. A value of 0 indicates an unlimited. When 0, the action does not return the number of unique names. This setting applies to XML and JSON documents. <ul><li>For XML, applies to the number of unique XML local names.</li><li>For JSON, applies to the number of unique JSON labels.</li></ul>
+- `unique_namespaces` (Number) Specify the maximum number of unique XML namespace URIs. This count includes all XML namespaces. A document is rejected when its number of unique namespaces exceeds the maximum number. Enter a value in the range 0 - 65535. The default value is 1024. A value of 0 indicates an unlimited. When 0, the action does not return the number of unique namespaces.
+- `unique_prefixes` (Number) Specify the maximum number of unique XML namespace prefixes. This count includes multiple prefixes for the same namespace, but not multiple namespaces in different parts of the document under a single prefix. A document is rejected when its number of unique prefixes exceeds the maximum number. Enter a value in the range 0 - 262143. The default value is 1024. A value of 0 indicates unlimited. When 0, the action does not return the number of unique prefixes.
 - `user_summary` (String) Comments
-- `value_length` (Number) Max value length
-- `width` (Number) Max width
+- `value_length` (Number) Specify the maximum value length in bytes. A document is rejected when its value length exceeds the maximum length. Enter a value in the range 0 - 5368709121. The default value is 8192. A value of 0 indicates unlimited. When 0, the action does not return the value length. This setting is applicable to XML, JSON, and GraphQL documents. <ul><li>For XML, applies to the length of an attribute or text value.</li><li>For JSON, applies to the length of a string value.</li><li>For GraphQL, applies to the number of bytes in any string from which GraphQL is composed.</li></ul><p>The length includes any white space between tags in XML or quotation marks in JSON.</p>
+- `width` (Number) Specify the maximum width of the payload. A document is rejected when its width exceeds the maximum width. Enter a value in the range 0 - 65535. The default value is 4096. A value of 0 indicates unlimited. When 0, the action does not return the width. This setting is application to XML, JSON, and GraphQL documents. <ul><li>For XML applies to the maximum number of attributes on an element and the maximum number of child elements for an element.</li><li>For JSON, applies to the maximum number of properties on a JSON object and the maximum number of JSON items in a JSON array</li><li>For GraphQL, applies to the maximum number of selections in a selection set.</li></ul>
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

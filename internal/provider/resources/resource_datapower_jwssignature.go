@@ -55,7 +55,7 @@ func (r *JWSSignatureResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *JWSSignatureResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("JWS Signature", "jws-signature", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("JWS signature object.", "jws-signature", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -80,11 +80,11 @@ func (r *JWSSignatureResource) Schema(ctx context.Context, req resource.SchemaRe
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"algorithm": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Algorithm", "alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").AddDefaultValue("RS256").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Algorithm.", "alg", "").AddStringEnum("HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "PS256", "PS384", "PS512").AddDefaultValue("RS256").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -93,20 +93,20 @@ func (r *JWSSignatureResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("RS256"),
 			},
 			"key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Private Key", "key", "cryptokey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Private key.", "key", "cryptokey").String,
 				Optional:            true,
 			},
 			"ss_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Shared Secret Key", "sskey", "cryptosskey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Shared secret key.", "sskey", "cryptosskey").String,
 				Optional:            true,
 			},
 			"protected_header": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Protected Header", "protected-header", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Add a protected header to the JWS Sign action.", "protected-header", "").String,
 				NestedObject:        models.DmJOSEHeaderResourceSchema,
 				Optional:            true,
 			},
 			"unprotected_header": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Unprotected Header", "unprotected-header", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Add an unprotected header to the JWS Sign action.", "unprotected-header", "").String,
 				NestedObject:        models.DmJOSEHeaderResourceSchema,
 				Optional:            true,
 			},

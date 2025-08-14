@@ -1,59 +1,60 @@
 name: JOSERecipientIdentifier
-description: 'Recipient Identifier'
-cli_alias: 'jose-recipient-identifier'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/JOSERecipientIdentifier'
+description: JOSE Recipient Identifier object for the JSON Web Decrypt.
+cli_alias: jose-recipient-identifier
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/JOSERecipientIdentifier
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestJOSERecipientIdentifier"'
-    test_expect_ds: '"AccTest_JOSERecipientIdentifier"'
-    example: 'JOSERecipientIdentifierName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Type
-    type: String
-    enum:
-      - 'key'
-      - 'sskey'
-    test_value: '"key"'
-    description: 'Key Material Type'
-    cli_alias: type
-  - name: Key
-    type: String
-    reference_to: CryptoKey
-    description: 'Key Material'
-    test_value: '"AccTest_CryptoKey"'
-    test_bed_value: 'datapower_cryptokey.acc_test.id'
-    cli_alias: key
-  - name: SSKey
-    type: String
-    reference_to: CryptoSSKey
-    description: 'Key Material'
-    cli_alias: sskey
-  - name: HeaderParam
-    type: List
-    element_type: DmJOSEHeader
-    required: true
-    description: 'Header Parameters'
-    cli_alias: header-param
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestJOSERecipientIdentifier"'
+  test_expect_ds: '"AccTest_JOSERecipientIdentifier"'
+  example: JOSERecipientIdentifierName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Brief summary for user annotation.
+  cli_alias: summary
+- name: Type
+  type: String
+  enum:
+  - key
+  - sskey
+  test_value: '"key"'
+  description: Key material type used to verify the recipient.
+  cli_alias: type
+- name: Key
+  type: String
+  reference_to: CryptoKey
+  description: Use the private key to verify the recipient.
+  test_value: '"AccTest_CryptoKey"'
+  test_bed_value: datapower_cryptokey.acc_test.id
+  cli_alias: key
+- name: SSKey
+  type: String
+  reference_to: CryptoSSKey
+  description: Use the shared secret key to verify the recipient.
+  cli_alias: sskey
+- name: HeaderParam
+  type: List
+  element_type: DmJOSEHeader
+  required: true
+  description: The JOSE header parameters used to identify the recipient.
+  cli_alias: header-param

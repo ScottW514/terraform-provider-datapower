@@ -3,12 +3,12 @@
 page_title: "datapower_stylepolicy Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Processing Policy
+  Create, Edit or Delete a Processing Policy. A policy consists of one or more Processing Rules. Rules execute depending upon the direction of the message and on whether or not a corresponding matching rule selects the document for processing. A service may have only one policy active at a time. Click Services in the left-hand navigation menu and then click the appropriate policy link to use the graphical interface to create and edit policies.
 ---
 
 # datapower_stylepolicy (Data Source)
 
-Processing Policy
+Create, Edit or Delete a Processing Policy. A policy consists of one or more Processing Rules. Rules execute depending upon the direction of the message and on whether or not a corresponding matching rule selects the document for processing. A service may have only one policy active at a time. Click Services in the left-hand navigation menu and then click the appropriate policy link to use the graphical interface to create and edit policies.
 
 ## Example Usage
 
@@ -39,12 +39,12 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `def_stylesheet_for_soap` (String) Default style sheet for SOAP
-- `def_stylesheet_for_xsl` (String) Default style sheet for XSL transforms
-- `def_x_query_for_json` (String) Default XQuery style sheet for JSON
+- `def_stylesheet_for_soap` (String) Identify the default style sheet used for SOAP filtering. The default rejects all SOAP documents.
+- `def_stylesheet_for_xsl` (String) Identify the default style sheet used for XSL transformation. The default mirrors all documents.
+- `def_x_query_for_json` (String) Identify the default XQuery style sheet used for JSON transformation. The default rejects all JSON documents.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `policy_maps` (Attributes List) Policy Maps (see [below for nested schema](#nestedatt--result--policy_maps))
-- `user_summary` (String) Comments
+- `policy_maps` (Attributes List) A list of processing rules their corresponding matching rule that this policy will evaluate. If a match is found, the corresponding processing rule is run. The policy runs the first processing rule with a successful match. Therefore, the order of rules in this list is important. (see [below for nested schema](#nestedatt--result--policy_maps))
+- `user_summary` (String) Enter a comment. This appears on the Policy catalog page.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

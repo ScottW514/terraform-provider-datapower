@@ -3,12 +3,12 @@
 page_title: "datapower_apigateway Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API gateway
+  An API gateway matches the API to process API requests and to route each request to the matched API.
 ---
 
 # datapower_apigateway (Data Source)
 
-API gateway
+An API gateway matches the API to process API requests and to route each request to the matched API.
 
 ## Example Usage
 
@@ -38,31 +38,31 @@ Optional:
 
 Read-Only:
 
-- `api_collection` (List of String) API collection
+- `api_collection` (List of String) Specify the API collections to serve a group of clients. Each collection packages the plans and subscribers to serve a specific group of clients.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `assembly_burst_limit` (Attributes List) Assembly burst limits (see [below for nested schema](#nestedatt--result--assembly_burst_limit))
+- `assembly_burst_limit` (Attributes List) (see [below for nested schema](#nestedatt--result--assembly_burst_limit))
 - `assembly_count_limit` (Attributes List) Assembly count limits (see [below for nested schema](#nestedatt--result--assembly_count_limit))
 - `assembly_rate_limit` (Attributes List) Assembly rate limits (see [below for nested schema](#nestedatt--result--assembly_rate_limit))
-- `cache_memory_size` (Number) Stylesheet cache size
-- `cache_size` (Number) Stylesheet cache count
-- `doc_cache_max_docs` (Number) Document cache count
-- `doc_cache_policy` (Attributes List) Document cache policy (see [below for nested schema](#nestedatt--result--doc_cache_policy))
-- `doc_cache_size` (Number) Document cache size
-- `doc_max_writes` (Number) Maximum concurrent writes
-- `front_persistent_timeout` (Number) Front persistent timeout
+- `cache_memory_size` (Number) Specify the maximum size of the stylesheet cache. The default value is 2147483647. A value of 0 disables caching. Stylesheets are purged when either the cache size or the cache count is reached.
+- `cache_size` (Number) Specify the maximum number of stylesheets to cache. Enter a value in the range 5 - 250000. The default value is 256. Stylesheets are purged when either the cache size or the cache count is reached.
+- `doc_cache_max_docs` (Number) Specify the maximum number of documents to cache. Enter a value in the range 1 - 250000. The default value is 5000.
+- `doc_cache_policy` (Attributes List) Specify the document cache policies to associate a set of URLs with a specific cache policy. A document cache policy allows the administrator to determine how documents are cached. The policy offers time-to-live, priority, and type. The document cache is distinct from the stylesheet cache. (see [below for nested schema](#nestedatt--result--doc_cache_policy))
+- `doc_cache_size` (Number) Specify the maximum size of the document cache. Regardless of the specified size, no document that is greater than 1073741824 bytes is cached. This restriction applies even if the cache has available space.
+- `doc_max_writes` (Number) Specify the maximum number of concurrent write requests to create documents or refresh expired documents in the document cache. Enter a value in the range 1 - 32768. The default value is 32768. After the maximum number is reached, requests are forwarded to the target server and the response is not written to the cache.
+- `front_persistent_timeout` (Number) Specify the inter-transaction timeout for client connections. This value is the maximum idle time to allow between the completion of a transaction and the initiation of a new transaction for a client connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.
 - `front_protocol` (List of String) Protocol handler (reference to HTTP or HTTPS Source Protocol Hander)
-- `front_timeout` (Number) Front side timeout
+- `front_timeout` (Number) Specify the intra-transaction timeout for client connections. This value is the maximum idle time to allow in a transaction for a client connection. This timer monitors idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.
 - `gateway_service_name` (String) Gateway service name
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `ldap_conn_pool` (String) LDAP connection pool
 - `open_telemetry` (String) OpenTelemetry instance
 - `open_telemetry_resource_attribute` (Attributes List) OpenTelemetry resource attributes (see [below for nested schema](#nestedatt--result--open_telemetry_resource_attribute))
-- `proxy_policies` (Attributes List) Proxy policy (see [below for nested schema](#nestedatt--result--proxy_policies))
-- `scheduled_rule` (Attributes List) Scheduled processing rule (see [below for nested schema](#nestedatt--result--scheduled_rule))
-- `sha1_caching` (Boolean) SHA1 caching
+- `proxy_policies` (Attributes List) Specify the proxy policies to associate a set of URLs with a specific HTTP proxy. When multiple proxy policies are defined, URLs are evaluated against each policy in order. (see [below for nested schema](#nestedatt--result--proxy_policies))
+- `scheduled_rule` (Attributes List) Specify the processing rules to run at defined intervals. Certain applications require the running of a processing rule. For example, the integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager. (see [below for nested schema](#nestedatt--result--scheduled_rule))
+- `sha1_caching` (Boolean) Specify how to manage SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.
 - `share_rate_limit_count` (String) Share rate limit count
-- `static_document_calls` (Boolean) Static document calls
-- `url_refresh_policy` (String) URL refresh policy
+- `static_document_calls` (Boolean) Specify how to manage static document calls. The latest XSLT specifications require that multiple document calls in the same transformation return the same result. Disable this setting to allow all document calls to operate independently.
+- `url_refresh_policy` (String) Specify the stylesheet refresh policy. Stylesheets cached by this gateway are refreshed in accordance with policy rules.
 - `user_summary` (String) Comments
 - `virtual_servers` (List of String) Load balancer groups
 

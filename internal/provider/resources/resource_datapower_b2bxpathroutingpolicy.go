@@ -91,11 +91,11 @@ func (r *B2BXPathRoutingPolicyResource) Schema(ctx context.Context, req resource
 				Required:            true,
 			},
 			"document_idx_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Document ID XPath", "document-id-xpath", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression for the unique identifier of the exchange. With the partner IDs, the XPath expression uniquely identifies a specific XML EDI message.", "document-id-xpath", "").String,
 				Optional:            true,
 			},
 			"date_time_x_path": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Transaction Timestamp XPath", "transaction-time-xpath", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the XPath expression to select the timestamp from the message. The results of this expression must be in the form of an <tt>xs:dateTime</tt> type.", "transaction-time-xpath", "").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

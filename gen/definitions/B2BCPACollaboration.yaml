@@ -1,73 +1,98 @@
 name: B2BCPACollaboration
-description: 'B2B CPA collaboration'
-cli_alias: 'b2b-cpa-collaboration'
-cmd_group: 'b2b'
-rest_endpoint: '/mgmt/config/{domain}/B2BCPACollaboration'
+description: B2B CPA collaboration
+cli_alias: b2b-cpa-collaboration
+cmd_group: b2b
+rest_endpoint: /mgmt/config/{domain}/B2BCPACollaboration
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestB2BCPACollaboration"'
-    test_expect_ds: '"AccTest_B2BCPACollaboration"'
-    example: 'B2BCPACollaborationName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: InternalRole
-    type: String
-    description: 'Internal role'
-    test_value: '"internal"'
-    cli_alias: internal-role
-  - name: ExternalRole
-    type: String
-    description: 'External role'
-    test_value: '"external"'
-    cli_alias: external-role
-  - name: ProcessSpecification
-    type: String
-    description: 'Process Specification'
-    cli_alias: process-spec
-  - name: Service
-    type: String
-    required: true
-    example: 'service'
-    description: 'Service'
-    cli_alias: service
-  - name: ServiceType
-    type: String
-    description: 'Service Type'
-    cli_alias: service-type
-  - name: SenderMshSetting
-    type: String
-    reference_to: B2BCPASenderSetting
-    description: 'Default MSH signal sender'
-    cli_alias: sender-msh-setting
-  - name: ReceiverMshSetting
-    type: String
-    reference_to: B2BCPAReceiverSetting
-    description: 'Default MSH signal receiver'
-    cli_alias: receiver-msh-setting
-  - name: Actions
-    type: List
-    required: true
-    element_type: DmCPACollaborationAction
-    description: 'Actions'
-    cli_alias: action
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestB2BCPACollaboration"'
+  test_expect_ds: '"AccTest_B2BCPACollaboration"'
+  example: B2BCPACollaborationName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: InternalRole
+  type: String
+  description: Specify the name of the authorized role of the internal partner in
+    a business collaboration service. Each role is authorized for specific actions.
+    For example, a <tt>Buyer</tt> role has the authority for purchasing actions.
+  test_value: '"internal"'
+  cli_alias: internal-role
+- name: ExternalRole
+  type: String
+  description: Specify the name of the authorized role of the external partner in
+    a business collaboration service. Each role is authorized for specific actions.
+    For example, a <tt>Supplier</tt> role has the authority for selling actions.
+  test_value: '"external"'
+  cli_alias: external-role
+- name: ProcessSpecification
+  type: String
+  description: Specify the location of the process specification document that defines
+    the interactions between the internal and external partners. For example, <tt>http://www.rosettanet.org/processes/3A4</tt>
+    .
+  cli_alias: process-spec
+- name: Service
+  type: String
+  required: true
+  example: service
+  description: Specify the value of the service that acts on the message. The value
+    is used to specify and identify the value of the Service element in the outbound
+    and inbound ebMS message header. The service is one of the following types. <ul><li>A
+    business collaboration service for exchanging business messages.</li><li>An MSH
+    signal service for exchanging MSH signals.</li></ul><p>The value of <tt>urn:oasis:names:tc:ebxml-msg:service;</tt>
+    is an MSH signal service. Any other value represents a business collaboration
+    service.</p>
+  cli_alias: service
+- name: ServiceType
+  type: String
+  description: Specify the value of the service type. If you specify the type, the
+    value is present in the type attribute of the <tt>Service</tt> element within
+    the message to be sent. If the type is empty, the value of the <tt>Service</tt>
+    element must be a URI.
+  cli_alias: service-type
+- name: SenderMshSetting
+  type: String
+  reference_to: B2BCPASenderSetting
+  description: Specify the name of the default MSH signal sender to send ebMS MSH
+    signals to send MSH level signals that include <tt>Acknowledgment</tt> , <tt>Error</tt>
+    , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt> , and <tt>Pong</tt>
+    .
+  cli_alias: sender-msh-setting
+- name: ReceiverMshSetting
+  type: String
+  reference_to: B2BCPAReceiverSetting
+  description: Specify the name of the default MSH signal receiver to receive ebMS
+    MSH signals to receive MSH level signals that include <tt>Acknowledgment</tt>
+    , <tt>Error</tt> , <tt>StatusRequest</tt> , <tt>StatusResponse</tt> , <tt>Ping</tt>
+    , and <tt>Pong</tt> .
+  cli_alias: receiver-msh-setting
+- name: Actions
+  type: List
+  required: true
+  element_type: DmCPACollaborationAction
+  description: Specify CPA actions to bind. For a business collaboration, each action
+    entry identifies a business message that a party can send or receive. For a collaboration
+    of MSH level signal, the action overrides the sending or receiving behaviors of
+    the default sender setting or default receiver setting.
+  cli_alias: action

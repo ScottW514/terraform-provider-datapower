@@ -56,7 +56,7 @@ func (r *SLMRsrcClassResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *SLMRsrcClassResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SLM resource class", "slm-rsrc", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>An SLM resource class identifies a set of resources to be subject to an SLM policy. A resource class consists of the following types and properties.</p><ul><li>A resource type that specifies the manner to identify resources.</li><li>A match type that determines the resources to apply the policy.</li><li>Depending on the resource and match type, properties that identify specific instances of resources.</li></ul>", "slm-rsrc", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

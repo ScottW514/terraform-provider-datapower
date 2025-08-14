@@ -57,7 +57,7 @@ func (d *AssemblyActionUserSecurityDataSource) Metadata(_ context.Context, req d
 
 func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "User security assembly action",
+		MarkdownDescription: "The user security assembly actions extracts identity, authenticates, and authorizes end users.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -85,7 +85,7 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"ei_stop_on_error": schema.BoolAttribute{
-							MarkdownDescription: "Stop on error",
+							MarkdownDescription: "Specify whether to stop processing if identity extraction fails. If failed, stops the assembly and return an error.",
 							Computed:            true,
 						},
 						"user_context_variable": schema.StringAttribute{
@@ -97,11 +97,11 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"redirect_url": schema.StringAttribute{
-							MarkdownDescription: "Redirect URL",
+							MarkdownDescription: "Specify the URL fragment to redirect the request to obtain user credentials. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.",
 							Computed:            true,
 						},
 						"redirect_time_limit": schema.Int64Attribute{
-							MarkdownDescription: "Redirect time limit",
+							MarkdownDescription: "Specify the duration in seconds for a transaction to complete before the redirect fails. Enter a value in the range 10 - 6000. The default value is 300.",
 							Computed:            true,
 						},
 						"query_parameters": schema.StringAttribute{
@@ -109,11 +109,11 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"ei_default_form": schema.BoolAttribute{
-							MarkdownDescription: "Use default form?",
+							MarkdownDescription: "Specify whether to use the default form or a custom form. When enabled, returns the default login page to obtain credentials. When disabled, define the configuration to return the custom login page.",
 							Computed:            true,
 						},
 						"ei_custom_form": schema.StringAttribute{
-							MarkdownDescription: "Custom form location",
+							MarkdownDescription: "Specify the URL fragment of the custom login page. This page collects user name and password information. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.",
 							Computed:            true,
 						},
 						"ei_custom_form_client_profile": schema.StringAttribute{
@@ -121,11 +121,11 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"ei_custom_form_content_security_policy": schema.StringAttribute{
-							MarkdownDescription: "Custom form CSP header value",
+							MarkdownDescription: "Specify the value to use for the HTTP <tt>Content-Security-Policy</tt> response header for the custom login page. This response header allows you to control which resources the user agent can load. Generally, you set server origins and script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking, and other injection attacks.",
 							Computed:            true,
 						},
 						"ei_form_time_limit": schema.Int64Attribute{
-							MarkdownDescription: "HTML form time limit",
+							MarkdownDescription: "Specify the duration in seconds for a transaction to complete before the identity extraction request fails. Enter a value in the range 10 - 600. The default value is 300.",
 							Computed:            true,
 						},
 						"user_auth_method": schema.StringAttribute{
@@ -133,19 +133,19 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"au_stop_on_error": schema.BoolAttribute{
-							MarkdownDescription: "Stop on error",
+							MarkdownDescription: "Specify whether to stop processing if authentication fails. If failed, stops the assembly and return an error.",
 							Computed:            true,
 						},
 						"user_registry": schema.StringAttribute{
-							MarkdownDescription: "User registry",
+							MarkdownDescription: "Specify the API user registry to authenticate incoming API requests. The supported registries are API authentication URL and API LDAP.",
 							Computed:            true,
 						},
 						"auth_response_headers_pattern": schema.StringAttribute{
-							MarkdownDescription: "Authentication response headers pattern",
+							MarkdownDescription: "Specify the regular expression to select which response headers to add to the API context for access by subsequent actions. The default value is a case-insensitive search on the <tt>x-api</tt> prefix. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.",
 							Computed:            true,
 						},
 						"auth_response_credential_header": schema.StringAttribute{
-							MarkdownDescription: "Authenticated credential header",
+							MarkdownDescription: "Specify the response header that contains the authenticated credentials. The default value is <tt>X-API-Authenticated-Credential</tt> . The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.",
 							Computed:            true,
 						},
 						"user_az_method": schema.StringAttribute{
@@ -153,15 +153,15 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"az_stop_on_error": schema.BoolAttribute{
-							MarkdownDescription: "Stop on error",
+							MarkdownDescription: "Specify whether to stop processing if authorization fails. If failed, stops the assembly and return an error.",
 							Computed:            true,
 						},
 						"az_default_form": schema.BoolAttribute{
-							MarkdownDescription: "Use default form?",
+							MarkdownDescription: "Specify whether to use the default form or a custom form. When enabled, returns the default authorization page to obtain authorization. When disabled, define the configuration to return the custom authorization page.",
 							Computed:            true,
 						},
 						"az_custom_form": schema.StringAttribute{
-							MarkdownDescription: "Custom form location",
+							MarkdownDescription: "Specify the URL fragment of the custom authorization page. This page obtains permission from the end user. The value can include one or more runtime context variables in the <tt>$(variable)</tt> format.",
 							Computed:            true,
 						},
 						"az_custom_form_client_profile": schema.StringAttribute{
@@ -169,11 +169,11 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"az_custom_form_content_security_policy": schema.StringAttribute{
-							MarkdownDescription: "Custom form CSP header value",
+							MarkdownDescription: "Specify the value for the HTTP <tt>Content-Security-Policy</tt> response header for the custom authorization page. This response header allows you to control which resources the user agent can load. Generally, you set server origins and script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking, and other injection attacks.",
 							Computed:            true,
 						},
 						"az_form_time_limit": schema.Int64Attribute{
-							MarkdownDescription: "HTML form time limit",
+							MarkdownDescription: "Specify the duration in seconds for a transaction to complete before the authorization request fails. Enter a value in the range 10 - 600. The default value is 300.",
 							Computed:            true,
 						},
 						"az_table_display_checkboxes": schema.BoolAttribute{
@@ -181,7 +181,7 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"az_table_dynamic_entries": schema.StringAttribute{
-							MarkdownDescription: "Dynamic table entries",
+							MarkdownDescription: "Specify the period-delimited context variable that adds dynamic entries to display. This context variable supports space delimited names, a JSON array of names, or a JSON array of objects with name and description.",
 							Computed:            true,
 						},
 						"az_table_default_entry": schema.ListNestedAttribute{
@@ -202,11 +202,11 @@ func (d *AssemblyActionUserSecurityDataSource) Schema(ctx context.Context, req d
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -57,7 +57,7 @@ func (d *LDAPConnectionPoolDataSource) Metadata(_ context.Context, req datasourc
 
 func (d *LDAPConnectionPoolDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "LDAP connection pool",
+		MarkdownDescription: "The LDAP connection pool settings specify the pool of LDAP servers to use.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,15 +81,15 @@ func (d *LDAPConnectionPoolDataSource) Schema(ctx context.Context, req datasourc
 							Computed:            true,
 						},
 						"idle_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Idle timeout",
+							MarkdownDescription: "Specify the duration in seconds that an LDAP connection can remain idle before the connection is removed from the pool. Enter a value in the range 1-86400. The default value is 120.",
 							Computed:            true,
 						},
 						"max_pool_size": schema.Int64Attribute{
-							MarkdownDescription: "Max pool size",
+							MarkdownDescription: "Specify the maximum number of LDAP connections that can exist for a server:port:BindDN combination in an LDAP connection pool. Enter a value in the range 1-2000. The default value is 35.",
 							Computed:            true,
 						},
 						"reject_on_pool_limit": schema.BoolAttribute{
-							MarkdownDescription: "Reject on pool limit",
+							MarkdownDescription: "Specify whether to reject an incoming LDAP connection when the LDAP connection pool reaches the maximum pool size for a server:port:BindDN combination.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

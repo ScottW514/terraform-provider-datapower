@@ -54,7 +54,7 @@ func (r *SSLSNIMappingResource) Metadata(ctx context.Context, req resource.Metad
 
 func (r *SSLSNIMappingResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("TLS hostname map", "ssl-sni-mapping", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A TLS hostname map defines the SNI map for TLS server profiles.", "ssl-sni-mapping", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *SSLSNIMappingResource) Schema(ctx context.Context, req resource.SchemaR
 				Optional:            true,
 			},
 			"sni_mapping": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SNI mapping", "sni-mapping", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a match pattern to select the TLS server profile based on the SNI hostname sent by the TLS client. The map allows virtual TLS server configuration where different server profiles are used in response to the hostname value in the <tt>ClientHello</tt> SNI extension from the TLS client. In this way, a single IP address and port can be used to host multiple TLS servers with separate crypto keys and certificates.", "sni-mapping", "").String,
 				NestedObject:        models.DmHostToSSLServerProfileResourceSchema,
 				Required:            true,
 			},

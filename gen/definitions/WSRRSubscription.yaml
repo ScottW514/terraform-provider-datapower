@@ -1,95 +1,108 @@
 name: WSRRSubscription
-description: 'WSRR subscription'
-cli_alias: 'wsrr-subscription'
-cmd_group: 'webservice'
-rest_endpoint: '/mgmt/config/{domain}/WSRRSubscription'
+description: The WSRR (WebSphere Service Registry and Repository) subscription is
+  useful when you want to deploy web services with a direct reference to a service
+  document. The configuration references a WSRR server, the name of the WSRR resource,
+  and its namespace. If more than one version of the service document exists, you
+  must specify the version to reference. <p>The management of service documents is
+  controlled on the WSRR server. The service configuration is updated based on the
+  synchronization method.</p>
+cli_alias: wsrr-subscription
+cmd_group: webservice
+rest_endpoint: /mgmt/config/{domain}/WSRRSubscription
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestWSRRSubscription"'
-    test_expect_ds: '"AccTest_WSRRSubscription"'
-    example: 'WSRRSubscriptionName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: Server
-    type: String
-    reference_to: WSRRServer
-    required: true
-    test_value: '"AccTest_WSRRServer"'
-    test_bed_value: 'datapower_wsrrserver.acc_test.id'
-    description: 'WSRR server'
-    cli_alias: server
-  - name: Namespace
-    type: String
-    description: 'Namespace'
-    test_value: '"namespace"'
-    cli_alias: namespace
-  - name: ObjectType
-    type: String
-    enum:
-      - 'wsdl'
-      - 'concept'
-      - 'saved-search'
-      - 'service-version'
-    required: true
-    example: 'wsdl'
-    description: 'Subscription object'
-    cli_alias: object-type
-  - name: ObjectName
-    type: String
-    required: true
-    test_value: '"ResTestobject"'
-    test_expect_ds: '"AccTest_object"'
-    example: 'objectName'
-    description: 'Object name'
-    cli_alias: object-name
-  - name: Method
-    type: String
-    enum:
-      - 'manual'
-      - 'poll'
-      - 'automatic'
-    default: 'poll'
-    description: 'Synchronization method'
-    cli_alias: method
-  - name: RefreshInterval
-    type: Int64
-    minimum: 60
-    maximum: 4294967
-    default: 86400
-    description: 'Refresh interval'
-    cli_alias: refresh-interval
-  - name: UseVersion
-    type: Bool
-    default: false
-    description: 'Use object version'
-    cli_alias: use-version
-  - name: ObjectVersion
-    type: String
-    description: 'Object version'
-    cli_alias: version
-  - name: FetchPolicyAttachments
-    type: Bool
-    default: false
-    description: 'Fetch policy attachments'
-    cli_alias: fetch-policy-attachments
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestWSRRSubscription"'
+  test_expect_ds: '"AccTest_WSRRSubscription"'
+  example: WSRRSubscriptionName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: Server
+  type: String
+  reference_to: WSRRServer
+  required: true
+  test_value: '"AccTest_WSRRServer"'
+  test_bed_value: datapower_wsrrserver.acc_test.id
+  description: WSRR server
+  cli_alias: server
+- name: Namespace
+  type: String
+  description: Specify the namespace to unambiguously identify the WSRR resource.
+    This property is used with the object name.
+  test_value: '"namespace"'
+  cli_alias: namespace
+- name: ObjectType
+  type: String
+  enum:
+  - wsdl
+  - concept
+  - saved-search
+  - service-version
+  required: true
+  example: wsdl
+  description: Subscription object
+  cli_alias: object-type
+- name: ObjectName
+  type: String
+  required: true
+  test_value: '"ResTestobject"'
+  test_expect_ds: '"AccTest_object"'
+  example: objectName
+  description: Specify the object name to unambiguously identify the WSRR resource.
+    This property is used with the namespace.
+  cli_alias: object-name
+- name: Method
+  type: String
+  enum:
+  - manual
+  - poll
+  - automatic
+  default: poll
+  description: Synchronization method
+  cli_alias: method
+- name: RefreshInterval
+  type: Int64
+  minimum: 60
+  maximum: 4294967
+  default: 86400
+  description: Specify the refresh interval in seconds between polls to synchronize
+    the local copy with the registry version.
+  cli_alias: refresh-interval
+- name: UseVersion
+  type: Bool
+  default: false
+  description: Specify whether to query the registry for a specific object version.
+    Set this property when the registry contains more than one version of an object.
+  cli_alias: use-version
+- name: ObjectVersion
+  type: String
+  description: Object version
+  cli_alias: version
+- name: FetchPolicyAttachments
+  type: Bool
+  default: false
+  description: Specify whether to fetch external policy attachments. When enabled,
+    the registry is queried for external policy attachments for retrieved resources.
+    These policies are processed when the service allow external policy attachments.
+  cli_alias: fetch-policy-attachments
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary

@@ -55,7 +55,7 @@ func (r *CryptoFWCredResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *CryptoFWCredResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Firewall credentials", "fwcred", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The set of crypto credentials (private keys, shared secret keys, and certificates) that are usable by an XML firewall when calling security extension functions to perform actions such as encryption, decryption, digital signing, and verification. If a firewall uses firewall credentials and a particular certificate or key is not included in this list, the crypto operation attempting to use the key or certificate fails.", "fwcred", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

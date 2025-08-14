@@ -56,7 +56,7 @@ func (r *RateLimitDefinitionGroupResource) Metadata(ctx context.Context, req res
 
 func (r *RateLimitDefinitionGroupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Rate limit definition group", "rate-limit-definition-group", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A rate limit definition group contains a list of rate limit definitions to enforce.", "rate-limit-definition-group", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

@@ -50,10 +50,10 @@ func (d *InteropServiceDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *InteropServiceDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Interoperability test service (`default` domain only)",
+		MarkdownDescription: "Configure and use the interoperability test service to test stylesheets or maps. The service is available over HTTP or HTTPS and is disabled by default.",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -73,7 +73,7 @@ func (d *InteropServiceDataSource) Schema(ctx context.Context, req datasource.Sc
 				Computed:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: "Local IP address",
+				MarkdownDescription: "Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.",
 				Computed:            true,
 			},
 			"local_port": schema.Int64Attribute{
@@ -89,7 +89,7 @@ func (d *InteropServiceDataSource) Schema(ctx context.Context, req datasource.Sc
 				Computed:            true,
 			},
 			"https_local_address": schema.StringAttribute{
-				MarkdownDescription: "Local IP address",
+				MarkdownDescription: "Specify the IP address or host alias that the service listens. The default value is 0.0.0.0, which indicates that the service is active on all addresses.",
 				Computed:            true,
 			},
 			"https_local_port": schema.Int64Attribute{

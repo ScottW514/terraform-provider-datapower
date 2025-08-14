@@ -1,33 +1,41 @@
 name: GWSRemoteDebug
-description: 'GatewayScript Remote Debugger (`default` domain only)'
-cli_alias: 'gatewayscript-remote-debug'
-cmd_group: 'system'
-rest_endpoint: '/mgmt/config/default/GWSRemoteDebug/GWSRemoteDebug'
+description: Modify the connection details for a remote GatewayScript debugger. This
+  configuration defines the local GatewayScript debug endpoint for remote debugging.
+cli_alias: gatewayscript-remote-debug
+cmd_group: system
+rest_endpoint: /mgmt/config/default/GWSRemoteDebug/GWSRemoteDebug
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: LocalPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    required: true
-    default: 9229
-    description: 'Local port'
-    cli_alias: port
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local address'
-    cli_alias: ip-address
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Specifies a brief descriptive summary for the configuration.
+  cli_alias: summary
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  required: true
+  default: 9229
+  description: Sets the port that the local GatewayScript debug endpoint monitors.
+    The default value is 9229.
+  cli_alias: port
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: '<p>Enter a host alias or the IP address that the service listens on.
+    Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0
+    indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4
+    and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the
+    value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate
+    management traffic from application data traffic.</p>'
+  cli_alias: ip-address

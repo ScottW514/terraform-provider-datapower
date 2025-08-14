@@ -3,12 +3,12 @@
 page_title: "datapower_slmschedule Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SLM schedule
+  An SLM schedule defines the time period (hours and days) to enforce the statements in an SLM policy. Schedules allow the application of different statements during different time periods.
 ---
 
 # datapower_slmschedule (Data Source)
 
-SLM schedule
+An SLM schedule defines the time period (hours and days) to enforce the statements in an SLM policy. Schedules allow the application of different statements during different time periods.
 
 ## Example Usage
 
@@ -39,14 +39,14 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `days_of_week` (Attributes) Week Days
+- `days_of_week` (Attributes) Specify the days to enforce the schedule. The time and duration apply to all selected days.
   - CLI Alias: `days` (see [below for nested schema](#nestedatt--result--days_of_week))
-- `duration` (Number) Duration
+- `duration` (Number) Specify the duration in minutes to enforce the schedule. Enter any value of 1 - 1440. The default value is 1440.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `start_date` (String) Start date
 - `start_time` (String) Start Time
-- `stop_date` (String) Stop date
-- `time_zone` (String) Time zone
+- `stop_date` (String) Specify the stop date to enforce the schedule. The enforcement period does not include the stop date.
+- `time_zone` (String) Specify the time zone to enforce the schedule. The default is the device local time zone.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

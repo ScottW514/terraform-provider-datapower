@@ -1,62 +1,80 @@
 name: WebServicesAgent
-description: 'Web Services Management agent'
-cli_alias: 'wsm-agent'
-cmd_group: 'wsm-agent'
-rest_endpoint: '/mgmt/config/{domain}/WebServicesAgent/default'
+description: The Web Services Management agent provides manageability for Web Services
+  by providing status, metrics, and transaction history to external management stations.
+cli_alias: wsm-agent
+cmd_group: wsm-agent
+rest_endpoint: /mgmt/config/{domain}/WebServicesAgent/default
 update_only: true
 attributes:
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: false
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: MaxRecords
-    type: Int64
-    required: true
-    default: 3000
-    description: 'Max records to buffer'
-    cli_alias: max-records
-  - name: MaxMemoryKB
-    type: Int64
-    required: true
-    default: 64000
-    description: 'Max memory for buffer'
-    cli_alias: max-memory
-  - name: CaptureMode
-    type: String
-    enum:
-      - 'none'
-      - 'faults'
-      - 'all-messages'
-    required: true
-    default: 'faults'
-    description: 'Capture mode'
-    cli_alias: capture-mode
-# DEPRECATED
-#  - name: BufferMode
-  - name: MediationMetrics
-    type: Bool
-    default: false
-    description: 'Collect mediation enforcement metrics'
-    cli_alias: mediation-enforcement-metrics
-  - name: MaxPayloadSizeKB
-    type: Int64
-    default: 0
-    description: 'Max payload size'
-    cli_alias: max-payload-size
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: false
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: MaxRecords
+  type: Int64
+  required: true
+  default: 3000
+  description: Specify the maximum number of transaction records to buffer. Buffering
+    controls the behavior of the agent when there are no registered consumers of transaction
+    events. Records are accumulated until they reach the configured threshold. After
+    this threshold is reached, new records are dropped. The loss of records are visible
+    to web service managers that understand the concept.
+  cli_alias: max-records
+- name: MaxMemoryKB
+  type: Int64
+  required: true
+  default: 64000
+  description: Specify the maximum memory in KB to buffer transaction records. Buffering
+    controls the behavior of the agent when there are no registered consumers of transaction
+    events. Records are accumulated until they reach the configured threshold. After
+    this threshold is reached, new records are dropped. The loss of records are visible
+    to web service managers that understand the concept.
+  cli_alias: max-memory
+- name: CaptureMode
+  type: String
+  enum:
+  - none
+  - faults
+  - all-messages
+  required: true
+  default: faults
+  description: Specify the mode to capture messages for further analysis. Because
+    not all Web Services Management protocols can accommodate full message-capture,
+    configure this property only when the spooler can forward full messages. <p>Full
+    message-capture incurs a performance penalty.</p>
+  cli_alias: capture-mode
+- name: MediationMetrics
+  type: Bool
+  default: false
+  description: Specify whether to collect metrics about mediation enforcement. The
+    default behavior is to not collect metrics.
+  cli_alias: mediation-enforcement-metrics
+- name: MaxPayloadSizeKB
+  type: Int64
+  default: 0
+  description: Specify the maximum total payload size in KB of a buffered transaction
+    record. The total payload size is the sum of the payloads that are collected at
+    the following points. <ul><li>When the service accepts the request.</li><li>When
+    the service sends the processed request to its target.</li><li>When the service
+    accepts the response.</li><li>When the service sends the processed response to
+    the client.</li></ul><p>A record is dropped when its total payload size exceeds
+    the maximum value. The default value is 0, which indicates no limit.</p>
+  cli_alias: max-payload-size

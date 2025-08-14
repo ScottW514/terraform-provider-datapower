@@ -1,59 +1,72 @@
 name: LDAPSearchParameters
-description: 'LDAP search parameters'
-cli_alias: 'ldap-search-parameters'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/LDAPSearchParameters'
+description: LDAP search parameters are a container for the parameters to use to perform
+  an LDAP search operation. When used with authentication, the search retrieves the
+  distinguished name (DN) for the user. When used with credential authorization mapping,
+  the search retrieves the group name (DN or attribute value) based on the DN of the
+  authenticated user.
+cli_alias: ldap-search-parameters
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/LDAPSearchParameters
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestLDAPSearchParameters"'
-    test_expect_ds: '"AccTest_LDAPSearchParameters"'
-    example: 'LDAPSearchParametersName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: LDAPBaseDN
-    type: String
-    description: 'LDAP base DN'
-    cli_alias: base-dn
-  - name: LDAPReturnedAttribute
-    type: String
-    default: 'dn'
-    description: 'LDAP returned attribute'
-    cli_alias: returned-attribute
-  - name: LDAPFilterPrefix
-    type: String
-    description: 'LDAP filter prefix'
-    cli_alias: filter-prefix
-  - name: LDAPFilterSuffix
-    type: String
-    description: 'LDAP filter suffix'
-    cli_alias: filter-suffix
-  - name: LDAPScope
-    type: String
-    enum:
-      - 'subtree'
-      - 'one-level'
-      - 'base'
-    default: 'subtree'
-    description: 'LDAP scope'
-    cli_alias: scope
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestLDAPSearchParameters"'
+  test_expect_ds: '"AccTest_LDAPSearchParameters"'
+  example: LDAPSearchParametersName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: LDAPBaseDN
+  type: String
+  description: Specify the base DN to begin the search. This value identifies the
+    entry level of the tree.
+  cli_alias: base-dn
+- name: LDAPReturnedAttribute
+  type: String
+  default: dn
+  description: Specify the LDAP attribute to return for each entry that matches the
+    search filter. The default value is dn.
+  cli_alias: returned-attribute
+- name: LDAPFilterPrefix
+  type: String
+  description: Specify the prefix of the LDAP filter expression. An LDAP filter expression
+    is composed by <tt>prefix + username + suffix</tt> . If the prefix is <tt>(&amp;(uid=</tt>
+    and the username is <tt>bob</tt> , the LDAP search filter is <tt>(&amp;(uid=bob</tt>
+    .
+  cli_alias: filter-prefix
+- name: LDAPFilterSuffix
+  type: String
+  description: Specify the suffix of the LDAP filter expression. An LDAP filter expression
+    is composed by <tt>prefix + username + suffix</tt> . If the prefix is <tt>(&amp;(uid=</tt>
+    , the username is <tt>bob</tt> , and the suffix is <tt>)(objectClass=person))</tt>
+    , the LDAP search filter is <tt>(&amp;(uid=bob)(objectClass=person))</tt> .
+  cli_alias: filter-suffix
+- name: LDAPScope
+  type: String
+  enum:
+  - subtree
+  - one-level
+  - base
+  default: subtree
+  description: Specify the depth of the LDAP search. The default is subtree.
+  cli_alias: scope

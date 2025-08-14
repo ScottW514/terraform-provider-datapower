@@ -3,12 +3,12 @@
 page_title: "datapower_sshclientprofile Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SSH client profile
+  An SSH client profile defines the authentication type, credentials, and cipher suites to use for an SSH client connection.
 ---
 
 # datapower_sshclientprofile (Data Source)
 
-SSH client profile
+An SSH client profile defines the authentication type, credentials, and cipher suites to use for an SSH client connection.
 
 ## Example Usage
 
@@ -39,19 +39,19 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `ciphers` (List of String) Ciphers
+- `ciphers` (List of String) Specify the SSH cipher suites to support.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `kex_alg` (List of String) Key exchange algorithms
-- `mac_alg` (List of String) Message authentication codes
+- `kex_alg` (List of String) Specify the key exchange (KEX) algorithms to support.
+- `mac_alg` (List of String) Specify the message authentication codes (MAC) to support.
 - `password_alias` (String) Password Alias
-- `persistent_connection_timeout` (Number) Persistent connection idle timeout
-- `persistent_connections` (Boolean) Persistent connections
-- `profile_usage` (String) Profile usage
-- `ssh_user_authentication` (Attributes) User authentication
+- `persistent_connection_timeout` (Number) Specify the idle duration in seconds for a persistent connection. When the connection remains idle for the specified duration, the connection is closed. Enter any value in the range 1 - 86000. The default value is 120.
+- `persistent_connections` (Boolean) Specify whether to support persistent connections. By default, persistent connections are enabled. <ul><li>When enabled, new requests reuse the connection of a previous session without reauthentication.</li><li>When not enabled, new request must reauthenticate.</li></ul>
+- `profile_usage` (String) Specify the usage of the profile. Only SFTP is supported.
+- `ssh_user_authentication` (Attributes) Specify the available types of SSH user authentication for the SSH client. Authentication can be public key or password or both public key and password. When both methods are defined, public key authentication is attempted first.
   - CLI Alias: `user-auth` (see [below for nested schema](#nestedatt--result--ssh_user_authentication))
-- `strict_host_key_checking` (Boolean) Strict host key checking
+- `strict_host_key_checking` (Boolean) Specify how to check host keys during the connection and authentication phases. By default strict host key checking is not enabled. <ul><li>When enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are rejected.</li><li>When not enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are added to the known hosts list and accepted.</li></ul>
 - `user_name` (String) User
-- `user_private_key` (String) User private key
+- `user_private_key` (String) Specify the private key for public key authentication. User private keys must not be password protected.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

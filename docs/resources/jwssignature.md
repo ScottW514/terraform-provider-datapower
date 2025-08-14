@@ -3,13 +3,13 @@
 page_title: "datapower_jwssignature Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  JWS Signature
+  JWS signature object.
   CLI Alias: jws-signature
 ---
 
 # datapower_jwssignature (Resource)
 
-JWS Signature
+JWS signature object.
   - CLI Alias: `jws-signature`
 
 ## Example Usage
@@ -33,22 +33,22 @@ resource "datapower_jwssignature" "test" {
 
 ### Optional
 
-- `algorithm` (String) Algorithm
+- `algorithm` (String) Algorithm.
   - CLI Alias: `alg`
   - Choices: `HS256`, `HS384`, `HS512`, `RS256`, `RS384`, `RS512`, `ES256`, `ES384`, `ES512`, `PS256`, `PS384`, `PS512`
   - Default value: `RS256`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `key` (String) Private Key
+- `key` (String) Private key.
   - CLI Alias: `key`
   - Reference to: `datapower_cryptokey:id`
-- `protected_header` (Attributes List) Protected Header
+- `protected_header` (Attributes List) Add a protected header to the JWS Sign action.
   - CLI Alias: `protected-header` (see [below for nested schema](#nestedatt--protected_header))
-- `ss_key` (String) Shared Secret Key
+- `ss_key` (String) Shared secret key.
   - CLI Alias: `sskey`
   - Reference to: `datapower_cryptosskey:id`
-- `unprotected_header` (Attributes List) Unprotected Header
+- `unprotected_header` (Attributes List) Add an unprotected header to the JWS Sign action.
   - CLI Alias: `unprotected-header` (see [below for nested schema](#nestedatt--unprotected_header))
-- `user_summary` (String) Comments
+- `user_summary` (String) A descriptive summary for the configuration.
   - CLI Alias: `summary`
 
 <a id="nestedatt--dependency_actions"></a>

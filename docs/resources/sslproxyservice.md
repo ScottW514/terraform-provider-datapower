@@ -3,13 +3,12 @@
 page_title: "datapower_sslproxyservice Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  TLS proxy service
-  CLI Alias: sslforwarderAccepted Dependency Actions: quiesce
+  
 ---
 
 # datapower_sslproxyservice (Resource)
 
-TLS proxy service
+<p>Creates a TLS proxy service. This service can be used to wrap or unwrap a TCP stream in TLS.</p><p>This service requires TLS profiles to secure the connections.</p><ul><li>When the system is a client, use a TLS client profile to secure connections with targets.</li><li>When the system is a server, use a a TLS server profile to secure connections with clients. When the server supports Server Name Indication (SNI), use a TLS SNI server profile.</li><li>When the system is both client and server, use TLS client and server profiles to secure both connections.</li></ul>
   - CLI Alias: `sslforwarder`
   - Accepted Dependency Actions: `quiesce`
 
@@ -45,24 +44,24 @@ resource "datapower_sslproxyservice" "test" {
 
 ### Optional
 
-- `back_timeout` (Number) Server-side timeout
+- `back_timeout` (Number) Specify the maximum idle time for server connections. This timer monitors the idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The value of 0 indicates that the timer is disabled. The default value is 0.
   - CLI Alias: `back-timeout`
   - Range: `0`-`86400`
   - Default value: `0`
-- `conn_limit` (Number) Max client connections
+- `conn_limit` (Number) Specify the maximum number of concurrent client connections. Enter a value in the range of 0 - 65535. The value of 0 indicates an unlimited number of connections. The default value is 100.
   - CLI Alias: `maximum-connections`
   - Range: `0`-`65535`
   - Default value: `100`
-- `conn_timeout` (Number) Transaction timeout
+- `conn_timeout` (Number) Specify the maximum duration in seconds for transactions. This timer monitors the duration of end-to-end transactions. If the specified connection time is exceeded, the client connection is torn down. Enter a value in the range of 0 - 86400. The value of 0 indicates that the timer is disabled. The default value is 0.
   - CLI Alias: `connection-timeout`
   - Range: `0`-`86400`
   - Default value: `0`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `front_timeout` (Number) Client-side timeout
+- `front_timeout` (Number) Specify the maximum idle time in seconds for client connections. This timer monitors the idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The value of 0 indicates that the timer is disabled. The default value is 0.
   - CLI Alias: `front-timeout`
   - Range: `0`-`86400`
   - Default value: `0`
-- `local_address` (String) Local address
+- `local_address` (String) <p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>
   - CLI Alias: `ip-address`
   - Default value: `0.0.0.0`
 - `priority` (String) Service priority

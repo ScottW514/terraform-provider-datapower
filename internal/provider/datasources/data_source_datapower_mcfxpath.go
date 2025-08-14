@@ -57,7 +57,7 @@ func (d *MCFXPathDataSource) Metadata(_ context.Context, req datasource.Metadata
 
 func (d *MCFXPathDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "XPath Message Content Filter",
+		MarkdownDescription: "Filter based on specific data in the message. An XPath expression defines a data element to be matched in the request message.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",

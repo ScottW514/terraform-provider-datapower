@@ -57,7 +57,7 @@ func (d *AssemblyActionXSLTDataSource) Metadata(_ context.Context, req datasourc
 
 func (d *AssemblyActionXSLTDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "XSLT assembly action",
+		MarkdownDescription: "XSLT assembly action runs an XSLT stylesheet. This action is not supported in IBM Cloud. Any assembly that includes this action fails.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -77,7 +77,7 @@ func (d *AssemblyActionXSLTDataSource) Schema(ctx context.Context, req datasourc
 							Computed:            true,
 						},
 						"use_payload": schema.BoolAttribute{
-							MarkdownDescription: "Use current payload as input",
+							MarkdownDescription: "Specify whether to use the current payload as input. When enabled, the input document uses the current payload. When not enabled, there is no input.",
 							Computed:            true,
 						},
 						"stylesheet": schema.StringAttribute{
@@ -85,7 +85,7 @@ func (d *AssemblyActionXSLTDataSource) Schema(ctx context.Context, req datasourc
 							Computed:            true,
 						},
 						"serialize_output": schema.BoolAttribute{
-							MarkdownDescription: "Serialize output",
+							MarkdownDescription: "Specify whether to serialize the output into binary data. The serialized output is not accessible as XML unless it is re-parsed. To access the output as XML after serialization, the API rule must contain a parse assembly action after the XSLT assembly action.",
 							Computed:            true,
 						},
 						"compile_settings": schema.StringAttribute{
@@ -101,11 +101,11 @@ func (d *AssemblyActionXSLTDataSource) Schema(ctx context.Context, req datasourc
 							Computed:            true,
 						},
 						"correlation_path": schema.StringAttribute{
-							MarkdownDescription: "Correlation path",
+							MarkdownDescription: "Specify the path that correlates the API action to a specific part of the API specification. The correlation path specifies the part of the API definition that correlates with the API action. This path is exposed in the debug data by the API gateway for use by debugging tools. For example, for an API configuration that is retrieved from API Connect and specified in an OpenAPI document with IBM extensions, this path is the JSON path to the assembly policy in the IBM extensions section of the document. The path can be expressed in any form that the debugging tool can correlate to the API definition.",
 							Computed:            true,
 						},
 						"action_debug": schema.BoolAttribute{
-							MarkdownDescription: "Enable debugging",
+							MarkdownDescription: "<p>Specify whether to enable the GatewayScript debugger to troubleshoot the following GatewayScript files or script.</p><ul><li>Troubleshoot a GatewayScript file that is called from the GatewayScript assembly action.</li><li>Troubleshoot a GatewayScript file that is called from an XSLT assembly action that uses the <tt>gatewayscript()</tt> extension function.</li><li>Troubleshoot a GatewayScript script that is called through the <tt>value</tt> or <tt>default</tt> property in the JSON file from the map assembly action.</li></ul><p>To debug a file or script, the following conditions must be met.</p><ul><li>The file contains one or more <tt>debugger;</tt> statements at the points in your script where you want to start debugging.</li><li>The GatewayScript debugger is enabled.</li></ul><p>You run the <tt>debug-action</tt> command.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

@@ -54,7 +54,7 @@ func (r *ProcessingMetadataResource) Metadata(ctx context.Context, req resource.
 
 func (r *ProcessingMetadataResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Processing Metadata", "metadata", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A Processing Metadata object contains a list of metadata items extracted from a message, such as protocol header values, or from the device processing scope, such as system variables. This list, or manifest, of item values is then returned by the metadata object in an XML nodeset. Currently used by an AAA Policy for Identity and Resource extraction.", "metadata", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *ProcessingMetadataResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 			},
 			"meta_item": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Metadata Item", "meta-item", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Define a metadata item by selecting one from the predefined items for a Processing Metadata Category, or configure a custom metadata item for a \"customizable\" category to retrieve value from any arbitrary headers or variables.", "meta-item", "").String,
 				NestedObject:        models.DmMetaItemResourceSchema,
 				Optional:            true,
 			},

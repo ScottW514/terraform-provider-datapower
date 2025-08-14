@@ -52,10 +52,10 @@ func (r *NFSClientSettingsResource) Metadata(ctx context.Context, req resource.M
 
 func (r *NFSClientSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("NFS client settings (`default` domain only)", "nfs-client", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure global NFS client parameters, which is the global configuration to enable NFS.", "nfs-client", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -65,7 +65,7 @@ func (r *NFSClientSettingsResource) Schema(ctx context.Context, req resource.Sch
 				Optional:            true,
 			},
 			"mount_refresh_time": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Mount refresh time", "mount-refresh-time", "").AddIntegerRange(1, 1000).AddDefaultValue("10").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval between the validation of NFS mounts. The status of each NFS mount is checked at this interval. This check detects whether the NFS server is up or down to prevent application-level NFS timeouts.", "mount-refresh-time", "").AddIntegerRange(1, 1000).AddDefaultValue("10").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{

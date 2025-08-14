@@ -1,57 +1,61 @@
 name: SLMAction
-description: 'SLM action'
-cli_alias: 'slm-action'
-cmd_group: 'webservice'
-rest_endpoint: '/mgmt/config/{domain}/SLMAction'
+description: An SLM action defines the control procedure to trigger for transactions
+  in excess of the threshold. As part of any control procedure, the monitor writes
+  an event to the log for each transaction that exceeds a threshold.
+cli_alias: slm-action
+cmd_group: webservice
+rest_endpoint: /mgmt/config/{domain}/SLMAction
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTest_SLMAction"'
-    test_expect_ds: '"AccTest_SLMAction"'
-    example: 'SLMActionName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Type
-    type: String
-    enum:
-      - 'log-only'
-      - 'reject'
-      - 'shape'
-    required: true
-    default: 'log-only'
-    description: 'Type'
-    cli_alias: type
-  - name: LogLevel
-    type: String
-    enum:
-      - 'emerg'
-      - 'alert'
-      - 'critic'
-      - 'error'
-      - 'warn'
-      - 'notice'
-      - 'info'
-      - 'debug'
-    default: 'debug'
-    description: 'Log priority'
-    cli_alias: log-priority
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTest_SLMAction"'
+  test_expect_ds: '"AccTest_SLMAction"'
+  example: SLMActionName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Type
+  type: String
+  enum:
+  - log-only
+  - reject
+  - shape
+  required: true
+  default: log-only
+  description: Specify the administrative sanction to trigger for transactions in
+    excess of the threshold. This action is beyond the generation of a log message.
+  cli_alias: type
+- name: LogLevel
+  type: String
+  enum:
+  - emerg
+  - alert
+  - critic
+  - error
+  - warn
+  - notice
+  - info
+  - debug
+  default: debug
+  description: Log priority
+  cli_alias: log-priority

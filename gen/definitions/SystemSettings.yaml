@@ -1,118 +1,156 @@
 name: SystemSettings
-description: 'System settings (`default` domain only)'
-cli_alias: 'system'
-cmd_group: 'system'
-rest_endpoint: '/mgmt/config/default/SystemSettings/System-Settings'
+description: <p>System settings provide the following purposes.</p><ul><li>Define
+  system-specific information, such as contact information, location, and name.</li><li>Update
+  serial number after a replacement.</li><li>Enable interface for custom GUI messages
+  and custom CLI prompt.</li><li>Reserve disk space for the audit log.</li><li>Define
+  information about the hardware for use by the SNMP system table, such as serial
+  number, and model type</li></ul>
+cli_alias: system
+cmd_group: system
+rest_endpoint: /mgmt/config/default/SystemSettings/System-Settings
 update_only: true
 default_domain_only: true
 attributes:
-  - name: mAdminState
-    tf_name: 'enabled'
-    type: Bool
-    bool_type: 'admin'
-    default: true
-    description: 'Administrative state'
-    cli_alias: admin-state
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: ProductOID
-    type: String
-    description: 'Product OID'
-    computed: true
-  - name: Description
-    type: String
-    description: 'Description'
-    computed: true
-  - name: SerialNumber
-    type: String
-    description: 'Serial number'
-    computed: true
-  - name: EntitlementNumber
-    type: String
-    description: 'Entitlement serial number'
-    cli_alias: entitlement
-  - name: ProductID
-    type: String
-    description: 'Product ID'
-    computed: true
-  - name: CapacityMode
-    type: String
-    description: 'Licensed capacity mode'
-    computed: true
-  - name: Contact
-    type: String
-    description: 'Contact'
-    cli_alias: contact
-  - name: SystemName
-    type: String
-    description: 'System name'
-    cli_alias: name
-  - name: Location
-    type: String
-    description: 'Location'
-    cli_alias: location
-  - name: Services
-    type: Int64
-    description: 'Services'
-    computed: true
-  - name: BackupMode
-    type: String
-    enum:
-      - 'normal'
-      - 'secure'
-    description: 'Backup mode'
-    computed: true
-  - name: ProductMode
-    type: String
-    enum:
-      - 'normal'
-      - 'cc'
-    description: 'Product Mode'
-    computed: true
-  - name: CustomUIFile
-    type: String
-    description: 'Custom user interface file'
-    cli_alias: custom-ui-file
-  - name: AuditReserve
-    type: Int64
-    maximum: 10000
-    default: 40
-    description: 'Audit reserve space'
-    cli_alias: audit-reserve
-  - name: DetectIntrusion
-    type: String
-    enum:
-      - 'enable'
-      - 'disable'
-    description: 'Detect intrusion (physical appliances only)'
-    cli_alias: detect-intrusion
-  - name: HardwareXMLAcceleration
-    type: Bool
-    description: 'Enable hardware XML acceleration (physical appliances only)'
-    cli_alias: xml-accelerator
-  - name: Locale
-    type: String
-    enum:
-      - 'de'
-      - 'en'
-      - 'es'
-      - 'fr'
-      - 'it'
-      - 'ja'
-      - 'ko'
-      - 'pt_BR'
-      - 'zh_CN'
-      - 'zh_TW'
-    description: 'System locale'
-    cli_alias: locale
-  - name: SystemLogFixedFormat
-    type: Bool
-    default: false
-    description: 'Enable fixed format'
-    cli_alias: system-log-fixed-format
-  - name: UUID
-    type: String
-    description: 'UUID'
-    computed: true
+- name: mAdminState
+  tf_name: enabled
+  type: Bool
+  bool_type: admin
+  default: true
+  description: <p>The administrative state of the configuration.</p><ul><li>To make
+    active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+  cli_alias: admin-state
+- name: UserSummary
+  type: String
+  description: Enter a descriptive summary for the configuration.
+  cli_alias: summary
+- name: ProductOID
+  type: String
+  description: The read-only string that identifies the installed DataPower agent
+    software.
+  computed: true
+- name: Description
+  type: String
+  description: The read-only string that identifies the product.
+  computed: true
+- name: SerialNumber
+  type: String
+  description: The read-only string that identifies the product serial number.
+  computed: true
+- name: EntitlementNumber
+  type: String
+  description: After an appliance replacement, the serial number of the original appliance.
+    Without the original serial number, IBM cannot entitle the replacement appliance
+    for maintenance or warranty services.
+  cli_alias: entitlement
+- name: ProductID
+  type: String
+  description: The read-only string that identifies the product type.
+  computed: true
+- name: CapacityMode
+  type: String
+  description: The read-only installation setting that indicates the licensed capacity
+    mode.
+  computed: true
+- name: Contact
+  type: String
+  description: Specify any information that identifies the individual or functional
+    area that is responsible maintenance and management.
+  cli_alias: contact
+- name: SystemName
+  type: String
+  description: Enter the name of the DataPower Gateway to use internally as a custom
+    prompt and to use externally to integrate with remote systems. The name must be
+    a 7-bit US-ASCII string of 127 characters or less consisting of letters, numbers,
+    underscore, or embedded dashes, dots, or spaces. However, it is recommended to
+    also be unique with a length of 64 characters or less to be compatible with most
+    remote systems.
+  cli_alias: name
+- name: Location
+  type: String
+  description: Enter the location of the DataPower Gateway.
+  cli_alias: location
+- name: Services
+  type: Int64
+  description: The read-only hex value that indicates support for application, presentation,
+    session, and data-link layer services.
+  computed: true
+- name: BackupMode
+  type: String
+  enum:
+  - normal
+  - secure
+  description: The read-only installation setting that indicates whether a secure-backup
+    is allowed.
+  computed: true
+- name: ProductMode
+  type: String
+  enum:
+  - normal
+  - cc
+  description: The read-only installation setting that indicates the operational mode
+    of the product.
+  computed: true
+- name: CustomUIFile
+  type: String
+  description: <p>Specifies the URL of the custom user interface file. This file contains
+    custom messages for CLI and GUI sessions as well as the custom CLI prompt. The
+    file must reside in the <tt>store:</tt> or <tt>local:</tt> directory, not on a
+    mounted file system.</p>
+  cli_alias: custom-ui-file
+- name: AuditReserve
+  type: Int64
+  maximum: 10000
+  default: 40
+  description: Specifies the amount of disk space to reserve for audit records. When
+    the disk is full, all services enter the down operational state and stop processing
+    traffic. To restore disk space and resume traffic processing, manual intervention
+    is required. Enter a value in the range 0 - 10000. The default value is 40.
+  cli_alias: audit-reserve
+- name: DetectIntrusion
+  type: String
+  enum:
+  - enable
+  - disable
+  description: Indicates whether to check for intrusion detection.
+  cli_alias: detect-intrusion
+- name: HardwareXMLAcceleration
+  type: Bool
+  description: '<p>Indicates whether to use the Hardware XML accelerator.</p><p><b>Attention:
+    </b>Disable the XML hardware accelerator only when directed by IBM Support. When
+    disabled, XML hardware acceleration rules in the compile options policy have no
+    effect.</p><p>After you change the state, restart the appliance to remove items
+    from the cache. After the appliance restarts, the specified state is in effect.
+    You can view the status of the XML hardware accelerator in the appliance version
+    information. The XML accelerator shows the type appended with <tt>(disabled)</tt>
+    when the accelerator is disabled.</p>'
+  cli_alias: xml-accelerator
+- name: Locale
+  type: String
+  enum:
+  - de
+  - en
+  - es
+  - fr
+  - it
+  - ja
+  - ko
+  - pt_BR
+  - zh_CN
+  - zh_TW
+  description: Specifies the locale for the operating language of the DataPower Gateway.
+    The locale setting manages locale-specific conventions, such as date and time
+    formats, and controls the language of log messages. The language must be enabled
+    before you can select it.
+  cli_alias: locale
+- name: SystemLogFixedFormat
+  type: Bool
+  default: false
+  description: Indicates whether to enable fixed format in system logs. When enabled,
+    the system logs are in the format that was used in version 6.0.1 and contain no
+    serviceability improvements after this version that can help with monitoring or
+    troubleshooting.
+  cli_alias: system-log-fixed-format
+- name: UUID
+  type: String
+  description: UUID
+  computed: true

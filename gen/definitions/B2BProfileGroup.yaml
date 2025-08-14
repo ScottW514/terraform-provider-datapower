@@ -1,39 +1,43 @@
 name: B2BProfileGroup
-description: 'B2B partner profile group'
-cli_alias: 'b2b-profile-group'
-cmd_group: 'b2b'
-rest_endpoint: '/mgmt/config/{domain}/B2BProfileGroup'
+description: A group of B2B partner profiles that can be enable or disable at the
+  same time. Each partner profile in the group is identified by its name and destination.
+  Without a destination, the configuration uses the first destination for the partner
+  profile.
+cli_alias: b2b-profile-group
+cmd_group: b2b
+rest_endpoint: /mgmt/config/{domain}/B2BProfileGroup
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestB2BProfileGroup"'
-    test_expect_ds: '"AccTest_B2BProfileGroup"'
-    example: 'B2BProfileGroupName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: B2BProfiles
-    type: List
-    element_type: DmB2BGroupedProfile
-    required: true
-    description: 'Partner profiles'
-    cli_alias: b2b-profiles
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestB2BProfileGroup"'
+  test_expect_ds: '"AccTest_B2BProfileGroup"'
+  example: B2BProfileGroupName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: B2BProfiles
+  type: List
+  element_type: DmB2BGroupedProfile
+  required: true
+  description: Partner profiles
+  cli_alias: b2b-profiles

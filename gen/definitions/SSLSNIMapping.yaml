@@ -1,39 +1,45 @@
 name: SSLSNIMapping
-description: 'TLS hostname map'
-cli_alias: 'ssl-sni-mapping'
-cmd_group: 'crypto'
-rest_endpoint: '/mgmt/config/{domain}/SSLSNIMapping'
+description: A TLS hostname map defines the SNI map for TLS server profiles.
+cli_alias: ssl-sni-mapping
+cmd_group: crypto
+rest_endpoint: /mgmt/config/{domain}/SSLSNIMapping
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestSSLSNIMapping"'
-    test_expect_ds: '"AccTest_SSLSNIMapping"'
-    example: 'SSLSNIMappingName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: SNIMapping
-    type: List
-    element_type: DmHostToSSLServerProfile
-    required: true
-    description: 'SNI mapping'
-    cli_alias: sni-mapping
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestSSLSNIMapping"'
+  test_expect_ds: '"AccTest_SSLSNIMapping"'
+  example: SSLSNIMappingName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: SNIMapping
+  type: List
+  element_type: DmHostToSSLServerProfile
+  required: true
+  description: Specify a match pattern to select the TLS server profile based on the
+    SNI hostname sent by the TLS client. The map allows virtual TLS server configuration
+    where different server profiles are used in response to the hostname value in
+    the <tt>ClientHello</tt> SNI extension from the TLS client. In this way, a single
+    IP address and port can be used to host multiple TLS servers with separate crypto
+    keys and certificates.
+  cli_alias: sni-mapping

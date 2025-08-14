@@ -54,7 +54,7 @@ func (r *WebServiceMonitorResource) Metadata(ctx context.Context, req resource.M
 
 func (r *WebServiceMonitorResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Web service monitor", "service-monitor", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("A service level monitor (SLM) for a web service watches web services traffic to a specific endpoint.", "service-monitor", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -79,7 +79,7 @@ func (r *WebServiceMonitorResource) Schema(ctx context.Context, req resource.Sch
 				},
 			},
 			"wsdlurl": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("WSDL URL", "wsdl", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the WSDL file that defines the endpoints, transport type and operations to monitor. The WSDL file can be in the file system or remote.", "wsdl", "").String,
 				Required:            true,
 			},
 			"operations": schema.ListNestedAttribute{
@@ -96,11 +96,11 @@ func (r *WebServiceMonitorResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 			},
 			"frontend_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Front URL", "frontend-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL that clients use to access the web service. This value cannot be the same value as the endpoint URL.. Wildcards are supported.", "frontend-url", "").String,
 				Required:            true,
 			},
 			"transport": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Transport type", "transport", "").AddStringEnum("http-get", "http-post", "soap-doc", "soap-rpc").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the transport type for the endpoint. The transport type must agree with the transport type in the WSDL file.", "transport", "").AddStringEnum("http-get", "http-post", "soap-doc", "soap-rpc").String,
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("http-get", "http-post", "soap-doc", "soap-rpc"),

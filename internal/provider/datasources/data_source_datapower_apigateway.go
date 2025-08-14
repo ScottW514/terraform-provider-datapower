@@ -57,7 +57,7 @@ func (d *APIGatewayDataSource) Metadata(_ context.Context, req datasource.Metada
 
 func (d *APIGatewayDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API gateway",
+		MarkdownDescription: "An API gateway matches the API to process API requests and to route each request to the matched API.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -90,23 +90,23 @@ func (d *APIGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"url_refresh_policy": schema.StringAttribute{
-							MarkdownDescription: "URL refresh policy",
+							MarkdownDescription: "Specify the stylesheet refresh policy. Stylesheets cached by this gateway are refreshed in accordance with policy rules.",
 							Computed:            true,
 						},
 						"cache_memory_size": schema.Int64Attribute{
-							MarkdownDescription: "Stylesheet cache size",
+							MarkdownDescription: "Specify the maximum size of the stylesheet cache. The default value is 2147483647. A value of 0 disables caching. Stylesheets are purged when either the cache size or the cache count is reached.",
 							Computed:            true,
 						},
 						"cache_size": schema.Int64Attribute{
-							MarkdownDescription: "Stylesheet cache count",
+							MarkdownDescription: "Specify the maximum number of stylesheets to cache. Enter a value in the range 5 - 250000. The default value is 256. Stylesheets are purged when either the cache size or the cache count is reached.",
 							Computed:            true,
 						},
 						"sha1_caching": schema.BoolAttribute{
-							MarkdownDescription: "SHA1 caching",
+							MarkdownDescription: "Specify how to manage SHA1-assisted stylesheet caching. With SHA1 caching enabled, stylesheets are cached by both URL and SHA1 message digest value. With SHA1 caching disabled, stylesheets are cached only by URL.",
 							Computed:            true,
 						},
 						"static_document_calls": schema.BoolAttribute{
-							MarkdownDescription: "Static document calls",
+							MarkdownDescription: "Specify how to manage static document calls. The latest XSLT specifications require that multiple document calls in the same transformation return the same result. Disable this setting to allow all document calls to operate independently.",
 							Computed:            true,
 						},
 						"virtual_servers": schema.ListAttribute{
@@ -115,29 +115,29 @@ func (d *APIGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"doc_cache_max_docs": schema.Int64Attribute{
-							MarkdownDescription: "Document cache count",
+							MarkdownDescription: "Specify the maximum number of documents to cache. Enter a value in the range 1 - 250000. The default value is 5000.",
 							Computed:            true,
 						},
 						"doc_cache_size": schema.Int64Attribute{
-							MarkdownDescription: "Document cache size",
+							MarkdownDescription: "Specify the maximum size of the document cache. Regardless of the specified size, no document that is greater than 1073741824 bytes is cached. This restriction applies even if the cache has available space.",
 							Computed:            true,
 						},
 						"doc_max_writes": schema.Int64Attribute{
-							MarkdownDescription: "Maximum concurrent writes",
+							MarkdownDescription: "Specify the maximum number of concurrent write requests to create documents or refresh expired documents in the document cache. Enter a value in the range 1 - 32768. The default value is 32768. After the maximum number is reached, requests are forwarded to the target server and the response is not written to the cache.",
 							Computed:            true,
 						},
 						"doc_cache_policy": schema.ListNestedAttribute{
-							MarkdownDescription: "Document cache policy",
+							MarkdownDescription: "Specify the document cache policies to associate a set of URLs with a specific cache policy. A document cache policy allows the administrator to determine how documents are cached. The policy offers time-to-live, priority, and type. The document cache is distinct from the stylesheet cache.",
 							NestedObject:        models.DmDocCachePolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"scheduled_rule": schema.ListNestedAttribute{
-							MarkdownDescription: "Scheduled processing rule",
+							MarkdownDescription: "Specify the processing rules to run at defined intervals. Certain applications require the running of a processing rule. For example, the integration with a CA Unicenter Manager is facilitated by a regularly scheduled processing rule that obtains relationship data from the Unicenter Manager.",
 							NestedObject:        models.DmScheduledRuleDataSourceSchema,
 							Computed:            true,
 						},
 						"api_collection": schema.ListAttribute{
-							MarkdownDescription: "API collection",
+							MarkdownDescription: "Specify the API collections to serve a group of clients. Each collection packages the plans and subscribers to serve a specific group of clients.",
 							ElementType:         types.StringType,
 							Computed:            true,
 						},
@@ -146,7 +146,7 @@ func (d *APIGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"assembly_burst_limit": schema.ListNestedAttribute{
-							MarkdownDescription: "Assembly burst limits",
+							MarkdownDescription: "",
 							NestedObject:        models.DmAPIBurstLimitDataSourceSchema,
 							Computed:            true,
 						},
@@ -165,16 +165,16 @@ func (d *APIGatewayDataSource) Schema(ctx context.Context, req datasource.Schema
 							Computed:            true,
 						},
 						"proxy_policies": schema.ListNestedAttribute{
-							MarkdownDescription: "Proxy policy",
+							MarkdownDescription: "Specify the proxy policies to associate a set of URLs with a specific HTTP proxy. When multiple proxy policies are defined, URLs are evaluated against each policy in order.",
 							NestedObject:        models.DmAPIProxyPolicyDataSourceSchema,
 							Computed:            true,
 						},
 						"front_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Front side timeout",
+							MarkdownDescription: "Specify the intra-transaction timeout for client connections. This value is the maximum idle time to allow in a transaction for a client connection. This timer monitors idle time in the data transfer process. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 1 - 86400. The default value is 120.",
 							Computed:            true,
 						},
 						"front_persistent_timeout": schema.Int64Attribute{
-							MarkdownDescription: "Front persistent timeout",
+							MarkdownDescription: "Specify the inter-transaction timeout for client connections. This value is the maximum idle time to allow between the completion of a transaction and the initiation of a new transaction for a client connection. If the specified idle time is exceeded, the connection is torn down. Enter a value in the range 0 - 86400. The default value is 180. A value of 0 disables persistent connections.",
 							Computed:            true,
 						},
 						"open_telemetry": schema.StringAttribute{

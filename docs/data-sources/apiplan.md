@@ -3,12 +3,12 @@
 page_title: "datapower_apiplan Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API plan
+  An API plan packages a list of APIs to expose. An API is not exposed unless you add the API to a plan. When you configure an API plan, define the rate limit schemes to enforce against APIs. By default, the rate limit scheme in the plan applies to all operations. You can override plan-level rate limit schemes with operation-specific rate limit schemes.
 ---
 
 # datapower_apiplan (Data Source)
 
-API plan
+An API plan packages a list of APIs to expose. An API is not exposed unless you add the API to a plan. When you configure an API plan, define the rate limit schemes to enforce against APIs. By default, the rate limit scheme in the plan applies to all operations. You can override plan-level rate limit schemes with operation-specific rate limit schemes.
 
 ## Example Usage
 
@@ -38,29 +38,29 @@ Optional:
 
 Read-Only:
 
-- `api` (List of String) API
+- `api` (List of String) Specify the APIs to package for the plan. An API is exposed through a plan by associating the API to the plan.
 - `app_domain` (String) The name of the application domain the object belongs to
-- `assembly_burst_limit` (Attributes List) Assembly burst limit (see [below for nested schema](#nestedatt--result--assembly_burst_limit))
-- `assembly_burst_limit_definition` (Attributes List) Assembly burst limit definition (see [below for nested schema](#nestedatt--result--assembly_burst_limit_definition))
-- `assembly_count_limit` (Attributes List) Assembly count limit (see [below for nested schema](#nestedatt--result--assembly_count_limit))
-- `assembly_count_limit_definition` (Attributes List) Assembly count limit definition (see [below for nested schema](#nestedatt--result--assembly_count_limit_definition))
-- `assembly_rate_limit` (Attributes List) Assembly rate limit (see [below for nested schema](#nestedatt--result--assembly_rate_limit))
-- `assembly_rate_limit_definition` (Attributes List) Assembly rate limit definition (see [below for nested schema](#nestedatt--result--assembly_rate_limit_definition))
-- `burst_limit` (Attributes List) Burst limit (see [below for nested schema](#nestedatt--result--burst_limit))
+- `assembly_burst_limit` (Attributes List) Specify the burst limit scheme that the rate limit assembly action enforces. This scheme defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme. (see [below for nested schema](#nestedatt--result--assembly_burst_limit))
+- `assembly_burst_limit_definition` (Attributes List) Specify a burst limit definition that the rate limit assembly action enforces. A burst limit definition defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. A message is first checked against the burst limit scheme and then against the rate limit scheme. (see [below for nested schema](#nestedatt--result--assembly_burst_limit_definition))
+- `assembly_count_limit` (Attributes List) Specify the count limit scheme that the rate limit assembly action enforces. This scheme defines the maximum count to allow and the actions to take when the limit is exceeded. (see [below for nested schema](#nestedatt--result--assembly_count_limit))
+- `assembly_count_limit_definition` (Attributes List) Specify a count limit definition that the rate limit assembly action enforces. A count limit definition defines the maximum count that is allowed and the actions to take when the limit is exceeded. (see [below for nested schema](#nestedatt--result--assembly_count_limit_definition))
+- `assembly_rate_limit` (Attributes List) Specify the rate limit scheme that the rate limit assembly action enforces. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded. (see [below for nested schema](#nestedatt--result--assembly_rate_limit))
+- `assembly_rate_limit_definition` (Attributes List) Specify a rate limit definition that the rate limit assembly action enforces. A rate limit definition defines the maximum rate that is allowed in a specified interval and the actions to take when the limit is exceeded. (see [below for nested schema](#nestedatt--result--assembly_rate_limit_definition))
+- `burst_limit` (Attributes List) Specify the burst limit scheme to enforce. This scheme defines the maximum burst rate to allow during a specified interval. The burst limit helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme. (see [below for nested schema](#nestedatt--result--burst_limit))
 - `exclude_operation` (List of String) Exclude operation
 - `graph_ql_schema_options` (List of String) GraphQL schema options
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `name` (String) Plan name
 - `override` (List of String) Operation rate limit
-- `product_id` (String) Product ID
+- `product_id` (String) Specify the product ID for the plan. A product makes a set of APIs and plans into one offering to make available to API developers.
 - `product_name` (String) Product name
 - `product_title` (String) Product title
 - `product_version` (String) Product version
-- `rate_limit` (Attributes List) Rate limit (see [below for nested schema](#nestedatt--result--rate_limit))
+- `rate_limit` (Attributes List) Specify the rate limit scheme to enforce. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded. (see [below for nested schema](#nestedatt--result--rate_limit))
 - `rate_limit_group` (String) Rate limit group
-- `rate_limit_scope` (String) Rate limit scope
-- `space_id` (String) Space ID
-- `space_name` (String) Space name
+- `rate_limit_scope` (String) Specify the scope to apply the rate limit schemes to. You can apply schemes against the application or client ID. For example, <tt>application1</tt> has <tt>client1</tt> and <tt>client2</tt> , and the rate limit is 10 calls per hour. <ul><li>When against the application, <tt>application1</tt> limits 10 calls per hour from either <tt>client1</tt> or <tt>client2.</tt></li><li>When against the client ID, <tt>application1</tt> limits 10 calls per hour from each <tt>client1</tt> and <tt>client2</tt> .</li></ul>
+- `space_id` (String) Specify the space ID for the product in the catalog. When space is enabled for a catalog, the catalog can be partitioned to spaces. Spaces enable each team to manage their APIs independently.
+- `space_name` (String) Specify the space name for the product in the catalog. When space is enabled for a catalog, the catalog can be partitioned to spaces. Spaces enable each team to manage their APIs independently.
 - `use_limit_definitions` (Boolean) Use limit definitions
 - `use_rate_limit_group` (Boolean) Use rate limit group
 - `user_summary` (String) Comments

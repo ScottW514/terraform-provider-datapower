@@ -3,12 +3,12 @@
 page_title: "datapower_wsrrsubscription Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  WSRR subscription
+  The WSRR (WebSphere Service Registry and Repository) subscription is useful when you want to deploy web services with a direct reference to a service document. The configuration references a WSRR server, the name of the WSRR resource, and its namespace. If more than one version of the service document exists, you must specify the version to reference. The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.
 ---
 
 # datapower_wsrrsubscription (Data Source)
 
-WSRR subscription
+The WSRR (WebSphere Service Registry and Repository) subscription is useful when you want to deploy web services with a direct reference to a service document. The configuration references a WSRR server, the name of the WSRR resource, and its namespace. If more than one version of the service document exists, you must specify the version to reference. <p>The management of service documents is controlled on the WSRR server. The service configuration is updated based on the synchronization method.</p>
 
 ## Example Usage
 
@@ -39,16 +39,16 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `fetch_policy_attachments` (Boolean) Fetch policy attachments
+- `fetch_policy_attachments` (Boolean) Specify whether to fetch external policy attachments. When enabled, the registry is queried for external policy attachments for retrieved resources. These policies are processed when the service allow external policy attachments.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `method` (String) Synchronization method
-- `namespace` (String) Namespace
-- `object_name` (String) Object name
+- `namespace` (String) Specify the namespace to unambiguously identify the WSRR resource. This property is used with the object name.
+- `object_name` (String) Specify the object name to unambiguously identify the WSRR resource. This property is used with the namespace.
 - `object_type` (String) Subscription object
 - `object_version` (String) Object version
-- `refresh_interval` (Number) Refresh interval
+- `refresh_interval` (Number) Specify the refresh interval in seconds between polls to synchronize the local copy with the registry version.
 - `server` (String) WSRR server
-- `use_version` (Boolean) Use object version
+- `use_version` (Boolean) Specify whether to query the registry for a specific object version. Set this property when the registry contains more than one version of an object.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

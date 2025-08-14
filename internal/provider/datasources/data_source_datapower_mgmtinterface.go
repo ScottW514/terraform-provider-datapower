@@ -50,10 +50,10 @@ func (d *MgmtInterfaceDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *MgmtInterfaceDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "XML management interface (`default` domain only)",
+		MarkdownDescription: "Modify the configuration of the XML management interface. This interface is described in the <tt>store:///xml-mgmt.wsdl</tt> file in the <tt>default</tt> domain. <p>If you do not assign a TLS profile, the service uses a profile with a self-signed certificate.</p>",
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: "Administrative state",
+				MarkdownDescription: "<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>",
 				Computed:            true,
 			},
 			"user_summary": schema.StringAttribute{
@@ -61,7 +61,7 @@ func (d *MgmtInterfaceDataSource) Schema(ctx context.Context, req datasource.Sch
 				Computed:            true,
 			},
 			"local_port": schema.Int64Attribute{
-				MarkdownDescription: "Port number",
+				MarkdownDescription: "Specify the TCP port that the interface monitors. The default value is 5550.",
 				Computed:            true,
 			},
 			"user_agent": schema.StringAttribute{
@@ -69,14 +69,14 @@ func (d *MgmtInterfaceDataSource) Schema(ctx context.Context, req datasource.Sch
 				Computed:            true,
 			},
 			"acl": schema.StringAttribute{
-				MarkdownDescription: "Access control list",
+				MarkdownDescription: "Edit the <tt>xml-mgmt</tt> access control list to define the client IP addresses to allow or deny.",
 				Computed:            true,
 			},
 			"slm_peering": schema.Int64Attribute{
 				MarkdownDescription: "SLM update interval",
 				Computed:            true,
 			},
-			"mode": models.GetDmXMLMgmtModesDataSourceSchema("Enabled services", "mode", ""),
+			"mode": models.GetDmXMLMgmtModesDataSourceSchema("Specify which service endpoints to enable. For each enabled endpoint, the interface listens for requests from those services.", "mode", ""),
 			"ssl_config_type": schema.StringAttribute{
 				MarkdownDescription: "Custom TLS server type",
 				Computed:            true,
@@ -90,7 +90,7 @@ func (d *MgmtInterfaceDataSource) Schema(ctx context.Context, req datasource.Sch
 				Computed:            true,
 			},
 			"local_address": schema.StringAttribute{
-				MarkdownDescription: "Local address",
+				MarkdownDescription: "<p>Enter a host alias or the IP address that the service listens on. Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0 indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4 and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate management traffic from application data traffic.</p>",
 				Computed:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

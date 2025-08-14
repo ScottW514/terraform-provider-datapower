@@ -3,12 +3,12 @@
 page_title: "datapower_aaapolicy Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  AAA policy
+  
 ---
 
 # datapower_aaapolicy (Data Source)
 
-AAA policy
+<p>Define the support to authenticate users and authorize their access to resources. An AAA policy consists of the following phases.</p><ul><li>During AAA processing, the identity extraction phase defines which methods the AAA policy uses to extract the claimed identity of the service requester.</li><li>After the claimed identity of the service requester is extracted, an AAA policy authenticates the claimed identity. The authentication process can use internal or external resources.</li><li>After authentication credentials are received, an AAA policy can map these credentials.</li><li>After client authentication, an AAA policy identifies the specific resource that is being requested by that client.</li><li>After requested resources are identified, you might need to map extracted resource to a form that is compatible with the authorization method.</li><li>After the service requester is authenticated from the extracted identity, an AAA policy authorizes the client to the requested resource.</li><li>After client-authorization, an AAA policy can run postprocessing activities.</li></ul>
 
 ## Example Usage
 
@@ -39,50 +39,50 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `ausmhttp_header` (List of String) HTTP headers
-- `authenticate` (Attributes) Authentication
+- `ausmhttp_header` (List of String) Specify HTTP headers from CA Single Sign-On authentication responses. These headers are included as request or response headers based on the CA Single Sign-on header flow.
+- `authenticate` (Attributes) Specify the method to authenticate the extracted identity. For some methods, you must define more properties.
   - CLI Alias: `authenticate` (see [below for nested schema](#nestedatt--result--authenticate))
-- `authorize` (Attributes) Authorization
+- `authorize` (Attributes) Specify the method to authorize the identity to resources. For some methods, you must define more properties.
   - CLI Alias: `authorize` (see [below for nested schema](#nestedatt--result--authorize))
-- `authorized_counter` (String) Authorized counter
-- `azsmhttp_header` (List of String) HTTP headers
-- `do_s_valve` (Number) DoS flooding attack valve
-- `dyn_config` (String) Dynamic configuration type
-- `dyn_config_custom_url` (String) Dynamic configuration custom URL
-- `enforce_soap_actor` (Boolean) Enforce actor or role for WS-Security message
-- `external_aaa_template` (String) External AAA policy template
-- `extract_identity` (Attributes) Identity extraction
+- `authorized_counter` (String) Specify the monitor for authorized messages. Ensure that this count monitor is configured with an XPath as the measure.
+- `azsmhttp_header` (List of String) Specify HTTP headers from CA Single Sign-On authorization responses. These headers are included as request or response headers based on the CA Single Sign-On header flow.
+- `do_s_valve` (Number) <p>Specify the number of times to process the same request to protect against a denial of service (DoS) attack. Enter a value in the range 1 - 1000. The default value is 3.</p><p>With the default value, AAA processes only the first 3 signature and each signature can contain up to 3 reference URIs. Additional signatures or reference URIs are ignored.</p><p>XML processing includes encryption, decryption, message signing, and signature validation. The AAA policy supports only identity extraction with subject DN from certificate in message signature and authorization with signer certificate for digitally signed messages.</p>
+- `dyn_config` (String) Specify how to obtain the AAA policy configuration dynamically. With dynamic configuration, you can configure the AAA policy at run time. When enabled, the configuration of AAA is determined dynamically based on the template AAA policy and the parameters that the dynamic configuration custom URL returns. By default, uses no template.
+- `dyn_config_custom_url` (String) <p>Specify the location of the custom stylesheet or GatewayScript file. The configuration of the AAA policy is obtained dynamically from this file. The obtained configuration overwrites the configuration in the template AAA policy.</p><p>In the custom file, modify only the properties to dynamically overwrite. See the <tt>ModifyAAAPolicy</tt> element in the <tt>store:///xml-mgmt.xsd</tt> schema to construct a schema-compliant AAA configuration.</p>
+- `enforce_soap_actor` (Boolean) Whether to enforce the <tt>S11:actor</tt> or <tt>S12:role</tt> on WS-Security messages. In general, a WS-Security message has a <tt>S11:actor</tt> or <tt>S12:role</tt> attribute for its <tt>Security</tt> header. Processing can enforce these attributes when the AAA policy tries to use the <tt>Security</tt> header. For example, the <tt>Security</tt> element has only one actor or role. In this case, the AAA policy processes only the <tt>Security</tt> header for this actor or role identifier. This setting applies to all AAA phases, except postprocessing. For postprocessing, the activity generally generates a new message for next SOAP node.
+- `external_aaa_template` (String) Specify another AAA policy to use as the template. When specified, this AAA policy overwrites the current AAA policy.
+- `extract_identity` (Attributes) Specify the methods to extract the identity of the service requester. For some methods, you must define more properties.
   - CLI Alias: `extract-identity` (see [below for nested schema](#nestedatt--result--extract_identity))
-- `extract_resource` (Attributes) Resource extraction
+- `extract_resource` (Attributes) Specify the methods to extract the identity of a requested resource. For some methods, you must define more properties.
   - CLI Alias: `extract-resource` (see [below for nested schema](#nestedatt--result--extract_resource))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `lda_psuffix` (String) LDAP suffix
-- `ldap_version` (String) LDAP version
-- `log_allowed` (Boolean) Log allowed
-- `log_allowed_level` (String) Log allowed level
-- `log_rejected` (Boolean) Log rejected
-- `log_rejected_level` (String) Log rejected level
-- `ltpa_attributes` (Attributes List) LTPA user attributes (see [below for nested schema](#nestedatt--result--ltpa_attributes))
-- `map_credentials` (Attributes) Credential mapping
+- `lda_psuffix` (String) Specify the LDAP suffix to add to the username to form the base distinguished name (DN) for authentication. The suffix and the username are separated with a comma. If the suffix is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the DN is <tt>CN=Bob,O=example.com</tt> .
+- `ldap_version` (String) Specify the LDAP version to access the LDAP server. The default value is v2.
+- `log_allowed` (Boolean) Whether to log successful AAA operations. When enabled and if needed, modify the default logging level from informational.
+- `log_allowed_level` (String) Set the logging level for successful AAA operations. The default level is informational.
+- `log_rejected` (Boolean) Whether to log unsuccessful AAA operations. When enabled and if needed, modify the default logging level from warning.
+- `log_rejected_level` (String) Set the logging level for unsuccessful AAA operations. The default level is warning.
+- `ltpa_attributes` (Attributes List) <p>Specify user attributes to include in the LTPA token. Attributes are relevant for only WebSphere tokens.</p><p>For each attribute, its value can be static or resolved at run time. <ul><li>When static, its value is a fixed value.</li><li>When resolved at run time, its value is resolved at run time with an XPath expression.</li></ul></p> (see [below for nested schema](#nestedatt--result--ltpa_attributes))
+- `map_credentials` (Attributes) Specify the method to map credentials for authorization. For some methods, you must define more properties.
   - CLI Alias: `map-credentials` (see [below for nested schema](#nestedatt--result--map_credentials))
-- `map_resource` (Attributes) Resource mapping
+- `map_resource` (Attributes) Specify the method to map resources for authorization. For some methods, you must define more properties.
   - CLI Alias: `map-resource` (see [below for nested schema](#nestedatt--result--map_resource))
-- `namespace_mapping` (Attributes List) Namespace mapping (see [below for nested schema](#nestedatt--result--namespace_mapping))
-- `ping_identity_compatibility` (Boolean) PingFederate compatibility
-- `post_process` (Attributes) Postprocessing
+- `namespace_mapping` (Attributes List) Define XML namespace maps. Each map is a prefix with its URI. (see [below for nested schema](#nestedatt--result--namespace_mapping))
+- `ping_identity_compatibility` (Boolean) Control compatibility with a PingFederate identity server. By default, compatibility is disabled. Enable compatibility for SAML authentication or authorization.
+- `post_process` (Attributes) Specify postprocessing activities. For some methods, you must define more properties.
   - CLI Alias: `post-process` (see [below for nested schema](#nestedatt--result--post_process))
-- `rejected_counter` (String) Rejected counter
-- `saml2_metadata_file` (String) SAML 2.0 metadata file
-- `saml_attribute` (Attributes List) SAML attributes (see [below for nested schema](#nestedatt--result--saml_attribute))
-- `saml_signing_alg` (String) SAML message signing algorithm
-- `saml_signing_cert` (String) SAML message signing certificate
-- `saml_signing_hash_alg` (String) SAML signing message digest algorithm
-- `saml_signing_key` (String) SAML message signing key
-- `saml_source_id_mapping_file` (String) SAML Artifact mapping file
+- `rejected_counter` (String) Specify the monitor for rejected messages. Ensure that this count monitor is configured with an XPath as the measure.
+- `saml2_metadata_file` (String) Specify the location of the SAML 2.0 metadata file for SAML 2.0 protocol message exchanges. The metadata in this file identifies identity provider endpoints and certificates to secure message exchanges. The file must have a root-level &lt;md:EntitiesDescriptor> element with an &lt;EntityDescriptor> child element for each identity provider.
+- `saml_attribute` (Attributes List) Specify SAML attributes. Each attribute consists of its namespace URI, local name, and expected value. (see [below for nested schema](#nestedatt--result--saml_attribute))
+- `saml_signing_alg` (String) Specify the algorithm to sign SAML messages. The default value is rsa.
+- `saml_signing_cert` (String) Specify the certificate to sign SAML messages. To sign messages, you must specify a key and a certificate.
+- `saml_signing_hash_alg` (String) Specify the algorithm to calculate the message digest for signing. The default value is sha1.
+- `saml_signing_key` (String) Specify the key to sign SAML messages. To sign messages, you must specify a key and a certificate.
+- `saml_source_id_mapping_file` (String) Specify the location of the SAML artifact-mapping file that provides a mapping of SAML artifact source IDs to artifact retrieval endpoints. Use this setting when artifacts are retrieved from multiple endpoints and the source ID for these endpoints are encoded in the artifact itself. If only one artifact retrieval URL exists, it can be specified by the SAML artifact responder URL in the authentication phase.
 - `saml_valcred` (String) SAML signature validation credentials
-- `transaction_priority` (Attributes List) Transaction priority (see [below for nested schema](#nestedatt--result--transaction_priority))
+- `transaction_priority` (Attributes List) Define the transactional priority for users. For each user, you must specify the name of the output credentials, their priority for scheduling or resource allocation, and whether authorization is required. (see [below for nested schema](#nestedatt--result--transaction_priority))
 - `user_summary` (String) Comments
-- `ws_sec_actor_role_id` (String) WS-Security actor or role identifier
+- `ws_sec_actor_role_id` (String) Set the assumed <tt>S11:actor</tt> or <tt>S12:role</tt> identifier. The AAA policy acts as the assumed actor or role when it consumes <tt>Security</tt> headers. This setting takes effect only when the AAA policy attempts to process the incoming message before it makes an authorization decision. Postprocessing does not use this setting. Postprocessing uses its own setting in generating the message for the next SOAP node. The default value is an empty string. <table border="1"><tr><td valign="left"><tt>http://schemas.xmlsoap.org/soap/actor/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign="left"><tt>http://www.w3.org/2003/05/soap-envelope/role/none</tt></td><td>No one can process the <tt>Security</tt> header.</td></tr><tr><td valign="left"><tt>http://www.w3.org/2003/05/soap-envelope/role/next</tt></td><td>Every one, including the intermediary and ultimate receiver, that receives the message can process the <tt>Security</tt> header.</td></tr><tr><td valign="left"><tt>http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</tt></td><td>The ultimate receiver can process the <tt>Security</tt> header.</td></tr><tr><td valign="left">No value, which is an empty string</td><td>The empty string (without quotation marks) indicates that no "actor/role" identifier is configured. With a configured actor/role, the ultimate receiver is assumed for the message. No actor/role attribute is added during the generation of the <tt>Security</tt> header. More than one <tt>Security</tt> header cannot omit the actor/role identifier.</td></tr><tr><td valign="left"><tt>USE_MESSAGE_BASE_URI</tt></td><td>The identifier is the base URL of the message. When the SOAP message is transported, the base URI is the request-URI of the HTTP request.</td></tr><tr><td valign="left">A string value</td><td>Any string to identify the actor or role of the <tt>Security</tt> header.</td></tr></table>
 - `ws_secure_conversation_crypto_key` (String) WS-Trust encryption recipient certificate
 
 <a id="nestedatt--result--dependency_actions"></a>

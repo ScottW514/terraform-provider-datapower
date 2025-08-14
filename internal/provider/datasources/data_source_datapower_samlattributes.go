@@ -57,7 +57,7 @@ func (d *SAMLAttributesDataSource) Metadata(_ context.Context, req datasource.Me
 
 func (d *SAMLAttributesDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "SAML Attributes",
+		MarkdownDescription: "Define a list of SAML attributes for the SAML Assertion generator.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *SAMLAttributesDataSource) Schema(ctx context.Context, req datasource.Sc
 							Computed:            true,
 						},
 						"saml_attribute": schema.ListNestedAttribute{
-							MarkdownDescription: "SAML Attribute Definition",
+							MarkdownDescription: "Define an attribute by selecting the source type and specifying the data source and SAML attribute name.",
 							NestedObject:        models.DmSAMLAttributeDataSourceSchema,
 							Computed:            true,
 						},

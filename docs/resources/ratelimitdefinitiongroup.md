@@ -3,13 +3,13 @@
 page_title: "datapower_ratelimitdefinitiongroup Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Rate limit definition group
+  A rate limit definition group contains a list of rate limit definitions to enforce.
   CLI Alias: rate-limit-definition-group
 ---
 
 # datapower_ratelimitdefinitiongroup (Resource)
 
-Rate limit definition group
+A rate limit definition group contains a list of rate limit definitions to enforce.
   - CLI Alias: `rate-limit-definition-group`
 
 ## Example Usage

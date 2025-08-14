@@ -1,81 +1,95 @@
 name: TCPProxyService
-description: 'TCP Proxy Service'
-cli_alias: 'tcpproxy'
-cmd_group: 'tcpproxy'
-rest_endpoint: '/mgmt/config/{domain}/TCPProxyService'
+description: Creates a TCP Proxy service.
+cli_alias: tcpproxy
+cmd_group: tcpproxy
+rest_endpoint: /mgmt/config/{domain}/TCPProxyService
 actions:
-  - name: quiesce
+- name: quiesce
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestTCPProxyService"'
-    test_expect_ds: '"AccTest_TCPProxyService"'
-    example: 'TCPProxyServiceName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Priority
-    type: String
-    enum:
-      - 'unknown'
-      - 'high-min'
-      - 'high'
-      - 'high-max'
-      - 'normal-min'
-      - 'normal'
-      - 'normal-max'
-      - 'low-min'
-      - 'low'
-      - 'low-max'
-    default: 'normal'
-    description: 'Service Priority'
-  - name: LocalPort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    example: 6158
-    required: true
-    description: 'Port Number'
-  - name: RemoteAddress
-    type: String
-    required: true
-    example: '10.10.10.10'
-    description: 'Remote Host'
-  - name: RemotePort
-    type: Int64
-    minimum: 1
-    maximum: 65535
-    example: 9999
-    required: true
-    description: 'Remote Port'
-  - name: Timeout
-    type: Int64
-    minimum: 0
-    maximum: 86400
-    default: 360
-    description: 'Idle timeout'
-  - name: LocalAddress
-    type: String
-    required: true
-    default: '0.0.0.0'
-    description: 'Local address'
-    cli_alias: ip-address
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestTCPProxyService"'
+  test_expect_ds: '"AccTest_TCPProxyService"'
+  example: TCPProxyServiceName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: A descriptive summary for the configuration.
+  cli_alias: summary
+- name: Priority
+  type: String
+  enum:
+  - unknown
+  - high-min
+  - high
+  - high-max
+  - normal-min
+  - normal
+  - normal-max
+  - low-min
+  - low
+  - low-max
+  default: normal
+  description: Control the service scheduling priority. When system resources are
+    in high demand, "high" priority services will be favored over lower priority services.
+- name: LocalPort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  example: 6158
+  required: true
+  description: An integer (within the range 1 through 65535) that specifies the port
+    monitored by the TCP proxy
+- name: RemoteAddress
+  type: String
+  required: true
+  example: 10.10.10.10
+  description: Specify the host name or IP address of the remote host for which this
+    proxy is accepting TCP traffic. TCP traffic sent to the proxy will in turn be
+    sent to this host. Click Ping to verify connectivity.
+- name: RemotePort
+  type: Int64
+  minimum: 1
+  maximum: 65535
+  example: 9999
+  required: true
+  description: Specify the port number of the remote host, specify with Remote Host,
+    for which this proxy is accepting TCP traffic.
+- name: Timeout
+  type: Int64
+  minimum: 0
+  maximum: 86400
+  default: 360
+  description: Specify the maximum idle time that is allowed for the front side connection
+    and the server side connection. After the time is reached, the idle connections
+    are terminated. Enter a value in the range 0 - 86400. The default value is 360.
+    A value of 0 disables the idle timer.
+- name: LocalAddress
+  type: String
+  required: true
+  default: 0.0.0.0
+  description: '<p>Enter a host alias or the IP address that the service listens on.
+    Host aliases can ease migration tasks among appliances.</p><ul><li>0 or 0.0.0.0
+    indicates all configured IPv4 addresses.</li><li>:: indicates all configured IPv4
+    and IPv6 addresses.</li></ul><p><b>Attention:</b> For management services, the
+    value of 0.0.0.0 or :: is a security risk. Use an explicit IP address to isolate
+    management traffic from application data traffic.</p>'
+  cli_alias: ip-address

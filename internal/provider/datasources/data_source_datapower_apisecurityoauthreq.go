@@ -57,7 +57,7 @@ func (d *APISecurityOAuthReqDataSource) Metadata(_ context.Context, req datasour
 
 func (d *APISecurityOAuthReqDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "API security OAuth requirement",
+		MarkdownDescription: "An OAuth security requirement defines the allowed scopes for controlling access to APIs or operations through the token-based OAuth protocol. By using an OAuth token, a user can grant websites or applications to access their data that are stored with another service provider, without sharing their personal credentials. <p><b>Note:</b> You cannot apply more than one OAuth security requirement to an API or operation.</p>",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -85,7 +85,7 @@ func (d *APISecurityOAuthReqDataSource) Schema(ctx context.Context, req datasour
 							Computed:            true,
 						},
 						"o_auth_allowed_scope": schema.StringAttribute{
-							MarkdownDescription: "Allowed scopes",
+							MarkdownDescription: "Specify the scopes that the access token is valid to access. To specify multiple scopes, use a space between each scope. The order of scopes does not matter. <p>The allowed scopes must be a subset of the allowed scopes set for the OAuth provider settings.</p><p>Scopes ensure that the granted access token is valid to access only specific protected resources.</p>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

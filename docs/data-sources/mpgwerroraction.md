@@ -3,12 +3,12 @@
 page_title: "datapower_mpgwerroraction Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Multi-Protocol Gateway Error Action
+  Define how the Multi-Protocol gateway handles errors and generates error responses to the client.
 ---
 
 # datapower_mpgwerroraction (Data Source)
 
-Multi-Protocol Gateway Error Action
+Define how the Multi-Protocol gateway handles errors and generates error responses to the client.
 
 ## Example Usage
 
@@ -39,14 +39,14 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `error_rule` (String) Error Rule
-- `header_injection` (Attributes List) HTTP Header Injection (see [below for nested schema](#nestedatt--result--header_injection))
+- `error_rule` (String) Specify the custom error rule that the appliance runs to handle errors.
+- `header_injection` (Attributes List) Specify the name and the value for the HTTP header that the appliance injects. (see [below for nested schema](#nestedatt--result--header_injection))
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `local_url` (String) Local page location
-- `reason_phrase` (String) Reason Phrase
-- `remote_url` (String) Remote URL
-- `status_code` (Number) Response Code
-- `type` (String) Mode
+- `local_url` (String) Specify the URL of the local error page.
+- `reason_phrase` (String) Specify the HTTP reason phrase that the appliance returns to the client. For a proxy mode, the specified reason phrase overrides the fetched value.
+- `remote_url` (String) Specify the URL of the remote error page.
+- `status_code` (Number) Specify the HTTP status code that the appliance returns to the client. Enter a value in the range 0 - 999.
+- `type` (String) Select which mode to handle the errors and generate the responses. The default mode is "Static (Local)".
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

@@ -54,7 +54,7 @@ func (r *APIAuthURLRegistryResource) Metadata(ctx context.Context, req resource.
 
 func (r *APIAuthURLRegistryResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API authentication URL registry", "api-auth-url-reg", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Configure and manage the API authentication URL registry.", "api-auth-url-reg", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -83,7 +83,7 @@ func (r *APIAuthURLRegistryResource) Schema(ctx context.Context, req resource.Sc
 				Optional:            true,
 			},
 			"auth_url": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Authentication URL", "auth-url", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL of the authentication endpoint to authenticate credentials. The user credentials in the authorization header are validated by the authentication endpoint. When the user is authenticated, DataPower expects the authentication endpoint to return an HTTP 200 status code. All other status codes result in an authentication failure, and access is denied.", "auth-url", "").String,
 				Required:            true,
 			},
 			"tls_client_profile": schema.StringAttribute{

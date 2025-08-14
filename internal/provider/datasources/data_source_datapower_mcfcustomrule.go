@@ -57,7 +57,7 @@ func (d *MCFCustomRuleDataSource) Metadata(_ context.Context, req datasource.Met
 
 func (d *MCFCustomRuleDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Custom Rule Message Content Filter",
+		MarkdownDescription: "A custom message content filter calls a processing rule to retrieve a specified value. The filter value is matched to the contents of variable 'var://context/policy/mcf/RULE-NAME'",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,7 +81,7 @@ func (d *MCFCustomRuleDataSource) Schema(ctx context.Context, req datasource.Sch
 							Computed:            true,
 						},
 						"custom_rule_value": schema.StringAttribute{
-							MarkdownDescription: "Value",
+							MarkdownDescription: "<p>Enter the value to match against the value that is retrieved from the named processing rule. Enter either a string that must match the outcome of the rule or enter an asterisk (*) to match any value.</p><p>When the value is a string, an identical literal string comparison result is a match. When the value is an asterisk, any value other than NULL or an empty string results in a match.</p>",
 							Computed:            true,
 						},
 						"user_summary": schema.StringAttribute{

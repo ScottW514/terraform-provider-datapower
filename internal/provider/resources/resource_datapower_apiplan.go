@@ -57,7 +57,7 @@ func (r *APIPlanResource) Metadata(ctx context.Context, req resource.MetadataReq
 
 func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API plan", "api-plan", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An API plan packages a list of APIs to expose. An API is not exposed unless you add the API to a plan. When you configure an API plan, define the rate limit schemes to enforce against APIs. By default, the rate limit scheme in the plan applies to all operations. You can override plan-level rate limit schemes with operation-specific rate limit schemes.", "api-plan", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -90,7 +90,7 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Optional:            true,
 			},
 			"product_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Product ID", "product-id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the product ID for the plan. A product makes a set of APIs and plans into one offering to make available to API developers.", "product-id", "").String,
 				Optional:            true,
 			},
 			"product_name": schema.StringAttribute{
@@ -114,12 +114,12 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Default:             booldefault.StaticBool(false),
 			},
 			"rate_limit": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit", "rate-limit", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit scheme to enforce. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.", "rate-limit", "").String,
 				NestedObject:        models.DmAPIRateLimitResourceSchema,
 				Optional:            true,
 			},
 			"burst_limit": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Burst limit", "burst-limit", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the burst limit scheme to enforce. This scheme defines the maximum burst rate to allow during a specified interval. The burst limit helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme.", "burst-limit", "").String,
 				NestedObject:        models.DmAPIBurstLimitResourceSchema,
 				Optional:            true,
 			},
@@ -134,45 +134,45 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Default:             booldefault.StaticBool(false),
 			},
 			"assembly_burst_limit": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Assembly burst limit", "assembly-burst-limit", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the burst limit scheme that the rate limit assembly action enforces. This scheme defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage the infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. In other words, a message is first checked against the burst limit scheme and then against the rate limit scheme.", "assembly-burst-limit", "").String,
 				NestedObject:        models.DmAPIBurstLimitResourceSchema,
 				Optional:            true,
 			},
 			"assembly_burst_limit_definition": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Assembly burst limit definition", "assembly-burst-limit-def", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a burst limit definition that the rate limit assembly action enforces. A burst limit definition defines the maximum burst rate to allow during a specified interval. This scheme helps to prevent spikes that might damage infrastructure. When a message arrives within an interval, the burst limit takes priority over the rate limit. A message is first checked against the burst limit scheme and then against the rate limit scheme.", "assembly-burst-limit-def", "").String,
 				NestedObject:        models.DmDefinitionLinkResourceSchema,
 				Optional:            true,
 			},
 			"assembly_rate_limit": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Assembly rate limit", "assembly-rate-limit", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the rate limit scheme that the rate limit assembly action enforces. This scheme defines the maximum rate to allow during a specified interval and the actions to take when the limit is exceeded.", "assembly-rate-limit", "").String,
 				NestedObject:        models.DmAPIRateLimitResourceSchema,
 				Optional:            true,
 			},
 			"assembly_rate_limit_definition": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Assembly rate limit definition", "assembly-rate-limit-def", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a rate limit definition that the rate limit assembly action enforces. A rate limit definition defines the maximum rate that is allowed in a specified interval and the actions to take when the limit is exceeded.", "assembly-rate-limit-def", "").String,
 				NestedObject:        models.DmDefinitionLinkResourceSchema,
 				Optional:            true,
 			},
 			"assembly_count_limit": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Assembly count limit", "assembly-count-limit", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the count limit scheme that the rate limit assembly action enforces. This scheme defines the maximum count to allow and the actions to take when the limit is exceeded.", "assembly-count-limit", "").String,
 				NestedObject:        models.DmAPICountLimitResourceSchema,
 				Optional:            true,
 			},
 			"assembly_count_limit_definition": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Assembly count limit definition", "assembly-count-limit-def", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify a count limit definition that the rate limit assembly action enforces. A count limit definition defines the maximum count that is allowed and the actions to take when the limit is exceeded.", "assembly-count-limit-def", "").String,
 				NestedObject:        models.DmDefinitionLinkResourceSchema,
 				Optional:            true,
 			},
 			"space_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Space ID", "space-id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the space ID for the product in the catalog. When space is enabled for a catalog, the catalog can be partitioned to spaces. Spaces enable each team to manage their APIs independently.", "space-id", "").String,
 				Optional:            true,
 			},
 			"space_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Space name", "space-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the space name for the product in the catalog. When space is enabled for a catalog, the catalog can be partitioned to spaces. Spaces enable each team to manage their APIs independently.", "space-name", "").String,
 				Optional:            true,
 			},
 			"api": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("API", "api", "apidefinition").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the APIs to package for the plan. An API is exposed through a plan by associating the API to the plan.", "api", "apidefinition").String,
 				ElementType:         types.StringType,
 				Required:            true,
 			},
@@ -187,7 +187,7 @@ func (r *APIPlanResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Optional:            true,
 			},
 			"rate_limit_scope": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Rate limit scope", "rate-limit-scope", "").AddStringEnum("per-application", "per-client-id").AddDefaultValue("per-application").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the scope to apply the rate limit schemes to. You can apply schemes against the application or client ID. For example, <tt>application1</tt> has <tt>client1</tt> and <tt>client2</tt> , and the rate limit is 10 calls per hour. <ul><li>When against the application, <tt>application1</tt> limits 10 calls per hour from either <tt>client1</tt> or <tt>client2.</tt></li><li>When against the client ID, <tt>application1</tt> limits 10 calls per hour from each <tt>client1</tt> and <tt>client2</tt> .</li></ul>", "rate-limit-scope", "").AddStringEnum("per-application", "per-client-id").AddDefaultValue("per-application").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{

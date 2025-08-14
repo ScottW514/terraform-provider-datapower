@@ -53,10 +53,10 @@ func (r *GWScriptSettingsResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *GWScriptSettingsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("GatewayScript Settings (`default` domain only)", "gatewayscript-settings", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("You can configure the following GatewayScript settings. <ul><li>Whether to freeze the GatewayScript built-in objects.</li><li>How to manage untrusted code mitigation to protect against SSCA.</li><li>The maximum allowed duration that a GatewayScript action can continuously use the CPU.</li></ul>", "gatewayscript-settings", "").String,
 		Attributes: map[string]schema.Attribute{
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -66,13 +66,13 @@ func (r *GWScriptSettingsResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"frozen_enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Freeze prototype", "freeze-prototype", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to freeze the GatewayScript built-in object prototypes. <ul><li>When frozen, you cannot modify, add, or remove prototypes. This setting is the default setting.</li><li>When not frozen, you can manipulate prototypes.</li></ul><p>If you change and persist this property, the change is pending and requires a firmware reload.</p>", "freeze-prototype", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"untrusted_code_mitigated": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Untrusted code mitigation", "untrusted-code-mitigations", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to enable untrusted code mitigation to protect against Speculative Side-Channel Attacks (SSCA). <ul><li>When enabled, protects untrusted code against SSCA. This setting is the default setting.</li><li>When disabled, does not protect untrusted code against SSCA.</li></ul><p>If you change and persist this property, the change is pending and requires a firmware reload.</p>", "untrusted-code-mitigations", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
@@ -86,7 +86,7 @@ func (r *GWScriptSettingsResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"terminate_time": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Max processing duration", "max-processing-duration", "").AddIntegerRange(0, 300).String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum duration in seconds that a GatewayScript action can continuously use CPU without yielding back to the system event loop. When the processing of a GatewayScript action exceeds the duration, processing is stopped and an error is logged. Enter a value in the range 1 - 300. The default value is 0, which indicates unlimited.", "max-processing-duration", "").AddIntegerRange(0, 300).String,
 				Optional:            true,
 				Validators: []validator.Int64{
 

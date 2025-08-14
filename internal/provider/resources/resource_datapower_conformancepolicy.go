@@ -85,25 +85,25 @@ func (r *ConformancePolicyResource) Schema(ctx context.Context, req resource.Sch
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
 				Optional:            true,
 			},
-			"profiles": models.GetDmConformanceProfilesResourceSchema("Profiles", "profiles", "", false),
+			"profiles": models.GetDmConformanceProfilesResourceSchema("Profiles against which to check conformance", "profiles", "", false),
 			"ignored_requirements": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Ignored Requirements", "ignored-requirements", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Requirements that should not be validated. A requirement is specified by a string of the form \"&lt;profile>:&lt;reqid>\", where &lt;profile> names the profile and is one of BP1.0, BP1.1, BSP1.0 or AP1.0, and &lt;reqid> names the requirement within that profile, and follows the naming convention used by the profile itself. For example, requirement R4221 in the Basic Security Profile 1.0 would be named as \"BSP1.0:R4221\".", "ignored-requirements", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"fixup_stylesheets": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Corrective Stylesheets", "fixup-stylesheets", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Stylesheets to invoke after conformance analysis. These stylesheets can manipulate the analysis results or repair instances of nonconformance.", "fixup-stylesheets", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			"assert_bp10_conformance": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("BP1.0 Conformance Claim Assertion", "assert-bp10-conformance", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Attach a Basic Profile 1.0 conformance assertion to messages that conform to BP 1.0, or remove a Basic Profile 1.0 conformance assertion to the messages that don't conform to BP 1.0.", "assert-bp10-conformance", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"report_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Record Report", "report-level", "").AddStringEnum("never", "failure", "warning", "always").AddDefaultValue("never").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the degree of nonconformance to cause a conformance report to be recorded.", "report-level", "").AddStringEnum("never", "failure", "warning", "always").AddDefaultValue("never").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -112,11 +112,11 @@ func (r *ConformancePolicyResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("never"),
 			},
 			"log_target": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Destination", "report-target", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Target URL to which conformance reports will be sent", "report-target", "").String,
 				Optional:            true,
 			},
 			"reject_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Reject non-conforming messages", "reject-level", "").AddStringEnum("never", "failure", "warning").AddDefaultValue("never").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the degree of nonconformance to cause the message to be rejected.", "reject-level", "").AddStringEnum("never", "failure", "warning").AddDefaultValue("never").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -125,25 +125,25 @@ func (r *ConformancePolicyResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("never"),
 			},
 			"reject_include_summary": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Include error summary", "reject-include-summary", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found.", "reject-include-summary", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"result_is_conformance_report": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Use analysis as result", "result-is-conformance-report", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The normal behavior of the conformance action is to deliver the original message, possibly modified by one or more stylesheets, to the next multistep stage. Setting this property will instead cause the analysis result to be used as the output. This is primarily intended for use within a loopback firewall, which will return the analysis results to the client.", "result-is-conformance-report", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"response_properties_enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Distinct response behavior", "response-properties-enabled", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("When placed inside a single conformance check action (as is typical in an XML gateway), a single set of logging and behavior parameters is sufficent. However, sometimes (as in the case of auto-generated WS-Proxy conformance checking), the same policy is used in checks in both the request and response directions. In this case, the conformance reports should likely be sent to different targets. This toggle allows for an alternate set of logging and rejection parameters to be specified for messages in the response direction.", "response-properties-enabled", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"response_report_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Record Report (response direction)", "response-report-level", "").AddStringEnum("never", "failure", "warning", "always").AddDefaultValue("never").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the degree of nonconformance in a response message to cause a conformance report to be recorded.", "response-report-level", "").AddStringEnum("never", "failure", "warning", "always").AddDefaultValue("never").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -152,11 +152,11 @@ func (r *ConformancePolicyResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("never"),
 			},
 			"response_log_target": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Destination", "response-report-target", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Target URL to which response conformance reports will be sent", "response-report-target", "").String,
 				Optional:            true,
 			},
 			"response_reject_level": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Reject non-conforming response messages", "response-reject-level", "").AddStringEnum("never", "failure", "warning").AddDefaultValue("never").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Select the degree of nonconformance to cause a response message to be rejected.", "response-reject-level", "").AddStringEnum("never", "failure", "warning").AddDefaultValue("never").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -165,7 +165,7 @@ func (r *ConformancePolicyResource) Schema(ctx context.Context, req resource.Sch
 				Default: stringdefault.StaticString("never"),
 			},
 			"response_reject_include_summary": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Include response error summary", "response-reject-include-summary", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found in response messages.", "response-reject-include-summary", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),

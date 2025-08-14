@@ -57,7 +57,7 @@ func (d *FilterActionDataSource) Metadata(_ context.Context, req datasource.Meta
 
 func (d *FilterActionDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Message Filter Action",
+		MarkdownDescription: "A message filter action defines the administrative action to take. Filters can be cautionary or stringent.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,15 +81,15 @@ func (d *FilterActionDataSource) Schema(ctx context.Context, req datasource.Sche
 							Computed:            true,
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: "Type",
+							MarkdownDescription: "Select the action to take The default is notify.",
 							Computed:            true,
 						},
 						"log_level": schema.StringAttribute{
-							MarkdownDescription: "Log priority",
+							MarkdownDescription: "Specify the priority of the log message that is generated when a monitored message type exceeds a threshold value.",
 							Computed:            true,
 						},
 						"block_interval": schema.Int64Attribute{
-							MarkdownDescription: "Block interval",
+							MarkdownDescription: "Specify an optional interval during which an over-threshold message type is denied service. Meaningful only when the message is rejected due to policy or shaping queue overflow. This value is the duration of service denial in milliseconds. The default value is 0, indicates that over-threshold messages are dropped but no service denial penalty is imposed.",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

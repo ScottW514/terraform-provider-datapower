@@ -49,20 +49,20 @@ func (r *RaidVolumeResource) Metadata(ctx context.Context, req resource.Metadata
 
 func (r *RaidVolumeResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("RAID Array (`default` domain only)", "raid-volume", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("<p>Configure a RAID volume for data storage.</p><ol><li>The access permission to files on the storage volume. With the B2B feature, access permission must be read/write. B2B storage requires write access. Setting to read-only is ignored but generates a warning.</li><li>The subdirectory where files on the storage volume are available in the <tt>local:</tt> and <tt>logstore:</tt> directories. Each domain contains these subdirectories, and these subdirectories are not shared across domains.</li></ol>", "raid-volume", "").String,
 		Attributes: map[string]schema.Attribute{
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"read_only": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Set to read-only", "read-only", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The access permission to files on the storage volume.</p><ul><li>When enabled, access permission is read-only. With the B2B feature, access permission must be read/write. B2B storage requires write access to the RAID volume. Setting to read-only is ignored but generates a warning.</li><li>When disabled, the default value, access permission is read/write.</li></ul>", "read-only", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"directory": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Directory", "directory", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The subdirectory where the files on the storage volume are available. The name can be up to 64 characters long. The name cannot start with a period. The name can use all alphanumeric characters and the following special characters: . - _.", "directory", "").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

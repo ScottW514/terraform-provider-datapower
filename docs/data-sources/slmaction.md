@@ -3,12 +3,12 @@
 page_title: "datapower_slmaction Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  SLM action
+  An SLM action defines the control procedure to trigger for transactions in excess of the threshold. As part of any control procedure, the monitor writes an event to the log for each transaction that exceeds a threshold.
 ---
 
 # datapower_slmaction (Data Source)
 
-SLM action
+An SLM action defines the control procedure to trigger for transactions in excess of the threshold. As part of any control procedure, the monitor writes an event to the log for each transaction that exceeds a threshold.
 
 ## Example Usage
 
@@ -41,7 +41,7 @@ Read-Only:
 - `app_domain` (String) The name of the application domain the object belongs to
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `log_level` (String) Log priority
-- `type` (String) Type
+- `type` (String) Specify the administrative sanction to trigger for transactions in excess of the threshold. This action is beyond the generation of a log message.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

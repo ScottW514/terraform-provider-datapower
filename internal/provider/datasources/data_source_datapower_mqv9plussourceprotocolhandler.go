@@ -57,7 +57,7 @@ func (d *MQv9PlusSourceProtocolHandlerDataSource) Metadata(_ context.Context, re
 
 func (d *MQv9PlusSourceProtocolHandlerDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "IBM MQ v9+ handler",
+		MarkdownDescription: "Configure the IBM MQ v9+ handler to manage IBM MQ protocol communications.",
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: "The name of the application domain the object belongs to",
@@ -81,60 +81,60 @@ func (d *MQv9PlusSourceProtocolHandlerDataSource) Schema(ctx context.Context, re
 							Computed:            true,
 						},
 						"queue_manager": schema.StringAttribute{
-							MarkdownDescription: "Queue manager (reference to MQManger or MQManagerGroup)",
+							MarkdownDescription: "Specify the name of the queue manager that provides messaging services for communicating applications by periodically monitoring or polling queues and by ensuring that messages are directed to the correct receive queue or routed to another queue manager. The local queue manager corresponds to a queue manager running on another host on the network.",
 							Computed:            true,
 						},
 						"get_queue": schema.StringAttribute{
-							MarkdownDescription: "Get queue",
+							MarkdownDescription: "Specify the name of the get queue associated with the queue manager. The handler gets messages from this queue.",
 							Computed:            true,
 						},
 						"subscribe_topic_string": schema.StringAttribute{
-							MarkdownDescription: "Subscribe topic string",
+							MarkdownDescription: "Specify the the topic string associated with the queue manager. The handler subscribes to this topic string and gets messages from it.",
 							Computed:            true,
 						},
 						"subscription_name": schema.StringAttribute{
-							MarkdownDescription: "Subscription name",
+							MarkdownDescription: "Specify the subscription name of a durable subscription associated with the queue manager. This name identifies the subscription after reestablishing a lost connection.",
 							Computed:            true,
 						},
 						"put_queue": schema.StringAttribute{
-							MarkdownDescription: "Put queue",
+							MarkdownDescription: "Specify the the name of the put queue associated with the queue manager. The handler puts server-originated reply messages to this queue.",
 							Computed:            true,
 						},
 						"publish_topic_string": schema.StringAttribute{
-							MarkdownDescription: "Publish topic string",
+							MarkdownDescription: "Specify the publish topic string associated with the queue manager. The topic string describes the subject of the information that is published in a publish or subscribe message. The handler publishes messages to this topic string. If the put queue is specified, this property is ignored.",
 							Computed:            true,
 						},
 						"code_page": schema.Int64Attribute{
-							MarkdownDescription: "CCSI",
+							MarkdownDescription: "<p>Specify the coded character set identifier to which the remote IBM MQ queue manager converts output data. This property is meaningful only when the queue manager has the convert property set to on. The CCSI will be put in the CodeCharSetId field of MQMD.</p><p>The default CCSI is for ISO-8859-1 (latin-1).</p><p>For MQCCSI_EMBEDDED enter 4294967295; for MQCCSI_INHERIT enter 4294967294. For the other CCSIDs, refer to the IBM Code Pages.</p>",
 							Computed:            true,
 						},
 						"get_message_options": schema.Int64Attribute{
-							MarkdownDescription: "Get message options",
+							MarkdownDescription: "Specify the cumulative value of the MQGET options that are applicable to an IBM MQ message in decimal or hex format. The value is passed directly to the IBM MQ API. The default value is 1, which is the decimal value for the MQGMO_WAIT option.",
 							Computed:            true,
 						},
 						"message_selector": schema.StringAttribute{
-							MarkdownDescription: "Selector",
+							MarkdownDescription: "Specify the selector that filters the messages from a queue or a subscription by their properties. The selector uses the SQL92 conditional expression syntax. The selector enables the handler to filter messages from a queue or a subscription.",
 							Computed:            true,
 						},
 						"parse_properties": schema.BoolAttribute{
-							MarkdownDescription: "Parse properties",
+							MarkdownDescription: "Specify whether to parse the properties of the incoming messages from a queue or a subscription. By default, properties are not parsed.",
 							Computed:            true,
 						},
 						"async_put": schema.BoolAttribute{
-							MarkdownDescription: "Async put",
+							MarkdownDescription: "Specify whether to asynchronously put a message to a queue without waiting for a response from the queue manager.",
 							Computed:            true,
 						},
-						"exclude_headers": models.GetDmMQHeadersDataSourceSchema("Exclude message headers", "exclude-headers", ""),
+						"exclude_headers": models.GetDmMQHeadersDataSourceSchema("Specify the headers after MQMD to strip from the message. By default only the MQMD header is parsed.", "exclude-headers", ""),
 						"concurrent_connections": schema.Int64Attribute{
-							MarkdownDescription: "Concurrent conversations",
+							MarkdownDescription: "Specify the number of concurrent IBM MQ conversations to allocate. The default value is 1 but can be increased to improve performance.",
 							Computed:            true,
 						},
 						"polling_interval": schema.Int64Attribute{
-							MarkdownDescription: "Polling interval",
+							MarkdownDescription: "Specify the duration in seconds to wait after processing all messages before attempting to retrieve messages from the get queue.",
 							Computed:            true,
 						},
 						"batch_size": schema.Int64Attribute{
-							MarkdownDescription: "Batch size",
+							MarkdownDescription: "Specify the number of messages to process as a batch. The handler gathers the specified number of messages and processes them as a batch.",
 							Computed:            true,
 						},
 						"content_type_header": schema.StringAttribute{
@@ -146,11 +146,11 @@ func (d *MQv9PlusSourceProtocolHandlerDataSource) Schema(ctx context.Context, re
 							Computed:            true,
 						},
 						"retrieve_backout_settings": schema.BoolAttribute{
-							MarkdownDescription: "Retrieve backout settings",
+							MarkdownDescription: "Specify whether to retrieve backout setting from the IBM MQ server. <p>When enabled, retrieves the <b>Backout threshold</b> and <b>Backout requeue queue name</b> settings from the IBM MQ server and checks these values. On a reattempt, the handler uses the higher priority backout settings from the server. If the server does not contain backout settings, The handler uses any existing backout values, either empty or populated, from the local IBM MQ queue manager. If there are no backout settings, the backout function is disabled.</p><p>When an alias queue is used, its attributes are retrieved, not those of the base queue.</p>",
 							Computed:            true,
 						},
 						"use_qm_name_in_url": schema.BoolAttribute{
-							MarkdownDescription: "Use queue manager in URL",
+							MarkdownDescription: "Specify whether the var://service/URL-in variable returns the name of the local queue manager or queue manager group when this configuration defines a queue manager group as the queue manager. <ul><li>When enabled, the variable returns the name of the queue manager.</li><li>When not enabled, the variable returns the name of the queue manager group. This setting is the default value.</li></ul>",
 							Computed:            true,
 						},
 						"dependency_actions": actions.ActionsSchema,

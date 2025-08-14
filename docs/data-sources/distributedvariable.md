@@ -3,12 +3,12 @@
 page_title: "datapower_distributedvariable Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Distributed variable settings
+  The domain-specific configuration that define the settings for using distributed variables.
 ---
 
 # datapower_distributedvariable (Data Source)
 
-Distributed variable settings
+The domain-specific configuration that define the settings for using distributed variables.
 
 ## Example Usage
 
@@ -31,8 +31,8 @@ data "datapower_distributedvariable" "test" {
 
 ### Read-Only
 
-- `enabled` (Boolean) Administrative state
-- `gateway_peering` (String) Gateway peering
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
+- `gateway_peering` (String) Specify the gateway-peering instance for distributed variable. This instance synchronizes the variables among the configured members. If you do not want to persist variable values across a restart, store the data in memory.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--dependency_actions"></a>

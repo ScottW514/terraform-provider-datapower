@@ -57,7 +57,7 @@ func (r *GitOpsResource) Metadata(ctx context.Context, req resource.MetadataRequ
 
 func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("GitOps", "gitops", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("Each DataPower domain supports a single GitOps instance that operates in either read-only mode or read/write mode. The DataPower GitOps integration helps to automate configuration management through version control. This integration supports industry-standard GitOps practices and authoring experiences.", "gitops", "").String,
 		Attributes: map[string]schema.Attribute{
 			"app_domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The name of the application domain the object belongs to", "", "").String,
@@ -71,7 +71,7 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				},
 			},
 			"enabled": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Administrative state", "admin-state", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>", "admin-state", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
@@ -81,7 +81,7 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"connection_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Connection type", "type", "").AddStringEnum("https", "ssh").AddDefaultValue("https").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the protocol to secure the connection. HTTPS is the default protocol.", "type", "").AddStringEnum("https", "ssh").AddDefaultValue("https").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -90,7 +90,7 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default: stringdefault.StaticString("https"),
 			},
 			"mode": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Operation mode", "mode", "").AddStringEnum("read-only", "read-write").AddDefaultValue("read-write").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the operational mode of the Git repository. The default mode is read-only.", "mode", "").AddStringEnum("read-only", "read-write").AddDefaultValue("read-write").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -99,7 +99,7 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default: stringdefault.StaticString("read-write"),
 			},
 			"commit_identifier_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Commit identifier type", "commit-id-type", "").AddStringEnum("branch", "tag", "commit").AddDefaultValue("branch").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the branch, commit hash, or tag for read and write GitOps operations against the repository. Use of branch is the default setting.", "commit-id-type", "").AddStringEnum("branch", "tag", "commit").AddDefaultValue("branch").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -116,7 +116,7 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Required:            true,
 			},
 			"interval": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Sync Interval", "interval", "").AddIntegerRange(0, 1440).AddDefaultValue("5").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the interval in minutes to poll the repository for changes. Enter a value in the range 0 - 1440. The default value is 5. To disable polling, specify 0.", "interval", "").AddIntegerRange(0, 1440).AddDefaultValue("5").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -138,7 +138,7 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"ssh_authorized_keys_file": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("SSH authorized key file", "ssh-authorized-keyfile", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the file that contains the authorized SSH keys. This file must be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.", "ssh-authorized-keyfile", "").String,
 				Optional:            true,
 			},
 			"tls_valcred": schema.StringAttribute{
@@ -146,11 +146,11 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"git_user": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Git user", "name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt> .", "name", "").String,
 				Optional:            true,
 			},
 			"git_email": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Git email", "email", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt> .", "email", "").String,
 				Optional:            true,
 			},
 			"json_parse_settings": schema.StringAttribute{
@@ -158,7 +158,7 @@ func (r *GitOpsResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:            true,
 			},
 			"template_policies": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Template policies", "template-policy", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the list of template policy for GitOps processing. The policy processing is in the order of the read or write GitOps operation.", "template-policy", "").String,
 				NestedObject:        models.DmGitOpsTemplatePolicyResourceSchema,
 				Optional:            true,
 			},

@@ -3,13 +3,12 @@
 page_title: "datapower_apisecuritytokenmanager Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API security token manager
-  CLI Alias: api-security-token-manager
+  
 ---
 
 # datapower_apisecuritytokenmanager (Resource)
 
-API security token manager
+<p>The API security token manager provides the storage configuration for security objects, which include OAuth providers and user security. Each domain has the <tt>default</tt> API security token manager. This instance is used by the domain to store and manage API details.</p><p>The API security token service uses gateway-peering instances for the internal and external token stores.</p>
   - CLI Alias: `api-security-token-manager`
 
 ## Example Usage
@@ -30,17 +29,17 @@ resource "datapower_apisecuritytokenmanager" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `enabled` (Boolean) Administrative state
+- `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `false`
 - `expired_token_cleanup_interval` (Number) Cleanup interval
   - CLI Alias: `expired-token-cleanup-interval`
   - Range: `15`-`1440`
   - Default value: `180`
-- `gateway_peering` (String) Internal token store
+- `gateway_peering` (String) Specify the gateway-peering instance to store and manage internal OAuth token data in this domain. Native OAuth tokens that are managed by an external token management service are not stored in this gateway-peering instance. This gateway-peering instance must be configured to persist data across a restart.
   - CLI Alias: `gateway-peering`
   - Reference to: `datapower_gatewaypeering:id`
-- `gateway_peering_external` (String) External token store
+- `gateway_peering_external` (String) Specify the gateway-peering instance to store and manage responses from external OAuth token management services in this domain. This gateway-peering instance does not require that data persist across a restart.
   - CLI Alias: `gateway-peering-external`
   - Reference to: `datapower_gatewaypeering:id`
 - `user_summary` (String) Comments

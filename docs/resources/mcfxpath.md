@@ -3,13 +3,13 @@
 page_title: "datapower_mcfxpath Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  XPath Message Content Filter
+  Filter based on specific data in the message. An XPath expression defines a data element to be matched in the request message.
   CLI Alias: mcf-xpath
 ---
 
 # datapower_mcfxpath (Resource)
 
-XPath Message Content Filter
+Filter based on specific data in the message. An XPath expression defines a data element to be matched in the request message.
   - CLI Alias: `mcf-xpath`
 
 ## Example Usage

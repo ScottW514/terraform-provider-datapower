@@ -39,22 +39,22 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `assert_bp10_conformance` (Boolean) BP1.0 Conformance Claim Assertion
-- `fixup_stylesheets` (List of String) Corrective Stylesheets
+- `assert_bp10_conformance` (Boolean) Attach a Basic Profile 1.0 conformance assertion to messages that conform to BP 1.0, or remove a Basic Profile 1.0 conformance assertion to the messages that don't conform to BP 1.0.
+- `fixup_stylesheets` (List of String) Stylesheets to invoke after conformance analysis. These stylesheets can manipulate the analysis results or repair instances of nonconformance.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `ignored_requirements` (List of String) Ignored Requirements
-- `log_target` (String) Destination
-- `profiles` (Attributes) Profiles
+- `ignored_requirements` (List of String) Requirements that should not be validated. A requirement is specified by a string of the form "&lt;profile>:&lt;reqid>", where &lt;profile> names the profile and is one of BP1.0, BP1.1, BSP1.0 or AP1.0, and &lt;reqid> names the requirement within that profile, and follows the naming convention used by the profile itself. For example, requirement R4221 in the Basic Security Profile 1.0 would be named as "BSP1.0:R4221".
+- `log_target` (String) Target URL to which conformance reports will be sent
+- `profiles` (Attributes) Profiles against which to check conformance
   - CLI Alias: `profiles` (see [below for nested schema](#nestedatt--result--profiles))
-- `reject_include_summary` (Boolean) Include error summary
-- `reject_level` (String) Reject non-conforming messages
-- `report_level` (String) Record Report
-- `response_log_target` (String) Destination
-- `response_properties_enabled` (Boolean) Distinct response behavior
-- `response_reject_include_summary` (Boolean) Include response error summary
-- `response_reject_level` (String) Reject non-conforming response messages
-- `response_report_level` (String) Record Report (response direction)
-- `result_is_conformance_report` (Boolean) Use analysis as result
+- `reject_include_summary` (Boolean) Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found.
+- `reject_level` (String) Select the degree of nonconformance to cause the message to be rejected.
+- `report_level` (String) Select the degree of nonconformance to cause a conformance report to be recorded.
+- `response_log_target` (String) Target URL to which response conformance reports will be sent
+- `response_properties_enabled` (Boolean) When placed inside a single conformance check action (as is typical in an XML gateway), a single set of logging and behavior parameters is sufficent. However, sometimes (as in the case of auto-generated WS-Proxy conformance checking), the same policy is used in checks in both the request and response directions. In this case, the conformance reports should likely be sent to different targets. This toggle allows for an alternate set of logging and rejection parameters to be specified for messages in the response direction.
+- `response_reject_include_summary` (Boolean) Usually, a rejection response contains little information about the reason that the message was rejected. Setting this property causes the conformance action to include summary information about the conformance errors found in response messages.
+- `response_reject_level` (String) Select the degree of nonconformance to cause a response message to be rejected.
+- `response_report_level` (String) Select the degree of nonconformance in a response message to cause a conformance report to be recorded.
+- `result_is_conformance_report` (Boolean) The normal behavior of the conformance action is to deliver the original message, possibly modified by one or more stylesheets, to the next multistep stage. Setting this property will instead cause the analysis result to be used as the output. This is primarily intended for use within a loopback firewall, which will return the analysis results to the client.
 - `user_summary` (String) Comments
 
 <a id="nestedatt--result--dependency_actions"></a>

@@ -1,117 +1,146 @@
 name: HTTPUserAgent
-description: 'User agent'
-cli_alias: 'user-agent'
-cmd_group: 'useragent'
-rest_endpoint: '/mgmt/config/{domain}/HTTPUserAgent'
+description: A user agent define how to retrieve resources from remote servers.
+cli_alias: user-agent
+cmd_group: useragent
+rest_endpoint: /mgmt/config/{domain}/HTTPUserAgent
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestHTTPUserAgent"'
-    test_expect_ds: '"AccTest_HTTPUserAgent"'
-    example: 'HTTPUserAgentName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Identifier
-    type: String
-    description: 'HTTP request-header'
-    cli_alias: identifier
-  - name: MaxRedirects
-    type: Int64
-    maximum: 128
-    default: 8
-    description: 'Max redirects'
-    cli_alias: max-redirects
-  - name: Timeout
-    type: Int64
-    minimum: 1
-    maximum: 86400
-    default: 300
-    description: 'Timeout'
-    cli_alias: timeout
-  - name: ProxyPolicies
-    type: List
-    element_type: DmProxyPolicy
-    description: 'Proxy policy'
-    cli_alias: proxy
-  - name: SSLPolicies
-    type: List
-    element_type: DmSSLPolicy
-    description: 'TLS profile policy'
-    cli_alias: ssl
-  - name: BasicAuthPolicies
-    type: List
-    element_type: DmBasicAuthPolicy
-    description: 'Basic authentication policy'
-    cli_alias: basicauth
-  - name: SoapActionPolicies
-    type: List
-    element_type: DmSoapActionPolicy
-    description: 'SOAPAction policy'
-    cli_alias: soapaction
-  - name: PubkeyAuthPolicies
-    type: List
-    element_type: DmPubkeyAuthPolicy
-    description: 'Public key authentication policy'
-    cli_alias: pubkeyauth
-  - name: AllowCompressionPolicies
-    type: List
-    element_type: DmAllowCompressionPolicy
-    description: 'Allow compression policy'
-    cli_alias: compression-policy
-  - name: HeaderRetentionPolicies
-    type: List
-    element_type: DmHeaderRetentionPolicy
-    description: 'Header retention policy'
-    cli_alias: headerretention-policy
-  # DEPRECATED
-  # - name: Restrict10Policies
-  - name: HTTPVersionPolicies
-    type: List
-    element_type: DmHTTPVersionPolicy
-    description: 'HTTP version policy'
-    cli_alias: http-version-policy
-  - name: AddHeaderPolicies
-    type: List
-    element_type: DmAddHeaderPolicy
-    description: 'Header injection policy'
-    cli_alias: add-header-policy
-  - name: UploadChunkedPolicies
-    type: List
-    element_type: DmUploadChunkedPolicy
-    description: 'Chunked upload policy'
-    cli_alias: chunked-uploads-policy
-  - name: FTPPolicies
-    type: List
-    element_type: DmFTPPolicy
-    description: 'FTP client policy'
-    cli_alias: ftp-policy
-  - name: SMTPPolicies
-    type: List
-    element_type: DmSMTPPolicy
-    description: 'SMTP client policy'
-    cli_alias: smtp-policy
-  - name: SFTPPolicies
-    type: List
-    element_type: DmSFTPPolicy
-    description: 'SFTP client policy'
-    cli_alias: sftp-policy
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestHTTPUserAgent"'
+  test_expect_ds: '"AccTest_HTTPUserAgent"'
+  example: HTTPUserAgentName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Identifier
+  type: String
+  description: Specify the string that the user agent includes as the <tt>request-header</tt>
+    field. This field contains information about the user agent that initiates the
+    request. By default, the system does not include a <tt>request-header</tt> field.
+  cli_alias: identifier
+- name: MaxRedirects
+  type: Int64
+  maximum: 128
+  default: 8
+  description: Specify the maximum number of HTTP redirect messages received before
+    the target URL is declared unreachable. Enter a value in the range 0 - 128. The
+    default value is 8.
+  cli_alias: max-redirects
+- name: Timeout
+  type: Int64
+  minimum: 1
+  maximum: 86400
+  default: 300
+  description: the maximum idle time in seconds before an established connection to
+    a remote server is torn down. Enter a avlue in the range 1 - 86400. The default
+    value is 300.
+  cli_alias: timeout
+- name: ProxyPolicies
+  type: List
+  element_type: DmProxyPolicy
+  description: Specify the proxy policy that associates a set of URLs with a specific
+    HTTP proxy.
+  cli_alias: proxy
+- name: SSLPolicies
+  type: List
+  element_type: DmSSLPolicy
+  description: Specify the policy that associates a set of URLs with a specific TLS
+    profile. When a URL matches the expression, the agent uses the corresponding TLS
+    profile to secure connections with the resource.
+  cli_alias: ssl
+- name: BasicAuthPolicies
+  type: List
+  element_type: DmBasicAuthPolicy
+  description: Specify the policy that associates a set of URLs with a specific username
+    and password for basic authentication.
+  cli_alias: basicauth
+- name: SoapActionPolicies
+  type: List
+  element_type: DmSoapActionPolicy
+  description: Specify the policy that associates a set of URLs with a specific HTTP
+    SOAPAction header.
+  cli_alias: soapaction
+- name: PubkeyAuthPolicies
+  type: List
+  element_type: DmPubkeyAuthPolicy
+  description: Specify the policy that associates a set of URLs with a specific private
+    key for public key authentication. The remote host must possess and reference
+    the corresponding public key (certificate) to connect successfully.
+  cli_alias: pubkeyauth
+- name: AllowCompressionPolicies
+  type: List
+  element_type: DmAllowCompressionPolicy
+  description: Specify the policy that associates a set of URLS that allow compression.
+  cli_alias: compression-policy
+- name: HeaderRetentionPolicies
+  type: List
+  element_type: DmHeaderRetentionPolicy
+  description: Specify the policy that associates a set of URLS to retain specific
+    heads in messages.
+  cli_alias: headerretention-policy
+- name: HTTPVersionPolicies
+  type: List
+  element_type: DmHTTPVersionPolicy
+  description: Specify the policy that associates a set of URLs to specific HTTP versions.
+    This policy is cumulative. If any transaction, URL match, or gateway have an HTTP
+    version policy, that transaction is processed at the requested HTTP version.
+  cli_alias: http-version-policy
+- name: AddHeaderPolicies
+  type: List
+  element_type: DmAddHeaderPolicy
+  description: Specify the policy that associates a set of URLS to inject HTTP headers
+    into the message.
+  cli_alias: add-header-policy
+- name: UploadChunkedPolicies
+  type: List
+  element_type: DmUploadChunkedPolicy
+  description: Specify the policy that associates a set of URL to control whether
+    to send chunked-encoded documents. With HTTP/1.1, the body of the document can
+    be delimited by <tt>Content-Length</tt> or chunked encoding. All servers understand
+    <tt>Content-Length</tt> but many applications fail to understand chunked encoding.
+    Therefore, <tt>Content-Length</tt> is used. However, the use of <tt>Content-Length</tt>
+    interferes with the ability of the service to fully stream. <p>Unlike all other
+    HTTP/1.1 features that can be negotiated down at run time, you must know beforehand
+    that the target server is RFC 2616 compatible.</p>
+  cli_alias: chunked-uploads-policy
+- name: FTPPolicies
+  type: List
+  element_type: DmFTPPolicy
+  description: Specify the policy that associate a set of URLs to control FTP client
+    options for outgoing connections. These settings override the compiled-in defaults
+    and can be further overridden by query parameters that initiates the file transfer.
+  cli_alias: ftp-policy
+- name: SMTPPolicies
+  type: List
+  element_type: DmSMTPPolicy
+  description: Specify the policy that associates a set of URLS to control SMTP client
+    options for outgoing connections. These settings override the compiled-in defaults
+    and can be further overridden by query parameters that sends the e-mail message.
+  cli_alias: smtp-policy
+- name: SFTPPolicies
+  type: List
+  element_type: DmSFTPPolicy
+  description: Specify the policy that associate a set of URLs to control SSH client
+    options for outgoing connections. These settings override the compiled-in defaults
+    and can be further overridden by query parameters that initiates the file transfer.
+  cli_alias: sftp-policy

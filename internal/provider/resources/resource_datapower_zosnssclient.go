@@ -55,7 +55,7 @@ func (r *ZosNSSClientResource) Metadata(ctx context.Context, req resource.Metada
 
 func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("NSS Client", "zos-nss", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The z/OS NSS client object provides the parameters for authentication with SAF on a z/OS Communications Server.", "zos-nss", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -80,40 +80,40 @@ func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRe
 				},
 			},
 			"user_summary": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("A descriptive summary for the configuration.", "summary", "").String,
 				Optional:            true,
 			},
 			"remote_address": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Remote Address", "host", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies IP address or host name of the NSS server. In conjunction with the Remote Port, identifies the host and listening port of the NSS server. The NSS server must have the XMLAppliance discipline support enabled.", "host", "").String,
 				Required:            true,
 			},
 			"remote_port": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Remote Port", "port", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies NSS server port. In conjunction with the Remote Address, identifies the host and listening port of the NSS server.", "port", "").String,
 				Required:            true,
 			},
 			"client_id": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Client ID", "client-id", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the client ID to be used for registration with the NSS server. Minimum length is 1. Maximum length is 24.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Client ID identifies the client ID to register the appliance with the NSS server. The NSS client ID is a unique string used by the NSS Server to track clients.</p><p>The Client ID does not have to correspond to any preexisting object. It is provided to the server at the time of registration. If another client attempts to register with the same client ID to the same NSS Server, the NSS server will send a heartbeat to the first client. If the first client responds to the heartbeat, the second client's registration will be rejected. If the first client does not respond, the connect to the first client will be severed and the second client will be registered.</p>", "client-id", "").String,
 				Required:            true,
 			},
 			"system_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("System Name", "system-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies a name for the NSS client. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The System Name identifies the NSS client to the NSS server. NSS server commands identify NSS clients by system name in the output when displaying information for connected NSS clients.</p>", "system-name", "").String,
 				Required:            true,
 			},
 			"user_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("User Name", "user-name", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies a user name to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The user name must match an existing user ID on the NSS Server.</p>", "user-name", "").String,
 				Required:            true,
 			},
 			"password": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password", "password", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the password to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Password specifies the password to use in conjunction with the value provided by the User Name.</p>", "password", "").String,
 				Optional:            true,
 				Sensitive:           true,
 			},
 			"password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Password Alias", "password-alias", "passwordalias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the password alias of the password to use to authenticate to the NSS server.</p><p>The associated password is used in conjunction with the value provided by the User Name.</p>", "password-alias", "passwordalias").String,
 				Optional:            true,
 			},
 			"ssl_client_config_type": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client type", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and the NSS server.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -122,7 +122,7 @@ func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRe
 				Default: stringdefault.StaticString("client"),
 			},
 			"ssl_client": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("TLS client profile", "ssl-client", "sslclientprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile to secure connections between the DataPower Gateway and the NSS server.", "ssl-client", "sslclientprofile").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -3,12 +3,12 @@
 page_title: "datapower_cryptovalcred Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Validation credentials
+  
 ---
 
 # datapower_cryptovalcred (Data Source)
 
-Validation credentials
+<p>Validation credentials authenticate certificates that are received from TLS peers. Validation credentials can be used to validate certificates that are used in digital signature and encryption operations.</p><p>a TLS client requires validation credentials only when it authenticates the certificate that is presented by the remote TLS server. The TLS standard does not require authentication of the server certificate.</p><p>a TLS server requires validation credentials only when it authenticates remote TLS clients. The TLS standard does not require authentication of the client certificate.</p>
 
 ## Example Usage
 
@@ -40,14 +40,14 @@ Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
 - `cert_validation_mode` (String) Certificate validation mode
-- `certificate` (List of String) Certificates
-- `check_dates` (Boolean) Check dates
-- `crldp_handling` (String) CRL distribution points handling
-- `explicit_policy` (Boolean) Require explicit certificate policy
+- `certificate` (List of String) Specify the list of certificates for the validation credentials. Each certificate in the validation credentials is the certificate that a TLS peer might send or is the certificate of the certification authority (CA) that signed the certificate that is sent by a peer or is the root certificate.
+- `check_dates` (Boolean) Specify whether to check dates during certificate validation. This validation checks the current date and time against the <tt>notBefore</tt> and <tt>notAfter</tt> values in certificates and CRLs. When enabled, the date values are checked and expired certificates cause validation to fail. Otherwise, the date values are ignored and and do not cause validation to fail when a certificate is expired.
+- `crldp_handling` (String) Specify the support of certificate extensions for X.509 certificate distribution points. This certificate extension specifies how to obtain CRL information. For more information, see RFC 2527 and RFC 3280.
+- `explicit_policy` (Boolean) Specify support for the initial explicit policy variable as defined by RFC 3280. When enabled, the chain validation algorithm must end with a non-empty policy tree. Otherwise, the algorithm can end with an empty policy tree unless policy constraint extensions in the chain require an explicit policy.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
-- `initial_policy_set` (List of String) Initial certificate policy set
-- `require_crl` (Boolean) Require CRL
-- `use_crl` (Boolean) Use CRL
+- `initial_policy_set` (List of String) Specify the unique object identifiers for the certificate policy. <p>RFC 3280 refers to the input variable for certificate chain validation as <tt>user-initial-policy-set</tt> . These OIDs specify the allow values of certificate policies. To use this functionality, you need to require an explicit certificate policy. Otherwise, this set is used only if there are policy constraint extensions in the certificate chain.</p><p>By default, the initial certificate policy set consists of the single OID 2.5.29.32.0, which identifies <tt>anyPolicy</tt> .</p>
+- `require_crl` (Boolean) Specify whether to mandate CRLs during certificate validation. When enabled, certificate validation fails if no CRL is available. Otherwise, validation succeeds independent of the availability of a CRL.
+- `use_crl` (Boolean) Specify whether to check certificate revocation lists (CRLs) during certificate validation. When enabled, CRLs are checked. Otherwise, CRLs are not checked.
 
 <a id="nestedatt--result--dependency_actions"></a>
 ### Nested Schema for `result.dependency_actions`

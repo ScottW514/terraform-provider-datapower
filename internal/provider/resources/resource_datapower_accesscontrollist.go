@@ -54,7 +54,7 @@ func (r *AccessControlListResource) Metadata(ctx context.Context, req resource.M
 
 func (r *AccessControlListResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("Access control list", "acl", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An access control list (ACL) consists of a sequence of allow and deny clauses. Each clause identifies an IP address or range of addresses that grants or denies access to a service. <p>Candidate addresses are sequentially evaluated against each clause. A candidate address is granted or denied access in accordance with the first clause that matches. Consequently, the order of the clauses is vital.</p><p>An ACL with only deny clauses effectively disables the service. To complete the configuration, include an allow clause to ensure that all addresses that are not explicitly denied access are granted access.</p>", "acl", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -79,7 +79,7 @@ func (r *AccessControlListResource) Schema(ctx context.Context, req resource.Sch
 				},
 			},
 			"access_control_entry": schema.ListNestedAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Entry", "entry", "").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify allow and deny clauses.", "entry", "").String,
 				NestedObject:        models.DmACEResourceSchema,
 				Optional:            true,
 			},

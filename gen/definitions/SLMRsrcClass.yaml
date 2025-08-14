@@ -1,97 +1,102 @@
 name: SLMRsrcClass
-description: 'SLM resource class'
-cli_alias: 'slm-rsrc'
-cmd_group: 'webservice'
-rest_endpoint: '/mgmt/config/{domain}/SLMRsrcClass'
+description: <p>An SLM resource class identifies a set of resources to be subject
+  to an SLM policy. A resource class consists of the following types and properties.</p><ul><li>A
+  resource type that specifies the manner to identify resources.</li><li>A match type
+  that determines the resources to apply the policy.</li><li>Depending on the resource
+  and match type, properties that identify specific instances of resources.</li></ul>
+cli_alias: slm-rsrc
+cmd_group: webservice
+rest_endpoint: /mgmt/config/{domain}/SLMRsrcClass
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestSLMRsrcClass"'
-    test_expect_ds: '"AccTest_SLMRsrcClass"'
-    example: 'SLMRsrcClassName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: RsrcType
-    type: String
-    enum:
-      - 'aaa-mapped-resource'
-      - 'front-url'
-      - 'destination-url'
-      - 'xpath-filter'
-      - 'request-message'
-      - 'response-message'
-      - 'soap-fault'
-      - 'errorcode'
-      - 'custom-stylesheet'
-      - 'concurrent-connections'
-      - 'concurrent-transactions'
-      - 'wsdl'
-      - 'wsdl-service'
-      - 'wsdl-port'
-      - 'wsdl-operation'
-      - 'request-mq-qname'
-      - 'reply-mq-qname'
-      - 'uddi-subscription'
-      - 'wsrr-subscription'
-      - 'wsrr-saved-search-subscription'
-    default: 'aaa-mapped-resource'
-    required: true
-    description: 'Resource type'
-    cli_alias: type
-  - name: RsrcMatchType
-    type: String
-    enum:
-      - 'per-extracted-value'
-      - 'exact-match'
-      - 'regexp-match'
-    default: 'per-extracted-value'
-    description: 'Match type'
-    cli_alias: match-type
-  - name: RsrcValue
-    type: List
-    element_type: String
-    description: 'Resource value'
-    cli_alias: value
-  - name: Stylesheet
-    type: String
-    description: 'Custom stylesheet'
-    cli_alias: stylesheet
-  - name: XPathFilter
-    type: String
-    description: 'XPath filter'
-    cli_alias: xpath-filter
-  - name: Subscription
-    type: String
-    description: 'UDDI subscription (deprecated)'
-    deprecated: true
-    cli_alias: subscription
-  - name: WSRRSubscription
-    type: String
-    reference_to: WSRRSubscription
-    description: 'WSRR subscription'
-    cli_alias: wsrr-subscription
-  - name: WSRRSavedSearchSubscription
-    type: String
-    reference_to: WSRRSavedSearchSubscription
-    description: 'WSRR saved search subscription'
-    cli_alias: wsrr-saved-search-subscription
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestSLMRsrcClass"'
+  test_expect_ds: '"AccTest_SLMRsrcClass"'
+  example: SLMRsrcClassName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: RsrcType
+  type: String
+  enum:
+  - aaa-mapped-resource
+  - front-url
+  - destination-url
+  - xpath-filter
+  - request-message
+  - response-message
+  - soap-fault
+  - errorcode
+  - custom-stylesheet
+  - concurrent-connections
+  - concurrent-transactions
+  - wsdl
+  - wsdl-service
+  - wsdl-port
+  - wsdl-operation
+  - request-mq-qname
+  - reply-mq-qname
+  - uddi-subscription
+  - wsrr-subscription
+  - wsrr-saved-search-subscription
+  default: aaa-mapped-resource
+  required: true
+  description: Resource type
+  cli_alias: type
+- name: RsrcMatchType
+  type: String
+  enum:
+  - per-extracted-value
+  - exact-match
+  - regexp-match
+  default: per-extracted-value
+  description: Match type
+  cli_alias: match-type
+- name: RsrcValue
+  type: List
+  element_type: String
+  description: Resource value
+  cli_alias: value
+- name: Stylesheet
+  type: String
+  description: Custom stylesheet
+  cli_alias: stylesheet
+- name: XPathFilter
+  type: String
+  description: XPath filter
+  cli_alias: xpath-filter
+- name: Subscription
+  type: String
+  description: UDDI subscription (deprecated)
+  deprecated: true
+  cli_alias: subscription
+- name: WSRRSubscription
+  type: String
+  reference_to: WSRRSubscription
+  description: WSRR subscription
+  cli_alias: wsrr-subscription
+- name: WSRRSavedSearchSubscription
+  type: String
+  reference_to: WSRRSavedSearchSubscription
+  description: WSRR saved search subscription
+  cli_alias: wsrr-saved-search-subscription

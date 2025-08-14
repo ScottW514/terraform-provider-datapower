@@ -3,13 +3,13 @@
 page_title: "datapower_visibilitylist Resource - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  Visibility list
+  A visibility list specifies elements in a GraphQL schema to remove from introspection and validation.
   CLI Alias: visibility-list
 ---
 
 # datapower_visibilitylist (Resource)
 
-Visibility list
+A visibility list specifies elements in a GraphQL schema to remove from introspection and validation.
   - CLI Alias: `visibility-list`
 
 ## Example Usage
@@ -36,7 +36,7 @@ resource "datapower_visibilitylist" "test" {
   - CLI Alias: `type`
   - Choices: `remove`
   - Default value: `remove`
-- `value` (List of String) Value
+- `value` (List of String) Specify the path to a GraphQL schema element. For example, <tt>Account.number</tt> uniquely identifies the <tt>number</tt> field of the <tt>Account</tt> type.
   - CLI Alias: `value`
 
 <a id="nestedatt--dependency_actions"></a>

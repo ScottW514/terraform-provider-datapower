@@ -1,68 +1,72 @@
 name: WSRRServer
-description: 'WSRR server'
-cli_alias: 'wsrr-server'
-cmd_group: 'webservice'
-rest_endpoint: '/mgmt/config/{domain}/WSRRServer'
+description: Configuration required to locate and access WSRR (WebSphere Service Registry
+  and Repository).
+cli_alias: wsrr-server
+cmd_group: webservice
+rest_endpoint: /mgmt/config/{domain}/WSRRServer
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTest_WSRRServer"'
-    test_expect_ds: '"AccTest_WSRRServer"'
-    example: 'WSRRServerName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: SoapURL
-    type: String
-    required: true
-    default: 'https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort'
-    description: 'SOAP URL'
-    cli_alias: soap-url
-  - name: ServerPrefix
-    type: String
-    description: 'WSRR instance prefix'
-    cli_alias: server-prefix
-  # DEPRECATED
-  # - name: SSLProxy
-  - name: Username
-    type: String
-    description: 'Username'
-    cli_alias: username
-  # DEPRECATED
-  # - name: Password
-  - name: PasswordAlias
-    type: String
-    reference_to: PasswordAlias
-    description: 'Password alias'
-    cli_alias: password-alias
-  - name: SSLClientConfigType
-    type: String
-    enum:
-      - 'client'
-    default: 'client'
-    description: 'TLS client type'
-    cli_alias: ssl-client-type
-  - name: SSLClient
-    type: String
-    reference_to: SSLClientProfile
-    description: 'TLS client profile'
-    cli_alias: ssl-client
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTest_WSRRServer"'
+  test_expect_ds: '"AccTest_WSRRServer"'
+  example: WSRRServerName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: SoapURL
+  type: String
+  required: true
+  default: https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort
+  description: Specify the URL of SOAP API endpoint on the WSRR server. The port in
+    the URL depends on whether the server has enabled global security. A typical default
+    URL is similar to <tt>https://192.18.1.120:9443/WSRRCoreSDO/services/WSRRCoreSDOPort</tt>
+    or <tt>http://192.18.1.120:9080/WSRRCoreSDO/services/WSRRCoreSDOPort</tt> .
+  cli_alias: soap-url
+- name: ServerPrefix
+  type: String
+  description: WSRR instance prefix
+  cli_alias: server-prefix
+- name: Username
+  type: String
+  description: Specify the username for authentication with the server. Leave blank
+    when authentication is not required.
+  cli_alias: username
+- name: PasswordAlias
+  type: String
+  reference_to: PasswordAlias
+  description: Specify the password alias for authentication with the server. The
+    password alias references the password. Leave blank when authentication is not
+    required.
+  cli_alias: password-alias
+- name: SSLClientConfigType
+  type: String
+  enum:
+  - client
+  default: client
+  description: TLS client type
+  cli_alias: ssl-client-type
+- name: SSLClient
+  type: String
+  reference_to: SSLClientProfile
+  description: TLS client profile
+  cli_alias: ssl-client

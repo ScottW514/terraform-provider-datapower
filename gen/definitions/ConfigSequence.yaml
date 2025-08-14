@@ -1,84 +1,112 @@
 name: ConfigSequence
-description: 'Configuration sequence'
-cli_alias: 'config-sequence'
-cmd_group: 'configuration'
-rest_endpoint: '/mgmt/config/{domain}/ConfigSequence'
+description: A configuration sequence defines a series of configuration files to load
+  after the startup configuration. By default, changes in configuration files are
+  detected and reloaded.
+cli_alias: config-sequence
+cmd_group: configuration
+rest_endpoint: /mgmt/config/{domain}/ConfigSequence
 attributes:
-  - name: Id
-    tf_name: id
-    path: name
-    type: String
-    required: true
-    test_value: '"ResTestConfigSequence"'
-    test_expect_ds: '"AccTest_ConfigSequence"'
-    example: 'ConfigSequenceName'
-    description: 'Name of the object. Must be unique among object types in application domain.'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: AppDomain
-    tf_name: app_domain
-    type: String
-    required: true
-    example: 'test_domain'
-    description: 'The name of the application domain the object belongs to'
-    string_patterns:
-      - '^[a-zA-Z0-9_-]+$'
-    string_min_length: 1
-    string_max_length: 128
-  - name: UserSummary
-    type: String
-    description: 'Comments'
-    cli_alias: summary
-  - name: Locations
-    type: List
-    element_type: DmConfigSequenceLocation
-    description: 'Location profiles'
-    cli_alias: location
-  - name: MatchPattern
-    type: String
-    default: '(.*)\\.cfg$'
-    description: 'Matching pattern'
-    cli_alias: match-pattern
-  - name: ResultNamePattern
-    type: String
-    default: '$1.log'
-    description: 'Result file-naming pattern'
-    cli_alias: result-name-pattern
-  - name: StatusNamePattern
-    type: String
-    default: '$1.status'
-    description: 'Status file-naming pattern'
-    cli_alias: status-name-pattern
-  - name: Watch
-    type: Bool
-    default: true
-    description: 'Watch'
-    cli_alias: watch
-  - name: UseOutputLocation
-    type: Bool
-    default: false
-    description: 'Use output location'
-    cli_alias: use-output-location
-  - name: OutputLocation
-    type: String
-    default: 'logtemp:///'
-    description: 'Output file location'
-    cli_alias: output-location
-  - name: DeleteUnused
-    type: Bool
-    default: true
-    description: 'Delete unused'
-    cli_alias: delete-unused
-  - name: RunSequenceInterval
-    type: Int64
-    minimum: 100
-    maximum: 60000
-    default: 100
-    description: 'Run interval'
-    cli_alias: run-sequence-interval
-  - name: Capabilities
-    dm_type: DmConfigSequenceCapabilities
-    description: 'Capabilities'
-    computed: true
+- name: Id
+  tf_name: id
+  path: name
+  type: String
+  required: true
+  test_value: '"ResTestConfigSequence"'
+  test_expect_ds: '"AccTest_ConfigSequence"'
+  example: ConfigSequenceName
+  description: Name of the object. Must be unique among object types in application
+    domain.
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: AppDomain
+  tf_name: app_domain
+  type: String
+  required: true
+  example: test_domain
+  description: The name of the application domain the object belongs to
+  string_patterns:
+  - ^[a-zA-Z0-9_-]+$
+  string_min_length: 1
+  string_max_length: 128
+- name: UserSummary
+  type: String
+  description: Comments
+  cli_alias: summary
+- name: Locations
+  type: List
+  element_type: DmConfigSequenceLocation
+  description: Specify the locations to watch for changes and the permissions for
+    each location. Each entry specifies a directory where the configuration files
+    to match are stored. The DataPower Gateway watches the location and reloads the
+    configuration when a change is detected that match the PCRE match pattern. The
+    entries are processed in the listed order. The assess profile indicates the permissions
+    for processing.
+  cli_alias: location
+- name: MatchPattern
+  type: String
+  default: (.*)\\.cfg$
+  description: Specify the PCRE pattern to determine whether a file is considered
+    part of the location match. For example, when the configuration files to match
+    are <tt>NNNNNN.input</tt> , the PCRE pattern is <tt>"([0-9]{6})\.input$"</tt>
+    .
+  cli_alias: match-pattern
+- name: ResultNamePattern
+  type: String
+  default: $1.log
+  description: Specify the PCRE pattern to name the result file. This pattern normally
+    has a back-reference to the base input file name. For example, when input files
+    are <tt>NNNNNN.input</tt> and the wanted result file name is <tt>NNNNNN.result</tt>
+    , the pattern is <tt>"$1.result"</tt> .
+  cli_alias: result-name-pattern
+- name: StatusNamePattern
+  type: String
+  default: $1.status
+  description: Specify the PCRE pattern to name the status file. This pattern normally
+    has a back-reference to the base input file name. For example, when the input
+    files are <tt>NNNNNN.input</tt> and the wanted status file name is <tt>NNNNNN.json</tt>
+    , the pattern is <tt>"$1.json"</tt> .
+  cli_alias: status-name-pattern
+- name: Watch
+  type: Bool
+  default: true
+  description: Specify whether to watch the specified directory for configuration
+    file changes and automatically reload the configuration when a change is detected.
+    By default, the specified directory is watched.
+  cli_alias: watch
+- name: UseOutputLocation
+  type: Bool
+  default: false
+  description: Specify whether to place output log and status files in the configured
+    output location after processing. By default, output files are stored in the input
+    file location.
+  cli_alias: use-output-location
+- name: OutputLocation
+  type: String
+  default: logtemp:///
+  description: Specify the directory to store the output files that processing generates.
+    When not specified, the input file location is used.
+  cli_alias: output-location
+- name: DeleteUnused
+  type: Bool
+  default: true
+  description: Specify whether to clean up objects that are no longer needed. When
+    enabled, the configuration sequence detects and attempts to delete objects that
+    are no longer modified by any configuration file. By default, the configuration
+    sequence does not delete unneeded objects.
+  cli_alias: delete-unused
+- name: RunSequenceInterval
+  type: Int64
+  minimum: 100
+  maximum: 60000
+  default: 100
+  description: Specify the interval in milliseconds between the processing of changes.
+    This delay enables multiple file events to be aggregated and handled within the
+    same sequence run. Enter a value in the range 100 - 60000. The default value is
+    100.
+  cli_alias: run-sequence-interval
+- name: Capabilities
+  dm_type: DmConfigSequenceCapabilities
+  description: Capabilities
+  computed: true

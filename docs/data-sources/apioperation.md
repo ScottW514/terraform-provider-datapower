@@ -3,12 +3,12 @@
 page_title: "datapower_apioperation Data Source - terraform-provider-datapower"
 subcategory: ""
 description: |-
-  API operation
+  An API operation describes the actions to perform against the resource.
 ---
 
 # datapower_apioperation (Data Source)
 
-API operation
+An API operation describes the actions to perform against the resource.
 
 ## Example Usage
 
@@ -39,17 +39,17 @@ Optional:
 Read-Only:
 
 - `app_domain` (String) The name of the application domain the object belongs to
-- `consume` (List of String) Consumes
+- `consume` (List of String) Specify MIME types that the operation can consume. This setting overrides the API-level consume declaration that is defined in the API definition.
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `method` (String) Method
 - `operation_id` (String) Operation ID
-- `parameter` (Attributes List) Parameters (see [below for nested schema](#nestedatt--result--parameter))
-- `produce` (List of String) Produces
-- `remove_consume` (Boolean) Remove consume
-- `remove_security` (Boolean) Remove security
+- `parameter` (Attributes List) Specify applicable parameters for the API operation. This setting overrides the setting in the API path configuration for the same parameter. (see [below for nested schema](#nestedatt--result--parameter))
+- `produce` (List of String) Specify MIME types that the operation can produce. This setting overrides the API-level produce declaration that is defined in the API definition.
+- `remove_consume` (Boolean) Specify whether to remove the API-level consume declaration. By default, the API-level consume declaration is applied to the operation. When removed, the operation can always be performed regardless of the content type.
+- `remove_security` (Boolean) Specify whether to remove the API-level security declaration that is defined for the API. By default, the API-level security declaration is applied to the operation. When removed, the operation can be performed without security check.
 - `request_schema` (String) Request schema
 - `response_schema` (Attributes List) Response schema (see [below for nested schema](#nestedatt--result--response_schema))
-- `security` (List of String) Security requirements
+- `security` (List of String) Specify the alternative security requirements to enforce for the operation (that is, there is a logical OR between the security requirements). This setting overrides any declared API-level security.
 - `soap_action` (String) SOAP action
 - `soap_element_name` (String) SOAP element name
 - `user_summary` (String) Comments

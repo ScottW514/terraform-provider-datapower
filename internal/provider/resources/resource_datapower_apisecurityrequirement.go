@@ -55,7 +55,7 @@ func (r *APISecurityRequirementResource) Metadata(ctx context.Context, req resou
 
 func (r *APISecurityRequirementResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("API security requirement", "api-sec-req", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("The API security requirement defines the required security schemes that an API request must pass to process an API operation. You must specify the security schemes that are declared in the security definitions. When multiple security schemes are specified, the API request must pass all security checks.", "api-sec-req", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,

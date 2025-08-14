@@ -60,7 +60,7 @@ func (r *SSHClientProfileResource) Metadata(ctx context.Context, req resource.Me
 
 func (r *SSHClientProfileResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: tfutils.NewAttributeDescription("SSH client profile", "sshclientprofile", "").String,
+		MarkdownDescription: tfutils.NewAttributeDescription("An SSH client profile defines the authentication type, credentials, and cipher suites to use for an SSH client connection.", "sshclientprofile", "").String,
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Name of the object. Must be unique among object types in application domain.", "", "").String,
@@ -93,7 +93,7 @@ func (r *SSHClientProfileResource) Schema(ctx context.Context, req resource.Sche
 				Required:            true,
 			},
 			"profile_usage": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Profile usage", "profile-usage", "").AddStringEnum("sftp", "scc").AddDefaultValue("sftp").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the usage of the profile. Only SFTP is supported.", "profile-usage", "").AddStringEnum("sftp", "scc").AddDefaultValue("sftp").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -101,9 +101,9 @@ func (r *SSHClientProfileResource) Schema(ctx context.Context, req resource.Sche
 				},
 				Default: stringdefault.StaticString("sftp"),
 			},
-			"ssh_user_authentication": models.GetDmSSHUserAuthenticationMethodsResourceSchema("User authentication", "user-auth", "", false),
+			"ssh_user_authentication": models.GetDmSSHUserAuthenticationMethodsResourceSchema("Specify the available types of SSH user authentication for the SSH client. Authentication can be public key or password or both public key and password. When both methods are defined, public key authentication is attempted first.", "user-auth", "", false),
 			"user_private_key": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("User private key", "user-private-key", "cryptokey").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the private key for public key authentication. User private keys must not be password protected.", "user-private-key", "cryptokey").String,
 				Optional:            true,
 			},
 			"password_alias": schema.StringAttribute{
@@ -111,13 +111,13 @@ func (r *SSHClientProfileResource) Schema(ctx context.Context, req resource.Sche
 				Optional:            true,
 			},
 			"persistent_connections": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Persistent connections", "persistent-connections", "").AddDefaultValue("true").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to support persistent connections. By default, persistent connections are enabled. <ul><li>When enabled, new requests reuse the connection of a previous session without reauthentication.</li><li>When not enabled, new request must reauthenticate.</li></ul>", "persistent-connections", "").AddDefaultValue("true").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(true),
 			},
 			"persistent_connection_timeout": schema.Int64Attribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Persistent connection idle timeout", "persistent-connection-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the idle duration in seconds for a persistent connection. When the connection remains idle for the specified duration, the connection is closed. Enter any value in the range 1 - 86000. The default value is 120.", "persistent-connection-timeout", "").AddIntegerRange(1, 86400).AddDefaultValue("120").String,
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.Int64{
@@ -127,13 +127,13 @@ func (r *SSHClientProfileResource) Schema(ctx context.Context, req resource.Sche
 				Default: int64default.StaticInt64(120),
 			},
 			"strict_host_key_checking": schema.BoolAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Strict host key checking", "strict-host-key-checking", "").AddDefaultValue("false").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify how to check host keys during the connection and authentication phases. By default strict host key checking is not enabled. <ul><li>When enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are rejected.</li><li>When not enabled, checks the host key against the known hosts list. Host keys that are not in the known host list are added to the known hosts list and accepted.</li></ul>", "strict-host-key-checking", "").AddDefaultValue("false").String,
 				Optional:            true,
 				Computed:            true,
 				Default:             booldefault.StaticBool(false),
 			},
 			"ciphers": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Ciphers", "ciphers", "").AddStringEnum("CHACHA20-POLY1305_AT_OPENSSH.COM", "AES128-CTR", "AES192-CTR", "AES256-CTR", "AES128-GCM_AT_OPENSSH.COM", "AES256-GCM_AT_OPENSSH.COM").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the SSH cipher suites to support.", "ciphers", "").AddStringEnum("CHACHA20-POLY1305_AT_OPENSSH.COM", "AES128-CTR", "AES192-CTR", "AES256-CTR", "AES128-GCM_AT_OPENSSH.COM", "AES256-GCM_AT_OPENSSH.COM").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{
@@ -141,7 +141,7 @@ func (r *SSHClientProfileResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"kex_alg": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Key exchange algorithms", "kex-alg", "").AddStringEnum("DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256", "ECDH-SHA2-NISTP256", "ECDH-SHA2-NISTP384", "ECDH-SHA2-NISTP521", "CURVE25519-SHA256_AT_LIBSSH.ORG").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the key exchange (KEX) algorithms to support.", "kex-alg", "").AddStringEnum("DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256", "ECDH-SHA2-NISTP256", "ECDH-SHA2-NISTP384", "ECDH-SHA2-NISTP521", "CURVE25519-SHA256_AT_LIBSSH.ORG").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{
@@ -149,7 +149,7 @@ func (r *SSHClientProfileResource) Schema(ctx context.Context, req resource.Sche
 				},
 			},
 			"mac_alg": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Message authentication codes", "mac-alg", "").AddStringEnum("HMAC-SHA1", "HMAC-SHA2-256", "HMAC-SHA2-512", "UMAC-64_AT_OPENSSH.COM", "UMAC-128_AT_OPENSSH.COM", "HMAC-SHA1-ETM_AT_OPENSSH.COM", "HMAC-SHA2-256-ETM_AT_OPENSSH.COM", "HMAC-SHA2-512-ETM_AT_OPENSSH.COM", "UMAC-64-ETM_AT_OPENSSH.COM", "UMAC-128-ETM_AT_OPENSSH.COM").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the message authentication codes (MAC) to support.", "mac-alg", "").AddStringEnum("HMAC-SHA1", "HMAC-SHA2-256", "HMAC-SHA2-512", "UMAC-64_AT_OPENSSH.COM", "UMAC-128_AT_OPENSSH.COM", "HMAC-SHA1-ETM_AT_OPENSSH.COM", "HMAC-SHA2-256-ETM_AT_OPENSSH.COM", "HMAC-SHA2-512-ETM_AT_OPENSSH.COM", "UMAC-64-ETM_AT_OPENSSH.COM", "UMAC-128-ETM_AT_OPENSSH.COM").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 				Validators: []validator.List{

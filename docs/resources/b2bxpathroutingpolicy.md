@@ -37,10 +37,10 @@ resource "datapower_b2bxpathroutingpolicy" "test" {
 
 ### Optional
 
-- `date_time_x_path` (String) Transaction Timestamp XPath
+- `date_time_x_path` (String) Specify the XPath expression to select the timestamp from the message. The results of this expression must be in the form of an <tt>xs:dateTime</tt> type.
   - CLI Alias: `transaction-time-xpath`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `document_idx_path` (String) Document ID XPath
+- `document_idx_path` (String) Specify the XPath expression for the unique identifier of the exchange. With the partner IDs, the XPath expression uniquely identifies a specific XML EDI message.
   - CLI Alias: `document-id-xpath`
 - `user_summary` (String) Comments
   - CLI Alias: `summary`
