@@ -78,7 +78,7 @@ attributes:
   reference_to: AppSecurityPolicy
   required: true
   test_value: '"AccTest_AppSecurityPolicy"'
-  test_bed_value: datapower_appsecuritypolicy.acc_test.id
+  test_bed_value: datapower_app_security_policy.acc_test.id
   description: Select a security policy from the list of available policies. Click
     + to create a new Policy. This policy controls which profiles are enforced.
   cli_alias: security-policy

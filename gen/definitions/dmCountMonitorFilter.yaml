@@ -34,7 +34,7 @@ attributes:
   reference_to: FilterAction
   required: true
   test_value: '"AccTest_FilterAction"'
-  test_bed_value: datapower_filteraction.acc_test.id
+  test_bed_value: datapower_filter_action.acc_test.id
   description: Select the monitor policy implemented by the monitor when the target
     message type exceeds the threshold value. This is a list of Message Filter Actions.
     Click the + button to create a new action.

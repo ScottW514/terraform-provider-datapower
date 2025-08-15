@@ -19,3 +19,4 @@ go.work.sum
 _dev/
 .devcontainer/
 .bin/
+sandbox/

@@ -84,7 +84,7 @@ attributes:
   element_type: String
   required: true
   test_value: '["AccTest_APIPath"]'
-  test_bed_value: '[datapower_apipath.acc_test.id]'
+  test_bed_value: '[datapower_api_path.acc_test.id]'
   description: Specify the paths through which users access the API operations. A
     path consists of one or more HTTP operations.
   cli_alias: path

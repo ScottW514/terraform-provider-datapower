@@ -31,7 +31,7 @@ resource "datapower_assembly" "test" {
 - `id` (String) Name of the object. Must be unique among object types in application domain.
 - `rule` (String) Specifies the API rule that comprises only assembly actions to apply to the API call.
   - CLI Alias: `rule`
-  - Reference to: `datapower_apirule:id`
+  - Reference to: `datapower_api_rule:id`
 
 ### Optional
 
@@ -39,11 +39,11 @@ resource "datapower_assembly" "test" {
   - CLI Alias: `catch` (see [below for nested schema](#nestedatt--catch))
 - `default_catch` (String) Specifies how to handle errors that are not caught by the catch setting during the assembly execution.
   - CLI Alias: `default-catch`
-  - Reference to: `datapower_apirule:id`
+  - Reference to: `datapower_api_rule:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `finally` (String) Specifies the final API rule to apply to the API call after the main rule, catch rule, or both have finished executing. The final API rule comprises only assembly actions.
   - CLI Alias: `finally`
-  - Reference to: `datapower_apirule:id`
+  - Reference to: `datapower_api_rule:id`
 - `user_summary` (String) A descriptive summary for the assembly configuration.
   - CLI Alias: `summary`
 
@@ -54,7 +54,7 @@ Required:
 
 - `error` (String) Specifies the name of a custom error.
 - `handler` (String) Specifies the name of the error handler for the custom error.
-  - Reference to: `datapower_apirule:id`
+  - Reference to: `datapower_api_rule:id`
 
 
 <a id="nestedatt--dependency_actions"></a>

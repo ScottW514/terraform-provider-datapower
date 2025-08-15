@@ -47,6 +47,6 @@ attributes:
   reference_to: JWERecipient
   required: true
   test_value: '"AccTest_JWERecipient"'
-  test_bed_value: datapower_jwerecipient.acc_test.id
+  test_bed_value: datapower_jwe_recipient.acc_test.id
   description: Add a JWE recipient object to a JWE encrypt action.
   cli_alias: recipient

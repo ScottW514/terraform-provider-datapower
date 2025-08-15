@@ -102,7 +102,7 @@ Read-Only:
   - CLI Alias: `bind-dn`
 - `bind_pw` (String) Enter the password alias of the password for the LDAP administrator that corresponds to the entered distinguished name.
   - CLI Alias: `bind-pw`
-  - Reference to: `datapower_passwordalias:id`
+  - Reference to: `datapower_password_alias:id`
 - `fed_name` (String) Specify the name of the federated directory entry to uniquely identify the entry in the federation.
   - CLI Alias: `federate-name`
 - `host` (String) Specify the host name or IP address of the LDAP server.

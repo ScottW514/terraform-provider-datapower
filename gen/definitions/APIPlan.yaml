@@ -156,7 +156,7 @@ attributes:
   element_type: String
   required: true
   test_value: '["AccTest_APIDefinition"]'
-  test_bed_value: '[datapower_apidefinition.acc_test.id]'
+  test_bed_value: '[datapower_api_definition.acc_test.id]'
   description: Specify the APIs to package for the plan. An API is exposed through
     a plan by associating the API to the plan.
   cli_alias: api

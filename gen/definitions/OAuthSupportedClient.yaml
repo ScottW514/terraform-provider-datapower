@@ -206,7 +206,7 @@ attributes:
     protocol. The shared secret must be at least 32 bytes in length.
   cli_alias: token-secret
   test_value: '"AccTest_CryptoSSKey"'
-  test_bed_value: datapower_cryptosskey.acc_test.id
+  test_bed_value: datapower_crypto_sskey.acc_test.id
 - name: LocalAZPageUrl
   type: String
   default: store:///OAuth-Generate-HTML.xsl

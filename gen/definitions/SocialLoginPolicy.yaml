@@ -100,7 +100,7 @@ attributes:
   reference_to: SSLClientProfile
   required: true
   test_value: '"AccTest_SSLClientProfile"'
-  test_bed_value: datapower_sslclientprofile.acc_test.id
+  test_bed_value: datapower_ssl_client_profile.acc_test.id
   description: Specifies the TLS client profile to secure connections when DataPower
     obtains an access token from the social login provider.
   cli_alias: client-ssl

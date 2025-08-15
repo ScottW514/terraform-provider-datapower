@@ -7,7 +7,7 @@ attributes:
   reference_to: B2BProfile
   required: true
   test_value: '"AccTest_B2BProfile"'
-  test_bed_value: datapower_b2bprofile.acc_test.id
+  test_bed_value: datapower_b2b_profile.acc_test.id
   description: Specify the name of the CPA sender (internal partner profile). Outbound
     ebMS2 messages from an internal partner use the CPA, service, and action that
     are specified by the CPA binding associated with the internal partner profile.
@@ -17,7 +17,7 @@ attributes:
   reference_to: B2BCPA
   required: true
   test_value: '"AccTest_B2BCPA"'
-  test_bed_value: datapower_b2bcpa.acc_test.id
+  test_bed_value: datapower_b2b_cpa.acc_test.id
   description: Specify the CPA ID to use. This value overrides the default CPA ID
     of the external partner profile configuration.
   cli_alias: cpa
@@ -26,7 +26,7 @@ attributes:
   reference_to: B2BCPACollaboration
   required: true
   test_value: '"AccTest_B2BCPACollaboration"'
-  test_bed_value: datapower_b2bcpacollaboration.acc_test.id
+  test_bed_value: datapower_b2b_cpa_collaboration.acc_test.id
   description: Specify the service to use, which is the value of <tt>Service</tt>
     element in outbound ebMS2 requests. This value overrides the default service of
     the external partner profile configuration.

@@ -11,6 +11,6 @@ attributes:
   type: String
   reference_to: APISchema
   test_value: '"AccTest_APISchema"'
-  test_bed_value: datapower_apischema.acc_test.id
+  test_bed_value: datapower_api_schema.acc_test.id
   required: true
   description: Specify the API schema object.

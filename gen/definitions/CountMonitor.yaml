@@ -85,6 +85,6 @@ attributes:
   reference_to: MessageType
   required: true
   test_value: '"AccTest_MessageType"'
-  test_bed_value: datapower_messagetype.acc_test.id
+  test_bed_value: datapower_message_type.acc_test.id
   description: Select the message type monitored by this message-count monitor.
   cli_alias: message-type

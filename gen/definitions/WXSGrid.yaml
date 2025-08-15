@@ -40,7 +40,7 @@ attributes:
   type: String
   reference_to: LoadBalancerGroup
   test_value: '"AccTest_LoadBalancerGroup"'
-  test_bed_value: datapower_loadbalancergroup.acc_test.id
+  test_bed_value: datapower_load_balancer_group.acc_test.id
   required: true
   description: Specify the Load Balancer Group that contains members in the collective
     of eXtreme Scale. You must define at least one member in the collective.
@@ -69,7 +69,7 @@ attributes:
   reference_to: PasswordAlias
   required: true
   test_value: '"AccTest_PasswordAlias"'
-  test_bed_value: datapower_passwordalias.acc_test.id
+  test_bed_value: datapower_password_alias.acc_test.id
   description: Specify the password alias to use to look up the password of the eXtreme
     Scale user who connects to the eXtreme Scale collective.
   cli_alias: password-alias

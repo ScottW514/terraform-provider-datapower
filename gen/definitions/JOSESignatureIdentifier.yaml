@@ -50,7 +50,7 @@ attributes:
   reference_to: CryptoCertificate
   description: Use the certificate to verify the signature.
   test_value: '"AccTest_CryptoCertificate"'
-  test_bed_value: datapower_cryptocertificate.acc_test.id
+  test_bed_value: datapower_crypto_certificate.acc_test.id
   cli_alias: cert
 - name: ValidAlgorithms
   type: List

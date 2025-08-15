@@ -37,7 +37,7 @@ attributes:
   reference_to: OpenTelemetryExporter
   required: true
   test_value: '"AccTest_OpenTelemetryExporter"'
-  test_bed_value: datapower_opentelemetryexporter.acc_test.id
+  test_bed_value: datapower_open_telemetry_exporter.acc_test.id
   description: Exporter
   cli_alias: exporter
 - name: Sampler
@@ -45,7 +45,7 @@ attributes:
   reference_to: OpenTelemetrySampler
   required: true
   test_value: '"AccTest_OpenTelemetrySampler"'
-  test_bed_value: datapower_opentelemetrysampler.acc_test.id
+  test_bed_value: datapower_open_telemetry_sampler.acc_test.id
   description: Sampler
   cli_alias: sampler
 - name: ResourceAttribute

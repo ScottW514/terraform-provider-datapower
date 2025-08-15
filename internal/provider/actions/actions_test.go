@@ -113,7 +113,7 @@ resource "datapower_file" "action_test" {
     {
       target_id     = "AccTest_HTTPSSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_httpssourceprotocolhandler"
+      target_type   = "datapower_https_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -129,7 +129,7 @@ resource "datapower_file" "action_test2" {
     {
       target_id     = "AccTest_HTTPSSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_httpssourceprotocolhandler"
+      target_type   = "datapower_https_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false

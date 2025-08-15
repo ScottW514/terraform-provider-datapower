@@ -56,7 +56,7 @@ attributes:
   type: String
   reference_to: CryptoCertificate
   test_value: '"TestAcc_CryptoCertificate"'
-  test_bed_value: datapower_cryptocertificate.acc_test.id
+  test_bed_value: datapower_crypto_certificate.acc_test.id
   description: Certificate.
   cli_alias: cert
 - name: UnprotectedHeader

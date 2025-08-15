@@ -161,7 +161,7 @@ func (r *TAMResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Optional:            true,
 			},
 			"ldapssl_key_file_password_alias": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Enter the password alias of the password for the key file that contains the certificates for TLS communication with the registry server.", "ldap-ssl-key-file-password-alias", "passwordalias").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Enter the password alias of the password for the key file that contains the certificates for TLS communication with the registry server.", "ldap-ssl-key-file-password-alias", "password_alias").String,
 				Optional:            true,
 			},
 			"ldapssl_key_file_label": schema.StringAttribute{

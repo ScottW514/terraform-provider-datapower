@@ -12,7 +12,7 @@ attributes:
   reference_to: SSHClientProfile
   required: true
   test_value: '"AccTest_SSHClientProfile"'
-  test_bed_value: datapower_sshclientprofile.acc_test.id
+  test_bed_value: datapower_ssh_client_profile.acc_test.id
   description: Specify the SSH client profile.
 - name: UseUniqueFilenames
   type: Bool

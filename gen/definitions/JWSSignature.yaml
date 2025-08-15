@@ -56,7 +56,7 @@ attributes:
   reference_to: CryptoKey
   description: Private key.
   test_value: '"AccTest_CryptoKey"'
-  test_bed_value: datapower_cryptokey.acc_test.id
+  test_bed_value: datapower_crypto_key.acc_test.id
   cli_alias: key
 - name: SSKey
   type: String

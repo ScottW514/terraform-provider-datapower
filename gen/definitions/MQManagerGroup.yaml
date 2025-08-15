@@ -46,7 +46,7 @@ attributes:
   reference_to: MQManager
   required: true
   test_value: '"AccTest_MQManager"'
-  test_bed_value: datapower_mqmanager.acc_test.id
+  test_bed_value: datapower_mq_manager.acc_test.id
   description: Specify the queue manager to be the primary queue manager for the group.
     All connections for the group go to this queue manager. If the primary queue manager
     becomes unreachable, a backup queue manager is selected.

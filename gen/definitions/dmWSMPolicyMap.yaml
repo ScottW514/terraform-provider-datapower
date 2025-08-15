@@ -31,7 +31,7 @@ attributes:
   reference_to: WSStylePolicyRule
   required: true
   test_value: '"AccTest_WSStylePolicyRule"'
-  test_bed_value: datapower_wsstylepolicyrule.acc_test.id
+  test_bed_value: datapower_ws_style_policy_rule.acc_test.id
   description: Select a WS-Proxy Processing Rule to run for matching transactions.
 - name: Subscription
   type: String

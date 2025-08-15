@@ -7,7 +7,7 @@ attributes:
   reference_to: PolicyParameters
   required: true
   test_value: '"AccTest_PolicyParameters"'
-  test_bed_value: datapower_policyparameters.acc_test.id
+  test_bed_value: datapower_policy_parameters.acc_test.id
   description: Reference to policy parameter object.
 - name: PolicyParamWSDLComponentType
   type: String

@@ -13,5 +13,5 @@ attributes:
   reference_to: WebAppRequest
   required: true
   test_value: '"AccTest_WebAppRequest"'
-  test_bed_value: datapower_webapprequest.acc_test.id
+  test_bed_value: datapower_web_app_request.acc_test.id
   description: Select the Web Request Profile to run.

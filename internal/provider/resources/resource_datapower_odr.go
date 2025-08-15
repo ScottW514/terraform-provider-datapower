@@ -70,7 +70,7 @@ func (r *ODRResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Default:             stringdefault.StaticString("dp_set"),
 			},
 			"odr_connector_groups": schema.ListAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Define one ODR connector group for each WebSphere cell or Liberty Collective. Each connector group establishes the communications with an Intelligent management service. The DataPower Gateway retrieves topology information, application information, routing rules, and other information over the connectors in the connector group.", "odr-connector-groups", "odrconnectorgroup").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Define one ODR connector group for each WebSphere cell or Liberty Collective. Each connector group establishes the communications with an Intelligent management service. The DataPower Gateway retrieves topology information, application information, routing rules, and other information over the connectors in the connector group.", "odr-connector-groups", "odr_connector_group").String,
 				ElementType:         types.StringType,
 				Optional:            true,
 			},

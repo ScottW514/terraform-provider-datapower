@@ -42,7 +42,7 @@ attributes:
   reference_to: APISecurityOAuth
   required: true
   test_value: '"AccTest_APISecurityOAuth"'
-  test_bed_value: datapower_apisecurityoauth.acc_test.id
+  test_bed_value: datapower_api_security_oauth.acc_test.id
   description: OAuth security definition
   cli_alias: oauth-definition
 - name: OAuthAllowedScope

@@ -124,7 +124,7 @@ attributes:
   reference_to: CryptoIdentCred
   required: true
   test_value: '"AccTest_CryptoIdentCred"'
-  test_bed_value: datapower_cryptoidentcred.acc_test.id
+  test_bed_value: datapower_crypto_ident_cred.acc_test.id
   description: Identification credentials
   cli_alias: idcred
 - name: RequestClientAuth

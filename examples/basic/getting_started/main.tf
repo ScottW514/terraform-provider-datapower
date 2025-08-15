@@ -2,7 +2,7 @@ resource "datapower_domain" "mpgw" {
   app_domain = "basic_example"
 }
 
-resource "datapower_httpsourceprotocolhandler" "mpgw" {
+resource "datapower_http_source_protocol_handler" "mpgw" {
   id         = "http_sph"
   app_domain = datapower_domain.mpgw.app_domain
   local_port = 8899
@@ -15,13 +15,13 @@ resource "datapower_httpsourceprotocolhandler" "mpgw" {
   }
 }
 
-resource "datapower_multiprotocolgateway" "mpgw" {
+resource "datapower_multi_protocol_gateway" "mpgw" {
   id         = "mpgw"
   app_domain = datapower_domain.mpgw.app_domain
   front_protocol = [
-    datapower_httpsourceprotocolhandler.mpgw.id
+    datapower_http_source_protocol_handler.mpgw.id
   ]
-  style_policy  = datapower_stylepolicy.mpgw.id
+  style_policy  = datapower_style_policy.mpgw.id
   type          = "dynamic-backend"
   request_type  = "preprocessed"
   response_type = "preprocessed"

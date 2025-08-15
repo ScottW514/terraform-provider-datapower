@@ -89,16 +89,16 @@ resource "datapower_file" "acc_test" {
 var AAAJWTGeneratorTestConfig = ModelTestConfig{
     Name:         "AAAJWTGenerator",
     Resource: `
-resource "datapower_aaajwtgenerator" "test" {
+resource "datapower_aaa_jwt_generator" "test" {
   id = "ResTestAAAJWTGenerator"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_aaajwtgenerator" "test" {
+data "datapower_aaa_jwt_generator" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_aaajwtgenerator" "acc_test" {
+resource "datapower_aaa_jwt_generator" "acc_test" {
   id = "AccTest_AAAJWTGenerator"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -107,17 +107,17 @@ resource "datapower_aaajwtgenerator" "acc_test" {
 var AAAJWTValidatorTestConfig = ModelTestConfig{
     Name:         "AAAJWTValidator",
     Resource: `
-resource "datapower_aaajwtvalidator" "test" {
+resource "datapower_aaa_jwt_validator" "test" {
   id = "ResTestAAAJWTValidator"
   app_domain = "acceptance_test"
   username_claim = "sub"
 }`,
     Data: `
-data "datapower_aaajwtvalidator" "test" {
+data "datapower_aaa_jwt_validator" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_aaajwtvalidator" "acc_test" {
+resource "datapower_aaa_jwt_validator" "acc_test" {
   id = "AccTest_AAAJWTValidator"
   app_domain = datapower_domain.acc_test.app_domain
   username_claim = "sub"
@@ -127,16 +127,16 @@ resource "datapower_aaajwtvalidator" "acc_test" {
 var AAAPolicyTestConfig = ModelTestConfig{
     Name:         "AAAPolicy",
     Resource: `
-resource "datapower_aaapolicy" "test" {
+resource "datapower_aaa_policy" "test" {
   id = "ResTestAAAPolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_aaapolicy" "test" {
+data "datapower_aaa_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_aaapolicy" "acc_test" {
+resource "datapower_aaa_policy" "acc_test" {
   id = "AccTest_AAAPolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -145,7 +145,7 @@ resource "datapower_aaapolicy" "acc_test" {
 var AMQPBrokerTestConfig = ModelTestConfig{
     Name:         "AMQPBroker",
     Resource: `
-resource "datapower_amqpbroker" "test" {
+resource "datapower_amqp_broker" "test" {
   id = "ResTestAMQPBroker"
   app_domain = "acceptance_test"
   host_name = "host.name"
@@ -154,11 +154,11 @@ resource "datapower_amqpbroker" "test" {
   authorization = "none"
 }`,
     Data: `
-data "datapower_amqpbroker" "test" {
+data "datapower_amqp_broker" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_amqpbroker" "acc_test" {
+resource "datapower_amqp_broker" "acc_test" {
   id = "AccTest_AMQPBroker"
   app_domain = datapower_domain.acc_test.app_domain
   host_name = "host.name"
@@ -171,21 +171,21 @@ resource "datapower_amqpbroker" "acc_test" {
 var AMQPSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "AMQPSourceProtocolHandler",
     Resource: `
-resource "datapower_amqpsourceprotocolhandler" "test" {
+resource "datapower_amqp_source_protocol_handler" "test" {
   id = "ResTestAMQPSourceProtocolHandler"
   app_domain = "acceptance_test"
   broker = "AccTest_AMQPBroker"
   from = "amqpfrom"
 }`,
     Data: `
-data "datapower_amqpsourceprotocolhandler" "test" {
+data "datapower_amqp_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_amqpsourceprotocolhandler" "acc_test" {
+resource "datapower_amqp_source_protocol_handler" "acc_test" {
   id = "AccTest_AMQPSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
-  broker = datapower_amqpbroker.acc_test.id
+  broker = datapower_amqp_broker.acc_test.id
   from = "amqpfrom"
 }`,
     ModelOnly:    false,
@@ -193,16 +193,16 @@ resource "datapower_amqpsourceprotocolhandler" "acc_test" {
 var APIApplicationTypeTestConfig = ModelTestConfig{
     Name:         "APIApplicationType",
     Resource: `
-resource "datapower_apiapplicationtype" "test" {
+resource "datapower_api_application_type" "test" {
   id = "ResTestAPIApplicationType"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apiapplicationtype" "test" {
+data "datapower_api_application_type" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apiapplicationtype" "acc_test" {
+resource "datapower_api_application_type" "acc_test" {
   id = "AccTest_APIApplicationType"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -211,17 +211,17 @@ resource "datapower_apiapplicationtype" "acc_test" {
 var APIAuthURLRegistryTestConfig = ModelTestConfig{
     Name:         "APIAuthURLRegistry",
     Resource: `
-resource "datapower_apiauthurlregistry" "test" {
+resource "datapower_api_auth_url_registry" "test" {
   id = "ResTestAPIAuthURLRegistry"
   app_domain = "acceptance_test"
   auth_url = "http://localhost"
 }`,
     Data: `
-data "datapower_apiauthurlregistry" "test" {
+data "datapower_api_auth_url_registry" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apiauthurlregistry" "acc_test" {
+resource "datapower_api_auth_url_registry" "acc_test" {
   id = "AccTest_APIAuthURLRegistry"
   app_domain = datapower_domain.acc_test.app_domain
   auth_url = "http://localhost"
@@ -231,16 +231,16 @@ resource "datapower_apiauthurlregistry" "acc_test" {
 var APICORSTestConfig = ModelTestConfig{
     Name:         "APICORS",
     Resource: `
-resource "datapower_apicors" "test" {
+resource "datapower_api_cors" "test" {
   id = "ResTestAPICORS"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apicors" "test" {
+data "datapower_api_cors" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apicors" "acc_test" {
+resource "datapower_api_cors" "acc_test" {
   id = "AccTest_APICORS"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -249,16 +249,16 @@ resource "datapower_apicors" "acc_test" {
 var APIClientIdentificationTestConfig = ModelTestConfig{
     Name:         "APIClientIdentification",
     Resource: `
-resource "datapower_apiclientidentification" "test" {
+resource "datapower_api_client_identification" "test" {
   id = "ResTestAPIClientIdentification"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apiclientidentification" "test" {
+data "datapower_api_client_identification" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apiclientidentification" "acc_test" {
+resource "datapower_api_client_identification" "acc_test" {
   id = "AccTest_APIClientIdentification"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -267,7 +267,7 @@ resource "datapower_apiclientidentification" "acc_test" {
 var APICollectionTestConfig = ModelTestConfig{
     Name:         "APICollection",
     Resource: `
-resource "datapower_apicollection" "test" {
+resource "datapower_api_collection" "test" {
   id = "ResTestAPICollection"
   app_domain = "acceptance_test"
   org_id = "orgid"
@@ -278,11 +278,11 @@ resource "datapower_apicollection" "test" {
   plan = ["AccTest_APIPlan"]
 }`,
     Data: `
-data "datapower_apicollection" "test" {
+data "datapower_api_collection" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apicollection" "acc_test" {
+resource "datapower_api_collection" "acc_test" {
   id = "AccTest_APICollection"
   app_domain = datapower_domain.acc_test.app_domain
   org_id = "orgid"
@@ -290,21 +290,21 @@ resource "datapower_apicollection" "acc_test" {
   routing_prefix = ` + DmRoutingPrefixTestConfig.GetModelTestBedListConfig() + `
   api_processing_rule = "default-api-rule"
   api_error_rule = "default-api-error-rule"
-  plan = [datapower_apiplan.acc_test.id]
+  plan = [datapower_api_plan.acc_test.id]
 }`,
     ModelOnly:    false,
 }
 var APIConnectGatewayServiceTestConfig = ModelTestConfig{
     Name:         "APIConnectGatewayService",
     Resource: `
-resource "datapower_apiconnectgatewayservice" "test" {
+resource "datapower_api_connect_gateway_service" "test" {
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 3000
   proxy_policy = {proxy_policy_enable = false, remote_address = "localhost", remote_port = 8080}
 }`,
     Data: `
-data "datapower_apiconnectgatewayservice" "test" {
+data "datapower_api_connect_gateway_service" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -312,7 +312,7 @@ data "datapower_apiconnectgatewayservice" "test" {
 var APIDefinitionTestConfig = ModelTestConfig{
     Name:         "APIDefinition",
     Resource: `
-resource "datapower_apidefinition" "test" {
+resource "datapower_api_definition" "test" {
   id = "ResTestAPIDefinition"
   app_domain = "acceptance_test"
   base_path = "/"
@@ -321,15 +321,15 @@ resource "datapower_apidefinition" "test" {
   error_content = "payload"
 }`,
     Data: `
-data "datapower_apidefinition" "test" {
+data "datapower_api_definition" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apidefinition" "acc_test" {
+resource "datapower_api_definition" "acc_test" {
   id = "AccTest_APIDefinition"
   app_domain = datapower_domain.acc_test.app_domain
   base_path = "/"
-  path = [datapower_apipath.acc_test.id]
+  path = [datapower_api_path.acc_test.id]
   content = "activity"
   error_content = "payload"
 }`,
@@ -338,16 +338,16 @@ resource "datapower_apidefinition" "acc_test" {
 var APIExecuteTestConfig = ModelTestConfig{
     Name:         "APIExecute",
     Resource: `
-resource "datapower_apiexecute" "test" {
+resource "datapower_api_execute" "test" {
   id = "ResTestAPIExecute"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apiexecute" "test" {
+data "datapower_api_execute" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apiexecute" "acc_test" {
+resource "datapower_api_execute" "acc_test" {
   id = "AccTest_APIExecute"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -356,16 +356,16 @@ resource "datapower_apiexecute" "acc_test" {
 var APIFinalTestConfig = ModelTestConfig{
     Name:         "APIFinal",
     Resource: `
-resource "datapower_apifinal" "test" {
+resource "datapower_api_final" "test" {
   id = "ResTestAPIFinal"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apifinal" "test" {
+data "datapower_api_final" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apifinal" "acc_test" {
+resource "datapower_api_final" "acc_test" {
   id = "AccTest_APIFinal"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -374,7 +374,7 @@ resource "datapower_apifinal" "acc_test" {
 var APIGatewayTestConfig = ModelTestConfig{
     Name:         "APIGateway",
     Resource: `
-resource "datapower_apigateway" "test" {
+resource "datapower_api_gateway" "test" {
   id = "ResTestAPIGateway"
   app_domain = "acceptance_test"
   front_protocol = ["AccTest_HTTPSourceProtocolHandler"]
@@ -382,14 +382,14 @@ resource "datapower_apigateway" "test" {
   front_persistent_timeout = 180
 }`,
     Data: `
-data "datapower_apigateway" "test" {
+data "datapower_api_gateway" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apigateway" "acc_test" {
+resource "datapower_api_gateway" "acc_test" {
   id = "AccTest_APIGateway"
   app_domain = datapower_domain.acc_test.app_domain
-  front_protocol = [datapower_httpsourceprotocolhandler.acc_test.id]
+  front_protocol = [datapower_http_source_protocol_handler.acc_test.id]
   front_timeout = 120
   front_persistent_timeout = 180
 }`,
@@ -398,7 +398,7 @@ resource "datapower_apigateway" "acc_test" {
 var APILDAPRegistryTestConfig = ModelTestConfig{
     Name:         "APILDAPRegistry",
     Resource: `
-resource "datapower_apildapregistry" "test" {
+resource "datapower_api_ldap_registry" "test" {
   id = "ResTestAPILDAPRegistry"
   app_domain = "acceptance_test"
   ldap_host = "localhost"
@@ -406,33 +406,33 @@ resource "datapower_apildapregistry" "test" {
   ldap_search_parameters = "AccTest_LDAPSearchParameters"
 }`,
     Data: `
-data "datapower_apildapregistry" "test" {
+data "datapower_api_ldap_registry" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apildapregistry" "acc_test" {
+resource "datapower_api_ldap_registry" "acc_test" {
   id = "AccTest_APILDAPRegistry"
   app_domain = datapower_domain.acc_test.app_domain
   ldap_host = "localhost"
   ldap_port = 636
-  ldap_search_parameters = datapower_ldapsearchparameters.acc_test.id
+  ldap_search_parameters = datapower_ldap_search_parameters.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var APIOperationTestConfig = ModelTestConfig{
     Name:         "APIOperation",
     Resource: `
-resource "datapower_apioperation" "test" {
+resource "datapower_api_operation" "test" {
   id = "ResTestAPIOperation"
   app_domain = "acceptance_test"
   method = "GET"
 }`,
     Data: `
-data "datapower_apioperation" "test" {
+data "datapower_api_operation" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apioperation" "acc_test" {
+resource "datapower_api_operation" "acc_test" {
   id = "AccTest_APIOperation"
   app_domain = datapower_domain.acc_test.app_domain
   method = "GET"
@@ -442,17 +442,17 @@ resource "datapower_apioperation" "acc_test" {
 var APIPathTestConfig = ModelTestConfig{
     Name:         "APIPath",
     Resource: `
-resource "datapower_apipath" "test" {
+resource "datapower_api_path" "test" {
   id = "ResTestAPIPath"
   app_domain = "acceptance_test"
   path = "/"
 }`,
     Data: `
-data "datapower_apipath" "test" {
+data "datapower_api_path" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apipath" "acc_test" {
+resource "datapower_api_path" "acc_test" {
   id = "AccTest_APIPath"
   app_domain = datapower_domain.acc_test.app_domain
   path = "/"
@@ -462,21 +462,21 @@ resource "datapower_apipath" "acc_test" {
 var APIPlanTestConfig = ModelTestConfig{
     Name:         "APIPlan",
     Resource: `
-resource "datapower_apiplan" "test" {
+resource "datapower_api_plan" "test" {
   id = "ResTestAPIPlan"
   app_domain = "acceptance_test"
   api = ["AccTest_APIDefinition"]
   rate_limit_scope = "per-application"
 }`,
     Data: `
-data "datapower_apiplan" "test" {
+data "datapower_api_plan" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apiplan" "acc_test" {
+resource "datapower_api_plan" "acc_test" {
   id = "AccTest_APIPlan"
   app_domain = datapower_domain.acc_test.app_domain
-  api = [datapower_apidefinition.acc_test.id]
+  api = [datapower_api_definition.acc_test.id]
   rate_limit_scope = "per-application"
 }`,
     ModelOnly:    false,
@@ -484,16 +484,16 @@ resource "datapower_apiplan" "acc_test" {
 var APIResultTestConfig = ModelTestConfig{
     Name:         "APIResult",
     Resource: `
-resource "datapower_apiresult" "test" {
+resource "datapower_api_result" "test" {
   id = "ResTestAPIResult"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apiresult" "test" {
+data "datapower_api_result" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apiresult" "acc_test" {
+resource "datapower_api_result" "acc_test" {
   id = "AccTest_APIResult"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -502,16 +502,16 @@ resource "datapower_apiresult" "acc_test" {
 var APIRoutingTestConfig = ModelTestConfig{
     Name:         "APIRouting",
     Resource: `
-resource "datapower_apirouting" "test" {
+resource "datapower_api_routing" "test" {
   id = "ResTestAPIRouting"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apirouting" "test" {
+data "datapower_api_routing" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apirouting" "acc_test" {
+resource "datapower_api_routing" "acc_test" {
   id = "AccTest_APIRouting"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -520,16 +520,16 @@ resource "datapower_apirouting" "acc_test" {
 var APIRuleTestConfig = ModelTestConfig{
     Name:         "APIRule",
     Resource: `
-resource "datapower_apirule" "test" {
+resource "datapower_api_rule" "test" {
   id = "ResTestAPIRule"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apirule" "test" {
+data "datapower_api_rule" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apirule" "acc_test" {
+resource "datapower_api_rule" "acc_test" {
   id = "AccTest_APIRule"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -538,17 +538,17 @@ resource "datapower_apirule" "acc_test" {
 var APISchemaTestConfig = ModelTestConfig{
     Name:         "APISchema",
     Resource: `
-resource "datapower_apischema" "test" {
+resource "datapower_api_schema" "test" {
   id = "ResTestAPISchema"
   app_domain = "acceptance_test"
   json_schema = "http://localhost/json"
 }`,
     Data: `
-data "datapower_apischema" "test" {
+data "datapower_api_schema" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apischema" "acc_test" {
+resource "datapower_api_schema" "acc_test" {
   id = "AccTest_APISchema"
   app_domain = datapower_domain.acc_test.app_domain
   json_schema = "http://localhost/json"
@@ -558,16 +558,16 @@ resource "datapower_apischema" "acc_test" {
 var APISecurityTestConfig = ModelTestConfig{
     Name:         "APISecurity",
     Resource: `
-resource "datapower_apisecurity" "test" {
+resource "datapower_api_security" "test" {
   id = "ResTestAPISecurity"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apisecurity" "test" {
+data "datapower_api_security" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apisecurity" "acc_test" {
+resource "datapower_api_security" "acc_test" {
   id = "AccTest_APISecurity"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -576,7 +576,7 @@ resource "datapower_apisecurity" "acc_test" {
 var APISecurityAPIKeyTestConfig = ModelTestConfig{
     Name:         "APISecurityAPIKey",
     Resource: `
-resource "datapower_apisecurityapikey" "test" {
+resource "datapower_api_security_api_key" "test" {
   id = "ResTestAPISecurityAPIKey"
   app_domain = "acceptance_test"
   where = "header"
@@ -584,11 +584,11 @@ resource "datapower_apisecurityapikey" "test" {
   key_name = "keyname"
 }`,
     Data: `
-data "datapower_apisecurityapikey" "test" {
+data "datapower_api_security_api_key" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apisecurityapikey" "acc_test" {
+resource "datapower_api_security_api_key" "acc_test" {
   id = "AccTest_APISecurityAPIKey"
   app_domain = datapower_domain.acc_test.app_domain
   where = "header"
@@ -600,36 +600,36 @@ resource "datapower_apisecurityapikey" "acc_test" {
 var APISecurityBasicAuthTestConfig = ModelTestConfig{
     Name:         "APISecurityBasicAuth",
     Resource: `
-resource "datapower_apisecuritybasicauth" "test" {
+resource "datapower_api_security_basic_auth" "test" {
   id = "ResTestAPISecurityBasicAuth"
   app_domain = "acceptance_test"
   user_registry = "AccTest_APIAuthURLRegistry"
 }`,
     Data: `
-data "datapower_apisecuritybasicauth" "test" {
+data "datapower_api_security_basic_auth" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apisecuritybasicauth" "acc_test" {
+resource "datapower_api_security_basic_auth" "acc_test" {
   id = "AccTest_APISecurityBasicAuth"
   app_domain = datapower_domain.acc_test.app_domain
-  user_registry = datapower_apiauthurlregistry.acc_test.id
+  user_registry = datapower_api_auth_url_registry.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var APISecurityHTTPSchemeTestConfig = ModelTestConfig{
     Name:         "APISecurityHTTPScheme",
     Resource: `
-resource "datapower_apisecurityhttpscheme" "test" {
+resource "datapower_api_security_http_scheme" "test" {
   id = "ResTestAPISecurityHTTPScheme"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apisecurityhttpscheme" "test" {
+data "datapower_api_security_http_scheme" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apisecurityhttpscheme" "acc_test" {
+resource "datapower_api_security_http_scheme" "acc_test" {
   id = "AccTest_APISecurityHTTPScheme"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -638,21 +638,21 @@ resource "datapower_apisecurityhttpscheme" "acc_test" {
 var APISecurityOAuthTestConfig = ModelTestConfig{
     Name:         "APISecurityOAuth",
     Resource: `
-resource "datapower_apisecurityoauth" "test" {
+resource "datapower_api_security_oauth" "test" {
   id = "ResTestAPISecurityOAuth"
   app_domain = "acceptance_test"
   o_auth_provider = "AccTest_OAuthProviderSettings"
   o_auth_flow = "implicit"
 }`,
     Data: `
-data "datapower_apisecurityoauth" "test" {
+data "datapower_api_security_oauth" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apisecurityoauth" "acc_test" {
+resource "datapower_api_security_oauth" "acc_test" {
   id = "AccTest_APISecurityOAuth"
   app_domain = datapower_domain.acc_test.app_domain
-  o_auth_provider = datapower_oauthprovidersettings.acc_test.id
+  o_auth_provider = datapower_oauth_provider_settings.acc_test.id
   o_auth_flow = "implicit"
 }`,
     ModelOnly:    false,
@@ -660,51 +660,51 @@ resource "datapower_apisecurityoauth" "acc_test" {
 var APISecurityOAuthReqTestConfig = ModelTestConfig{
     Name:         "APISecurityOAuthReq",
     Resource: `
-resource "datapower_apisecurityoauthreq" "test" {
+resource "datapower_api_security_oauth_req" "test" {
   id = "ResTestAPISecurityOAuthReq"
   app_domain = "acceptance_test"
   api_security_o_auth_def = "AccTest_APISecurityOAuth"
 }`,
     Data: `
-data "datapower_apisecurityoauthreq" "test" {
+data "datapower_api_security_oauth_req" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apisecurityoauthreq" "acc_test" {
+resource "datapower_api_security_oauth_req" "acc_test" {
   id = "AccTest_APISecurityOAuthReq"
   app_domain = datapower_domain.acc_test.app_domain
-  api_security_o_auth_def = datapower_apisecurityoauth.acc_test.id
+  api_security_o_auth_def = datapower_api_security_oauth.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var APISecurityRequirementTestConfig = ModelTestConfig{
     Name:         "APISecurityRequirement",
     Resource: `
-resource "datapower_apisecurityrequirement" "test" {
+resource "datapower_api_security_requirement" "test" {
   id = "ResTestAPISecurityRequirement"
   app_domain = "acceptance_test"
   security = ["AccTest_APISecurityAPIKey"]
 }`,
     Data: `
-data "datapower_apisecurityrequirement" "test" {
+data "datapower_api_security_requirement" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_apisecurityrequirement" "acc_test" {
+resource "datapower_api_security_requirement" "acc_test" {
   id = "AccTest_APISecurityRequirement"
   app_domain = datapower_domain.acc_test.app_domain
-  security = [datapower_apisecurityapikey.acc_test.id]
+  security = [datapower_api_security_api_key.acc_test.id]
 }`,
     ModelOnly:    false,
 }
 var APISecurityTokenManagerTestConfig = ModelTestConfig{
     Name:         "APISecurityTokenManager",
     Resource: `
-resource "datapower_apisecuritytokenmanager" "test" {
+resource "datapower_api_security_token_manager" "test" {
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_apisecuritytokenmanager" "test" {
+data "datapower_api_security_token_manager" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -712,7 +712,7 @@ data "datapower_apisecuritytokenmanager" "test" {
 var AS1PollerSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "AS1PollerSourceProtocolHandler",
     Resource: `
-resource "datapower_as1pollersourceprotocolhandler" "test" {
+resource "datapower_as1_poller_source_protocol_handler" "test" {
   id = "ResTestAS1PollerSourceProtocolHandler"
   app_domain = "acceptance_test"
   mail_server = "smtp.host"
@@ -723,11 +723,11 @@ resource "datapower_as1pollersourceprotocolhandler" "test" {
   max_messages_per_poll = 5
 }`,
     Data: `
-data "datapower_as1pollersourceprotocolhandler" "test" {
+data "datapower_as1_poller_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_as1pollersourceprotocolhandler" "acc_test" {
+resource "datapower_as1_poller_source_protocol_handler" "acc_test" {
   id = "AccTest_AS1PollerSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   mail_server = "smtp.host"
@@ -742,7 +742,7 @@ resource "datapower_as1pollersourceprotocolhandler" "acc_test" {
 var AS2ProxySourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "AS2ProxySourceProtocolHandler",
     Resource: `
-resource "datapower_as2proxysourceprotocolhandler" "test" {
+resource "datapower_as2_proxy_source_protocol_handler" "test" {
   id = "ResTestAS2ProxySourceProtocolHandler"
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
@@ -753,7 +753,7 @@ resource "datapower_as2proxysourceprotocolhandler" "test" {
   xml_manager = "default"
 }`,
     Data: `
-data "datapower_as2proxysourceprotocolhandler" "test" {
+data "datapower_as2_proxy_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -771,18 +771,18 @@ data "datapower_as2proxysourceprotocolhandler" "test" {
 var AS2SourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "AS2SourceProtocolHandler",
     Resource: `
-resource "datapower_as2sourceprotocolhandler" "test" {
+resource "datapower_as2_source_protocol_handler" "test" {
   id = "ResTestAS2SourceProtocolHandler"
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 80
 }`,
     Data: `
-data "datapower_as2sourceprotocolhandler" "test" {
+data "datapower_as2_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_as2sourceprotocolhandler" "acc_test" {
+resource "datapower_as2_source_protocol_handler" "acc_test" {
   id = "AccTest_AS2SourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
@@ -793,18 +793,18 @@ resource "datapower_as2sourceprotocolhandler" "acc_test" {
 var AS3SourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "AS3SourceProtocolHandler",
     Resource: `
-resource "datapower_as3sourceprotocolhandler" "test" {
+resource "datapower_as3_source_protocol_handler" "test" {
   id = "ResTestAS3SourceProtocolHandler"
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 21
 }`,
     Data: `
-data "datapower_as3sourceprotocolhandler" "test" {
+data "datapower_as3_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_as3sourceprotocolhandler" "acc_test" {
+resource "datapower_as3_source_protocol_handler" "acc_test" {
   id = "AccTest_AS3SourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
@@ -815,16 +815,16 @@ resource "datapower_as3sourceprotocolhandler" "acc_test" {
 var AccessControlListTestConfig = ModelTestConfig{
     Name:         "AccessControlList",
     Resource: `
-resource "datapower_accesscontrollist" "test" {
+resource "datapower_access_control_list" "test" {
   id = "ResTestAccessControlList"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_accesscontrollist" "test" {
+data "datapower_access_control_list" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_accesscontrollist" "acc_test" {
+resource "datapower_access_control_list" "acc_test" {
   id = "AccTest_AccessControlList"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -833,16 +833,16 @@ resource "datapower_accesscontrollist" "acc_test" {
 var AccessProfileTestConfig = ModelTestConfig{
     Name:         "AccessProfile",
     Resource: `
-resource "datapower_accessprofile" "test" {
+resource "datapower_access_profile" "test" {
   id = "ResTestAccessProfile"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_accessprofile" "test" {
+data "datapower_access_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_accessprofile" "acc_test" {
+resource "datapower_access_profile" "acc_test" {
   id = "AccTest_AccessProfile"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -851,7 +851,7 @@ resource "datapower_accessprofile" "acc_test" {
 var AnalyticsEndpointTestConfig = ModelTestConfig{
     Name:         "AnalyticsEndpoint",
     Resource: `
-resource "datapower_analyticsendpoint" "test" {
+resource "datapower_analytics_endpoint" "test" {
   id = "ResTestAnalyticsEndpoint"
   app_domain = "acceptance_test"
   analytics_server_url = "https://localhost"
@@ -861,15 +861,15 @@ resource "datapower_analyticsendpoint" "test" {
   max_delivery_memory_mb = 512
 }`,
     Data: `
-data "datapower_analyticsendpoint" "test" {
+data "datapower_analytics_endpoint" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_analyticsendpoint" "acc_test" {
+resource "datapower_analytics_endpoint" "acc_test" {
   id = "AccTest_AnalyticsEndpoint"
   app_domain = datapower_domain.acc_test.app_domain
   analytics_server_url = "https://localhost"
-  ssl_client = datapower_sslclientprofile.acc_test.id
+  ssl_client = datapower_ssl_client_profile.acc_test.id
   max_records = 1024
   max_records_memory_kb = 512
   max_delivery_memory_mb = 512
@@ -879,18 +879,18 @@ resource "datapower_analyticsendpoint" "acc_test" {
 var AppSecurityPolicyTestConfig = ModelTestConfig{
     Name:         "AppSecurityPolicy",
     Resource: `
-resource "datapower_appsecuritypolicy" "test" {
+resource "datapower_app_security_policy" "test" {
   id = "ResTestAppSecurityPolicy"
   app_domain = "acceptance_test"
   request_maps = ` + DmWebAppRequestPolicyMapTestConfig.GetModelListConfig() + `
   response_maps = ` + DmWebAppResponsePolicyMapTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_appsecuritypolicy" "test" {
+data "datapower_app_security_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_appsecuritypolicy" "acc_test" {
+resource "datapower_app_security_policy" "acc_test" {
   id = "AccTest_AppSecurityPolicy"
   app_domain = datapower_domain.acc_test.app_domain
   request_maps = ` + DmWebAppRequestPolicyMapTestConfig.GetModelTestBedListConfig() + `
@@ -921,7 +921,7 @@ resource "datapower_assembly" "acc_test" {
 var AssemblyActionClientSecurityTestConfig = ModelTestConfig{
     Name:         "AssemblyActionClientSecurity",
     Resource: `
-resource "datapower_assemblyactionclientsecurity" "test" {
+resource "datapower_assembly_action_client_security" "test" {
   id = "ResTestAssemblyActionClientSecurity"
   app_domain = "acceptance_test"
   id_name = "idname"
@@ -929,11 +929,11 @@ resource "datapower_assemblyactionclientsecurity" "test" {
   authenticate_client_method = "native"
 }`,
     Data: `
-data "datapower_assemblyactionclientsecurity" "test" {
+data "datapower_assembly_action_client_security" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionclientsecurity" "acc_test" {
+resource "datapower_assembly_action_client_security" "acc_test" {
   id = "AccTest_AssemblyActionClientSecurity"
   app_domain = datapower_domain.acc_test.app_domain
   id_name = "idname"
@@ -945,17 +945,17 @@ resource "datapower_assemblyactionclientsecurity" "acc_test" {
 var AssemblyActionExtractTestConfig = ModelTestConfig{
     Name:         "AssemblyActionExtract",
     Resource: `
-resource "datapower_assemblyactionextract" "test" {
+resource "datapower_assembly_action_extract" "test" {
   id = "ResTestAssemblyActionExtract"
   app_domain = "acceptance_test"
   extract = ` + DmAssemblyActionExtractTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_assemblyactionextract" "test" {
+data "datapower_assembly_action_extract" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionextract" "acc_test" {
+resource "datapower_assembly_action_extract" "acc_test" {
   id = "AccTest_AssemblyActionExtract"
   app_domain = datapower_domain.acc_test.app_domain
   extract = ` + DmAssemblyActionExtractTestConfig.GetModelTestBedListConfig() + `
@@ -965,17 +965,17 @@ resource "datapower_assemblyactionextract" "acc_test" {
 var AssemblyActionFunctionCallTestConfig = ModelTestConfig{
     Name:         "AssemblyActionFunctionCall",
     Resource: `
-resource "datapower_assemblyactionfunctioncall" "test" {
+resource "datapower_assembly_action_function_call" "test" {
   id = "ResTestAssemblyActionFunctionCall"
   app_domain = "acceptance_test"
   function_call = "default-func-global"
 }`,
     Data: `
-data "datapower_assemblyactionfunctioncall" "test" {
+data "datapower_assembly_action_function_call" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionfunctioncall" "acc_test" {
+resource "datapower_assembly_action_function_call" "acc_test" {
   id = "AccTest_AssemblyActionFunctionCall"
   app_domain = datapower_domain.acc_test.app_domain
   function_call = "default-func-global"
@@ -985,17 +985,17 @@ resource "datapower_assemblyactionfunctioncall" "acc_test" {
 var AssemblyActionGatewayScriptTestConfig = ModelTestConfig{
     Name:         "AssemblyActionGatewayScript",
     Resource: `
-resource "datapower_assemblyactiongatewayscript" "test" {
+resource "datapower_assembly_action_gateway_script" "test" {
   id = "ResTestAssemblyActionGatewayScript"
   app_domain = "acceptance_test"
   source = "gsfile"
 }`,
     Data: `
-data "datapower_assemblyactiongatewayscript" "test" {
+data "datapower_assembly_action_gateway_script" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactiongatewayscript" "acc_test" {
+resource "datapower_assembly_action_gateway_script" "acc_test" {
   id = "AccTest_AssemblyActionGatewayScript"
   app_domain = datapower_domain.acc_test.app_domain
   source = "gsfile"
@@ -1005,17 +1005,17 @@ resource "datapower_assemblyactiongatewayscript" "acc_test" {
 var AssemblyActionGraphQLCostAnalysisTestConfig = ModelTestConfig{
     Name:         "AssemblyActionGraphQLCostAnalysis",
     Resource: `
-resource "datapower_assemblyactiongraphqlcostanalysis" "test" {
+resource "datapower_assembly_action_graphql_cost_analysis" "test" {
   id = "ResTestAssemblyActionGraphQLCostAnalysis"
   app_domain = "acceptance_test"
   target = "targetquery"
 }`,
     Data: `
-data "datapower_assemblyactiongraphqlcostanalysis" "test" {
+data "datapower_assembly_action_graphql_cost_analysis" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactiongraphqlcostanalysis" "acc_test" {
+resource "datapower_assembly_action_graphql_cost_analysis" "acc_test" {
   id = "AccTest_AssemblyActionGraphQLCostAnalysis"
   app_domain = datapower_domain.acc_test.app_domain
   target = "targetquery"
@@ -1025,16 +1025,16 @@ resource "datapower_assemblyactiongraphqlcostanalysis" "acc_test" {
 var AssemblyActionGraphQLExecuteTestConfig = ModelTestConfig{
     Name:         "AssemblyActionGraphQLExecute",
     Resource: `
-resource "datapower_assemblyactiongraphqlexecute" "test" {
+resource "datapower_assembly_action_graphql_execute" "test" {
   id = "ResTestAssemblyActionGraphQLExecute"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_assemblyactiongraphqlexecute" "test" {
+data "datapower_assembly_action_graphql_execute" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactiongraphqlexecute" "acc_test" {
+resource "datapower_assembly_action_graphql_execute" "acc_test" {
   id = "AccTest_AssemblyActionGraphQLExecute"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1043,16 +1043,16 @@ resource "datapower_assemblyactiongraphqlexecute" "acc_test" {
 var AssemblyActionGraphQLIntrospectTestConfig = ModelTestConfig{
     Name:         "AssemblyActionGraphQLIntrospect",
     Resource: `
-resource "datapower_assemblyactiongraphqlintrospect" "test" {
+resource "datapower_assembly_action_graphql_introspect" "test" {
   id = "ResTestAssemblyActionGraphQLIntrospect"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_assemblyactiongraphqlintrospect" "test" {
+data "datapower_assembly_action_graphql_introspect" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactiongraphqlintrospect" "acc_test" {
+resource "datapower_assembly_action_graphql_introspect" "acc_test" {
   id = "AccTest_AssemblyActionGraphQLIntrospect"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1061,16 +1061,16 @@ resource "datapower_assemblyactiongraphqlintrospect" "acc_test" {
 var AssemblyActionHtmlPageTestConfig = ModelTestConfig{
     Name:         "AssemblyActionHtmlPage",
     Resource: `
-resource "datapower_assemblyactionhtmlpage" "test" {
+resource "datapower_assembly_action_html_page" "test" {
   id = "ResTestAssemblyActionHtmlPage"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_assemblyactionhtmlpage" "test" {
+data "datapower_assembly_action_html_page" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionhtmlpage" "acc_test" {
+resource "datapower_assembly_action_html_page" "acc_test" {
   id = "AccTest_AssemblyActionHtmlPage"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1079,7 +1079,7 @@ resource "datapower_assemblyactionhtmlpage" "acc_test" {
 var AssemblyActionInvokeTestConfig = ModelTestConfig{
     Name:         "AssemblyActionInvoke",
     Resource: `
-resource "datapower_assemblyactioninvoke" "test" {
+resource "datapower_assembly_action_invoke" "test" {
   id = "ResTestAssemblyActionInvoke"
   app_domain = "acceptance_test"
   url = "https://localhost"
@@ -1088,11 +1088,11 @@ resource "datapower_assemblyactioninvoke" "test" {
   cache_type = "Protocol"
 }`,
     Data: `
-data "datapower_assemblyactioninvoke" "test" {
+data "datapower_assembly_action_invoke" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactioninvoke" "acc_test" {
+resource "datapower_assembly_action_invoke" "acc_test" {
   id = "AccTest_AssemblyActionInvoke"
   app_domain = datapower_domain.acc_test.app_domain
   url = "https://localhost"
@@ -1105,18 +1105,18 @@ resource "datapower_assemblyactioninvoke" "acc_test" {
 var AssemblyActionJWTGenerateTestConfig = ModelTestConfig{
     Name:         "AssemblyActionJWTGenerate",
     Resource: `
-resource "datapower_assemblyactionjwtgenerate" "test" {
+resource "datapower_assembly_action_jwt_generate" "test" {
   id = "ResTestAssemblyActionJWTGenerate"
   app_domain = "acceptance_test"
   issuer_claim = "iss.claim"
   validity_period = 3600
 }`,
     Data: `
-data "datapower_assemblyactionjwtgenerate" "test" {
+data "datapower_assembly_action_jwt_generate" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionjwtgenerate" "acc_test" {
+resource "datapower_assembly_action_jwt_generate" "acc_test" {
   id = "AccTest_AssemblyActionJWTGenerate"
   app_domain = datapower_domain.acc_test.app_domain
   issuer_claim = "iss.claim"
@@ -1127,18 +1127,18 @@ resource "datapower_assemblyactionjwtgenerate" "acc_test" {
 var AssemblyActionJWTValidateTestConfig = ModelTestConfig{
     Name:         "AssemblyActionJWTValidate",
     Resource: `
-resource "datapower_assemblyactionjwtvalidate" "test" {
+resource "datapower_assembly_action_jwt_validate" "test" {
   id = "ResTestAssemblyActionJWTValidate"
   app_domain = "acceptance_test"
   jwt = "request.headers.authorization"
   output_claims = "decoded.claims"
 }`,
     Data: `
-data "datapower_assemblyactionjwtvalidate" "test" {
+data "datapower_assembly_action_jwt_validate" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionjwtvalidate" "acc_test" {
+resource "datapower_assembly_action_jwt_validate" "acc_test" {
   id = "AccTest_AssemblyActionJWTValidate"
   app_domain = datapower_domain.acc_test.app_domain
   jwt = "request.headers.authorization"
@@ -1149,16 +1149,16 @@ resource "datapower_assemblyactionjwtvalidate" "acc_test" {
 var AssemblyActionJson2XmlTestConfig = ModelTestConfig{
     Name:         "AssemblyActionJson2Xml",
     Resource: `
-resource "datapower_assemblyactionjson2xml" "test" {
+resource "datapower_assembly_action_json2xml" "test" {
   id = "ResTestAssemblyActionJson2Xml"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_assemblyactionjson2xml" "test" {
+data "datapower_assembly_action_json2xml" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionjson2xml" "acc_test" {
+resource "datapower_assembly_action_json2xml" "acc_test" {
   id = "AccTest_AssemblyActionJson2Xml"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1167,17 +1167,17 @@ resource "datapower_assemblyactionjson2xml" "acc_test" {
 var AssemblyActionLogTestConfig = ModelTestConfig{
     Name:         "AssemblyActionLog",
     Resource: `
-resource "datapower_assemblyactionlog" "test" {
+resource "datapower_assembly_action_log" "test" {
   id = "ResTestAssemblyActionLog"
   app_domain = "acceptance_test"
   mode = "gather-only"
 }`,
     Data: `
-data "datapower_assemblyactionlog" "test" {
+data "datapower_assembly_action_log" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionlog" "acc_test" {
+resource "datapower_assembly_action_log" "acc_test" {
   id = "AccTest_AssemblyActionLog"
   app_domain = datapower_domain.acc_test.app_domain
   mode = "gather-only"
@@ -1187,17 +1187,17 @@ resource "datapower_assemblyactionlog" "acc_test" {
 var AssemblyActionMapTestConfig = ModelTestConfig{
     Name:         "AssemblyActionMap",
     Resource: `
-resource "datapower_assemblyactionmap" "test" {
+resource "datapower_assembly_action_map" "test" {
   id = "ResTestAssemblyActionMap"
   app_domain = "acceptance_test"
   location = "local:///file"
 }`,
     Data: `
-data "datapower_assemblyactionmap" "test" {
+data "datapower_assembly_action_map" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionmap" "acc_test" {
+resource "datapower_assembly_action_map" "acc_test" {
   id = "AccTest_AssemblyActionMap"
   app_domain = datapower_domain.acc_test.app_domain
   location = "local:///file"
@@ -1207,36 +1207,36 @@ resource "datapower_assemblyactionmap" "acc_test" {
 var AssemblyActionOAuthTestConfig = ModelTestConfig{
     Name:         "AssemblyActionOAuth",
     Resource: `
-resource "datapower_assemblyactionoauth" "test" {
+resource "datapower_assembly_action_oauth" "test" {
   id = "ResTestAssemblyActionOAuth"
   app_domain = "acceptance_test"
   o_auth_provider_settings_reference = {"Default": "AccTest_OAuthProviderSettings"}
 }`,
     Data: `
-data "datapower_assemblyactionoauth" "test" {
+data "datapower_assembly_action_oauth" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionoauth" "acc_test" {
+resource "datapower_assembly_action_oauth" "acc_test" {
   id = "AccTest_AssemblyActionOAuth"
   app_domain = datapower_domain.acc_test.app_domain
-  o_auth_provider_settings_reference = {"Default": datapower_oauthprovidersettings.acc_test.id}
+  o_auth_provider_settings_reference = {"Default": datapower_oauth_provider_settings.acc_test.id}
 }`,
     ModelOnly:    false,
 }
 var AssemblyActionParseTestConfig = ModelTestConfig{
     Name:         "AssemblyActionParse",
     Resource: `
-resource "datapower_assemblyactionparse" "test" {
+resource "datapower_assembly_action_parse" "test" {
   id = "ResTestAssemblyActionParse"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_assemblyactionparse" "test" {
+data "datapower_assembly_action_parse" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionparse" "acc_test" {
+resource "datapower_assembly_action_parse" "acc_test" {
   id = "AccTest_AssemblyActionParse"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1245,17 +1245,17 @@ resource "datapower_assemblyactionparse" "acc_test" {
 var AssemblyActionRateLimitTestConfig = ModelTestConfig{
     Name:         "AssemblyActionRateLimit",
     Resource: `
-resource "datapower_assemblyactionratelimit" "test" {
+resource "datapower_assembly_action_rate_limit" "test" {
   id = "ResTestAssemblyActionRateLimit"
   app_domain = "acceptance_test"
   source = "plan-default"
 }`,
     Data: `
-data "datapower_assemblyactionratelimit" "test" {
+data "datapower_assembly_action_rate_limit" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionratelimit" "acc_test" {
+resource "datapower_assembly_action_rate_limit" "acc_test" {
   id = "AccTest_AssemblyActionRateLimit"
   app_domain = datapower_domain.acc_test.app_domain
   source = "plan-default"
@@ -1265,16 +1265,16 @@ resource "datapower_assemblyactionratelimit" "acc_test" {
 var AssemblyActionRateLimitInfoTestConfig = ModelTestConfig{
     Name:         "AssemblyActionRateLimitInfo",
     Resource: `
-resource "datapower_assemblyactionratelimitinfo" "test" {
+resource "datapower_assembly_action_rate_limit_info" "test" {
   id = "ResTestAssemblyActionRateLimitInfo"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_assemblyactionratelimitinfo" "test" {
+data "datapower_assembly_action_rate_limit_info" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionratelimitinfo" "acc_test" {
+resource "datapower_assembly_action_rate_limit_info" "acc_test" {
   id = "AccTest_AssemblyActionRateLimitInfo"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1283,17 +1283,17 @@ resource "datapower_assemblyactionratelimitinfo" "acc_test" {
 var AssemblyActionRedactTestConfig = ModelTestConfig{
     Name:         "AssemblyActionRedact",
     Resource: `
-resource "datapower_assemblyactionredact" "test" {
+resource "datapower_assembly_action_redact" "test" {
   id = "ResTestAssemblyActionRedact"
   app_domain = "acceptance_test"
   redact = ` + DmAssemblyActionRedactTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_assemblyactionredact" "test" {
+data "datapower_assembly_action_redact" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionredact" "acc_test" {
+resource "datapower_assembly_action_redact" "acc_test" {
   id = "AccTest_AssemblyActionRedact"
   app_domain = datapower_domain.acc_test.app_domain
   redact = ` + DmAssemblyActionRedactTestConfig.GetModelTestBedListConfig() + `
@@ -1303,17 +1303,17 @@ resource "datapower_assemblyactionredact" "acc_test" {
 var AssemblyActionSetVarTestConfig = ModelTestConfig{
     Name:         "AssemblyActionSetVar",
     Resource: `
-resource "datapower_assemblyactionsetvar" "test" {
+resource "datapower_assembly_action_set_var" "test" {
   id = "ResTestAssemblyActionSetVar"
   app_domain = "acceptance_test"
   variable = ` + DmAssemblyActionSetVarTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_assemblyactionsetvar" "test" {
+data "datapower_assembly_action_set_var" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionsetvar" "acc_test" {
+resource "datapower_assembly_action_set_var" "acc_test" {
   id = "AccTest_AssemblyActionSetVar"
   app_domain = datapower_domain.acc_test.app_domain
   variable = ` + DmAssemblyActionSetVarTestConfig.GetModelTestBedListConfig() + `
@@ -1323,17 +1323,17 @@ resource "datapower_assemblyactionsetvar" "acc_test" {
 var AssemblyActionThrowTestConfig = ModelTestConfig{
     Name:         "AssemblyActionThrow",
     Resource: `
-resource "datapower_assemblyactionthrow" "test" {
+resource "datapower_assembly_action_throw" "test" {
   id = "ResTestAssemblyActionThrow"
   app_domain = "acceptance_test"
   error_id = "errorid"
 }`,
     Data: `
-data "datapower_assemblyactionthrow" "test" {
+data "datapower_assembly_action_throw" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionthrow" "acc_test" {
+resource "datapower_assembly_action_throw" "acc_test" {
   id = "AccTest_AssemblyActionThrow"
   app_domain = datapower_domain.acc_test.app_domain
   error_id = "errorid"
@@ -1343,7 +1343,7 @@ resource "datapower_assemblyactionthrow" "acc_test" {
 var AssemblyActionUserSecurityTestConfig = ModelTestConfig{
     Name:         "AssemblyActionUserSecurity",
     Resource: `
-resource "datapower_assemblyactionusersecurity" "test" {
+resource "datapower_assembly_action_user_security" "test" {
   id = "ResTestAssemblyActionUserSecurity"
   app_domain = "acceptance_test"
   factor_id = "default"
@@ -1353,17 +1353,17 @@ resource "datapower_assemblyactionusersecurity" "test" {
   user_az_method = "authenticated"
 }`,
     Data: `
-data "datapower_assemblyactionusersecurity" "test" {
+data "datapower_assembly_action_user_security" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionusersecurity" "acc_test" {
+resource "datapower_assembly_action_user_security" "acc_test" {
   id = "AccTest_AssemblyActionUserSecurity"
   app_domain = datapower_domain.acc_test.app_domain
   factor_id = "default"
   extract_identity_method = "basic"
   user_auth_method = "user-registry"
-  user_registry = datapower_apiauthurlregistry.acc_test.id
+  user_registry = datapower_api_auth_url_registry.acc_test.id
   user_az_method = "authenticated"
 }`,
     ModelOnly:    false,
@@ -1371,36 +1371,36 @@ resource "datapower_assemblyactionusersecurity" "acc_test" {
 var AssemblyActionValidateTestConfig = ModelTestConfig{
     Name:         "AssemblyActionValidate",
     Resource: `
-resource "datapower_assemblyactionvalidate" "test" {
+resource "datapower_assembly_action_validate" "test" {
   id = "ResTestAssemblyActionValidate"
   app_domain = "acceptance_test"
   schema = "AccTest_APISchema"
 }`,
     Data: `
-data "datapower_assemblyactionvalidate" "test" {
+data "datapower_assembly_action_validate" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionvalidate" "acc_test" {
+resource "datapower_assembly_action_validate" "acc_test" {
   id = "AccTest_AssemblyActionValidate"
   app_domain = datapower_domain.acc_test.app_domain
-  schema = datapower_apischema.acc_test.id
+  schema = datapower_api_schema.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var AssemblyActionWSDLTestConfig = ModelTestConfig{
     Name:         "AssemblyActionWSDL",
     Resource: `
-resource "datapower_assemblyactionwsdl" "test" {
+resource "datapower_assembly_action_wsdl" "test" {
   id = "ResTestAssemblyActionWSDL"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_assemblyactionwsdl" "test" {
+data "datapower_assembly_action_wsdl" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionwsdl" "acc_test" {
+resource "datapower_assembly_action_wsdl" "acc_test" {
   id = "AccTest_AssemblyActionWSDL"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1409,17 +1409,17 @@ resource "datapower_assemblyactionwsdl" "acc_test" {
 var AssemblyActionWebSocketUpgradeTestConfig = ModelTestConfig{
     Name:         "AssemblyActionWebSocketUpgrade",
     Resource: `
-resource "datapower_assemblyactionwebsocketupgrade" "test" {
+resource "datapower_assembly_action_web_socket_upgrade" "test" {
   id = "ResTestAssemblyActionWebSocketUpgrade"
   app_domain = "acceptance_test"
   url = "https://localhost"
 }`,
     Data: `
-data "datapower_assemblyactionwebsocketupgrade" "test" {
+data "datapower_assembly_action_web_socket_upgrade" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionwebsocketupgrade" "acc_test" {
+resource "datapower_assembly_action_web_socket_upgrade" "acc_test" {
   id = "AccTest_AssemblyActionWebSocketUpgrade"
   app_domain = datapower_domain.acc_test.app_domain
   url = "https://localhost"
@@ -1429,17 +1429,17 @@ resource "datapower_assemblyactionwebsocketupgrade" "acc_test" {
 var AssemblyActionXSLTTestConfig = ModelTestConfig{
     Name:         "AssemblyActionXSLT",
     Resource: `
-resource "datapower_assemblyactionxslt" "test" {
+resource "datapower_assembly_action_xslt" "test" {
   id = "ResTestAssemblyActionXSLT"
   app_domain = "acceptance_test"
   stylesheet = "local:///stylesheet"
 }`,
     Data: `
-data "datapower_assemblyactionxslt" "test" {
+data "datapower_assembly_action_xslt" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionxslt" "acc_test" {
+resource "datapower_assembly_action_xslt" "acc_test" {
   id = "AccTest_AssemblyActionXSLT"
   app_domain = datapower_domain.acc_test.app_domain
   stylesheet = "local:///stylesheet"
@@ -1449,16 +1449,16 @@ resource "datapower_assemblyactionxslt" "acc_test" {
 var AssemblyActionXml2JsonTestConfig = ModelTestConfig{
     Name:         "AssemblyActionXml2Json",
     Resource: `
-resource "datapower_assemblyactionxml2json" "test" {
+resource "datapower_assembly_action_xml2json" "test" {
   id = "ResTestAssemblyActionXml2Json"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_assemblyactionxml2json" "test" {
+data "datapower_assembly_action_xml2json" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyactionxml2json" "acc_test" {
+resource "datapower_assembly_action_xml2json" "acc_test" {
   id = "AccTest_AssemblyActionXml2Json"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1467,16 +1467,16 @@ resource "datapower_assemblyactionxml2json" "acc_test" {
 var AssemblyFunctionTestConfig = ModelTestConfig{
     Name:         "AssemblyFunction",
     Resource: `
-resource "datapower_assemblyfunction" "test" {
+resource "datapower_assembly_function" "test" {
   id = "ResTestAssemblyFunction"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_assemblyfunction" "test" {
+data "datapower_assembly_function" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblyfunction" "acc_test" {
+resource "datapower_assembly_function" "acc_test" {
   id = "AccTest_AssemblyFunction"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1485,17 +1485,17 @@ resource "datapower_assemblyfunction" "acc_test" {
 var AssemblyLogicOperationSwitchTestConfig = ModelTestConfig{
     Name:         "AssemblyLogicOperationSwitch",
     Resource: `
-resource "datapower_assemblylogicoperationswitch" "test" {
+resource "datapower_assembly_logic_operation_switch" "test" {
   id = "ResTestAssemblyLogicOperationSwitch"
   app_domain = "acceptance_test"
   case = ` + DmAssemblyLogicOperationSwitchCaseTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_assemblylogicoperationswitch" "test" {
+data "datapower_assembly_logic_operation_switch" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblylogicoperationswitch" "acc_test" {
+resource "datapower_assembly_logic_operation_switch" "acc_test" {
   id = "AccTest_AssemblyLogicOperationSwitch"
   app_domain = datapower_domain.acc_test.app_domain
   case = ` + DmAssemblyLogicOperationSwitchCaseTestConfig.GetModelTestBedListConfig() + `
@@ -1505,17 +1505,17 @@ resource "datapower_assemblylogicoperationswitch" "acc_test" {
 var AssemblyLogicSwitchTestConfig = ModelTestConfig{
     Name:         "AssemblyLogicSwitch",
     Resource: `
-resource "datapower_assemblylogicswitch" "test" {
+resource "datapower_assembly_logic_switch" "test" {
   id = "ResTestAssemblyLogicSwitch"
   app_domain = "acceptance_test"
   case = ` + DmAssemblyLogicExecuteTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_assemblylogicswitch" "test" {
+data "datapower_assembly_logic_switch" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_assemblylogicswitch" "acc_test" {
+resource "datapower_assembly_logic_switch" "acc_test" {
   id = "AccTest_AssemblyLogicSwitch"
   app_domain = datapower_domain.acc_test.app_domain
   case = ` + DmAssemblyLogicExecuteTestConfig.GetModelTestBedListConfig() + `
@@ -1525,27 +1525,27 @@ resource "datapower_assemblylogicswitch" "acc_test" {
 var AuditLogTestConfig = ModelTestConfig{
     Name:         "AuditLog",
     Resource: `
-resource "datapower_auditlog" "test" {
+resource "datapower_audit_log" "test" {
 }`,
     Data: `
-data "datapower_auditlog" "test" {
+data "datapower_audit_log" "test" {
 }`,
     ModelOnly:    false,
 }
 var B2BCPATestConfig = ModelTestConfig{
     Name:         "B2BCPA",
     Resource: `
-resource "datapower_b2bcpa" "test" {
+resource "datapower_b2b_cpa" "test" {
   id = "ResTestB2BCPA"
   app_domain = "acceptance_test"
   cpa_id = "cpaid"
 }`,
     Data: `
-data "datapower_b2bcpa" "test" {
+data "datapower_b2b_cpa" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_b2bcpa" "acc_test" {
+resource "datapower_b2b_cpa" "acc_test" {
   id = "AccTest_B2BCPA"
   app_domain = datapower_domain.acc_test.app_domain
   cpa_id = "cpaid"
@@ -1555,7 +1555,7 @@ resource "datapower_b2bcpa" "acc_test" {
 var B2BCPACollaborationTestConfig = ModelTestConfig{
     Name:         "B2BCPACollaboration",
     Resource: `
-resource "datapower_b2bcpacollaboration" "test" {
+resource "datapower_b2b_cpa_collaboration" "test" {
   id = "ResTestB2BCPACollaboration"
   app_domain = "acceptance_test"
   internal_role = "internal"
@@ -1564,11 +1564,11 @@ resource "datapower_b2bcpacollaboration" "test" {
   actions = ` + DmCPACollaborationActionTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_b2bcpacollaboration" "test" {
+data "datapower_b2b_cpa_collaboration" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_b2bcpacollaboration" "acc_test" {
+resource "datapower_b2b_cpa_collaboration" "acc_test" {
   id = "AccTest_B2BCPACollaboration"
   app_domain = datapower_domain.acc_test.app_domain
   internal_role = "internal"
@@ -1581,16 +1581,16 @@ resource "datapower_b2bcpacollaboration" "acc_test" {
 var B2BCPAReceiverSettingTestConfig = ModelTestConfig{
     Name:         "B2BCPAReceiverSetting",
     Resource: `
-resource "datapower_b2bcpareceiversetting" "test" {
+resource "datapower_b2b_cpa_receiver_setting" "test" {
   id = "ResTestB2BCPAReceiverSetting"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_b2bcpareceiversetting" "test" {
+data "datapower_b2b_cpa_receiver_setting" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_b2bcpareceiversetting" "acc_test" {
+resource "datapower_b2b_cpa_receiver_setting" "acc_test" {
   id = "AccTest_B2BCPAReceiverSetting"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1599,17 +1599,17 @@ resource "datapower_b2bcpareceiversetting" "acc_test" {
 var B2BCPASenderSettingTestConfig = ModelTestConfig{
     Name:         "B2BCPASenderSetting",
     Resource: `
-resource "datapower_b2bcpasendersetting" "test" {
+resource "datapower_b2b_cpa_sender_setting" "test" {
   id = "ResTestB2BCPASenderSetting"
   app_domain = "acceptance_test"
   dest_endpoint_url = "ebms2://somehost/url"
 }`,
     Data: `
-data "datapower_b2bcpasendersetting" "test" {
+data "datapower_b2b_cpa_sender_setting" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_b2bcpasendersetting" "acc_test" {
+resource "datapower_b2b_cpa_sender_setting" "acc_test" {
   id = "AccTest_B2BCPASenderSetting"
   app_domain = datapower_domain.acc_test.app_domain
   dest_endpoint_url = "ebms2://somehost/url"
@@ -1619,7 +1619,7 @@ resource "datapower_b2bcpasendersetting" "acc_test" {
 var B2BGatewayTestConfig = ModelTestConfig{
     Name:         "B2BGateway",
     Resource: `
-resource "datapower_b2bgateway" "test" {
+resource "datapower_b2b_gateway" "test" {
   id = "ResTestB2BGateway"
   app_domain = "acceptance_test"
   document_routing_preprocessor = "store:///b2b-routing.xsl"
@@ -1627,11 +1627,11 @@ resource "datapower_b2bgateway" "test" {
   xml_manager = "default"
 }`,
     Data: `
-data "datapower_b2bgateway" "test" {
+data "datapower_b2b_gateway" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_b2bgateway" "acc_test" {
+resource "datapower_b2b_gateway" "acc_test" {
   id = "AccTest_B2BGateway"
   app_domain = datapower_domain.acc_test.app_domain
   document_routing_preprocessor = "store:///b2b-routing.xsl"
@@ -1643,31 +1643,31 @@ resource "datapower_b2bgateway" "acc_test" {
 var B2BPersistenceTestConfig = ModelTestConfig{
     Name:         "B2BPersistence",
     Resource: `
-resource "datapower_b2bpersistence" "test" {
+resource "datapower_b2b_persistence" "test" {
   raid_volume = "raid0"
   storage_size = 1024
   ha_enabled = false
 }`,
     Data: `
-data "datapower_b2bpersistence" "test" {
+data "datapower_b2b_persistence" "test" {
 }`,
     ModelOnly:    false,
 }
 var B2BProfileTestConfig = ModelTestConfig{
     Name:         "B2BProfile",
     Resource: `
-resource "datapower_b2bprofile" "test" {
+resource "datapower_b2b_profile" "test" {
   id = "ResTestB2BProfile"
   app_domain = "acceptance_test"
   business_i_ds = ["businessid"]
   destinations = ` + DmB2BDestinationTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_b2bprofile" "test" {
+data "datapower_b2b_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_b2bprofile" "acc_test" {
+resource "datapower_b2b_profile" "acc_test" {
   id = "AccTest_B2BProfile"
   app_domain = datapower_domain.acc_test.app_domain
   business_i_ds = ["businessid"]
@@ -1678,17 +1678,17 @@ resource "datapower_b2bprofile" "acc_test" {
 var B2BProfileGroupTestConfig = ModelTestConfig{
     Name:         "B2BProfileGroup",
     Resource: `
-resource "datapower_b2bprofilegroup" "test" {
+resource "datapower_b2b_profile_group" "test" {
   id = "ResTestB2BProfileGroup"
   app_domain = "acceptance_test"
   b2b_profiles = ` + DmB2BGroupedProfileTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_b2bprofilegroup" "test" {
+data "datapower_b2b_profile_group" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_b2bprofilegroup" "acc_test" {
+resource "datapower_b2b_profile_group" "acc_test" {
   id = "AccTest_B2BProfileGroup"
   app_domain = datapower_domain.acc_test.app_domain
   b2b_profiles = ` + DmB2BGroupedProfileTestConfig.GetModelTestBedListConfig() + `
@@ -1698,18 +1698,18 @@ resource "datapower_b2bprofilegroup" "acc_test" {
 var B2BXPathRoutingPolicyTestConfig = ModelTestConfig{
     Name:         "B2BXPathRoutingPolicy",
     Resource: `
-resource "datapower_b2bxpathroutingpolicy" "test" {
+resource "datapower_b2b_xpath_routing_policy" "test" {
   id = "ResTestB2BXPathRoutingPolicy"
   app_domain = "acceptance_test"
   sender_x_path = "senderpath"
   receiver_x_path = "senderpath"
 }`,
     Data: `
-data "datapower_b2bxpathroutingpolicy" "test" {
+data "datapower_b2b_xpath_routing_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_b2bxpathroutingpolicy" "acc_test" {
+resource "datapower_b2b_xpath_routing_policy" "acc_test" {
   id = "AccTest_B2BXPathRoutingPolicy"
   app_domain = datapower_domain.acc_test.app_domain
   sender_x_path = "senderpath"
@@ -1720,37 +1720,37 @@ resource "datapower_b2bxpathroutingpolicy" "acc_test" {
 var CORSPolicyTestConfig = ModelTestConfig{
     Name:         "CORSPolicy",
     Resource: `
-resource "datapower_corspolicy" "test" {
+resource "datapower_cors_policy" "test" {
   id = "ResTestCORSPolicy"
   app_domain = "acceptance_test"
   rule = ["AccTest_CORSRule"]
 }`,
     Data: `
-data "datapower_corspolicy" "test" {
+data "datapower_cors_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_corspolicy" "acc_test" {
+resource "datapower_cors_policy" "acc_test" {
   id = "AccTest_CORSPolicy"
   app_domain = datapower_domain.acc_test.app_domain
-  rule = [datapower_corsrule.acc_test.id]
+  rule = [datapower_cors_rule.acc_test.id]
 }`,
     ModelOnly:    false,
 }
 var CORSRuleTestConfig = ModelTestConfig{
     Name:         "CORSRule",
     Resource: `
-resource "datapower_corsrule" "test" {
+resource "datapower_cors_rule" "test" {
   id = "ResTestCORSRule"
   app_domain = "acceptance_test"
   allow_origin = ["origin"]
 }`,
     Data: `
-data "datapower_corsrule" "test" {
+data "datapower_cors_rule" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_corsrule" "acc_test" {
+resource "datapower_cors_rule" "acc_test" {
   id = "AccTest_CORSRule"
   app_domain = datapower_domain.acc_test.app_domain
   allow_origin = ["origin"]
@@ -1760,40 +1760,40 @@ resource "datapower_corsrule" "acc_test" {
 var CRLFetchTestConfig = ModelTestConfig{
     Name:         "CRLFetch",
     Resource: `
-resource "datapower_crlfetch" "test" {
+resource "datapower_crl_fetch" "test" {
 }`,
     Data: `
-data "datapower_crlfetch" "test" {
+data "datapower_crl_fetch" "test" {
 }`,
     ModelOnly:    false,
 }
 var CertMonitorTestConfig = ModelTestConfig{
     Name:         "CertMonitor",
     Resource: `
-resource "datapower_certmonitor" "test" {
+resource "datapower_cert_monitor" "test" {
   polling_interval = 1
   reminder_time = 30
   log_level = "warn"
   disable_expired_certs = false
 }`,
     Data: `
-data "datapower_certmonitor" "test" {
+data "datapower_cert_monitor" "test" {
 }`,
     ModelOnly:    false,
 }
 var CompileOptionsPolicyTestConfig = ModelTestConfig{
     Name:         "CompileOptionsPolicy",
     Resource: `
-resource "datapower_compileoptionspolicy" "test" {
+resource "datapower_compile_options_policy" "test" {
   id = "ResTestCompileOptionsPolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_compileoptionspolicy" "test" {
+data "datapower_compile_options_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_compileoptionspolicy" "acc_test" {
+resource "datapower_compile_options_policy" "acc_test" {
   id = "AccTest_CompileOptionsPolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1802,16 +1802,16 @@ resource "datapower_compileoptionspolicy" "acc_test" {
 var CompileSettingsTestConfig = ModelTestConfig{
     Name:         "CompileSettings",
     Resource: `
-resource "datapower_compilesettings" "test" {
+resource "datapower_compile_settings" "test" {
   id = "ResTestCompileSettings"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_compilesettings" "test" {
+data "datapower_compile_settings" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_compilesettings" "acc_test" {
+resource "datapower_compile_settings" "acc_test" {
   id = "AccTest_CompileSettings"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1820,16 +1820,16 @@ resource "datapower_compilesettings" "acc_test" {
 var ConfigDeploymentPolicyTestConfig = ModelTestConfig{
     Name:         "ConfigDeploymentPolicy",
     Resource: `
-resource "datapower_configdeploymentpolicy" "test" {
+resource "datapower_config_deployment_policy" "test" {
   id = "ResTestConfigDeploymentPolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_configdeploymentpolicy" "test" {
+data "datapower_config_deployment_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_configdeploymentpolicy" "acc_test" {
+resource "datapower_config_deployment_policy" "acc_test" {
   id = "AccTest_ConfigDeploymentPolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1838,16 +1838,16 @@ resource "datapower_configdeploymentpolicy" "acc_test" {
 var ConfigSequenceTestConfig = ModelTestConfig{
     Name:         "ConfigSequence",
     Resource: `
-resource "datapower_configsequence" "test" {
+resource "datapower_config_sequence" "test" {
   id = "ResTestConfigSequence"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_configsequence" "test" {
+data "datapower_config_sequence" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_configsequence" "acc_test" {
+resource "datapower_config_sequence" "acc_test" {
   id = "AccTest_ConfigSequence"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1856,16 +1856,16 @@ resource "datapower_configsequence" "acc_test" {
 var ConformancePolicyTestConfig = ModelTestConfig{
     Name:         "ConformancePolicy",
     Resource: `
-resource "datapower_conformancepolicy" "test" {
+resource "datapower_conformance_policy" "test" {
   id = "ResTestConformancePolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_conformancepolicy" "test" {
+data "datapower_conformance_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_conformancepolicy" "acc_test" {
+resource "datapower_conformance_policy" "acc_test" {
   id = "AccTest_ConformancePolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1874,16 +1874,16 @@ resource "datapower_conformancepolicy" "acc_test" {
 var ControlListTestConfig = ModelTestConfig{
     Name:         "ControlList",
     Resource: `
-resource "datapower_controllist" "test" {
+resource "datapower_control_list" "test" {
   id = "ResTestControlList"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_controllist" "test" {
+data "datapower_control_list" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_controllist" "acc_test" {
+resource "datapower_control_list" "acc_test" {
   id = "AccTest_ControlList"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1892,16 +1892,16 @@ resource "datapower_controllist" "acc_test" {
 var CookieAttributePolicyTestConfig = ModelTestConfig{
     Name:         "CookieAttributePolicy",
     Resource: `
-resource "datapower_cookieattributepolicy" "test" {
+resource "datapower_cookie_attribute_policy" "test" {
   id = "ResTestCookieAttributePolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_cookieattributepolicy" "test" {
+data "datapower_cookie_attribute_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_cookieattributepolicy" "acc_test" {
+resource "datapower_cookie_attribute_policy" "acc_test" {
   id = "AccTest_CookieAttributePolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -1910,7 +1910,7 @@ resource "datapower_cookieattributepolicy" "acc_test" {
 var CountMonitorTestConfig = ModelTestConfig{
     Name:         "CountMonitor",
     Resource: `
-resource "datapower_countmonitor" "test" {
+resource "datapower_count_monitor" "test" {
   id = "ResTestCountMonitor"
   app_domain = "acceptance_test"
   measure = "requests"
@@ -1919,34 +1919,34 @@ resource "datapower_countmonitor" "test" {
   message_type = "AccTest_MessageType"
 }`,
     Data: `
-data "datapower_countmonitor" "test" {
+data "datapower_count_monitor" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_countmonitor" "acc_test" {
+resource "datapower_count_monitor" "acc_test" {
   id = "AccTest_CountMonitor"
   app_domain = datapower_domain.acc_test.app_domain
   measure = "requests"
   source = "all"
   max_sources = 10000
-  message_type = datapower_messagetype.acc_test.id
+  message_type = datapower_message_type.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var CryptoCertificateTestConfig = ModelTestConfig{
     Name:         "CryptoCertificate",
     Resource: `
-resource "datapower_cryptocertificate" "test" {
+resource "datapower_crypto_certificate" "test" {
   id = "ResTestCryptoCertificate"
   app_domain = "acceptance_test"
   filename = "cert:///acc-test-server.crt"
 }`,
     Data: `
-data "datapower_cryptocertificate" "test" {
+data "datapower_crypto_certificate" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_cryptocertificate" "acc_test" {
+resource "datapower_crypto_certificate" "acc_test" {
   id = "AccTest_CryptoCertificate"
   app_domain = datapower_domain.acc_test.app_domain
   filename = datapower_file.acc_test_server_crt.remote_path
@@ -1956,60 +1956,60 @@ resource "datapower_cryptocertificate" "acc_test" {
 var CryptoFWCredTestConfig = ModelTestConfig{
     Name:         "CryptoFWCred",
     Resource: `
-resource "datapower_cryptofwcred" "test" {
+resource "datapower_crypto_fw_cred" "test" {
   id = "ResTestCryptoFWCred"
   app_domain = "acceptance_test"
   private_key = ["AccTest_CryptoKey"]
 }`,
     Data: `
-data "datapower_cryptofwcred" "test" {
+data "datapower_crypto_fw_cred" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_cryptofwcred" "acc_test" {
+resource "datapower_crypto_fw_cred" "acc_test" {
   id = "AccTest_CryptoFWCred"
   app_domain = datapower_domain.acc_test.app_domain
-  private_key = [datapower_cryptokey.acc_test.id]
+  private_key = [datapower_crypto_key.acc_test.id]
 }`,
     ModelOnly:    false,
 }
 var CryptoIdentCredTestConfig = ModelTestConfig{
     Name:         "CryptoIdentCred",
     Resource: `
-resource "datapower_cryptoidentcred" "test" {
+resource "datapower_crypto_ident_cred" "test" {
   id = "ResTestCryptoIdentCred"
   app_domain = "acceptance_test"
   key = "AccTest_CryptoKey"
   certificate = "AccTest_CryptoCertificate"
 }`,
     Data: `
-data "datapower_cryptoidentcred" "test" {
+data "datapower_crypto_ident_cred" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_cryptoidentcred" "acc_test" {
+resource "datapower_crypto_ident_cred" "acc_test" {
   id = "AccTest_CryptoIdentCred"
   app_domain = datapower_domain.acc_test.app_domain
-  key = datapower_cryptokey.acc_test.id
-  certificate = datapower_cryptocertificate.acc_test.id
+  key = datapower_crypto_key.acc_test.id
+  certificate = datapower_crypto_certificate.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var CryptoKerberosKDCTestConfig = ModelTestConfig{
     Name:         "CryptoKerberosKDC",
     Resource: `
-resource "datapower_cryptokerberoskdc" "test" {
+resource "datapower_crypto_kerberos_kdc" "test" {
   id = "ResTestCryptoKerberosKDC"
   app_domain = "acceptance_test"
   realm = "realm"
   server = "localhost"
 }`,
     Data: `
-data "datapower_cryptokerberoskdc" "test" {
+data "datapower_crypto_kerberos_kdc" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_cryptokerberoskdc" "acc_test" {
+resource "datapower_crypto_kerberos_kdc" "acc_test" {
   id = "AccTest_CryptoKerberosKDC"
   app_domain = datapower_domain.acc_test.app_domain
   realm = "realm"
@@ -2020,17 +2020,17 @@ resource "datapower_cryptokerberoskdc" "acc_test" {
 var CryptoKerberosKeytabTestConfig = ModelTestConfig{
     Name:         "CryptoKerberosKeytab",
     Resource: `
-resource "datapower_cryptokerberoskeytab" "test" {
+resource "datapower_crypto_kerberos_keytab" "test" {
   id = "ResTestCryptoKerberosKeytab"
   app_domain = "acceptance_test"
   filename = "cert:///kerberos-keytab"
 }`,
     Data: `
-data "datapower_cryptokerberoskeytab" "test" {
+data "datapower_crypto_kerberos_keytab" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_cryptokerberoskeytab" "acc_test" {
+resource "datapower_crypto_kerberos_keytab" "acc_test" {
   id = "AccTest_CryptoKerberosKeytab"
   app_domain = datapower_domain.acc_test.app_domain
   filename = datapower_file.kerberos-keytab.remote_path
@@ -2040,39 +2040,39 @@ resource "datapower_cryptokerberoskeytab" "acc_test" {
 var CryptoKeyTestConfig = ModelTestConfig{
     Name:         "CryptoKey",
     Resource: `
-resource "datapower_cryptokey" "test" {
+resource "datapower_crypto_key" "test" {
   id = "ResTestCryptoKey"
   app_domain = "acceptance_test"
   filename = "cert:///acc-test-server.key"
   alias = "AccTest_PasswordAlias"
 }`,
     Data: `
-data "datapower_cryptokey" "test" {
+data "datapower_crypto_key" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_cryptokey" "acc_test" {
+resource "datapower_crypto_key" "acc_test" {
   id = "AccTest_CryptoKey"
   app_domain = datapower_domain.acc_test.app_domain
   filename = datapower_file.acc_test_server_key.remote_path
-  alias = datapower_passwordalias.acc_test.id
+  alias = datapower_password_alias.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var CryptoSSKeyTestConfig = ModelTestConfig{
     Name:         "CryptoSSKey",
     Resource: `
-resource "datapower_cryptosskey" "test" {
+resource "datapower_crypto_sskey" "test" {
   id = "ResTestCryptoSSKey"
   app_domain = "acceptance_test"
   filename = "cert://tokensecret"
 }`,
     Data: `
-data "datapower_cryptosskey" "test" {
+data "datapower_crypto_sskey" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_cryptosskey" "acc_test" {
+resource "datapower_crypto_sskey" "acc_test" {
   id = "AccTest_CryptoSSKey"
   app_domain = datapower_domain.acc_test.app_domain
   filename = datapower_file.token-secret.remote_path
@@ -2082,16 +2082,16 @@ resource "datapower_cryptosskey" "acc_test" {
 var CryptoValCredTestConfig = ModelTestConfig{
     Name:         "CryptoValCred",
     Resource: `
-resource "datapower_cryptovalcred" "test" {
+resource "datapower_crypto_val_cred" "test" {
   id = "ResTestCryptoValCred"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_cryptovalcred" "test" {
+data "datapower_crypto_val_cred" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_cryptovalcred" "acc_test" {
+resource "datapower_crypto_val_cred" "acc_test" {
   id = "AccTest_CryptoValCred"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -2100,27 +2100,27 @@ resource "datapower_cryptovalcred" "acc_test" {
 var DNSNameServiceTestConfig = ModelTestConfig{
     Name:         "DNSNameService",
     Resource: `
-resource "datapower_dnsnameservice" "test" {
+resource "datapower_dns_name_service" "test" {
   load_balance_algorithm = "first-alive"
 }`,
     Data: `
-data "datapower_dnsnameservice" "test" {
+data "datapower_dns_name_service" "test" {
 }`,
     ModelOnly:    false,
 }
 var DeploymentPolicyParametersBindingTestConfig = ModelTestConfig{
     Name:         "DeploymentPolicyParametersBinding",
     Resource: `
-resource "datapower_deploymentpolicyparametersbinding" "test" {
+resource "datapower_deployment_policy_parameters_binding" "test" {
   id = "ResTestDeploymentPolicyParametersBinding"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_deploymentpolicyparametersbinding" "test" {
+data "datapower_deployment_policy_parameters_binding" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_deploymentpolicyparametersbinding" "acc_test" {
+resource "datapower_deployment_policy_parameters_binding" "acc_test" {
   id = "AccTest_DeploymentPolicyParametersBinding"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -2129,12 +2129,12 @@ resource "datapower_deploymentpolicyparametersbinding" "acc_test" {
 var DistributedVariableTestConfig = ModelTestConfig{
     Name:         "DistributedVariable",
     Resource: `
-resource "datapower_distributedvariable" "test" {
+resource "datapower_distributed_variable" "test" {
   app_domain = "acceptance_test"
   gateway_peering = "default-gateway-peering"
 }`,
     Data: `
-data "datapower_distributedvariable" "test" {
+data "datapower_distributed_variable" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -2285,7 +2285,7 @@ var DmAPIDataTypeDefinitionTestConfig = ModelTestConfig{
 }`,
     ModelTestBed: `{
   name = "dtdefname"
-  schema = datapower_apischema.acc_test.id
+  schema = datapower_api_schema.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -2501,7 +2501,7 @@ var DmB2BActiveProfileTestConfig = ModelTestConfig{
   partner_profile = "AccTest_B2BProfile"
 }`,
     ModelTestBed: `{
-  partner_profile = datapower_b2bprofile.acc_test.id
+  partner_profile = datapower_b2b_profile.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -2522,10 +2522,10 @@ var DmB2BCPAEntryTestConfig = ModelTestConfig{
   external_partner = "AccTest_B2BProfile"
 }`,
     ModelTestBed: `{
-  cpa = datapower_b2bcpa.acc_test.id
-  collaboration = datapower_b2bcpacollaboration.acc_test.id
-  internal_partner = datapower_b2bprofile.acc_test.id
-  external_partner = datapower_b2bprofile.acc_test.id
+  cpa = datapower_b2b_cpa.acc_test.id
+  collaboration = datapower_b2b_cpa_collaboration.acc_test.id
+  internal_partner = datapower_b2b_profile.acc_test.id
+  external_partner = datapower_b2b_profile.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -2563,7 +2563,7 @@ var DmB2BGroupedProfileTestConfig = ModelTestConfig{
   partner_profile = "AccTest_B2BProfile"
 }`,
     ModelTestBed: `{
-  partner_profile = datapower_b2bprofile.acc_test.id
+  partner_profile = datapower_b2b_profile.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -2623,7 +2623,7 @@ var DmCPACollaborationActionTestConfig = ModelTestConfig{
   name = "cpacollaborationactionname"
   value = "value"
   capability = "cansend"
-  sender_setting = datapower_b2bcpasendersetting.acc_test.id
+  sender_setting = datapower_b2b_cpa_sender_setting.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -2634,7 +2634,7 @@ var DmCRLFetchConfigTestConfig = ModelTestConfig{
   refresh_interval = 240
 }`,
     ModelTestBed: `{
-  issuer_valcred = datapower_cryptovalcred.acc_test.id
+  issuer_valcred = datapower_crypto_valcred.acc_test.id
   refresh_interval = 240
 }`,
     ModelOnly:    true,
@@ -2739,7 +2739,7 @@ var DmCountMonitorFilterTestConfig = ModelTestConfig{
   interval = 1000
   rate_limit = 50
   burst_limit = 100
-  action = datapower_filteraction.acc_test.id
+  action = datapower_filter_action.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -2751,7 +2751,7 @@ var DmDefinitionLinkTestConfig = ModelTestConfig{
 }`,
     ModelTestBed: `{
   short_name = "shortname"
-  definition = datapower_ratelimitdefinition.acc_test.id
+  definition = datapower_rate_limit_definition.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -2817,7 +2817,7 @@ var DmDurationMonitorFilterTestConfig = ModelTestConfig{
     ModelTestBed: `{
   name = "ResTestDmDurationMonitorFilter"
   value = 1
-  action = datapower_filteraction.acc_test.id
+  action = datapower_filter_action.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -3117,7 +3117,7 @@ var DmHostToSSLServerProfileTestConfig = ModelTestConfig{
 }`,
     ModelTestBed: `{
   host_name_wildmat = "hostname_wildmat"
-  ssl_server = datapower_sslserverprofile.acc_test.id
+  ssl_server = datapower_ssl_server_profile.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -3579,9 +3579,9 @@ var DmProfileCPABindingTestConfig = ModelTestConfig{
   collaboration = "AccTest_B2BCPACollaboration"
 }`,
     ModelTestBed: `{
-  internal_partner = datapower_b2bprofile.acc_test.id
-  cpa = datapower_b2bcpa.acc_test.id
-  collaboration = datapower_b2bcpacollaboration.acc_test.id
+  internal_partner = datapower_b2b_profile.acc_test.id
+  cpa = datapower_b2b_cpa.acc_test.id
+  collaboration = datapower_b2b_cpa_collaboration.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -3607,7 +3607,7 @@ var DmPubkeyAuthPolicyTestConfig = ModelTestConfig{
 }`,
     ModelTestBed: `{
   reg_exp = "*"
-  crypto_key = datapower_cryptokey.acc_test.id
+  crypto_key = datapower_crypto_key.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -3675,7 +3675,7 @@ var DmRateLimitInfoDomainNamedTestConfig = ModelTestConfig{
   name = "AccTest_RateLimitDefinition"
 }`,
     ModelTestBed: `{
-  name = datapower_ratelimitdefinition.acc_test.id
+  name = datapower_rate_limit_definition.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -3724,7 +3724,7 @@ var DmSFTPPolicyTestConfig = ModelTestConfig{
 }`,
     ModelTestBed: `{
   reg_exp = "*"
-  ssh_client_profile = datapower_sshclientprofile.acc_test.id
+  ssh_client_profile = datapower_ssh_client_profile.acc_test.id
   use_unique_filenames = false
 }`,
     ModelOnly:    true,
@@ -4080,7 +4080,7 @@ var DmTAMFedDirTestConfig = ModelTestConfig{
   host = "ldap.host"
   port = 389
   bind_dn = "dn"
-  bind_pw = datapower_passwordalias.acc_test.id
+  bind_pw = datapower_password_alias.acc_test.id
   use_ssl = false
 }`,
     ModelOnly:    true,
@@ -4269,7 +4269,7 @@ var DmWSMPolicyMapTestConfig = ModelTestConfig{
     ModelTestBed: `{
   wsdl_component_type = "all"
   match = "__default-accept-service-providers__"
-  rule = datapower_wsstylepolicyrule.acc_test.id
+  rule = datapower_ws_style_policy_rule.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -4280,7 +4280,7 @@ var DmWSOperationConformancePolicyTestConfig = ModelTestConfig{
   conformance_policy_wsdl_component_type = "all"
 }`,
     ModelTestBed: `{
-  conformance_policy = datapower_conformancepolicy.acc_test.id
+  conformance_policy = datapower_conformance_policy.acc_test.id
   conformance_policy_wsdl_component_type = "all"
 }`,
     ModelOnly:    true,
@@ -4322,7 +4322,7 @@ var DmWSPolicyParametersTestConfig = ModelTestConfig{
   policy_param_wsdl_component_type = "all"
 }`,
     ModelTestBed: `{
-  policy_param_parameters = datapower_policyparameters.acc_test.id
+  policy_param_parameters = datapower_policy_parameters.acc_test.id
   policy_param_wsdl_component_type = "all"
 }`,
     ModelOnly:    true,
@@ -4381,7 +4381,7 @@ var DmWebAppRequestPolicyMapTestConfig = ModelTestConfig{
 }`,
     ModelTestBed: `{
   match = "__default-accept-service-providers__"
-  rule = datapower_webapprequest.acc_test.id
+  rule = datapower_web_app_request.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -4393,7 +4393,7 @@ var DmWebAppResponsePolicyMapTestConfig = ModelTestConfig{
 }`,
     ModelTestBed: `{
   match = "__default-accept-service-providers__"
-  rule = datapower_webappresponse.acc_test.id
+  rule = datapower_web_app_response.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -4405,7 +4405,7 @@ var DmWebGWErrorPolicyMapTestConfig = ModelTestConfig{
 }`,
     ModelTestBed: `{
   match = "__default-accept-service-providers__"
-  action = datapower_mpgwerroraction.acc_test.id
+  action = datapower_mpgw_error_action.acc_test.id
 }`,
     ModelOnly:    true,
 }
@@ -4468,18 +4468,18 @@ var DmXPathRoutingRuleTestConfig = ModelTestConfig{
 var DocumentCryptoMapTestConfig = ModelTestConfig{
     Name:         "DocumentCryptoMap",
     Resource: `
-resource "datapower_documentcryptomap" "test" {
+resource "datapower_document_crypto_map" "test" {
   id = "ResTestDocumentCryptoMap"
   app_domain = "acceptance_test"
   operation = "encrypt"
   x_path = ["*",]
 }`,
     Data: `
-data "datapower_documentcryptomap" "test" {
+data "datapower_document_crypto_map" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_documentcryptomap" "acc_test" {
+resource "datapower_document_crypto_map" "acc_test" {
   id = "AccTest_DocumentCryptoMap"
   app_domain = datapower_domain.acc_test.app_domain
   operation = "encrypt"
@@ -4505,11 +4505,11 @@ resource "datapower_domain" "acc_test" {
 var DomainAvailabilityTestConfig = ModelTestConfig{
     Name:         "DomainAvailability",
     Resource: `
-resource "datapower_domainavailability" "test" {
+resource "datapower_domain_availability" "test" {
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_domainavailability" "test" {
+data "datapower_domain_availability" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -4517,12 +4517,12 @@ data "datapower_domainavailability" "test" {
 var DomainSettingsTestConfig = ModelTestConfig{
     Name:         "DomainSettings",
     Resource: `
-resource "datapower_domainsettings" "test" {
+resource "datapower_domain_settings" "test" {
   app_domain = "acceptance_test"
   password_treatment = "masked"
 }`,
     Data: `
-data "datapower_domainsettings" "test" {
+data "datapower_domain_settings" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -4530,40 +4530,40 @@ data "datapower_domainsettings" "test" {
 var DurationMonitorTestConfig = ModelTestConfig{
     Name:         "DurationMonitor",
     Resource: `
-resource "datapower_durationmonitor" "test" {
+resource "datapower_duration_monitor" "test" {
   id = "ResTestDurationMonitor"
   app_domain = "acceptance_test"
   measure = "messages"
   message_type = "AccTest_MessageType"
 }`,
     Data: `
-data "datapower_durationmonitor" "test" {
+data "datapower_duration_monitor" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_durationmonitor" "acc_test" {
+resource "datapower_duration_monitor" "acc_test" {
   id = "AccTest_DurationMonitor"
   app_domain = datapower_domain.acc_test.app_domain
   measure = "messages"
-  message_type = datapower_messagetype.acc_test.id
+  message_type = datapower_message_type.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var EBMS2SourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "EBMS2SourceProtocolHandler",
     Resource: `
-resource "datapower_ebms2sourceprotocolhandler" "test" {
+resource "datapower_ebms2_source_protocol_handler" "test" {
   id = "ResTestEBMS2SourceProtocolHandler"
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 80
 }`,
     Data: `
-data "datapower_ebms2sourceprotocolhandler" "test" {
+data "datapower_ebms2_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_ebms2sourceprotocolhandler" "acc_test" {
+resource "datapower_ebms2_source_protocol_handler" "acc_test" {
   id = "AccTest_EBMS2SourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
@@ -4574,18 +4574,18 @@ resource "datapower_ebms2sourceprotocolhandler" "acc_test" {
 var EBMS3SourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "EBMS3SourceProtocolHandler",
     Resource: `
-resource "datapower_ebms3sourceprotocolhandler" "test" {
+resource "datapower_ebms3_source_protocol_handler" "test" {
   id = "ResTestEBMS3SourceProtocolHandler"
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 80
 }`,
     Data: `
-data "datapower_ebms3sourceprotocolhandler" "test" {
+data "datapower_ebms3_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_ebms3sourceprotocolhandler" "acc_test" {
+resource "datapower_ebms3_source_protocol_handler" "acc_test" {
   id = "AccTest_EBMS3SourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
@@ -4596,17 +4596,17 @@ resource "datapower_ebms3sourceprotocolhandler" "acc_test" {
 var ErrorReportSettingsTestConfig = ModelTestConfig{
     Name:         "ErrorReportSettings",
     Resource: `
-resource "datapower_errorreportsettings" "test" {
+resource "datapower_error_report_settings" "test" {
 }`,
     Data: `
-data "datapower_errorreportsettings" "test" {
+data "datapower_error_report_settings" "test" {
 }`,
     ModelOnly:    false,
 }
 var FTPFilePollerSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "FTPFilePollerSourceProtocolHandler",
     Resource: `
-resource "datapower_ftpfilepollersourceprotocolhandler" "test" {
+resource "datapower_ftp_file_poller_source_protocol_handler" "test" {
   id = "ResTestFTPFilePollerSourceProtocolHandler"
   app_domain = "acceptance_test"
   target_directory = "ftp://user:password@host:port/path/"
@@ -4616,11 +4616,11 @@ resource "datapower_ftpfilepollersourceprotocolhandler" "test" {
   xml_manager = "default"
 }`,
     Data: `
-data "datapower_ftpfilepollersourceprotocolhandler" "test" {
+data "datapower_ftp_file_poller_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_ftpfilepollersourceprotocolhandler" "acc_test" {
+resource "datapower_ftp_file_poller_source_protocol_handler" "acc_test" {
   id = "AccTest_FTPFilePollerSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   target_directory = "ftp://user:password@host:port/path/"
@@ -4634,16 +4634,16 @@ resource "datapower_ftpfilepollersourceprotocolhandler" "acc_test" {
 var FTPQuoteCommandsTestConfig = ModelTestConfig{
     Name:         "FTPQuoteCommands",
     Resource: `
-resource "datapower_ftpquotecommands" "test" {
+resource "datapower_ftp_quote_commands" "test" {
   id = "ResTestFTPQuoteCommands"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_ftpquotecommands" "test" {
+data "datapower_ftp_quote_commands" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_ftpquotecommands" "acc_test" {
+resource "datapower_ftp_quote_commands" "acc_test" {
   id = "AccTest_FTPQuoteCommands"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -4652,18 +4652,18 @@ resource "datapower_ftpquotecommands" "acc_test" {
 var FTPServerSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "FTPServerSourceProtocolHandler",
     Resource: `
-resource "datapower_ftpserversourceprotocolhandler" "test" {
+resource "datapower_ftp_server_source_protocol_handler" "test" {
   id = "ResTestFTPServerSourceProtocolHandler"
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 21
 }`,
     Data: `
-data "datapower_ftpserversourceprotocolhandler" "test" {
+data "datapower_ftp_server_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_ftpserversourceprotocolhandler" "acc_test" {
+resource "datapower_ftp_server_source_protocol_handler" "acc_test" {
   id = "AccTest_FTPServerSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
@@ -4674,29 +4674,29 @@ resource "datapower_ftpserversourceprotocolhandler" "acc_test" {
 var FileSystemUsageMonitorTestConfig = ModelTestConfig{
     Name:         "FileSystemUsageMonitor",
     Resource: `
-resource "datapower_filesystemusagemonitor" "test" {
+resource "datapower_file_system_usage_monitor" "test" {
   polling_interval = 60
   all_system = true
 }`,
     Data: `
-data "datapower_filesystemusagemonitor" "test" {
+data "datapower_file_system_usage_monitor" "test" {
 }`,
     ModelOnly:    false,
 }
 var FilterActionTestConfig = ModelTestConfig{
     Name:         "FilterAction",
     Resource: `
-resource "datapower_filteraction" "test" {
+resource "datapower_filter_action" "test" {
   id = "ResTestFilterAction"
   app_domain = "acceptance_test"
   type = "notify"
 }`,
     Data: `
-data "datapower_filteraction" "test" {
+data "datapower_filter_action" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_filteraction" "acc_test" {
+resource "datapower_filter_action" "acc_test" {
   id = "AccTest_FilterAction"
   app_domain = datapower_domain.acc_test.app_domain
   type = "notify"
@@ -4706,7 +4706,7 @@ resource "datapower_filteraction" "acc_test" {
 var FormsLoginPolicyTestConfig = ModelTestConfig{
     Name:         "FormsLoginPolicy",
     Resource: `
-resource "datapower_formsloginpolicy" "test" {
+resource "datapower_forms_login_policy" "test" {
   id = "ResTestFormsLoginPolicy"
   app_domain = "acceptance_test"
   login_form = "/LoginPage.htm"
@@ -4721,11 +4721,11 @@ resource "datapower_formsloginpolicy" "test" {
   form_processing_url = "/j_security_check"
 }`,
     Data: `
-data "datapower_formsloginpolicy" "test" {
+data "datapower_forms_login_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_formsloginpolicy" "acc_test" {
+resource "datapower_forms_login_policy" "acc_test" {
   id = "AccTest_FormsLoginPolicy"
   app_domain = datapower_domain.acc_test.app_domain
   login_form = "/LoginPage.htm"
@@ -4744,29 +4744,29 @@ resource "datapower_formsloginpolicy" "acc_test" {
 var GWSRemoteDebugTestConfig = ModelTestConfig{
     Name:         "GWSRemoteDebug",
     Resource: `
-resource "datapower_gwsremotedebug" "test" {
+resource "datapower_gws_remote_debug" "test" {
   local_port = 9229
   local_address = "0.0.0.0"
 }`,
     Data: `
-data "datapower_gwsremotedebug" "test" {
+data "datapower_gws_remote_debug" "test" {
 }`,
     ModelOnly:    false,
 }
 var GWScriptSettingsTestConfig = ModelTestConfig{
     Name:         "GWScriptSettings",
     Resource: `
-resource "datapower_gwscriptsettings" "test" {
+resource "datapower_gw_script_settings" "test" {
 }`,
     Data: `
-data "datapower_gwscriptsettings" "test" {
+data "datapower_gw_script_settings" "test" {
 }`,
     ModelOnly:    false,
 }
 var GatewayPeeringTestConfig = ModelTestConfig{
     Name:         "GatewayPeering",
     Resource: `
-resource "datapower_gatewaypeering" "test" {
+resource "datapower_gateway_peering" "test" {
   id = "ResTestGatewayPeering"
   app_domain = "acceptance_test"
   local_address = "5.5.5.5"
@@ -4774,7 +4774,7 @@ resource "datapower_gatewaypeering" "test" {
   enable_ssl = false
 }`,
     Data: `
-data "datapower_gatewaypeering" "test" {
+data "datapower_gateway_peering" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -4789,14 +4789,14 @@ data "datapower_gatewaypeering" "test" {
 var GatewayPeeringGroupTestConfig = ModelTestConfig{
     Name:         "GatewayPeeringGroup",
     Resource: `
-resource "datapower_gatewaypeeringgroup" "test" {
+resource "datapower_gateway_peering_group" "test" {
   id = "ResTestGatewayPeeringGroup"
   app_domain = "acceptance_test"
   mode = "peer"
   enable_ssl = false
 }`,
     Data: `
-data "datapower_gatewaypeeringgroup" "test" {
+data "datapower_gateway_peering_group" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -4810,7 +4810,7 @@ data "datapower_gatewaypeeringgroup" "test" {
 var GatewayPeeringManagerTestConfig = ModelTestConfig{
     Name:         "GatewayPeeringManager",
     Resource: `
-resource "datapower_gatewaypeeringmanager" "test" {
+resource "datapower_gateway_peering_manager" "test" {
   app_domain = "acceptance_test"
   api_connect_gateway_service = "default-gateway-peering"
   rate_limit = "default-gateway-peering"
@@ -4818,7 +4818,7 @@ resource "datapower_gatewaypeeringmanager" "test" {
   ratelimit_module = "default-gateway-peering"
 }`,
     Data: `
-data "datapower_gatewaypeeringmanager" "test" {
+data "datapower_gateway_peering_manager" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -4826,7 +4826,7 @@ data "datapower_gatewaypeeringmanager" "test" {
 var GitOpsTestConfig = ModelTestConfig{
     Name:         "GitOps",
     Resource: `
-resource "datapower_gitops" "test" {
+resource "datapower_git_ops" "test" {
   app_domain = "acceptance_test"
   connection_type = "https"
   mode = "read-write"
@@ -4835,7 +4835,7 @@ resource "datapower_gitops" "test" {
   remote_location = "https://github.com/ScottW514/terraform-provider-datapower"
 }`,
     Data: `
-data "datapower_gitops" "test" {
+data "datapower_git_ops" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -4843,16 +4843,16 @@ data "datapower_gitops" "test" {
 var GitOpsTemplateTestConfig = ModelTestConfig{
     Name:         "GitOpsTemplate",
     Resource: `
-resource "datapower_gitopstemplate" "test" {
+resource "datapower_git_ops_template" "test" {
   id = "ResTestGitOpsTemplate"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_gitopstemplate" "test" {
+data "datapower_git_ops_template" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_gitopstemplate" "acc_test" {
+resource "datapower_git_ops_template" "acc_test" {
   id = "AccTest_GitOpsTemplate"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -4861,46 +4861,46 @@ resource "datapower_gitopstemplate" "acc_test" {
 var GitOpsVariablesTestConfig = ModelTestConfig{
     Name:         "GitOpsVariables",
     Resource: `
-resource "datapower_gitopsvariables" "test" {
+resource "datapower_git_ops_variables" "test" {
 }`,
     Data: `
-data "datapower_gitopsvariables" "test" {
+data "datapower_git_ops_variables" "test" {
 }`,
     ModelOnly:    false,
 }
 var GraphQLSchemaOptionsTestConfig = ModelTestConfig{
     Name:         "GraphQLSchemaOptions",
     Resource: `
-resource "datapower_graphqlschemaoptions" "test" {
+resource "datapower_graphql_schema_options" "test" {
   id = "ResTestGraphQLSchemaOptions"
   app_domain = "acceptance_test"
   api = "AccTest_APIDefinition"
 }`,
     Data: `
-data "datapower_graphqlschemaoptions" "test" {
+data "datapower_graphql_schema_options" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_graphqlschemaoptions" "acc_test" {
+resource "datapower_graphql_schema_options" "acc_test" {
   id = "AccTest_GraphQLSchemaOptions"
   app_domain = datapower_domain.acc_test.app_domain
-  api = datapower_apidefinition.acc_test.id
+  api = datapower_api_definition.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var HTTPInputConversionMapTestConfig = ModelTestConfig{
     Name:         "HTTPInputConversionMap",
     Resource: `
-resource "datapower_httpinputconversionmap" "test" {
+resource "datapower_http_input_conversion_map" "test" {
   id = "ResTestHTTPInputConversionMap"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_httpinputconversionmap" "test" {
+data "datapower_http_input_conversion_map" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_httpinputconversionmap" "acc_test" {
+resource "datapower_http_input_conversion_map" "acc_test" {
   id = "AccTest_HTTPInputConversionMap"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -4909,40 +4909,40 @@ resource "datapower_httpinputconversionmap" "acc_test" {
 var HTTPSSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "HTTPSSourceProtocolHandler",
     Resource: `
-resource "datapower_httpssourceprotocolhandler" "test" {
+resource "datapower_https_source_protocol_handler" "test" {
   id = "ResTestHTTPSSourceProtocolHandler"
   app_domain = "acceptance_test"
   ssl_server_config_type = "server"
   ssl_server = "AccTest_SSLServerProfile"
 }`,
     Data: `
-data "datapower_httpssourceprotocolhandler" "test" {
+data "datapower_https_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_httpssourceprotocolhandler" "acc_test" {
+resource "datapower_https_source_protocol_handler" "acc_test" {
   id = "AccTest_HTTPSSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   ssl_server_config_type = "server"
-  ssl_server = datapower_sslserverprofile.acc_test.id
+  ssl_server = datapower_ssl_server_profile.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var HTTPSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "HTTPSourceProtocolHandler",
     Resource: `
-resource "datapower_httpsourceprotocolhandler" "test" {
+resource "datapower_http_source_protocol_handler" "test" {
   id = "ResTestHTTPSourceProtocolHandler"
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 8088
 }`,
     Data: `
-data "datapower_httpsourceprotocolhandler" "test" {
+data "datapower_http_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_httpsourceprotocolhandler" "acc_test" {
+resource "datapower_http_source_protocol_handler" "acc_test" {
   id = "AccTest_HTTPSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
@@ -4953,16 +4953,16 @@ resource "datapower_httpsourceprotocolhandler" "acc_test" {
 var HTTPUserAgentTestConfig = ModelTestConfig{
     Name:         "HTTPUserAgent",
     Resource: `
-resource "datapower_httpuseragent" "test" {
+resource "datapower_http_user_agent" "test" {
   id = "ResTestHTTPUserAgent"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_httpuseragent" "test" {
+data "datapower_http_user_agent" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_httpuseragent" "acc_test" {
+resource "datapower_http_user_agent" "acc_test" {
   id = "AccTest_HTTPUserAgent"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -4971,15 +4971,15 @@ resource "datapower_httpuseragent" "acc_test" {
 var HostAliasTestConfig = ModelTestConfig{
     Name:         "HostAlias",
     Resource: `
-resource "datapower_hostalias" "test" {
+resource "datapower_host_alias" "test" {
   id = "ResTest_HostAlias"
   ip_address = "10.10.10.10"
 }`,
     Data: `
-data "datapower_hostalias" "test" {
+data "datapower_host_alias" "test" {
 }`,
     TestBed: `
-resource "datapower_hostalias" "acc_test" {
+resource "datapower_host_alias" "acc_test" {
   id = "AccTest_HostAlias"
   ip_address = "10.10.10.10"
 }`,
@@ -4988,7 +4988,7 @@ resource "datapower_hostalias" "acc_test" {
 var ImportPackageTestConfig = ModelTestConfig{
     Name:         "ImportPackage",
     Resource: `
-resource "datapower_importpackage" "test" {
+resource "datapower_import_package" "test" {
   id = "ResTestImportPackage"
   app_domain = "acceptance_test"
   url = "http://localhost/config.zip"
@@ -4997,11 +4997,11 @@ resource "datapower_importpackage" "test" {
   overwrite_objects = true
 }`,
     Data: `
-data "datapower_importpackage" "test" {
+data "datapower_import_package" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_importpackage" "acc_test" {
+resource "datapower_import_package" "acc_test" {
   id = "AccTest_ImportPackage"
   app_domain = datapower_domain.acc_test.app_domain
   url = "http://localhost/config.zip"
@@ -5014,17 +5014,17 @@ resource "datapower_importpackage" "acc_test" {
 var IncludeConfigTestConfig = ModelTestConfig{
     Name:         "IncludeConfig",
     Resource: `
-resource "datapower_includeconfig" "test" {
+resource "datapower_include_config" "test" {
   id = "ResTestIncludeConfig"
   app_domain = "acceptance_test"
   url = "http://localhost/config.zip"
 }`,
     Data: `
-data "datapower_includeconfig" "test" {
+data "datapower_include_config" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_includeconfig" "acc_test" {
+resource "datapower_include_config" "acc_test" {
   id = "AccTest_IncludeConfig"
   app_domain = datapower_domain.acc_test.app_domain
   url = "http://localhost/config.zip"
@@ -5034,17 +5034,17 @@ resource "datapower_includeconfig" "acc_test" {
 var InteropServiceTestConfig = ModelTestConfig{
     Name:         "InteropService",
     Resource: `
-resource "datapower_interopservice" "test" {
+resource "datapower_interop_service" "test" {
 }`,
     Data: `
-data "datapower_interopservice" "test" {
+data "datapower_interop_service" "test" {
 }`,
     ModelOnly:    false,
 }
 var JOSERecipientIdentifierTestConfig = ModelTestConfig{
     Name:         "JOSERecipientIdentifier",
     Resource: `
-resource "datapower_joserecipientidentifier" "test" {
+resource "datapower_jose_recipient_identifier" "test" {
   id = "ResTestJOSERecipientIdentifier"
   app_domain = "acceptance_test"
   type = "key"
@@ -5052,15 +5052,15 @@ resource "datapower_joserecipientidentifier" "test" {
   header_param = ` + DmJOSEHeaderTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_joserecipientidentifier" "test" {
+data "datapower_jose_recipient_identifier" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_joserecipientidentifier" "acc_test" {
+resource "datapower_jose_recipient_identifier" "acc_test" {
   id = "AccTest_JOSERecipientIdentifier"
   app_domain = datapower_domain.acc_test.app_domain
   type = "key"
-  key = datapower_cryptokey.acc_test.id
+  key = datapower_crypto_key.acc_test.id
   header_param = ` + DmJOSEHeaderTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
@@ -5068,7 +5068,7 @@ resource "datapower_joserecipientidentifier" "acc_test" {
 var JOSESignatureIdentifierTestConfig = ModelTestConfig{
     Name:         "JOSESignatureIdentifier",
     Resource: `
-resource "datapower_josesignatureidentifier" "test" {
+resource "datapower_jose_signature_identifier" "test" {
   id = "ResTestJOSESignatureIdentifier"
   app_domain = "acceptance_test"
   type = "certificate"
@@ -5076,15 +5076,15 @@ resource "datapower_josesignatureidentifier" "test" {
   header_param = ` + DmJOSEHeaderTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_josesignatureidentifier" "test" {
+data "datapower_jose_signature_identifier" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_josesignatureidentifier" "acc_test" {
+resource "datapower_jose_signature_identifier" "acc_test" {
   id = "AccTest_JOSESignatureIdentifier"
   app_domain = datapower_domain.acc_test.app_domain
   type = "certificate"
-  certificate = datapower_cryptocertificate.acc_test.id
+  certificate = datapower_crypto_certificate.acc_test.id
   header_param = ` + DmJOSEHeaderTestConfig.GetModelTestBedListConfig() + `
 }`,
     ModelOnly:    false,
@@ -5092,16 +5092,16 @@ resource "datapower_josesignatureidentifier" "acc_test" {
 var JSONSettingsTestConfig = ModelTestConfig{
     Name:         "JSONSettings",
     Resource: `
-resource "datapower_jsonsettings" "test" {
+resource "datapower_json_settings" "test" {
   id = "ResTestJSONSettings"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_jsonsettings" "test" {
+data "datapower_json_settings" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_jsonsettings" "acc_test" {
+resource "datapower_json_settings" "acc_test" {
   id = "AccTest_JSONSettings"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -5110,78 +5110,78 @@ resource "datapower_jsonsettings" "acc_test" {
 var JWEHeaderTestConfig = ModelTestConfig{
     Name:         "JWEHeader",
     Resource: `
-resource "datapower_jweheader" "test" {
+resource "datapower_jwe_header" "test" {
   id = "ResTestJWEHeader"
   app_domain = "acceptance_test"
   recipient = "AccTest_JWERecipient"
 }`,
     Data: `
-data "datapower_jweheader" "test" {
+data "datapower_jwe_header" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_jweheader" "acc_test" {
+resource "datapower_jwe_header" "acc_test" {
   id = "AccTest_JWEHeader"
   app_domain = datapower_domain.acc_test.app_domain
-  recipient = datapower_jwerecipient.acc_test.id
+  recipient = datapower_jwe_recipient.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var JWERecipientTestConfig = ModelTestConfig{
     Name:         "JWERecipient",
     Resource: `
-resource "datapower_jwerecipient" "test" {
+resource "datapower_jwe_recipient" "test" {
   id = "ResTestJWERecipient"
   app_domain = "acceptance_test"
   algorithm = "RSA1_5"
   certificate = "TestAcc_CryptoCertificate"
 }`,
     Data: `
-data "datapower_jwerecipient" "test" {
+data "datapower_jwe_recipient" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_jwerecipient" "acc_test" {
+resource "datapower_jwe_recipient" "acc_test" {
   id = "AccTest_JWERecipient"
   app_domain = datapower_domain.acc_test.app_domain
   algorithm = "RSA1_5"
-  certificate = datapower_cryptocertificate.acc_test.id
+  certificate = datapower_crypto_certificate.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var JWSSignatureTestConfig = ModelTestConfig{
     Name:         "JWSSignature",
     Resource: `
-resource "datapower_jwssignature" "test" {
+resource "datapower_jws_signature" "test" {
   id = "ResTestJWSSignature"
   app_domain = "acceptance_test"
   algorithm = "RS256"
   key = "AccTest_CryptoKey"
 }`,
     Data: `
-data "datapower_jwssignature" "test" {
+data "datapower_jws_signature" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_jwssignature" "acc_test" {
+resource "datapower_jws_signature" "acc_test" {
   id = "AccTest_JWSSignature"
   app_domain = datapower_domain.acc_test.app_domain
   algorithm = "RS256"
-  key = datapower_cryptokey.acc_test.id
+  key = datapower_crypto_key.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var KafkaClusterTestConfig = ModelTestConfig{
     Name:         "KafkaCluster",
     Resource: `
-resource "datapower_kafkacluster" "test" {
+resource "datapower_kafka_cluster" "test" {
   id = "ResTestKafkaCluster"
   app_domain = "acceptance_test"
   protocol = "plaintext"
   endpoint = ` + DmKafkaEndpointTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_kafkacluster" "test" {
+data "datapower_kafka_cluster" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -5195,7 +5195,7 @@ data "datapower_kafkacluster" "test" {
 var KafkaSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "KafkaSourceProtocolHandler",
     Resource: `
-resource "datapower_kafkasourceprotocolhandler" "test" {
+resource "datapower_kafka_source_protocol_handler" "test" {
   id = "ResTestKafkaSourceProtocolHandler"
   app_domain = "acceptance_test"
   cluster = "AccTest_KafkaCluster"
@@ -5203,13 +5203,13 @@ resource "datapower_kafkasourceprotocolhandler" "test" {
   consumer_group = "consumer"
 }`,
     Data: `
-data "datapower_kafkasourceprotocolhandler" "test" {
+data "datapower_kafka_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
   id = "AccTest_KafkaSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
-  cluster = datapower_kafkacluster.acc_test.id
+  cluster = datapower_kafka_cluster.acc_test.id
   request_topic = "topic"
   consumer_group = "consumer"
 }`,
@@ -5218,16 +5218,16 @@ data "datapower_kafkasourceprotocolhandler" "test" {
 var LDAPConnectionPoolTestConfig = ModelTestConfig{
     Name:         "LDAPConnectionPool",
     Resource: `
-resource "datapower_ldapconnectionpool" "test" {
+resource "datapower_ldap_connection_pool" "test" {
   id = "ResTestLDAPConnectionPool"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_ldapconnectionpool" "test" {
+data "datapower_ldap_connection_pool" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_ldapconnectionpool" "acc_test" {
+resource "datapower_ldap_connection_pool" "acc_test" {
   id = "AccTest_LDAPConnectionPool"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -5236,16 +5236,16 @@ resource "datapower_ldapconnectionpool" "acc_test" {
 var LDAPSearchParametersTestConfig = ModelTestConfig{
     Name:         "LDAPSearchParameters",
     Resource: `
-resource "datapower_ldapsearchparameters" "test" {
+resource "datapower_ldap_search_parameters" "test" {
   id = "ResTestLDAPSearchParameters"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_ldapsearchparameters" "test" {
+data "datapower_ldap_search_parameters" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_ldapsearchparameters" "acc_test" {
+resource "datapower_ldap_search_parameters" "acc_test" {
   id = "AccTest_LDAPSearchParameters"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -5254,7 +5254,7 @@ resource "datapower_ldapsearchparameters" "acc_test" {
 var LoadBalancerGroupTestConfig = ModelTestConfig{
     Name:         "LoadBalancerGroup",
     Resource: `
-resource "datapower_loadbalancergroup" "test" {
+resource "datapower_load_balancer_group" "test" {
   id = "ResTestLoadBalancerGroup"
   app_domain = "acceptance_test"
   algorithm = "round-robin"
@@ -5262,11 +5262,11 @@ resource "datapower_loadbalancergroup" "test" {
   damp = 120
 }`,
     Data: `
-data "datapower_loadbalancergroup" "test" {
+data "datapower_load_balancer_group" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_loadbalancergroup" "acc_test" {
+resource "datapower_load_balancer_group" "acc_test" {
   id = "AccTest_LoadBalancerGroup"
   app_domain = datapower_domain.acc_test.app_domain
   algorithm = "round-robin"
@@ -5278,16 +5278,16 @@ resource "datapower_loadbalancergroup" "acc_test" {
 var LogLabelTestConfig = ModelTestConfig{
     Name:         "LogLabel",
     Resource: `
-resource "datapower_loglabel" "test" {
+resource "datapower_log_label" "test" {
   id = "ResTestLogLabel"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_loglabel" "test" {
+data "datapower_log_label" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_loglabel" "acc_test" {
+resource "datapower_log_label" "acc_test" {
   id = "AccTest_LogLabel"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -5296,17 +5296,17 @@ resource "datapower_loglabel" "acc_test" {
 var LogTargetTestConfig = ModelTestConfig{
     Name:         "LogTarget",
     Resource: `
-resource "datapower_logtarget" "test" {
+resource "datapower_log_target" "test" {
   id = "ResTest_LogTarget"
   app_domain = "acceptance_test"
   type = "file"
 }`,
     Data: `
-data "datapower_logtarget" "test" {
+data "datapower_log_target" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_logtarget" "acc_test" {
+resource "datapower_log_target" "acc_test" {
   id = "AccTest_LogTarget"
   app_domain = datapower_domain.acc_test.app_domain
   type = "file"
@@ -5336,38 +5336,38 @@ data "datapower_luna" "test" {
 var LunaHAGroupTestConfig = ModelTestConfig{
     Name:         "LunaHAGroup",
     Resource: `
-resource "datapower_lunahagroup" "test" {
+resource "datapower_luna_ha_group" "test" {
   id = "ResTestLunaHAGroup"
   app_domain = "acceptance_test"
   group_name = "groupname"
   member = ["AccTest_LunaPartition"]
 }`,
     Data: `
-data "datapower_lunahagroup" "test" {
+data "datapower_luna_ha_group" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
   id = "AccTest_LunaHAGroup"
   app_domain = datapower_domain.acc_test.app_domain
   group_name = "groupname"
-  member = [datapower_lunapartition.acc_test.id]
+  member = [datapower_luna_partition.acc_test.id]
 }`,
     ModelOnly:    false,
 }
 var LunaHASettingsTestConfig = ModelTestConfig{
     Name:         "LunaHASettings",
     Resource: `
-resource "datapower_lunahasettings" "test" {
+resource "datapower_luna_ha_settings" "test" {
 }`,
     Data: `
-data "datapower_lunahasettings" "test" {
+data "datapower_luna_ha_settings" "test" {
 }`,
     ModelOnly:    false,
 }
 var LunaPartitionTestConfig = ModelTestConfig{
     Name:         "LunaPartition",
     Resource: `
-resource "datapower_lunapartition" "test" {
+resource "datapower_luna_partition" "test" {
   id = "ResTestLunaPartition"
   app_domain = "acceptance_test"
   partition_name = "partitionname"
@@ -5376,7 +5376,7 @@ resource "datapower_lunapartition" "test" {
   login_role = "co"
 }`,
     Data: `
-data "datapower_lunapartition" "test" {
+data "datapower_luna_partition" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -5384,7 +5384,7 @@ data "datapower_lunapartition" "test" {
   app_domain = datapower_domain.acc_test.app_domain
   partition_name = "partitionname"
   partition_serial = "serial"
-  password_alias = datapower_passwordalias.acc_test.id
+  password_alias = datapower_password_alias.acc_test.id
   login_role = "co"
 }`,
     ModelOnly:    false,
@@ -5392,18 +5392,18 @@ data "datapower_lunapartition" "test" {
 var MCFCustomRuleTestConfig = ModelTestConfig{
     Name:         "MCFCustomRule",
     Resource: `
-resource "datapower_mcfcustomrule" "test" {
+resource "datapower_mcf_custom_rule" "test" {
   id = "ResTestMCFCustomRule"
   app_domain = "acceptance_test"
   custom_rule_name = "__dp-policy-begin__"
   custom_rule_value = "rulevalue"
 }`,
     Data: `
-data "datapower_mcfcustomrule" "test" {
+data "datapower_mcf_custom_rule" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mcfcustomrule" "acc_test" {
+resource "datapower_mcf_custom_rule" "acc_test" {
   id = "AccTest_MCFCustomRule"
   app_domain = datapower_domain.acc_test.app_domain
   custom_rule_name = "__dp-policy-begin__"
@@ -5414,18 +5414,18 @@ resource "datapower_mcfcustomrule" "acc_test" {
 var MCFHttpHeaderTestConfig = ModelTestConfig{
     Name:         "MCFHttpHeader",
     Resource: `
-resource "datapower_mcfhttpheader" "test" {
+resource "datapower_mcf_http_header" "test" {
   id = "ResTestMCFHttpHeader"
   app_domain = "acceptance_test"
   http_name = "HEADERNAME"
   http_value = "HEADERVALUE"
 }`,
     Data: `
-data "datapower_mcfhttpheader" "test" {
+data "datapower_mcf_http_header" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mcfhttpheader" "acc_test" {
+resource "datapower_mcf_http_header" "acc_test" {
   id = "AccTest_MCFHttpHeader"
   app_domain = datapower_domain.acc_test.app_domain
   http_name = "HEADERNAME"
@@ -5436,17 +5436,17 @@ resource "datapower_mcfhttpheader" "acc_test" {
 var MCFHttpMethodTestConfig = ModelTestConfig{
     Name:         "MCFHttpMethod",
     Resource: `
-resource "datapower_mcfhttpmethod" "test" {
+resource "datapower_mcf_http_method" "test" {
   id = "ResTestMCFHttpMethod"
   app_domain = "acceptance_test"
   http_method = "GET"
 }`,
     Data: `
-data "datapower_mcfhttpmethod" "test" {
+data "datapower_mcf_http_method" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mcfhttpmethod" "acc_test" {
+resource "datapower_mcf_http_method" "acc_test" {
   id = "AccTest_MCFHttpMethod"
   app_domain = datapower_domain.acc_test.app_domain
   http_method = "GET"
@@ -5456,17 +5456,17 @@ resource "datapower_mcfhttpmethod" "acc_test" {
 var MCFHttpURLTestConfig = ModelTestConfig{
     Name:         "MCFHttpURL",
     Resource: `
-resource "datapower_mcfhttpurl" "test" {
+resource "datapower_mcf_http_url" "test" {
   id = "ResTestMCFHttpURL"
   app_domain = "acceptance_test"
   http_url_expression = "*"
 }`,
     Data: `
-data "datapower_mcfhttpurl" "test" {
+data "datapower_mcf_http_url" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mcfhttpurl" "acc_test" {
+resource "datapower_mcf_http_url" "acc_test" {
   id = "AccTest_MCFHttpURL"
   app_domain = datapower_domain.acc_test.app_domain
   http_url_expression = "*"
@@ -5476,18 +5476,18 @@ resource "datapower_mcfhttpurl" "acc_test" {
 var MCFXPathTestConfig = ModelTestConfig{
     Name:         "MCFXPath",
     Resource: `
-resource "datapower_mcfxpath" "test" {
+resource "datapower_mcf_xpath" "test" {
   id = "ResTestMCFXPath"
   app_domain = "acceptance_test"
   x_path_expression = "*"
   x_path_value = "value"
 }`,
     Data: `
-data "datapower_mcfxpath" "test" {
+data "datapower_mcf_xpath" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mcfxpath" "acc_test" {
+resource "datapower_mcf_xpath" "acc_test" {
   id = "AccTest_MCFXPath"
   app_domain = datapower_domain.acc_test.app_domain
   x_path_expression = "*"
@@ -5498,18 +5498,18 @@ resource "datapower_mcfxpath" "acc_test" {
 var MPGWErrorActionTestConfig = ModelTestConfig{
     Name:         "MPGWErrorAction",
     Resource: `
-resource "datapower_mpgwerroraction" "test" {
+resource "datapower_mpgw_error_action" "test" {
   id = "ResTestMPGWErrorAction"
   app_domain = "acceptance_test"
   type = "static"
   local_url = "store:///schemas/XMLSchema.dtd"
 }`,
     Data: `
-data "datapower_mpgwerroraction" "test" {
+data "datapower_mpgw_error_action" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mpgwerroraction" "acc_test" {
+resource "datapower_mpgw_error_action" "acc_test" {
   id = "AccTest_MPGWErrorAction"
   app_domain = datapower_domain.acc_test.app_domain
   type = "static"
@@ -5520,17 +5520,17 @@ resource "datapower_mpgwerroraction" "acc_test" {
 var MPGWErrorHandlingPolicyTestConfig = ModelTestConfig{
     Name:         "MPGWErrorHandlingPolicy",
     Resource: `
-resource "datapower_mpgwerrorhandlingpolicy" "test" {
+resource "datapower_mpgw_error_handling_policy" "test" {
   id = "ResTestMPGWErrorHandlingPolicy"
   app_domain = "acceptance_test"
   policy_maps = ` + DmWebGWErrorPolicyMapTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_mpgwerrorhandlingpolicy" "test" {
+data "datapower_mpgw_error_handling_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mpgwerrorhandlingpolicy" "acc_test" {
+resource "datapower_mpgw_error_handling_policy" "acc_test" {
   id = "AccTest_MPGWErrorHandlingPolicy"
   app_domain = datapower_domain.acc_test.app_domain
   policy_maps = ` + DmWebGWErrorPolicyMapTestConfig.GetModelTestBedListConfig() + `
@@ -5540,7 +5540,7 @@ resource "datapower_mpgwerrorhandlingpolicy" "acc_test" {
 var MQManagerTestConfig = ModelTestConfig{
     Name:         "MQManager",
     Resource: `
-resource "datapower_mqmanager" "test" {
+resource "datapower_mq_manager" "test" {
   id = "ResTestMQManager"
   app_domain = "acceptance_test"
   host_name = "localhost"
@@ -5548,11 +5548,11 @@ resource "datapower_mqmanager" "test" {
   xml_manager = "default"
 }`,
     Data: `
-data "datapower_mqmanager" "test" {
+data "datapower_mq_manager" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mqmanager" "acc_test" {
+resource "datapower_mq_manager" "acc_test" {
   id = "AccTest_MQManager"
   app_domain = datapower_domain.acc_test.app_domain
   host_name = "localhost"
@@ -5564,41 +5564,41 @@ resource "datapower_mqmanager" "acc_test" {
 var MQManagerGroupTestConfig = ModelTestConfig{
     Name:         "MQManagerGroup",
     Resource: `
-resource "datapower_mqmanagergroup" "test" {
+resource "datapower_mq_manager_group" "test" {
   id = "ResTestMQManagerGroup"
   app_domain = "acceptance_test"
   primary_queue_manager = "AccTest_MQManager"
 }`,
     Data: `
-data "datapower_mqmanagergroup" "test" {
+data "datapower_mq_manager_group" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mqmanagergroup" "acc_test" {
+resource "datapower_mq_manager_group" "acc_test" {
   id = "AccTest_MQManagerGroup"
   app_domain = datapower_domain.acc_test.app_domain
-  primary_queue_manager = datapower_mqmanager.acc_test.id
+  primary_queue_manager = datapower_mq_manager.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var MQv9PlusMFTSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "MQv9PlusMFTSourceProtocolHandler",
     Resource: `
-resource "datapower_mqv9plusmftsourceprotocolhandler" "test" {
+resource "datapower_mqv9_plus_mft_source_protocol_handler" "test" {
   id = "ResTestMQv9PlusMFTSourceProtocolHandler"
   app_domain = "acceptance_test"
   queue_manager = "AccTest_MQManager"
   get_queue = "queue"
 }`,
     Data: `
-data "datapower_mqv9plusmftsourceprotocolhandler" "test" {
+data "datapower_mqv9_plus_mft_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mqv9plusmftsourceprotocolhandler" "acc_test" {
+resource "datapower_mqv9_plus_mft_source_protocol_handler" "acc_test" {
   id = "AccTest_MQv9PlusMFTSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
-  queue_manager = datapower_mqmanager.acc_test.id
+  queue_manager = datapower_mq_manager.acc_test.id
   get_queue = "queue"
 }`,
     ModelOnly:    false,
@@ -5606,36 +5606,36 @@ resource "datapower_mqv9plusmftsourceprotocolhandler" "acc_test" {
 var MQv9PlusSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "MQv9PlusSourceProtocolHandler",
     Resource: `
-resource "datapower_mqv9plussourceprotocolhandler" "test" {
+resource "datapower_mqv9_plus_source_protocol_handler" "test" {
   id = "ResTestMQv9PlusSourceProtocolHandler"
   app_domain = "acceptance_test"
   queue_manager = "AccTest_MQManager"
 }`,
     Data: `
-data "datapower_mqv9plussourceprotocolhandler" "test" {
+data "datapower_mqv9_plus_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mqv9plussourceprotocolhandler" "acc_test" {
+resource "datapower_mqv9_plus_source_protocol_handler" "acc_test" {
   id = "AccTest_MQv9PlusSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
-  queue_manager = datapower_mqmanager.acc_test.id
+  queue_manager = datapower_mq_manager.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var MTOMPolicyTestConfig = ModelTestConfig{
     Name:         "MTOMPolicy",
     Resource: `
-resource "datapower_mtompolicy" "test" {
+resource "datapower_mtom_policy" "test" {
   id = "ResTestMTOMPolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_mtompolicy" "test" {
+data "datapower_mtom_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_mtompolicy" "acc_test" {
+resource "datapower_mtom_policy" "acc_test" {
   id = "AccTest_MTOMPolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -5662,16 +5662,16 @@ resource "datapower_matching" "acc_test" {
 var MessageContentFiltersTestConfig = ModelTestConfig{
     Name:         "MessageContentFilters",
     Resource: `
-resource "datapower_messagecontentfilters" "test" {
+resource "datapower_message_content_filters" "test" {
   id = "ResTestMessageContentFilters"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_messagecontentfilters" "test" {
+data "datapower_message_content_filters" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_messagecontentfilters" "acc_test" {
+resource "datapower_message_content_filters" "acc_test" {
   id = "AccTest_MessageContentFilters"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -5680,16 +5680,16 @@ resource "datapower_messagecontentfilters" "acc_test" {
 var MessageMatchingTestConfig = ModelTestConfig{
     Name:         "MessageMatching",
     Resource: `
-resource "datapower_messagematching" "test" {
+resource "datapower_message_matching" "test" {
   id = "ResTestMessageMatching"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_messagematching" "test" {
+data "datapower_message_matching" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_messagematching" "acc_test" {
+resource "datapower_message_matching" "acc_test" {
   id = "AccTest_MessageMatching"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -5698,16 +5698,16 @@ resource "datapower_messagematching" "acc_test" {
 var MessageTypeTestConfig = ModelTestConfig{
     Name:         "MessageType",
     Resource: `
-resource "datapower_messagetype" "test" {
+resource "datapower_message_type" "test" {
   id = "ResTestMessageType"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_messagetype" "test" {
+data "datapower_message_type" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_messagetype" "acc_test" {
+resource "datapower_message_type" "acc_test" {
   id = "AccTest_MessageType"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -5716,19 +5716,19 @@ resource "datapower_messagetype" "acc_test" {
 var MgmtInterfaceTestConfig = ModelTestConfig{
     Name:         "MgmtInterface",
     Resource: `
-resource "datapower_mgmtinterface" "test" {
+resource "datapower_mgmt_interface" "test" {
   local_port = 5550
   local_address = "0.0.0.0"
 }`,
     Data: `
-data "datapower_mgmtinterface" "test" {
+data "datapower_mgmt_interface" "test" {
 }`,
     ModelOnly:    false,
 }
 var MultiProtocolGatewayTestConfig = ModelTestConfig{
     Name:         "MultiProtocolGateway",
     Resource: `
-resource "datapower_multiprotocolgateway" "test" {
+resource "datapower_multi_protocol_gateway" "test" {
   id = "ResTestMultiProtocolGateway"
   app_domain = "acceptance_test"
   type = "static-backend"
@@ -5739,11 +5739,11 @@ resource "datapower_multiprotocolgateway" "test" {
   back_persistent_timeout = 180
 }`,
     Data: `
-data "datapower_multiprotocolgateway" "test" {
+data "datapower_multi_protocol_gateway" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_multiprotocolgateway" "acc_test" {
+resource "datapower_multi_protocol_gateway" "acc_test" {
   id = "AccTest_MultiProtocolGateway"
   app_domain = datapower_domain.acc_test.app_domain
   type = "static-backend"
@@ -5758,21 +5758,21 @@ resource "datapower_multiprotocolgateway" "acc_test" {
 var NFSClientSettingsTestConfig = ModelTestConfig{
     Name:         "NFSClientSettings",
     Resource: `
-resource "datapower_nfsclientsettings" "test" {
+resource "datapower_nfs_client_settings" "test" {
 }`,
     Data: `
-data "datapower_nfsclientsettings" "test" {
+data "datapower_nfs_client_settings" "test" {
 }`,
     ModelOnly:    false,
 }
 var NFSDynamicMountsTestConfig = ModelTestConfig{
     Name:         "NFSDynamicMounts",
     Resource: `
-resource "datapower_nfsdynamicmounts" "test" {
+resource "datapower_nfs_dynamic_mounts" "test" {
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_nfsdynamicmounts" "test" {
+data "datapower_nfs_dynamic_mounts" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -5780,7 +5780,7 @@ data "datapower_nfsdynamicmounts" "test" {
 var NFSFilePollerSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "NFSFilePollerSourceProtocolHandler",
     Resource: `
-resource "datapower_nfsfilepollersourceprotocolhandler" "test" {
+resource "datapower_nfs_file_poller_source_protocol_handler" "test" {
   id = "ResTestNFSFilePollerSourceProtocolHandler"
   app_domain = "acceptance_test"
   target_directory = "dpnfs://static-mount-name/path/"
@@ -5791,11 +5791,11 @@ resource "datapower_nfsfilepollersourceprotocolhandler" "test" {
   xml_manager = "default"
 }`,
     Data: `
-data "datapower_nfsfilepollersourceprotocolhandler" "test" {
+data "datapower_nfs_file_poller_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_nfsfilepollersourceprotocolhandler" "acc_test" {
+resource "datapower_nfs_file_poller_source_protocol_handler" "acc_test" {
   id = "AccTest_NFSFilePollerSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   target_directory = "dpnfs://static-mount-name/path/"
@@ -5810,17 +5810,17 @@ resource "datapower_nfsfilepollersourceprotocolhandler" "acc_test" {
 var NFSStaticMountTestConfig = ModelTestConfig{
     Name:         "NFSStaticMount",
     Resource: `
-resource "datapower_nfsstaticmount" "test" {
+resource "datapower_nfs_static_mount" "test" {
   id = "ResTestNFSStaticMount"
   app_domain = "acceptance_test"
   remote = "url://test"
 }`,
     Data: `
-data "datapower_nfsstaticmount" "test" {
+data "datapower_nfs_static_mount" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_nfsstaticmount" "acc_test" {
+resource "datapower_nfs_static_mount" "acc_test" {
   id = "AccTest_NFSStaticMount"
   app_domain = datapower_domain.acc_test.app_domain
   remote = "url://test"
@@ -5830,17 +5830,17 @@ resource "datapower_nfsstaticmount" "acc_test" {
 var NameValueProfileTestConfig = ModelTestConfig{
     Name:         "NameValueProfile",
     Resource: `
-resource "datapower_namevalueprofile" "test" {
+resource "datapower_name_value_profile" "test" {
   id = "ResTestNameValueProfile"
   app_domain = "acceptance_test"
   default_fixup = "strip"
 }`,
     Data: `
-data "datapower_namevalueprofile" "test" {
+data "datapower_name_value_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_namevalueprofile" "acc_test" {
+resource "datapower_name_value_profile" "acc_test" {
   id = "AccTest_NameValueProfile"
   app_domain = datapower_domain.acc_test.app_domain
   default_fixup = "strip"
@@ -5850,29 +5850,29 @@ resource "datapower_namevalueprofile" "acc_test" {
 var OAuthProviderSettingsTestConfig = ModelTestConfig{
     Name:         "OAuthProviderSettings",
     Resource: `
-resource "datapower_oauthprovidersettings" "test" {
+resource "datapower_oauth_provider_settings" "test" {
   id = "ResTestOAuthProviderSettings"
   app_domain = "acceptance_test"
   provider_type = "native"
   apic_token_secret = "AccTest_CryptoSSKey"
 }`,
     Data: `
-data "datapower_oauthprovidersettings" "test" {
+data "datapower_oauth_provider_settings" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_oauthprovidersettings" "acc_test" {
+resource "datapower_oauth_provider_settings" "acc_test" {
   id = "AccTest_OAuthProviderSettings"
   app_domain = datapower_domain.acc_test.app_domain
   provider_type = "native"
-  apic_token_secret = datapower_cryptosskey.acc_test.id
+  apic_token_secret = datapower_crypto_sskey.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var OAuthSupportedClientTestConfig = ModelTestConfig{
     Name:         "OAuthSupportedClient",
     Resource: `
-resource "datapower_oauthsupportedclient" "test" {
+resource "datapower_oauth_supported_client" "test" {
   id = "ResTestOAuthSupportedClient"
   app_domain = "acceptance_test"
   o_auth_role = {"azsvr": true}
@@ -5882,34 +5882,34 @@ resource "datapower_oauthsupportedclient" "test" {
   token_secret = "AccTest_CryptoSSKey"
 }`,
     Data: `
-data "datapower_oauthsupportedclient" "test" {
+data "datapower_oauth_supported_client" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_oauthsupportedclient" "acc_test" {
+resource "datapower_oauth_supported_client" "acc_test" {
   id = "AccTest_OAuthSupportedClient"
   app_domain = datapower_domain.acc_test.app_domain
   o_auth_role = {"azsvr": true}
   az_grant = {"code": true}
   generate_client_secret = false
   client_secret = "secret"
-  token_secret = datapower_cryptosskey.acc_test.id
+  token_secret = datapower_crypto_sskey.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var OAuthSupportedClientGroupTestConfig = ModelTestConfig{
     Name:         "OAuthSupportedClientGroup",
     Resource: `
-resource "datapower_oauthsupportedclientgroup" "test" {
+resource "datapower_oauth_supported_client_group" "test" {
   id = "ResTestOAuthSupportedClientGroup"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_oauthsupportedclientgroup" "test" {
+data "datapower_oauth_supported_client_group" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_oauthsupportedclientgroup" "acc_test" {
+resource "datapower_oauth_supported_client_group" "acc_test" {
   id = "AccTest_OAuthSupportedClientGroup"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -5929,15 +5929,15 @@ data "datapower_odr" "test" {
 var ODRConnectorGroupTestConfig = ModelTestConfig{
     Name:         "ODRConnectorGroup",
     Resource: `
-resource "datapower_odrconnectorgroup" "test" {
+resource "datapower_odr_connector_group" "test" {
   id = "ResTestODRConnectorGroup"
   xml_manager = "default"
 }`,
     Data: `
-data "datapower_odrconnectorgroup" "test" {
+data "datapower_odr_connector_group" "test" {
 }`,
     TestBed: `
-resource "datapower_odrconnectorgroup" "acc_test" {
+resource "datapower_odr_connector_group" "acc_test" {
   id = "AccTest_ODRConnectorGroup"
   xml_manager = "default"
 }`,
@@ -5946,29 +5946,29 @@ resource "datapower_odrconnectorgroup" "acc_test" {
 var OpenTelemetryTestConfig = ModelTestConfig{
     Name:         "OpenTelemetry",
     Resource: `
-resource "datapower_opentelemetry" "test" {
+resource "datapower_open_telemetry" "test" {
   id = "ResTestOpenTelemetry"
   app_domain = "acceptance_test"
   exporter = "AccTest_OpenTelemetryExporter"
   sampler = "AccTest_OpenTelemetrySampler"
 }`,
     Data: `
-data "datapower_opentelemetry" "test" {
+data "datapower_open_telemetry" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_opentelemetry" "acc_test" {
+resource "datapower_open_telemetry" "acc_test" {
   id = "AccTest_OpenTelemetry"
   app_domain = datapower_domain.acc_test.app_domain
-  exporter = datapower_opentelemetryexporter.acc_test.id
-  sampler = datapower_opentelemetrysampler.acc_test.id
+  exporter = datapower_open_telemetry_exporter.acc_test.id
+  sampler = datapower_open_telemetry_sampler.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var OpenTelemetryExporterTestConfig = ModelTestConfig{
     Name:         "OpenTelemetryExporter",
     Resource: `
-resource "datapower_opentelemetryexporter" "test" {
+resource "datapower_open_telemetry_exporter" "test" {
   id = "ResTestOpenTelemetryExporter"
   app_domain = "acceptance_test"
   type = "http"
@@ -5977,11 +5977,11 @@ resource "datapower_opentelemetryexporter" "test" {
   processor = "batch"
 }`,
     Data: `
-data "datapower_opentelemetryexporter" "test" {
+data "datapower_open_telemetry_exporter" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_opentelemetryexporter" "acc_test" {
+resource "datapower_open_telemetry_exporter" "acc_test" {
   id = "AccTest_OpenTelemetryExporter"
   app_domain = datapower_domain.acc_test.app_domain
   type = "http"
@@ -5994,18 +5994,18 @@ resource "datapower_opentelemetryexporter" "acc_test" {
 var OpenTelemetrySamplerTestConfig = ModelTestConfig{
     Name:         "OpenTelemetrySampler",
     Resource: `
-resource "datapower_opentelemetrysampler" "test" {
+resource "datapower_open_telemetry_sampler" "test" {
   id = "ResTestOpenTelemetrySampler"
   app_domain = "acceptance_test"
   parent_based = true
   type = "always-on"
 }`,
     Data: `
-data "datapower_opentelemetrysampler" "test" {
+data "datapower_open_telemetry_sampler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_opentelemetrysampler" "acc_test" {
+resource "datapower_open_telemetry_sampler" "acc_test" {
   id = "AccTest_OpenTelemetrySampler"
   app_domain = datapower_domain.acc_test.app_domain
   parent_based = true
@@ -6016,27 +6016,27 @@ resource "datapower_opentelemetrysampler" "acc_test" {
 var OperationRateLimitTestConfig = ModelTestConfig{
     Name:         "OperationRateLimit",
     Resource: `
-resource "datapower_operationratelimit" "test" {
+resource "datapower_operation_rate_limit" "test" {
   id = "ResTestOperationRateLimit"
   app_domain = "acceptance_test"
   operation = "AccTest_APIOperation"
 }`,
     Data: `
-data "datapower_operationratelimit" "test" {
+data "datapower_operation_rate_limit" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_operationratelimit" "acc_test" {
+resource "datapower_operation_rate_limit" "acc_test" {
   id = "AccTest_OperationRateLimit"
   app_domain = datapower_domain.acc_test.app_domain
-  operation = datapower_apioperation.acc_test.id
+  operation = datapower_api_operation.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var POPPollerSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "POPPollerSourceProtocolHandler",
     Resource: `
-resource "datapower_poppollersourceprotocolhandler" "test" {
+resource "datapower_pop_poller_source_protocol_handler" "test" {
   id = "ResTestPOPPollerSourceProtocolHandler"
   app_domain = "acceptance_test"
   mail_server = "localhost"
@@ -6047,11 +6047,11 @@ resource "datapower_poppollersourceprotocolhandler" "test" {
   max_messages_per_poll = 5
 }`,
     Data: `
-data "datapower_poppollersourceprotocolhandler" "test" {
+data "datapower_pop_poller_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_poppollersourceprotocolhandler" "acc_test" {
+resource "datapower_pop_poller_source_protocol_handler" "acc_test" {
   id = "AccTest_POPPollerSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   mail_server = "localhost"
@@ -6066,16 +6066,16 @@ resource "datapower_poppollersourceprotocolhandler" "acc_test" {
 var ParseSettingsTestConfig = ModelTestConfig{
     Name:         "ParseSettings",
     Resource: `
-resource "datapower_parsesettings" "test" {
+resource "datapower_parse_settings" "test" {
   id = "ResTestParseSettings"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_parsesettings" "test" {
+data "datapower_parse_settings" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_parsesettings" "acc_test" {
+resource "datapower_parse_settings" "acc_test" {
   id = "AccTest_ParseSettings"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -6084,17 +6084,17 @@ resource "datapower_parsesettings" "acc_test" {
 var PasswordAliasTestConfig = ModelTestConfig{
     Name:         "PasswordAlias",
     Resource: `
-resource "datapower_passwordalias" "test" {
+resource "datapower_password_alias" "test" {
   id = "ResTestPasswordAlias"
   app_domain = "acceptance_test"
   password = "password"
 }`,
     Data: `
-data "datapower_passwordalias" "test" {
+data "datapower_password_alias" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_passwordalias" "acc_test" {
+resource "datapower_password_alias" "acc_test" {
   id = "AccTest_PasswordAlias"
   app_domain = datapower_domain.acc_test.app_domain
   password = "password"
@@ -6104,18 +6104,18 @@ resource "datapower_passwordalias" "acc_test" {
 var PeerGroupTestConfig = ModelTestConfig{
     Name:         "PeerGroup",
     Resource: `
-resource "datapower_peergroup" "test" {
+resource "datapower_peer_group" "test" {
   id = "ResTestPeerGroup"
   app_domain = "acceptance_test"
   type = "slm"
   url = ["http://localhost"]
 }`,
     Data: `
-data "datapower_peergroup" "test" {
+data "datapower_peer_group" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_peergroup" "acc_test" {
+resource "datapower_peer_group" "acc_test" {
   id = "AccTest_PeerGroup"
   app_domain = datapower_domain.acc_test.app_domain
   type = "slm"
@@ -6126,7 +6126,7 @@ resource "datapower_peergroup" "acc_test" {
 var PolicyAttachmentsTestConfig = ModelTestConfig{
     Name:         "PolicyAttachments",
     Resource: `
-resource "datapower_policyattachments" "test" {
+resource "datapower_policy_attachments" "test" {
   id = "ResTestPolicyAttachments"
   app_domain = "acceptance_test"
   enforcement_mode = "enforce"
@@ -6134,11 +6134,11 @@ resource "datapower_policyattachments" "test" {
   sla_enforcement_mode = "allow-if-no-sla"
 }`,
     Data: `
-data "datapower_policyattachments" "test" {
+data "datapower_policy_attachments" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_policyattachments" "acc_test" {
+resource "datapower_policy_attachments" "acc_test" {
   id = "AccTest_PolicyAttachments"
   app_domain = datapower_domain.acc_test.app_domain
   enforcement_mode = "enforce"
@@ -6150,16 +6150,16 @@ resource "datapower_policyattachments" "acc_test" {
 var PolicyParametersTestConfig = ModelTestConfig{
     Name:         "PolicyParameters",
     Resource: `
-resource "datapower_policyparameters" "test" {
+resource "datapower_policy_parameters" "test" {
   id = "ResTestPolicyParameters"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_policyparameters" "test" {
+data "datapower_policy_parameters" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_policyparameters" "acc_test" {
+resource "datapower_policy_parameters" "acc_test" {
   id = "AccTest_PolicyParameters"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -6182,16 +6182,16 @@ data "datapower_probe" "test" {
 var ProcessingMetadataTestConfig = ModelTestConfig{
     Name:         "ProcessingMetadata",
     Resource: `
-resource "datapower_processingmetadata" "test" {
+resource "datapower_processing_metadata" "test" {
   id = "ResTestProcessingMetadata"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_processingmetadata" "test" {
+data "datapower_processing_metadata" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_processingmetadata" "acc_test" {
+resource "datapower_processing_metadata" "acc_test" {
   id = "AccTest_ProcessingMetadata"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -6200,29 +6200,29 @@ resource "datapower_processingmetadata" "acc_test" {
 var QuotaEnforcementServerTestConfig = ModelTestConfig{
     Name:         "QuotaEnforcementServer",
     Resource: `
-resource "datapower_quotaenforcementserver" "test" {
+resource "datapower_quota_enforcement_server" "test" {
   server_port = 16379
   monitor_port = 26379
 }`,
     Data: `
-data "datapower_quotaenforcementserver" "test" {
+data "datapower_quota_enforcement_server" "test" {
 }`,
     ModelOnly:    false,
 }
 var RADIUSSettingsTestConfig = ModelTestConfig{
     Name:         "RADIUSSettings",
     Resource: `
-resource "datapower_radiussettings" "test" {
+resource "datapower_radius_settings" "test" {
 }`,
     Data: `
-data "datapower_radiussettings" "test" {
+data "datapower_radius_settings" "test" {
 }`,
     ModelOnly:    false,
 }
 var RBMSettingsTestConfig = ModelTestConfig{
     Name:         "RBMSettings",
     Resource: `
-resource "datapower_rbmsettings" "test" {
+resource "datapower_rbm_settings" "test" {
   au_method = "local"
   au_cache_allow = "absolute"
   mc_method = "local"
@@ -6237,28 +6237,28 @@ resource "datapower_rbmsettings" "test" {
   max_failed_login = 0
 }`,
     Data: `
-data "datapower_rbmsettings" "test" {
+data "datapower_rbm_settings" "test" {
 }`,
     ModelOnly:    false,
 }
 var RaidVolumeTestConfig = ModelTestConfig{
     Name:         "RaidVolume",
     Resource: `
-resource "datapower_raidvolume" "test" {
+resource "datapower_raid_volume" "test" {
 }`,
     Data: `
-data "datapower_raidvolume" "test" {
+data "datapower_raid_volume" "test" {
 }`,
     ModelOnly:    false,
 }
 var RateLimitConfigurationTestConfig = ModelTestConfig{
     Name:         "RateLimitConfiguration",
     Resource: `
-resource "datapower_ratelimitconfiguration" "test" {
+resource "datapower_rate_limit_configuration" "test" {
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_ratelimitconfiguration" "test" {
+data "datapower_rate_limit_configuration" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -6266,18 +6266,18 @@ data "datapower_ratelimitconfiguration" "test" {
 var RateLimitDefinitionTestConfig = ModelTestConfig{
     Name:         "RateLimitDefinition",
     Resource: `
-resource "datapower_ratelimitdefinition" "test" {
+resource "datapower_rate_limit_definition" "test" {
   id = "ResTestRateLimitDefinition"
   app_domain = "acceptance_test"
   type = "rate"
   rate = 1000
 }`,
     Data: `
-data "datapower_ratelimitdefinition" "test" {
+data "datapower_rate_limit_definition" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_ratelimitdefinition" "acc_test" {
+resource "datapower_rate_limit_definition" "acc_test" {
   id = "AccTest_RateLimitDefinition"
   app_domain = datapower_domain.acc_test.app_domain
   type = "rate"
@@ -6288,17 +6288,17 @@ resource "datapower_ratelimitdefinition" "acc_test" {
 var RateLimitDefinitionGroupTestConfig = ModelTestConfig{
     Name:         "RateLimitDefinitionGroup",
     Resource: `
-resource "datapower_ratelimitdefinitiongroup" "test" {
+resource "datapower_rate_limit_definition_group" "test" {
   id = "ResTestRateLimitDefinitionGroup"
   app_domain = "acceptance_test"
   update_on_exceed = "all"
 }`,
     Data: `
-data "datapower_ratelimitdefinitiongroup" "test" {
+data "datapower_rate_limit_definition_group" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_ratelimitdefinitiongroup" "acc_test" {
+resource "datapower_rate_limit_definition_group" "acc_test" {
   id = "AccTest_RateLimitDefinitionGroup"
   app_domain = datapower_domain.acc_test.app_domain
   update_on_exceed = "all"
@@ -6308,16 +6308,16 @@ resource "datapower_ratelimitdefinitiongroup" "acc_test" {
 var SAMLAttributesTestConfig = ModelTestConfig{
     Name:         "SAMLAttributes",
     Resource: `
-resource "datapower_samlattributes" "test" {
+resource "datapower_saml_attributes" "test" {
   id = "ResTestSAMLAttributes"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_samlattributes" "test" {
+data "datapower_saml_attributes" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_samlattributes" "acc_test" {
+resource "datapower_saml_attributes" "acc_test" {
   id = "AccTest_SAMLAttributes"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -6326,7 +6326,7 @@ resource "datapower_samlattributes" "acc_test" {
 var SFTPFilePollerSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "SFTPFilePollerSourceProtocolHandler",
     Resource: `
-resource "datapower_sftpfilepollersourceprotocolhandler" "test" {
+resource "datapower_sftp_file_poller_source_protocol_handler" "test" {
   id = "ResTestSFTPFilePollerSourceProtocolHandler"
   app_domain = "acceptance_test"
   ssh_client_connection = "AccTest_SSHClientProfile"
@@ -6338,14 +6338,14 @@ resource "datapower_sftpfilepollersourceprotocolhandler" "test" {
   xml_manager = "default"
 }`,
     Data: `
-data "datapower_sftpfilepollersourceprotocolhandler" "test" {
+data "datapower_sftp_file_poller_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_sftpfilepollersourceprotocolhandler" "acc_test" {
+resource "datapower_sftp_file_poller_source_protocol_handler" "acc_test" {
   id = "AccTest_SFTPFilePollerSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
-  ssh_client_connection = datapower_sshclientprofile.acc_test.id
+  ssh_client_connection = datapower_ssh_client_profile.acc_test.id
   target_directory = "/"
   delay_between_polls = 60000
   input_file_match_pattern = ".*"
@@ -6358,17 +6358,17 @@ resource "datapower_sftpfilepollersourceprotocolhandler" "acc_test" {
 var SLMActionTestConfig = ModelTestConfig{
     Name:         "SLMAction",
     Resource: `
-resource "datapower_slmaction" "test" {
+resource "datapower_slm_action" "test" {
   id = "ResTest_SLMAction"
   app_domain = "acceptance_test"
   type = "log-only"
 }`,
     Data: `
-data "datapower_slmaction" "test" {
+data "datapower_slm_action" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_slmaction" "acc_test" {
+resource "datapower_slm_action" "acc_test" {
   id = "AccTest_SLMAction"
   app_domain = datapower_domain.acc_test.app_domain
   type = "log-only"
@@ -6378,17 +6378,17 @@ resource "datapower_slmaction" "acc_test" {
 var SLMCredClassTestConfig = ModelTestConfig{
     Name:         "SLMCredClass",
     Resource: `
-resource "datapower_slmcredclass" "test" {
+resource "datapower_slm_cred_class" "test" {
   id = "ResTestSLMCredClass"
   app_domain = "acceptance_test"
   cred_type = "aaa-mapped-credential"
 }`,
     Data: `
-data "datapower_slmcredclass" "test" {
+data "datapower_slm_cred_class" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_slmcredclass" "acc_test" {
+resource "datapower_slm_cred_class" "acc_test" {
   id = "AccTest_SLMCredClass"
   app_domain = datapower_domain.acc_test.app_domain
   cred_type = "aaa-mapped-credential"
@@ -6398,16 +6398,16 @@ resource "datapower_slmcredclass" "acc_test" {
 var SLMPolicyTestConfig = ModelTestConfig{
     Name:         "SLMPolicy",
     Resource: `
-resource "datapower_slmpolicy" "test" {
+resource "datapower_slm_policy" "test" {
   id = "ResTestSLMPolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_slmpolicy" "test" {
+data "datapower_slm_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_slmpolicy" "acc_test" {
+resource "datapower_slm_policy" "acc_test" {
   id = "AccTest_SLMPolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -6416,17 +6416,17 @@ resource "datapower_slmpolicy" "acc_test" {
 var SLMRsrcClassTestConfig = ModelTestConfig{
     Name:         "SLMRsrcClass",
     Resource: `
-resource "datapower_slmrsrcclass" "test" {
+resource "datapower_slm_rsrc_class" "test" {
   id = "ResTestSLMRsrcClass"
   app_domain = "acceptance_test"
   rsrc_type = "aaa-mapped-resource"
 }`,
     Data: `
-data "datapower_slmrsrcclass" "test" {
+data "datapower_slm_rsrc_class" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_slmrsrcclass" "acc_test" {
+resource "datapower_slm_rsrc_class" "acc_test" {
   id = "AccTest_SLMRsrcClass"
   app_domain = datapower_domain.acc_test.app_domain
   rsrc_type = "aaa-mapped-resource"
@@ -6436,18 +6436,18 @@ resource "datapower_slmrsrcclass" "acc_test" {
 var SLMScheduleTestConfig = ModelTestConfig{
     Name:         "SLMSchedule",
     Resource: `
-resource "datapower_slmschedule" "test" {
+resource "datapower_slm_schedule" "test" {
   id = "ResTestSLMSchedule"
   app_domain = "acceptance_test"
   start_time = "12:34:00"
   duration = 1440
 }`,
     Data: `
-data "datapower_slmschedule" "test" {
+data "datapower_slm_schedule" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_slmschedule" "acc_test" {
+resource "datapower_slm_schedule" "acc_test" {
   id = "AccTest_SLMSchedule"
   app_domain = datapower_domain.acc_test.app_domain
   start_time = "12:34:00"
@@ -6458,18 +6458,18 @@ resource "datapower_slmschedule" "acc_test" {
 var SMTPServerConnectionTestConfig = ModelTestConfig{
     Name:         "SMTPServerConnection",
     Resource: `
-resource "datapower_smtpserverconnection" "test" {
+resource "datapower_smtp_server_connection" "test" {
   id = "ResTest_SMTPServerConnection"
   app_domain = "acceptance_test"
   mail_server_host = "localhost"
   mail_server_port = 25
 }`,
     Data: `
-data "datapower_smtpserverconnection" "test" {
+data "datapower_smtp_server_connection" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_smtpserverconnection" "acc_test" {
+resource "datapower_smtp_server_connection" "acc_test" {
   id = "AccTest_SMTPServerConnection"
   app_domain = datapower_domain.acc_test.app_domain
   mail_server_host = "localhost"
@@ -6480,29 +6480,29 @@ resource "datapower_smtpserverconnection" "acc_test" {
 var SNMPSettingsTestConfig = ModelTestConfig{
     Name:         "SNMPSettings",
     Resource: `
-resource "datapower_snmpsettings" "test" {
+resource "datapower_snmp_settings" "test" {
   local_port = 161
   security_level = "authPriv"
   access_level = "read-only"
 }`,
     Data: `
-data "datapower_snmpsettings" "test" {
+data "datapower_snmp_settings" "test" {
 }`,
     ModelOnly:    false,
 }
 var SOAPHeaderDispositionTestConfig = ModelTestConfig{
     Name:         "SOAPHeaderDisposition",
     Resource: `
-resource "datapower_soapheaderdisposition" "test" {
+resource "datapower_soap_header_disposition" "test" {
   id = "ResTestSOAPHeaderDisposition"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_soapheaderdisposition" "test" {
+data "datapower_soap_header_disposition" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_soapheaderdisposition" "acc_test" {
+resource "datapower_soap_header_disposition" "acc_test" {
   id = "AccTest_SOAPHeaderDisposition"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -6511,7 +6511,7 @@ resource "datapower_soapheaderdisposition" "acc_test" {
 var SQLDataSourceTestConfig = ModelTestConfig{
     Name:         "SQLDataSource",
     Resource: `
-resource "datapower_sqldatasource" "test" {
+resource "datapower_sql_data_source" "test" {
   id = "ResTestSQLDataSource"
   app_domain = "acceptance_test"
   database = "Oracle"
@@ -6526,16 +6526,16 @@ resource "datapower_sqldatasource" "test" {
   idle_timeout = 180
 }`,
     Data: `
-data "datapower_sqldatasource" "test" {
+data "datapower_sql_data_source" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_sqldatasource" "acc_test" {
+resource "datapower_sql_data_source" "acc_test" {
   id = "AccTest_SQLDataSource"
   app_domain = datapower_domain.acc_test.app_domain
   database = "Oracle"
   username = "username"
-  password_alias = datapower_passwordalias.acc_test.id
+  password_alias = datapower_password_alias.acc_test.id
   data_source_id = "datasource_id"
   data_source_host = "datasource.host"
   data_source_port = 1488
@@ -6549,18 +6549,18 @@ resource "datapower_sqldatasource" "acc_test" {
 var SSHClientProfileTestConfig = ModelTestConfig{
     Name:         "SSHClientProfile",
     Resource: `
-resource "datapower_sshclientprofile" "test" {
+resource "datapower_ssh_client_profile" "test" {
   id = "ResTestSSHClientProfile"
   app_domain = "acceptance_test"
   user_name = "someuser"
   profile_usage = "sftp"
 }`,
     Data: `
-data "datapower_sshclientprofile" "test" {
+data "datapower_ssh_client_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_sshclientprofile" "acc_test" {
+resource "datapower_ssh_client_profile" "acc_test" {
   id = "AccTest_SSHClientProfile"
   app_domain = datapower_domain.acc_test.app_domain
   user_name = "someuser"
@@ -6571,11 +6571,11 @@ resource "datapower_sshclientprofile" "acc_test" {
 var SSHDomainClientProfileTestConfig = ModelTestConfig{
     Name:         "SSHDomainClientProfile",
     Resource: `
-resource "datapower_sshdomainclientprofile" "test" {
+resource "datapower_ssh_domain_client_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_sshdomainclientprofile" "test" {
+data "datapower_ssh_domain_client_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -6583,11 +6583,11 @@ data "datapower_sshdomainclientprofile" "test" {
 var SSHServerProfileTestConfig = ModelTestConfig{
     Name:         "SSHServerProfile",
     Resource: `
-resource "datapower_sshserverprofile" "test" {
+resource "datapower_ssh_server_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_sshserverprofile" "test" {
+data "datapower_ssh_server_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -6595,7 +6595,7 @@ data "datapower_sshserverprofile" "test" {
 var SSHServerSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "SSHServerSourceProtocolHandler",
     Resource: `
-resource "datapower_sshserversourceprotocolhandler" "test" {
+resource "datapower_ssh_server_source_protocol_handler" "test" {
   id = "ResTestSSHServerSourceProtocolHandler"
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
@@ -6603,11 +6603,11 @@ resource "datapower_sshserversourceprotocolhandler" "test" {
   default_directory = "/"
 }`,
     Data: `
-data "datapower_sshserversourceprotocolhandler" "test" {
+data "datapower_ssh_server_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_sshserversourceprotocolhandler" "acc_test" {
+resource "datapower_ssh_server_source_protocol_handler" "acc_test" {
   id = "AccTest_SSHServerSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
@@ -6619,30 +6619,30 @@ resource "datapower_sshserversourceprotocolhandler" "acc_test" {
 var SSHServiceTestConfig = ModelTestConfig{
     Name:         "SSHService",
     Resource: `
-resource "datapower_sshservice" "test" {
+resource "datapower_ssh_service" "test" {
   local_port = 22
   local_address = "0.0.0.0"
 }`,
     Data: `
-data "datapower_sshservice" "test" {
+data "datapower_ssh_service" "test" {
 }`,
     ModelOnly:    false,
 }
 var SSLClientProfileTestConfig = ModelTestConfig{
     Name:         "SSLClientProfile",
     Resource: `
-resource "datapower_sslclientprofile" "test" {
+resource "datapower_ssl_client_profile" "test" {
   id = "ResTestSSLClientProfile"
   app_domain = "acceptance_test"
   ciphers = ["AES_256_GCM_SHA384","CHACHA20_POLY1305_SHA256","AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_256_GCM_SHA384","ECDHE_ECDSA_WITH_AES_256_CBC_SHA384","ECDHE_ECDSA_WITH_AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_128_CBC_SHA256","ECDHE_ECDSA_WITH_AES_256_CBC_SHA","ECDHE_ECDSA_WITH_AES_128_CBC_SHA","ECDHE_RSA_WITH_AES_256_GCM_SHA384","ECDHE_RSA_WITH_AES_256_CBC_SHA384","ECDHE_RSA_WITH_AES_128_GCM_SHA256","ECDHE_RSA_WITH_AES_128_CBC_SHA256","ECDHE_RSA_WITH_AES_256_CBC_SHA","ECDHE_RSA_WITH_AES_128_CBC_SHA","DHE_RSA_WITH_AES_256_GCM_SHA384","DHE_RSA_WITH_AES_256_CBC_SHA256","DHE_RSA_WITH_AES_128_GCM_SHA256","DHE_RSA_WITH_AES_128_CBC_SHA256","DHE_RSA_WITH_AES_256_CBC_SHA","DHE_RSA_WITH_AES_128_CBC_SHA",]
   validate_server_cert = false
 }`,
     Data: `
-data "datapower_sslclientprofile" "test" {
+data "datapower_ssl_client_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_sslclientprofile" "acc_test" {
+resource "datapower_ssl_client_profile" "acc_test" {
   id = "AccTest_SSLClientProfile"
   app_domain = datapower_domain.acc_test.app_domain
   ciphers = ["AES_256_GCM_SHA384","CHACHA20_POLY1305_SHA256","AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_256_GCM_SHA384","ECDHE_ECDSA_WITH_AES_256_CBC_SHA384","ECDHE_ECDSA_WITH_AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_128_CBC_SHA256","ECDHE_ECDSA_WITH_AES_256_CBC_SHA","ECDHE_ECDSA_WITH_AES_128_CBC_SHA","ECDHE_RSA_WITH_AES_256_GCM_SHA384","ECDHE_RSA_WITH_AES_256_CBC_SHA384","ECDHE_RSA_WITH_AES_128_GCM_SHA256","ECDHE_RSA_WITH_AES_128_CBC_SHA256","ECDHE_RSA_WITH_AES_256_CBC_SHA","ECDHE_RSA_WITH_AES_128_CBC_SHA","DHE_RSA_WITH_AES_256_GCM_SHA384","DHE_RSA_WITH_AES_256_CBC_SHA256","DHE_RSA_WITH_AES_128_GCM_SHA256","DHE_RSA_WITH_AES_128_CBC_SHA256","DHE_RSA_WITH_AES_256_CBC_SHA","DHE_RSA_WITH_AES_128_CBC_SHA",]
@@ -6653,7 +6653,7 @@ resource "datapower_sslclientprofile" "acc_test" {
 var SSLProxyServiceTestConfig = ModelTestConfig{
     Name:         "SSLProxyService",
     Resource: `
-resource "datapower_sslproxyservice" "test" {
+resource "datapower_ssl_proxy_service" "test" {
   id = "ResTestSSLProxyService"
   app_domain = "acceptance_test"
   local_port = 4521
@@ -6663,17 +6663,17 @@ resource "datapower_sslproxyservice" "test" {
   local_address = "0.0.0.0"
 }`,
     Data: `
-data "datapower_sslproxyservice" "test" {
+data "datapower_ssl_proxy_service" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_sslproxyservice" "acc_test" {
+resource "datapower_ssl_proxy_service" "acc_test" {
   id = "AccTest_SSLProxyService"
   app_domain = datapower_domain.acc_test.app_domain
   local_port = 4521
   remote_address = "10.10.10.10"
   remote_port = 9999
-  ssl_server = datapower_sslserverprofile.acc_test.id
+  ssl_server = datapower_ssl_server_profile.acc_test.id
   local_address = "0.0.0.0"
 }`,
     ModelOnly:    false,
@@ -6681,17 +6681,17 @@ resource "datapower_sslproxyservice" "acc_test" {
 var SSLSNIMappingTestConfig = ModelTestConfig{
     Name:         "SSLSNIMapping",
     Resource: `
-resource "datapower_sslsnimapping" "test" {
+resource "datapower_ssl_sni_mapping" "test" {
   id = "ResTestSSLSNIMapping"
   app_domain = "acceptance_test"
   sni_mapping = ` + DmHostToSSLServerProfileTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_sslsnimapping" "test" {
+data "datapower_ssl_sni_mapping" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_sslsnimapping" "acc_test" {
+resource "datapower_ssl_sni_mapping" "acc_test" {
   id = "AccTest_SSLSNIMapping"
   app_domain = datapower_domain.acc_test.app_domain
   sni_mapping = ` + DmHostToSSLServerProfileTestConfig.GetModelTestBedListConfig() + `
@@ -6701,60 +6701,60 @@ resource "datapower_sslsnimapping" "acc_test" {
 var SSLSNIServerProfileTestConfig = ModelTestConfig{
     Name:         "SSLSNIServerProfile",
     Resource: `
-resource "datapower_sslsniserverprofile" "test" {
+resource "datapower_ssl_sni_server_profile" "test" {
   id = "ResTestSSLSNIServerProfile"
   app_domain = "acceptance_test"
   sni_server_mapping = "AccTest_SSLSNIMapping"
 }`,
     Data: `
-data "datapower_sslsniserverprofile" "test" {
+data "datapower_ssl_sni_server_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_sslsniserverprofile" "acc_test" {
+resource "datapower_ssl_sni_server_profile" "acc_test" {
   id = "AccTest_SSLSNIServerProfile"
   app_domain = datapower_domain.acc_test.app_domain
-  sni_server_mapping = datapower_sslsnimapping.acc_test.id
+  sni_server_mapping = datapower_ssl_sni_mapping.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var SSLServerProfileTestConfig = ModelTestConfig{
     Name:         "SSLServerProfile",
     Resource: `
-resource "datapower_sslserverprofile" "test" {
+resource "datapower_ssl_server_profile" "test" {
   id = "ResTestSSLServerProfile"
   app_domain = "acceptance_test"
   ciphers = ["AES_256_GCM_SHA384","CHACHA20_POLY1305_SHA256","AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_256_GCM_SHA384","ECDHE_ECDSA_WITH_AES_256_CBC_SHA384","ECDHE_ECDSA_WITH_AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_128_CBC_SHA256","ECDHE_ECDSA_WITH_AES_256_CBC_SHA","ECDHE_ECDSA_WITH_AES_128_CBC_SHA","ECDHE_RSA_WITH_AES_256_GCM_SHA384","ECDHE_RSA_WITH_AES_256_CBC_SHA384","ECDHE_RSA_WITH_AES_128_GCM_SHA256","ECDHE_RSA_WITH_AES_128_CBC_SHA256","ECDHE_RSA_WITH_AES_256_CBC_SHA","ECDHE_RSA_WITH_AES_128_CBC_SHA","DHE_RSA_WITH_AES_256_GCM_SHA384","DHE_RSA_WITH_AES_256_CBC_SHA256","DHE_RSA_WITH_AES_128_GCM_SHA256","DHE_RSA_WITH_AES_128_CBC_SHA256","DHE_RSA_WITH_AES_256_CBC_SHA","DHE_RSA_WITH_AES_128_CBC_SHA",]
   idcred = "AccTest_CryptoIdentCred"
 }`,
     Data: `
-data "datapower_sslserverprofile" "test" {
+data "datapower_ssl_server_profile" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_sslserverprofile" "acc_test" {
+resource "datapower_ssl_server_profile" "acc_test" {
   id = "AccTest_SSLServerProfile"
   app_domain = datapower_domain.acc_test.app_domain
   ciphers = ["AES_256_GCM_SHA384","CHACHA20_POLY1305_SHA256","AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_256_GCM_SHA384","ECDHE_ECDSA_WITH_AES_256_CBC_SHA384","ECDHE_ECDSA_WITH_AES_128_GCM_SHA256","ECDHE_ECDSA_WITH_AES_128_CBC_SHA256","ECDHE_ECDSA_WITH_AES_256_CBC_SHA","ECDHE_ECDSA_WITH_AES_128_CBC_SHA","ECDHE_RSA_WITH_AES_256_GCM_SHA384","ECDHE_RSA_WITH_AES_256_CBC_SHA384","ECDHE_RSA_WITH_AES_128_GCM_SHA256","ECDHE_RSA_WITH_AES_128_CBC_SHA256","ECDHE_RSA_WITH_AES_256_CBC_SHA","ECDHE_RSA_WITH_AES_128_CBC_SHA","DHE_RSA_WITH_AES_256_GCM_SHA384","DHE_RSA_WITH_AES_256_CBC_SHA256","DHE_RSA_WITH_AES_128_GCM_SHA256","DHE_RSA_WITH_AES_128_CBC_SHA256","DHE_RSA_WITH_AES_256_CBC_SHA","DHE_RSA_WITH_AES_128_CBC_SHA",]
-  idcred = datapower_cryptoidentcred.acc_test.id
+  idcred = datapower_crypto_ident_cred.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var SchemaExceptionMapTestConfig = ModelTestConfig{
     Name:         "SchemaExceptionMap",
     Resource: `
-resource "datapower_schemaexceptionmap" "test" {
+resource "datapower_schema_exception_map" "test" {
   id = "ResTestSchemaExceptionMap"
   app_domain = "acceptance_test"
   original_schema_url = "http://localhost"
   schema_exception_rules = ` + DmSchemaExceptionRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_schemaexceptionmap" "test" {
+data "datapower_schema_exception_map" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_schemaexceptionmap" "acc_test" {
+resource "datapower_schema_exception_map" "acc_test" {
   id = "AccTest_SchemaExceptionMap"
   app_domain = datapower_domain.acc_test.app_domain
   original_schema_url = "http://localhost"
@@ -6765,17 +6765,17 @@ resource "datapower_schemaexceptionmap" "acc_test" {
 var SecureBackupModeTestConfig = ModelTestConfig{
     Name:         "SecureBackupMode",
     Resource: `
-resource "datapower_securebackupmode" "test" {
+resource "datapower_secure_backup_mode" "test" {
 }`,
     Data: `
-data "datapower_securebackupmode" "test" {
+data "datapower_secure_backup_mode" "test" {
 }`,
     ModelOnly:    false,
 }
 var SocialLoginPolicyTestConfig = ModelTestConfig{
     Name:         "SocialLoginPolicy",
     Resource: `
-resource "datapower_socialloginpolicy" "test" {
+resource "datapower_social_login_policy" "test" {
   id = "ResTestSocialLoginPolicy"
   app_domain = "acceptance_test"
   client_id = "client_id"
@@ -6787,16 +6787,16 @@ resource "datapower_socialloginpolicy" "test" {
   validate_jwt_token = false
 }`,
     Data: `
-data "datapower_socialloginpolicy" "test" {
+data "datapower_social_login_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_socialloginpolicy" "acc_test" {
+resource "datapower_social_login_policy" "acc_test" {
   id = "AccTest_SocialLoginPolicy"
   app_domain = datapower_domain.acc_test.app_domain
   client_id = "client_id"
   client_secret = "client_secret"
-  client_ssl_profile = datapower_sslclientprofile.acc_test.id
+  client_ssl_profile = datapower_ssl_client_profile.acc_test.id
   social_provider = "google"
   provider_az_endpoint = "https://example.com/auth"
   provider_token_endpoint = "https://example.com/token"
@@ -6807,18 +6807,18 @@ resource "datapower_socialloginpolicy" "acc_test" {
 var StatelessTCPSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "StatelessTCPSourceProtocolHandler",
     Resource: `
-resource "datapower_statelesstcpsourceprotocolhandler" "test" {
+resource "datapower_stateless_tcp_source_protocol_handler" "test" {
   id = "ResTestStatelessTCPSourceProtocolHandler"
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
   local_port = 4000
 }`,
     Data: `
-data "datapower_statelesstcpsourceprotocolhandler" "test" {
+data "datapower_stateless_tcp_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_statelesstcpsourceprotocolhandler" "acc_test" {
+resource "datapower_stateless_tcp_source_protocol_handler" "acc_test" {
   id = "AccTest_StatelessTCPSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
@@ -6841,16 +6841,16 @@ data "datapower_statistics" "test" {
 var StylePolicyTestConfig = ModelTestConfig{
     Name:         "StylePolicy",
     Resource: `
-resource "datapower_stylepolicy" "test" {
+resource "datapower_style_policy" "test" {
   id = "ResTestStylePolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_stylepolicy" "test" {
+data "datapower_style_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_stylepolicy" "acc_test" {
+resource "datapower_style_policy" "acc_test" {
   id = "AccTest_StylePolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -6859,7 +6859,7 @@ resource "datapower_stylepolicy" "acc_test" {
 var StylePolicyActionTestConfig = ModelTestConfig{
     Name:         "StylePolicyAction",
     Resource: `
-resource "datapower_stylepolicyaction" "test" {
+resource "datapower_style_policy_action" "test" {
   id = "ResTestStylePolicyAction"
   app_domain = "acceptance_test"
   type = "xform"
@@ -6870,11 +6870,11 @@ resource "datapower_stylepolicyaction" "test" {
   named_outputs = null
 }`,
     Data: `
-data "datapower_stylepolicyaction" "test" {
+data "datapower_style_policy_action" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_stylepolicyaction" "acc_test" {
+resource "datapower_style_policy_action" "acc_test" {
   id = "AccTest_StylePolicyAction"
   app_domain = datapower_domain.acc_test.app_domain
   type = "xform"
@@ -6889,7 +6889,7 @@ resource "datapower_stylepolicyaction" "acc_test" {
 var StylePolicyRuleTestConfig = ModelTestConfig{
     Name:         "StylePolicyRule",
     Resource: `
-resource "datapower_stylepolicyrule" "test" {
+resource "datapower_style_policy_rule" "test" {
   id = "ResTestStylePolicyRule"
   app_domain = "acceptance_test"
   direction = "rule"
@@ -6897,11 +6897,11 @@ resource "datapower_stylepolicyrule" "test" {
   output_format = "none"
 }`,
     Data: `
-data "datapower_stylepolicyrule" "test" {
+data "datapower_style_policy_rule" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_stylepolicyrule" "acc_test" {
+resource "datapower_style_policy_rule" "acc_test" {
   id = "AccTest_StylePolicyRule"
   app_domain = datapower_domain.acc_test.app_domain
   direction = "rule"
@@ -6913,10 +6913,10 @@ resource "datapower_stylepolicyrule" "acc_test" {
 var SystemSettingsTestConfig = ModelTestConfig{
     Name:         "SystemSettings",
     Resource: `
-resource "datapower_systemsettings" "test" {
+resource "datapower_system_settings" "test" {
 }`,
     Data: `
-data "datapower_systemsettings" "test" {
+data "datapower_system_settings" "test" {
 }`,
     ModelOnly:    false,
 }
@@ -6950,7 +6950,7 @@ data "datapower_tam" "test" {
 var TCPProxyServiceTestConfig = ModelTestConfig{
     Name:         "TCPProxyService",
     Resource: `
-resource "datapower_tcpproxyservice" "test" {
+resource "datapower_tcp_proxy_service" "test" {
   id = "ResTestTCPProxyService"
   app_domain = "acceptance_test"
   local_port = 6158
@@ -6959,11 +6959,11 @@ resource "datapower_tcpproxyservice" "test" {
   local_address = "0.0.0.0"
 }`,
     Data: `
-data "datapower_tcpproxyservice" "test" {
+data "datapower_tcp_proxy_service" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_tcpproxyservice" "acc_test" {
+resource "datapower_tcp_proxy_service" "acc_test" {
   id = "AccTest_TCPProxyService"
   app_domain = datapower_domain.acc_test.app_domain
   local_port = 6158
@@ -6992,28 +6992,28 @@ data "datapower_throttler" "test" {
 var TimeSettingsTestConfig = ModelTestConfig{
     Name:         "TimeSettings",
     Resource: `
-resource "datapower_timesettings" "test" {
+resource "datapower_time_settings" "test" {
   local_time_zone = "EST5EDT"
 }`,
     Data: `
-data "datapower_timesettings" "test" {
+data "datapower_time_settings" "test" {
 }`,
     ModelOnly:    false,
 }
 var URLMapTestConfig = ModelTestConfig{
     Name:         "URLMap",
     Resource: `
-resource "datapower_urlmap" "test" {
+resource "datapower_url_map" "test" {
   id = "ResTestURLMap"
   app_domain = "acceptance_test"
   url_map_rule = ` + DmURLMapRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_urlmap" "test" {
+data "datapower_url_map" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_urlmap" "acc_test" {
+resource "datapower_url_map" "acc_test" {
   id = "AccTest_URLMap"
   app_domain = datapower_domain.acc_test.app_domain
   url_map_rule = ` + DmURLMapRuleTestConfig.GetModelTestBedListConfig() + `
@@ -7023,17 +7023,17 @@ resource "datapower_urlmap" "acc_test" {
 var URLRefreshPolicyTestConfig = ModelTestConfig{
     Name:         "URLRefreshPolicy",
     Resource: `
-resource "datapower_urlrefreshpolicy" "test" {
+resource "datapower_url_refresh_policy" "test" {
   id = "ResTestURLRefreshPolicy"
   app_domain = "acceptance_test"
   url_refresh_rule = ` + DmURLRefreshRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_urlrefreshpolicy" "test" {
+data "datapower_url_refresh_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_urlrefreshpolicy" "acc_test" {
+resource "datapower_url_refresh_policy" "acc_test" {
   id = "AccTest_URLRefreshPolicy"
   app_domain = datapower_domain.acc_test.app_domain
   url_refresh_rule = ` + DmURLRefreshRuleTestConfig.GetModelTestBedListConfig() + `
@@ -7043,16 +7043,16 @@ resource "datapower_urlrefreshpolicy" "acc_test" {
 var URLRewritePolicyTestConfig = ModelTestConfig{
     Name:         "URLRewritePolicy",
     Resource: `
-resource "datapower_urlrewritepolicy" "test" {
+resource "datapower_url_rewrite_policy" "test" {
   id = "ResTestURLRewritePolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_urlrewritepolicy" "test" {
+data "datapower_url_rewrite_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_urlrewritepolicy" "acc_test" {
+resource "datapower_url_rewrite_policy" "acc_test" {
   id = "AccTest_URLRewritePolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -7077,7 +7077,7 @@ resource "datapower_user" "acc_test" {
   id = "AccTest_User"
   password = "Password$123"
   access_level = "group-defined"
-  group_name = datapower_usergroup.acc_test.id
+  group_name = datapower_user_group.acc_test.id
   snmp_creds = null
   hashed_snmp_creds = null
 }`,
@@ -7086,15 +7086,15 @@ resource "datapower_user" "acc_test" {
 var UserGroupTestConfig = ModelTestConfig{
     Name:         "UserGroup",
     Resource: `
-resource "datapower_usergroup" "test" {
+resource "datapower_user_group" "test" {
   id = "ResTest_UserGroup"
   access_policies = ["*/*/*?Access=r"]
 }`,
     Data: `
-data "datapower_usergroup" "test" {
+data "datapower_user_group" "test" {
 }`,
     TestBed: `
-resource "datapower_usergroup" "acc_test" {
+resource "datapower_user_group" "acc_test" {
   id = "AccTest_UserGroup"
   access_policies = ["*/*/*?Access=r"]
 }`,
@@ -7103,16 +7103,16 @@ resource "datapower_usergroup" "acc_test" {
 var VisibilityListTestConfig = ModelTestConfig{
     Name:         "VisibilityList",
     Resource: `
-resource "datapower_visibilitylist" "test" {
+resource "datapower_visibility_list" "test" {
   id = "ResTestVisibilityList"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_visibilitylist" "test" {
+data "datapower_visibility_list" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_visibilitylist" "acc_test" {
+resource "datapower_visibility_list" "acc_test" {
   id = "AccTest_VisibilityList"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -7121,7 +7121,7 @@ resource "datapower_visibilitylist" "acc_test" {
 var WCCServiceTestConfig = ModelTestConfig{
     Name:         "WCCService",
     Resource: `
-resource "datapower_wccservice" "test" {
+resource "datapower_wcc_service" "test" {
   id = "ResTestWCCService"
   app_domain = "acceptance_test"
   odc_info_hostname = "example.com"
@@ -7129,11 +7129,11 @@ resource "datapower_wccservice" "test" {
   time_interval = 10
 }`,
     Data: `
-data "datapower_wccservice" "test" {
+data "datapower_wcc_service" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_wccservice" "acc_test" {
+resource "datapower_wcc_service" "acc_test" {
   id = "AccTest_WCCService"
   app_domain = datapower_domain.acc_test.app_domain
   odc_info_hostname = "example.com"
@@ -7145,16 +7145,16 @@ resource "datapower_wccservice" "acc_test" {
 var WSEndpointRewritePolicyTestConfig = ModelTestConfig{
     Name:         "WSEndpointRewritePolicy",
     Resource: `
-resource "datapower_wsendpointrewritepolicy" "test" {
+resource "datapower_ws_endpoint_rewrite_policy" "test" {
   id = "ResTestWSEndpointRewritePolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_wsendpointrewritepolicy" "test" {
+data "datapower_ws_endpoint_rewrite_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_wsendpointrewritepolicy" "acc_test" {
+resource "datapower_ws_endpoint_rewrite_policy" "acc_test" {
   id = "AccTest_WSEndpointRewritePolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -7163,7 +7163,7 @@ resource "datapower_wsendpointrewritepolicy" "acc_test" {
 var WSGatewayTestConfig = ModelTestConfig{
     Name:         "WSGateway",
     Resource: `
-resource "datapower_wsgateway" "test" {
+resource "datapower_ws_gateway" "test" {
   id = "ResTestWSGateway"
   app_domain = "acceptance_test"
   type = "static-from-wsdl"
@@ -7175,11 +7175,11 @@ resource "datapower_wsgateway" "test" {
   back_persistent_timeout = 180
 }`,
     Data: `
-data "datapower_wsgateway" "test" {
+data "datapower_ws_gateway" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_wsgateway" "acc_test" {
+resource "datapower_ws_gateway" "acc_test" {
   id = "AccTest_WSGateway"
   app_domain = datapower_domain.acc_test.app_domain
   type = "static-from-wsdl"
@@ -7195,21 +7195,21 @@ resource "datapower_wsgateway" "acc_test" {
 var WSRRSavedSearchSubscriptionTestConfig = ModelTestConfig{
     Name:         "WSRRSavedSearchSubscription",
     Resource: `
-resource "datapower_wsrrsavedsearchsubscription" "test" {
+resource "datapower_wsrr_saved_search_subscription" "test" {
   id = "ResTestWSRRSavedSearchSubscription"
   app_domain = "acceptance_test"
   server = "AccTest_WSRRServer"
   saved_search_name = "ResTestsaved_search"
 }`,
     Data: `
-data "datapower_wsrrsavedsearchsubscription" "test" {
+data "datapower_wsrr_saved_search_subscription" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_wsrrsavedsearchsubscription" "acc_test" {
+resource "datapower_wsrr_saved_search_subscription" "acc_test" {
   id = "AccTest_WSRRSavedSearchSubscription"
   app_domain = datapower_domain.acc_test.app_domain
-  server = datapower_wsrrserver.acc_test.id
+  server = datapower_wsrr_server.acc_test.id
   saved_search_name = "ResTestsaved_search"
 }`,
     ModelOnly:    false,
@@ -7217,17 +7217,17 @@ resource "datapower_wsrrsavedsearchsubscription" "acc_test" {
 var WSRRServerTestConfig = ModelTestConfig{
     Name:         "WSRRServer",
     Resource: `
-resource "datapower_wsrrserver" "test" {
+resource "datapower_wsrr_server" "test" {
   id = "ResTest_WSRRServer"
   app_domain = "acceptance_test"
   soap_url = "https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort"
 }`,
     Data: `
-data "datapower_wsrrserver" "test" {
+data "datapower_wsrr_server" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_wsrrserver" "acc_test" {
+resource "datapower_wsrr_server" "acc_test" {
   id = "AccTest_WSRRServer"
   app_domain = datapower_domain.acc_test.app_domain
   soap_url = "https://host:9443/WSRRCoreSDO/services/WSRRCoreSDOPort"
@@ -7237,7 +7237,7 @@ resource "datapower_wsrrserver" "acc_test" {
 var WSRRSubscriptionTestConfig = ModelTestConfig{
     Name:         "WSRRSubscription",
     Resource: `
-resource "datapower_wsrrsubscription" "test" {
+resource "datapower_wsrr_subscription" "test" {
   id = "ResTestWSRRSubscription"
   app_domain = "acceptance_test"
   server = "AccTest_WSRRServer"
@@ -7246,14 +7246,14 @@ resource "datapower_wsrrsubscription" "test" {
   object_name = "ResTestobject"
 }`,
     Data: `
-data "datapower_wsrrsubscription" "test" {
+data "datapower_wsrr_subscription" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_wsrrsubscription" "acc_test" {
+resource "datapower_wsrr_subscription" "acc_test" {
   id = "AccTest_WSRRSubscription"
   app_domain = datapower_domain.acc_test.app_domain
-  server = datapower_wsrrserver.acc_test.id
+  server = datapower_wsrr_server.acc_test.id
   namespace = "namespace"
   object_type = "wsdl"
   object_name = "ResTestobject"
@@ -7263,16 +7263,16 @@ resource "datapower_wsrrsubscription" "acc_test" {
 var WSStylePolicyTestConfig = ModelTestConfig{
     Name:         "WSStylePolicy",
     Resource: `
-resource "datapower_wsstylepolicy" "test" {
+resource "datapower_ws_style_policy" "test" {
   id = "ResTestWSStylePolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_wsstylepolicy" "test" {
+data "datapower_ws_style_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_wsstylepolicy" "acc_test" {
+resource "datapower_ws_style_policy" "acc_test" {
   id = "AccTest_WSStylePolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -7281,7 +7281,7 @@ resource "datapower_wsstylepolicy" "acc_test" {
 var WSStylePolicyRuleTestConfig = ModelTestConfig{
     Name:         "WSStylePolicyRule",
     Resource: `
-resource "datapower_wsstylepolicyrule" "test" {
+resource "datapower_ws_style_policy_rule" "test" {
   id = "ResTest_WSStylePolicyRule"
   app_domain = "acceptance_test"
   actions = ["AccTest_StylePolicyAction"]
@@ -7290,14 +7290,14 @@ resource "datapower_wsstylepolicyrule" "test" {
   output_format = "none"
 }`,
     Data: `
-data "datapower_wsstylepolicyrule" "test" {
+data "datapower_ws_style_policy_rule" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_wsstylepolicyrule" "acc_test" {
+resource "datapower_ws_style_policy_rule" "acc_test" {
   id = "AccTest_WSStylePolicyRule"
   app_domain = datapower_domain.acc_test.app_domain
-  actions = [datapower_stylepolicyaction.acc_test.id]
+  actions = [datapower_style_policy_action.acc_test.id]
   direction = "rule"
   input_format = "none"
   output_format = "none"
@@ -7307,7 +7307,7 @@ resource "datapower_wsstylepolicyrule" "acc_test" {
 var WXSGridTestConfig = ModelTestConfig{
     Name:         "WXSGrid",
     Resource: `
-resource "datapower_wxsgrid" "test" {
+resource "datapower_wxs_grid" "test" {
   id = "ResTestWXSGrid"
   app_domain = "acceptance_test"
   collective = "AccTest_LoadBalancerGroup"
@@ -7317,17 +7317,17 @@ resource "datapower_wxsgrid" "test" {
   timeout = 1000
 }`,
     Data: `
-data "datapower_wxsgrid" "test" {
+data "datapower_wxs_grid" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_wxsgrid" "acc_test" {
+resource "datapower_wxs_grid" "acc_test" {
   id = "AccTest_WXSGrid"
   app_domain = datapower_domain.acc_test.app_domain
-  collective = datapower_loadbalancergroup.acc_test.id
+  collective = datapower_load_balancer_group.acc_test.id
   grid = "gridname"
   user_name = "username"
-  password_alias = datapower_passwordalias.acc_test.id
+  password_alias = datapower_password_alias.acc_test.id
   timeout = 1000
 }`,
     ModelOnly:    false,
@@ -7335,16 +7335,16 @@ resource "datapower_wxsgrid" "acc_test" {
 var WebAppErrorHandlingPolicyTestConfig = ModelTestConfig{
     Name:         "WebAppErrorHandlingPolicy",
     Resource: `
-resource "datapower_webapperrorhandlingpolicy" "test" {
+resource "datapower_web_app_error_handling_policy" "test" {
   id = "ResTestWebAppErrorHandlingPolicy"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_webapperrorhandlingpolicy" "test" {
+data "datapower_web_app_error_handling_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_webapperrorhandlingpolicy" "acc_test" {
+resource "datapower_web_app_error_handling_policy" "acc_test" {
   id = "AccTest_WebAppErrorHandlingPolicy"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -7353,7 +7353,7 @@ resource "datapower_webapperrorhandlingpolicy" "acc_test" {
 var WebAppFWTestConfig = ModelTestConfig{
     Name:         "WebAppFW",
     Resource: `
-resource "datapower_webappfw" "test" {
+resource "datapower_web_app_fw" "test" {
   id = "ResTestWebAppFW"
   app_domain = "acceptance_test"
   front_side = [{"LocalAddress": "0.0.0.0"}]
@@ -7366,16 +7366,16 @@ resource "datapower_webappfw" "test" {
   back_persistent_timeout = 180
 }`,
     Data: `
-data "datapower_webappfw" "test" {
+data "datapower_web_app_fw" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_webappfw" "acc_test" {
+resource "datapower_web_app_fw" "acc_test" {
   id = "AccTest_WebAppFW"
   app_domain = datapower_domain.acc_test.app_domain
   front_side = [{"LocalAddress": "0.0.0.0"}]
   remote_address = "10.10.10.10"
-  style_policy = datapower_appsecuritypolicy.acc_test.id
+  style_policy = datapower_app_security_policy.acc_test.id
   xml_manager = "default"
   front_timeout = 120
   back_timeout = 120
@@ -7387,16 +7387,16 @@ resource "datapower_webappfw" "acc_test" {
 var WebAppRequestTestConfig = ModelTestConfig{
     Name:         "WebAppRequest",
     Resource: `
-resource "datapower_webapprequest" "test" {
+resource "datapower_web_app_request" "test" {
   id = "ResTest_WebAppRequest"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_webapprequest" "test" {
+data "datapower_web_app_request" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_webapprequest" "acc_test" {
+resource "datapower_web_app_request" "acc_test" {
   id = "AccTest_WebAppRequest"
   app_domain = datapower_domain.acc_test.app_domain
 }`,
@@ -7405,17 +7405,17 @@ resource "datapower_webapprequest" "acc_test" {
 var WebAppResponseTestConfig = ModelTestConfig{
     Name:         "WebAppResponse",
     Resource: `
-resource "datapower_webappresponse" "test" {
+resource "datapower_web_app_response" "test" {
   id = "ResTest_WebAppResponse"
   app_domain = "acceptance_test"
   policy_type = "admission"
 }`,
     Data: `
-data "datapower_webappresponse" "test" {
+data "datapower_web_app_response" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_webappresponse" "acc_test" {
+resource "datapower_web_app_response" "acc_test" {
   id = "AccTest_WebAppResponse"
   app_domain = datapower_domain.acc_test.app_domain
   policy_type = "admission"
@@ -7425,17 +7425,17 @@ resource "datapower_webappresponse" "acc_test" {
 var WebAppSessionPolicyTestConfig = ModelTestConfig{
     Name:         "WebAppSessionPolicy",
     Resource: `
-resource "datapower_webappsessionpolicy" "test" {
+resource "datapower_web_app_session_policy" "test" {
   id = "ResTestWebAppSessionPolicy"
   app_domain = "acceptance_test"
   start_matches = "__default-accept-service-providers__"
 }`,
     Data: `
-data "datapower_webappsessionpolicy" "test" {
+data "datapower_web_app_session_policy" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_webappsessionpolicy" "acc_test" {
+resource "datapower_web_app_session_policy" "acc_test" {
   id = "AccTest_WebAppSessionPolicy"
   app_domain = datapower_domain.acc_test.app_domain
   start_matches = "__default-accept-service-providers__"
@@ -7445,34 +7445,34 @@ resource "datapower_webappsessionpolicy" "acc_test" {
 var WebB2BViewerTestConfig = ModelTestConfig{
     Name:         "WebB2BViewer",
     Resource: `
-resource "datapower_webb2bviewer" "test" {
+resource "datapower_web_b2b_viewer" "test" {
   local_port = 9091
   idle_timeout = 600
   local_address = "0.0.0.0"
 }`,
     Data: `
-data "datapower_webb2bviewer" "test" {
+data "datapower_web_b2b_viewer" "test" {
 }`,
     ModelOnly:    false,
 }
 var WebGUITestConfig = ModelTestConfig{
     Name:         "WebGUI",
     Resource: `
-resource "datapower_webgui" "test" {
+resource "datapower_web_gui" "test" {
   local_port = 9090
   save_config_overwrites = true
   idle_timeout = 0
   local_address = "0.0.0.0"
 }`,
     Data: `
-data "datapower_webgui" "test" {
+data "datapower_web_gui" "test" {
 }`,
     ModelOnly:    false,
 }
 var WebServiceMonitorTestConfig = ModelTestConfig{
     Name:         "WebServiceMonitor",
     Resource: `
-resource "datapower_webservicemonitor" "test" {
+resource "datapower_web_service_monitor" "test" {
   id = "ResTestWebServiceMonitor"
   app_domain = "acceptance_test"
   wsdlurl = "wsdlurl"
@@ -7480,11 +7480,11 @@ resource "datapower_webservicemonitor" "test" {
   frontend_url = "frontendurl"
 }`,
     Data: `
-data "datapower_webservicemonitor" "test" {
+data "datapower_web_service_monitor" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_webservicemonitor" "acc_test" {
+resource "datapower_web_service_monitor" "acc_test" {
   id = "AccTest_WebServiceMonitor"
   app_domain = datapower_domain.acc_test.app_domain
   wsdlurl = "wsdlurl"
@@ -7496,14 +7496,14 @@ resource "datapower_webservicemonitor" "acc_test" {
 var WebServicesAgentTestConfig = ModelTestConfig{
     Name:         "WebServicesAgent",
     Resource: `
-resource "datapower_webservicesagent" "test" {
+resource "datapower_web_services_agent" "test" {
   app_domain = "acceptance_test"
   max_records = 3000
   max_memory_kb = 64000
   capture_mode = "faults"
 }`,
     Data: `
-data "datapower_webservicesagent" "test" {
+data "datapower_web_services_agent" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelOnly:    false,
@@ -7511,14 +7511,14 @@ data "datapower_webservicesagent" "test" {
 var WebSphereJMSServerTestConfig = ModelTestConfig{
     Name:         "WebSphereJMSServer",
     Resource: `
-resource "datapower_webspherejmsserver" "test" {
+resource "datapower_web_sphere_jms_server" "test" {
   id = "ResTest_WebSphereJMSServer"
   app_domain = "acceptance_test"
   endpoint = ` + DmWebSphereJMSEndpointTestConfig.GetModelListConfig() + `
   messaging_bus = "bus"
 }`,
     Data: `
-data "datapower_webspherejmsserver" "test" {
+data "datapower_web_sphere_jms_server" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
@@ -7532,20 +7532,20 @@ data "datapower_webspherejmsserver" "test" {
 var WebSphereJMSSourceProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "WebSphereJMSSourceProtocolHandler",
     Resource: `
-resource "datapower_webspherejmssourceprotocolhandler" "test" {
+resource "datapower_web_sphere_jms_source_protocol_handler" "test" {
   id = "ResTestWebSphereJMSSourceProtocolHandler"
   app_domain = "acceptance_test"
   server = "AccTest_WebSphereJMSServer"
   get_queue = "getqueue"
 }`,
     Data: `
-data "datapower_webspherejmssourceprotocolhandler" "test" {
+data "datapower_web_sphere_jms_source_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     ModelTestBed: `{
   id = "AccTest_WebSphereJMSSourceProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
-  server = datapower_webspherejmsserver.acc_test.id
+  server = datapower_web_sphere_jms_server.acc_test.id
   get_queue = "getqueue"
 }`,
     ModelOnly:    false,
@@ -7553,7 +7553,7 @@ data "datapower_webspherejmssourceprotocolhandler" "test" {
 var WebTokenServiceTestConfig = ModelTestConfig{
     Name:         "WebTokenService",
     Resource: `
-resource "datapower_webtokenservice" "test" {
+resource "datapower_web_token_service" "test" {
   id = "ResTestWebTokenService"
   app_domain = "acceptance_test"
   xml_manager = "default"
@@ -7563,11 +7563,11 @@ resource "datapower_webtokenservice" "test" {
   front_persistent_timeout = 180
 }`,
     Data: `
-data "datapower_webtokenservice" "test" {
+data "datapower_web_token_service" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_webtokenservice" "acc_test" {
+resource "datapower_web_token_service" "acc_test" {
   id = "AccTest_WebTokenService"
   app_domain = datapower_domain.acc_test.app_domain
   xml_manager = "default"
@@ -7581,17 +7581,17 @@ resource "datapower_webtokenservice" "acc_test" {
 var XACMLPDPTestConfig = ModelTestConfig{
     Name:         "XACMLPDP",
     Resource: `
-resource "datapower_xacmlpdp" "test" {
+resource "datapower_xacml_pdp" "test" {
   id = "ResTestXACMLPDP"
   app_domain = "acceptance_test"
   general_policy = "http://test/uri"
 }`,
     Data: `
-data "datapower_xacmlpdp" "test" {
+data "datapower_xacml_pdp" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_xacmlpdp" "acc_test" {
+resource "datapower_xacml_pdp" "acc_test" {
   id = "AccTest_XACMLPDP"
   app_domain = datapower_domain.acc_test.app_domain
   general_policy = "http://test/uri"
@@ -7601,7 +7601,7 @@ resource "datapower_xacmlpdp" "acc_test" {
 var XMLFirewallServiceTestConfig = ModelTestConfig{
     Name:         "XMLFirewallService",
     Resource: `
-resource "datapower_xmlfirewallservice" "test" {
+resource "datapower_xml_firewall_service" "test" {
   id = "ResTestXMLFirewallService"
   app_domain = "acceptance_test"
   type = "dynamic-backend"
@@ -7610,11 +7610,11 @@ resource "datapower_xmlfirewallservice" "test" {
   local_address = "0.0.0.0"
 }`,
     Data: `
-data "datapower_xmlfirewallservice" "test" {
+data "datapower_xml_firewall_service" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_xmlfirewallservice" "acc_test" {
+resource "datapower_xml_firewall_service" "acc_test" {
   id = "AccTest_XMLFirewallService"
   app_domain = datapower_domain.acc_test.app_domain
   type = "dynamic-backend"
@@ -7627,36 +7627,36 @@ resource "datapower_xmlfirewallservice" "acc_test" {
 var XMLManagerTestConfig = ModelTestConfig{
     Name:         "XMLManager",
     Resource: `
-resource "datapower_xmlmanager" "test" {
+resource "datapower_xml_manager" "test" {
   id = "ResTestXMLManager"
   app_domain = "acceptance_test"
 }`,
     Data: `
-data "datapower_xmlmanager" "test" {
+data "datapower_xml_manager" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_xmlmanager" "acc_test" {
+resource "datapower_xml_manager" "acc_test" {
   id = "AccTest_XMLManager"
   app_domain = datapower_domain.acc_test.app_domain
-  ldap_conn_pool = datapower_ldapconnectionpool.acc_test.id
+  ldap_conn_pool = datapower_ldap_connection_pool.acc_test.id
 }`,
     ModelOnly:    false,
 }
 var XPathRoutingMapTestConfig = ModelTestConfig{
     Name:         "XPathRoutingMap",
     Resource: `
-resource "datapower_xpathroutingmap" "test" {
+resource "datapower_xpath_routing_map" "test" {
   id = "ResTestXPathRoutingMap"
   app_domain = "acceptance_test"
   x_path_routing_rules = ` + DmXPathRoutingRuleTestConfig.GetModelListConfig() + `
 }`,
     Data: `
-data "datapower_xpathroutingmap" "test" {
+data "datapower_xpath_routing_map" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_xpathroutingmap" "acc_test" {
+resource "datapower_xpath_routing_map" "acc_test" {
   id = "AccTest_XPathRoutingMap"
   app_domain = datapower_domain.acc_test.app_domain
   x_path_routing_rules = ` + DmXPathRoutingRuleTestConfig.GetModelTestBedListConfig() + `
@@ -7666,7 +7666,7 @@ resource "datapower_xpathroutingmap" "acc_test" {
 var XSLCoprocServiceTestConfig = ModelTestConfig{
     Name:         "XSLCoprocService",
     Resource: `
-resource "datapower_xslcoprocservice" "test" {
+resource "datapower_xsl_coproc_service" "test" {
   id = "ResTestXSLCoprocService"
   app_domain = "acceptance_test"
   local_port = 8811
@@ -7674,11 +7674,11 @@ resource "datapower_xslcoprocservice" "test" {
   local_address = "0.0.0.0"
 }`,
     Data: `
-data "datapower_xslcoprocservice" "test" {
+data "datapower_xsl_coproc_service" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_xslcoprocservice" "acc_test" {
+resource "datapower_xsl_coproc_service" "acc_test" {
   id = "AccTest_XSLCoprocService"
   app_domain = datapower_domain.acc_test.app_domain
   local_port = 8811
@@ -7690,7 +7690,7 @@ resource "datapower_xslcoprocservice" "acc_test" {
 var XSLProxyServiceTestConfig = ModelTestConfig{
     Name:         "XSLProxyService",
     Resource: `
-resource "datapower_xslproxyservice" "test" {
+resource "datapower_xsl_proxy_service" "test" {
   id = "ResTestXSLProxyService"
   app_domain = "acceptance_test"
   type = "static-backend"
@@ -7701,11 +7701,11 @@ resource "datapower_xslproxyservice" "test" {
   local_address = "0.0.0.0"
 }`,
     Data: `
-data "datapower_xslproxyservice" "test" {
+data "datapower_xsl_proxy_service" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_xslproxyservice" "acc_test" {
+resource "datapower_xsl_proxy_service" "acc_test" {
   id = "AccTest_XSLProxyService"
   app_domain = datapower_domain.acc_test.app_domain
   type = "static-backend"
@@ -7720,7 +7720,7 @@ resource "datapower_xslproxyservice" "acc_test" {
 var XTCProtocolHandlerTestConfig = ModelTestConfig{
     Name:         "XTCProtocolHandler",
     Resource: `
-resource "datapower_xtcprotocolhandler" "test" {
+resource "datapower_xtc_protocol_handler" "test" {
   id = "ResTestXTCProtocolHandler"
   app_domain = "acceptance_test"
   local_address = "0.0.0.0"
@@ -7729,11 +7729,11 @@ resource "datapower_xtcprotocolhandler" "test" {
   remote_port = 12000
 }`,
     Data: `
-data "datapower_xtcprotocolhandler" "test" {
+data "datapower_xtc_protocol_handler" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_xtcprotocolhandler" "acc_test" {
+resource "datapower_xtc_protocol_handler" "acc_test" {
   id = "AccTest_XTCProtocolHandler"
   app_domain = datapower_domain.acc_test.app_domain
   local_address = "0.0.0.0"
@@ -7746,7 +7746,7 @@ resource "datapower_xtcprotocolhandler" "acc_test" {
 var ZosNSSClientTestConfig = ModelTestConfig{
     Name:         "ZosNSSClient",
     Resource: `
-resource "datapower_zosnssclient" "test" {
+resource "datapower_zos_nss_client" "test" {
   id = "ResTestZosNSSClient"
   app_domain = "acceptance_test"
   remote_address = "remote.host"
@@ -7756,11 +7756,11 @@ resource "datapower_zosnssclient" "test" {
   user_name = "username"
 }`,
     Data: `
-data "datapower_zosnssclient" "test" {
+data "datapower_zos_nss_client" "test" {
   app_domain = "acceptance_test"
 }`,
     TestBed: `
-resource "datapower_zosnssclient" "acc_test" {
+resource "datapower_zos_nss_client" "acc_test" {
   id = "AccTest_ZosNSSClient"
   app_domain = datapower_domain.acc_test.app_domain
   remote_address = "remote.host"

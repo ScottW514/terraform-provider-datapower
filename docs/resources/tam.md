@@ -59,7 +59,7 @@ resource "datapower_tam" "test" {
   - CLI Alias: `ldap-ssl-key-file-dn`
 - `ldapssl_key_file_password_alias` (String) Enter the password alias of the password for the key file that contains the certificates for TLS communication with the registry server.
   - CLI Alias: `ldap-ssl-key-file-password-alias`
-  - Reference to: `datapower_passwordalias:id`
+  - Reference to: `datapower_password_alias:id`
 - `ldapssl_port` (Number) Enter the listening port that the LDAP server uses for TLS communication. This property does not apply for TLS communication with an Active Directory server.
   - CLI Alias: `ldap-ssl-port`
   - Default value: `636`
@@ -146,7 +146,7 @@ Required:
   - CLI Alias: `bind-dn`
 - `bind_pw` (String) Enter the password alias of the password for the LDAP administrator that corresponds to the entered distinguished name.
   - CLI Alias: `bind-pw`
-  - Reference to: `datapower_passwordalias:id`
+  - Reference to: `datapower_password_alias:id`
 - `fed_name` (String) Specify the name of the federated directory entry to uniquely identify the entry in the federation.
   - CLI Alias: `federate-name`
 - `host` (String) Specify the host name or IP address of the LDAP server.

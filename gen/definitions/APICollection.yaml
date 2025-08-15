@@ -185,7 +185,7 @@ attributes:
   element_type: String
   required: true
   test_value: '["AccTest_APIPlan"]'
-  test_bed_value: '[datapower_apiplan.acc_test.id]'
+  test_bed_value: '[datapower_api_plan.acc_test.id]'
   description: Specify the API plans for the collection. Each plan contains a list
     of APIs and defines the rate limit for the API operations.
   cli_alias: plan

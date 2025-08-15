@@ -7,7 +7,7 @@ attributes:
   reference_to: RateLimitDefinition
   required: true
   test_value: '"AccTest_RateLimitDefinition"'
-  test_bed_value: datapower_ratelimitdefinition.acc_test.id
+  test_bed_value: datapower_rate_limit_definition.acc_test.id
   description: Specify the name of the rate limit definition.
   cli_alias: name
 - name: Action

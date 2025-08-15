@@ -52,7 +52,7 @@ attributes:
   reference_to: SSLClientProfile
   description: TLS client profile
   test_value: '"AccTest_SSLClientProfile"'
-  test_bed_value: datapower_sslclientprofile.acc_test.id
+  test_bed_value: datapower_ssl_client_profile.acc_test.id
   cli_alias: ssl-client
 - name: RequestTopic
   type: String

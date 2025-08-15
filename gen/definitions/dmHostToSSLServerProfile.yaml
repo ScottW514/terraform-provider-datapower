@@ -12,5 +12,5 @@ attributes:
   reference_to: SSLServerProfile
   required: true
   test_value: '"AccTest_SSLServerProfile"'
-  test_bed_value: datapower_sslserverprofile.acc_test.id
+  test_bed_value: datapower_ssl_server_profile.acc_test.id
   description: Specify the TLS server profile to use when a hostname matches the pattern.

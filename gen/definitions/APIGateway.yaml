@@ -46,7 +46,7 @@ attributes:
   type: List
   element_type: String
   test_value: '["AccTest_HTTPSourceProtocolHandler"]'
-  test_bed_value: '[datapower_httpsourceprotocolhandler.acc_test.id]'
+  test_bed_value: '[datapower_http_source_protocol_handler.acc_test.id]'
   required: true
   description: Protocol handler (reference to HTTP or HTTPS Source Protocol Hander)
   cli_alias: front-protocol

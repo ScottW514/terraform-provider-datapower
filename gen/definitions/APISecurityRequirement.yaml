@@ -40,7 +40,7 @@ attributes:
   element_type: String
   required: true
   test_value: '["AccTest_APISecurityAPIKey"]'
-  test_bed_value: '[datapower_apisecurityapikey.acc_test.id]'
+  test_bed_value: '[datapower_api_security_api_key.acc_test.id]'
   description: Security definition (reference to APISecurityAPIKey, APISecurityBasicAuth,
     APISecurityHTTPScheme, or APISecurityOAuthReq)
   cli_alias: security
