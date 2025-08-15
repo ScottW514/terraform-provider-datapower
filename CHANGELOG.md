@@ -1,4 +1,4 @@
-## Unreleased
+## v0.8.0
 
 - BREAKING CHANGE: Changed `data_source` and `resource` names to aid in readability.
 
