@@ -34,6 +34,7 @@ During configuration validation:
 - `target_id` is required unless `target_type` is `datapower_domain`.
 - The specified `action` must be supported for the `target_type`.
 - Unsupported `target_type` values are rejected.
+- Existence of the target object is **not** validated. If the target does not exist, no error will be returned.
 
 If validation fails, Terraform will report attribute errors under the `dependency_actions` path.
 

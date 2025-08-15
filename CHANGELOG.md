@@ -1,4 +1,4 @@
-## UNRELEASED
+## v0.9.1
 
 - Fixed `dependency_actions` handling of non-existent resources (silently proceed)
 

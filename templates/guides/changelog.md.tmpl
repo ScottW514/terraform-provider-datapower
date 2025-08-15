@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## v0.9.1
+
+- Fixed `dependency_actions` handling of non-existent resources (silently proceed)
+
 ## v0.9.0
 
 - BREAKING CHANGE: Changed `data_source` and `resource` names to aid in readability.
