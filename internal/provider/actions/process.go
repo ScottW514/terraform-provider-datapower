@@ -49,6 +49,7 @@ const (
 	quiesced
 	unquiescing
 	errorState
+	noState
 )
 
 // Called by resources prior to create/update runs.
@@ -187,14 +188,14 @@ func submitAction(ctx context.Context, diag *diag.Diagnostics, domain, objectTyp
 				postStr, action, domain, objectType, objectId))
 			return
 		case <-ticker.C:
-			status, resBody, err := getOperationState(diag, cbUrl)
+			status, resBody, err := getOperationState(cbUrl)
 			if err != nil && !strings.Contains(err.Error(), "status 404") {
 				diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), error while reading action submission status: %s",
 					postStr, action, domain, objectType, objectId, err))
 				return
 			} else if err != nil && strings.Contains(err.Error(), "status 404") {
 				exitLoop = true
-			} else if status == "completed" {
+			} else if status == "completed" || status == "non-existent" {
 				exitLoop = true
 			} else if status != "started" {
 				diag.AddError("Action Error", fmt.Sprintf("Failed to %s-%s object (%s/%s/%s), unexpected status (%s) while reading action submission status: %s",
@@ -224,7 +225,7 @@ func submitAction(ctx context.Context, diag *diag.Diagnostics, domain, objectTyp
 						postStr, action, domain, objectType, objectId, err))
 					return
 				}
-				if (!postAction && qState == quiesced) || (postAction && qState == unquiesced) {
+				if (!postAction && qState == quiesced) || (postAction && qState == unquiesced) || (qState == noState) {
 					return
 				}
 			}
@@ -279,6 +280,12 @@ func getQuiesceState(domain, objectType, objectId string) (qstate, error) {
 	if err != nil {
 		return errorState, err
 	}
+	if result := sRes.Get("result"); result.Exists() {
+		if result.String() == "No status retrieved." {
+			// If no target objects have been created yet, we can return no state
+			return noState, nil
+		}
+	}
 	if summary := sRes.Get(fmt.Sprintf("%sSummary", actionMap[objectType].ObjectName)); summary.Exists() {
 		// DataPower returns single objects as an object in the "{ObjectName}Summary" key, and multiple objects as an array
 		if summary.IsArray() {
@@ -293,7 +300,7 @@ func getQuiesceState(domain, objectType, objectId string) (qstate, error) {
 					}
 				}
 			}
-			return errorState, fmt.Errorf("object not found in Summary")
+			return noState, nil
 		} else {
 			// Single object recieved
 			namePath := fmt.Sprintf("%s.value", actionMap[objectType].ObjectName)
@@ -301,17 +308,23 @@ func getQuiesceState(domain, objectType, objectId string) (qstate, error) {
 				if status := summary.Get("Quiesce"); status.Exists() {
 					return stringToQstate(status.String()), nil
 				}
+			} else {
+				return noState, nil
 			}
 		}
 	}
 	return errorState, fmt.Errorf("invalid Summary response from host: %s", sRes.Raw)
 }
 
-func getOperationState(diag *diag.Diagnostics, cbUrl string) (string, string, error) {
+func getOperationState(cbUrl string) (string, string, error) {
 	cbRes, err := Process.Provider.Client.Get(cbUrl)
 	if err == nil {
 		if status := cbRes.Get("status"); status.Exists() {
 			if status.String() == "error" {
+				errStr := cbRes.Get("error")
+				if strings.Contains(errStr.String(), "invalid or non-existent object") {
+					return "non-existent", cbRes.Raw, nil
+				}
 				return "", "", fmt.Errorf("%s", cbRes.Raw)
 			} else {
 				return status.String(), cbRes.Raw, nil
