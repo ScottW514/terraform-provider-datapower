@@ -57,7 +57,7 @@ attributes:
     from its user group.
   cli_alias: group
   test_value: '"AccTest_UserGroup"'
-  test_bed_value: datapower_usergroup.acc_test.id
+  test_bed_value: datapower_user_group.acc_test.id
 - name: SnmpCreds
   type: List
   element_type: DmSnmpCred

@@ -39,7 +39,7 @@ attributes:
   element_type: String
   required: true
   test_value: '["AccTest_CORSRule"]'
-  test_bed_value: '[datapower_corsrule.acc_test.id]'
+  test_bed_value: '[datapower_cors_rule.acc_test.id]'
   description: Specify the CORS rules to to apply to the CORS policy. A CORS rule
     defines allowed origins and other CORS properties. The first rule that is valid
     is applied to the inbound CORS request. If no rule applies, the CORS request is

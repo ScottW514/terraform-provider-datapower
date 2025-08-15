@@ -40,7 +40,7 @@ attributes:
   type: String
   required: true
   test_value: '"AccTest_APIAuthURLRegistry"'
-  test_bed_value: datapower_apiauthurlregistry.acc_test.id
+  test_bed_value: datapower_api_auth_url_registry.acc_test.id
   description: Specify the API user registry configuration to authenticate API requests.
     The supported registries are API authentication URL and API LDAP registry.
   cli_alias: user-registry

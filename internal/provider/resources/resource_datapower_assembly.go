@@ -83,7 +83,7 @@ func (r *AssemblyResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 			},
 			"rule": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the API rule that comprises only assembly actions to apply to the API call.", "rule", "apirule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the API rule that comprises only assembly actions to apply to the API call.", "rule", "api_rule").String,
 				Required:            true,
 			},
 			"catch": schema.ListNestedAttribute{
@@ -92,11 +92,11 @@ func (r *AssemblyResource) Schema(ctx context.Context, req resource.SchemaReques
 				Optional:            true,
 			},
 			"default_catch": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies how to handle errors that are not caught by the catch setting during the assembly execution.", "default-catch", "apirule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies how to handle errors that are not caught by the catch setting during the assembly execution.", "default-catch", "api_rule").String,
 				Optional:            true,
 			},
 			"finally": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the final API rule to apply to the API call after the main rule, catch rule, or both have finished executing. The final API rule comprises only assembly actions.", "finally", "apirule").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the final API rule to apply to the API call after the main rule, catch rule, or both have finished executing. The final API rule comprises only assembly actions.", "finally", "api_rule").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

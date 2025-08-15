@@ -30,7 +30,7 @@ resource "datapower_probe" "test" {
 - `app_domain` (String) The name of the application domain the object belongs to
 - `gateway_peering` (String) Specify the gateway-peering instance for the probe. This instance synchronizes the captured data across the members. If you do not want to persist data across a restart, store the data in memory.
   - CLI Alias: `gateway-peering`
-  - Reference to: `datapower_gatewaypeering:id`
+  - Reference to: `datapower_gateway_peering:id`
 
 ### Optional
 

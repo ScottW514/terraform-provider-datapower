@@ -233,5 +233,5 @@ attributes:
   reference_to: LDAPConnectionPool
   description: Identifies the LDAP connection pool to be used by the XML Manager when
     contacting LDAP
-  test_bed_value: datapower_ldapconnectionpool.acc_test.id
+  test_bed_value: datapower_ldap_connection_pool.acc_test.id
   cli_alias: ldap-pool

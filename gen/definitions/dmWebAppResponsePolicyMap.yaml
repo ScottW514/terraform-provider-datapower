@@ -13,5 +13,5 @@ attributes:
   reference_to: WebAppResponse
   required: true
   test_value: '"AccTest_WebAppResponse"'
-  test_bed_value: datapower_webappresponse.acc_test.id
+  test_bed_value: datapower_web_app_response.acc_test.id
   description: Select the Web Response Profile to run.

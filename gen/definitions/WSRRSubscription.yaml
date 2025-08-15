@@ -39,7 +39,7 @@ attributes:
   reference_to: WSRRServer
   required: true
   test_value: '"AccTest_WSRRServer"'
-  test_bed_value: datapower_wsrrserver.acc_test.id
+  test_bed_value: datapower_wsrr_server.acc_test.id
   description: WSRR server
   cli_alias: server
 - name: Namespace

@@ -7,7 +7,7 @@ attributes:
   reference_to: B2BCPA
   required: true
   test_value: '"AccTest_B2BCPA"'
-  test_bed_value: datapower_b2bcpa.acc_test.id
+  test_bed_value: datapower_b2b_cpa.acc_test.id
   description: Specify the CPA.
   cli_alias: cpa
 - name: Collaboration
@@ -15,7 +15,7 @@ attributes:
   reference_to: B2BCPACollaboration
   required: true
   test_value: '"AccTest_B2BCPACollaboration"'
-  test_bed_value: datapower_b2bcpacollaboration.acc_test.id
+  test_bed_value: datapower_b2b_cpa_collaboration.acc_test.id
   description: Specify the service to attach. A service is either a business collaboration
     service for exchanging business messages or an MSH signal service for exchanging
     MSH signals including Acknowledgment, Error, StatusRequest, StatusResponse, Ping,
@@ -27,7 +27,7 @@ attributes:
   reference_to: B2BProfile
   required: true
   test_value: '"AccTest_B2BProfile"'
-  test_bed_value: datapower_b2bprofile.acc_test.id
+  test_bed_value: datapower_b2b_profile.acc_test.id
   description: Specify the internal partner.
   cli_alias: internal-partner
 - name: ExternalPartner
@@ -35,6 +35,6 @@ attributes:
   reference_to: B2BProfile
   required: true
   test_value: '"AccTest_B2BProfile"'
-  test_bed_value: datapower_b2bprofile.acc_test.id
+  test_bed_value: datapower_b2b_profile.acc_test.id
   description: Specify the external partner.
   cli_alias: external-partner

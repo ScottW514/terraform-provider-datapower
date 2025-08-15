@@ -37,7 +37,7 @@ attributes:
   reference_to: WebSphereJMSServer
   required: true
   test_value: '"AccTest_WebSphereJMSServer"'
-  test_bed_value: datapower_webspherejmsserver.acc_test.id
+  test_bed_value: datapower_web_sphere_jms_server.acc_test.id
   description: Select the WebSphere JMS server object supported by this handler.
   cli_alias: server
 - name: RequestTopicSpace

@@ -38,7 +38,7 @@ attributes:
   reference_to: SSHClientProfile
   required: true
   test_value: '"AccTest_SSHClientProfile"'
-  test_bed_value: datapower_sshclientprofile.acc_test.id
+  test_bed_value: datapower_ssh_client_profile.acc_test.id
   description: Specifies the name of the SSH client profile which describes how SSH
     connections are made from the SSH client to an SSH server.
   cli_alias: ssh-client-connection

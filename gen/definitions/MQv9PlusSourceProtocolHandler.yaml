@@ -43,7 +43,7 @@ attributes:
     to another queue manager. The local queue manager corresponds to a queue manager
     running on another host on the network.
   test_value: '"AccTest_MQManager"'
-  test_bed_value: datapower_mqmanager.acc_test.id
+  test_bed_value: datapower_mq_manager.acc_test.id
   cli_alias: queue-manager
 - name: GetQueue
   type: String

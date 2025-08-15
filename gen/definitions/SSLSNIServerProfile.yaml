@@ -43,7 +43,7 @@ attributes:
   reference_to: SSLSNIMapping
   required: true
   test_value: '"AccTest_SSLSNIMapping"'
-  test_bed_value: datapower_sslsnimapping.acc_test.id
+  test_bed_value: datapower_ssl_sni_mapping.acc_test.id
   description: TLS hostname map
   cli_alias: sni-server-mapping
 - name: SNIServerDefault

@@ -36,14 +36,14 @@ attributes:
   reference_to: CryptoKey
   required: true
   test_value: '"AccTest_CryptoKey"'
-  test_bed_value: datapower_cryptokey.acc_test.id
+  test_bed_value: datapower_crypto_key.acc_test.id
   description: Key
   cli_alias: key
 - name: Certificate
   type: String
   reference_to: CryptoCertificate
   test_value: '"AccTest_CryptoCertificate"'
-  test_bed_value: datapower_cryptocertificate.acc_test.id
+  test_bed_value: datapower_crypto_certificate.acc_test.id
   required: true
   description: Certificate
   cli_alias: certificate

@@ -100,7 +100,7 @@ func (r *ProbeResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				Default: int64default.StaticInt64(3600),
 			},
 			"gateway_peering": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering instance for the probe. This instance synchronizes the captured data across the members. If you do not want to persist data across a restart, store the data in memory.", "gateway-peering", "gatewaypeering").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the gateway-peering instance for the probe. This instance synchronizes the captured data across the members. If you do not want to persist data across a restart, store the data in memory.", "gateway-peering", "gateway_peering").String,
 				Required:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

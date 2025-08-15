@@ -37,7 +37,7 @@ attributes:
   type: String
   reference_to: OAuthProviderSettings
   test_value: '"AccTest_OAuthProviderSettings"'
-  test_bed_value: datapower_oauthprovidersettings.acc_test.id
+  test_bed_value: datapower_oauth_provider_settings.acc_test.id
   description: OAuth provider
   cli_alias: oauth-provider
 - name: OAuthFlow

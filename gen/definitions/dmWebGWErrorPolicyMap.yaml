@@ -13,5 +13,5 @@ attributes:
   reference_to: MPGWErrorAction
   required: true
   test_value: '"AccTest_MPGWErrorAction"'
-  test_bed_value: datapower_mpgwerroraction.acc_test.id
+  test_bed_value: datapower_mpgw_error_action.acc_test.id
   description: Select the error action that handles the errors and generates responses.

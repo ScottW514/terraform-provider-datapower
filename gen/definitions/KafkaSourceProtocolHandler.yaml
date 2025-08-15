@@ -40,7 +40,7 @@ attributes:
   reference_to: KafkaCluster
   required: true
   test_value: '"AccTest_KafkaCluster"'
-  test_bed_value: datapower_kafkacluster.acc_test.id
+  test_bed_value: datapower_kafka_cluster.acc_test.id
   description: Kafka cluster
   cli_alias: cluster
 - name: RequestTopic

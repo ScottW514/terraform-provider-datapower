@@ -53,7 +53,7 @@ attributes:
   reference_to: PasswordAlias
   required: true
   test_value: '"AccTest_PasswordAlias"'
-  test_bed_value: datapower_passwordalias.acc_test.id
+  test_bed_value: datapower_password_alias.acc_test.id
   description: Password alias
   cli_alias: password-alias
 - name: LoginRole

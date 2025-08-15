@@ -34,7 +34,7 @@ const serviceQuiesceBody = `{"ServiceQuiesce": {"type": "{type}", "name": "{name
 const serviceUnquiesceBody = `{"ServiceUnquiesce": {"type": "{type}", "name": "{name}"}}`
 
 var actionMap = map[string]target{
-	"datapower_aaapolicy": {
+	"datapower_aaa_policy": {
 		ObjectName: "AAAPolicy",
 		ValidActions: map[string]action{
 			"flush_cache": {
@@ -42,13 +42,13 @@ var actionMap = map[string]target{
 			},
 		},
 	},
-	"datapower_amqpsourceprotocolhandler": {
+	"datapower_amqp_source_protocol_handler": {
 		ObjectName: "AMQPSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_apicollection": {
+	"datapower_api_collection": {
 		ObjectName: "APICollection",
 		ValidActions: map[string]action{
 			"flush_cache": {
@@ -56,7 +56,7 @@ var actionMap = map[string]target{
 			},
 		},
 	},
-	"datapower_apigateway": {
+	"datapower_api_gateway": {
 		ObjectName: "APIGateway",
 		ValidActions: map[string]action{
 			"flush_stylesheet_cache": {
@@ -67,31 +67,31 @@ var actionMap = map[string]target{
 			},
 		},
 	},
-	"datapower_as1pollersourceprotocolhandler": {
+	"datapower_as1_poller_source_protocol_handler": {
 		ObjectName: "AS1PollerSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_as2proxysourceprotocolhandler": {
+	"datapower_as2_proxy_source_protocol_handler": {
 		ObjectName: "AS2ProxySourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_as2sourceprotocolhandler": {
+	"datapower_as2_source_protocol_handler": {
 		ObjectName: "AS2SourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_as3sourceprotocolhandler": {
+	"datapower_as3_source_protocol_handler": {
 		ObjectName: "AS3SourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_b2bgateway": {
+	"datapower_b2b_gateway": {
 		ObjectName: "B2BGateway",
 		ValidActions: map[string]action{
 			"quiesce": {},
@@ -106,79 +106,79 @@ var actionMap = map[string]target{
 			},
 		},
 	},
-	"datapower_ebms2sourceprotocolhandler": {
+	"datapower_ebms2_source_protocol_handler": {
 		ObjectName: "EBMS2SourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_ebms3sourceprotocolhandler": {
+	"datapower_ebms3_source_protocol_handler": {
 		ObjectName: "EBMS3SourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_ftpfilepollersourceprotocolhandler": {
+	"datapower_ftp_file_poller_source_protocol_handler": {
 		ObjectName: "FTPFilePollerSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_ftpserversourceprotocolhandler": {
+	"datapower_ftp_server_source_protocol_handler": {
 		ObjectName: "FTPServerSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_httpssourceprotocolhandler": {
+	"datapower_https_source_protocol_handler": {
 		ObjectName: "HTTPSSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_httpsourceprotocolhandler": {
+	"datapower_http_source_protocol_handler": {
 		ObjectName: "HTTPSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_kafkasourceprotocolhandler": {
+	"datapower_kafka_source_protocol_handler": {
 		ObjectName: "KafkaSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_mqv9plusmftsourceprotocolhandler": {
+	"datapower_mqv9_plus_mft_source_protocol_handler": {
 		ObjectName: "MQv9PlusMFTSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_mqv9plussourceprotocolhandler": {
+	"datapower_mqv9_plus_source_protocol_handler": {
 		ObjectName: "MQv9PlusSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_multiprotocolgateway": {
+	"datapower_multi_protocol_gateway": {
 		ObjectName: "MultiProtocolGateway",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_nfsfilepollersourceprotocolhandler": {
+	"datapower_nfs_file_poller_source_protocol_handler": {
 		ObjectName: "NFSFilePollerSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_poppollersourceprotocolhandler": {
+	"datapower_pop_poller_source_protocol_handler": {
 		ObjectName: "POPPollerSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_rbmsettings": {
+	"datapower_rbm_settings": {
 		ObjectName: "RBMSettings",
 		ValidActions: map[string]action{
 			"flush_cache": {
@@ -186,67 +186,67 @@ var actionMap = map[string]target{
 			},
 		},
 	},
-	"datapower_sftpfilepollersourceprotocolhandler": {
+	"datapower_sftp_file_poller_source_protocol_handler": {
 		ObjectName: "SFTPFilePollerSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_sshserversourceprotocolhandler": {
+	"datapower_ssh_server_source_protocol_handler": {
 		ObjectName: "SSHServerSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_sslproxyservice": {
+	"datapower_ssl_proxy_service": {
 		ObjectName: "SSLProxyService",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_statelesstcpsourceprotocolhandler": {
+	"datapower_stateless_tcp_source_protocol_handler": {
 		ObjectName: "StatelessTCPSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_tcpproxyservice": {
+	"datapower_tcp_proxy_service": {
 		ObjectName: "TCPProxyService",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_wsgateway": {
+	"datapower_ws_gateway": {
 		ObjectName: "WSGateway",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_webappfw": {
+	"datapower_web_app_fw": {
 		ObjectName: "WebAppFW",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_webspherejmssourceprotocolhandler": {
+	"datapower_web_sphere_jms_source_protocol_handler": {
 		ObjectName: "WebSphereJMSSourceProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_webtokenservice": {
+	"datapower_web_token_service": {
 		ObjectName: "WebTokenService",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_xmlfirewallservice": {
+	"datapower_xml_firewall_service": {
 		ObjectName: "XMLFirewallService",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_xmlmanager": {
+	"datapower_xml_manager": {
 		ObjectName: "XMLManager",
 		ValidActions: map[string]action{
 			"flush_stylesheet_cache": {
@@ -260,19 +260,19 @@ var actionMap = map[string]target{
 			},
 		},
 	},
-	"datapower_xslcoprocservice": {
+	"datapower_xsl_coproc_service": {
 		ObjectName: "XSLCoprocService",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_xslproxyservice": {
+	"datapower_xsl_proxy_service": {
 		ObjectName: "XSLProxyService",
 		ValidActions: map[string]action{
 			"quiesce": {},
 		},
 	},
-	"datapower_xtcprotocolhandler": {
+	"datapower_xtc_protocol_handler": {
 		ObjectName: "XTCProtocolHandler",
 		ValidActions: map[string]action{
 			"quiesce": {},

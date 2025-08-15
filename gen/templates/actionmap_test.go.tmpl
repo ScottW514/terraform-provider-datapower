@@ -39,7 +39,7 @@ func TestAccActions{{$root.Name}}{{toGoName .Name}}(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [

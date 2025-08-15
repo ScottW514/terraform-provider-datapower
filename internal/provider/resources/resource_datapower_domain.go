@@ -125,11 +125,11 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default: stringdefault.StaticString("ZIP"),
 			},
 			"deployment_policy": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Deployment policy", "deployment-policy", "configdeploymentpolicy").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Deployment policy", "deployment-policy", "config_deployment_policy").String,
 				Optional:            true,
 			},
 			"deployment_policy_parameters": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Deployment policy variables", "deployment-policy-variables", "deploymentpolicyparametersbinding").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Deployment policy variables", "deployment-policy-variables", "deployment_policy_parameters_binding").String,
 				Optional:            true,
 			},
 			"local_ip_rewrite": schema.BoolAttribute{
@@ -158,7 +158,7 @@ func (r *DomainResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Default: stringdefault.StaticString("scope-domain"),
 			},
 			"config_permissions_profile": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Global permissions profile", "config-permissions-profile", "accessprofile").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Global permissions profile", "config-permissions-profile", "access_profile").String,
 				Optional:            true,
 			},
 			"dependency_actions": actions.ActionsSchema,

@@ -34,14 +34,14 @@ func TestAccActionsAAAPolicyFlushCache(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_AAAPolicy"
       target_domain = "acceptance_test"
-      target_type   = "datapower_aaapolicy"
+      target_type   = "datapower_aaa_policy"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -66,14 +66,14 @@ func TestAccActionsAMQPSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_AMQPSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_amqpsourceprotocolhandler"
+      target_type   = "datapower_amqp_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -98,14 +98,14 @@ func TestAccActionsAPICollectionFlushCache(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_APICollection"
       target_domain = "acceptance_test"
-      target_type   = "datapower_apicollection"
+      target_type   = "datapower_api_collection"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -130,14 +130,14 @@ func TestAccActionsAPIGatewayFlushStylesheetCache(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_APIGateway"
       target_domain = "acceptance_test"
-      target_type   = "datapower_apigateway"
+      target_type   = "datapower_api_gateway"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -161,14 +161,14 @@ func TestAccActionsAPIGatewayFlushDocumentCache(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_APIGateway"
       target_domain = "acceptance_test"
-      target_type   = "datapower_apigateway"
+      target_type   = "datapower_api_gateway"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -193,14 +193,14 @@ func TestAccActionsAS1PollerSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_AS1PollerSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_as1pollersourceprotocolhandler"
+      target_type   = "datapower_as1_poller_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -225,14 +225,14 @@ func TestAccActionsAS2SourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_AS2SourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_as2sourceprotocolhandler"
+      target_type   = "datapower_as2_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -257,14 +257,14 @@ func TestAccActionsAS3SourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_AS3SourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_as3sourceprotocolhandler"
+      target_type   = "datapower_as3_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -289,14 +289,14 @@ func TestAccActionsB2BGatewayQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_B2BGateway"
       target_domain = "acceptance_test"
-      target_type   = "datapower_b2bgateway"
+      target_type   = "datapower_b2b_gateway"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -321,14 +321,14 @@ func TestAccActionsEBMS2SourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_EBMS2SourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_ebms2sourceprotocolhandler"
+      target_type   = "datapower_ebms2_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -353,14 +353,14 @@ func TestAccActionsEBMS3SourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_EBMS3SourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_ebms3sourceprotocolhandler"
+      target_type   = "datapower_ebms3_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -385,14 +385,14 @@ func TestAccActionsFTPFilePollerSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_FTPFilePollerSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_ftpfilepollersourceprotocolhandler"
+      target_type   = "datapower_ftp_file_poller_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -417,14 +417,14 @@ func TestAccActionsFTPServerSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_FTPServerSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_ftpserversourceprotocolhandler"
+      target_type   = "datapower_ftp_server_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -449,14 +449,14 @@ func TestAccActionsHTTPSSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_HTTPSSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_httpssourceprotocolhandler"
+      target_type   = "datapower_https_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -481,14 +481,14 @@ func TestAccActionsHTTPSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_HTTPSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_httpsourceprotocolhandler"
+      target_type   = "datapower_http_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -513,14 +513,14 @@ func TestAccActionsMQv9PlusMFTSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_MQv9PlusMFTSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_mqv9plusmftsourceprotocolhandler"
+      target_type   = "datapower_mqv9_plus_mft_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -545,14 +545,14 @@ func TestAccActionsMQv9PlusSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_MQv9PlusSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_mqv9plussourceprotocolhandler"
+      target_type   = "datapower_mqv9_plus_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -577,14 +577,14 @@ func TestAccActionsMultiProtocolGatewayQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_MultiProtocolGateway"
       target_domain = "acceptance_test"
-      target_type   = "datapower_multiprotocolgateway"
+      target_type   = "datapower_multi_protocol_gateway"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -609,14 +609,14 @@ func TestAccActionsNFSFilePollerSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_NFSFilePollerSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_nfsfilepollersourceprotocolhandler"
+      target_type   = "datapower_nfs_file_poller_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -641,14 +641,14 @@ func TestAccActionsPOPPollerSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_POPPollerSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_poppollersourceprotocolhandler"
+      target_type   = "datapower_pop_poller_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -673,14 +673,14 @@ func TestAccActionsRBMSettingsFlushCache(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_RBMSettings"
       target_domain = "acceptance_test"
-      target_type   = "datapower_rbmsettings"
+      target_type   = "datapower_rbm_settings"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -705,14 +705,14 @@ func TestAccActionsSFTPFilePollerSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_SFTPFilePollerSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_sftpfilepollersourceprotocolhandler"
+      target_type   = "datapower_sftp_file_poller_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -737,14 +737,14 @@ func TestAccActionsSSHServerSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_SSHServerSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_sshserversourceprotocolhandler"
+      target_type   = "datapower_ssh_server_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -769,14 +769,14 @@ func TestAccActionsSSLProxyServiceQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_SSLProxyService"
       target_domain = "acceptance_test"
-      target_type   = "datapower_sslproxyservice"
+      target_type   = "datapower_ssl_proxy_service"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -801,14 +801,14 @@ func TestAccActionsStatelessTCPSourceProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_StatelessTCPSourceProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_statelesstcpsourceprotocolhandler"
+      target_type   = "datapower_stateless_tcp_source_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -833,14 +833,14 @@ func TestAccActionsTCPProxyServiceQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_TCPProxyService"
       target_domain = "acceptance_test"
-      target_type   = "datapower_tcpproxyservice"
+      target_type   = "datapower_tcp_proxy_service"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -865,14 +865,14 @@ func TestAccActionsWSGatewayQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_WSGateway"
       target_domain = "acceptance_test"
-      target_type   = "datapower_wsgateway"
+      target_type   = "datapower_ws_gateway"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -897,14 +897,14 @@ func TestAccActionsWebAppFWQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_WebAppFW"
       target_domain = "acceptance_test"
-      target_type   = "datapower_webappfw"
+      target_type   = "datapower_web_app_fw"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -929,14 +929,14 @@ func TestAccActionsWebTokenServiceQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_WebTokenService"
       target_domain = "acceptance_test"
-      target_type   = "datapower_webtokenservice"
+      target_type   = "datapower_web_token_service"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -961,14 +961,14 @@ func TestAccActionsXMLFirewallServiceQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_XMLFirewallService"
       target_domain = "acceptance_test"
-      target_type   = "datapower_xmlfirewallservice"
+      target_type   = "datapower_xml_firewall_service"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -993,14 +993,14 @@ func TestAccActionsXMLManagerFlushStylesheetCache(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_XMLManager"
       target_domain = "acceptance_test"
-      target_type   = "datapower_xmlmanager"
+      target_type   = "datapower_xml_manager"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -1024,14 +1024,14 @@ func TestAccActionsXMLManagerFlushDocumentCache(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_XMLManager"
       target_domain = "acceptance_test"
-      target_type   = "datapower_xmlmanager"
+      target_type   = "datapower_xml_manager"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -1055,14 +1055,14 @@ func TestAccActionsXMLManagerFlushLdapPoolCache(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_XMLManager"
       target_domain = "acceptance_test"
-      target_type   = "datapower_xmlmanager"
+      target_type   = "datapower_xml_manager"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -1087,14 +1087,14 @@ func TestAccActionsXSLCoprocServiceQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_XSLCoprocService"
       target_domain = "acceptance_test"
-      target_type   = "datapower_xslcoprocservice"
+      target_type   = "datapower_xsl_coproc_service"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -1119,14 +1119,14 @@ func TestAccActionsXSLProxyServiceQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_XSLProxyService"
       target_domain = "acceptance_test"
-      target_type   = "datapower_xslproxyservice"
+      target_type   = "datapower_xsl_proxy_service"
       on_create     = true
       on_update     = false
       on_delete     = false
@@ -1151,14 +1151,14 @@ func TestAccActionsXTCProtocolHandlerQuiesce(t *testing.T) {
 
 	var steps []resource.TestStep
 	steps = append(steps, resource.TestStep{
-		Config: `resource "datapower_loglabel" "action_test" {
+		Config: `resource "datapower_log_label" "action_test" {
   id         = "ActionTest_LogLabel"
   app_domain = "acceptance_test"
   dependency_actions = [
     {
       target_id     = "AccTest_XTCProtocolHandler"
       target_domain = "acceptance_test"
-      target_type   = "datapower_xtcprotocolhandler"
+      target_type   = "datapower_xtc_protocol_handler"
       on_create     = true
       on_update     = false
       on_delete     = false

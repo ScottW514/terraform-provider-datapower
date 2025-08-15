@@ -43,7 +43,7 @@ attributes:
   reference_to: AMQPBroker
   required: true
   test_value: '"AccTest_AMQPBroker"'
-  test_bed_value: datapower_amqpbroker.acc_test.id
+  test_bed_value: datapower_amqp_broker.acc_test.id
   description: AMQP broker
   cli_alias: broker
 - name: From

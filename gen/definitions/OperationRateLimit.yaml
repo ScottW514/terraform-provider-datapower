@@ -38,7 +38,7 @@ attributes:
   reference_to: APIOperation
   required: true
   test_value: '"AccTest_APIOperation"'
-  test_bed_value: datapower_apioperation.acc_test.id
+  test_bed_value: datapower_api_operation.acc_test.id
   description: API operation
   cli_alias: operation
 - name: UseRateLimitGroup

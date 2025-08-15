@@ -49,7 +49,7 @@ attributes:
   element_type: String
   required: true
   test_value: '["AccTest_LunaPartition"]'
-  test_bed_value: '[datapower_lunapartition.acc_test.id]'
+  test_bed_value: '[datapower_luna_partition.acc_test.id]'
   description: Specify the members for HA group. An HA group member is an HSM partition
     that the system can access. The first member is the primary member. The Luna HSM
     balances cryptographic requests across the members in the HA group.

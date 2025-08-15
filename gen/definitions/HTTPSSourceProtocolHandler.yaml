@@ -204,7 +204,7 @@ attributes:
     <b>Note:</b> The TLS server profile that secures the HTTP/2 connection must use
     the TLS 1.2 or later protocol with a cipher that is secure according to RFC 7540.
   test_value: '"AccTest_SSLServerProfile"'
-  test_bed_value: datapower_sslserverprofile.acc_test.id
+  test_bed_value: datapower_ssl_server_profile.acc_test.id
   cli_alias: ssl-server
 - name: SSLSNIServer
   type: String

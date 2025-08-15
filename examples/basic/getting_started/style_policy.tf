@@ -25,7 +25,7 @@ resource "datapower_matching" "mpgw" {
   ]
 }
 
-resource "datapower_stylepolicyaction" "mpgw_fetch_0" {
+resource "datapower_style_policy_action" "mpgw_fetch_0" {
   id          = "mpgw_fetch_0"
   app_domain  = datapower_domain.mpgw.app_domain
   type        = "fetch"
@@ -34,7 +34,7 @@ resource "datapower_stylepolicyaction" "mpgw_fetch_0" {
   output      = "PIPE"
 }
 
-resource "datapower_stylepolicyaction" "mpgw_transform_1" {
+resource "datapower_style_policy_action" "mpgw_transform_1" {
   id         = "mpgw_transform_1"
   app_domain = datapower_domain.mpgw.app_domain
   type       = "xform"
@@ -43,7 +43,7 @@ resource "datapower_stylepolicyaction" "mpgw_transform_1" {
   output     = "dpvar_1"
 }
 
-resource "datapower_stylepolicyaction" "mpgw_setvar_2" {
+resource "datapower_style_policy_action" "mpgw_setvar_2" {
   id         = "mpgw_setvar_2"
   app_domain = datapower_domain.mpgw.app_domain
   type       = "setvar"
@@ -52,31 +52,31 @@ resource "datapower_stylepolicyaction" "mpgw_setvar_2" {
   input      = "dpvar_1"
 }
 
-resource "datapower_stylepolicyaction" "mpgw_output_3" {
+resource "datapower_style_policy_action" "mpgw_output_3" {
   id         = "mpgw_output_3"
   app_domain = datapower_domain.mpgw.app_domain
   type       = "results"
   input      = "dpvar_1"
 }
 
-resource "datapower_stylepolicyrule" "mpgw" {
+resource "datapower_style_policy_rule" "mpgw" {
   id         = "mpgw-style-policy-rule"
   app_domain = datapower_domain.mpgw.app_domain
   actions = [
-    datapower_stylepolicyaction.mpgw_fetch_0.id,
-    datapower_stylepolicyaction.mpgw_transform_1.id,
-    datapower_stylepolicyaction.mpgw_setvar_2.id,
-    datapower_stylepolicyaction.mpgw_output_3.id
+    datapower_style_policy_action.mpgw_fetch_0.id,
+    datapower_style_policy_action.mpgw_transform_1.id,
+    datapower_style_policy_action.mpgw_setvar_2.id,
+    datapower_style_policy_action.mpgw_output_3.id
   ]
 }
 
-resource "datapower_stylepolicy" "mpgw" {
+resource "datapower_style_policy" "mpgw" {
   id         = "mpgw-style-policy"
   app_domain = datapower_domain.mpgw.app_domain
   policy_maps = [
     {
       match = datapower_matching.mpgw.id
-      rule  = datapower_stylepolicyrule.mpgw.id
+      rule  = datapower_style_policy_rule.mpgw.id
     }
   ]
 }

@@ -38,7 +38,7 @@ attributes:
   description: The full action pipeline that includes the actions generated from the
     WSDL as well as the rules configured by the user.
   test_value: '["AccTest_StylePolicyAction"]'
-  test_bed_value: '[datapower_stylepolicyaction.acc_test.id]'
+  test_bed_value: '[datapower_style_policy_action.acc_test.id]'
   cli_alias: action
 - name: Direction
   type: String

@@ -90,7 +90,7 @@ attributes:
   reference_to: LDAPSearchParameters
   required: true
   test_value: '"AccTest_LDAPSearchParameters"'
-  test_bed_value: datapower_ldapsearchparameters.acc_test.id
+  test_bed_value: datapower_ldap_search_parameters.acc_test.id
   description: LDAP search parameters
   cli_alias: ldap-search-param
 - name: LDAPReadTimeout

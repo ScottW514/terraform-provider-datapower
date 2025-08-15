@@ -35,7 +35,7 @@ attributes:
     You can use one or more methods. Precedence rules apply when you configure the
     same aspect of the OAuth provider settings through multiple methods.
   test_value: '{"Default": "AccTest_OAuthProviderSettings"}'
-  test_bed_value: '{"Default": datapower_oauthprovidersettings.acc_test.id}'
+  test_bed_value: '{"Default": datapower_oauth_provider_settings.acc_test.id}'
   cli_alias: oauth-provider-settings-ref
 - name: SupportedOAuthComponents
   dm_type: DmOAuthComponents

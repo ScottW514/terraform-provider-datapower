@@ -67,7 +67,7 @@ attributes:
   required: true
   reference_to: PasswordAlias
   test_value: '"AccTest_PasswordAlias"'
-  test_bed_value: datapower_passwordalias.acc_test.id
+  test_bed_value: datapower_password_alias.acc_test.id
   description: Specify the password alias of the user password to establish connection
     with the SQL database. The password alias looks up the password for the user.
     The server maintains the password.

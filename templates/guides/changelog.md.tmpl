@@ -7,6 +7,10 @@ description: |-
 
 # Changelog
 
+## Unreleased
+
+- BREAKING CHANGE: Changed `data_source` and `resource` names to aid in readability.
+
 ## v0.7.0
 
 - Cleaned up formatting in resource template

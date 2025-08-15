@@ -98,7 +98,7 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Default: stringdefault.StaticString("group-defined"),
 			},
 			"group_name": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user group for the user account. Each user group has an access profile to manage access rights. A user account inherits access rights from its user group.", "group", "usergroup").String,
+				MarkdownDescription: tfutils.NewAttributeDescription("Specify the user group for the user account. Each user group has an access profile to manage access rights. A user account inherits access rights from its user group.", "group", "user_group").String,
 				Optional:            true,
 			},
 			"snmp_creds": schema.ListNestedAttribute{

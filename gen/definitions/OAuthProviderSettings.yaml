@@ -113,7 +113,7 @@ attributes:
   description: Token secret
   cli_alias: apic-token-secret
   test_value: '"AccTest_CryptoSSKey"'
-  test_bed_value: datapower_cryptosskey.acc_test.id
+  test_bed_value: datapower_crypto_sskey.acc_test.id
 - name: APICOneTimeUseAccesstoken
   type: Bool
   default: false

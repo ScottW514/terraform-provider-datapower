@@ -40,14 +40,14 @@ resource "datapower_domain" "test" {
   - Default value: `scope-domain`
 - `config_permissions_profile` (String) Global permissions profile
   - CLI Alias: `config-permissions-profile`
-  - Reference to: `datapower_accessprofile:id`
+  - Reference to: `datapower_access_profile:id`
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `deployment_policy` (String) Deployment policy
   - CLI Alias: `deployment-policy`
-  - Reference to: `datapower_configdeploymentpolicy:id`
+  - Reference to: `datapower_config_deployment_policy:id`
 - `deployment_policy_parameters` (String) Deployment policy variables
   - CLI Alias: `deployment-policy-variables`
-  - Reference to: `datapower_deploymentpolicyparametersbinding:id`
+  - Reference to: `datapower_deployment_policy_parameters_binding:id`
 - `domain_user` (List of String) Specify the set of CLI users who can access this domain. These users can log into this domain through the CLI. This setting can be superseded by an existing access policy of the user.
   - CLI Alias: `domain-user`
   - Reference to: `datapower_user:id`

@@ -39,6 +39,6 @@ attributes:
   reference_to: APIDefinition
   required: true
   test_value: '"AccTest_APIDefinition"'
-  test_bed_value: datapower_apidefinition.acc_test.id
+  test_bed_value: datapower_api_definition.acc_test.id
   description: API
   cli_alias: api

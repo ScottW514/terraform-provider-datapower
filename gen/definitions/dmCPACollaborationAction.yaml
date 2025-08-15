@@ -33,7 +33,7 @@ attributes:
     the Message-sending characteristics in Delivery Channels. It consists of document-exchange
     configurations and transport configurations.
   test_value: '"AccTest_B2BCPASenderSetting"'
-  test_bed_value: datapower_b2bcpasendersetting.acc_test.id
+  test_bed_value: datapower_b2b_cpa_sender_setting.acc_test.id
   cli_alias: sender-setting
 - name: ReceiverSetting
   type: String
