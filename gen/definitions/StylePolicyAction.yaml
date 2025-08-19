@@ -83,6 +83,16 @@ attributes:
     of the policy rule.
   test_value: '"INPUT"'
   cli_alias: input
+  required_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - rewrite
+    - route-set
+    - on-error
+    - method-rewrite
+  ignored_when:
+  - evaluation: logical-true
 - name: Transform
   type: String
   description: Specify the location of the XSL stylesheet or transform file. The location
@@ -92,6 +102,46 @@ attributes:
     . The context runs as a stylesheet.</li></ul>
   test_value: '"tfile"'
   cli_alias: transform
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - filter
+      - cryptobin
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - xformng
+      - evaluation: property-does-not-equal
+        attribute: TransformLanguage
+        value:
+        - none
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - xformng
+      - evaluation: property-equals
+        attribute: TransformLanguage
+        value:
+        - none
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - route-action
+      - xformpi
+      - xformbin
+      - xformng
+      - xform
+      - sql
 - name: ParseSettingsReference
   dm_type: DmDynamicParseSettingsReference
   description: Specify the configuration that defines the constraints against the
@@ -103,6 +153,11 @@ attributes:
     constraint for the same aspect of an input document is configured with more than
     one method.</p>
   cli_alias: parse-settings-reference
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - parse
 - name: ParseMetricsResultType
   type: String
   enum:
@@ -113,10 +168,31 @@ attributes:
   default: none
   description: Parse metrics result type
   cli_alias: parse-settings-result-type
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - parse
 - name: ParseMetricsResultLocation
   type: String
   description: Parse metrics result location
   cli_alias: parse-settings-result-location
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - parse
+    - evaluation: property-value-not-in-list
+      attribute: ParseMetricsResultType
+      value:
+      - none
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - parse
 - name: InputLanguage
   type: String
   enum:
@@ -127,6 +203,16 @@ attributes:
   default: xml
   description: Input language
   cli_alias: input-language
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - xformng
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - xformng
 - name: DFDLInputRootName
   type: String
   description: Specify the root element in the DFDL model from which to start a parse.
@@ -145,6 +231,17 @@ attributes:
     of another value for the DFDL input root name overrides the value that is specified
     in the schema.</p>
   cli_alias: input-root-name
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - xformng
+    - evaluation: property-value-not-in-list
+      attribute: InputLanguage
+      value:
+      - dfdl
 - name: InputDescriptor
   type: String
   description: Specify the input descriptor as understood according to the input language.
@@ -154,12 +251,35 @@ attributes:
     XML, do not specify an input descriptor.</li><li>When XSD, the input descriptor
     must be a URL to an XML schema.</li><li>When JSON, do not specify an input descriptor.</li></ul>
   cli_alias: input-descriptor
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - xformng
+    - evaluation: property-value-not-in-list
+      attribute: InputLanguage
+      value:
+      - xsd
+      - dfdl
 - name: OutputDescriptor
   type: String
   description: Specify the output descriptor as understood by the output language.
     When DFDL, the output descriptor must be a URL to a DFDL schema to serialize the
     output.
   cli_alias: output-descriptor
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - xformng
+    - evaluation: property-value-not-in-list
+      attribute: OutputLanguage
+      value:
+      - dfdl
 - name: TransformLanguage
   type: String
   enum:
@@ -168,6 +288,16 @@ attributes:
   default: none
   description: Transform language
   cli_alias: transform-language
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - xformng
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - xformng
 - name: OutputLanguage
   type: String
   enum:
@@ -176,6 +306,11 @@ attributes:
   default: default
   description: Output language
   cli_alias: output-language
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - xformng
 - name: TxMap
   type: String
   description: Specify the location of the Transformation Extender map file. The generated
@@ -183,6 +318,11 @@ attributes:
     Use one of the following formats. <ul><li>When the file is local, use &lt;directory>:///&lt;file></li><li>When
     the file is remote, use HTTP://&lt;path_qualified_file> or HTTPS://&lt;path_qualified_file></li></ul>
   cli_alias: tx-map
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - xformbin
 - name: GatewayScriptLocation
   type: String
   description: Specify the location of the GatewayScript file. The file location can
@@ -192,17 +332,44 @@ attributes:
     .</li><li>As a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt>
     . The context content runs as GatewayScript.</li></ul>
   cli_alias: gatewayscript-location
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - gatewayscript
+    - jose-sign
+    - jose-verify
+    - jose-encrypt
+    - jose-decrypt
+  ignored_when:
+  - evaluation: logical-true
 - name: ActionDebug
   type: Bool
   default: false
   description: Enable GatewayScript debug
   cli_alias: debug
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - gatewayscript
 - name: TxTopLevelMap
   type: String
   description: Specify the name of the Transformation Extender map in the map file.
     A map file can contain more than one map. When not specified, the transform uses
     the first map in the file.
   cli_alias: tx-tlm
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - xformbin
+    - evaluation: property-value-in-list
+      attribute: TxMode
+      value:
+      - dpa
 - name: TxMode
   type: String
   enum:
@@ -212,10 +379,30 @@ attributes:
   description: Specify the Transformation Extender mode to run the map. DPA is the
     only mode.
   cli_alias: tx-mode
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - xformbin
 - name: TxAuditLog
   type: String
   description: ITX audit log
   cli_alias: tx-audit-log
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - xformbin
+    - evaluation: property-value-not-in-list
+      attribute: TxMode
+      value:
+      - dpa
+  string_max_length: 30
+  string_min_length: 0
+  string_patterns:
+  - ^[_a-zA-Z0-9-]+$
 - name: Output
   type: String
   description: Specify the output context for the action, which identifies the context
@@ -224,6 +411,38 @@ attributes:
     identify the final output of the policy rule.
   test_value: '"OUTPUT"'
   cli_alias: output
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - xformpi
+    - xformbin
+    - xformng
+    - cryptobin
+    - xform
+    - convert-http
+    - fetch
+    - extract
+    - call
+    - gatewayscript
+    - jose-sign
+    - jose-verify
+    - jose-encrypt
+    - jose-decrypt
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - results-async
+    - setvar
+    - rewrite
+    - route-set
+    - strip-attachments
+    - on-error
+    - checkpoint
+    - conditional
+    - event-sink
+    - method-rewrite
 - name: NoTranscodeUtf8
   type: Bool
   default: false
@@ -234,6 +453,11 @@ attributes:
     and the input encoding is UTF-8, the output is ISO 8859-1. This behavior is the
     default behavior.</li></ul>
   cli_alias: charset-transparency
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - convert-http
 - name: NamedInOutLocationType
   type: String
   enum:
@@ -245,24 +469,64 @@ attributes:
   description: Specify how to locate named inputs and outputs. Use values that are
     appropriate for your Transformation Extender configuration.
   cli_alias: named-inouts
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - xformbin
 - name: NamedInputs
   type: List
   element_type: DmNamedInOut
   description: Named inputs
   cli_alias: named-input
   test_value: 'null'
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: NamedInOutLocationType
+      value:
+      - explicit
+    - evaluation: property-does-not-equal
+      attribute: Type
+      value:
+      - xformbin
 - name: NamedOutputs
   type: List
   element_type: DmNamedInOut
   description: Named outputs
   cli_alias: named-output
   test_value: 'null'
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: NamedInOutLocationType
+      value:
+      - explicit
+    - evaluation: property-does-not-equal
+      attribute: Type
+      value:
+      - xformbin
 - name: Destination
   type: String
   description: Specify the location of the resource, which might be either the source
     or the destination. Specify the location as either a URL or as a variable that
     expands to a URL.
   cli_alias: destination
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - results-async
+    - fetch
+    - route-set
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - results
+    - log
 - name: SchemaURL
   type: String
   description: Specify XML schema for document validation regardless of any <tt>xsi:schemaLocation</tt>
@@ -272,6 +536,11 @@ attributes:
     a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt>
     . The context runs as a schema validation.</li></ul>
   cli_alias: schema-url
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - validate
 - name: JSONSchemaURL
   type: String
   description: Specify the JSON schema for JSON document validation. Identify the
@@ -280,6 +549,11 @@ attributes:
     a context, for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt>
     . The context runs as a JSON schema validation.</li></ul>
   cli_alias: json-schema-url
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - validate
 - name: WsdlURL
   type: String
   description: Specify the URL of the WSDL file that defines the operations to use
@@ -292,35 +566,86 @@ attributes:
     for example, <tt>var://context/Name</tt> or <tt>var://context/Name/</tt> . The
     context runs as a WSDL validation.</li></ul>
   cli_alias: wsdl-url
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - validate
 - name: Policy
   type: String
   reference_to: URLRewritePolicy
   description: URL rewrite policy
   cli_alias: urlrewrite-policy
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - rewrite
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - validate
+    - xformpi
+    - xformbin
+    - xformng
+    - xform
 - name: AAA
   type: String
   reference_to: AAAPolicy
   description: AAA policy
   cli_alias: aaa-policy
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - aaa
+  ignored_when:
+  - evaluation: logical-true
 - name: DynamicSchema
   type: String
   description: Dynamic schema
   cli_alias: dynamic-schema
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - validate
 - name: DynamicStylesheet
   type: String
   description: Dynamic stylesheet
   cli_alias: dynamic-stylesheet
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - filter
+    - route-action
+    - xformpi
+    - xformbin
+    - xformng
+    - xform
 - name: InputConversion
   type: String
   reference_to: HTTPInputConversionMap
   description: Input conversion
   cli_alias: input-conversion
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - convert-http
 - name: XPath
   type: String
   description: Specify the XPath expression to apply to the input context. Enter the
     XPath expression or a variable in the <tt>var://context/name</tt> format that
     expands to an XPath expression.
   cli_alias: xpath
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - extract
 - name: Variable
   type: String
   example: var://context/CONTEXT-NAME/VAR-NAME
@@ -336,11 +661,37 @@ attributes:
     <p>This format is used to reference certain internal state variables. These variables
     are defined by the firmware.</p></li></ul>
   cli_alias: variable
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - extract
+      - setvar
+      - sql
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - sql
+      - evaluation: property-does-not-equal
+        attribute: SQLSourceType
+        value:
+        - variable
+  string_patterns:
+  - ^var://(context/[^/ ]+(/[^/ ][^ ]*)+|(system/[^/ ]+|local|service)/[^/ ][^ ]*)$
 - name: Value
   type: String
   description: Specify the variable value. The value can be a number, a string, or
     another variable URL.
   cli_alias: value
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - setvar
 - name: SSLClientConfigType
   type: String
   enum:
@@ -349,21 +700,54 @@ attributes:
   test_expect_ds: '"proxy"'
   description: TLS client type
   cli_alias: ssl-client-type
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - route-set
 - name: SSLClientCred
   type: String
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: Type
+      value:
+      - route-set
+    - evaluation: property-does-not-equal
+      attribute: SSLClientConfigType
+      value:
+      - client
 - name: AttachmentURI
   type: String
   description: Specify the attachment to strip. When omitted, all attachments are
     stripped from the context.
   cli_alias: attachment-uri
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - strip-attachments
 - name: StylesheetParameters
   type: List
   element_type: DmStylesheetParameter
   description: Stylesheet parameters
   cli_alias: parameter
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - filter
+    - route-action
+    - xformpi
+    - xformbin
+    - xformng
+    - cryptobin
+    - xform
+    - gatewayscript
 - name: ErrorMode
   type: String
   enum:
@@ -372,18 +756,45 @@ attributes:
   - alternative
   description: Error mode
   cli_alias: error-mode
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - on-error
+  ignored_when:
+  - evaluation: logical-true
 - name: ErrorInput
   type: String
   description: Error input
   cli_alias: error-input
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - on-error
 - name: ErrorOutput
   type: String
   description: Error output
   cli_alias: error-output
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - on-error
 - name: Rule
   type: String
   description: Processing rule
   cli_alias: rule
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - call
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - on-error
 - name: OutputType
   type: String
   enum:
@@ -392,6 +803,17 @@ attributes:
   - xml
   description: Output type
   cli_alias: output-type
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - xformpi
+    - xformbin
+    - xformng
+    - xform
+    - results
+    - log
+    - fetch
 - name: LogLevel
   type: String
   enum:
@@ -405,16 +827,36 @@ attributes:
   - debug
   description: Log level
   cli_alias: log-level
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - log
+  ignored_when:
+  - evaluation: logical-true
 - name: LogType
   type: String
   reference_to: LogLabel
   description: Log type
   cli_alias: log-type
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - log
+  ignored_when:
+  - evaluation: logical-true
 - name: Transactional
   type: Bool
   default: false
   description: Transactional
   cli_alias: transactional
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - results
+    - results-async
 - name: CheckpointEvent
   type: String
   enum:
@@ -424,19 +866,63 @@ attributes:
   - AuthComplete
   description: Event
   cli_alias: event
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - checkpoint
+  ignored_when:
+  - evaluation: logical-true
 - name: SLMPolicy
   type: String
   description: SLM policy
   cli_alias: slm
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - slm
+  ignored_when:
+  - evaluation: logical-true
 - name: SQLDataSource
   type: String
   reference_to: SQLDataSource
   description: SQL Data Source
   cli_alias: sql-source
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - sql
+  ignored_when:
+  - evaluation: logical-true
 - name: SQLText
   type: String
   description: SQL text
   cli_alias: sql-text
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: SQLSourceType
+      value:
+      - static
+    - evaluation: property-equals
+      attribute: Type
+      value:
+      - sql
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: Type
+      value:
+      - sql
+    - evaluation: property-value-in-list
+      attribute: SQLSourceType
+      value:
+      - stylesheet
+      - variable
 - name: SOAPValidation
   type: String
   enum:
@@ -448,6 +934,17 @@ attributes:
   description: Specify which parts of the SOAP message to validate. This setting does
     not affect the validation of the input context to ensure that it is a valid document.
   cli_alias: soap-validation
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: Type
+      value:
+      - validate
+    - evaluation: property-does-not-equal
+      attribute: WsdlURL
+      value:
+      - ''
 - name: SQLSourceType
   type: String
   enum:
@@ -458,6 +955,16 @@ attributes:
   default: static
   description: SQL input method
   cli_alias: sql-source-type
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - sql
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - sql
 - name: JOSESerializationType
   type: String
   enum:
@@ -466,6 +973,14 @@ attributes:
   - json_flat
   description: Serialization
   cli_alias: serialization
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - jose-sign
+    - jose-encrypt
+  ignored_when:
+  - evaluation: logical-true
 - name: JWEEncAlgorithm
   type: String
   enum:
@@ -477,16 +992,37 @@ attributes:
   - A256GCM
   description: Algorithm
   cli_alias: jwe-enc
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - jose-encrypt
+  ignored_when:
+  - evaluation: logical-true
 - name: JWSSignatureObject
   type: String
   reference_to: JWSSignature
   description: Signature
   cli_alias: jws-signature
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - jose-sign
+  ignored_when:
+  - evaluation: logical-true
 - name: JWEHeaderObject
   type: String
   reference_to: JWEHeader
   description: JWE Header
   cli_alias: jwe-header
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - jose-encrypt
+  ignored_when:
+  - evaluation: logical-true
 - name: JOSEVerifyType
   type: String
   enum:
@@ -495,6 +1031,11 @@ attributes:
   - single-sskey
   description: Identifier type
   cli_alias: jose-verify-type
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - jose-verify
 - name: JOSEDecryptType
   type: String
   enum:
@@ -504,49 +1045,161 @@ attributes:
   - direct-key
   description: Identifier Type
   cli_alias: jose-decrypt-type
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - jose-decrypt
 - name: SignatureIdentifier
   type: List
   reference_to: JOSESignatureIdentifier
   element_type: String
   description: Signature Identifiers
   cli_alias: signature-identifier
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - jose-verify
+    - evaluation: property-value-in-list
+      attribute: JOSEVerifyType
+      value:
+      - identifiers
+  ignored_when:
+  - evaluation: logical-true
 - name: RecipientIdentifier
   type: List
   reference_to: JOSERecipientIdentifier
   element_type: String
   description: Recipient Identifiers
   cli_alias: recipient-identifier
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - jose-decrypt
+    - evaluation: property-value-in-list
+      attribute: JOSEDecryptType
+      value:
+      - identifiers
+  ignored_when:
+  - evaluation: logical-true
 - name: SingleCertificate
   type: String
   reference_to: CryptoCertificate
   description: Certificate
   cli_alias: single-cert
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - jose-verify
+    - evaluation: property-value-in-list
+      attribute: JOSEVerifyType
+      value:
+      - single-cert
+  ignored_when:
+  - evaluation: logical-true
 - name: SingleKey
   type: String
   reference_to: CryptoKey
   description: Private Key
   cli_alias: single-key
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - jose-decrypt
+    - evaluation: property-value-in-list
+      attribute: JOSEDecryptType
+      value:
+      - single-key
+  ignored_when:
+  - evaluation: logical-true
 - name: SingleSSKey
   type: String
   reference_to: CryptoSSKey
   description: Shared Secret Key
   cli_alias: single-sskey
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-in-list
+        attribute: Type
+        value:
+        - jose-decrypt
+      - evaluation: property-value-in-list
+        attribute: JOSEDecryptType
+        value:
+        - single-sskey
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-in-list
+        attribute: Type
+        value:
+        - jose-verify
+      - evaluation: property-value-in-list
+        attribute: JOSEVerifyType
+        value:
+        - single-sskey
+  ignored_when:
+  - evaluation: logical-true
 - name: JWEDirectKeyObject
   type: String
   reference_to: CryptoSSKey
   description: Direct Key
   cli_alias: direct-key
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - jose-decrypt
+    - evaluation: property-value-in-list
+      attribute: JOSEDecryptType
+      value:
+      - direct-key
+  ignored_when:
+  - evaluation: logical-true
 - name: JWSVerifyStripSignature
   type: Bool
   default: true
   description: Strip Signature
   cli_alias: strip-signature
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - jose-verify
 - name: Asynchronous
   type: Bool
   default: false
   description: Specify whether to mark the action as asynchronous. When asynchronous,
     the action does not need to complete for the next action to start.
   cli_alias: asynchronous
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - results-async
+    - event-sink
+    - method-rewrite
+    - gatewayscript
+    - jose-sign
+    - jose-verify
+    - jose-encrypt
+    - jose-decrypt
 - name: Condition
   type: List
   element_type: DmCondition
@@ -555,6 +1208,11 @@ attributes:
     to an action to run when the condition is found. When no match is found, other
     conditions can be checked.
   cli_alias: condition
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - conditional
 - name: ResultsMode
   type: String
   enum:
@@ -565,17 +1223,35 @@ attributes:
   description: Specify the processing mode for multiple targets. The default behavior,
     is first available.
   cli_alias: results-mode
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - results
+    - results-async
 - name: RetryCount
   type: Int64
   description: Specify the number of connection attempts. The default value is 0,
     which indicates that the operation fails immediately if the connection fails.
   cli_alias: retry-count
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - results
+    - results-async
 - name: RetryInterval
   type: Int64
   default: 1000
   description: Specify the duration between connection attempts in milliseconds. The
     default value is 1000.
   cli_alias: retry-interval
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - results
+    - results-async
 - name: MultipleOutputs
   type: Bool
   default: false
@@ -590,6 +1266,24 @@ attributes:
     target to succeed.</li><li>In attempt-all mode, the last target attempted.</li><li>In
     first-available mode, the first target to succeed or the last to fail.</li></ul></li></ul>
   cli_alias: multiple-outputs
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - results
+      - for-each
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - results
+      - evaluation: property-equals
+        attribute: Destination
+        value:
+        - ''
 - name: IteratorType
   type: String
   enum:
@@ -598,10 +1292,42 @@ attributes:
   default: XPATH
   description: Iterator type
   cli_alias: iterator-type
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - for-each
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - for-each
 - name: IteratorExpression
   type: String
   description: XPath expression
   cli_alias: iterator-expression
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - for-each
+    - evaluation: property-value-in-list
+      attribute: IteratorType
+      value:
+      - XPATH
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - for-each
+    - evaluation: property-value-not-in-list
+      attribute: IteratorType
+      value:
+      - XPATH
 - name: IteratorCount
   type: Int64
   minimum: 1
@@ -609,21 +1335,60 @@ attributes:
   description: Specify the number of times to run the loop action. Enter a value in
     the range 1 - 32768.
   cli_alias: iterator-count
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - for-each
+    - evaluation: property-value-in-list
+      attribute: IteratorType
+      value:
+      - COUNT
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - for-each
+    - evaluation: property-value-not-in-list
+      attribute: IteratorType
+      value:
+      - COUNT
 - name: LoopAction
   type: String
   description: Loop action
   cli_alias: loop-action
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - for-each
+  ignored_when:
+  - evaluation: logical-true
 - name: AsyncAction
   type: List
   element_type: String
   description: Asynchronous actions
   cli_alias: async-action
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - event-sink
 - name: Timeout
   type: Int64
   description: Specify the duration to wait for asynchronous actions to complete in
     milliseconds. After this period, an error is logged. A value of 0 indicates to
     wait forever.
   cli_alias: timeout
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - event-sink
 - name: WSDLPortQName
   type: String
   description: Specify the QName of the WSDL port that defines the service traffic
@@ -631,6 +1396,11 @@ attributes:
     format or <tt>*</tt> for all ports. When specified and not <tt>*</tt> , only messages
     that are defined for the named port are considered valid.
   cli_alias: wsdl-port
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - validate
 - name: WSDLOperationName
   type: String
   description: Specify the name of the WSDL operation that defines the service traffic
@@ -638,6 +1408,11 @@ attributes:
     for all operations. When specified and not <tt>*</tt> , only messages that are
     defined for operations that match the specified name are considered valid.
   cli_alias: wsdl-operation
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - validate
 - name: WSDLMessageDirectionOrName
   type: String
   description: Specify the name or direction of the WSDL input, output, or fault that
@@ -652,6 +1427,11 @@ attributes:
     are defined for inputs, outputs, and faults that match the specified name or direction
     are considered valid. Faults are considered valid for the response direction.</p>
   cli_alias: wsdl-message-direction-or-name
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - validate
 - name: WSDLAttachmentPart
   type: String
   description: Specify the name of the WSDL message part that defines the content
@@ -661,6 +1441,11 @@ attributes:
     , the root MIME part is validated. The root MIME part is bound to a <tt>soap:body</tt>
     .
   cli_alias: wsdl-attachment-part
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - validate
 - name: MethodRewriteType
   type: String
   enum:
@@ -673,6 +1458,18 @@ attributes:
   default: GET
   description: Method
   cli_alias: http-method
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - method-rewrite
+    - fetch
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - method-rewrite
+    - fetch
 - name: MethodType
   type: String
   enum:
@@ -685,6 +1482,41 @@ attributes:
   default: POST
   description: Method
   cli_alias: http-method-limited
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Type
+      value:
+      - results-async
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - results
+      - evaluation: property-does-not-equal
+        attribute: Destination
+        value:
+        - ''
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - results
+      - results-async
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - results
+      - evaluation: property-equals
+        attribute: Destination
+        value:
+        - ''
 - name: MethodType2
   type: String
   enum:
@@ -697,6 +1529,16 @@ attributes:
   default: POST
   description: Method
   cli_alias: http-method-limited2
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - log
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - log
 - name: PolicyKey
   type: String
   description: <b>Do not modify this value.</b> The DataPower Gateway uses this identifier

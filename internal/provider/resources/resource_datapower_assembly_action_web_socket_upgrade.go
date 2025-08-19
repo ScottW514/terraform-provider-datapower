@@ -64,7 +64,7 @@ func (r *AssemblyActionWebSocketUpgradeResource) Schema(ctx context.Context, req
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -75,7 +75,7 @@ func (r *AssemblyActionWebSocketUpgradeResource) Schema(ctx context.Context, req
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -98,6 +98,9 @@ func (r *AssemblyActionWebSocketUpgradeResource) Schema(ctx context.Context, req
 			"user_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("User name", "username", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
+				},
 			},
 			"password": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password", "password_alias").String,

@@ -18,20 +18,57 @@ attributes:
 - name: HttpTag
   type: String
   description: For HTTP matching, the name of the HTTP header to examine.
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - http
+  ignored_when:
+  - evaluation: logical-true
 - name: HttpValue
   type: String
   description: For HTTP matching, the value match for the HTTP header. Enter a match
     pattern or a literal string.
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - http
+  ignored_when:
+  - evaluation: logical-true
 - name: Url
   type: String
   description: The URL match expression.
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - url
+    - fullyqualifiedurl
+    - host
+  ignored_when:
+  - evaluation: logical-true
 - name: ErrorCode
   type: String
   test_value: '"*"'
   description: The error code match expression.
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - errorcode
+  ignored_when:
+  - evaluation: logical-true
 - name: XPATHExpression
   type: String
   description: The XPath match expression.
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - xpath
+  ignored_when:
+  - evaluation: logical-true
 - name: Method
   type: String
   enum:
@@ -47,6 +84,24 @@ attributes:
   - default
   description: The HTTP method.
   default: default
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - method
+  ignored_when:
+  - evaluation: logical-true
 - name: CustomMethod
   type: String
   description: For a custom method, the custom HTTP method.
+  required_when:
+  - evaluation: property-equals
+    attribute: Method
+    value:
+    - custom
+  ignored_when:
+  - evaluation: logical-true
+  string_patterns:
+  - ^[a-zA-Z0-9!#$%&'*+-.^_`|~]*$
+  string_min_length: 1
+  string_max_length: 8192

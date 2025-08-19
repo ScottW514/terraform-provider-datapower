@@ -7,6 +7,11 @@ attributes:
   required: true
   example: localhost
   description: Specify the local IP address or host alias of the node.
+  string_exclude:
+  - 127.0.0.1
+  - 0.0.0.0
+  - '::'
+  - '::1'
 - name: LocalNodes
   type: String
   description: Specify a comma-separated list of the local IP addresses or host aliases

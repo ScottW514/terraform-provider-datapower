@@ -22,8 +22,10 @@ package models
 
 import (
 	"context"
+	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -114,6 +116,9 @@ var DmAPIProxyPolicyResourceSchema = ResourceSchema.NestedAttributeObject{
 		"user_name": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the username for authentication.", "", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
+			},
 		},
 		"password": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias for authentication.", "", "password_alias").String,

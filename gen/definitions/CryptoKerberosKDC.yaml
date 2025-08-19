@@ -67,6 +67,11 @@ attributes:
   description: The number of seconds to wait for a UDP response from the KDC before
     declaring failure.
   cli_alias: udp-timeout
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseTCP
+    value:
+    - 'on'
 - name: CacheTickets
   type: Bool
   default: true
@@ -81,6 +86,11 @@ attributes:
   description: Specify the maximum number of Kerberos service tickets per owner principal
     to cache in this realm.
   cli_alias: max-cached-tickets
+  ignored_when:
+  - evaluation: property-equals
+    attribute: CacheTickets
+    value:
+    - 'off'
 - name: MinCachedTicketValidity
   type: Int64
   minimum: 1
@@ -89,3 +99,8 @@ attributes:
   description: Specify the minimum amount of validity time in seconds that must remain
     on a Kerberos service ticket for it to be reused from the ticket cache.
   cli_alias: min-cached-ticket-validity
+  ignored_when:
+  - evaluation: property-equals
+    attribute: CacheTickets
+    value:
+    - 'off'

@@ -20,6 +20,11 @@ attributes:
   description: Enter the name of a WSDL-defined component of the type selected in
     the WSDL Component Type field. The selected rule will be run only if the component
     named here would be used in processing the client request.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: WSDLComponentType
+    value:
+    - subscription
 - name: Match
   type: String
   reference_to: Matching
@@ -37,6 +42,13 @@ attributes:
   type: String
   description: Select a subscription. The selected rule will be run for requests that
     correspond to services that belong to this subscription.
+  required_when:
+  - evaluation: property-equals
+    attribute: WSDLComponentType
+    value:
+    - subscription
+  ignored_when:
+  - evaluation: logical-true
 - name: WSDLFragmentID
   type: String
   description: Matches Fragment Identifier

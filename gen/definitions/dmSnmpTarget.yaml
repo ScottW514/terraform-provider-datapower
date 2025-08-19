@@ -19,6 +19,14 @@ attributes:
   default: public
   description: The SNMP community name included in SNMP Version 1 Traps and SNMP Version
     2 Notifications. By default, a community name of public is used.
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: TrapVersion
+    value:
+    - '1'
+    - 2c
+  string_max_length: 255
+  string_min_length: 0
 - name: TrapVersion
   type: String
   enum:
@@ -33,6 +41,13 @@ attributes:
   description: The name of the local SNMPv3 user to use for Notifications to this
     recipient. Determines what authentication and privacy (encryption) protocols are
     used, and what keys.
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: TrapVersion
+    value:
+    - '3'
+  string_max_length: 32
+  string_min_length: 0
 - name: SecurityLevel
   type: String
   enum:
@@ -42,3 +57,8 @@ attributes:
   default: authPriv
   description: The SNMPv3 security level at which Notifications are sent to the recipient.
     The default is Authentication, Privacy.
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: TrapVersion
+    value:
+    - '3'

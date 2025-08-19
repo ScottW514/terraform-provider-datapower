@@ -28,6 +28,11 @@ attributes:
   type: String
   description: An value that fails validation is changed to this value if the failure
     policy is 'set'.
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Fixup
+    value:
+    - set
 - name: XSS
   type: Bool
   default: false
@@ -46,3 +51,16 @@ attributes:
     default file, store:///XSS-Patterns.xml, checks for invalid characters and various
     forms of the term &lt;script. Specify a custom XML patterns file with PCRE patterns
     to be used by the XSS filter.
+  required_when:
+  - evaluation: property-equals
+    attribute: XSS
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: XSS
+    value:
+    - 'on'
+  file_locations:
+  - local
+  - store

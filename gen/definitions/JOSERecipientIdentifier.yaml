@@ -47,11 +47,25 @@ attributes:
   test_value: '"AccTest_CryptoKey"'
   test_bed_value: datapower_crypto_key.acc_test.id
   cli_alias: key
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - key
+  ignored_when:
+  - evaluation: logical-true
 - name: SSKey
   type: String
   reference_to: CryptoSSKey
   description: Use the shared secret key to verify the recipient.
   cli_alias: sskey
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - sskey
+  ignored_when:
+  - evaluation: logical-true
 - name: HeaderParam
   type: List
   element_type: DmJOSEHeader

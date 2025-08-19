@@ -26,6 +26,8 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
@@ -108,11 +110,19 @@ func (r *QuotaEnforcementServerResource) Schema(ctx context.Context, req resourc
 			"ip_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the IP address of the DataPower Gateway for other peers to connect to. The IP address can be the IP address on any interface of the DataPower Gateway and must be accessible by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::. This IP address uniquely identifies the DataPower Gateway.</p><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address.</p>", "ip-address", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+				},
 			},
 			"peers": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies peers of the DataPower Gateway in the peer group. The DataPower Gateway connects to each peer in the order in which peers are added in the list. It is not necessary to specify all peers in the Peers list.</p><ul><li>When the DataPower Gateway connects to no peer in the list, this DataPower Gateway is the first active server and joins the peer group as the primary node.</li><li>When the DataPower Gateway connects to any peer in the list, it joins the peer group as a replica.</li></ul><p>You can use a local host alias instead of a static IP address. A host alias resolves a locally configured alias to a static IP address. Aliasing can help when you move configurations among appliances.</p><p>Note: Do not specify the IP address or hostname of this DataPower Gateway.</p>", "peer", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(
+						stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+					),
+				},
 			},
 			"priority": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Indicates the priority that is used to decide which replica is promoted to the primary node when failover occurs.</p><p>Enter a value in range 0 - 255. The default value is 100. The replica with the lowest priority number is promoted. A replica with the value of 0 can never be promoted.</p>", "priority", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,

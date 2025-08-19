@@ -139,21 +139,55 @@ attributes:
     When enabled, the handshake is aborted if the client certificate is not provided.
     Otherwise, the request does not fail when there is no client certificate.
   cli_alias: require-client-auth
+  ignored_when:
+  - evaluation: property-equals
+    attribute: RequestClientAuth
+    value:
+    - 'off'
 - name: ValidateClientCert
   type: Bool
   default: true
   description: Validate client certificate
   cli_alias: validate-client-cert
+  ignored_when:
+  - evaluation: property-equals
+    attribute: RequestClientAuth
+    value:
+    - 'off'
 - name: SendClientAuthCAList
   type: Bool
   default: true
   description: Send client authentication CA list
   cli_alias: send-client-auth-ca-list
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: RequestClientAuth
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: ValidateClientCert
+      value:
+      - 'off'
 - name: Valcred
   type: String
   reference_to: CryptoValCred
   description: Validation credentials
   cli_alias: valcred
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: RequestClientAuth
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: ValidateClientCert
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: Caching
   type: Bool
   default: true
@@ -168,6 +202,11 @@ attributes:
     in the TLS session cache before they are removed. Enter a value in the range 1
     - 86400. The default value is 300.
   cli_alias: cache-timeout
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Caching
+    value:
+    - 'off'
 - name: CacheSize
   type: Int64
   minimum: 1
@@ -176,6 +215,11 @@ attributes:
   description: Specify the maximum number of entries (multiplied by 1024) in the session
     cache. Enter a value in the range 1 - 500. The default value is 20.
   cli_alias: cache-size
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Caching
+    value:
+    - 'off'
 - name: SSLOptions
   dm_type: DmSSLOptions
   description: Specify the options to apply to the TLS connection. These options have
@@ -190,6 +234,11 @@ attributes:
     connection terminates when the duration is reached. Enter a value in the range
     1 - 11520. The default value is 60.
   cli_alias: max-duration
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: SSLOptions
+    value:
+    - max-duration
 - name: DisableRenegotiation
   type: Bool
   default: false
@@ -203,11 +252,27 @@ attributes:
     Enter a value in the range 0 - 512. The default value is 0, which indicates TLS
     client initiated renegotiation is not allowed.
   cli_alias: max-renegotiation-allowed
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: SSLOptions
+    value:
+    - max-renegotiation
 - name: ProhibitResumeOnReneg
   type: Bool
   default: false
   description: Prohibit session resumption on renegotiation
   cli_alias: prohibit-resume-on-reneg
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSLOptions
+      value:
+      - max-renegotiation
+    - evaluation: property-equals
+      attribute: NumberOfRenegotiationAllowed
+      value:
+      - '0'
 - name: Compression
   type: Bool
   default: false
@@ -222,6 +287,17 @@ attributes:
     is vulnerable to man-in-the-middle attacks as documented in CVE-2009-3555. Renegotiation
     with TLS clients that support RFC 5746 is permitted regardless of the setting.
   cli_alias: allow-legacy-renegotiation
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSLOptions
+      value:
+      - max-renegotiation
+    - evaluation: property-equals
+      attribute: NumberOfRenegotiationAllowed
+      value:
+      - '0'
 - name: PreferServerCiphers
   type: Bool
   default: true
@@ -274,6 +350,11 @@ attributes:
     list. This setting allows the client to negotiate ChaCha20-Poly1305 cipher while
     other clients can use other ciphers.
   cli_alias: prioritize-chacha
+  ignored_when:
+  - evaluation: property-equals
+    attribute: PreferServerCiphers
+    value:
+    - 'off'
 - name: SigAlgs
   type: List
   enum:

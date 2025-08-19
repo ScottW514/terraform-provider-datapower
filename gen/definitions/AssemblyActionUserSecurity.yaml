@@ -53,20 +53,48 @@ attributes:
   description: Specify whether to stop processing if identity extraction fails. If
     failed, stops the assembly and return an error.
   cli_alias: ei-stop-on-error
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: ExtractIdentityMethod
+    value:
+    - disabled
+  ignored_when:
+  - evaluation: logical-true
 - name: UserContextVariable
   type: String
   description: Username context variable
   cli_alias: user-context-var
+  required_when:
+  - evaluation: property-equals
+    attribute: ExtractIdentityMethod
+    value:
+    - context-var
+  ignored_when:
+  - evaluation: logical-true
 - name: PassContextVariable
   type: String
   description: Password context variable
   cli_alias: pass-context-var
+  required_when:
+  - evaluation: property-equals
+    attribute: ExtractIdentityMethod
+    value:
+    - context-var
+  ignored_when:
+  - evaluation: logical-true
 - name: RedirectURL
   type: String
   description: Specify the URL fragment to redirect the request to obtain user credentials.
     The value can include one or more runtime context variables in the <tt>$(variable)</tt>
     format.
   cli_alias: redirect-url
+  required_when:
+  - evaluation: property-equals
+    attribute: ExtractIdentityMethod
+    value:
+    - redirect
+  ignored_when:
+  - evaluation: logical-true
 - name: RedirectTimeLimit
   type: Int64
   minimum: 10
@@ -76,10 +104,22 @@ attributes:
     the redirect fails. Enter a value in the range 10 - 6000. The default value is
     300.
   cli_alias: redirect-time-limit
+  required_when:
+  - evaluation: property-equals
+    attribute: ExtractIdentityMethod
+    value:
+    - redirect
+  ignored_when:
+  - evaluation: logical-true
 - name: QueryParameters
   type: String
   description: Query parameters
   cli_alias: query-parameters
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ExtractIdentityMethod
+    value:
+    - redirect
 - name: EIDefaultForm
   type: Bool
   default: true
@@ -87,17 +127,48 @@ attributes:
     returns the default login page to obtain credentials. When disabled, define the
     configuration to return the custom login page.
   cli_alias: ei-default-form
+  required_when:
+  - evaluation: property-equals
+    attribute: ExtractIdentityMethod
+    value:
+    - html-form
+  ignored_when:
+  - evaluation: logical-true
 - name: EICustomForm
   type: String
   description: Specify the URL fragment of the custom login page. This page collects
     user name and password information. The value can include one or more runtime
     context variables in the <tt>$(variable)</tt> format.
   cli_alias: ei-custom-form
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ExtractIdentityMethod
+      value:
+      - html-form
+    - evaluation: property-equals
+      attribute: EIDefaultForm
+      value:
+      - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: EICustomFormClientProfile
   type: String
   reference_to: SSLClientProfile
   description: Custom form TLS client profile
   cli_alias: ei-custom-form-tls-client-profile
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ExtractIdentityMethod
+      value:
+      - html-form
+    - evaluation: property-equals
+      attribute: EIDefaultForm
+      value:
+      - 'on'
 - name: EICustomFormContentSecurityPolicy
   type: String
   default: default-src 'self'
@@ -107,6 +178,17 @@ attributes:
     and script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking,
     and other injection attacks.
   cli_alias: ei-custom-form-csp
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ExtractIdentityMethod
+      value:
+      - html-form
+    - evaluation: property-equals
+      attribute: EIDefaultForm
+      value:
+      - 'on'
 - name: EIFormTimeLimit
   type: Int64
   minimum: 10
@@ -116,6 +198,13 @@ attributes:
     the identity extraction request fails. Enter a value in the range 10 - 600. The
     default value is 300.
   cli_alias: ei-form-time-limit
+  required_when:
+  - evaluation: property-equals
+    attribute: ExtractIdentityMethod
+    value:
+    - html-form
+  ignored_when:
+  - evaluation: logical-true
 - name: UserAuthMethod
   type: String
   enum:
@@ -131,6 +220,13 @@ attributes:
   description: Specify whether to stop processing if authentication fails. If failed,
     stops the assembly and return an error.
   cli_alias: au-stop-on-error
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: UserAuthMethod
+    value:
+    - disabled
+  ignored_when:
+  - evaluation: logical-true
 - name: UserRegistry
   type: String
   description: Specify the API user registry to authenticate incoming API requests.
@@ -138,6 +234,13 @@ attributes:
   test_value: '"AccTest_APIAuthURLRegistry"'
   test_bed_value: datapower_api_auth_url_registry.acc_test.id
   cli_alias: user-registry
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: UserAuthMethod
+    value:
+    - disabled
+  ignored_when:
+  - evaluation: logical-true
 - name: AuthResponseHeadersPattern
   type: String
   default: (?i)x-api*
@@ -146,6 +249,11 @@ attributes:
     a case-insensitive search on the <tt>x-api</tt> prefix. The value can include
     one or more runtime context variables in the <tt>$(variable)</tt> format.
   cli_alias: auth-response-headers-pattern
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: UserAuthMethod
+    value:
+    - user-registry
 - name: AuthResponseCredentialHeader
   type: String
   default: X-API-Authenticated-Credential
@@ -153,6 +261,11 @@ attributes:
     The default value is <tt>X-API-Authenticated-Credential</tt> . The value can include
     one or more runtime context variables in the <tt>$(variable)</tt> format.
   cli_alias: auth-response-header-credential
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: UserAuthMethod
+    value:
+    - user-registry
 - name: UserAZMethod
   type: String
   enum:
@@ -169,6 +282,13 @@ attributes:
   description: Specify whether to stop processing if authorization fails. If failed,
     stops the assembly and return an error.
   cli_alias: az-stop-on-error
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: UserAZMethod
+    value:
+    - disabled
+  ignored_when:
+  - evaluation: logical-true
 - name: AZDefaultForm
   type: Bool
   default: true
@@ -176,17 +296,48 @@ attributes:
     returns the default authorization page to obtain authorization. When disabled,
     define the configuration to return the custom authorization page.
   cli_alias: az-default-form
+  required_when:
+  - evaluation: property-equals
+    attribute: UserAZMethod
+    value:
+    - html-form
+  ignored_when:
+  - evaluation: logical-true
 - name: AZCustomForm
   type: String
   description: Specify the URL fragment of the custom authorization page. This page
     obtains permission from the end user. The value can include one or more runtime
     context variables in the <tt>$(variable)</tt> format.
   cli_alias: az-custom-form
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: UserAZMethod
+      value:
+      - html-form
+    - evaluation: property-equals
+      attribute: AZDefaultForm
+      value:
+      - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: AZCustomFormClientProfile
   type: String
   reference_to: SSLClientProfile
   description: Custom form TLS client profile
   cli_alias: az-custom-form-tls-client-profile
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: UserAZMethod
+      value:
+      - html-form
+    - evaluation: property-equals
+      attribute: AZDefaultForm
+      value:
+      - 'on'
 - name: AZCustomFormContentSecurityPolicy
   type: String
   default: default-src 'self'
@@ -196,6 +347,17 @@ attributes:
     script endpoints to detect and mitigate cross-site scripting (XSS), clickjacking,
     and other injection attacks.
   cli_alias: az-custom-form-csp
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: UserAZMethod
+      value:
+      - html-form
+    - evaluation: property-equals
+      attribute: AZDefaultForm
+      value:
+      - 'on'
 - name: AZFormTimeLimit
   type: Int64
   minimum: 10
@@ -205,11 +367,23 @@ attributes:
     the authorization request fails. Enter a value in the range 10 - 600. The default
     value is 300.
   cli_alias: az-form-time-limit
+  required_when:
+  - evaluation: property-equals
+    attribute: UserAZMethod
+    value:
+    - html-form
+  ignored_when:
+  - evaluation: logical-true
 - name: AZTableDisplayCheckboxes
   type: Bool
   default: false
   description: Display table check boxes
   cli_alias: az-table-display-checkboxes
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: UserAZMethod
+    value:
+    - html-form
 - name: AZTableDynamicEntries
   type: String
   default: user.default.az.dynamic_entries
@@ -217,15 +391,40 @@ attributes:
     to display. This context variable supports space delimited names, a JSON array
     of names, or a JSON array of objects with name and description.
   cli_alias: az-table-dynamic-entries
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: UserAZMethod
+    value:
+    - html-form
 - name: AZTableDefaultEntry
   type: List
   element_type: DmTableEntry
   description: Default table entry
   cli_alias: az-table-default-entry
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: UserAZMethod
+    value:
+    - html-form
 - name: Hostname
   type: String
   description: Hostname
   cli_alias: hostname
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ExtractIdentityMethod
+      value:
+      - redirect
+    - evaluation: property-does-not-equal
+      attribute: ExtractIdentityMethod
+      value:
+      - html-form
+    - evaluation: property-does-not-equal
+      attribute: UserAZMethod
+      value:
+      - html-form
 - name: UserSummary
   type: String
   description: Comments

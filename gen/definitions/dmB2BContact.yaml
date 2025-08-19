@@ -7,20 +7,40 @@ attributes:
   description: Specify the family name of the person to contact. A family name is
     the surname borne by family members.
   cli_alias: family-name
+  string_max_length: 128
+  string_min_length: 0
+  string_patterns:
+  - ^[_a-zA-Z0-9-. ]+$
 - name: GivenName
   type: String
   description: Specify the given name of the person to contact. A given name is the
     name used to identify an individual within a family.
   cli_alias: given-name
+  string_max_length: 128
+  string_min_length: 0
+  string_patterns:
+  - ^[_a-zA-Z0-9-. ]+$
 - name: Title
   type: String
   description: Specify the title of the person to contact.
   cli_alias: title
+  string_max_length: 128
+  string_min_length: 0
+  string_patterns:
+  - ^[_a-zA-Z0-9-. ]+$
 - name: Phone
   type: String
   description: Specify the telephone number to contact the person.
   cli_alias: phone
+  string_max_length: 128
+  string_min_length: 0
+  string_patterns:
+  - ^[(0-9][)0-9- ]+[0-9]$
 - name: Email
   type: String
   description: Specify the email address to contact the person.
   cli_alias: email
+  string_max_length: 128
+  string_min_length: 0
+  string_patterns:
+  - ^[_a-zA-Z0-9-.]+@[_a-zA-Z0-9.]+$

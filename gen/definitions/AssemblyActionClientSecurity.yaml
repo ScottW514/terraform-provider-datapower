@@ -70,6 +70,31 @@ attributes:
     parameter.</li></ul>
   test_value: '"idname"'
   cli_alias: id-name
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ExtractCredentialMethod
+      value:
+      - header
+    - evaluation: property-equals
+      attribute: ExtractCredentialMethod
+      value:
+      - cookie
+    - evaluation: property-equals
+      attribute: ExtractCredentialMethod
+      value:
+      - query
+    - evaluation: property-equals
+      attribute: ExtractCredentialMethod
+      value:
+      - form
+    - evaluation: property-equals
+      attribute: ExtractCredentialMethod
+      value:
+      - context-var
+  ignored_when:
+  - evaluation: logical-true
 - name: SecretName
   type: String
   description: <p>Specify the location where to find the secret to extract.</p><ul><li>When
@@ -79,6 +104,42 @@ attributes:
     parameter.</li></ul>
   test_value: '"secretname"'
   cli_alias: secret-name
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: SecretRequired
+      value:
+      - 'on'
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-equals
+        attribute: ExtractCredentialMethod
+        value:
+        - header
+      - evaluation: property-equals
+        attribute: ExtractCredentialMethod
+        value:
+        - cookie
+      - evaluation: property-equals
+        attribute: ExtractCredentialMethod
+        value:
+        - query
+      - evaluation: property-equals
+        attribute: ExtractCredentialMethod
+        value:
+        - form
+      - evaluation: property-equals
+        attribute: ExtractCredentialMethod
+        value:
+        - context-var
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ExtractCredentialMethod
+      value:
+      - http
 - name: HTTPType
   type: String
   enum:
@@ -86,6 +147,13 @@ attributes:
   default: basic
   description: HTTP type
   cli_alias: http-type
+  required_when:
+  - evaluation: property-equals
+    attribute: ExtractCredentialMethod
+    value:
+    - http
+  ignored_when:
+  - evaluation: logical-true
 - name: AuthenticateClientMethod
   type: String
   enum:
@@ -102,6 +170,13 @@ attributes:
   description: Specify the API registry to authenticate the extracted client credentials.
     The supported registries are API authentication URL and API LDAP.
   cli_alias: user-registry
+  required_when:
+  - evaluation: property-equals
+    attribute: AuthenticateClientMethod
+    value:
+    - third-party
+  ignored_when:
+  - evaluation: logical-true
 - name: UserSummary
   type: String
   description: Comments

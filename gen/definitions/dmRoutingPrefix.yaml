@@ -18,3 +18,8 @@ attributes:
     (/).</li><li>When hostname, the prefix must not start or end with period (.).
     Although the request uses the domain qualified hostname, specify only the hostname.</li></ul>
   example: localhost
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - uri

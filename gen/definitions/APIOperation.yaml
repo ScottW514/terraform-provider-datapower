@@ -64,12 +64,21 @@ attributes:
   description: Specify MIME types that the operation can consume. This setting overrides
     the API-level consume declaration that is defined in the API definition.
   cli_alias: consume
+  ignored_when:
+  - evaluation: property-equals
+    attribute: RemoveConsume
+    value:
+    - 'on'
+  string_patterns:
+  - '[a-zA-Z0-9][a-zA-Z0-9!#$&\-^_]{0,126}\/[a-zA-Z0-9][a-zA-Z0-9!#$&\-^_+.]{0,126}(;\s*[a-zA-Z0-9][a-zA-Z0-9!#$&\-^_="]{0,126})*$'
 - name: Produce
   type: List
   element_type: String
   description: Specify MIME types that the operation can produce. This setting overrides
     the API-level produce declaration that is defined in the API definition.
   cli_alias: produce
+  string_patterns:
+  - ^(application|audio|image|message|multipart|text|video)\/[a-zA-Z-]+$
 - name: RequestSchema
   type: String
   reference_to: APISchema
@@ -102,6 +111,11 @@ attributes:
     (that is, there is a logical OR between the security requirements). This setting
     overrides any declared API-level security.
   cli_alias: security
+  ignored_when:
+  - evaluation: property-equals
+    attribute: RemoveSecurity
+    value:
+    - 'on'
 - name: SOAPAction
   type: String
   description: SOAP action

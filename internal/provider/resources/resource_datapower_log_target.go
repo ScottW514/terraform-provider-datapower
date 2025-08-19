@@ -66,7 +66,7 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -77,7 +77,7 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -184,10 +184,16 @@ func (r *LogTargetResource) Schema(ctx context.Context, req resource.SchemaReque
 			"local_file": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the log file. For example, <tt>logtemp:///filename.log</tt> or <tt>logstore:///filename.log</tt> .", "local-file", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^(logtemp|logstore):[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$"), "Must match :"+"^(logtemp|logstore):[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$"),
+				},
 			},
 			"nfs_file": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the path to the log file. The path is relative to the NFS mount. Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format. Do not end the path with a forward slash (/).", "nfs-file", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$"), "Must match :"+"^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$"),
+				},
 			},
 			"archive_mode": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Archive mode", "archive-mode", "").AddStringEnum("rotate", "upload").AddDefaultValue("rotate").String,

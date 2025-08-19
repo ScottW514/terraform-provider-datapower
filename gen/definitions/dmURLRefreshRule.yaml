@@ -28,3 +28,15 @@ attributes:
     frequency for stylesheets that fulfill the match criteria.
   cli_alias: interval
   default: 0
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: URLRefreshPolicy
+    value:
+    - default
+    - no-flush
+    - protocol-specified
+  ignored_when:
+  - evaluation: property-equals
+    attribute: URLRefreshPolicy
+    value:
+    - no-cache

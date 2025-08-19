@@ -143,6 +143,11 @@ attributes:
   description: Select how to treat client requests with attachments. The default is
     Strip.
   cli_alias: request-attachments
+  ignored_when:
+  - evaluation: property-equals
+    attribute: RequestType
+    value:
+    - unprocessed
 - name: ResponseAttachments
   type: String
   enum:
@@ -155,6 +160,11 @@ attributes:
   description: Select how to treat server responses with attachments. The default
     is Strip.
   cli_alias: response-attachments
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ResponseType
+    value:
+    - unprocessed
 - name: RootPartNotFirstAction
   type: String
   enum:
@@ -167,6 +177,17 @@ attributes:
     to do BSP conformance checking) and the action is set to "process in order" the
     DP device will buffer attachments up to the root.
   cli_alias: root-part-not-first-action
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: RequestAttachments
+      value:
+      - streaming
+    - evaluation: property-does-not-equal
+      attribute: ResponseAttachments
+      value:
+      - streaming
 - name: FrontAttachmentFormat
   type: String
   enum:
@@ -223,6 +244,11 @@ attributes:
     error messages for the defined duration. When disabled, the DataPower Gateway
     does not delay error messages.
   cli_alias: delay-errors
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: RewriteErrors
+    value:
+    - 'on'
 - name: DelayErrorsDuration
   type: Int64
   minimum: 250
@@ -234,6 +260,19 @@ attributes:
     Gateway performed decryption on the requests. Use any value of 250 - 300000. The
     default value is 1000.
   cli_alias: delay-errors-duration
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: DelayErrors
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: RewriteErrors
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: SOAPSchemaURL
   type: String
   default: store:///schemas/soap-envelope.xsd
@@ -243,6 +282,17 @@ attributes:
     schema is used on a per-firewall basis by changing this property; this can be
     used to accommodate non-standard configurations or other special cases.
   cli_alias: soap-schema-url
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: RequestType
+      value:
+      - soap
+    - evaluation: property-does-not-equal
+      attribute: ResponseType
+      value:
+      - soap
 - name: WSDLResponsePolicy
   type: String
   enum:
@@ -258,6 +308,11 @@ attributes:
   description: URL of the file to return when WSDL response policy is set to serve
     local.
   cli_alias: wsdl-file-location
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: WSDLResponsePolicy
+    value:
+    - serve
 - name: FirewallParserLimits
   type: Bool
   default: false
@@ -272,6 +327,13 @@ attributes:
     in the XML Firewall, they will override those on the XML Manager. If this value
     is 0, no limit is enforced.
   cli_alias: bytes-scanned
+  required_when:
+  - evaluation: property-equals
+    attribute: FirewallParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsElementDepth
   type: Int64
   minimum: 0
@@ -281,6 +343,13 @@ attributes:
     of the parser limits are set in the XML Firewall, they will override those on
     the XML Manager.
   cli_alias: element-depth
+  required_when:
+  - evaluation: property-equals
+    attribute: FirewallParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsAttributeCount
   type: Int64
   minimum: 0
@@ -290,6 +359,13 @@ attributes:
     of the parser limits are set in the XML Firewall, they will override those on
     the XML Manager.
   cli_alias: attribute-count
+  required_when:
+  - evaluation: property-equals
+    attribute: FirewallParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsMaxNodeSize
   type: Int64
   minimum: 1024
@@ -302,6 +378,13 @@ attributes:
     that is the rounded-down, largest power of two that is smaller than the defined
     value.
   cli_alias: max-node-size
+  required_when:
+  - evaluation: property-equals
+    attribute: FirewallParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsMaxPrefixes
   type: Int64
   minimum: 0
@@ -313,6 +396,13 @@ attributes:
     the input document under a single prefix. Enter a value in the rage 0 - 262143.
     The default value is 1024. A value of 0 indicates that the limit is 1024.
   cli_alias: max-prefixes
+  required_when:
+  - evaluation: property-equals
+    attribute: FirewallParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsMaxNamespaces
   type: Int64
   default: 1024
@@ -321,6 +411,13 @@ attributes:
     prefixes are used to declare them. Enter a value in the range 0 - 65535. The default
     value is 1024. A value of 0 indicates that the limit is 1024.
   cli_alias: max-namespaces
+  required_when:
+  - evaluation: property-equals
+    attribute: FirewallParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsMaxLocalNames
   type: Int64
   minimum: 0
@@ -331,6 +428,13 @@ attributes:
     they are associated with. Enter a value in the range 0 - 1048575. The default
     value is 60000. A value of 0 indicates that the limit is 60000.
   cli_alias: max-local-names
+  required_when:
+  - evaluation: property-equals
+    attribute: FirewallParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsAttachmentByteCount
   type: Int64
   minimum: 0
@@ -340,12 +444,26 @@ attributes:
     Attachments that exceed this size will result in a failure of the whole transaction.
     If this value is 0, no limit is enforced.
   cli_alias: attachment-byte-count
+  required_when:
+  - evaluation: property-equals
+    attribute: FirewallParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsAttachmentPackageByteCount
   type: Int64
   description: Defines the maximum number of bytes allowed for all parts of an attachment
     package, including the root part. Attachment packages that exceed this size will
     result in a failure of the transaction. If this value is 0, no limit is enforced.
   cli_alias: attachment-package-byte-count
+  required_when:
+  - evaluation: property-equals
+    attribute: FirewallParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsExternalReferences
   type: String
   enum:
@@ -356,6 +474,13 @@ attributes:
   description: Select the special handling for input documents that contain external
     references, such as an external entity or external DTD definition.
   cli_alias: external-references
+  required_when:
+  - evaluation: property-equals
+    attribute: FirewallParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: CredentialCharset
   type: String
   enum:
@@ -410,16 +535,31 @@ attributes:
   reference_to: SSLServerProfile
   description: TLS server profile
   cli_alias: ssl-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLConfigType
+    value:
+    - server
 - name: SSLSNIServer
   type: String
   reference_to: SSLSNIServerProfile
   description: TLS SNI server profile
   cli_alias: ssl-sni-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLConfigType
+    value:
+    - sni
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: property-equals
+    attribute: SSLConfigType
+    value:
+    - proxy
 - name: UserSummary
   type: String
   description: Comments
@@ -456,12 +596,26 @@ attributes:
     Balancer Group. If using the On Demand Router, specify the keyword ODR-LBG. Load
     balancer groups and the On Demand Router can be used only when Type is static-backend.
   cli_alias: remote-ip-address
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - static-backend
+  ignored_when:
+  - evaluation: logical-true
 - name: RemotePort
   type: Int64
   minimum: 1
   maximum: 65535
   description: Specify the port number to monitor. Used only when Type is static-backend.
   cli_alias: remote-port
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - static-backend
+  ignored_when:
+  - evaluation: logical-true
 - name: ACL
   type: String
   reference_to: AccessControlList
@@ -676,6 +830,13 @@ attributes:
   description: Set the number of records for transaction diagnostic mode in the probe.
     Enter a value in the range 10 - 250. The default value is 25.
   cli_alias: debug-history
+  required_when:
+  - evaluation: property-equals
+    attribute: DebugMode
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: DebugTrigger
   type: List
   element_type: DmMSDebugTriggerType
@@ -685,6 +846,11 @@ attributes:
     one of these conditions, the transaction is captured in diagnostics mode and becomes
     part of the list of transactions that can be viewed.
   cli_alias: debug-trigger
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: DebugMode
+    value:
+    - 'on'
 - name: LocalAddress
   type: String
   required: true

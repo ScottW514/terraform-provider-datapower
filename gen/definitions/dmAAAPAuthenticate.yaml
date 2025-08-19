@@ -34,27 +34,98 @@ attributes:
   description: Specify the location of the processing file. This file is the stylesheet
     or GatewayScript that authenticates the extracted identity.
   cli_alias: custom-url
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: AUMapURL
   type: String
   description: Specify the location of the AAA information file. This file contains
     a list of authenticated identities and the various values needed to authenticate
     successfully.
   cli_alias: xmlfile-url
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - xmlfile
+  ignored_when:
+  - evaluation: logical-true
 - name: AUHost
   type: String
   description: Specify the host name or IP address of the authentication server.
   cli_alias: remote-host
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: AUMethod
+      value:
+      - ldap
+      - oblix
+      - netegrity
+    - evaluation: property-value-in-list
+      attribute: AULDAPLoadBalanceGroup
+      value:
+      - ''
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: AUMethod
+      value:
+      - ldap
+      - netegrity
+      - oblix
+    - evaluation: property-value-not-in-list
+      attribute: AULDAPLoadBalanceGroup
+      value:
+      - ''
 - name: AUPort
   type: Int64
   description: Specify this listening port on the authentication server.
   default: 389
   cli_alias: remote-port
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: AUMethod
+      value:
+      - ldap
+      - oblix
+      - netegrity
+    - evaluation: property-value-in-list
+      attribute: AULDAPLoadBalanceGroup
+      value:
+      - ''
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: AUMethod
+      value:
+      - ldap
+      - netegrity
+      - oblix
+    - evaluation: property-value-not-in-list
+      attribute: AULDAPLoadBalanceGroup
+      value:
+      - ''
 - name: AUSSLValcred
   type: String
   reference_to: CryptoValCred
   description: Specify the validation credentials that contain the certificate to
     validate the remote TLS peer.
   cli_alias: valcred
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - client-ssl
 - name: AUCacheAllow
   type: String
   enum:
@@ -75,28 +146,56 @@ attributes:
   description: Specify the duration in seconds to cache authentication decisions.
     Enter a value in the range 1 - 86400. The default value is 3.
   cli_alias: cache-ttl
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AUCacheAllow
+    value:
+    - disabled
 - name: AUKerberosPrincipal
   type: String
   description: Specify the principal name that must appear as the server name in the
     Kerberos ticket.This value must be a full principal name, including the Kerberos
     realm. For example, <tt>foo/bar@REALM</tt> .
   cli_alias: kerberos-principal
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - kerberos
 - name: AUKerberosPassword
   type: String
   sensitive: true
+  ignored_when:
+  - evaluation: logical-true
 - name: AUClearTrustServerURL
   type: String
   description: Specify the URL to access the ClearTrust server for authentication.
   cli_alias: cleartrust-url
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - cleartrust
+  ignored_when:
+  - evaluation: logical-true
 - name: AUClearTrustApplication
   type: String
+  ignored_when:
+  - evaluation: logical-true
 - name: AUSAMLArtifactResponder
   type: String
   description: Specify the URL of the SAML artifact responder.
   cli_alias: saml-artifact-responder
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - saml-artifact
 - name: AUKerberosVerifySignature
   type: Bool
   default: true
+  ignored_when:
+  - evaluation: logical-true
 - name: AUNetegrityBaseURI
   type: String
   description: Specify the base URI sent to CA Single Sign-On server. The base URI
@@ -106,11 +205,21 @@ attributes:
     the <tt>servlet-name</tt> is <tt>datapoweragent</tt> and the <tt>url-pattern</tt>
     is <tt>/</tt> , then the base URI must be <tt>datapoweragent/</tt> .
   cli_alias: netegrity-base-uri
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - netegrity
 - name: AUSAMLAuthQueryServer
   type: String
   description: Specify the URL to access the SAML authentication query server and
     to post a SAML authentication query.
   cli_alias: saml-authen-query-url
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - saml-authen-query
 - name: AUSAMLVersion
   type: String
   enum:
@@ -120,34 +229,85 @@ attributes:
   default: '1.1'
   description: Specify the version of SAML messages. The default value is 1.1.
   cli_alias: saml-version
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: AUMethod
+    value:
+    - saml-artifact
+    - saml-authen-query
+  ignored_when:
+  - evaluation: logical-true
 - name: AULDAPPrefix
   type: String
   default: cn=
   description: Specify the prefix to construct the LDAP lookup DN. The default value
     is <tt>cn=</tt> .
   cli_alias: ldap-prefix
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-equals
+      attribute: AULDAPSearchForDN
+      value:
+      - 'on'
 - name: AULDAPSuffix
   type: String
   description: Specify the suffix used to construct the LDAP lookup DN.
   cli_alias: ldap-suffix
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-equals
+      attribute: AULDAPSearchForDN
+      value:
+      - 'on'
 - name: AULDAPLoadBalanceGroup
   type: String
   reference_to: LoadBalancerGroup
   description: Specify the name of the load balancer group that contains the LDAP
     servers.
   cli_alias: ldap-lbgroup
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: AUKerberosKeytab
   type: String
   reference_to: CryptoKerberosKeytab
   description: Specify the name of the keytab for the Kerberos server principal. This
     keytab is required to decrypt the client Kerberos ticket.
   cli_alias: kerberos-keytab
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - kerberos
+  ignored_when:
+  - evaluation: logical-true
 - name: AUWSTrustURL
   type: String
   description: Specify the URL to access the WS-Trust server.
   cli_alias: ws-trust-url
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - ws-trust
+  ignored_when:
+  - evaluation: logical-true
 - name: AUSAML2Issuer
   type: String
+  ignored_when:
+  - evaluation: logical-true
 - name: AUSignerValcred
   type: String
   reference_to: CryptoValCred
@@ -156,12 +316,22 @@ attributes:
     certificate must be contained in the validation credentials or the signature is
     rejected as untrusted.
   cli_alias: valcred
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - validate-signer
 - name: AUSignedXPath
   type: String
   description: Specify the XPath expression for the XML entity that is protected by
     signature. After the signature validity is verified, this property verifies if
     the specific XPath expression is part of the signed message.
   cli_alias: signed-xpath
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - validate-signer
 - name: AULDAPBindDN
   type: String
   description: Specify the DN to bind to the LDAP server for an LDAP search. This
@@ -169,17 +339,34 @@ attributes:
     UsernameToken PasswordDigest. The LDAP server is searched for the corresponding
     password to verify the PasswordDigest.
   cli_alias: ldap-bind-dn
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: AULDAPSearchAttribute
   type: String
   default: userPassword
   description: Specify the attribute to use in the LDAP search. The default value
     is userPassword.
   cli_alias: ldap-search-attr
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: AULTPATokenVersionsBitmap
   dm_type: DmLTPATokenVersion
   default: LTPA2
   description: Specify which versions of LTPA tokens are acceptable.
   cli_alias: lpta-version
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - ltpa
+  ignored_when:
+  - evaluation: logical-true
 - name: AULTPAKeyFile
   type: String
   description: <p>Specify the LTPA key file that contains the crypto material to create
@@ -189,22 +376,50 @@ attributes:
     Domino token creation, the key file contains only the base 64-encoded Domino shared
     secret.</li></ul>
   cli_alias: lpta-key-file
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - ltpa
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - local
+  - store
+  - cert
+  - sharedcert
 - name: AULTPAStashFile
   type: String
   description: Specify stash file file that contains the password for the LTPA key
     file.
   cli_alias: lpta-stash-file
+  ignored_when:
+  - evaluation: logical-true
 - name: AUBinaryTokenX509Valcred
   type: String
   reference_to: CryptoValCred
   description: Specify the name of the validation credentials to validate the X.509
     certificate in the BinarySecurityToken.
   cli_alias: x509-bin-token-valcred
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - binarytokenx509
+  ignored_when:
+  - evaluation: logical-true
 - name: AUTAMServer
   type: String
   reference_to: TAM
   description: Specify the name of the Access Manager client.
   cli_alias: tam
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - tivoli
+  ignored_when:
+  - evaluation: logical-true
 - name: AUAllowRemoteTokenReference
   type: Bool
   default: false
@@ -214,6 +429,12 @@ attributes:
     SAML assertion at which the signed Security Token Reference (STR dereference transform)
     points.</li></ul>
   cli_alias: remote-token-allowed
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: AUMethod
+    value:
+    - saml-signature
+    - validate-signer
 - name: AURemoteTokenProcessService
   type: String
   description: <p>Specify the URL for a service that can process the remote security
@@ -224,6 +445,18 @@ attributes:
     be by decrypting parts of a remote SAML assertion, doing an XSLT transform, or
     with an AAA policy to assert the token.</p>
   cli_alias: remote-token-url
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: AUMethod
+      value:
+      - saml-signature
+      - validate-signer
+    - evaluation: property-equals
+      attribute: AUAllowRemoteTokenReference
+      value:
+      - 'off'
 - name: AUWSTrustVersion
   type: String
   enum:
@@ -235,6 +468,11 @@ attributes:
     to use when WS-Trust authentication sends a request to the remote STS. Usually
     these specifications are updated together. The default value is 1.2.
   cli_alias: ws-trust-version
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ws-trust
 - name: AULDAPSearchForDN
   type: Bool
   default: false
@@ -242,12 +480,39 @@ attributes:
     the login name that the user presents is used with the LDAP prefix and LDAP suffix
     to construct the user DN.
   cli_alias: ldap-search-for-dn
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: AULDAPSearchParameters
   type: String
   reference_to: LDAPSearchParameters
   description: Specify the name of an LDAP search parameters that retrieves the user
     DN.
   cli_alias: ldap-search-param
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-equals
+      attribute: AULDAPSearchForDN
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-equals
+      attribute: AULDAPSearchForDN
+      value:
+      - 'off'
 - name: AUWSTrustRequireClientEntropy
   type: Bool
   default: false
@@ -259,6 +524,11 @@ attributes:
     element contains the entropy material. In this case, use a TLS profile to secure
     the exchange with the WS-Trust server.</li></ul>
   cli_alias: trust-require-client-entropy
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ws-trust
 - name: AUWSTrustClientEntropySize
   type: Int64
   minimum: 8
@@ -268,6 +538,17 @@ attributes:
     The size refers to the length of the entropy before base 64-encoding. Enter a
     value in the range 8 - 128. The default value is 32.
   cli_alias: trust-client-entropy-size
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ws-trust
+    - evaluation: property-equals
+      attribute: AUWSTrustRequireClientEntropy
+      value:
+      - 'off'
 - name: AUWSTrustRequireServerEntropy
   type: Bool
   default: false
@@ -275,6 +556,11 @@ attributes:
     When required, a WS-Trust <tt>entropy</tt> element must be returned to the client
     as part of the security token request exchange. By default, entropy is not required.
   cli_alias: trust-require-server-entropy
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ws-trust
 - name: AUWSTrustServerEntropySize
   type: Int64
   minimum: 8
@@ -284,6 +570,17 @@ attributes:
     The size refers to the length of the entropy before base 64-encoding. Enter any
     value in the range 8 - 128. The default value is 32.
   cli_alias: trust-server-entropy-size
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ws-trust
+    - evaluation: property-equals
+      attribute: AUWSTrustRequireServerEntropy
+      value:
+      - 'off'
 - name: AUWSTrustRequireRSTC
   type: Bool
   default: false
@@ -291,18 +588,39 @@ attributes:
     <tt>RequestSecurityToken</tt> or WS-Trust <tt>RequestSecurityTokenCollection</tt>
     element to be sent by the client. By default, the element is not required.
   cli_alias: trust-require-rstc
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ws-trust
 - name: AUWSTrustRequireAppliesToHeader
   type: Bool
   default: false
   description: Specify whether to require a WS-Addressing <tt>AppliesTo</tt> header
     in the message exchange. By default, the header is not required.
   cli_alias: trust-require-applies-to-header
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ws-trust
 - name: AUWSTrustAppliesToHeader
   type: String
   description: Specify the value for the WS-Addressing <tt>AppliesTo</tt> header.
     The <tt>header</tt> element is included in the WS-Trust request security token
     message sent to the WS-Trust server.
   cli_alias: trust-applies-to-header
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ws-trust
+    - evaluation: property-equals
+      attribute: AUWSTrustRequireAppliesToHeader
+      value:
+      - 'off'
 - name: AUWSTrustEncryptionCertificate
   type: String
   reference_to: CryptoCertificate
@@ -311,11 +629,26 @@ attributes:
     for the recipient. If client entropy is configured and this certificate is not
     specified, use a TLS profile to secure the message exchange.
   cli_alias: trust-encryption-certificate
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ws-trust
+  file_locations:
+  - cert
+  - sharedcert
 - name: AUZOSNSSConfig
   type: String
   reference_to: ZosNSSClient
   description: Specify the name of the z/OS NSS client for SAF communication.
   cli_alias: zos-nss-au
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - zosnss
+  ignored_when:
+  - evaluation: logical-true
 - name: AULDAPAttributes
   type: String
   description: Specify the list of the extra user attributes to retrieve from the
@@ -324,6 +657,11 @@ attributes:
     of LDAP attributes as the auxiliary information for AAA, use the comma (,) as
     the delimiter. For example, <tt>email, cn, userPassword</tt> .
   cli_alias: au-ldap-attributes
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: AUSkewTime
   type: Int64
   default: 0
@@ -334,6 +672,13 @@ attributes:
     minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt> , validates with <tt>CurrentTime</tt>
     plus <tt>SkewTime</tt> .</li></ul>
   cli_alias: au-skew-time
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: AUMethod
+    value:
+    - saml-artifact
+    - saml-authen-query
+    - saml-signature
 - name: AUTAMPACReturn
   type: Bool
   default: false
@@ -342,6 +687,13 @@ attributes:
     PAC in the postprocessing phase. By default, The default the PAC token is not
     returned.
   cli_alias: tam-pac-return
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - tivoli
+  ignored_when:
+  - evaluation: logical-true
 - name: AULDAPReadTimeout
   type: Int64
   maximum: 86400
@@ -354,6 +706,11 @@ attributes:
     the idle timer of the LDAP connection pool to remove idle connections from the
     LDAP connection pool.</p>
   cli_alias: ldap-readtimeout
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: AUSSLClientConfigType
   type: String
   enum:
@@ -361,11 +718,63 @@ attributes:
   default: client
   description: Specify the TLS profile type to secure connections.
   cli_alias: ssl-client-type
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: AUMethod
+      value:
+      - cleartrust
+      - ldap
+      - netegrity
+      - saml-artifact
+      - saml-authen-query
+      - ws-trust
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: AUMethod
+        value:
+        - saml-signature
+        - validate-signer
+      - evaluation: property-equals
+        attribute: AUAllowRemoteTokenReference
+        value:
+        - 'off'
 - name: AUSSLClientProfile
   type: String
   reference_to: SSLClientProfile
   description: Specify the TLS client profile to secure connections.
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: AUMethod
+        value:
+        - cleartrust
+        - ldap
+        - netegrity
+        - saml-artifact
+        - saml-authen-query
+        - ws-trust
+      - evaluation: logical-or
+        conditions:
+        - evaluation: property-value-not-in-list
+          attribute: AUMethod
+          value:
+          - saml-signature
+          - validate-signer
+        - evaluation: property-equals
+          attribute: AUAllowRemoteTokenReference
+          value:
+          - 'off'
+    - evaluation: property-does-not-equal
+      attribute: AUSSLClientConfigType
+      value:
+      - client
 - name: AULDAPBindPasswordAlias
   type: String
   reference_to: PasswordAlias
@@ -374,6 +783,11 @@ attributes:
     is a WS-Security UsernameToken PasswordDigest. The LDAP server is searched for
     the corresponding password to verify the PasswordDigest.
   cli_alias: ldap-bind-password-alias
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: AULTPAKeyFilePasswordAlias
   type: String
   reference_to: PasswordAlias
@@ -381,6 +795,42 @@ attributes:
     file. This password decrypts certain entries in a WebSphere LTPA key file. This
     password is not applicable to Domino key files.
   cli_alias: ltpa-key-password-alias
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AULTPAKeyFilePassword
+      value:
+      - ''
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: AUMethod
+        value:
+        - ltpa
+      - evaluation: property-value-in-list
+        attribute: AULTPATokenVersionsBitmap
+        value:
+        - LTPA
+        - LTPA2
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ltpa
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: AULTPATokenVersionsBitmap
+        value:
+        - LTPA
+        - LTPA2
+      - evaluation: property-value-in-list
+        attribute: AULTPATokenVersionsBitmap
+        value:
+        - LTPADomino
 - name: AUSMRequestType
   type: String
   enum:
@@ -390,22 +840,49 @@ attributes:
   description: Specify the type of request to make. By default, the request is against
     the CA Single Sign-On web agent.
   cli_alias: sm-request-type
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - netegrity
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - netegrity
 - name: AUSMCookieFlow
   dm_type: DmSMFlow
   description: Specify which flow to include the authentication session cookie.
   cli_alias: sm-cookie-flow
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - netegrity
 - name: AUSMHeaderFlow
   dm_type: DmSMFlow
   description: Identifies the flow to include the CA Single Sign-On headers that are
     generated during authentication. The CA Single Sign-On HTTP headers start with
     <tt>SM_</tt> .
   cli_alias: sm-header-flow
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - netegrity
 - name: AUSMCookieAttributes
   type: String
   reference_to: CookieAttributePolicy
   description: Specify the cookie attribute policy that allows predefined or custom
     attributes to be included in CA Single Sign-On cookies.
   cli_alias: cookie-attributes
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: AUSMCookieFlow
+    value:
+    - frontend
+    - frontend+backend
+    - backend+frontend
 - name: AUCacheControl
   type: String
   enum:

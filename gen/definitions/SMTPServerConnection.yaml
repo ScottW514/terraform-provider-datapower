@@ -66,6 +66,11 @@ attributes:
     SMTP client. If blank, the configuration uses the setting from the SMTP client
     policy in the associated user agent.
   cli_alias: auth
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Options
+    value:
+    - Auth
 - name: AccountName
   type: String
   description: The account or user name of the SMTP client to authenticate on the
@@ -73,6 +78,16 @@ attributes:
     blank, the configuration uses the setting from the basic authentication policy
     in the associated user agent.
   cli_alias: username
+  required_when:
+  - evaluation: property-equals
+    attribute: Options
+    value:
+    - Auth
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Options
+    value:
+    - Auth
 - name: AccountPasswordAlias
   type: String
   reference_to: PasswordAlias
@@ -81,6 +96,11 @@ attributes:
     the configuration uses the setting from the basic authentication policy in the
     associated user agent.
   cli_alias: password-alias
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Options
+    value:
+    - Auth
 - name: SSLClientConfigType
   type: String
   enum:
@@ -95,3 +115,8 @@ attributes:
   description: The TLS client profile to secure connections between the DataPower
     Gateway and its targets.
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLClientConfigType
+    value:
+    - client

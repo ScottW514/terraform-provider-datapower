@@ -72,31 +72,108 @@ attributes:
   default: per-extracted-value
   description: Match type
   cli_alias: match-type
+  required_when:
+  - evaluation: property-value-not-in-list
+    attribute: RsrcType
+    value:
+    - xpath-filter
+    - request-message
+    - response-message
+    - soap-fault
+    - custom-stylesheet
+    - concurrent-connections
+    - concurrent-transactions
+    - uddi-subscription
+    - wsrr-subscription
+    - wsrr-saved-search-subscription
+  ignored_when:
+  - evaluation: logical-true
 - name: RsrcValue
   type: List
   element_type: String
   description: Resource value
   cli_alias: value
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: RsrcMatchType
+        value:
+        - exact-match
+      - evaluation: property-does-not-equal
+        attribute: RsrcMatchType
+        value:
+        - regexp-match
+    - evaluation: property-value-in-list
+      attribute: RsrcType
+      value:
+      - uddi-subscription
+      - wsrr-subscription
+      - wsrr-saved-search-subscription
+      - request-message
+      - response-message
+      - soap-fault
+      - xpath-filter
+      - custom-stylesheet
+      - concurrent-connections
+      - concurrent-transactions
 - name: Stylesheet
   type: String
   description: Custom stylesheet
   cli_alias: stylesheet
+  required_when:
+  - evaluation: property-equals
+    attribute: RsrcType
+    value:
+    - custom-stylesheet
+  ignored_when:
+  - evaluation: logical-true
 - name: XPathFilter
   type: String
   description: XPath filter
   cli_alias: xpath-filter
+  required_when:
+  - evaluation: property-equals
+    attribute: RsrcType
+    value:
+    - xpath-filter
+  ignored_when:
+  - evaluation: logical-true
 - name: Subscription
   type: String
   description: UDDI subscription (deprecated)
   deprecated: true
   cli_alias: subscription
+  required_when:
+  - evaluation: property-equals
+    attribute: RsrcType
+    value:
+    - uddi-subscription
+  ignored_when:
+  - evaluation: logical-true
 - name: WSRRSubscription
   type: String
   reference_to: WSRRSubscription
   description: WSRR subscription
   cli_alias: wsrr-subscription
+  required_when:
+  - evaluation: property-equals
+    attribute: RsrcType
+    value:
+    - wsrr-subscription
+  ignored_when:
+  - evaluation: logical-true
 - name: WSRRSavedSearchSubscription
   type: String
   reference_to: WSRRSavedSearchSubscription
   description: WSRR saved search subscription
   cli_alias: wsrr-saved-search-subscription
+  required_when:
+  - evaluation: property-equals
+    attribute: RsrcType
+    value:
+    - wsrr-saved-search-subscription
+  ignored_when:
+  - evaluation: logical-true

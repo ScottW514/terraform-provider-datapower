@@ -44,6 +44,11 @@ attributes:
     to include the serial number of the appliance and the timestamp, which prevents
     one report overwriting another</li></ul>
   cli_alias: upload-report
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseSmtp
+    value:
+    - 'on'
 - name: UseSmtp
   type: Bool
   default: false
@@ -51,6 +56,11 @@ attributes:
     error report. If you want to receive e-mail notification, use the upload error
     report property instead of this property.
   cli_alias: use-smtp
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UploadReport
+    value:
+    - 'on'
 - name: InternalState
   type: Bool
   default: false
@@ -69,6 +79,11 @@ attributes:
     to determine the messages that the appliance was processing when it encountered
     the problem.</p>
   cli_alias: ffdc packet-capture
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UploadReport
+    value:
+    - 'off'
 - name: FFDCEventLogCapture
   type: Bool
   default: false
@@ -79,6 +94,11 @@ attributes:
     this log capture. This data can help IBM Support identify the problem.</p><p>These
     messages are independent of messages written to log and trace targets.</p>
   cli_alias: ffdc event-log
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UploadReport
+    value:
+    - 'off'
 - name: FFDCMemoryLeakCapture
   type: Bool
   default: false
@@ -92,6 +112,11 @@ attributes:
     feature. The throttle settings can prevent the appliance from reaching the internal
     threshold.</p>
   cli_alias: ffdc memory-trace
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UploadReport
+    value:
+    - 'off'
 - name: AlwaysOnStartup
   type: Bool
   default: true
@@ -127,6 +152,16 @@ attributes:
   description: Specify the protocol to use to upload the error report. Note that the
     selection you will see depends on your device features and licenses.
   cli_alias: protocol
+  required_when:
+  - evaluation: property-equals
+    attribute: UploadReport
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UploadReport
+    value:
+    - 'off'
 - name: LocationIdentifier
   type: String
   description: Specify text to include in the subject of an e-mail notification. In
@@ -135,32 +170,138 @@ attributes:
     this case, failure notification uses the serial number of the appliance and the
     timestamp of the error report.
   cli_alias: location-id
+  required_when:
+  - evaluation: property-equals
+    attribute: UseSmtp
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: SmtpServer
   type: String
   example: smtp.mycompany.com
   description: Specify the host name or IP address of the remote SMTP server to which
     to send the error report.
   cli_alias: remote-address
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: UseSmtp
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: UploadReport
+        value:
+        - 'on'
+      - evaluation: property-equals
+        attribute: Protocol
+        value:
+        - smtp
+  ignored_when:
+  - evaluation: logical-true
+  string_exclude:
+  - 127.0.0.1
+  - localhost
 - name: EmailAddress
   type: String
   description: Specify the e-mail address to which to send the error report.
   cli_alias: email-address
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: UseSmtp
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: UploadReport
+        value:
+        - 'on'
+      - evaluation: property-equals
+        attribute: Protocol
+        value:
+        - smtp
+  ignored_when:
+  - evaluation: logical-true
 - name: EmailSenderAddress
   type: String
   description: Specify the e-mail address of the sender ( <tt>MAIL FROM</tt> ). If
     not specified, the configuration uses the e-mail address of the recipient.
   cli_alias: email-sender-address
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: UseSmtp
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: UploadReport
+        value:
+        - 'off'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: UseSmtp
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: UploadReport
+        value:
+        - 'on'
+      - evaluation: property-does-not-equal
+        attribute: Protocol
+        value:
+        - smtp
 - name: FTPServer
   type: String
   example: ftp.mycompany.com
   description: Specify the host name or IP address of the remote FTP server to which
     to upload the error report.
   cli_alias: ftp-server
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: UploadReport
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - ftp
+  ignored_when:
+  - evaluation: logical-true
+  string_max_length: 128
+  string_min_length: 0
+  string_exclude:
+  - 127.0.0.1
+  - localhost
 - name: FTPPath
   type: String
   description: Specify the directory on the FTP server to which to upload the error
     report. Use <tt>%2F</tt> to specify an absolute path.
   cli_alias: ftp-path
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: UploadReport
+      value:
+      - 'off'
+    - evaluation: property-does-not-equal
+      attribute: Protocol
+      value:
+      - ftp
+  string_max_length: 128
+  string_min_length: 0
 - name: FTPUserAgent
   type: String
   reference_to: HTTPUserAgent
@@ -169,25 +310,86 @@ attributes:
     User Agent defines the basic authentication policy (user name and password) to
     connect to the FTP server.
   cli_alias: ftp-user-agent
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: UploadReport
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - ftp
+  ignored_when:
+  - evaluation: logical-true
 - name: NFSMount
   type: String
   reference_to: NFSStaticMount
   description: Specify the NFS mount point to which to upload the error report.
   cli_alias: nfs-mount
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: UploadReport
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - nfs
+  ignored_when:
+  - evaluation: logical-true
 - name: NFSPath
   type: String
   description: This describes the NFS path location for the Error Report
   cli_alias: nfs-path
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: UploadReport
+      value:
+      - 'off'
+    - evaluation: property-does-not-equal
+      attribute: Protocol
+      value:
+      - nfs
 - name: RaidVolume
   type: String
   reference_to: RaidVolume
   description: Specify the volume on the RAID array to which to upload the error report.
   cli_alias: raid-volume
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: UploadReport
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - raid
+  ignored_when:
+  - evaluation: logical-true
 - name: RaidPath
   type: String
   description: Specify the directory on the RAID volume to which to upload the error
     report.
   cli_alias: raid-path
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: UploadReport
+      value:
+      - 'off'
+    - evaluation: property-does-not-equal
+      attribute: Protocol
+      value:
+      - raid
 - name: ReportHistoryKept
   type: Int64
   minimum: 2
@@ -200,3 +402,8 @@ attributes:
     reports, including temporary and Raid.</p><p>To view the history, see the Failure
     Notification status provider.</p>
   cli_alias: report-history
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UploadReport
+    value:
+    - 'off'

@@ -62,7 +62,7 @@ func (r *APISecurityAPIKeyResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -73,7 +73,7 @@ func (r *APISecurityAPIKeyResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -104,6 +104,9 @@ func (r *APISecurityAPIKeyResource) Schema(ctx context.Context, req resource.Sch
 			"key_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Key name", "key-name", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9-_]*$"), "Must match :"+"^[a-zA-Z0-9][a-zA-Z0-9-_]*$"),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

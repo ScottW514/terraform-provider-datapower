@@ -106,6 +106,11 @@ attributes:
   description: Specify the criticality level for throttle messages. By default, logging
     is at debug level.
   cli_alias: status-loglevel
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Statistics
+    value:
+    - 'on'
 - name: EnvironmentalLog
   type: Bool
   default: true

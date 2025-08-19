@@ -51,8 +51,23 @@ attributes:
   element_type: DmAPIRateLimit
   description: Rate limit
   cli_alias: rate-limit
+  required_when:
+  - evaluation: property-equals
+    attribute: UseRateLimitGroup
+    value:
+    - 'off'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseRateLimitGroup
+    value:
+    - 'on'
 - name: RateLimitGroup
   type: String
   reference_to: RateLimitDefinitionGroup
   description: Rate limit group
   cli_alias: rate-limit-group
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseRateLimitGroup
+    value:
+    - 'off'

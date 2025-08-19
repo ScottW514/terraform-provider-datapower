@@ -67,7 +67,7 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -78,7 +78,7 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -171,6 +171,10 @@ func (r *B2BGatewayResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"archive_file_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base file name for archive file. When archiving, the operation appends the current timestamp.", "arch-file", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 128),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9.-]+$"), "Must match :"+"^[_a-zA-Z0-9.-]+$"),
+				},
 			},
 			"archive_minimum_size": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the minimum remaining size in KB of document storage that triggers archival. The default value is 1024.", "arch-minimum-size", "").AddDefaultValue("1024").String,

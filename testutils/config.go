@@ -7752,8 +7752,9 @@ resource "datapower_zos_nss_client" "test" {
   remote_address = "remote.host"
   remote_port = 443
   client_id = "client_id"
-  system_name = "ResTestsystem"
+  system_name = "sysname"
   user_name = "username"
+  ssl_client = "AccTest_SSLClientProfile"
 }`,
     Data: `
 data "datapower_zos_nss_client" "test" {
@@ -7766,8 +7767,9 @@ resource "datapower_zos_nss_client" "acc_test" {
   remote_address = "remote.host"
   remote_port = 443
   client_id = "client_id"
-  system_name = "ResTestsystem"
+  system_name = "sysname"
   user_name = "username"
+  ssl_client = datapower_ssl_client_profile.acc_test.id
 }`,
     ModelOnly:    false,
 }

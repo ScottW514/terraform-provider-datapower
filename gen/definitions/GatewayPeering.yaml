@@ -49,6 +49,32 @@ attributes:
     or ::.
   test_value: '"5.5.5.5"'
   cli_alias: local-address
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: EnablePeerGroup
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: EnablePeerGroup
+        value:
+        - 'off'
+      - evaluation: property-does-not-equal
+        attribute: PrimaryCount
+        value:
+        - '1'
+      - evaluation: property-equals
+        attribute: PeerGroup
+        value:
+        - ''
+  string_exclude:
+  - 127.0.0.1
+  - 0.0.0.0
+  - '::'
+  - '::1'
 - name: LocalPort
   type: Int64
   required: true
@@ -61,12 +87,39 @@ attributes:
   reference_to: GatewayPeeringGroup
   description: Gateway-peering group
   cli_alias: peer-group
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: EnablePeerGroup
+    value:
+    - 'on'
 - name: MonitorPort
   type: Int64
   default: 26380
   description: Specify the port to monitor for state synchronization. The default
     value is 26380. Ensure that all peers use the same port.
   cli_alias: monitor-port
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: PrimaryCount
+      value:
+      - '1'
+    - evaluation: property-equals
+      attribute: PeerGroup
+      value:
+      - ''
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: PrimaryCount
+      value:
+      - '1'
+    - evaluation: property-equals
+      attribute: PeerGroup
+      value:
+      - ''
 - name: EnablePeerGroup
   type: Bool
   default: true
@@ -82,6 +135,11 @@ attributes:
   description: Specify whether to use TLS to secure the connection among the members.
     By default, TLS is enabled. In peer-based mode, ensure that all peers use the
     same TLS configuration.
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: PeerGroup
+    value:
+    - ''
 - name: PersistenceLocation
   type: String
   enum:
@@ -98,6 +156,15 @@ attributes:
   description: Specify the directory to store data. For example, <tt>local:///group1</tt>
     .
   cli_alias: local-directory
+  required_when:
+  - evaluation: property-equals
+    attribute: PersistenceLocation
+    value:
+    - local
+  ignored_when:
+  - evaluation: logical-true
+  string_patterns:
+  - '^(local):'
 - name: MaxMemory
   type: Int64
   maximum: 1048576
@@ -105,3 +172,8 @@ attributes:
     this limit, data is removed by using the least recently used (LRU) algorithm.
     The default value is 0, which means no limits. Do not over allocate memory.
   cli_alias: max-memory
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: PersistenceLocation
+    value:
+    - memory

@@ -62,6 +62,8 @@ attributes:
     must be unique not only within the 3 types of ID System (Freeform, DUNS, and DUNS+4)
     but also within a specific B2B gateway.
   cli_alias: business-id-duns
+  string_patterns:
+  - ^[0-9]{9}$
 - name: BusinessIDsDUNSPlus4
   type: List
   element_type: String
@@ -70,6 +72,8 @@ attributes:
     identifier (ID) must be unique not only within the 3 types of ID System (Freeform,
     DUNS, and DUNS+4) but also within a specific B2B gateway.
   cli_alias: business-id-duns4
+  string_patterns:
+  - ^[0-9]{13}$
 - name: CustomStylePolicy
   type: String
   reference_to: StylePolicy
@@ -111,23 +115,54 @@ attributes:
   reference_to: CryptoValCred
   description: Inbound signature validation credentials
   cli_alias: verify-valcred
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: InboundRequireSigned
   type: Bool
   default: false
   description: Specify whether inbound AS messages must be signed. The default behavior
     is off.
   cli_alias: require-signed
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: InboundRequireEncrypted
   type: Bool
   default: false
   description: Specify whether inbound AS messages must be encrypted. The default
     behavior is off.
   cli_alias: require-encrypted
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: InboundDecryptIdCred
   type: String
   reference_to: CryptoIdentCred
   description: Inbound decryption identification credentials
   cli_alias: decrypt-idcred
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: InboundRequireEncrypted
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: OutboundSign
   type: Bool
   default: false
@@ -139,6 +174,11 @@ attributes:
     MDN messages. Regardless of this setting and if a partner requests a signed MDN,
     the outbound MDN is signed if this partner has a configured identification credentials.</p>
   cli_alias: sign
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: OutboundSignIdCred
   type: String
   reference_to: CryptoIdentCred
@@ -146,6 +186,22 @@ attributes:
     or outbound MDN. The outbound MDN is signed if requested by a partner and this
     setting is configured.
   cli_alias: sign-idcred
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: OutboundSign
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: OutboundSignDigestAlg
   type: String
   enum:
@@ -157,6 +213,17 @@ attributes:
   default: sha1
   description: Signing digest algorithm
   cli_alias: sign-digest-alg
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+    - evaluation: property-equals
+      attribute: OutboundSign
+      value:
+      - 'off'
 - name: OutboundSignMICAlgVersion
   type: String
   enum:
@@ -172,6 +239,11 @@ attributes:
     3.1, the micalg parameter value has micalg=[md5|sha1|sha256|sha384|sha512].</li><li>In
     Version 3.2, the micalg parameter value has micalg=[md5|sha-1|sha-256|sha-384|sha-512].</li></ul>'
   cli_alias: sign-micalg-version
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: Contacts
   type: List
   element_type: DmB2BContact
@@ -197,6 +269,11 @@ attributes:
   description: Specify when to allow and reprocess duplicate AS inbound messages.
     The default behavior is never. This option does not apply to MDN.
   cli_alias: as-allow-dup-msg
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: PreserveFilename
   type: Bool
   default: false
@@ -208,6 +285,11 @@ attributes:
     the original file name that is contained in the header and transfer the received
     file to its backend system with the received file name.
   cli_alias: preserve-filename
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMSRole
   type: String
   description: Specify the name of authorized role of the party. When sending outbound
@@ -223,6 +305,11 @@ attributes:
     This value is used to compute the <tt>TimeToLive</tt> value. Until the value of
     the <tt>TimeToLive</tt> element elapses, the message cannot be archived.
   cli_alias: ebms-persist-duration
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMSAckURL
   type: String
   description: Specify the redirection URL to send the acknowledgment message when
@@ -230,6 +317,16 @@ attributes:
     reply is requested by the inbound ebMS2 document, this field is required to determine
     where to send the acknowledgment.
   cli_alias: ebms-ack-url
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
+  protocols:
+  - http
+  - https
+  file_locations:
+  - '"NONE"'
 - name: EBMSErrorURL
   type: String
   description: Specify the redirection URL to send the error message when received
@@ -238,18 +335,49 @@ attributes:
     location to send the error message that contains the error code and the description
     of the problem. Error URL cannot be empty when the acknowledgment URL is specified.
   cli_alias: ebms-error-url
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: EBMSAckURL
+    value:
+    - ''
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
+  protocols:
+  - http
+  - https
+  file_locations:
+  - '"NONE"'
 - name: EBMSInboundSendReceipt
   type: Bool
   default: false
   description: Specify whether to reply to the MSH with a receipt signal message for
     the received ebMS messages. The default behavior is off.
   cli_alias: ebms-inbound-send-receipt
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMSInboundSendSignedReceipt
   type: Bool
   default: false
   description: Specify whether to reply to the MSH with a signed receipt signal message
     for the received ebMS3 message. The default behavior is off.
   cli_alias: ebms-inbound-send-signed-receipt
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: EBMSInboundSendReceipt
+      value:
+      - 'off'
 - name: EBMSInboundReceiptReplyPattern
   type: String
   enum:
@@ -259,16 +387,87 @@ attributes:
   description: Specify the pattern to send the receipt signal. The default behavior
     is response.
   cli_alias: ebms-inbound-receipt-reply-pattern
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: EBMSInboundSendReceipt
+      value:
+      - 'off'
 - name: EBMSReceiptURL
   type: String
   description: When the receipt reply pattern is callback, specify the URL to send
     the receipt signal.
   cli_alias: ebms-receipt-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EBMSInboundSendReceipt
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: EBMSInboundReceiptReplyPattern
+      value:
+      - Callback
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: EBMSInboundReceiptReplyPattern
+      value:
+      - Response
+    - evaluation: property-equals
+      attribute: EBMSInboundSendReceipt
+      value:
+      - 'off'
+  protocols:
+  - http
+  - https
+  file_locations:
+  - '"NONE"'
 - name: EBMSInboundErrorURL
   type: String
   description: When the error is sent asynchronously, specify the URL to send the
     error signal.
   cli_alias: ebms-inbound-error-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EBMSInboundSendReceipt
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: EBMSInboundReceiptReplyPattern
+      value:
+      - Callback
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
+  protocols:
+  - http
+  - https
+  file_locations:
+  - '"NONE"'
 - name: EBMSInboundVerifyValCred
   type: String
   reference_to: CryptoValCred
@@ -276,6 +475,11 @@ attributes:
     or inbound ebMS2 message. For ebMS2 messages, only <tt>X509Data</tt> and <tt>KeyName</tt>
     signature methods are supported.
   cli_alias: ebms-verify-valcred
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMSDefaultSignerCert
   type: String
   reference_to: CryptoCertificate
@@ -284,23 +488,54 @@ attributes:
     certificate is used if either the <tt>keyInfo</tt> element is missing or signature
     method is unsupported.
   cli_alias: ebms-default-signer-cert
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMSInboundRequireSigned
   type: Bool
   default: false
   description: Specify whether inbound ebMS2 messages must be signed. The default
     behavior is off.
   cli_alias: ebms-require-signed
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMSInboundRequireEncrypted
   type: Bool
   default: false
   description: Specify whether inbound ebMS2 messages must be encrypted. The default
     behavior is off.
   cli_alias: ebms-require-encrypted
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMSInboundDecryptIdCred
   type: String
   reference_to: CryptoIdentCred
   description: Specify the identification credentials to decrypt inbound ebMS2 messages.
   cli_alias: ebms-decrypt-idcred
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: EBMSInboundRequireEncrypted
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMSOutboundSign
   type: Bool
   default: false
@@ -313,6 +548,11 @@ attributes:
     setting and if a partner requests a signed acknowledgment, the outbound acknowledgment
     is signed if this partner has a configured identification credentials.</p>
   cli_alias: ebms-sign
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMSOutboundSignIdCred
   type: String
   reference_to: CryptoIdentCred
@@ -321,6 +561,22 @@ attributes:
     and this setting is configured. For ebMS2 messages, only <tt>X509Data</tt> and
     <tt>KeyName</tt> signature methods are supported.
   cli_alias: ebms-sign-idcred
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: EBMSOutboundSign
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMSOutboundSignatureAlg
   type: String
   enum:
@@ -342,6 +598,17 @@ attributes:
   description: Specify the algorithm to sign the outbound ebMS2 message. The default
     value is dsa-sha1, which is recommended by the ebMS specification.
   cli_alias: ebms-signature-alg
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+    - evaluation: property-equals
+      attribute: EBMSOutboundSign
+      value:
+      - 'off'
 - name: EBMSOutboundSignatureC14NAlg
   type: String
   enum:
@@ -356,6 +623,17 @@ attributes:
     comments before signing outbound ebMS2 message. The default value is c14n, which
     is recommended by the ebMS specification.
   cli_alias: ebms-signature-c14n-alg
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+    - evaluation: property-equals
+      attribute: EBMSOutboundSign
+      value:
+      - 'off'
 - name: EBMSOutboundSignDigestAlg
   type: String
   enum:
@@ -370,6 +648,17 @@ attributes:
   description: Specify the algorithm to hash the payload during signing. The default
     value is sha1. See http://www.w3.org/TR/xmldsig-core/
   cli_alias: ebms-sign-digest-alg
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+    - evaluation: property-equals
+      attribute: EBMSOutboundSign
+      value:
+      - 'off'
 - name: EBMSEnableCPABinding
   type: Bool
   default: false
@@ -378,6 +667,11 @@ attributes:
     ebMS2 messages instead of the default CPA, service, and action of the external
     profile. The CPA binding is matched by the internal partner profile.
   cli_alias: ebms-enable-cpa-bindings
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMSProfileCPABindings
   type: List
   element_type: DmProfileCPABinding
@@ -388,21 +682,47 @@ attributes:
     matched CPA entry. You must have the CPA entry in the ebXML settings of the associated
     B2B gateway before you add the entry to the CPA bindings list.
   cli_alias: profile-cpa-binding
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: EBMSEnableCPABinding
+      value:
+      - 'off'
 - name: EBMSCpaId
   type: String
   description: Specify the CPA ID to package in the outbound ebMS2 message header.
     This value is used when the B2B gateway is CPA-enforced.
   cli_alias: ebms-cpa-id
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMSService
   type: String
   description: Specify the service to package in the outbound ebMS2 message header.
     This value is used when when the B2B gateway is CPA-enforced.
   cli_alias: ebms-service
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMSAction
   type: String
   description: Specify the action to package in the outbound ebMS2 message header.
     This value is used when the B2B gateway is CPA-enforced.
   cli_alias: ebms-action
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMSStartParameter
   type: Bool
   default: false
@@ -421,6 +741,11 @@ attributes:
   description: Specify when to allow and reprocess duplicate ebMS2 inbound messages.
     The default behavior is never. This option does not apply to acknowledgments.
   cli_alias: ebms-allow-dup-msg
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: MDNSSLClientConfigType
   type: String
   enum:
@@ -428,11 +753,27 @@ attributes:
   default: client
   description: MDN TLS client type
   cli_alias: mdn-ssl-client-type
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: MDNSSLClient
   type: String
   reference_to: SSLClientProfile
   description: MDN TLS client profile
   cli_alias: mdn-ssl-client
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: MDNSSLClientConfigType
+      value:
+      - client
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
 - name: EBMSAckSSLClientConfigType
   type: String
   enum:
@@ -440,11 +781,27 @@ attributes:
   default: client
   description: Acknowledgment/Error TLS client type
   cli_alias: ebmsack-ssl-client-type
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMSAckSSLClient
   type: String
   reference_to: SSLClientProfile
   description: Acknowledgment/Error TLS client profile
   cli_alias: ebmsack-ssl-client
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: EBMSAckSSLClientConfigType
+      value:
+      - client
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
 - name: EBMS3OutboundSign
   type: Bool
   default: false
@@ -458,6 +815,11 @@ attributes:
     outbound receipt signal is signed when this internal partner has a configured
     identification credentials.</p>
   cli_alias: ebms3-sign
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMS3OutboundSignIdCred
   type: String
   reference_to: CryptoIdentCred
@@ -465,6 +827,22 @@ attributes:
     or outbound receipt signal. The outbound receipt signal is signed if requested
     by a partner and this setting is configured.
   cli_alias: ebms3-sign-idcred
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: EBMS3OutboundSign
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMS3OutboundSignDigestAlg
   type: String
   enum:
@@ -479,6 +857,17 @@ attributes:
   description: Specify the algorithm to hash the payload during signing. The default
     value is sha1. See http://www.w3.org/TR/xmldsig-core/
   cli_alias: ebms3-sign-digest-alg
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+    - evaluation: property-equals
+      attribute: EBMS3OutboundSign
+      value:
+      - 'off'
 - name: EBMS3OutboundSignatureAlg
   type: String
   enum:
@@ -500,6 +889,17 @@ attributes:
   description: Specify the algorithm to sign outbound ebMS3 messages. The default
     value is dsa-sha1, which is recommended by the ebMS specification.
   cli_alias: ebms3-signature-alg
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+    - evaluation: property-equals
+      attribute: EBMS3OutboundSign
+      value:
+      - 'off'
 - name: EBMS3OutboundSignatureC14NAlg
   type: String
   enum:
@@ -513,11 +913,27 @@ attributes:
     comments before signing outbound ebMS3 messages. The default value is exc-c14n,
     which is recommended by the ebMS specification.
   cli_alias: ebms3-signature-c14n-alg
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+    - evaluation: property-equals
+      attribute: EBMS3OutboundSign
+      value:
+      - 'off'
 - name: EBMS3InboundVerifyValCred
   type: String
   reference_to: CryptoValCred
   description: Inbound signature validation credentials
   cli_alias: ebms3-verify-valcred
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMS3DefaultSignerCert
   type: String
   reference_to: CryptoCertificate
@@ -525,29 +941,65 @@ attributes:
     of an inbound ebMS3 message or a receipt. This certificate is used when the <tt>keyInfo</tt>
     element is missing or the signature method is unsupported.
   cli_alias: ebms3-default-signer-cert
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMS3InboundRequireSigned
   type: Bool
   default: false
   description: Specify whether inbound ebMS3 messages must be signed. The default
     behavior is off.
   cli_alias: ebms3-require-signed
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMS3InboundRequireEncrypted
   type: Bool
   default: false
   description: Specify whether inbound ebMS3 messages must be encrypted. The default
     behavior is off.
   cli_alias: ebms3-require-encrypted
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMS3InboundDecryptIdCred
   type: String
   reference_to: CryptoIdentCred
   description: Inbound decryption identification credentials
   cli_alias: ebms3-decrypt-idcred
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: EBMS3InboundRequireEncrypted
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMS3InboundRequireCompressed
   type: Bool
   default: false
   description: Specify whether internal partners require compressed inbound ebMS3
     messages. The default behavior is not to require compression.
   cli_alias: ebms3-require-compressed
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMS3ReceiptSSLClientConfigType
   type: String
   enum:
@@ -555,11 +1007,56 @@ attributes:
   default: client
   description: Receipt/Error TLS client type
   cli_alias: ebms3-receipt-ssl-client-type
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMS3ReceiptSSLClient
   type: String
   reference_to: SSLClientProfile
   description: Receipt/Error TLS client profile
   cli_alias: ebms3-receipt-ssl-client
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EBMS3ReceiptSSLClientConfigType
+      value:
+      - client
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-url-protocol-in-list
+        attribute: EBMSReceiptURL
+        value:
+        - https
+      - evaluation: property-url-protocol-in-list
+        attribute: EBMSInboundErrorURL
+        value:
+        - https
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+    - evaluation: property-equals
+      attribute: EBMSInboundSendReceipt
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: EBMSInboundReceiptReplyPattern
+      value:
+      - Callback
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: EBMS3ReceiptSSLClientConfigType
+      value:
+      - client
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
 - name: EBMSNotification
   type: Bool
   default: false
@@ -567,10 +1064,30 @@ attributes:
     to the message producer or consumer when there are specific errors. The default
     behavior is off.
   cli_alias: ebms-notification
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
 - name: EBMSNotificationURL
   type: String
   description: Notification URL
   cli_alias: ebms-notification-url
+  required_when:
+  - evaluation: property-equals
+    attribute: EBMSNotification
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - external
+  protocols:
+  - http
+  - https
+  file_locations:
+  - '"NONE"'
 - name: EBMSNotificationSSLClientConfigType
   type: String
   enum:
@@ -578,11 +1095,56 @@ attributes:
   default: client
   description: Notification TLS client type
   cli_alias: ebms-notification-ssl-client-type
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+    - evaluation: property-url-protocol-not-in-list
+      attribute: EBMSNotificationURL
+      value:
+      - https
 - name: EBMSNotificationSSLClient
   type: String
   reference_to: SSLClientProfile
   description: Notification TLS client profile
   cli_alias: ebms-notification-ssl-client
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EBMSNotificationSSLClientConfigType
+      value:
+      - client
+    - evaluation: property-url-protocol-in-list
+      attribute: EBMSNotificationURL
+      value:
+      - https
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - internal
+    - evaluation: property-equals
+      attribute: EBMSNotification
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: EBMSNotificationSSLClientConfigType
+      value:
+      - client
+    - evaluation: property-equals
+      attribute: ProfileType
+      value:
+      - external
+    - evaluation: property-url-protocol-not-in-list
+      attribute: EBMSNotificationURL
+      value:
+      - https
 - name: EBMS3AllowDuplicateMessage
   type: String
   enum:
@@ -594,6 +1156,11 @@ attributes:
     The default behavior is never. This option does not apply to the receipt signal
     messages.
   cli_alias: ebms3-allow-dup-msg
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMS3DuplicateDetectionNotification
   type: Bool
   default: false
@@ -601,6 +1168,11 @@ attributes:
     send notification to the message consumer when a duplicate message is detected.
     The default behavior is disabled.
   cli_alias: ebms3-duplicate-detection-notification
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal
 - name: EBMSMessageProperties
   type: List
   element_type: DmB2BMessageProperties
@@ -608,3 +1180,8 @@ attributes:
     node. Define message properties to meet your business needs and the agreement
     between partners.
   cli_alias: ebms-messageproperties
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileType
+    value:
+    - internal

@@ -6,6 +6,8 @@ attributes:
   type: String
   required: true
   description: An SNMPv3 context that will allow access to an application domain.
+  string_max_length: 32
+  string_min_length: 1
 - name: Domain
   type: String
   reference_to: Domain

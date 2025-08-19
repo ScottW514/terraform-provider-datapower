@@ -80,6 +80,11 @@ attributes:
     close</tt> header is sent in the response and the TCP connection is closed. The
     default value is 0, which means unlimited reuse.'
   cli_alias: max-persistent-reuse
+  ignored_when:
+  - evaluation: property-equals
+    attribute: PersistentConnections
+    value:
+    - 'off'
 - name: AllowCompression
   type: Bool
   default: false
@@ -245,6 +250,16 @@ attributes:
     IBM MQ server name, queue manager name, and name of the channel configured in
     the Multi-Enterprise Integration Gateway server. For example, dpmq://NAME_OF_MQ_OBJECT/?RequestQueue=QUEUE_NAME_FOR_VISIBILITY_EVENT
   cli_alias: visibility-event-endpoint
+  required_when:
+  - evaluation: property-equals
+    attribute: EnableVisibilityEvent
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: EnableVisibilityEvent
+    value:
+    - 'on'
 - name: EnableHmacAuthentication
   type: Bool
   default: true
@@ -253,6 +268,11 @@ attributes:
     is enabled in the Multi-Enterprise Integration Gateway server, you must enable
     HMAC authentication in the AS2 proxy handler to avoid message rejection.
   cli_alias: enable-hmac-authentication
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: EnableVisibilityEvent
+    value:
+    - 'on'
 - name: HmacPassphraseAlias
   type: String
   reference_to: PasswordAlias
@@ -260,6 +280,34 @@ attributes:
     HMAC token for message authentication and integrity checking in the Multi-Enterprise
     Integration Gateway server.
   cli_alias: hmac-passphrase-alias
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: EnableVisibilityEvent
+        value:
+        - 'on'
+      - evaluation: property-equals
+        attribute: EnableHmacAuthentication
+        value:
+        - 'on'
+    - evaluation: property-equals
+      attribute: HmacPassphrase
+      value:
+      - ''
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: EnableVisibilityEvent
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: EnableHmacAuthentication
+      value:
+      - 'on'
 - name: SSLServerConfigType
   type: String
   enum:
@@ -275,12 +323,22 @@ attributes:
   description: The TLS server profile to secure connections between clients and the
     DataPower Gateway.
   cli_alias: ssl-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLServerConfigType
+    value:
+    - server
 - name: SSLSNIServer
   type: String
   reference_to: SSLSNIServerProfile
   description: The TLS SNI server profile to secure connections between clients and
     the DataPower Gateway.
   cli_alias: ssl-sni-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLServerConfigType
+    value:
+    - sni
 - name: SSLClientConfigType
   type: String
   enum:
@@ -300,3 +358,8 @@ attributes:
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLClientConfigType
+    value:
+    - client

@@ -65,6 +65,10 @@ attributes:
     also be unique with a length of 64 characters or less to be compatible with most
     remote systems.
   cli_alias: name
+  string_max_length: 127
+  string_min_length: 0
+  string_patterns:
+  - ^$|^[a-zA-Z0-9_][-_a-zA-Z0-9.\ ]{0,126}$
 - name: Location
   type: String
   description: Enter the location of the DataPower Gateway.
@@ -97,6 +101,9 @@ attributes:
     file must reside in the <tt>store:</tt> or <tt>local:</tt> directory, not on a
     mounted file system.</p>
   cli_alias: custom-ui-file
+  file_locations:
+  - store
+  - local
 - name: AuditReserve
   type: Int64
   maximum: 10000
@@ -124,6 +131,8 @@ attributes:
     information. The XML accelerator shows the type appended with <tt>(disabled)</tt>
     when the accelerator is disabled.</p>'
   cli_alias: xml-accelerator
+  ignored_when:
+  - evaluation: logical-true
 - name: Locale
   type: String
   enum:

@@ -77,6 +77,11 @@ attributes:
   description: Specify the refresh interval in seconds between polls to synchronize
     the local copy with the registry version.
   cli_alias: refresh-interval
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Method
+    value:
+    - poll
 - name: FetchPolicyAttachments
   type: Bool
   default: false

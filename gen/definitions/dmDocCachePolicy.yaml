@@ -33,6 +33,17 @@ attributes:
     applies to only the <tt>Fixed</tt> policy type. Enter a value in the range 5 -
     31708800. The default value is 900.
   cli_alias: ttl
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - fixed
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - protocol
+    - no-cache
 - name: Priority
   type: Int64
   minimum: 1
@@ -59,17 +70,32 @@ attributes:
   type: String
   description: The eXtreme Scale grid configuration to use for caching documents.
   cli_alias: xc10-grid
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - no-cache
 - name: CacheBackendResponses
   type: Bool
   default: false
   description: Caches responses to requests from back-end servers.
   cli_alias: cache-backend-response
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - no-cache
 - name: HTTPCacheValidation
   type: Bool
   default: false
   description: When a requested HTTP document results in a cache hit, HTTP cache validation
     with the origin server is performed.
   cli_alias: http-cache-validation
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - no-cache
 - name: ReturnExpired
   type: Bool
   default: false
@@ -81,6 +107,11 @@ attributes:
     though it is potentially stale. A warning header indicates that the document is
     stale.</p>
   cli_alias: return-expired
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - no-cache
 - name: RESTInvalidation
   type: Bool
   default: false
@@ -90,6 +121,17 @@ attributes:
     the internal state of the server might have changed. The next GET request must
     contact the origin service to update the cache with any changes.
   cli_alias: rest-invalidation
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - no-cache
+    - evaluation: property-equals
+      attribute: CacheUnsafeResponse
+      value:
+      - 'on'
 - name: CacheUnsafeResponse
   type: Bool
   default: false
@@ -99,3 +141,14 @@ attributes:
     to these requests when you know that the action (for example: HTTP POST) will
     not change the server state.'
   cli_alias: cache-unsafe-response
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: Type
+      value:
+      - fixed
+    - evaluation: property-equals
+      attribute: RESTInvalidation
+      value:
+      - 'on'

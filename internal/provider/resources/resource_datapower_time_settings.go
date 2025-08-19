@@ -23,6 +23,7 @@ package resources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -75,7 +76,10 @@ func (r *TimeSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the symbolic name for the custom time zone. This name is appended to local times. The name must be three or more alphabetic characters. If you use any other characters, the time zone becomes UTC.", "custom", "").AddDefaultValue("STD").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("STD"),
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z]{3,}$"), "Must match :"+"^[a-zA-Z]{3,}$"),
+				},
+				Default: stringdefault.StaticString("STD"),
 			},
 			"utc_direction": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the direction relative to UTC for the custom time zone. Asia is east. North America is west. The default value is East.", "direction", "").AddStringEnum("East", "West").AddDefaultValue("West").String,

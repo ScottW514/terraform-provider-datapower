@@ -24,6 +24,7 @@ import (
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,6 +66,9 @@ var DmGatewayPeeringGroupPeerNodeResourceSchema = ResourceSchema.NestedAttribute
 		"host": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the local IP address or host alias of the peer.", "", "").String,
 			Required:            true,
+			Validators: []validator.String{
+				stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+			},
 		},
 		"priority": ResourceSchema.Int64Attribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the priority to elect the new primary. When failover occurs, the secondary member with the lowest priority is promoted as the new primary. Enter a value in the range 0 - 255. The default value is 100. A secondary member with a priority of 0 can never be promoted.", "", "").AddIntegerRange(0, 255).AddDefaultValue("100").String,

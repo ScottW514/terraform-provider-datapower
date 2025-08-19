@@ -64,7 +64,7 @@ func (r *CookieAttributePolicyResource) Schema(ctx context.Context, req resource
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -75,7 +75,7 @@ func (r *CookieAttributePolicyResource) Schema(ctx context.Context, req resource
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -89,12 +89,18 @@ func (r *CookieAttributePolicyResource) Schema(ctx context.Context, req resource
 			"domain": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Identifies domain to which a cookie belongs. A browser accepts cookies only when the current domain matches the value you enter here. The maximum length of the domain is 256 characters.", "domain", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 256),
+				},
 			},
 			"path": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Identifies path attribute of a cookie. A browser accepts cookies only when the current path matches the value you enter there. If this policy object is attached to HTML Forms Login Policy, this property overrides Form POST Action URL property. The maximum length of the path is 256 characters.", "path", "").AddDefaultValue("/").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("/"),
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 256),
+				},
+				Default: stringdefault.StaticString("/"),
 			},
 			"interval": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Sets the cookie's maximum age and/or the cookie's expiration date as an interval of seconds, relative to the time the transaction occurred on the object. For example, if this value is set to 3600 and the transaction on this object occurred on Feb 10, 2014 12:00:00 GMT, then the maximum age of the cookie is 3600 seconds and the expiration date is Feb 10, 2014 13:00:00 GMT, depending on whether the Max-Age and the Expires attribute are included.</p><p>When the maximum age or the expiration date is reached, the cookie is deleted. Enter a value in the range 1 - 2678400. The default value is 3600. Note that the Max-Age attribute in this policy overrides Inactivity Timeout and Session Lifetime attributes in HTML Forms Login policy.</p>", "interval", "").AddIntegerRange(1, 2678400).AddDefaultValue("3600").String,

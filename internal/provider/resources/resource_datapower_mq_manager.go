@@ -65,7 +65,7 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -76,7 +76,7 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -108,15 +108,25 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the channel to use as an alternative to the default SYSTEM.DEF.SVRCONN.", "channel-name", "").AddDefaultValue("SYSTEM.DEF.SVRCONN").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("SYSTEM.DEF.SVRCONN"),
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 20),
+				},
+				Default: stringdefault.StaticString("SYSTEM.DEF.SVRCONN"),
 			},
 			"csp_user_id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the user ID value of the MQCSP connection security parameter when the MQCSP structure is used for authorization service.</p><p>MQCSP support enables the authorization service to authenticate a user ID and password. You can specify the MQCSP connection security parameters structure on an MQCONNX call. Before you use MQCSP support, you must define a security exit in the queue manager on the IBM MQ server. Ensure that your MQCSP user ID and password in the security exit are consistent with what you define for the local queue manager. Either an inconsistent MQCSP user ID or an inconsistent password causes a connection failure with the IBM MQ server.</p><p><b>Notes:</b><ul><li>If neither user ID or password is defined, connects to the IBM MQ server without MQCSP settings.</li><li>If only one is defined, a warning occurs and the local queue manager is not up.</li><li>If both are defined but one is inconsistent with the value on the IBM MQ server, the connection fails and the local queue manager is not up.</li></ul></p>", "mqcsp-userid", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 1024),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
+				},
 			},
 			"csp_password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the password alias of the password value of the MQCSP connection security parameter when the MQCSP structure is used for authorization service.</p><p>MQCSP support enables the authorization service to authenticate a user ID and password. You can specify the MQCSP connection security parameters structure on an MQCONNX call. Before you use MQCSP support, you must define a security exit in the queue manager on the IBM MQ server. Ensure that your MQCSP user ID and password in the security exit are consistent with what you define for the local queue manager. Either an inconsistent MQCSP user ID or an inconsistent password causes a connection failure with the IBM MQ server.</p><p><b>Notes:</b><ul><li>If neither user ID or password is defined, connects to the IBM MQ server without MQCSP settings.</li><li>If only one is defined, a warning occurs and the local queue manager is not up.</li><li>If both are defined but one is inconsistent with the value on the IBM MQ server, the connection fails and the local queue manager is not up.</li></ul></p>", "mqcsp-password-alias", "password_alias").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 127),
+				},
 			},
 			"heartbeat": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the approximate time in seconds between heartbeat flows on a channel when waiting for a message on a queue. Enter a value in the range 0 - 999999. If 0, there in no heartbeat flows exchanged when waiting for a message on the channel. This property does not set the heartbeat on the channel. Instead, it is used to negotiate the heartbeat value with the channel. The greater of the two values is used.", "heartbeat", "").AddIntegerRange(0, 999999).AddDefaultValue("300").String,
@@ -195,6 +205,9 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			"backout_queue_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the queue for undeliverable messages. This queue contains messages that exceeded the backout threshold. This queue must be managed by the same queue manager on the IBM MQ server as the defined GET queue. The backout queue, typically <tt>SYSTEM.DEAD.LETTER.QUEUE</tt> contains messages that cannot be processed or delivered.", "backout-queue", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 48),
+				},
 			},
 			"total_connection_limit": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the total number of open TCP connections to allow. Enter a value in the range 1 - 10000. The default value is 250.", "total-connection-limit", "").AddIntegerRange(1, 10000).AddDefaultValue("250").String,
@@ -248,6 +261,9 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			"ssl_cert_label": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("TLS certificate label", "ssl-cert-label", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 64),
+				},
 			},
 			"convert_input": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to convert input messages to a different CCSI (coded character set identifier) than the one in the incoming message. This conversion is done by the queue manager on the IBM MQ server.", "convert", "").AddDefaultValue("true").String,
@@ -310,6 +326,9 @@ func (r *MQManagerResource) Schema(ctx context.Context, req resource.SchemaReque
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the local address for the channel, which is the local address for outbound connections to a specific local interface and port. Supported formats are 1.1.1.1 or 1.1.1.1(1) or just (1) to tell TCP to bind to port 1 and for a range of ports use (1,10) or 1.1.1.1(1,10). If the port is set, the range must be greater than the total number of allowed connections.", "local-address", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+([(][1-9][0-9]*(,[0-9]+)?[)])?$"), "Must match :"+"^[^ ]+([(][1-9][0-9]*(,[0-9]+)?[)])?$"),
+				},
 			},
 			"xml_manager": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("XML manager", "xml-manager", "xml_manager").AddDefaultValue("default").String,

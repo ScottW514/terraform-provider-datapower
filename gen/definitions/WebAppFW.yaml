@@ -131,6 +131,11 @@ attributes:
     error messages for the defined duration. When disabled, the DataPower Gateway
     does not delay error messages.
   cli_alias: delay-errors
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: RewriteErrors
+    value:
+    - 'on'
 - name: DelayErrorsDuration
   type: Int64
   minimum: 250
@@ -142,6 +147,19 @@ attributes:
     Gateway performed decryption on the requests. Use any value of 250 - 300000. The
     default value is 1000.
   cli_alias: delay-errors-duration
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: DelayErrors
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: RewriteErrors
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: StreamOutputToBack
   type: String
   enum:
@@ -308,6 +326,13 @@ attributes:
   description: Set the number of records for transaction diagnostics in the probe.
     Enter a value in the range 10 - 250. The default value is 25.
   cli_alias: debug-history
+  required_when:
+  - evaluation: property-equals
+    attribute: DebugMode
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: DebugTrigger
   type: List
   element_type: DmMSDebugTriggerType
@@ -317,6 +342,11 @@ attributes:
     one of these conditions, the transaction is captured in diagnostics mode and becomes
     part of the list of transactions that can be viewed.
   cli_alias: debug-trigger
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: DebugMode
+    value:
+    - 'on'
 - name: URLRewritePolicy
   type: String
   reference_to: URLRewritePolicy
@@ -350,13 +380,28 @@ attributes:
   reference_to: SSLServerProfile
   description: TLS server profile
   cli_alias: ssl-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLConfigType
+    value:
+    - server
 - name: SSLSNIServer
   type: String
   reference_to: SSLSNIServerProfile
   description: TLS SNI server profile
   cli_alias: ssl-sni-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLConfigType
+    value:
+    - sni
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: property-equals
+    attribute: SSLConfigType
+    value:
+    - proxy

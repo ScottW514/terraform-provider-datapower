@@ -26,6 +26,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -62,7 +63,7 @@ func (r *AccessProfileResource) Schema(ctx context.Context, req resource.SchemaR
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -73,7 +74,7 @@ func (r *AccessProfileResource) Schema(ctx context.Context, req resource.SchemaR
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -87,6 +88,11 @@ func (r *AccessProfileResource) Schema(ctx context.Context, req resource.SchemaR
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the access policies that define privileges for the access profile. When more than one policy applies to a resource, the most specific policy is used. To create access policies, enter a policy statement in the following format. <p><tt><i>address</i> / <i>domain</i> / <i>resource</i> ?Access= <i>privileges</i> &amp; <i>field</i> = <i>value</i></tt></p><dl><dt><i>address</i></dt><dd>The complete local IP address or host alias. Use the * character to designate all addresses.</dd><dt><i>domain</i></dt><dd>The complete domain name. Use the * character to designate all domains.</dd><dt>resource</dt><dd>The complete value for the resource type. Use the * character to designate all resource types.</dd><dt><i>privileges</i></dt><dd>The privileges to apply. Separate permissions with the + character. For example, <tt>a+d+x+r+w</tt> defines add, delete, execute, read, and write privileges.</dd><dt><i>field</i></dt><dd>The complete name of a specific property in the configuration; for example, <tt>Name</tt> .</dd><dt><i>value</i></dt><dd>The PCRE match for the property value; For example, <tt>foo(.*)bar</tt> .</dd></dl>", "access-policy", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(
+						stringvalidator.RegexMatches(regexp.MustCompile("^[-_a-zA-Z0-9.:*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$"), "Must match :"+"^[-_a-zA-Z0-9.:*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$"),
+					),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

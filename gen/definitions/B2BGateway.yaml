@@ -60,6 +60,8 @@ attributes:
     If unspecified, documents are stored in the encrypted area on the RAID volume.
     For storage on the RAID volume, set the maximum disk usage to 30 GB.
   cli_alias: doc-location
+  file_locations:
+  - local
 - name: ASFrontProtocol
   type: List
   element_type: DmASFrontProtocol
@@ -85,6 +87,11 @@ attributes:
     or proxy that routes the message to the gateway. A URL in the destination overrides
     this value.
   cli_alias: as2-mdn-url
+  protocols:
+  - http
+  - https
+  file_locations:
+  - '"NONE"'
 - name: AS3MDNURL
   type: String
   description: For AS3 asynchronous MDN scenarios, specify the default URL for the
@@ -92,11 +99,20 @@ attributes:
     or proxy that routes the message to the gateway. A URL in the destination overrides
     this value.
   cli_alias: as3-mdn-url
+  protocols:
+  - ftp
+  file_locations:
+  - '"NONE"'
 - name: B2BProfiles
   type: List
   element_type: DmB2BActiveProfile
   description: Active partner profiles
   cli_alias: b2b-profile
+  required_when:
+  - evaluation: property-equals
+    attribute: B2BGroups
+    value:
+    - ''
 - name: B2BGroups
   type: List
   element_type: DmB2BActiveGroup
@@ -126,6 +142,9 @@ attributes:
     types, such as JSON, XML, and non-XML. A sample GatewayScript file is <tt>store:///gateayscript/example-b2b-routing.js</tt>
     .</li></ul>
   cli_alias: document-routing-preprocessor
+  file_locations:
+  - store
+  - local
 - name: DocumentRoutingPreprocessorDebug
   type: Bool
   default: false
@@ -149,17 +168,46 @@ attributes:
     of the directory. To copy the archive file to an FTP server, ensure that the FTP
     policies in the XML manager enable image (binary) data transfer.
   cli_alias: arch-dir
+  required_when:
+  - evaluation: property-equals
+    attribute: ArchiveMode
+    value:
+    - archpurge
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ArchiveMode
+    value:
+    - archpurge
 - name: ArchiveFileName
   type: String
   description: Specify the base file name for archive file. When archiving, the operation
     appends the current timestamp.
   cli_alias: arch-file
+  required_when:
+  - evaluation: property-equals
+    attribute: ArchiveMode
+    value:
+    - archpurge
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ArchiveMode
+    value:
+    - archpurge
+  string_max_length: 128
+  string_min_length: 0
+  string_patterns:
+  - ^[_a-zA-Z0-9.-]+$
 - name: ArchiveMinimumSize
   type: Int64
   default: 1024
   description: Specify the minimum remaining size in KB of document storage that triggers
     archival. The default value is 1024.
   cli_alias: arch-minimum-size
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ArchiveMode
+    value:
+    - archpurge
 - name: ArchiveDocumentAge
   type: Int64
   minimum: 1
@@ -176,6 +224,11 @@ attributes:
   description: Specify the minimum number of documents to retain in document storage
     after archival. The minimum value is 1. The default value is 100.
   cli_alias: arch-minimum-documents
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ArchiveMode
+    value:
+    - archpurge
 - name: DiskUseCheckInterval
   type: Int64
   minimum: 1
@@ -210,11 +263,21 @@ attributes:
     rejects transactions and generates a log message. Enter a value in the range 10
     - 10000. The default value is 200.
   cli_alias: arch-shaping-threshold
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ArchiveMonitor
+    value:
+    - 'off'
 - name: ArchiveBackupDocuments
   dm_type: DmB2BBackupMsgType
   description: Specify the types of documents to archive. This property does not indicate
     the inbound or outbound transaction to archive.
   cli_alias: arch-backup-documents
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ArchiveMode
+    value:
+    - archpurge
 - name: XPathRoutingPolicies
   type: List
   reference_to: B2BXPathRoutingPolicy
@@ -248,6 +311,13 @@ attributes:
   description: Specify the number of transactions to capture for diagnostics. Enter
     a value in the range 10 - 250. The default value is 25.
   cli_alias: debug-history
+  required_when:
+  - evaluation: property-equals
+    attribute: DebugMode
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: CPAEntries
   type: List
   element_type: DmB2BCPAEntry

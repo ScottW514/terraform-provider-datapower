@@ -28,30 +28,113 @@ attributes:
   description: Specify the location of the stylesheet or GatewayScript file for custom
     authorization.
   cli_alias: custom-url
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: AZMapURL
   type: String
   description: Specify the location of the AAA information file.
   cli_alias: xmlfile-url
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - xmlfile
+  ignored_when:
+  - evaluation: logical-true
 - name: AZHost
   type: String
   description: Specify the host name or IP address of the authorization server.
   cli_alias: remote-host
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: AZMethod
+      value:
+      - ldap
+      - oblix
+      - netegrity
+    - evaluation: property-value-in-list
+      attribute: AZLDAPLoadBalanceGroup
+      value:
+      - ''
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: AZMethod
+      value:
+      - ldap
+      - netegrity
+      - oblix
+    - evaluation: property-value-not-in-list
+      attribute: AZLDAPLoadBalanceGroup
+      value:
+      - ''
 - name: AZPort
   type: Int64
   default: 0
   description: Specify the listening port on the authorization server.
   cli_alias: remote-port
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: AZMethod
+      value:
+      - ldap
+      - oblix
+      - netegrity
+    - evaluation: property-value-in-list
+      attribute: AZLDAPLoadBalanceGroup
+      value:
+      - ''
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: AZMethod
+      value:
+      - ldap
+      - netegrity
+      - oblix
+    - evaluation: property-value-not-in-list
+      attribute: AZLDAPLoadBalanceGroup
+      value:
+      - ''
 - name: AZLDAPGroup
   type: String
   description: Specify the DN of the required LDAP group.
   cli_alias: ldap-group-dn
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - ldap
+  ignored_when:
+  - evaluation: logical-true
 - name: AZValcred
   type: String
   reference_to: CryptoValCred
+  ignored_when:
+  - evaluation: logical-true
 - name: AZSAMLURL
   type: String
   description: Specify the URL of the SAML server.
   cli_alias: saml-server-url
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: AZMethod
+    value:
+    - saml-attr
+    - saml-authz
+  ignored_when:
+  - evaluation: logical-true
 - name: AZSAMLType
   type: String
   enum:
@@ -64,10 +147,45 @@ attributes:
   description: Specify how to match SAML attributes and values. The default value
     is any.
   cli_alias: saml-type
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: AZMethod
+    value:
+    - saml-attr
+    - saml-authz
+    - use-authen-attr
+  ignored_when:
+  - evaluation: logical-true
 - name: AZSAMLXPath
   type: String
   description: Specify the XPath expression to run against the SAML statement.
   cli_alias: saml-xpath
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AZSAMLType
+      value:
+      - xpath
+    - evaluation: property-value-in-list
+      attribute: AZMethod
+      value:
+      - saml-attr
+      - saml-authz
+      - use-authen-attr
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AZSAMLType
+      value:
+      - xpath
+    - evaluation: property-value-not-in-list
+      attribute: AZMethod
+      value:
+      - saml-attr
+      - saml-authz
+      - use-authen-attr
 - name: AZSAMLNameQualifier
   type: String
   description: Specifies the value of the <tt>NameQualifier</tt> attribute of the
@@ -75,6 +193,12 @@ attributes:
     attribute is an optional attribute, some SAML implementations require it to be
     present.
   cli_alias: saml-name-qualifier
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: AZMethod
+    value:
+    - saml-attr
+    - saml-authz
 - name: AZCacheAllow
   type: String
   enum:
@@ -97,6 +221,11 @@ attributes:
   description: Specify the duration in seconds to cache authorization decisions. Enter
     a value in the range 1 - 86400. The default value is 3.
   cli_alias: cache-ttl
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AZCacheAllow
+    value:
+    - disabled
 - name: AZNetegrityBaseURI
   type: String
   description: Specify the URI sent to CA Single Sign-On (formerly Netegrity SiteMinder)
@@ -106,6 +235,11 @@ attributes:
     form, where NetegrityOpNameExtension is concatenated directly with the operation
     name.
   cli_alias: netegrity-base-uri
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - netegrity
 - name: AZNetegrityOpNameExtension
   type: String
   description: Specify the extension for URI sent to CA Single Sign-On (formerly Netegrity
@@ -115,10 +249,28 @@ attributes:
     form, where NetegrityOpNameExtension is concatenated directly with the operation
     name.
   cli_alias: netegrity-opname-ext
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AZMethod
+      value:
+      - netegrity
+    - evaluation: property-equals
+      attribute: AZSMRequestType
+      value:
+      - webservice
 - name: AZClearTrustServerURL
   type: String
   description: Specify the URL to access the ClearTrust server for authorization.
   cli_alias: cleartrust-server-url
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - cleartrust
+  ignored_when:
+  - evaluation: logical-true
 - name: AZSAMLVersion
   type: String
   enum:
@@ -129,21 +281,42 @@ attributes:
   description: Specify the version to use for SAML messages. The default value is
     1.1.
   cli_alias: saml-version
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: AZMethod
+    value:
+    - saml-attr
+    - saml-authz
 - name: AZLDAPLoadBalanceGroup
   type: String
   reference_to: LoadBalancerGroup
   description: Specify the load balancer group that contains the LDAP servers.
   cli_alias: ldap-lbgroup
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - ldap
 - name: AZLDAPBindDN
   type: String
   description: Specify the DN to bind to the LDAP server.
   cli_alias: ldap-bind-dn
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - ldap
 - name: AZLDAPGroupAttribute
   type: String
   default: member
   description: Specify the attribute name of the LDAP group to check for membership.
     The authorizing identity must exist as an attribute value in the group.
   cli_alias: ldap-group-attr
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - ldap
 - name: AZLDAPSearchScope
   type: String
   enum:
@@ -154,12 +327,22 @@ attributes:
   description: Specify the scope of the search relative to the input. The default
     value is subtree.
   cli_alias: ldap-search-scope
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - ldap
 - name: AZLDAPSearchFilter
   type: String
   default: (objectClass=*)
   description: Specify the LDAP search filter for the search. The default value is
     <tt>(objectClass=*)</tt> .
   cli_alias: ldap-search-filter
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - ldap
 - name: AZXACMLVersion
   type: String
   enum:
@@ -170,6 +353,13 @@ attributes:
     AAA policy. The AAA policy acts as an XACML policy enforcement point (PEP). The
     default value is 2.0.
   cli_alias: xacml-version
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - xacml
+  ignored_when:
+  - evaluation: logical-true
 - name: AZXACMLPEPType
   type: String
   enum:
@@ -180,23 +370,69 @@ attributes:
   description: Specify how the AAA policy processes the PDP authorization response.
     The AAA policy acts as an XACML PEP. The default value is deny-based PEP.
   cli_alias: xacml-pep-type
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AZMethod
+      value:
+      - xacml
+    - evaluation: property-does-not-equal
+      attribute: AZXACMLVersion
+      value:
+      - '1.0'
+  ignored_when:
+  - evaluation: logical-true
 - name: AZXACMLUseOnBoxPDP
   type: Bool
   default: true
   description: Specify whether to use the on-box XACML policy decision point (PDP).
     By default, the AAA policy uses the XACML PDP configuration on the DataPower Gateway.
   cli_alias: xacml-use-builtin
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - xacml
+  ignored_when:
+  - evaluation: logical-true
 - name: AZXACMLPDP
   type: String
   reference_to: XACMLPDP
   description: Specify the XACML policy decision point (PDP) configuration.
   cli_alias: xacml-pdp
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AZMethod
+      value:
+      - xacml
+    - evaluation: property-equals
+      attribute: AZXACMLUseOnBoxPDP
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: AZXACMLExternalPDPUrl
   type: String
   description: Specify the URL for the external XACML PDP service. The AAA policy
     sends the authorization request to and receives the authorization response from
     this service.
   cli_alias: xacml-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AZMethod
+      value:
+      - xacml
+    - evaluation: property-equals
+      attribute: AZXACMLUseOnBoxPDP
+      value:
+      - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: AZXACMLBindingMethod
   type: String
   enum:
@@ -206,16 +442,36 @@ attributes:
   description: Specify the method to generate the XACML context request. The default
     value is custom processing.
   cli_alias: xacml-binding-method
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - xacml
 - name: AZXACMLBindingObject
   type: String
   description: XACML binding
   cli_alias: xacml-binding-object
+  ignored_when:
+  - evaluation: logical-true
 - name: AZXACMLBindingXSL
   type: String
   description: Specify the location of the stylesheet or GatewayScript file that generates
     the XACML context request. This file maps the AAA result, input message, or both
     AAA result and input message to the XACML context request.
   cli_alias: xacml-binding-custom-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AZMethod
+      value:
+      - xacml
+    - evaluation: property-does-not-equal
+      attribute: AZXACMLBindingMethod
+      value:
+      - dp-pdp
+  ignored_when:
+  - evaluation: logical-true
 - name: AZXACMLCustomObligation
   type: String
   description: Specify the location of the stylesheet or GatewayScript file that can
@@ -225,6 +481,11 @@ attributes:
     select="true()"</tt> />.</li><li>For unfulfilled obligations, the output is &lt;
     <tt>xsl:value-of select="false()"</tt> />.</li></ul>
   cli_alias: xacml-obligation-custom-url
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - xacml
 - name: AZXACMLUseSAML2
   type: Bool
   default: false
@@ -236,11 +497,35 @@ attributes:
     element.</li><li>When disabled, the PEP does not use SAML2.0 Profile to communicate
     with the external PDP service.</li></ul>
   cli_alias: xacml-use-saml2
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AZMethod
+      value:
+      - xacml
+    - evaluation: property-equals
+      attribute: AZXACMLVersion
+      value:
+      - '2.0'
+    - evaluation: property-equals
+      attribute: AZXACMLUseOnBoxPDP
+      value:
+      - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: AZTAMServer
   type: String
   reference_to: TAM
   description: Specify the IBM Security Access Manager client.
   cli_alias: tam
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - tivoli
+  ignored_when:
+  - evaluation: logical-true
 - name: AZTAMDefaultAction
   type: String
   enum:
@@ -268,6 +553,11 @@ attributes:
   default: T
   description: Specify the default Access Manager action. The default value is T (traverse).
   cli_alias: tam-action-default
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - tivoli
 - name: AZTAMActionResourceMap
   type: String
   description: Specify the location of the XML file that contains the resource-action
@@ -275,6 +565,11 @@ attributes:
     resource, the action to run, and whether to map the action to WebSEAL. This file
     is in the <tt>local:</tt> or <tt>store:</tt> directory.
   cli_alias: tam-action-map
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - tivoli
 - name: AZXACMLUseSOAP
   type: Bool
   default: false
@@ -282,11 +577,31 @@ attributes:
     a SOAP envelope is not required. If the stylesheet or GatewayScript file for custom
     binding generates the SOAP envelope, retain the default value.
   cli_alias: xacml-use-soap
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AZMethod
+      value:
+      - xacml
+    - evaluation: property-equals
+      attribute: AZXACMLUseOnBoxPDP
+      value:
+      - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: AZZOSNSSConfig
   type: String
   reference_to: ZosNSSClient
   description: Specify the z/OS NSS client for SAF communication.
   cli_alias: zos-nss-az
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - zosnss
+  ignored_when:
+  - evaluation: logical-true
 - name: AZSAFDefaultAction
   type: String
   enum:
@@ -297,6 +612,11 @@ attributes:
   default: r
   description: Specify the default action. The default value is r (Read).
   cli_alias: zos-nss-default-action
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - zosnss
 - name: AZLDAPAttributes
   type: String
   description: Specify the list of the extra user attributes to retrieve from the
@@ -306,6 +626,11 @@ attributes:
     comma as the delimiter. For example, enter <tt>email, cn, userPassword</tt> to
     retrieve these attributes from the registry.
   cli_alias: az-ldap-attributes
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - ldap
 - name: AZSkewTime
   type: Int64
   default: 0
@@ -316,6 +641,12 @@ attributes:
     with <tt>CurrentTime</tt> minus <tt>SkewTime</tt> .</li><li>For <tt>NotOnOrAfter</tt>
     , validates with <tt>CurrentTime</tt> plus <tt>SkewTime</tt> .</li></ul>
   cli_alias: az-skew-time
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: AZMethod
+    value:
+    - saml-authz
+    - saml-attr
 - name: AZOAuthEnforceScope
   type: Bool
   default: false
@@ -325,6 +656,13 @@ attributes:
     is enforced by the DataPower Gateway against the scope.</li><li>When disabled,
     the remote resource server enforces the scope.</li></ul>
   cli_alias: az-oauth-enforce-scope
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - oauth
+  ignored_when:
+  - evaluation: logical-true
 - name: AZOAuthExportHeaders
   type: Bool
   default: true
@@ -335,6 +673,13 @@ attributes:
     <tt>/container/ResponseAttributes</tt> as the XPath expression. By default, all
     response attributes are exported to HTTP headers.
   cli_alias: az-oauth-export-headers
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - oauth
+  ignored_when:
+  - evaluation: logical-true
 - name: AZTAMPACReturn
   type: Bool
   default: false
@@ -345,6 +690,13 @@ attributes:
     If you select this property for both authentication and authorization, the setting
     is automatically cleared for authorization when applied.</p>
   cli_alias: tam-pac-return
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - tivoli
+  ignored_when:
+  - evaluation: logical-true
 - name: AZTAMPACUse
   type: Bool
   default: false
@@ -353,6 +705,13 @@ attributes:
     the PAC token that was returned in the authentication or map credentials phase.
     You can use the PAC token in the postprocessing phase.</p>
   cli_alias: use-tam-pac
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - tivoli
+  ignored_when:
+  - evaluation: logical-true
 - name: AZLDAPReadTimeout
   type: Int64
   maximum: 86400
@@ -365,6 +724,11 @@ attributes:
     the AAA policy can work with the idle timer of the LDAP connection pool to remove
     idle connections from the connection pool.</p>
   cli_alias: ldap-readtimeout
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - ldap
 - name: AZSSLClientConfigType
   type: String
   enum:
@@ -372,16 +736,45 @@ attributes:
   default: client
   description: Specify the TLS profile type to secure connections.
   cli_alias: ssl-client-type
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: AZMethod
+    value:
+    - cleartrust
+    - ldap
+    - netegrity
+    - saml-attr
+    - saml-authz
 - name: AZSSLClientProfile
   type: String
   reference_to: SSLClientProfile
   description: Specify the client profile type to secure connections.
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: AZMethod
+      value:
+      - cleartrust
+      - ldap
+      - netegrity
+      - saml-attr
+      - saml-authz
+    - evaluation: property-does-not-equal
+      attribute: AZSSLClientConfigType
+      value:
+      - client
 - name: AZLDAPBindPasswordAlias
   type: String
   reference_to: PasswordAlias
   description: Specify the password alias to bind to the LDAP server.
   cli_alias: ldap-bind-password-alias
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - ldap
 - name: AZSMRequestType
   type: String
   enum:
@@ -391,22 +784,49 @@ attributes:
   description: Specify the type of request to make. By default, the request against
     the CA Single Sign-On web agent.
   cli_alias: sm-request-type
+  required_when:
+  - evaluation: property-equals
+    attribute: AZMethod
+    value:
+    - netegrity
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - netegrity
 - name: AZSMCookieFlow
   dm_type: DmSMFlow
   description: Specify which flows to include the authorization session cookie.
   cli_alias: sm-cookie-flow
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - netegrity
 - name: AZSMHeaderFlow
   dm_type: DmSMFlow
   description: Specify which flows to include the CA Single Sign-On HTTP headers that
     are generated during authorization. The CA Single Sign-On HTTP headers has a prefix
     of <tt>SM_</tt> .
   cli_alias: sm-header-flow
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AZMethod
+    value:
+    - netegrity
 - name: AZSMCookieAttributes
   type: String
   reference_to: CookieAttributePolicy
   description: Specify the cookie attribute policy that allows predefined or custom
     attributes to be included in CA Single Sign-On cookies.
   cli_alias: cookie-attributes
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: AZSMCookieFlow
+    value:
+    - frontend
+    - frontend+backend
+    - backend+frontend
 - name: AZCacheControl
   type: String
   enum:

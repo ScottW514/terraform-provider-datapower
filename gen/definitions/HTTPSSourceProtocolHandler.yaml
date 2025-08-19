@@ -76,6 +76,11 @@ attributes:
     header is sent in the response, and the TCP connection is closed. The default
     value is 0, which means unlimited reuse.'
   cli_alias: max-persistent-reuse
+  ignored_when:
+  - evaluation: property-equals
+    attribute: PersistentConnections
+    value:
+    - 'off'
 - name: AllowCompression
   type: Bool
   default: false
@@ -92,6 +97,11 @@ attributes:
     use the WebSocket protocol. WebSocket upgrade requests require that The handler
     allows GET methods.
   cli_alias: websocket-upgrade
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HTTPVersion
+    value:
+    - HTTP/1.0
 - name: WebSocketIdleTimeout
   type: Int64
   maximum: 86400
@@ -100,6 +110,19 @@ attributes:
     idle time is exceeded, the connection is torn down. Enter a value in the range
     0 - 86400. The default value is 0, which indicates that the timer is disabled.
   cli_alias: websocket-idle-timeout
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AllowWebSocketUpgrade
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: HTTPVersion
+      value:
+      - HTTP/1.0
+  ignored_when:
+  - evaluation: logical-true
 - name: MaxURLLen
   type: Int64
   minimum: 1
@@ -206,6 +229,13 @@ attributes:
   test_value: '"AccTest_SSLServerProfile"'
   test_bed_value: datapower_ssl_server_profile.acc_test.id
   cli_alias: ssl-server
+  required_when:
+  - evaluation: property-equals
+    attribute: SSLServerConfigType
+    value:
+    - server
+  ignored_when:
+  - evaluation: logical-true
 - name: SSLSNIServer
   type: String
   reference_to: SSLSNIServerProfile
@@ -214,6 +244,13 @@ attributes:
     use the TLS 1.2 or later protocol with a cipher that is secure according to RFC
     7540.
   cli_alias: ssl-sni-server
+  required_when:
+  - evaluation: property-equals
+    attribute: SSLServerConfigType
+    value:
+    - sni
+  ignored_when:
+  - evaluation: logical-true
 - name: HTTP2MaxStreams
   type: Int64
   minimum: 1

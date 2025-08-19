@@ -13,6 +13,16 @@ attributes:
     Manager endpoint.
   example: localhost
   test_value: '"localhost"'
+  required_when:
+  - evaluation: property-equals
+    attribute: ProxyPolicyEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProxyPolicyEnable
+    value:
+    - 'off'
 - name: RemotePort
   type: Int64
   required: true
@@ -20,3 +30,13 @@ attributes:
     endpoint.
   example: 8080
   test_value: 8080
+  required_when:
+  - evaluation: property-equals
+    attribute: ProxyPolicyEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProxyPolicyEnable
+    value:
+    - 'off'

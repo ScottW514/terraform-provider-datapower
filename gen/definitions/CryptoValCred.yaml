@@ -67,6 +67,11 @@ attributes:
     enabled, certificate validation fails if no CRL is available. Otherwise, validation
     succeeds independent of the availability of a CRL.
   cli_alias: require-crl
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseCRL
+    value:
+    - 'off'
 - name: CRLDPHandling
   type: String
   enum:
@@ -77,6 +82,11 @@ attributes:
     distribution points. This certificate extension specifies how to obtain CRL information.
     For more information, see RFC 2527 and RFC 3280.
   cli_alias: crldp
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseCRL
+    value:
+    - 'off'
 - name: InitialPolicySet
   type: List
   element_type: String
@@ -88,6 +98,11 @@ attributes:
     default, the initial certificate policy set consists of the single OID 2.5.29.32.0,
     which identifies <tt>anyPolicy</tt> .</p>
   cli_alias: initial-policy-set
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: CertValidationMode
+    value:
+    - pkix
 - name: ExplicitPolicy
   type: Bool
   default: false
@@ -96,6 +111,11 @@ attributes:
     policy tree. Otherwise, the algorithm can end with an empty policy tree unless
     policy constraint extensions in the chain require an explicit policy.
   cli_alias: explicit-policy
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: CertValidationMode
+    value:
+    - pkix
 - name: CheckDates
   type: Bool
   default: true

@@ -22,6 +22,7 @@ package models
 
 import (
 	"context"
+	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -175,6 +176,9 @@ var DmCRLFetchConfigResourceSchema = ResourceSchema.NestedAttributeObject{
 		"url": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("A URL that specifies the location of the CRL.", "fetch-url", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.RegexMatches(regexp.MustCompile("^https?://\\[?[-_a-z0-9A-Z.:]+\\]?(:[0-9]+)?/[ -~]*$"), "Must match :"+"^https?://\\[?[-_a-z0-9A-Z.:]+\\]?(:[0-9]+)?/[ -~]*$"),
+			},
 		},
 		"remote_address": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the LDAP server to obtain the CRL.", "remote-address", "").String,

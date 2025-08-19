@@ -66,3 +66,8 @@ attributes:
     The default value is 0, indicates that over-threshold messages are dropped but
     no service denial penalty is imposed.
   cli_alias: block-interval
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - notify

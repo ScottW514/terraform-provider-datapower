@@ -69,6 +69,11 @@ attributes:
     Select 'WebSphere Cell' if your back-end is a WebSphere Application Server (WAS)
     Network Deployment (ND) or WAS Virtual Enterprise (VE).
   cli_alias: wlm-type
+  ignored_when:
+  - evaluation: property-equals
+    attribute: RetrieveInfo
+    value:
+    - 'off'
 - name: WebSphereCellConfig
   type: String
   reference_to: WCCService
@@ -76,6 +81,17 @@ attributes:
     you need to select a WebSphere Cell object that retrieves this information. If
     no objects are available in the pull down, you must create one.
   cli_alias: websphere-cell
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: RetrieveInfo
+      value:
+      - 'off'
+    - evaluation: property-value-not-in-list
+      attribute: WLMRetrieval
+      value:
+      - use-websphere
 - name: WLMGroup
   type: String
   description: The Workload Management Group Name is used to define a group. In a
@@ -83,6 +99,11 @@ attributes:
     Once specified, the Load Balancer Group will be populated with the members and
     weights retrieved from the back end.
   cli_alias: wlm-group
+  ignored_when:
+  - evaluation: property-equals
+    attribute: RetrieveInfo
+    value:
+    - 'off'
 - name: WLMTransport
   type: String
   enum:
@@ -93,6 +114,17 @@ attributes:
     This protocol is used to forward traffic between the DataPower Gateway and the
     members of the Load Balancer Group.
   cli_alias: wlm-transport
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: RetrieveInfo
+      value:
+      - 'off'
+    - evaluation: property-value-not-in-list
+      attribute: WLMRetrieval
+      value:
+      - use-websphere
 - name: Damp
   type: Int64
   minimum: 1
@@ -147,6 +179,17 @@ attributes:
     or atomic) rollout. If you need Application Edition support, set the Update Type
     to Subscribe in the WebSphere Cell object.</p>
   cli_alias: appl-routing
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: RetrieveInfo
+      value:
+      - 'off'
+    - evaluation: property-value-not-in-list
+      attribute: WLMRetrieval
+      value:
+      - use-websphere
 - name: LBGroupAffinityConf
   dm_type: DmLBGroupAffinity
   description: Session affinity allows applications to maintain sessions with clients.
@@ -157,3 +200,14 @@ attributes:
   description: The DataPower Gateway enforces session affinity when the application
     server attempts to establish session affinity using one of these cookie names.
   cli_alias: monitored-cookie
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: AffinityWLMOverride
+      value:
+      - 'off'
+    - evaluation: property-value-not-in-list
+      attribute: AffinityMode
+      value:
+      - activeConditional

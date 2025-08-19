@@ -5,3 +5,5 @@ attributes:
 - name: VirtualPath
   type: String
   description: Specify the directory in the virtual file system of the SFTP server.
+  string_patterns:
+  - ^/[^/]+(/[^/]+)*$

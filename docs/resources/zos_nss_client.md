@@ -21,8 +21,9 @@ resource "datapower_zos_nss_client" "test" {
   remote_address = "remote.host"
   remote_port    = 443
   client_id      = "client_id"
-  system_name    = "ResTestsystem"
+  system_name    = "sysname"
   user_name      = "username"
+  ssl_client     = "AccTest_SSLClientProfile"
 }
 ```
 
@@ -47,8 +48,6 @@ resource "datapower_zos_nss_client" "test" {
 ### Optional
 
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
-- `password` (String, Sensitive) <p>Specifies the password to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Password specifies the password to use in conjunction with the value provided by the User Name.</p>
-  - CLI Alias: `password`
 - `password_alias` (String) <p>Specifies the password alias of the password to use to authenticate to the NSS server.</p><p>The associated password is used in conjunction with the value provided by the User Name.</p>
   - CLI Alias: `password-alias`
   - Reference to: `datapower_password_alias:id`

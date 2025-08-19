@@ -64,7 +64,7 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -75,7 +75,7 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -168,6 +168,9 @@ func (r *AnalyticsEndpointResource) Schema(ctx context.Context, req resource.Sch
 			"client_secret_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Client secret", "client-secret-alias", "password_alias").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 127),
+				},
 			},
 			"grant_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the grant type for requesting JWT tokens. Only the client credentials grant type is supported.", "grant-type", "").AddStringEnum("implicit", "password", "application", "accessCode").String,

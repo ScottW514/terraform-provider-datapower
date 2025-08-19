@@ -48,6 +48,16 @@ attributes:
   example: cert:///crypto.key
   test_value: '"cert:///acc-test-server.key"'
   test_bed_value: datapower_file.acc_test_server_key.remote_path
+  protocols:
+  - saf-key
+  - saf-remote-key
+  - luna-remote-key
+  file_locations:
+  - cert
+  - hsm
+  - sharedcert
+  - dpcert
+  - local
 - name: Alias
   type: String
   reference_to: PasswordAlias

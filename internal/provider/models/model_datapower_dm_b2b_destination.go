@@ -22,6 +22,7 @@ package models
 
 import (
 	"context"
+	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -541,6 +542,10 @@ var DmB2BDestinationResourceSchema = ResourceSchema.NestedAttributeObject{
 		"dest_name": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name to identify this destination in the profile.", "name", "").String,
 			Required:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9.-]+$"), "Must match :"+"^[_a-zA-Z0-9.-]+$"),
+			},
 		},
 		"dest_url": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the URL for the destination. The URL is parsed to determine the protocol. For load distribution, specify the name of the load balancer instead of the address-port pair. <ul><li>If the URL starts with as1:// or dpsmtp://, the service uses the ESMTP protocol. These protocols require an SMTP server connection and email address. Specify the URL in one of the following formats. <ul><li><tt>as1://mailExchange[:port][/queryParameters]</tt></li><li><tt>dpsmtp://mailExchange[:port][/queryParameters]</tt></li></ul></li><li>If the URL starts with as2://, ebms2://, ebms3://, or http://, the service uses the HTTP protocol. Specify the URL in the <tt>hostname:port/uri</tt> format.</li><li>If the URL starts with as2s://, ebms2s://, ebms3s://, or https://, the service uses the HTTPS protocol. Specify the URL in the <tt>hostname:port/uri</tt> format.</li><li>If the URL starts with as3:// or ftp://, the service uses the FTP protocol. <ul><li>For an absolute path to the root directory, specify the URL in the <tt>ftp://user:password@host/%2Fpath</tt> format. %2F is the URL encoding of a forward slash.</li><li>For a relative path to the login directory of the user, specify the URL in the <tt>ftp://user:password@host:port/path</tt> format.</li></ul></li><li>If the URL starts with sftp://, the service uses the SSH FTP protocol. <ul><li>For an absolute path to the root directory, specify the URL in the <tt>sftp://host:port/path</tt> format.</li><li>For a relative path to the login directory of the user, specify the URL in the <tt>sftp://host:port/~/path</tt> format.</li></ul></li><li>If the URL starts with dpnfs://, the service uses the NFS protocol. <ul><li>For static mounts, specify the URL in the <tt>dpnfs://MountName</tt> format, where <tt>MountName</tt> is the name of an NFS mount.</li><li>For dynamic mounts, specify the URL in the <tt>dpnfs://host</tt> or <tt>dpnfs://host/path</tt> format.</li></ul></li><li>If the URL starts with dpims:// or dpimsssl://, the service uses the IMS protocol. Specify the URL in one of the following formats. <ul><li><tt>dpims://ConnectObject/?parameters</tt></li><li><tt>dpimsssl://ConnectObject/?parameters</tt></li></ul></li><li>If the URL starts with dpmq://, the service uses the IBM MQ protocol. The queue manager must exist in current domain. <ul><li>To send a message, specify the URL in the <tt>dpmq://QueueManager/URI?RequestQueue=requestQueue;queryParameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dpmq://QueueManager/URI?ReplyQueue=replyQueue;queryParameters</tt> format.</li></ul><p>If the URL starts with mq://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dpmqfte://, the service uses the IBM MQ FTE protocol. The queue manager must exist in current domain. <ul><li>To send a message, specify the URL in the <tt>dpmqfte://QueueManager/?RequestQueue=request_queue_name;queryParameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dpmqfte://QueueManager/?ReplyQueue=reply_queue_name;queryParameters</tt> format.</li></ul><p>If the URL starts with mqfte://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dptibems://, the service uses the TIBCO EMS protocol. The server must exist. <ul><li>To send a message, specify the URL in the <tt>dptibems://Server/?RequestQueue=queue;RequestReply=queue;query-parameters</tt> format.</li><li>To retrieve a message, specify the URL in the <tt>dptibems://Server/?ReplyQueue=queue;query-parameters</tt> format.</li></ul><p>If the URL starts with tibems://, the protocol is for dynamic routing.</p></li><li>If the URL starts with dpwasjms://, the service uses the WebSphere JMS protocol. The server must exist. <ul><li>To send a message to a request queue, specify the URL in the <tt>dpwasjms://Server/?RequestQueue=queue;RequestReply=queue;query-parameters</tt> format.</li><li>To send a message to a request topic space, specify the URL in the <tt>dpwasjms://Server/?RequestTopicSpace=topic-space;RequestReply=queue;query-parameters</tt> format.</li><li>To retrieve a message from a reply queue, specify the URL in the <tt>dpwasjms://Server/?ReplyQueue=queue;query-parameters</tt> format.</li><li>To retrieve a message from a reply topic space, specify the URL in the <tt>dpwasjms://Server/?ReplyTopicSpace=topic-space;query-parameters</tt> format.</li></ul></li></ul>", "dest-url", "").String,
@@ -585,10 +590,17 @@ var DmB2BDestinationResourceSchema = ResourceSchema.NestedAttributeObject{
 		"user_name": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the username to override in the basic authentication policy of the user agent.", "username", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-.]+$"), "Must match :"+"^[_a-zA-Z0-9-.]+$"),
+			},
 		},
 		"password_alias": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias to override in the basic authentication policy of the user agent.", "password-alias", "password_alias").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+			},
 		},
 		"ebmsmpc_auth_method": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify how the MPC authenticates the incoming pull requests. By default, the MPC authenticates requests through username token.", "embs-mpc-auth-method", "").AddStringEnum("username-token", "cert").AddDefaultValue("username-token").String,
@@ -602,10 +614,17 @@ var DmB2BDestinationResourceSchema = ResourceSchema.NestedAttributeObject{
 		"user_name_token": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("For ebMS3, the WS-Security UsernameToken authorizes received messages. Enter the username for the wsse:UsernameToken element to package in the SOAP header of the message to send. <ul><li>For one-way push exchange pattern, specify the username token to package in messages to send.</li><li>For one-way pull exchange pattern outbound messages, when the MPC authentication method is username token, specify the username to store messages in the MPC.</li><li>For one-way pull exchange pattern inbound messages, specify the username token to package in pull requests.</li></ul>", "username-token", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-.]+$"), "Must match :"+"^[_a-zA-Z0-9-.]+$"),
+			},
 		},
 		"user_name_token_password_alias": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias of the username for the wsse:UsernameToken element.", "username-token-password-alias", "password_alias").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+			},
 		},
 		"ebmsmpc_verify_val_cred": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("When the MPC authentication method is validation credentials, specify the certificate to associate with messages that are submitted to the MPC.", "ebms-mpc-verify-valcred", "crypto_val_cred").String,
@@ -782,7 +801,10 @@ var DmB2BDestinationResourceSchema = ResourceSchema.NestedAttributeObject{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the digest algorithms to request for a signed MDN. The value can be a single algorithm or any combination of algorithms that are separated by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt> .", "as-mdn-request-signed-algs", "").AddDefaultValue("sha1,md5").String,
 			Computed:            true,
 			Optional:            true,
-			Default:             stringdefault.StaticString("sha1,md5"),
+			Validators: []validator.String{
+				stringvalidator.RegexMatches(regexp.MustCompile("^((sha1|sha-1|md5|sha256|sha-256|sha384|sha-384|sha512|sha-512),)*(sha1|sha-1|md5|sha256|sha-256|sha384|sha-384|sha512|sha-512)$"), "Must match :"+"^((sha1|sha-1|md5|sha256|sha-256|sha384|sha-384|sha512|sha-512),)*(sha1|sha-1|md5|sha256|sha-256|sha384|sha-384|sha512|sha-512)$"),
+			},
+			Default: stringdefault.StaticString("sha1,md5"),
 		},
 		"ebms_cpa_id": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the CPA ID in the message that is sent to the destination partner. You can use the value to identify the sender and the recipient. This value is used when the B2B gateway is not CPA-enforced.", "ebms-cpa-id", "").String,
@@ -916,14 +938,23 @@ var DmB2BDestinationResourceSchema = ResourceSchema.NestedAttributeObject{
 		"ebms_message_partition_channel": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("When the MEP is one-way pull, specify the message partition channel (MPC) to pull messages. In the one-way pull mode, a message remains in MPC storage until the B2B gateway receives an authenticated and authorized pull request.", "ebms-mpc", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+			},
 		},
 		"ebms_agreement_ref": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the reference to the agreement that governs this message exchange. This value maps to <tt>eb:AgreementRef</tt> in the message header.", "ebms-agreementref", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+			},
 		},
 		"ebmsp_mode": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the PMode identifier for the convenience of PMode management. When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in associated messages.", "ebms-pmode", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+			},
 		},
 		"ebms_outbound_request_receipt": ResourceSchema.BoolAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to request a receipt signal for a sent ebMS3 message. The default behavior is off.", "ebms-outbound-request-receipt", "").AddDefaultValue("false").String,

@@ -22,11 +22,14 @@ package models
 
 import (
 	"context"
+	"regexp"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
@@ -70,6 +73,9 @@ var DmAPIPropertyResourceSchema = ResourceSchema.NestedAttributeObject{
 		"property_name": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the property name.", "", "").String,
 			Required:            true,
+			Validators: []validator.String{
+				stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_$]( *[a-zA-Z0-9_$-])*$"), "Must match :"+"^[a-zA-Z0-9_$]( *[a-zA-Z0-9_$-])*$"),
+			},
 		},
 		"catalog": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the catalog name. The name must match the name of an API catalog in the API collection. The default value is <tt>*</tt> , which indicates that the value applies to all catalogs.", "", "").AddDefaultValue("*").String,

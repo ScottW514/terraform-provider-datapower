@@ -28,9 +28,21 @@ attributes:
   type: String
   description: Enter the name of a WSDL-defined component of the type selected in
     the WSDL Component Type field.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ReliableMessagingWSDLComponentType
+    value:
+    - subscription
 - name: ReliableMessagingSubscription
   type: String
   description: Select a subscription.
+  required_when:
+  - evaluation: property-equals
+    attribute: ReliableMessagingWSDLComponentType
+    value:
+    - subscription
+  ignored_when:
+  - evaluation: logical-true
 - name: ReliableMessagingFragmentID
   type: String
   description: Matches Fragment Identifier

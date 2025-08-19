@@ -70,6 +70,11 @@ attributes:
     rate to allow during a specified interval and the actions to take when the limit
     is exceeded.
   cli_alias: rate-limit
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseRateLimitGroup
+    value:
+    - 'on'
 - name: BurstLimit
   type: List
   element_type: DmAPIBurstLimit
@@ -80,11 +85,21 @@ attributes:
     words, a message is first checked against the burst limit scheme and then against
     the rate limit scheme.
   cli_alias: burst-limit
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseRateLimitGroup
+    value:
+    - 'on'
 - name: RateLimitGroup
   type: String
   reference_to: RateLimitDefinitionGroup
   description: Rate limit group
   cli_alias: rate-limit-group
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseRateLimitGroup
+    value:
+    - 'off'
 - name: UseLimitDefinitions
   type: Bool
   default: false
@@ -100,6 +115,11 @@ attributes:
     the rate limit. In other words, a message is first checked against the burst limit
     scheme and then against the rate limit scheme.
   cli_alias: assembly-burst-limit
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseLimitDefinitions
+    value:
+    - 'on'
 - name: AssemblyBurstLimitDefinition
   type: List
   element_type: DmDefinitionLink
@@ -110,6 +130,11 @@ attributes:
     the rate limit. A message is first checked against the burst limit scheme and
     then against the rate limit scheme.
   cli_alias: assembly-burst-limit-def
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseLimitDefinitions
+    value:
+    - 'off'
 - name: AssemblyRateLimit
   type: List
   element_type: DmAPIRateLimit
@@ -117,6 +142,11 @@ attributes:
     This scheme defines the maximum rate to allow during a specified interval and
     the actions to take when the limit is exceeded.
   cli_alias: assembly-rate-limit
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseLimitDefinitions
+    value:
+    - 'on'
 - name: AssemblyRateLimitDefinition
   type: List
   element_type: DmDefinitionLink
@@ -124,6 +154,11 @@ attributes:
     enforces. A rate limit definition defines the maximum rate that is allowed in
     a specified interval and the actions to take when the limit is exceeded.
   cli_alias: assembly-rate-limit-def
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseLimitDefinitions
+    value:
+    - 'off'
 - name: AssemblyCountLimit
   type: List
   element_type: DmAPICountLimit
@@ -131,6 +166,11 @@ attributes:
     enforces. This scheme defines the maximum count to allow and the actions to take
     when the limit is exceeded.
   cli_alias: assembly-count-limit
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseLimitDefinitions
+    value:
+    - 'on'
 - name: AssemblyCountLimitDefinition
   type: List
   element_type: DmDefinitionLink
@@ -138,6 +178,11 @@ attributes:
     enforces. A count limit definition defines the maximum count that is allowed and
     the actions to take when the limit is exceeded.
   cli_alias: assembly-count-limit-def
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseLimitDefinitions
+    value:
+    - 'off'
 - name: SpaceID
   type: String
   description: Specify the space ID for the product in the catalog. When space is

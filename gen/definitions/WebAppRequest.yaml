@@ -116,6 +116,14 @@ attributes:
   description: This is the transformation rule that is run when the request contains
     an XML MIME type and the XML processing policy is set to XML or SOAP.
   cli_alias: request-xml-rule
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: XMLPolicy
+    value:
+    - xml
+    - soap
+  ignored_when:
+  - evaluation: logical-true
 - name: NonXMLPolicy
   type: String
   enum:
@@ -133,6 +141,14 @@ attributes:
     contain an XML MIME type and the Non-XML processing policy is set to binary or
     side-effect.
   cli_alias: request-nonxml-rule
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: NonXMLPolicy
+    value:
+    - side
+    - binary
+  ignored_when:
+  - evaluation: logical-true
 - name: ErrorPolicy
   type: String
   reference_to: WebAppErrorHandlingPolicy
@@ -177,6 +193,16 @@ attributes:
     is enforced. The profile allows you to validate data members of the query string,
     filter out unknown ones, or map certain names to known values.
   cli_alias: request-qs-profile
+  required_when:
+  - evaluation: property-equals
+    attribute: QueryStringPolicy
+    value:
+    - require
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: QueryStringPolicy
+    value:
+    - allow
 - name: SQLInjection
   type: Bool
   default: false
@@ -247,8 +273,31 @@ attributes:
   element_type: String
   description: The list of cookies, by name, that the process signs and encrypts.
   cli_alias: cookie-namelist
+  required_when:
+  - evaluation: property-equals
+    attribute: ProcessAllCookie
+    value:
+    - 'off'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProcessAllCookie
+    value:
+    - 'on'
 - name: SQLInjectionPatternsFile
   type: String
   default: store:///SQL-Injection-Patterns.xml
   description: The patterns file that the SQL injection filter uses.
   cli_alias: sql-injection-patterns-file
+  required_when:
+  - evaluation: property-equals
+    attribute: SQLInjection
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SQLInjection
+    value:
+    - 'on'
+  file_locations:
+  - local
+  - store

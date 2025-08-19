@@ -41,6 +41,9 @@ attributes:
     <tt>local:</tt> or <tt>temporary:</tt> directory or to one of their subdirectories.
   example: local:///file
   cli_alias: location
+  file_locations:
+  - local
+  - temporary
 - name: ParseSettingsReference
   dm_type: DmDynamicParseSettingsReference
   description: Specify the configuration that defines constraints on documents to

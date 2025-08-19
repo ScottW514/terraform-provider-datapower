@@ -22,6 +22,7 @@ package models
 
 import (
 	"context"
+	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -100,6 +101,10 @@ var DmSnmpCredResourceSchema = ResourceSchema.NestedAttributeObject{
 		"engine_id": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the SNMPv3 engine ID. The value of 0 represents the local engine ID. For any other engine ID, the value is a hex string that represents the 5 - 32 byte value.", "", "").String,
 			Required:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(1, 64),
+				stringvalidator.RegexMatches(regexp.MustCompile("^(0|[0-9a-fA-F]{10,64})$"), "Must match :"+"^(0|[0-9a-fA-F]{10,64})$"),
+			},
 		},
 		"auth_protocol": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the authentication protocol.", "", "").AddStringEnum("none", "md5", "sha").AddDefaultValue("sha").String,

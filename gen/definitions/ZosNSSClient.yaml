@@ -65,12 +65,12 @@ attributes:
     registration will be rejected. If the first client does not respond, the connect
     to the first client will be severed and the second client will be registered.</p>
   cli_alias: client-id
+  string_max_length: 24
+  string_min_length: 1
 - name: SystemName
   type: String
   required: true
-  test_value: '"ResTestsystem"'
-  test_expect_ds: '"AccTest_system"'
-  example: systemName
+  example: sysname
   description: <p>Specifies a name for the NSS client. Minimum length is 1. Maximum
     length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through
     Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded
@@ -78,6 +78,8 @@ attributes:
     server. NSS server commands identify NSS clients by system name in the output
     when displaying information for connected NSS clients.</p>
   cli_alias: system-name
+  string_max_length: 8
+  string_min_length: 1
 - name: UserName
   type: String
   required: true
@@ -88,15 +90,8 @@ attributes:
     (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The user name must match
     an existing user ID on the NSS Server.</p>
   cli_alias: user-name
-- name: Password
-  type: String
-  sensitive: true
-  description: <p>Specifies the password to use to authenticate to the NSS server.
-    Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a
-    through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>-
-    (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Password specifies
-    the password to use in conjunction with the value provided by the User Name.</p>
-  cli_alias: password
+  string_max_length: 8
+  string_min_length: 1
 - name: PasswordAlias
   type: String
   reference_to: PasswordAlias
@@ -104,6 +99,13 @@ attributes:
     to the NSS server.</p><p>The associated password is used in conjunction with the
     value provided by the User Name.</p>
   cli_alias: password-alias
+  required_when:
+  - evaluation: property-equals
+    attribute: Password
+    value:
+    - ''
+  string_max_length: 127
+  string_min_length: 1
 - name: SSLClientConfigType
   type: String
   enum:
@@ -115,6 +117,15 @@ attributes:
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile
+  test_value: '"AccTest_SSLClientProfile"'
+  test_bed_value: datapower_ssl_client_profile.acc_test.id
   description: The TLS client profile to secure connections between the DataPower
     Gateway and the NSS server.
   cli_alias: ssl-client
+  required_when:
+  - evaluation: property-equals
+    attribute: SSLClientConfigType
+    value:
+    - client
+  ignored_when:
+  - evaluation: logical-true

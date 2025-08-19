@@ -39,6 +39,11 @@ attributes:
   computed: true
   description: Specify where the configuration file for this domain is stored. This
     property is read-only because it is configured in domain settings.
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ConfigMode
+    value:
+    - local
 - name: NeighborDomain
   type: List
   reference_to: Domain
@@ -62,6 +67,8 @@ attributes:
     can log into this domain through the CLI. This setting can be superseded by an
     existing access policy of the user.
   cli_alias: domain-user
+  ignored_when:
+  - evaluation: logical-true
 - name: FileMap
   dm_type: DmDomainFileMap
   description: Specify the file permissions to apply to the <tt>local:</tt> directory.
@@ -84,6 +91,13 @@ attributes:
   type: String
   description: Import URL
   cli_alias: import-url
+  required_when:
+  - evaluation: property-equals
+    attribute: ConfigMode
+    value:
+    - import
+  ignored_when:
+  - evaluation: logical-true
 - name: ImportFormat
   type: String
   enum:
@@ -92,16 +106,33 @@ attributes:
   default: ZIP
   description: Import format
   cli_alias: import-format
+  required_when:
+  - evaluation: property-equals
+    attribute: ConfigMode
+    value:
+    - import
+  ignored_when:
+  - evaluation: logical-true
 - name: DeploymentPolicy
   type: String
   reference_to: ConfigDeploymentPolicy
   description: Deployment policy
   cli_alias: deployment-policy
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ConfigMode
+    value:
+    - import
 - name: DeploymentPolicyParameters
   type: String
   reference_to: DeploymentPolicyParametersBinding
   description: Deployment policy variables
   cli_alias: deployment-policy-variables
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ConfigMode
+    value:
+    - import
 - name: LocalIPRewrite
   type: Bool
   default: true
@@ -111,6 +142,13 @@ attributes:
     in the import package is rewritten to bind to the local IP address of <tt>eth10</tt>
     on the DataPower Gateway.
   cli_alias: local-ip-rewrite
+  required_when:
+  - evaluation: property-equals
+    attribute: ConfigMode
+    value:
+    - import
+  ignored_when:
+  - evaluation: logical-true
 - name: MaxChkpoints
   type: Int64
   minimum: 1
@@ -132,3 +170,13 @@ attributes:
   reference_to: AccessProfile
   description: Global permissions profile
   cli_alias: config-permissions-profile
+  required_when:
+  - evaluation: property-equals
+    attribute: ConfigPermissionsMode
+    value:
+    - global-profile
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ConfigPermissionsMode
+    value:
+    - global-profile

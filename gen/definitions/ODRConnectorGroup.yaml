@@ -73,3 +73,8 @@ attributes:
   description: The TLS client profile to secure connections between the DataPower
     Gateway and its targets.
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: property-equals
+    attribute: SSLClientConfigType
+    value:
+    - proxy

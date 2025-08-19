@@ -48,6 +48,16 @@ attributes:
     system that is full. The value for the warning threshold must be less than the
     critical threshold. Enter a value in the range 0 - 100. The default value is 75.
   cli_alias: all-system-warning
+  required_when:
+  - evaluation: property-equals
+    attribute: AllSystem
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AllSystem
+    value:
+    - 'off'
 - name: AllSystemCriticalThreshold
   type: Int64
   maximum: 100
@@ -58,6 +68,16 @@ attributes:
     the warning threshold. Enter a value in the range 0 - 100. The default value is
     75.
   cli_alias: all-system-critical
+  required_when:
+  - evaluation: property-equals
+    attribute: AllSystem
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AllSystem
+    value:
+    - 'off'
 - name: System
   type: List
   element_type: DmFileSystemUsage
@@ -75,6 +95,16 @@ attributes:
     than the critical threshold. Enter a value in the range 0 - 100. The default value
     is 75.
   cli_alias: all-qm-warning
+  required_when:
+  - evaluation: property-equals
+    attribute: AllQueueManagers
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AllQueueManagers
+    value:
+    - 'off'
 - name: AllQMCriticalThreshold
   type: Int64
   maximum: 100
@@ -85,6 +115,16 @@ attributes:
     than the warning threshold. Enter a value in the range 0 - 100. The default value
     is 75.
   cli_alias: all-qm-critical
+  required_when:
+  - evaluation: property-equals
+    attribute: AllQueueManagers
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AllQueueManagers
+    value:
+    - 'off'
 - name: QueueManager
   type: List
   element_type: DmQMFileSystemUsage

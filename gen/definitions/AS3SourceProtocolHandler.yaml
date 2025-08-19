@@ -77,6 +77,11 @@ attributes:
     that were not deleted by the FTP client are deleted from their storage area. Enter
     a value in the range 1 - 43200. The default value is 600.
   cli_alias: persistent-filesystem-timeout
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - virtual-persistent
 - name: VirtualDirectories
   type: List
   element_type: DmFTPServerVirtualDirectory
@@ -85,6 +90,12 @@ attributes:
     to be processed. The root directory (/) is always present, cannot be created,
     and is its own response directory.
   cli_alias: virtual-directory
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: FilesystemType
+    value:
+    - virtual-ephemeral
+    - virtual-persistent
 - name: DefaultDirectory
   type: String
   default: /
@@ -186,6 +197,11 @@ attributes:
     these ports unavailable for the FTP server. The FTP server allocates these listing
     ports dynamically.</p>
   cli_alias: passive-port-range
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Passive
+    value:
+    - disallow
 - name: PasvMinPort
   type: Int64
   minimum: 1024
@@ -195,6 +211,17 @@ attributes:
     This value must be less than the value of the maximum passive port. Enter a value
     in the range 1024 - 65534.
   cli_alias: passive-port-min
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Passive
+      value:
+      - disallow
+    - evaluation: property-equals
+      attribute: UsePasvPortRange
+      value:
+      - 'off'
 - name: PasvMaxPort
   type: Int64
   minimum: 1024
@@ -204,6 +231,17 @@ attributes:
     This value must be greater than the value of the minimum passive port. Enter a
     value in the range 1024 - 65534.
   cli_alias: passive-port-max
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Passive
+      value:
+      - disallow
+    - evaluation: property-equals
+      attribute: UsePasvPortRange
+      value:
+      - 'off'
 - name: PasvIdleTimeOut
   type: Int64
   minimum: 5
@@ -224,6 +262,11 @@ attributes:
     or <tt>EPSV</tt> command was never issued. The command fails with code 425 and
     the <tt>Require PASV or PORT command first</tt> message.</li></ul>
   cli_alias: passive-idle-timeout
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Passive
+    value:
+    - disallow
 - name: DisablePASVIPCheck
   type: Bool
   default: false
@@ -235,6 +278,11 @@ attributes:
     is supported by only the FTP server handler with a multiprotocol gateway or web
     service proxy.</p>
   cli_alias: passive-promiscuous
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Passive
+    value:
+    - disallow
 - name: DisablePORTIPCheck
   type: Bool
   default: false
@@ -244,6 +292,11 @@ attributes:
     is supported by only the FTP server handler with a multiprotocol gateway or web
     service proxy.</p>
   cli_alias: port-promiscuous
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Passive
+    value:
+    - require
 - name: UseAlternatePASVAddr
   type: Bool
   default: false
@@ -252,6 +305,11 @@ attributes:
     passive mode. <p>This setting is supported by only the FTP server handler with
     a multiprotocol gateway or web service proxy.</p>
   cli_alias: allow-passive-addr
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Passive
+    value:
+    - disallow
 - name: AlternatePASVAddr
   type: String
   description: Specify the IP address to return to the FTP client in response to a
@@ -259,6 +317,13 @@ attributes:
     server listens, which is always the IP address for the FTP data connection. This
     value is used when the FTP server is behind a firewall that is not FTP-aware.
   cli_alias: passive-addr
+  required_when:
+  - evaluation: property-equals
+    attribute: UseAlternatePASVAddr
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: AllowLISTCmd
   type: Bool
   default: false
@@ -268,6 +333,11 @@ attributes:
     files. <p>This setting is only supported by the FTP server handler for a multiprotocol
     gateway or web service proxy.</p>
   cli_alias: list-cmd
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - transparent
 - name: AllowDELECmd
   type: Bool
   default: false
@@ -277,6 +347,11 @@ attributes:
     a transparent file system. This setting is only supported by the FTP server handler
     for a multiprotocol gateway or web service proxy.</p>
   cli_alias: dele-cmd
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - transparent
 - name: DataEncryption
   type: String
   enum:
@@ -308,6 +383,13 @@ attributes:
     The default value is an empty string, which indicates to not add a prefix. <p><b>Note:</b>
     Processing adds a numeric suffix.</p>
   cli_alias: unique-filename-prefix
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AllowSTOU
+    value:
+    - 'on'
+  string_patterns:
+  - ^[^/]*$
 - name: AllowREST
   type: Bool
   default: false
@@ -322,6 +404,11 @@ attributes:
     , and <tt>STOR</tt> commands. The argument to the <tt>REST</tt> command must be
     the same as the byte count the the <tt>SIZE</tt> command returned.</p>
   cli_alias: allow-restart
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - virtual-persistent
 - name: RestartTimeout
   type: Int64
   default: 240
@@ -333,6 +420,17 @@ attributes:
     canceled when a command other than <tt>SIZE</tt> or <tt>REST</tt> is received
     on the FTP control connection.
   cli_alias: restart-timeout
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AllowREST
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: FilesystemType
+      value:
+      - virtual-persistent
 - name: IdleTimeout
   type: Int64
   maximum: 65535
@@ -348,6 +446,12 @@ attributes:
   default: none
   description: Response type
   cli_alias: response-type
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: FilesystemType
+    value:
+    - virtual-ephemeral
+    - virtual-persistent
 - name: ResponseStorage
   type: String
   enum:
@@ -356,6 +460,18 @@ attributes:
   default: temporary
   description: Response storage
   cli_alias: response-storage
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ResponseType
+      value:
+      - virtual-filesystem
+    - evaluation: property-value-not-in-list
+      attribute: FilesystemType
+      value:
+      - virtual-ephemeral
+      - virtual-persistent
 - name: TemporaryStorageSize
   type: Int64
   minimum: 1
@@ -363,19 +479,76 @@ attributes:
   default: 32
   description: Temporary storage size
   cli_alias: filesystem-size
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ResponseStorage
+      value:
+      - temporary
+    - evaluation: property-value-not-in-list
+      attribute: FilesystemType
+      value:
+      - virtual-ephemeral
+      - virtual-persistent
 - name: ResponseNFSMount
   type: String
   reference_to: NFSStaticMount
   description: Response NFS mount
   cli_alias: response-nfs-mount
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ResponseType
+      value:
+      - virtual-filesystem
+    - evaluation: property-does-not-equal
+      attribute: ResponseStorage
+      value:
+      - nfs
+    - evaluation: property-value-not-in-list
+      attribute: FilesystemType
+      value:
+      - virtual-ephemeral
+      - virtual-persistent
 - name: ResponseSuffix
   type: String
   description: Response suffix
   cli_alias: response-suffix
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: ResponseType
+      value:
+      - virtual-filesystem
+      - ftp-client
+    - evaluation: property-value-not-in-list
+      attribute: FilesystemType
+      value:
+      - virtual-ephemeral
+      - virtual-persistent
+  string_patterns:
+  - ^[^/]*$
 - name: ResponseURL
   type: String
   description: Response URL
   cli_alias: response-url
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ResponseType
+      value:
+      - ftp-client
+    - evaluation: property-value-not-in-list
+      attribute: FilesystemType
+      value:
+      - virtual-ephemeral
+      - virtual-persistent
+  string_patterns:
+  - ^ftp://[^/]+(/[^/]+)*$
 - name: SSLServerConfigType
   type: String
   enum:
@@ -386,13 +559,53 @@ attributes:
     When a TLS profile is assigned, the FTP <tt>AUTH TLS</tt> command is enabled and
     clients can encrypt FTP control connection.
   cli_alias: ssl-config-type
+  required_when:
+  - evaluation: property-equals
+    attribute: RequireTLS
+    value:
+    - explicit
+    - implicit
 - name: SSLServer
   type: String
   reference_to: SSLServerProfile
   description: TLS server profile
   cli_alias: ssl-server
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: RequireTLS
+      value:
+      - explicit
+      - implicit
+    - evaluation: property-equals
+      attribute: SSLServerConfigType
+      value:
+      - server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLServerConfigType
+    value:
+    - server
 - name: SSLSNIServer
   type: String
   reference_to: SSLSNIServerProfile
   description: TLS SNI server profile
   cli_alias: ssl-sni-server
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: RequireTLS
+      value:
+      - explicit
+      - implicit
+    - evaluation: property-equals
+      attribute: SSLServerConfigType
+      value:
+      - sni
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLServerConfigType
+    value:
+    - sni

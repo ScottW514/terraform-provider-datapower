@@ -41,6 +41,8 @@ attributes:
     , where <tt>host</tt> is the DNS name or IP address of the NFS server, and <tt>path</tt>
     is the path exported by the host to mount.
   cli_alias: remote
+  string_patterns:
+  - ^[^:/]+:/[^/]*(/[^/]+)*$
 - name: LocalFilesystemAccess
   type: Bool
   default: false
@@ -67,6 +69,11 @@ attributes:
   default: tcp
   description: Specify the transport protocol. The default transport protocol is TCP.
   cli_alias: transport
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Version
+    value:
+    - '4'
 - name: MountType
   type: String
   enum:

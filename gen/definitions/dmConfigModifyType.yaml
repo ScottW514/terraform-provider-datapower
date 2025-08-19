@@ -26,6 +26,8 @@ attributes:
     for the configuration property. This property limits the match statement to resources
     with the specified property value.</td></tr></table>'
   cli_alias: match
+  string_patterns:
+  - ^[-_a-zA-Z0-9:.*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$
 - name: Type
   type: String
   enum:
@@ -40,6 +42,13 @@ attributes:
   type: String
   description: Specifies the name of the property to add.
   cli_alias: name
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - add
+  ignored_when:
+  - evaluation: logical-true
 - name: Value
   type: String
   description: Specifies the value of the added or changed property. To change a property
@@ -50,3 +59,11 @@ attributes:
     , a referenced deployment policy variable configuration must map the <tt>newName</tt>
     variable to an explicit replacement value.
   cli_alias: value
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - add
+    - change
+  ignored_when:
+  - evaluation: logical-true

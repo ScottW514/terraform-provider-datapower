@@ -42,3 +42,7 @@ attributes:
     or included in an export. Therefore, consider whether to store crypto files in
     this directory.</p>
   cli_alias: file-name
+  file_locations:
+  - cert
+  - sharedcert
+  - local

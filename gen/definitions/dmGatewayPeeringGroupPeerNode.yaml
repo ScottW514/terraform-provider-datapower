@@ -8,6 +8,11 @@ attributes:
   example: localhost
   test_value: '"10.10.10.10"'
   description: Specify the local IP address or host alias of the peer.
+  string_exclude:
+  - 127.0.0.1
+  - 0.0.0.0
+  - '::'
+  - '::1'
 - name: Priority
   type: Int64
   minimum: 0

@@ -126,11 +126,23 @@ attributes:
   default: 25
   description: ''
   cli_alias: debug-history
+  required_when:
+  - evaluation: property-equals
+    attribute: DebugMode
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: DebugTrigger
   type: List
   element_type: DmMSDebugTriggerType
   description: ''
   cli_alias: debug-trigger
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: DebugMode
+    value:
+    - 'on'
 - name: SSLServerConfigType
   type: String
   enum:
@@ -144,11 +156,21 @@ attributes:
   reference_to: SSLServerProfile
   description: ''
   cli_alias: ssl-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLServerConfigType
+    value:
+    - server
 - name: SSLSNIServer
   type: String
   reference_to: SSLSNIServerProfile
   description: ''
   cli_alias: ssl-sni-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLServerConfigType
+    value:
+    - sni
 - name: LocalAddress
   type: String
   required: true

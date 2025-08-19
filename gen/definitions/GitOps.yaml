@@ -61,6 +61,11 @@ attributes:
   description: Specify the branch, commit hash, or tag for read and write GitOps operations
     against the repository. Use of branch is the default setting.
   cli_alias: commit-id-type
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - read-write
 - name: CommitIdentifier
   type: String
   required: true
@@ -81,40 +86,123 @@ attributes:
     Enter a value in the range 0 - 1440. The default value is 5. To disable polling,
     specify 0.
   cli_alias: interval
+  required_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - read-only
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - read-write
 - name: SSHClientProfile
   type: String
   reference_to: SSHClientProfile
   description: SSH client profile
   cli_alias: ssh-client-profile
+  required_when:
+  - evaluation: property-equals
+    attribute: ConnectionType
+    value:
+    - ssh
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ConnectionType
+    value:
+    - https
 - name: Username
   type: String
   description: Username
   cli_alias: username
+  required_when:
+  - evaluation: property-equals
+    attribute: ConnectionType
+    value:
+    - https
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ConnectionType
+    value:
+    - ssh
 - name: Password
   type: String
   reference_to: PasswordAlias
   description: Password
   cli_alias: password
+  required_when:
+  - evaluation: property-equals
+    attribute: ConnectionType
+    value:
+    - https
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ConnectionType
+    value:
+    - ssh
 - name: SSHAuthorizedKeysFile
   type: String
   description: Specify the file that contains the authorized SSH keys. This file must
     be in the <tt>cert:</tt> or <tt>sharedcert:</tt> directory.
   cli_alias: ssh-authorized-keyfile
+  required_when:
+  - evaluation: property-equals
+    attribute: ConnectionType
+    value:
+    - ssh
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ConnectionType
+    value:
+    - https
+  file_locations:
+  - cert
+  - sharedcert
 - name: TLSValcred
   type: String
   reference_to: CryptoValCred
   description: HTTPS validation credentials
   cli_alias: https-valcred
+  required_when:
+  - evaluation: property-equals
+    attribute: ConnectionType
+    value:
+    - https
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ConnectionType
+    value:
+    - ssh
 - name: GitUser
   type: String
   description: Specify the full username. Controls <tt>user.name</tt> in <tt>git config</tt>
     .
   cli_alias: name
+  required_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - read-write
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - read-only
 - name: GitEmail
   type: String
   description: Specify the user emai. Controls <tt>user.email</tt> in <tt>git config</tt>
     .
   cli_alias: email
+  required_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - read-write
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - read-only
 - name: JSONParseSettings
   type: String
   reference_to: JSONSettings

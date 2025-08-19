@@ -10,6 +10,10 @@ attributes:
     pattern and runs only the matching files. By default, this directory is also where
     the generated output files are stored.
   cli_alias: directory
+  file_locations:
+  - config
+  - local
+  - temporary
 - name: AccessProfileName
   type: String
   reference_to: AccessProfile

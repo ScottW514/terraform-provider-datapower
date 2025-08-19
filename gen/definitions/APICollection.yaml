@@ -79,6 +79,16 @@ attributes:
     value in the range 8 - 51200. The default value is 128. When the limit is exceeded,
     the least recently used (LRU) entry is removed.
   cli_alias: cache-capacity
+  required_when:
+  - evaluation: property-equals
+    attribute: EnableCache
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: EnableCache
+    value:
+    - 'off'
 - name: RoutingPrefix
   type: List
   element_type: DmRoutingPrefix
@@ -118,12 +128,22 @@ attributes:
     keys for client identification. When not defined, requests without API keys are
     rejected.
   cli_alias: default-rate-limit
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseRateLimitGroup
+    value:
+    - 'on'
 - name: RateLimitGroup
   type: String
   reference_to: RateLimitDefinitionGroup
   description: Specify the default rate limit group for API requests without API keys
     for client identification. When not defined, requests without API keys are rejected.
   cli_alias: rate-limit-group
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseRateLimitGroup
+    value:
+    - 'off'
 - name: AssemblyBurstLimit
   type: List
   element_type: DmAPIBurstLimit

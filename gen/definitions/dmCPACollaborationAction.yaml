@@ -8,6 +8,8 @@ attributes:
   example: cpacollaborationactionname
   description: Specifies an ID for naming the action
   cli_alias: name
+  string_max_length: 128
+  string_min_length: 0
 - name: Value
   type: String
   required: true
@@ -17,6 +19,8 @@ attributes:
     Action value is used to identify the action binding for processing the incoming
     message within the Service.
   cli_alias: value
+  string_max_length: 128
+  string_min_length: 0
 - name: Capability
   type: String
   enum:
@@ -35,6 +39,16 @@ attributes:
   test_value: '"AccTest_B2BCPASenderSetting"'
   test_bed_value: datapower_b2b_cpa_sender_setting.acc_test.id
   cli_alias: sender-setting
+  required_when:
+  - evaluation: property-equals
+    attribute: Capability
+    value:
+    - cansend
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Capability
+    value:
+    - cansend
 - name: ReceiverSetting
   type: String
   reference_to: B2BCPAReceiverSetting
@@ -42,3 +56,13 @@ attributes:
     defines the Message-receiving characteristics in Delivery Channels. It consists
     of document-exchange configurations and transport configurations.
   cli_alias: receiver-setting
+  required_when:
+  - evaluation: property-equals
+    attribute: Capability
+    value:
+    - canreceive
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Capability
+    value:
+    - canreceive

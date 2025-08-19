@@ -21,3 +21,5 @@ attributes:
   type: String
   description: Specify the password login to the RADIUS server. You must confirm the
     password for accuracy.
+  required_when:
+  - evaluation: is-edit-new-object

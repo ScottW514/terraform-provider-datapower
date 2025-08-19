@@ -8,6 +8,10 @@ attributes:
   example: b2bdestinationname
   description: Specify the name to identify this destination in the profile.
   cli_alias: name
+  string_max_length: 128
+  string_min_length: 0
+  string_patterns:
+  - ^[_a-zA-Z0-9.-]+$
 - name: DestURL
   type: String
   required: true
@@ -61,6 +65,34 @@ attributes:
     retrieve a message from a reply topic space, specify the URL in the <tt>dpwasjms://Server/?ReplyTopicSpace=topic-space;query-parameters</tt>
     format.</li></ul></li></ul>
   cli_alias: dest-url
+  protocols:
+  - dpmq
+  - dpmqfte
+  - mq
+  - mqfte
+  - idgmq
+  - idgmqmft
+  - dptibems
+  - tibems
+  - dpwasjms
+  - ftp
+  - sftp
+  - dpnfs
+  - http
+  - https
+  - dpims
+  - dpimsssl
+  - dpsmtp
+  - as1
+  - as2
+  - as2s
+  - as3
+  - ebms2
+  - ebms2s
+  - ebms3
+  - ebms3s
+  file_locations:
+  - '"NONE"'
 - name: EnabledDocType
   dm_type: DmB2BEnabledDocType
   default: EnableXML+EnableX12+EnableEDIFACT+EnableBinary
@@ -73,21 +105,66 @@ attributes:
   description: Specify the SMTP server connection to send email messages. By default,
     the gateway uses the default SMTP server connection.
   cli_alias: smtp-server-connection
+  required_when:
+  - evaluation: property-url-protocol-in-list
+    attribute: DestURL
+    value:
+    - as1
+    - dpsmtp
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as1
+    - dpsmtp
 - name: EmailAddress
   type: String
   description: Specify the destination email address for messages sent to this partner.
   cli_alias: email-address
+  required_when:
+  - evaluation: property-url-protocol-in-list
+    attribute: DestURL
+    value:
+    - as1
+    - dpsmtp
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as1
+    - dpsmtp
 - name: SSHClientConnection
   type: String
   reference_to: SSHClientProfile
   description: Specify the SSH profile for SSH client connections and authentication.
   cli_alias: ssh-client-connection
+  required_when:
+  - evaluation: property-url-protocol-in-list
+    attribute: DestURL
+    value:
+    - sftp
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - sftp
 - name: UseUniqueFilenames
   type: Bool
   default: false
   description: Specify whether to generate a unique file name for puts to a remote
     directory.
   cli_alias: use-unique-filenames
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as3
+    - ftp
+    - sftp
+    - dpnfs
+    - mqfte
+    - dpmqfte
+    - idgmqmft
 - name: OverrideTimeout
   type: Int64
   minimum: 3
@@ -96,6 +173,11 @@ attributes:
   description: Specify the duration to maintain an idle connection in seconds. Enter
     a value in the range 3 - 7200. The default value is 300.
   cli_alias: timeout
+  ignored_when:
+  - evaluation: property-equals
+    attribute: EBMSMessageExchangePattern
+    value:
+    - one-way-pull
 - name: EnableFTPSettings
   type: Bool
   default: false
@@ -104,17 +186,57 @@ attributes:
     the overrides with the advanced AS3 or FTP settings.</li><li>When disabled, uses
     the original FTP client policy.</li></ul>
   cli_alias: enable-ftp-settings
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ftp
+    - as3
 - name: UserName
   type: String
   description: Specify the username to override in the basic authentication policy
     of the user agent.
   cli_alias: username
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as2
+    - as2s
+    - as3
+    - ebms2
+    - ebms2s
+    - ebms3
+    - ebms3s
+    - http
+    - https
+    - ftp
+  string_max_length: 128
+  string_min_length: 0
+  string_patterns:
+  - ^[_a-zA-Z0-9-.]+$
 - name: PasswordAlias
   type: String
   reference_to: PasswordAlias
   description: Specify the password alias to override in the basic authentication
     policy of the user agent.
   cli_alias: password-alias
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as2
+    - as2s
+    - as3
+    - ebms2
+    - ebms2s
+    - ebms3
+    - ebms3s
+    - http
+    - https
+    - ftp
+  string_max_length: 128
+  string_min_length: 0
 - name: EBMSMPCAuthMethod
   type: String
   enum:
@@ -124,6 +246,18 @@ attributes:
   description: Specify how the MPC authenticates the incoming pull requests. By default,
     the MPC authenticates requests through username token.
   cli_alias: embs-mpc-auth-method
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+    - evaluation: property-equals
+      attribute: EBMSMessageExchangePattern
+      value:
+      - one-way-push
 - name: UserNameToken
   type: String
   description: For ebMS3, the WS-Security UsernameToken authorizes received messages.
@@ -134,18 +268,76 @@ attributes:
     specify the username to store messages in the MPC.</li><li>For one-way pull exchange
     pattern inbound messages, specify the username token to package in pull requests.</li></ul>
   cli_alias: username-token
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: EBMSMPCAuthMethod
+        value:
+        - cert
+      - evaluation: property-equals
+        attribute: EBMSMessageExchangePattern
+        value:
+        - one-way-pull
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+  string_max_length: 128
+  string_min_length: 0
+  string_patterns:
+  - ^[_a-zA-Z0-9-.]+$
 - name: UserNameTokenPasswordAlias
   type: String
   reference_to: PasswordAlias
   description: Specify the password alias of the username for the wsse:UsernameToken
     element.
   cli_alias: username-token-password-alias
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: EBMSMPCAuthMethod
+        value:
+        - cert
+      - evaluation: property-equals
+        attribute: EBMSMessageExchangePattern
+        value:
+        - one-way-pull
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+  string_max_length: 128
+  string_min_length: 0
 - name: EBMSMPCVerifyValCred
   type: String
   reference_to: CryptoValCred
   description: When the MPC authentication method is validation credentials, specify
     the certificate to associate with messages that are submitted to the MPC.
   cli_alias: ebms-mpc-verify-valcred
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+    - evaluation: property-equals
+      attribute: EBMSMPCAuthMethod
+      value:
+      - username-token
+    - evaluation: property-equals
+      attribute: EBMSMessageExchangePattern
+      value:
+      - one-way-push
 - name: Passive
   type: String
   enum:
@@ -155,6 +347,18 @@ attributes:
   default: pasv-req
   description: Specify the use of FTP passive mode with the FTP <tt>PASV</tt> command.
   cli_alias: ftp-passive
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ftp
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: EnableFTPSettings
+      value:
+      - 'on'
 - name: AuthTLS
   type: String
   enum:
@@ -166,6 +370,18 @@ attributes:
   description: Specify the use of TLS to secure connections with the FTP <tt>AUTH
     TLS</tt> command.
   cli_alias: ftp-auth-tls
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ftp
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: EnableFTPSettings
+      value:
+      - 'on'
 - name: UseCCC
   type: String
   enum:
@@ -176,6 +392,22 @@ attributes:
   description: Specify the use of command encryption after authentication with the
     FTP <tt>CCC</tt> command.
   cli_alias: ftp-use-ccc
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ftp
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: EnableFTPSettings
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: AuthTLS
+      value:
+      - auth-off
 - name: EncryptData
   type: String
   enum:
@@ -186,6 +418,22 @@ attributes:
   description: Specify the encryption of file transfers with the FTP <tt>PROT P</tt>
     command.
   cli_alias: ftp-encrypt-data
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ftp
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: EnableFTPSettings
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: AuthTLS
+      value:
+      - auth-off
 - name: DataType
   type: String
   enum:
@@ -194,6 +442,18 @@ attributes:
   default: binary
   description: Specify the data type of file transfers.
   cli_alias: ftp-data-type
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ftp
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: EnableFTPSettings
+      value:
+      - 'on'
 - name: SlashSTOU
   type: String
   enum:
@@ -204,6 +464,18 @@ attributes:
     slash with either the FTP <tt>STOU</tt> or <tt>STOR</tt> command. Some FTP servers
     do not support the <tt>STOU</tt> command.
   cli_alias: ftp-slash-stou
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ftp
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: EnableFTPSettings
+      value:
+      - 'on'
 - name: QuotedCommands
   type: String
   reference_to: FTPQuoteCommands
@@ -211,6 +483,18 @@ attributes:
     to the FTP server. before each <tt>STOU</tt> , <tt>STOR</tt> , or <tt>RETR</tt>
     command. The commands in the list cannot be data-transfer related commands.
   cli_alias: ftp-quoted-commands
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ftp
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: EnableFTPSettings
+      value:
+      - 'on'
 - name: SizeCheck
   type: String
   enum:
@@ -222,6 +506,18 @@ attributes:
     provide inaccurate responses for files transferred in ASCII mode. If you get such
     errors, disable this feature or reconfigure vsftpd.
   cli_alias: ftp-size-check
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ftp
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: EnableFTPSettings
+      value:
+      - 'on'
 - name: BinaryTransferMode
   type: String
   enum:
@@ -230,12 +526,28 @@ attributes:
   default: auto-detect
   description: Specify whether to transfer the message payload in binary mode.
   cli_alias: binary-transfer-mode
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as1
+    - as2
+    - as2s
+    - as3
 - name: ASCompress
   type: Bool
   default: false
   description: Specify whether to compress the body of outbound AS messages. The default
     behavior is disabled.
   cli_alias: as-compress
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as1
+    - as2
+    - as2s
+    - as3
 - name: ASCompressBeforeSign
   type: Bool
   default: false
@@ -244,6 +556,20 @@ attributes:
     body before signing.</li><li>If disabled, sign the message before compressing
     the message body.</li></ul>
   cli_alias: as-compress-before-sign
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as1
+      - as2
+      - as2s
+      - as3
+    - evaluation: property-equals
+      attribute: ASCompress
+      value:
+      - 'off'
 - name: ASSendUnsigned
   type: Bool
   default: false
@@ -253,24 +579,64 @@ attributes:
     behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled,
     sign messages when the sender has signing credentials.</li></ul>
   cli_alias: as-send-unsigned
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as1
+    - as2
+    - as2s
+    - as3
 - name: ASEncrypt
   type: Bool
   default: false
   description: Specify whether to encrypt the body of outgoing AS messages. The default
     behavior is disabled.
   cli_alias: as-encrypt
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as1
+    - as2
+    - as2s
+    - as3
 - name: ASEncryptCert
   type: String
   reference_to: CryptoCertificate
   description: Specify the certificate to encrypt outbound AS messages. Use the name
     of a certificate.
   cli_alias: as-encrypt-cert
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-url-protocol-in-list
+      attribute: DestURL
+      value:
+      - as1
+      - as2
+      - as2s
+      - as3
+    - evaluation: property-equals
+      attribute: ASEncrypt
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ASMDNRequest
   type: Bool
   default: false
   description: Specify whether to request an MDN for outbound AS messages. The default
     behavior is disabled.
   cli_alias: as-mdn-request
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as1
+    - as2
+    - as2s
+    - as3
 - name: ASMDNRequestAsync
   type: Bool
   default: false
@@ -278,6 +644,18 @@ attributes:
     The default behavior is disabled. <ul><li>If enabled, the MDN request is asynchronous</li><li>If
     disabled, the MDN request is synchronous</li></ul>
   cli_alias: as-mdn-request-async
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as2
+      - as2s
+    - evaluation: property-equals
+      attribute: ASMDNRequest
+      value:
+      - 'off'
 - name: AS1MDNRedirectEmail
   type: String
   description: Specify the redirection email address for the MDN to outbound AS1 messages.
@@ -285,25 +663,100 @@ attributes:
     address. When blank, the redirection email in the <tt>From</tt> address of the
     outgoing message (the default email address of the sending internal partner).
   cli_alias: as1-mdn-email
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as1
+    - evaluation: property-does-not-equal
+      attribute: ASMDNRequest
+      value:
+      - 'on'
 - name: AS2MDNRedirectURL
   type: String
   description: Specify the redirection URL for the MDN to outbound AS2 messages.
   cli_alias: as2-mdn-url
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as2
+      - as2s
+    - evaluation: property-does-not-equal
+      attribute: ASMDNRequest
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: ASMDNRequestAsync
+      value:
+      - 'on'
+  protocols:
+  - http
+  - https
+  file_locations:
+  - '"NONE"'
 - name: AS3MDNRedirectURL
   type: String
   description: Specify the redirection URL for the MDN to outbound AS3 messages.
   cli_alias: as3-mdn-url
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: ASMDNRequest
+      value:
+      - 'on'
+  protocols:
+  - ftp
+  file_locations:
+  - '"NONE"'
 - name: ASMDNRequestSigned
   type: Bool
   default: false
   description: Specify whether to request a signed MDN instead of an unsigned one.
     The default behavior is an unsigned one.
   cli_alias: as-mdn-request-signed
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as1
+      - as2
+      - as2s
+      - as3
+    - evaluation: property-equals
+      attribute: ASMDNRequest
+      value:
+      - 'off'
 - name: Retransmit
   type: Bool
   default: false
   description: Specify whether to retransmit messages. The default behavior is off.
   cli_alias: retransmit
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as1
+      - as2
+      - as2s
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: ASMDNRequest
+      value:
+      - 'on'
 - name: ACKTime
   type: Int64
   minimum: 1
@@ -313,6 +766,20 @@ attributes:
     a message is retransmitted. Enter a value in the range 1 - 3600. The default value
     is 1800.
   cli_alias: ack-time
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as1
+      - as2
+      - as2s
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: ASMDNRequest
+      value:
+      - 'on'
 - name: MaxResends
   type: Int64
   minimum: 1
@@ -321,6 +788,24 @@ attributes:
   description: Specify the number of attempts to retransmit a message. Enter a value
     in the range 1 - 30. The default value is 3.
   cli_alias: max-resends
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as1
+      - as2
+      - as2s
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: ASMDNRequest
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: Retransmit
+      value:
+      - 'on'
 - name: ASEncryptAlg
   type: String
   enum:
@@ -335,6 +820,20 @@ attributes:
   default: 3des
   description: Specify the symmetric encryption algorithm to encrypt outbound AS messages.
   cli_alias: as-encrypt-alg
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as1
+      - as2
+      - as2s
+      - as3
+    - evaluation: property-does-not-equal
+      attribute: ASEncrypt
+      value:
+      - 'on'
 - name: ASMDNRequestSignedAlgs
   type: String
   default: sha1,md5
@@ -343,12 +842,38 @@ attributes:
     by a comma. For example, <tt>md5,sha256</tt> . The default value is <tt>sha1,md5</tt>
     .
   cli_alias: as-mdn-request-signed-algs
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as1
+      - as2
+      - as2s
+      - as3
+    - evaluation: property-equals
+      attribute: ASMDNRequest
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: ASMDNRequestSigned
+      value:
+      - 'off'
+  string_patterns:
+  - ^((sha1|sha-1|md5|sha256|sha-256|sha384|sha-384|sha512|sha-512),)*(sha1|sha-1|md5|sha256|sha-256|sha384|sha-384|sha512|sha-512)$
 - name: EBMSCpaId
   type: String
   description: Specify the CPA ID in the message that is sent to the destination partner.
     You can use the value to identify the sender and the recipient. This value is
     used when the B2B gateway is not CPA-enforced.
   cli_alias: ebms-cpa-id
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms2
+    - ebms2s
 - name: EBMSService
   type: String
   description: Specify the value of service element in outbound ebMS2 request that
@@ -357,17 +882,35 @@ attributes:
     a string or a URI. If a non-URI string is specified, you must specify the value
     of <b>Service Type</b>.
   cli_alias: ebms-service
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms2
+    - ebms2s
 - name: EBMSServiceType
   type: String
   description: Specify the value of the type attribute in the ebMS SOAP message. When
     blank, ensure that the service value is a URI.
   cli_alias: ebms-service-type
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms2
+    - ebms2s
 - name: EBMSAction
   type: String
   description: Specify the value of action element in outbound ebMS2 request. For
     example, <tt>NewPurchaseOrder</tt> . This value is used when the B2B gateway is
     not CPA-enforced.
   cli_alias: ebms-action
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms2
+    - ebms2s
 - name: EBMSSendUnsigned
   type: Bool
   default: false
@@ -377,16 +920,48 @@ attributes:
     behavior is off. <ul><li>If enabled, never sign messages.</li><li>If disabled,
     sign messages only if the sender has signing credentials.</li></ul>
   cli_alias: ebms-send-unsigned
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms2
+    - ebms2s
+    - ebms3
+    - ebms3s
 - name: EBMSEncrypt
   type: Bool
   default: false
   description: Specify whether to encrypt the body of outgoing ebMS messages.
   cli_alias: ebms-encrypt
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms2
+    - ebms2s
+    - ebms3
+    - ebms3s
 - name: EBMSEncryptCert
   type: String
   reference_to: CryptoCertificate
   description: Specify the certificate to encrypt outbound messages.
   cli_alias: ebms-encrypt-cert
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-url-protocol-in-list
+      attribute: DestURL
+      value:
+      - ebms2
+      - ebms2s
+      - ebms3
+      - ebms3s
+    - evaluation: property-equals
+      attribute: EBMSEncrypt
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: EBMSEncryptAlg
   type: String
   enum:
@@ -400,6 +975,20 @@ attributes:
   default: http://www.w3.org/2001/04/xmlenc#tripledes-cbc
   description: Specify the encryption algorithm to encrypt outbound ebMS2 messages.
   cli_alias: ebms-encrypt-alg
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms2
+      - ebms2s
+      - ebms3
+      - ebms3s
+    - evaluation: property-does-not-equal
+      attribute: EBMSEncrypt
+      value:
+      - 'on'
 - name: EBMSKeyEncryptAlg
   type: String
   enum:
@@ -410,6 +999,18 @@ attributes:
   description: Specify the ebMS3 asymmetric key transport algorithm to encrypt outbound
     ebMS3 messages. By default, encrypts with RSA Version 1.5.
   cli_alias: ebms-key-encrypt-alg
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+    - evaluation: property-does-not-equal
+      attribute: EBMSEncrypt
+      value:
+      - 'on'
 - name: EBMSDuplicateEliminationRequest
   type: Bool
   default: true
@@ -417,18 +1018,42 @@ attributes:
     of outbound messages. If enabled, the receiving business partner should ignore
     duplicate message received. The default behavior is on.
   cli_alias: ebms-duplicate-elimination-request
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms2
+    - ebms2s
 - name: EBMSAckRequest
   type: Bool
   default: false
   description: Specify whether to request an acknowledgment for outbound ebMS2 messages.
     The default behavior is off.
   cli_alias: ebms-ack-request
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms2
+    - ebms2s
 - name: EBMSAckRequestSigned
   type: Bool
   default: false
   description: Specify whether to request a signed acknowledgment. The default behavior
     is off.
   cli_alias: ebms-ack-request-signed
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms2
+      - ebms2s
+    - evaluation: property-equals
+      attribute: EBMSAckRequest
+      value:
+      - 'off'
 - name: EBMSSyncReplyMode
   type: String
   enum:
@@ -439,12 +1064,32 @@ attributes:
     The syncReplyMode parameter indicates to the receiving partner whether to return
     the business response or acknowledgment in the same connection. None means asynchronous.
   cli_alias: ebms-syncreply-mode
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms2
+      - ebms2s
 - name: EBMSRetry
   type: Bool
   default: false
   description: Specify whether to retransmit unacknowledged outbound messages. The
     default behavior is off.
   cli_alias: ebms-retry
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms2
+      - ebms2s
+    - evaluation: property-does-not-equal
+      attribute: EBMSAckRequest
+      value:
+      - 'on'
 - name: EBMSMaxRetries
   type: Int64
   minimum: 1
@@ -453,6 +1098,22 @@ attributes:
   description: Specify the number of retransmit attempts. Enter a value in the range
     1 - 30. The default value is 3.
   cli_alias: ebms-max-retries
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms2
+      - ebms2s
+    - evaluation: property-does-not-equal
+      attribute: EBMSAckRequest
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: EBMSRetry
+      value:
+      - 'off'
 - name: EBMSRetryInterval
   type: Int64
   minimum: 1
@@ -461,6 +1122,18 @@ attributes:
   description: Specify the interval in seconds between retry attempts. Enter a value
     in the range 1 - 3600. This default value is 1800.
   cli_alias: ebms-retry-interval
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms2
+      - ebms2s
+    - evaluation: property-equals
+      attribute: EBMSRetry
+      value:
+      - 'off'
 - name: EBMSIncludeTimeToLive
   type: Bool
   default: true
@@ -471,6 +1144,18 @@ attributes:
     the receiving partner receives the message after it expires, the receiving partner
     rejects the message.</li></ul>
   cli_alias: ebms-include-time-to-live
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms2
+      - ebms2s
+    - evaluation: property-does-not-equal
+      attribute: EBMSRetry
+      value:
+      - 'on'
 - name: SSLClientConfigType
   type: String
   enum:
@@ -478,11 +1163,57 @@ attributes:
   default: client
   description: Specify the type of TLS profile type to secure connections with targets.
   cli_alias: ssl-client-type
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - as2s
+    - as3
+    - https
+    - ftp
+    - mq
+    - mqfte
+    - dpimsssl
+    - ebms2s
+    - ebms3s
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile
   description: Specify the TLS client profile to secure connections with targets.
   cli_alias: ssl-client
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: SSLClientConfigType
+      value:
+      - client
+    - evaluation: property-url-protocol-in-list
+      attribute: DestURL
+      value:
+      - as2s
+      - https
+      - dpimsssl
+      - ebms2s
+      - ebms3s
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: SSLClientConfigType
+      value:
+      - client
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - as2s
+      - as3
+      - https
+      - ftp
+      - mq
+      - mqfte
+      - dpimsssl
+      - ebms2s
 - name: EBMSMessageExchangePattern
   type: String
   enum:
@@ -493,35 +1224,95 @@ attributes:
     how a business partner exchanges messages with another business partner. The default
     value is one-way push.
   cli_alias: ebms-mep
+  required_when:
+  - evaluation: property-url-protocol-in-list
+    attribute: DestURL
+    value:
+    - ebms3
+    - ebms3s
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms3
+    - ebms3s
 - name: EBMSMessagePartitionChannel
   type: String
   description: When the MEP is one-way pull, specify the message partition channel
     (MPC) to pull messages. In the one-way pull mode, a message remains in MPC storage
     until the B2B gateway receives an authenticated and authorized pull request.
   cli_alias: ebms-mpc
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+    - evaluation: property-equals
+      attribute: EBMSMessageExchangePattern
+      value:
+      - one-way-push
+  string_max_length: 128
+  string_min_length: 0
 - name: EBMSAgreementRef
   type: String
   description: Specify the reference to the agreement that governs this message exchange.
     This value maps to <tt>eb:AgreementRef</tt> in the message header.
   cli_alias: ebms-agreementref
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms3
+    - ebms3s
+  string_max_length: 128
+  string_min_length: 0
 - name: EBMSPMode
   type: String
   description: Specify the PMode identifier for the convenience of PMode management.
     When specified, the <tt>AgreementRef/@pmode</tt> attribute value is expected in
     associated messages.
   cli_alias: ebms-pmode
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms3
+    - ebms3s
+  string_max_length: 128
+  string_min_length: 0
 - name: EBMSOutboundRequestReceipt
   type: Bool
   default: false
   description: Specify whether to request a receipt signal for a sent ebMS3 message.
     The default behavior is off.
   cli_alias: ebms-outbound-request-receipt
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms3
+    - ebms3s
 - name: EBMSOutboundRequestSignedReceipt
   type: Bool
   default: false
   description: Specify whether to request a signed receipt. The default behavior is
     off.
   cli_alias: ebms-outbound-request-signed-receipt
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+    - evaluation: property-equals
+      attribute: EBMSOutboundRequestReceipt
+      value:
+      - 'off'
 - name: EBMSOutboundReceiptReplyPattern
   type: String
   enum:
@@ -531,6 +1322,22 @@ attributes:
   description: Specifies the pattern to send the receipt signal. The default behavior
     is response.
   cli_alias: ebms-outbound-receipt-reply-pattern
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+    - evaluation: property-equals
+      attribute: EBMSOutboundRequestReceipt
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: EBMSMessageExchangePattern
+      value:
+      - one-way-pull
 - name: EBMSOutboundReceptionAwarenessNotification
   type: Bool
   default: false
@@ -539,6 +1346,18 @@ attributes:
     a reception awareness error to the message producer if the receipt signal message
     is not received for a sent message.
   cli_alias: ebms-reception-awareness-notification
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+    - evaluation: property-equals
+      attribute: EBMSOutboundRequestReceipt
+      value:
+      - 'off'
 - name: EBMSOutboundReceptionAwarenessTimeout
   type: Int64
   minimum: 3
@@ -549,15 +1368,59 @@ attributes:
     not receive the receipt signal after this duration, the B2B gateway sends a reception
     awareness error notification to the message producer.
   cli_alias: ebms-reception-awareness-timeout
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+    - evaluation: property-equals
+      attribute: EBMSOutboundRequestReceipt
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: EBMSOutboundReceptionAwarenessNotification
+      value:
+      - 'off'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: EBMSOutboundReceiptReplyPattern
+        value:
+        - Response
+      - evaluation: property-equals
+        attribute: EBMSMessageExchangePattern
+        value:
+        - one-way-push
 - name: EBMSCompress
   type: Bool
   default: false
   description: Specify whether to compress the body of outbound ebMS messages. The
     default behavior is off.
   cli_alias: ebms-compress
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestURL
+    value:
+    - ebms3
+    - ebms3s
 - name: EBMSSOAPBody
   type: Bool
   default: false
   description: When compression is not enabled, specify whether to send messages in
     the SOAP <tt>Body</tt> .
   cli_alias: ebms-soapbody
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: DestURL
+      value:
+      - ebms3
+      - ebms3s
+    - evaluation: property-equals
+      attribute: EBMSCompress
+      value:
+      - 'on'

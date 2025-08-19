@@ -51,6 +51,13 @@ attributes:
     for TLS connections, for example.
   test_value: '"http://test/uri"'
   cli_alias: general-policy
+  required_when:
+  - evaluation: property-equals
+    attribute: EqualPolicies
+    value:
+    - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: CombiningAlg
   type: String
   enum:
@@ -61,6 +68,13 @@ attributes:
   description: Select the policy-combining algorithm when not using a top-level comprehensive
     XACML policy file. The default is First Applicable.
   cli_alias: combining-alg
+  required_when:
+  - evaluation: property-equals
+    attribute: EqualPolicies
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: DependentPolicy
   type: List
   element_type: String

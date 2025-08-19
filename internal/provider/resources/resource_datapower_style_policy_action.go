@@ -66,7 +66,7 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -77,7 +77,7 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -185,6 +185,10 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			"tx_audit_log": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("ITX audit log", "tx-audit-log", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 30),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-]+$"), "Must match :"+"^[_a-zA-Z0-9-]+$"),
+				},
 			},
 			"output": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the output context for the action, which identifies the context that receives the document when the action completes. Enter the context name, the string <tt>PIPE</tt> for streaming mode, or the string <tt>OUTPUT</tt> to identify the final output of the policy rule.", "output", "").String,
@@ -258,6 +262,9 @@ func (r *StylePolicyActionResource) Schema(ctx context.Context, req resource.Sch
 			"variable": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable URL in one of the following formats. <ul><li>var://context/CONTEXT-NAME/VAR-NAME <p>This format is the primary way to reference variables. var://context/CONTEXT-NAME/_roottree is a special variable that holds the value of the context when used as input to an action. var://context/CONTEXT-NAME (or var://context/CONTEXT-NAME/) is treated as shorthand for var://context/CONTEXT-NAME/_roottree.</p></li><li>var://local/VAR-NAME <p>This format can be used to reference variables in the input or output context. Because this reference is context-sensitive, The use of var://context/CONTEXT-NAME/VAR-NAME is recommended.</p></li><li>var://system/CONTEXT-NAME/VAR-NAME <p>This format is used to reference global variables. These variables are rarely used.</p></li><li>var://service/SERVICE-NAME <p>This format is used to reference certain internal state variables. These variables are defined by the firmware.</p></li></ul>", "variable", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^var://(context/[^/ ]+(/[^/ ][^ ]*)+|(system/[^/ ]+|local|service)/[^/ ][^ ]*)$"), "Must match :"+"^var://(context/[^/ ]+(/[^/ ][^ ]*)+|(system/[^/ ]+|local|service)/[^/ ][^ ]*)$"),
+				},
 			},
 			"value": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable value. The value can be a number, a string, or another variable URL.", "value", "").String,

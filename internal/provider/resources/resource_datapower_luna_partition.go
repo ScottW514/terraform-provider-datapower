@@ -62,7 +62,7 @@ func (r *LunaPartitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -73,7 +73,7 @@ func (r *LunaPartitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -86,10 +86,17 @@ func (r *LunaPartitionResource) Schema(ctx context.Context, req resource.SchemaR
 			"partition_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the partition name for key storage. The name identifies the Luna partition. The minimum length is 1 character. The maximum length is 32 characters.", "partition", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
+				},
 			},
 			"partition_serial": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Partition serial", "serial", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(9, 16),
+				},
 			},
 			"password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Password alias", "password-alias", "password_alias").String,

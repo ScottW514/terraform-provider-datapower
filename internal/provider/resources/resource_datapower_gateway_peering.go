@@ -65,7 +65,7 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -76,7 +76,7 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -93,6 +93,9 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 			"local_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the IP address or host alias that the gateway service listens on. The IP address can be any DataPower network interface that can be accessed by other peers in the peer group. The IP address cannot be 127.0.0.1, 0.0.0.0 or ::.", "local-address", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.NoneOf([]string{"127.0.0.1", "0.0.0.0", "::", "::1"}...),
+				},
 			},
 			"local_port": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the port that the gateway service listens on. The default value is 16380. Ensure that all peers use the same port.", "local-port", "").AddDefaultValue("16380").String,
@@ -135,7 +138,10 @@ func (r *GatewayPeeringResource) Schema(ctx context.Context, req resource.Schema
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory to store data. For example, <tt>local:///group1</tt> .", "local-directory", "").AddDefaultValue("local:///").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("local:///"),
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^(local):"), "Must match :"+"^(local):"),
+				},
+				Default: stringdefault.StaticString("local:///"),
 			},
 			"max_memory": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the maximum memory for the data store. When memory reaches this limit, data is removed by using the least recently used (LRU) algorithm. The default value is 0, which means no limits. Do not over allocate memory.", "max-memory", "").AddIntegerRange(0, 1048576).String,

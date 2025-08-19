@@ -25,13 +25,52 @@ attributes:
   type: String
   description: Enter the URL of the schema to use for validation. Used only when the
     Validation Mode is schema or schema-rewrite.
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: ValidationMode
+    value:
+    - schema
+    - schema-rewrite
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: ValidationMode
+    value:
+    - attribute-rewrite
+    - dynamic-schema
+    - default
 - name: URLRewritePolicy
   type: String
   reference_to: URLRewritePolicy
   description: Select a URL Rewrite Policy from the list. Used only the Validation
     Mode is attribute-rewrite or schema-rewrite.
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: ValidationMode
+    value:
+    - attribute-rewrite
+    - schema-rewrite
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: ValidationMode
+    value:
+    - schema
+    - dynamic-schema
+    - default
 - name: DynamicSchema
   type: String
   description: Select a dynamic schema used to perform document validation regardless
     of any validation processing instructions contained within the document. Dynamic
     schemas used Schema Exception Maps or Document Crypto Maps.
+  required_when:
+  - evaluation: property-equals
+    attribute: ValidationMode
+    value:
+    - dynamic-schema
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: ValidationMode
+    value:
+    - schema-rewrite
+    - schema
+    - attribute-rewrite
+    - default

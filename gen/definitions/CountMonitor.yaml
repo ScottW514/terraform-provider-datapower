@@ -57,6 +57,11 @@ attributes:
   description: The name of the HTTP header to read to determine the value of the source
     IP address.
   cli_alias: header
+  required_when:
+  - evaluation: property-equals
+    attribute: Source
+    value:
+    - ip-from-header
 - name: Filter
   type: List
   element_type: DmCountMonitorFilter
@@ -72,6 +77,12 @@ attributes:
     counts have been observed, the Addresses not seen in the longest time are discarded.
     This parameter specifies how many distinct addresses are tracked.
   cli_alias: distinct-sources
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Source
+    value:
+    - each-ip
+    - ip-from-header
 - name: UserSummary
   type: String
   description: A Message Monitor observes traffic that is incuded by the Message Type

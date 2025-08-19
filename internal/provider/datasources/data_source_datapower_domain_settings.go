@@ -68,10 +68,6 @@ func (d *DomainSettingsDataSource) Schema(ctx context.Context, req datasource.Sc
 				MarkdownDescription: "Password treatment",
 				Computed:            true,
 			},
-			"passphrase": schema.StringAttribute{
-				MarkdownDescription: "Passphrase",
-				Computed:            true,
-			},
 			"dependency_actions": actions.ActionsSchema,
 		},
 	}
@@ -89,7 +85,7 @@ func (d *DomainSettingsDataSource) Read(ctx context.Context, req datasource.Read
 	d.pData.Mu.Lock()
 	defer d.pData.Mu.Unlock()
 
-	var data models.DomainSettings
+	var data models.DomainSettingsWO
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return

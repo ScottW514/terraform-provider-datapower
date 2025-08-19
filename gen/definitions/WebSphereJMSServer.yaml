@@ -120,6 +120,29 @@ attributes:
     by an IBM default cipher specification. The default value is <tt>SSL_RSA_WITH_NULL_MD5</tt>
     .
   cli_alias: ssl-cipher
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: SSLClientConfigType
+        value:
+        - proxy
+      - evaluation: property-equals
+        attribute: SSLProfile
+        value:
+        - ''
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: SSLClientConfigType
+        value:
+        - client
+      - evaluation: property-equals
+        attribute: SSLClient
+        value:
+        - ''
 - name: FIPS
   type: Bool
   default: false
@@ -128,6 +151,29 @@ attributes:
     not required. When enabled, which prevents the use of non-FIPs compliance ciphers,
     requires the use of one of the following ciphers. <ul><li><tt>TLS_RSA_WITH_AES_128_CBC_SHA</tt></li><li><tt>TLS_RSA_WITH_AES_256_CBC_SHA</tt></li><li><tt>TLS_RSA_WITH_AES_128_CBC_SHA256</tt></li><li><tt>TLS_RSA_WITH_AES_256_CBC_SHA256</tt></li></ul>
   cli_alias: ssl-fips
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: SSLClientConfigType
+        value:
+        - proxy
+      - evaluation: property-equals
+        attribute: SSLProfile
+        value:
+        - ''
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: SSLClientConfigType
+        value:
+        - client
+      - evaluation: property-equals
+        attribute: SSLClient
+        value:
+        - ''
 - name: UserSummary
   type: String
   description: Comments
@@ -136,6 +182,8 @@ attributes:
   type: String
   description: Username
   cli_alias: username
+  string_patterns:
+  - ^[^ ]+$
 - name: PasswordAlias
   type: String
   reference_to: PasswordAlias
@@ -231,3 +279,8 @@ attributes:
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: property-equals
+    attribute: SSLClientConfigType
+    value:
+    - proxy

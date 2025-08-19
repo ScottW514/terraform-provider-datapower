@@ -42,6 +42,10 @@ attributes:
     local: directory can be downloaded or included in an export. Therefore, consider
     carefully before you store cryptographic files in this directory.</p>'
   cli_alias: file-name
+  file_locations:
+  - cert
+  - sharedcert
+  - local
 - name: UseReplayCache
   type: Bool
   default: true
@@ -60,3 +64,8 @@ attributes:
   description: Which flags to set in GSS-API checksums when generating AP-REQ tokens
     with this keytab. Refer to RFC 4121 for the flag definitions.
   cli_alias: gss-checksum-flags
+  ignored_when:
+  - evaluation: property-equals
+    attribute: GenerateGssChecksum
+    value:
+    - 'off'

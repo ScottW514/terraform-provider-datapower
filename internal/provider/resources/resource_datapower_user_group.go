@@ -64,7 +64,7 @@ func (r *UserGroupResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -79,6 +79,11 @@ func (r *UserGroupResource) Schema(ctx context.Context, req resource.SchemaReque
 				ElementType:         types.StringType,
 				Optional:            true,
 				Computed:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(
+						stringvalidator.RegexMatches(regexp.MustCompile("^[-_a-zA-Z0-9.:*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$"), "Must match :"+"^[-_a-zA-Z0-9.:*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$"),
+					),
+				},
 				Default: listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{
 					types.StringValue("*/*/*?Access=r"),
 				})),

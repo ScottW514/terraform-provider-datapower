@@ -40,6 +40,17 @@ attributes:
     effect on network-based log targets. For network-based log targets, set a load
     balancer group as the remote host.
   cli_alias: backup
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: dmObjectName
+      value:
+      - default-log
+    - evaluation: property-does-not-equal
+      attribute: Type
+      value:
+      - file
 - name: LogEvents
   type: List
   element_type: DmLogEvent
@@ -90,6 +101,11 @@ attributes:
     resources are in high demand, high priority operations are favored over lower
     priority operations.
   cli_alias: priority
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
 - name: SoapVersion
   type: String
   enum:
@@ -98,6 +114,11 @@ attributes:
   default: soap11
   description: SOAP version
   cli_alias: soap-version
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - soap
 - name: Format
   type: String
   enum:
@@ -112,6 +133,13 @@ attributes:
   default: xml
   description: Log format
   cli_alias: format
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - snmp
+    - syslog
+    - syslog-tcp
 - name: TimestampFormat
   type: String
   enum:
@@ -122,31 +150,136 @@ attributes:
   description: Specify the format of the timestamp for log entries. The default format
     is ISO UTC format.
   cli_alias: timestamp
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - smtp
+    - syslog
+    - syslog-tcp
 - name: FixedFormat
   type: Bool
   default: false
   description: Specify whether to make the format of logs unchanging. The log format
     fixed at version 6.0.1. New fields added to log formats are ignored.
   cli_alias: fixed-format
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: dmObjectName
+      value:
+      - default-log
+    - evaluation: property-equals
+      attribute: Format
+      value:
+      - json-icp
 - name: LocalIdentifier
   type: String
   description: Specify a descriptive string that identifies the log target to remote
     recipients. For syslog destinations, do not include spaces.
   cli_alias: local-ident
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Format
+      value:
+      - cbe
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - syslog
+      - smtp
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - file
+      - evaluation: property-equals
+        attribute: UploadMethod
+        value:
+        - smtp
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
 - name: EmailAddress
   type: String
   description: Recipient email address
   cli_alias: email-address
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Type
+      value:
+      - smtp
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - file
+      - evaluation: property-equals
+        attribute: UploadMethod
+        value:
+        - smtp
+  ignored_when:
+  - evaluation: logical-true
 - name: SenderAddress
   type: String
   description: Specify the email address of the sender. The value must match the email
     address of the crypto key when email messages are signed.
   cli_alias: sender-address
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Type
+      value:
+      - smtp
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - file
+      - evaluation: property-equals
+        attribute: UploadMethod
+        value:
+        - smtp
+  ignored_when:
+  - evaluation: logical-true
 - name: SMTPDomain
   type: String
   description: Specify the fully-qualified domain name of the SMTP client. This information
     is part of the SMTP session initiation (HELO command).
   cli_alias: smtp-domain
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Type
+      value:
+      - smtp
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - file
+      - evaluation: property-equals
+        attribute: UploadMethod
+        value:
+        - smtp
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - smtp
 - name: Size
   type: Int64
   minimum: 100
@@ -155,22 +288,53 @@ attributes:
   description: Specify the maximum size of file-based log targets. Enter a value in
     the range 100 - 50000. The default value is 500.
   cli_alias: size
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - file
+    - nfs
+  ignored_when:
+  - evaluation: logical-true
 - name: URL
   type: String
   description: Specify the HTTP URL to send log entries. Entries are sent with the
     POST method and uses the default user agent.
   cli_alias: url
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - soap
+  ignored_when:
+  - evaluation: logical-true
 - name: NFSMount
   type: String
   reference_to: NFSStaticMount
   description: NFS static mount
   cli_alias: nfs-static-mount
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - nfs
+  ignored_when:
+  - evaluation: logical-true
 - name: LocalFile
   type: String
   example: logtemp:///filename.log
   description: Specify the name of the log file. For example, <tt>logtemp:///filename.log</tt>
     or <tt>logstore:///filename.log</tt> .
   cli_alias: local-file
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - file
+  ignored_when:
+  - evaluation: logical-true
+  string_patterns:
+  - ^(logtemp|logstore):[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$
 - name: NFSFile
   type: String
   example: dp-log/filename.log
@@ -178,6 +342,15 @@ attributes:
     Use a regular expression in the <tt>^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$</tt> format.
     Do not end the path with a forward slash (/).
   cli_alias: nfs-file
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - nfs
+  ignored_when:
+  - evaluation: logical-true
+  string_patterns:
+  - ^[_a-z0-9A-Z/][-_a-z0-9A-Z/.]*$
 - name: ArchiveMode
   type: String
   enum:
@@ -186,6 +359,13 @@ attributes:
   default: rotate
   description: Archive mode
   cli_alias: archive-mode
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - file
+  ignored_when:
+  - evaluation: logical-true
 - name: UploadMethod
   type: String
   enum:
@@ -196,6 +376,19 @@ attributes:
   default: ftp
   description: Upload protocol
   cli_alias: upload-method
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ArchiveMode
+      value:
+      - upload
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - file
+  ignored_when:
+  - evaluation: logical-true
 - name: Rotate
   type: Int64
   minimum: 1
@@ -204,12 +397,36 @@ attributes:
   description: Specify the maximum number of rotations. Enter a value in the range
     1 - 100. The default value is 3.
   cli_alias: rotate
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - nfs
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: ArchiveMode
+        value:
+        - rotate
+      - evaluation: property-value-in-list
+        attribute: Type
+        value:
+        - file
+  ignored_when:
+  - evaluation: logical-true
 - name: UseANSIColor
   type: Bool
   default: false
   description: Specify whether to enable the use of ANSI color scheme. When enabled,
     ANSI X3.64 escape sequences color-code messages by log level.
   cli_alias: ansi-color
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - console
 - name: RemoteAddress
   type: String
   description: Specify the host name or IP address of the remote server. To establish
@@ -217,6 +434,27 @@ attributes:
     host of a TLS proxy service. The local TLS proxy service then securely forwards
     the log entries to its configured remote server.
   cli_alias: remote-address
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - syslog
+      - syslog-tcp
+      - smtp
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: ArchiveMode
+        value:
+        - upload
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - file
+  ignored_when:
+  - evaluation: logical-true
 - name: RemotePort
   type: Int64
   minimum: 1
@@ -225,16 +463,92 @@ attributes:
     proxy service to establish a secure TLS connection, set this value to the value
     of the remote port of the TLS proxy service.
   cli_alias: remote-port
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Type
+        value:
+        - file
+      - evaluation: property-does-not-equal
+        attribute: ArchiveMode
+        value:
+        - upload
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - syslog
+      - syslog-tcp
+      - smtp
+      - file
+    - evaluation: property-equals
+      attribute: dmObjectName
+      value:
+      - default-log
 - name: RemoteLogin
   type: String
   description: Remote login
   cli_alias: remote-login
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: UploadMethod
+      value:
+      - ftp
+      - scp
+      - sftp
+    - evaluation: property-equals
+      attribute: ArchiveMode
+      value:
+      - upload
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - file
+  ignored_when:
+  - evaluation: logical-true
 - name: RemotePassword
   type: String
   sensitive: true
   description: Specify the password for the account or username for non-public key
     authentication. Public key authentication can be configured through the default
     user agent.
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: is-edit-new-object
+    - evaluation: property-equals
+      attribute: UploadMethod
+      value:
+      - ftp
+    - evaluation: property-equals
+      attribute: ArchiveMode
+      value:
+      - upload
+    - evaluation: property-value-in-list
+      attribute: Type
+      value:
+      - file
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: UploadMethod
+      value:
+      - ftp
+      - scp
+      - sftp
+    - evaluation: property-does-not-equal
+      attribute: ArchiveMode
+      value:
+      - upload
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - file
 - name: RemoteDirectory
   type: String
   description: Specify an existing writable directory on the remote server to upload
@@ -245,10 +559,39 @@ attributes:
     is relative to the home directory of a user, do not specify a forward slash character
     or encoded character before the fully qualified file name.</li></ul>
   cli_alias: remote-directory
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: UploadMethod
+      value:
+      - ftp
+      - scp
+      - sftp
+    - evaluation: property-does-not-equal
+      attribute: ArchiveMode
+      value:
+      - upload
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - file
 - name: LocalAddress
   type: String
   description: Local address
   cli_alias: local-address
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - smtp
+    - syslog-tcp
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog
+    - soap
 - name: SyslogFacility
   type: String
   enum:
@@ -267,6 +610,14 @@ attributes:
   description: Specify the syslog log facility (per RFC 3164) to include in messages
     sent to the syslog log target.
   cli_alias: facility
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
+    - syslog
+  ignored_when:
+  - evaluation: logical-true
 - name: RateLimit
   type: Int64
   minimum: 0
@@ -281,6 +632,16 @@ attributes:
     the connection within one second. A value of 0 disables rate-limiting by the logging
     target.</li></ul>
   cli_alias: rate-limit
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - nfs
+    - smtp
+    - soap
+    - snmp
+    - syslog
+    - syslog-tcp
 - name: MaxConnections
   type: Int64
   minimum: 1
@@ -290,6 +651,11 @@ attributes:
     to the syslog-tcp server. Enter a value in the range 1 - 100. The default value
     is 1.
   cli_alias: maximum-connections
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
 - name: ConnectTimeout
   type: Int64
   minimum: 1
@@ -300,6 +666,11 @@ attributes:
     in the default log and connection retry attempts are made. Enter a value in the
     range 1 - 90. The default value is 60.
   cli_alias: connect-timeout
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
 - name: IdleTimeout
   type: Int64
   minimum: 1
@@ -312,6 +683,11 @@ attributes:
     same remote address and port</li></ul> Because of potential connection-sharing,
     set the same idle timeout value for these log targets.</p>
   cli_alias: idle-timeout
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
 - name: ActiveTimeout
   type: Int64
   minimum: 0
@@ -326,6 +702,11 @@ attributes:
     Because of potential connection-sharing, set the same active timeout value for
     these log targets.</p>
   cli_alias: active-timeout
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
 - name: FeedbackDetection
   type: Bool
   default: false
@@ -381,6 +762,18 @@ attributes:
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - soap
+      - syslog-tcp
+    - evaluation: property-does-not-equal
+      attribute: SSLClientConfigType
+      value:
+      - client
 - name: SSLClientConfigType
   type: String
   enum:
@@ -388,6 +781,12 @@ attributes:
   default: client
   description: TLS client type
   cli_alias: ssl-client-type
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - soap
+    - syslog-tcp
 - name: RetryInterval
   type: Int64
   minimum: 1
@@ -397,6 +796,11 @@ attributes:
     a failed connection to the syslog server. Enter a value in the range 1 - 600.
     The default value is 1.
   cli_alias: retry-interval
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
 - name: RetryAttempts
   type: Int64
   minimum: 1
@@ -409,6 +813,11 @@ attributes:
     retry interval. <p><b>Note:</b> 0 means that the long retry interval is never
     used and retries forever by using the retry interval.</p>
   cli_alias: retry-attempts
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
 - name: LongRetryInterval
   type: Int64
   minimum: 1
@@ -420,6 +829,11 @@ attributes:
     long retry interval must be greater than the retry interval or it will take no
     effect.</p>
   cli_alias: long-retry-interval
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
 - name: LogPrecision
   type: String
   enum:
@@ -429,6 +843,13 @@ attributes:
   description: Specify the precision for the timestamp of log messages. The default
     value is seconds.
   cli_alias: precision
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - syslog-tcp
+  ignored_when:
+  - evaluation: logical-true
 - name: EventBufferSize
   type: String
   enum:
@@ -447,3 +868,8 @@ attributes:
     log events before they are written to the target. A buffer of this size is allocated
     for each connection.
   cli_alias: buffer-size
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Type
+    value:
+    - syslog-tcp

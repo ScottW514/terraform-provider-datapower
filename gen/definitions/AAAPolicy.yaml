@@ -199,6 +199,13 @@ attributes:
   description: Set the logging level for successful AAA operations. The default level
     is informational.
   cli_alias: log-allowed-level
+  required_when:
+  - evaluation: property-equals
+    attribute: LogAllowed
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: LogRejected
   type: Bool
   default: true
@@ -220,6 +227,13 @@ attributes:
   description: Set the logging level for unsuccessful AAA operations. The default
     level is warning.
   cli_alias: log-rejected-level
+  required_when:
+  - evaluation: property-equals
+    attribute: LogRejected
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: WSSecureConversationCryptoKey
   type: String
   reference_to: CryptoCertificate
@@ -234,6 +248,9 @@ attributes:
     URL exists, it can be specified by the SAML artifact responder URL in the authentication
     phase.
   cli_alias: saml-artifact-mapping
+  file_locations:
+  - local
+  - store
 - name: PingIdentityCompatibility
   type: Bool
   default: false
@@ -248,6 +265,9 @@ attributes:
     &lt;md:EntitiesDescriptor> element with an &lt;EntityDescriptor> child element
     for each identity provider.
   cli_alias: saml2-metadata
+  file_locations:
+  - local
+  - store
 - name: DoSValve
   type: Int64
   minimum: 1
@@ -308,6 +328,11 @@ attributes:
     string value</td><td>Any string to identify the actor or role of the <tt>Security</tt>
     header.</td></tr></table>
   cli_alias: actor-role-id
+  ignored_when:
+  - evaluation: property-equals
+    attribute: EnforceSOAPActor
+    value:
+    - 'off'
 - name: AUSMHTTPHeader
   type: List
   element_type: String
@@ -315,6 +340,13 @@ attributes:
     These headers are included as request or response headers based on the CA Single
     Sign-on header flow.
   cli_alias: au-sm-http-header
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: AUSMHeaderFlow
+    value:
+    - frontend
+    - backend
+    - frontend+backend
 - name: AZSMHTTPHeader
   type: List
   element_type: String
@@ -322,6 +354,13 @@ attributes:
     These headers are included as request or response headers based on the CA Single
     Sign-On header flow.
   cli_alias: az-sm-http-header
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: AZSMHeaderFlow
+    value:
+    - frontend
+    - backend
+    - frontend+backend
 - name: DynConfig
   type: String
   enum:
@@ -341,6 +380,13 @@ attributes:
   description: Specify another AAA policy to use as the template. When specified,
     this AAA policy overwrites the current AAA policy.
   cli_alias: external-aaa-template
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: DynConfig
+    value:
+    - external-aaa
+  ignored_when:
+  - evaluation: logical-true
 - name: DynConfigCustomURL
   type: String
   description: <p>Specify the location of the custom stylesheet or GatewayScript file.
@@ -350,3 +396,16 @@ attributes:
     <tt>ModifyAAAPolicy</tt> element in the <tt>store:///xml-mgmt.xsd</tt> schema
     to construct a schema-compliant AAA configuration.</p>
   cli_alias: dyn-config-custom-url
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: DynConfig
+      value:
+      - current-aaa
+    - evaluation: property-value-in-list
+      attribute: DynConfig
+      value:
+      - external-aaa
+  ignored_when:
+  - evaluation: logical-true

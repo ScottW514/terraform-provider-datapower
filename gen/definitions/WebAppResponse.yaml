@@ -93,6 +93,14 @@ attributes:
   description: This is the transformation rule that is run when the response contains
     an XML MIME type and the XML processing policy is set to XML or SOAP.
   cli_alias: response-xml-rule
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: XMLPolicy
+    value:
+    - xml
+    - soap
+  ignored_when:
+  - evaluation: logical-true
 - name: NonXMLPolicy
   type: String
   enum:
@@ -110,6 +118,14 @@ attributes:
     not contain an XML MIME type and the Non-XML processing policy is set to binary
     or side-effect.
   cli_alias: response-nonxml-rule
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: NonXMLPolicy
+    value:
+    - side
+    - binary
+  ignored_when:
+  - evaluation: logical-true
 - name: ErrorPolicy
   type: String
   reference_to: WebAppErrorHandlingPolicy

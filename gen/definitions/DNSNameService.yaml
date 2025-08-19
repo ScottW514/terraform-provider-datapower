@@ -75,6 +75,16 @@ attributes:
     attempts to send a query to the list of name servers before an error is returned.
     By default, an unacknowledged resolution request is attempted 3 times.
   cli_alias: retries
+  required_when:
+  - evaluation: property-equals
+    attribute: LoadBalanceAlgorithm
+    value:
+    - first-alive
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: LoadBalanceAlgorithm
+    value:
+    - first-alive
 - name: Timeout
   type: Int64
   default: 5
@@ -82,3 +92,13 @@ attributes:
     the resolver waits for a response from a DNS server. After expiry, the resolver
     attempts the query to a different DNS server. The default value is 5.
   cli_alias: timeout
+  required_when:
+  - evaluation: property-equals
+    attribute: LoadBalanceAlgorithm
+    value:
+    - first-alive
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: LoadBalanceAlgorithm
+    value:
+    - first-alive

@@ -65,7 +65,7 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -76,7 +76,7 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -98,15 +98,24 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable from which to retrieve the issuer (iss) claim value. The default value is <tt>iss.claim</tt> . The maximum value length is 256 characters.", "iss-claim", "").AddDefaultValue("iss.claim").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("iss.claim"),
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
+				Default: stringdefault.StaticString("iss.claim"),
 			},
 			"subject_claim": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable from which to retrieve the subject (sub) claim value. The maximum value length is 256 characters.", "sub-claim", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
 			},
 			"audience_claim": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable from which to retrieve the audience (aud) claim value. The maximum value length is 256 characters. This value can be a single string, a comma-separated string of values, or an array of one or more values when you set the variable through GatewayScript processing.", "aud-claim", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
 			},
 			"validity_period": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the validity period in seconds to calculate the expiration (exp) claim. This value is added to the current date and time to be the value for the \"exp\" claim. The JWT is considered valid until expiry. Enter a value in the range 1 - 31622400. The default value is 3600.", "exp-claim", "").AddIntegerRange(1, 31622400).AddDefaultValue("3600").String,
@@ -121,6 +130,9 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 			"private_claim": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the variable from which to retrieve a valid set of JSON claims. These claims are added to any set of claims that are specified previously.", "private-claims", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
 			},
 			"sign_jwk": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("JWK for JWT signature", "jws-jwk", "").String,
@@ -137,6 +149,9 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 			"custom_kid_value_jws": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the <tt>kid</tt> claim of the JWT for JWS. The maximum length is 256 characters. This value can be a single string, a comma-separated string of values, or an array of values when you set the variable through GatewayScript processing.", "custom-kid-value-jws", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
 			},
 			"encrypt_algorithm": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the encryption algorithm to use. Use one of the following values. <ul><li><tt>A128CBC-HS256</tt> - AES_128_CBC_HMAC_SHA_256 authenticated encryption algorithm</li><li><tt>A192CBC-HS384</tt> - AES_192_CBC_HMAC_SHA_384 authenticated encryption algorithm</li><li><tt>A256CBC-HS512</tt> - AES_256_CBC_HMAC_SHA_512 authenticated encryption algorithm</li><li><tt>A128GCM</tt> - AES GCM using 128-bit key</li><li><tt>A192GCM</tt> - AES GCM using 192-bit key</li><li><tt>A256GCM</tt> - AES GCM using 256-bit key</li><li>An inline parameter to read at runtime</li></ul>", "jwe-enc", "").String,
@@ -157,6 +172,9 @@ func (r *AssemblyActionJWTGenerateResource) Schema(ctx context.Context, req reso
 			"custom_kid_value_jwe": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the <tt>kid</tt> claim of the JWT for JWE. The maximum length is 256 characters. This value can be a single string, a comma-separated string of values, or an array of values when you set the variable through GatewayScript processing.", "custom-kid-value-jwe", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
 			},
 			"user_summary": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Comments", "summary", "").String,

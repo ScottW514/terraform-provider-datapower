@@ -41,6 +41,8 @@ attributes:
     for cross-origin requests. This rule does not apply to a CORS request when the
     value for the <tt>Origin</tt> header does not match any value in the list.
   cli_alias: allow-origin
+  string_patterns:
+  - ^[^*?]+$
 - name: AllowCredentials
   type: Bool
   default: false

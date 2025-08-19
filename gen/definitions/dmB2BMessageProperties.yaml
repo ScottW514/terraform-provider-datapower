@@ -8,12 +8,18 @@ attributes:
   required: true
   description: Specify the name of the eb:Property element that is agreed upon between
     the partners.
+  string_max_length: 256
+  string_min_length: 0
 - name: Value
   type: String
   example: value
   required: true
   description: Specify the value of the eb:Property element.
+  string_max_length: 256
+  string_min_length: 0
 - name: Type
   type: String
   description: Specify the type of the eb:Property element for conflict resolution
     between message properties with the same name.
+  string_max_length: 256
+  string_min_length: 0

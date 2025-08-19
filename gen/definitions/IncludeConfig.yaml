@@ -60,3 +60,10 @@ attributes:
     remote files are processed asynchronously after the associated IP interface is
     operational.
   cli_alias: interface-detection
+  required_when:
+  - evaluation: property-equals
+    attribute: OnStartup
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true

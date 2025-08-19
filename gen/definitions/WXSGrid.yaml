@@ -53,6 +53,8 @@ attributes:
     whitespace or the following characters: <tt>^ . \ / , # $ @ : ; * ? &lt; > | =
     + &amp; % [ ] " ''</tt> .'
   cli_alias: grid
+  string_patterns:
+  - ^[^\\\^\]./,#$@:;"'*?<>|=+&%[\s]+$
 - name: UserName
   type: String
   required: true
@@ -64,6 +66,8 @@ attributes:
     .</p><p>The user must have sufficient eXtreme Scale permissions to access the
     grid.</p>'
   cli_alias: username
+  string_patterns:
+  - ^[^<#\s]{1,64}$
 - name: PasswordAlias
   type: String
   reference_to: PasswordAlias
@@ -103,6 +107,13 @@ attributes:
     writing data to the data grid, encrypts the data. When reading data from the eXtreme
     Scale data grid, decrypts the data.'
   cli_alias: encrypt-sskey
+  required_when:
+  - evaluation: property-equals
+    attribute: Encrypt
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: EncryptAlg
   type: String
   enum:
@@ -118,6 +129,13 @@ attributes:
     writing data to the data grid, encrypts the data. When reading data from the eXtreme
     Scale data grid, decrypts the data.'
   cli_alias: encrypt-alg
+  required_when:
+  - evaluation: property-equals
+    attribute: Encrypt
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: KeyObfuscation
   type: Bool
   default: false
@@ -138,3 +156,10 @@ attributes:
   description: Specify the hash algorithm to obfuscate keys before reading data from
     or writing data to the eXtreme Scale data grid.
   cli_alias: key-obfuscation-alg
+  required_when:
+  - evaluation: property-equals
+    attribute: KeyObfuscation
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true

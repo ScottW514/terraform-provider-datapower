@@ -12,6 +12,13 @@ attributes:
   default: /
   description: The relative URI to test for each member of the group. XXX in http://www.foobar.com/XXX.
   cli_alias: target-uri
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: SSL
+    value:
+    - LDAP
+    - IMSConnect
+    - TCPConnection
 - name: Port
   type: Int64
   required: true
@@ -50,6 +57,19 @@ attributes:
     is then analyzed using the Xpath Expression to verify the state of health of the
     server.
   cli_alias: use-soap
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSL
+      value:
+      - LDAP
+      - IMSConnect
+      - TCPConnection
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'on'
 - name: Input
   type: String
   default: store:///healthcheck.xml
@@ -57,6 +77,23 @@ attributes:
     local flash filesystem (for example, local:///healthcheck.xml). This document
     is POSTed to the server if Send SOAP Request is on.
   cli_alias: send-soap
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Post
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'on'
+    - evaluation: property-value-in-list
+      attribute: SSL
+      value:
+      - LDAP
+      - IMSConnect
+      - TCPConnection
 - name: Timeout
   type: Int64
   minimum: 2
@@ -83,6 +120,19 @@ attributes:
     expression is true, the server is healthy. Otherwise, the server health state
     is softdown until it passes a health check.
   cli_alias: xpath
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSL
+      value:
+      - LDAP
+      - IMSConnect
+      - TCPConnection
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'on'
 - name: Filter
   type: String
   default: store:///healthcheck.xsl
@@ -90,6 +140,19 @@ attributes:
     using the XPath Expression entered above. The default is supplied on this DataPower
     device.
   cli_alias: filter
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSL
+      value:
+      - LDAP
+      - IMSConnect
+      - TCPConnection
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'on'
 - name: EnforceTimeout
   type: Bool
   default: false
@@ -98,6 +161,13 @@ attributes:
     the actual time that the request took. With the default behavior, the health check
     timeout is not used to interrupt the transaction.
   cli_alias: enforce-timeout
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: SSL
+    value:
+    - LDAP
+    - IMSConnect
+    - TCPConnection
 - name: IndependentChecks
   type: Bool
   default: false
@@ -106,6 +176,13 @@ attributes:
     Group run sequentially. With the default behavior, if a server hangs, all the
     other health checks for the other members are delayed.
   cli_alias: independent-checks
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: SSL
+    value:
+    - LDAP
+    - IMSConnect
+    - TCPConnection
 - name: GatewayScriptChecks
   type: Bool
   default: false
@@ -113,6 +190,13 @@ attributes:
     content of health check requests and responses can be of any type and the response
     evaluator will be a GatewayScript file.
   cli_alias: gatewayscript-checks
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: SSL
+    value:
+    - LDAP
+    - IMSConnect
+    - TCPConnection
 - name: GatewayScriptReqMethod
   type: String
   enum:
@@ -124,11 +208,59 @@ attributes:
   description: The HTTP method to use for Standard health checks with GatewayScript.
     If Custom is selected, a custom method name must also be specified.
   cli_alias: request-method
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSL
+      value:
+      - LDAP
+      - IMSConnect
+      - TCPConnection
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'off'
 - name: GatewayScriptCustomReqMethod
   type: String
   description: The name of the custom method to use for Standard health check requests
     when GatewayScript processing is enabled.
   cli_alias: request-custom-method
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: SSL
+      value:
+      - Standard
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: GatewayScriptReqMethod
+      value:
+      - Custom
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSL
+      value:
+      - LDAP
+      - IMSConnect
+      - TCPConnection
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: GatewayScriptReqMethod
+      value:
+      - GET
+      - POST
+      - PUT
+      - HEAD
 - name: GatewayScriptReqDoc
   type: String
   default: store:///healthcheck.json
@@ -138,17 +270,82 @@ attributes:
     selected for Standard health checks with GatewayScript. If the HTTP method is
     Custom, the request document is optional.
   cli_alias: request-doc
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: SSL
+      value:
+      - Standard
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'on'
+    - evaluation: property-value-in-list
+      attribute: GatewayScriptReqMethod
+      value:
+      - POST
+      - PUT
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSL
+      value:
+      - LDAP
+      - IMSConnect
+      - TCPConnection
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: GatewayScriptReqMethod
+      value:
+      - GET
+      - HEAD
 - name: GatewayScriptReqContentType
   type: String
   default: application/json
   description: Enter the content type of the Request Document for Standard health
     checks with GatewayScript.
   cli_alias: request-content-type
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSL
+      value:
+      - LDAP
+      - IMSConnect
+      - TCPConnection
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: GatewayScriptReqMethod
+      value:
+      - GET
+      - HEAD
 - name: GatewayScriptRspHandlerMetadata
   type: String
-  description: Enter a string to be used by the GatewayScript Response Evaluator to help determine
-    the state of the server's health.
+  description: Enter a string to be used by the GatewayScript Response Evaluator to
+    help determine the state of the server's health.
   cli_alias: response-evaluator-metadata
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSL
+      value:
+      - LDAP
+      - IMSConnect
+      - TCPConnection
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'off'
 - name: GatewayScriptRspHandler
   type: String
   default: store:///healthcheck.js
@@ -156,6 +353,34 @@ attributes:
     using the Response Evaluator Metadata. The default GatewayScript file is supplied
     on the DataPower Gateway.
   cli_alias: response-evaluator
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: SSL
+      value:
+      - Standard
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: SSL
+      value:
+      - LDAP
+      - IMSConnect
+      - TCPConnection
+    - evaluation: property-equals
+      attribute: GatewayScriptChecks
+      value:
+      - 'off'
+  file_locations:
+  - local
+  - store
+  - temporary
 - name: TCPConnectionType
   type: String
   enum:
@@ -167,6 +392,18 @@ attributes:
     perform a half-open connection to check a member's health. The three-way handshake
     to establish a connection will not be completed for partial connection types.
   cli_alias: tcp-conn-type
+  required_when:
+  - evaluation: property-equals
+    attribute: SSL
+    value:
+    - TCPConnection
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: SSL
+    value:
+    - LDAP
+    - IMSConnect
+    - Standard
 - name: SSLClientConfigType
   type: String
   enum:
@@ -175,9 +412,25 @@ attributes:
   description: The TLS profile type to secure connections between the DataPower Gateway
     and its targets.
   cli_alias: ssl-client-type
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSL
+    value:
+    - Standard
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile
   description: The TLS client profile to secure connections between the DataPower
     Gateway and its targets.
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: SSLClientConfigType
+      value:
+      - client
+    - evaluation: property-does-not-equal
+      attribute: SSL
+      value:
+      - Standard

@@ -60,6 +60,13 @@ attributes:
   reference_to: IPMulticast
   description: IP multicast
   cli_alias: ip-multicast
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - slm-multicast
+  ignored_when:
+  - evaluation: logical-true
 - name: UpdateInterval
   type: Int64
   minimum: 1
@@ -68,3 +75,10 @@ attributes:
   description: Specify the update interval in milliseconds that data is transmitted
     among peers.
   cli_alias: update-interval
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - slm-multicast
+  ignored_when:
+  - evaluation: logical-true

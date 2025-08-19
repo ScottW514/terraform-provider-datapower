@@ -63,7 +63,7 @@ func (r *SocialLoginPolicyResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -74,7 +74,7 @@ func (r *SocialLoginPolicyResource) Schema(ctx context.Context, req resource.Sch
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -107,7 +107,11 @@ func (r *SocialLoginPolicyResource) Schema(ctx context.Context, req resource.Sch
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the URI that the social login policy redirects the client to after the client obtains a code or an access token. The URI must match with what is registered at the social login provider for DataPower as the OAuth/OIDC client. The URI is included in the OAuth/OIDC client request that DataPower generates.</p><p>Note that the social login provider Google mandates that the redirect URI must be a fully qualified host name instead of an IP address.</p><p>Note that the redirect URI should end with the suffix '/social-login-callback' in the pathname in order to differentiate between the callback requests and other types of requests coming into the service.</p><p>You can specify the value of this redirect URI in the following forms.</p><ul><li>Static string. Enter a static string as the redirect URI. Must end with the suffix '/social-login-callback'.</li><li>URL-in/suffix. In this case, it takes the value from the inbound URL service variable var://service/URL-in and then suffixes the value with whatever is specified after <tt>URL-in</tt> as the redirect URI. For example, the value of this property is 'URL-in/social-login-callback' and the incoming URL is 'https://datapower.ibm.com:10087/getresources', then the redirect URI is constructed as 'https://datapower.ibm.com:10087/getresources/social-login-callback'.</li><li>Context variable. You can set a context variable before you invoke this AAA action and specify the context variable name for this value. For example, var://context/AAA/social-login-redirect-uri</li></ul>", "client-redirect-uri", "").AddDefaultValue("URL-in/social-login-callback").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("URL-in/social-login-callback"),
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 255),
+					stringvalidator.RegexMatches(regexp.MustCompile("(^var://)|(/social-login-callback$)"), "Must match :"+"(^var://)|(/social-login-callback$)"),
+				},
+				Default: stringdefault.StaticString("URL-in/social-login-callback"),
 			},
 			"client_optional_query_params": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the optional query parameters to include in the initial OAuth/OIDC request that DataPower sends to the social login provider. Enter the optional query parameters as name=value pairs and separate each pair with an ampersand. For example, prompt=consent&amp;login_hint=jsmith@example.com&amp;openid.realm=example.comi&amp;hd=example.com.", "client-opt-query-params", "").String,
@@ -127,10 +131,18 @@ func (r *SocialLoginPolicyResource) Schema(ctx context.Context, req resource.Sch
 			"provider_az_endpoint": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the provider's endpoint URL that accepts an authorization request from a client to perform social login with the provider. When the provider is Google, you can retrieve the authorization endpoint URL from the Discovery document for Google's OpenID Connect service.", "provider-az-endpoint", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(7, 255),
+					stringvalidator.RegexMatches(regexp.MustCompile("^https?://\\[?[-_a-z0-9A-Z.:]+\\]?(:[0-9]+)?/[ -~]*$"), "Must match :"+"^https?://\\[?[-_a-z0-9A-Z.:]+\\]?(:[0-9]+)?/[ -~]*$"),
+				},
 			},
 			"provider_token_endpoint": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the provider's endpoint URL that accepts an authorization grant, or code, from a client in exchange for an access token from the social login provider. When the provider is Google, you can retrieve the token endpoint URL from the Discovery document for Google's OpenID Connect service.", "provider-token-endpoint", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(7, 255),
+					stringvalidator.RegexMatches(regexp.MustCompile("^https?://\\[?[-_a-z0-9A-Z.:]+\\]?(:[0-9]+)?/[ -~]*$"), "Must match :"+"^https?://\\[?[-_a-z0-9A-Z.:]+\\]?(:[0-9]+)?/[ -~]*$"),
+				},
 			},
 			"validate_jwt_token": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Controls whether to validate the JWT token (ID token)from the provider. If yes, it is recommended that you validate the ID token that is obtained from Google by defining the following settings in the JWT Validator configuration.</p><p><ol><li>Verify the signature by fetching the certs from https://www.googleapis.com/oauth2/v3/certs</li><li>Verify that the <tt>aud</tt> claim matches the client ID of DataPower.</li><li>Verify that the <tt>iss</tt> claim matches accounts.google.com or https://accounts.google.com</li></ol></p><p>For other recommendations on validating the ID token from Google, see https://developers.google.com/identity/protocols/OpenIDConnect.</p>", "validate-jwt-token", "").AddDefaultValue("true").String,

@@ -24,6 +24,11 @@ attributes:
   description: Specify the name of the SAML attribute to be generated. <p>When the
     Data Source Type is variable, this setting can be an empty string. In that case,
     the attribute name that is carried by the variable's content is used.</p>
+  required_when:
+  - evaluation: property-value-not-in-list
+    attribute: SourceType
+    value:
+    - var
 - name: Format
   type: String
   description: '<p>Specify the optional Namespace URI for the SAML 1.x attribute,</p><p>Optional:
@@ -34,6 +39,13 @@ attributes:
     when the attribute value is From Input Message, and specify the XPath expression
     to locate the value. <p>The XML nodes that the XPath expression points to is the
     value for the SAML attribute.</p>
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: SourceType
+    value:
+    - xpath
+  ignored_when:
+  - evaluation: logical-true
 - name: ValueData
   type: String
   description: Specify the information to get the value for the SAML attribute. <p>If
@@ -48,6 +60,11 @@ attributes:
     the format of the variable content.</p><p>&lt;result> &lt;attribute-value name="cn">Alice&lt;/attribute-value>
     &lt;attribute-value name="sn">Alice&lt;/attribute-value> &lt;attribute-value name="creatorsName">
     cn=Manager,dc=datapower,dc=com&lt;/attribute-value> &lt;/result></p>
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: SourceType
+    value:
+    - xpath
 - name: SubValueData
   type: String
   description: <p>When the SAML attribute value is retrieved from a variable as defined
@@ -59,6 +76,11 @@ attributes:
     element is treated as one SAML AttributeValue. Therefore, if multiple attribute-values
     are carried by the DataPower variable, there can be multiple SAML AttributeValues
     in one SAML Attribute element.</p>
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: SourceType
+    value:
+    - var
 - name: FriendlyName
   type: String
   description: Specify a meaningful name for the SAML attribute.

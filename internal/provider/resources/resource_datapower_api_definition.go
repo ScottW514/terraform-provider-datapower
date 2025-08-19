@@ -65,7 +65,7 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -76,7 +76,7 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -104,7 +104,10 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the base path on which the API is served, which is relative to the host. When the base path is not specified, the APIs are served directly under the host. The base path does not include the hostname or any additional segments for paths or operations. The base path must start but not end with slash (/). All resources in a REST API are defined relative to its base path.", "base-path", "").AddDefaultValue("/").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("/"),
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^\\/$||^\\/([0-9a-zA-Z-_.~%!$&'()*+,;=:@]+\\/)*[0-9a-zA-Z-_.~%!$&'()*+,;=:@]+$"), "Must match :"+"^\\/$||^\\/([0-9a-zA-Z-_.~%!$&'()*+,;=:@]+\\/)*[0-9a-zA-Z-_.~%!$&'()*+,;=:@]+$"),
+				},
+				Default: stringdefault.StaticString("/"),
 			},
 			"html_page": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name and location of a static HTML page that the API can return. Import the file to the <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt> DataPower directory.", "html-page", "").String,
@@ -132,11 +135,21 @@ func (r *APIDefinitionResource) Schema(ctx context.Context, req resource.SchemaR
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the MIME types that the API can consume. These MIME types apply to all API operations. You can override the setting for specific operations in the API operation.", "consume", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(
+						stringvalidator.RegexMatches(regexp.MustCompile("[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_]{0,126}\\/[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_+.]{0,126}(;\\s*[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_=\"]{0,126})*$"), "Must match :"+"[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_]{0,126}\\/[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_+.]{0,126}(;\\s*[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_=\"]{0,126})*$"),
+					),
+				},
 			},
 			"produce": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the MIME types that the API can produce. These MIME types apply to all API operations. You can override the setting for specific operations in the API operation.", "produce", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(
+						stringvalidator.RegexMatches(regexp.MustCompile("^(application|audio|image|message|multipart|text|video)\\/[a-zA-Z-]+$"), "Must match :"+"^(application|audio|image|message|multipart|text|video)\\/[a-zA-Z-]+$"),
+					),
+				},
 			},
 			"swagger_location": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name and location of the OpenAPI document when you create the API definition from an OpenAPI document. Prepare the document as follows before you specify the location. <ol><li>When the OpenAPI document is a YAML file, convert it to JSON.</li><li>Import the JSON file to the <tt>local:</tt> or <tt>temporary:</tt> DataPower directory.</li></ol><p>When you create the API definition with API properties, this property is not applicable.</p>", "swagger-location", "").String,

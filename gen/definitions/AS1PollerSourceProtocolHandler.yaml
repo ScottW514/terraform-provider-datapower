@@ -84,6 +84,11 @@ attributes:
   description: The password alias of the password for the account that accesses the
     mailbox on the server.
   cli_alias: password-alias
+  required_when:
+  - evaluation: property-equals
+    attribute: Password
+    value:
+    - ''
 - name: DelayBetweenPolls
   type: Int64
   minimum: 1
@@ -114,9 +119,32 @@ attributes:
   description: The TLS profile type to secure connections between the DataPower Gateway
     and its targets.
   cli_alias: ssl-client-type
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: ConnSecurity
+    value:
+    - none
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ConnSecurity
+    value:
+    - none
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile
   description: The TLS client profile to secure connections between the DataPower
     Gateway and its targets.
   cli_alias: ssl-client
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ConnSecurity
+      value:
+      - none
+    - evaluation: property-equals
+      attribute: SSLClientConfigType
+      value:
+      - client
+  ignored_when:
+  - evaluation: logical-true

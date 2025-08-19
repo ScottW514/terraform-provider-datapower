@@ -26,6 +26,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -63,7 +64,7 @@ func (r *CORSRuleResource) Schema(ctx context.Context, req resource.SchemaReques
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -74,7 +75,7 @@ func (r *CORSRuleResource) Schema(ctx context.Context, req resource.SchemaReques
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -88,6 +89,11 @@ func (r *CORSRuleResource) Schema(ctx context.Context, req resource.SchemaReques
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the accepted values for the <tt>Origin</tt> request header for cross-origin requests. This rule does not apply to a CORS request when the value for the <tt>Origin</tt> header does not match any value in the list.", "allow-origin", "").String,
 				ElementType:         types.StringType,
 				Required:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(
+						stringvalidator.RegexMatches(regexp.MustCompile("^[^*?]+$"), "Must match :"+"^[^*?]+$"),
+					),
+				},
 			},
 			"allow_credentials": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the CORS request returns the <tt>Access-Control-Allow-Credentials</tt> response header. By default, this header is not returned in response to a CORS request. When enabled, the CORS request returns this header with a value of <tt>true</tt> .", "allow-credentials", "").AddDefaultValue("false").String,

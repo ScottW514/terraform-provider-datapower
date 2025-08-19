@@ -42,7 +42,6 @@ type ZosNSSClient struct {
 	ClientId            types.String                `tfsdk:"client_id"`
 	SystemName          types.String                `tfsdk:"system_name"`
 	UserName            types.String                `tfsdk:"user_name"`
-	Password            types.String                `tfsdk:"password"`
 	PasswordAlias       types.String                `tfsdk:"password_alias"`
 	SslClientConfigType types.String                `tfsdk:"ssl_client_config_type"`
 	SslClient           types.String                `tfsdk:"ssl_client"`
@@ -58,7 +57,6 @@ var ZosNSSClientObjectType = map[string]attr.Type{
 	"client_id":              types.StringType,
 	"system_name":            types.StringType,
 	"user_name":              types.StringType,
-	"password":               types.StringType,
 	"password_alias":         types.StringType,
 	"ssl_client_config_type": types.StringType,
 	"ssl_client":             types.StringType,
@@ -95,9 +93,6 @@ func (data ZosNSSClient) IsNull() bool {
 		return false
 	}
 	if !data.UserName.IsNull() {
-		return false
-	}
-	if !data.Password.IsNull() {
 		return false
 	}
 	if !data.PasswordAlias.IsNull() {
@@ -137,9 +132,6 @@ func (data ZosNSSClient) ToBody(ctx context.Context, pathRoot string) string {
 	}
 	if !data.UserName.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`UserName`, data.UserName.ValueString())
-	}
-	if !data.Password.IsNull() {
-		body, _ = sjson.Set(body, pathRoot+`Password`, data.Password.ValueString())
 	}
 	if !data.PasswordAlias.IsNull() {
 		body, _ = sjson.Set(body, pathRoot+`PasswordAlias`, data.PasswordAlias.ValueString())
@@ -191,11 +183,6 @@ func (data *ZosNSSClient) FromBody(ctx context.Context, pathRoot string, res gjs
 		data.UserName = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.UserName = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `Password`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
-		data.Password = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Password = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PasswordAlias`); value.Exists() && tfutils.ParseStringFromGJSON(value).ValueString() != "" {
 		data.PasswordAlias = tfutils.ParseStringFromGJSON(value)
@@ -252,11 +239,6 @@ func (data *ZosNSSClient) UpdateFromBody(ctx context.Context, pathRoot string, r
 		data.UserName = tfutils.ParseStringFromGJSON(value)
 	} else {
 		data.UserName = types.StringNull()
-	}
-	if value := res.Get(pathRoot + `Password`); value.Exists() && !data.Password.IsNull() {
-		data.Password = tfutils.ParseStringFromGJSON(value)
-	} else {
-		data.Password = types.StringNull()
 	}
 	if value := res.Get(pathRoot + `PasswordAlias`); value.Exists() && !data.PasswordAlias.IsNull() {
 		data.PasswordAlias = tfutils.ParseStringFromGJSON(value)

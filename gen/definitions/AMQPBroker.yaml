@@ -80,11 +80,31 @@ attributes:
   type: String
   description: Username
   cli_alias: user
+  required_when:
+  - evaluation: property-equals
+    attribute: Authorization
+    value:
+    - plain
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Authorization
+    value:
+    - plain
 - name: PasswordAlias
   type: String
   reference_to: PasswordAlias
   description: Password alias
   cli_alias: password-alias
+  required_when:
+  - evaluation: property-equals
+    attribute: Authorization
+    value:
+    - plain
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Authorization
+    value:
+    - plain
 - name: MaximumFrameSize
   type: Int64
   minimum: 512
@@ -112,6 +132,11 @@ attributes:
     Enter a value in the range 1 - 65535. The default value is 10. <p>This setting
     does not affect attempts over an established connection.</p>
   cli_alias: retry-interval
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'
 - name: RetryAttempts
   type: Int64
   default: 6
@@ -120,6 +145,11 @@ attributes:
     is used. Enter a value in the range 0 - 65535. The default value is 6. The special
     value of 0 disables the long interval, where the retry interval is used forever.
   cli_alias: retry-attempts
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'
 - name: LongRetryInterval
   type: Int64
   minimum: 1
@@ -130,6 +160,11 @@ attributes:
     range 1 - 65535. The default value is 600. <p>This setting does not affect attempts
     over an established connection.</p>
   cli_alias: long-retry-interval
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'
 - name: ReportingInterval
   type: Int64
   minimum: 1
@@ -138,6 +173,11 @@ attributes:
   description: Specify the interval in seconds between the writing of identical log
     message. Enter a value in the range 1 - 65535. The default value is 10.
   cli_alias: reporting-interval
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile

@@ -23,11 +23,14 @@ package resources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/actions"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/models"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
@@ -64,6 +67,9 @@ func (r *RaidVolumeResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"directory": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The subdirectory where the files on the storage volume are available. The name can be up to 64 characters long. The name cannot start with a period. The name can use all alphanumeric characters and the following special characters: . - _.", "directory", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[-_a-zA-Z0-9][-_a-zA-Z0-9.]{0,63}$"), "Must match :"+"^[-_a-zA-Z0-9][-_a-zA-Z0-9.]{0,63}$"),
+				},
 			},
 			"dependency_actions": actions.ActionsSchema,
 		},

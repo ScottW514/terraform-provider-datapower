@@ -33,6 +33,8 @@ attributes:
 - name: Activity
   type: String
   description: DEPRECATED.
+  ignored_when:
+  - evaluation: logical-true
 - name: HealthPort
   type: Int64
   description: Specifies the TCP Port number to test.

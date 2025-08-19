@@ -8,6 +8,10 @@ attributes:
   example: virtualpath
   description: Specify the directory in virtual file system where the FTP client can
     find this directory.
+  string_patterns:
+  - ^/[^/]+(/[^/]+)*$
 - name: ResponseDirectory
   type: String
   description: Specify the directory in the virtual file system to store responses.
+  string_patterns:
+  - ^(|/[^/]+(/[^/]+)*)$

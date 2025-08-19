@@ -68,15 +68,83 @@ attributes:
   description: Specify the Simple Authentication and Security Layer (SASL) mechanism
     to communicate with the Kafka cluster. By default, uses a clear text password.
   cli_alias: sasl-mechanism
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - sasl_plaintext
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - sasl_ssl
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - plaintext
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - ssl
 - name: UserName
   type: String
   description: Username
   cli_alias: username
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - sasl_plaintext
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - sasl_ssl
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - plaintext
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - ssl
+  string_patterns:
+  - ^[^ ]+$
 - name: PasswordAlias
   type: String
   reference_to: PasswordAlias
   description: Password alias
   cli_alias: password-alias
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - sasl_plaintext
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - sasl_ssl
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - plaintext
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - ssl
 - name: Autocommit
   type: Bool
   default: true
@@ -92,6 +160,28 @@ attributes:
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - ssl
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - sasl_ssl
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - plaintext
+    - evaluation: property-equals
+      attribute: Protocol
+      value:
+      - sasl_plaintext
 - name: MemoryThreshold
   type: Int64
   minimum: 10485760

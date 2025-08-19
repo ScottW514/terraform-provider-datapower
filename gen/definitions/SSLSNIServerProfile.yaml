@@ -69,6 +69,11 @@ attributes:
     After the duration is reached, the TLS connection is closed. Enter a value in
     the range 1 - 691200. The default value is 3600.
   cli_alias: max-duration
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: SSLOptions
+    value:
+    - max-duration
 - name: NumberOfRenegotiationAllowed
   type: Int64
   maximum: 512
@@ -76,3 +81,8 @@ attributes:
     a value in the range 0 - 512. The default value is 0, which indicates client initiated
     renegotiation is not allowed.
   cli_alias: max-renegotiation-allowed
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: SSLOptions
+    value:
+    - max-renegotiation

@@ -56,12 +56,18 @@ attributes:
     segments for paths or operations. The base path must start but not end with slash
     (/). All resources in a REST API are defined relative to its base path.
   cli_alias: base-path
+  string_patterns:
+  - ^\/$||^\/([0-9a-zA-Z-_.~%!$&'()*+,;=:@]+\/)*[0-9a-zA-Z-_.~%!$&'()*+,;=:@]+$
 - name: HtmlPage
   type: String
   description: Specify the name and location of a static HTML page that the API can
     return. Import the file to the <tt>local:</tt> , <tt>store:</tt> , or <tt>temporary:</tt>
     DataPower directory.
   cli_alias: html-page
+  file_locations:
+  - local
+  - temporary
+  - store
 - name: Type
   type: String
   enum:
@@ -95,6 +101,8 @@ attributes:
     to all API operations. You can override the setting for specific operations in
     the API operation.
   cli_alias: consume
+  string_patterns:
+  - '[a-zA-Z0-9][a-zA-Z0-9!#$&\-^_]{0,126}\/[a-zA-Z0-9][a-zA-Z0-9!#$&\-^_+.]{0,126}(;\s*[a-zA-Z0-9][a-zA-Z0-9!#$&\-^_="]{0,126})*$'
 - name: Produce
   type: List
   element_type: String
@@ -102,6 +110,8 @@ attributes:
     to all API operations. You can override the setting for specific operations in
     the API operation.
   cli_alias: produce
+  string_patterns:
+  - ^(application|audio|image|message|multipart|text|video)\/[a-zA-Z-]+$
 - name: SwaggerLocation
   type: String
   description: Specify the name and location of the OpenAPI document when you create
@@ -111,20 +121,43 @@ attributes:
     DataPower directory.</li></ol><p>When you create the API definition with API properties,
     this property is not applicable.</p>
   cli_alias: swagger-location
+  file_locations:
+  - local
+  - temporary
 - name: GraphQLSchema
   type: String
   reference_to: APISchema
   description: GraphQL schema location
   cli_alias: graphql-schema
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - graphql
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - graphql
 - name: WsdlAdvertisedSchemaLocation
   type: String
   description: WSDL advertised schema location
   cli_alias: wsdl-advertised-schema-location
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - wsdl
 - name: WsdlValidationSchema
   type: String
   reference_to: APISchema
   description: WSDL validation schema location
   cli_alias: wsdl-validation-schema
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - wsdl
 - name: SecurityRequirement
   type: List
   reference_to: APISecurityRequirement
@@ -151,12 +184,33 @@ attributes:
     Because you can define multiple ways to obtain the source, ensure that you sequence
     the methods appropriately.
   cli_alias: api-mutual-tls-source
+  required_when:
+  - evaluation: property-equals
+    attribute: RequireAPIMutualTLS
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: RequireAPIMutualTLS
+    value:
+    - 'on'
 - name: APIMutualTLSHeaderName
   type: String
   default: X-Client-Certificate
   description: Specify the HTTP header that contains the client certificate for mutual
     TLS. The default value is <tt>X-Client-Certificate</tt> .
   cli_alias: api-mutual-tls-header-name
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: RequireAPIMutualTLS
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: APIMutualTLSSource
+      value:
+      - header
 - name: Properties
   type: List
   element_type: DmAPIProperty
@@ -215,6 +269,11 @@ attributes:
   description: Specify the content to log on success. When set to payload data, you
     must enable message buffering to capture all request and response data.
   cli_alias: success-content
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ActivityLogToggle
+    value:
+    - 'on'
 - name: ErrorContent
   type: String
   enum:
@@ -227,6 +286,11 @@ attributes:
   description: Specify the content to log on error. When set to payload data, you
     must enable message buffering to capture all request and response data.
   cli_alias: error-content
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ActivityLogToggle
+    value:
+    - 'on'
 - name: PreservedRequestHeader
   type: List
   element_type: String
@@ -340,3 +404,8 @@ attributes:
   default: false
   description: Force HTTP 500 for SOAP 1.1
   cli_alias: force-http-500-for-soap11
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - wsdl

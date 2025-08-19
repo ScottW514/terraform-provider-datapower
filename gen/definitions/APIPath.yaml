@@ -50,6 +50,8 @@ attributes:
     <tt>{type}</tt> parameter matches one path level. The <tt>{*category}</tt> parameter
     matches multiple levels. The following paths match this path template.</p><ul><li><tt>/petstore/cats/</tt></li><li><tt>/petstore/cats/supplies</tt></li><li><tt>/petstore/cats/supplies/health</tt></li><li><tt>/petstore/cats/supplies/health/medicines</tt></li></ul></li></ul>
   cli_alias: path
+  string_patterns:
+  - ^\/$||^\/([0-9a-zA-Z-_.~%!$&'()*+,;=:@\{\}]+\/)*[0-9a-zA-Z-_.~%!$&'()*+,;=:@\{\}]+$
 - name: Operation
   type: List
   reference_to: APIOperation

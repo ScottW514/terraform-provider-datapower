@@ -119,7 +119,7 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 				Validators: []validator.{{.Type}}{
 					{{if eq .Type "List"}}listvalidator.ValueStringsAre({{end}}stringvalidator.OneOf({{range .Enum}}{{quote .}}, {{end}}){{if eq .Type "List"}}){{end}},
 				},
-		{{- else if or (len .StringPatterns) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
+		{{- else if or (len .StringPatterns) (len .StringExclude) (ne .StringMinLength 0) (ne .StringMaxLength 0) }}
 				Validators: []validator.{{.Type}}{
 			{{- if eq .Type "List"}}
 					listvalidator.ValueStringsAre(
@@ -128,7 +128,10 @@ func (r *{{.Name}}Resource) Schema(ctx context.Context, req resource.SchemaReque
 						stringvalidator.LengthBetween({{.StringMinLength}}, {{.StringMaxLength}}),
 			{{- end}}
 			{{- range .StringPatterns}}
-						stringvalidator.RegexMatches(regexp.MustCompile(`{{.}}`), ""),
+						stringvalidator.RegexMatches(regexp.MustCompile({{quote .}}), "Must match :" + {{quote .}}),
+			{{- end}}
+			{{- if len .StringExclude}}
+		                stringvalidator.NoneOf([]string{ {{range .StringExclude}}{{quote .}},{{end}} }...),
 			{{- end}}
 			{{- if eq .Type "List"}}
 					),

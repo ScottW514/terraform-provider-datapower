@@ -7,6 +7,8 @@ attributes:
   required: true
   example: propertyname
   description: Specify the property name.
+  string_patterns:
+  - ^[a-zA-Z0-9_$]( *[a-zA-Z0-9_$-])*$
 - name: Catalog
   type: String
   required: true

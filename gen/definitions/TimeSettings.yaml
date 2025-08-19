@@ -58,6 +58,15 @@ attributes:
     to local times. The name must be three or more alphabetic characters. If you use
     any other characters, the time zone becomes UTC.
   cli_alias: custom
+  required_when:
+  - evaluation: property-equals
+    attribute: LocalTimeZone
+    value:
+    - Custom
+  ignored_when:
+  - evaluation: logical-true
+  string_patterns:
+  - ^[a-zA-Z]{3,}$
 - name: UTCDirection
   type: String
   enum:
@@ -67,18 +76,33 @@ attributes:
   description: Specify the direction relative to UTC for the custom time zone. Asia
     is east. North America is west. The default value is East.
   cli_alias: direction
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: LocalTimeZone
+    value:
+    - Custom
 - name: OffsetHours
   type: Int64
   maximum: 12
   description: Specify the number of hours the custom time zone is from UTC. If 2
     hours and 30 minutes from UTC, enter 2.
   cli_alias: offset-hours
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: LocalTimeZone
+    value:
+    - Custom
 - name: OffsetMinutes
   type: Int64
   maximum: 59
   description: Specify the number of minutes the time zone is from UTC. If 2 hours
     and 30 minutes from UTC, enter 30.
   cli_alias: offset-minutes
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: LocalTimeZone
+    value:
+    - Custom
 - name: DaylightOffsetHours
   type: Int64
   maximum: 12
@@ -86,6 +110,11 @@ attributes:
   description: Specify the offset in hours when the custom time zone observes DST.
     Generally, the offset is 1 hour. The default value is 1.
   cli_alias: daylight-offset
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: LocalTimeZone
+    value:
+    - Custom
 - name: TZNameDST
   type: String
   default: DST
@@ -93,6 +122,28 @@ attributes:
     name is appended to local times. The name must be three or more alphabetic characters.
     If you use any other characters, the time zone becomes UTC.
   cli_alias: daylight-name
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-does-not-equal
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
 - name: DaylightStartMonth
   type: String
   enum:
@@ -112,6 +163,17 @@ attributes:
   description: Specify the month when DST starts for the custom time zone. The default
     value is March.
   cli_alias: daylight-start-month
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
 - name: DaylightStartWeek
   type: Int64
   minimum: 1
@@ -120,6 +182,17 @@ attributes:
   description: Specify the instance of the day in the month when DST starts for the
     custom time zone. If DST starts on the second Sunday in the month, enter 2.
   cli_alias: daylight-start-week
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
 - name: DaylightStartDay
   type: String
   enum:
@@ -134,6 +207,17 @@ attributes:
   description: Specify the day of the week when DST starts for the custom time zone.
     The default value is Sunday.
   cli_alias: daylight-start-day
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
 - name: DaylightStartTimeHours
   type: Int64
   maximum: 23
@@ -141,12 +225,34 @@ attributes:
   description: Specify the hour when DST starts for the custom time zone. If the start
     boundary is 2:30 AM, enter 2.
   cli_alias: daylight-start-hours
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
 - name: DaylightStartTimeMinutes
   type: Int64
   maximum: 59
   description: Specify the minute when DST starts for the custom time zone. If the
     start boundary is 2:30 AM, enter 30.
   cli_alias: daylight-start-minutes
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
 - name: DaylightStopMonth
   type: String
   enum:
@@ -166,6 +272,17 @@ attributes:
   description: Specify the month when DST ends for the custom time zone. The default
     value is November.
   cli_alias: daylight-stop-month
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
 - name: DaylightStopWeek
   type: Int64
   minimum: 1
@@ -174,6 +291,17 @@ attributes:
   description: Specify the instance of the day in the month when DST ends for the
     custom time zone. If DST ends on the second Sunday in the month, enter 2.
   cli_alias: daylight-stop-week
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
 - name: DaylightStopDay
   type: String
   enum:
@@ -188,6 +316,17 @@ attributes:
   description: Specify the day of the week when DST ends for the custom time zone.
     The default value is Sunday.
   cli_alias: daylight-stop-day
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
 - name: DaylightStopTimeHours
   type: Int64
   maximum: 23
@@ -195,9 +334,31 @@ attributes:
   description: Specify the hour when DST ends for the custom time zone. If the end
     boundary is 2:30 AM, enter 2.
   cli_alias: daylight-stop-hours
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'
 - name: DaylightStopTimeMinutes
   type: Int64
   maximum: 59
   description: Specify the minute when DST ends for the custom time zone. If the end
     boundary is 2:30 AM, enter 30.
   cli_alias: daylight-stop-minutes
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: LocalTimeZone
+      value:
+      - Custom
+    - evaluation: property-equals
+      attribute: DaylightOffsetHours
+      value:
+      - '0'

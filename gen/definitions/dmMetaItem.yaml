@@ -37,3 +37,11 @@ attributes:
     name of the variable (service, context, or system) that contains the data to be
     returned in the metadata XML nodeset. The provided value is the name of the element
     in the returned nodeset that contains the data.
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: MetaCategory
+    value:
+    - header
+    - variable
+  ignored_when:
+  - evaluation: logical-true

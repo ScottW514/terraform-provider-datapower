@@ -35,11 +35,31 @@ attributes:
     named object instance.</li><li>When custom, specify the transform to insert a
     template value</li></ul>
   cli_alias: value
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: TemplateType
+    value:
+    - delete
+  ignored_when:
+  - evaluation: property-equals
+    attribute: TemplateType
+    value:
+    - delete
 - name: ValueInverse
   type: String
   description: Specify the value inverse. This value is the inverse transform to replace
     the template value with the wanted value.
   cli_alias: value-inverse
+  required_when:
+  - evaluation: property-equals
+    attribute: TemplateType
+    value:
+    - custom
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: TemplateType
+    value:
+    - custom
 - name: ValueValidate
   type: String
   description: Specify the query to validate the replaced value at the specified location.
@@ -48,3 +68,8 @@ attributes:
     location. The query is in the following format. <p><code>configuration.%Class[$match(`@name`,
     /^%Name/)]%ValueValidate</code></p>
   cli_alias: value-validate
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: TemplateType
+    value:
+    - custom

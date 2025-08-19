@@ -60,16 +60,50 @@ attributes:
   - regexp-match
   description: Match Type
   cli_alias: match-type
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: CredType
+    value:
+    - custom-stylesheet
+  ignored_when:
+  - evaluation: logical-true
 - name: CredValue
   type: List
   element_type: String
   description: Credential value
   cli_alias: value
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: CredMatchType
+      value:
+      - exact-match
+      - regexp-match
+    - evaluation: property-equals
+      attribute: CredType
+      value:
+      - custom-stylesheet
 - name: Stylesheet
   type: String
   description: Custom stylesheet
   cli_alias: stylesheet
+  required_when:
+  - evaluation: property-equals
+    attribute: CredType
+    value:
+    - custom-stylesheet
+  ignored_when:
+  - evaluation: logical-true
 - name: Header
   type: String
   description: Request header
   cli_alias: header
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: CredType
+    value:
+    - ip-from-header
+    - request-header
+  ignored_when:
+  - evaluation: logical-true

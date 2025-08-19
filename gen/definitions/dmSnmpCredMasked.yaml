@@ -6,6 +6,10 @@ attributes:
   type: String
   required: true
   example: 0DEADBEEF0
+  string_max_length: 64
+  string_min_length: 1
+  string_patterns:
+  - ^(0|[0-9a-fA-F]{10,64})$
 - name: AuthProtocol
   type: String
   enum:

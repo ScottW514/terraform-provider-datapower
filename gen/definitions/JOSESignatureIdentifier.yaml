@@ -45,6 +45,13 @@ attributes:
   reference_to: CryptoSSKey
   description: Use the shared secret key to verify the signature.
   cli_alias: sskey
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - sskey
+  ignored_when:
+  - evaluation: logical-true
 - name: Certificate
   type: String
   reference_to: CryptoCertificate
@@ -52,6 +59,13 @@ attributes:
   test_value: '"AccTest_CryptoCertificate"'
   test_bed_value: datapower_crypto_certificate.acc_test.id
   cli_alias: cert
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - certificate
+  ignored_when:
+  - evaluation: logical-true
 - name: ValidAlgorithms
   type: List
   enum:

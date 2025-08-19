@@ -23,6 +23,7 @@ package resources
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -114,6 +115,10 @@ func (r *SystemSettingsResource) Schema(ctx context.Context, req resource.Schema
 			"system_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the name of the DataPower Gateway to use internally as a custom prompt and to use externally to integrate with remote systems. The name must be a 7-bit US-ASCII string of 127 characters or less consisting of letters, numbers, underscore, or embedded dashes, dots, or spaces. However, it is recommended to also be unique with a length of 64 characters or less to be compatible with most remote systems.", "name", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 127),
+					stringvalidator.RegexMatches(regexp.MustCompile("^$|^[a-zA-Z0-9_][-_a-zA-Z0-9.\\ ]{0,126}$"), "Must match :"+"^$|^[a-zA-Z0-9_][-_a-zA-Z0-9.\\ ]{0,126}$"),
+				},
 			},
 			"location": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Enter the location of the DataPower Gateway.", "location", "").String,

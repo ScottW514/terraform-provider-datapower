@@ -44,15 +44,26 @@ attributes:
     instead of the address-port pair in the URL.
   cli_alias: dest-url
   test_value: '"ebms2://somehost/url"'
+  protocols:
+  - ebms2
+  - ebms2s
+  file_locations:
+  - '"NONE"'
 - name: UserName
   type: String
   description: Username
   cli_alias: username
+  string_max_length: 128
+  string_min_length: 0
+  string_patterns:
+  - ^[_a-zA-Z0-9-.]+$
 - name: PasswordAlias
   type: String
   reference_to: PasswordAlias
   description: Password alias
   cli_alias: password-alias
+  string_max_length: 128
+  string_min_length: 0
 - name: ConnectionTimeout
   type: Int64
   minimum: 3
@@ -111,6 +122,16 @@ attributes:
   description: Specify the number of attempts to retransmit an unacknowledged message.
     Enter a value in the range 1 - 30. The default value is 3.
   cli_alias: max-retries
+  required_when:
+  - evaluation: property-equals
+    attribute: Retry
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Retry
+    value:
+    - 'off'
 - name: RetryInterval
   type: Int64
   minimum: 1
@@ -119,6 +140,16 @@ attributes:
   description: Specify the interval in seconds between retransmit attempts. Enter
     a value in the range 1 - 86400. The default value in 1800.
   cli_alias: retry-interval
+  required_when:
+  - evaluation: property-equals
+    attribute: Retry
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Retry
+    value:
+    - 'off'
 - name: PersistDuration
   type: Int64
   maximum: 6000000
@@ -133,6 +164,11 @@ attributes:
     messages. This element indicates when the message expires. The receiving partner
     can accept the message only when it has not expired.
   cli_alias: include-time-to-live
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Retry
+    value:
+    - 'on'
 - name: EncryptionRequired
   type: Bool
   default: false
@@ -144,6 +180,11 @@ attributes:
   reference_to: CryptoCertificate
   description: Encryption certificate
   cli_alias: encrypt-cert
+  required_when:
+  - evaluation: property-equals
+    attribute: EncryptionRequired
+    value:
+    - 'on'
 - name: EncryptAlgorithm
   type: String
   enum:
@@ -157,6 +198,11 @@ attributes:
   default: http://www.w3.org/2001/04/xmlenc#tripledes-cbc
   description: Encryption algorithm
   cli_alias: encrypt-algorithm
+  required_when:
+  - evaluation: property-equals
+    attribute: EncryptionRequired
+    value:
+    - 'on'
 - name: SignatureRequired
   type: Bool
   default: false
@@ -167,6 +213,11 @@ attributes:
   reference_to: CryptoIdentCred
   description: Signature identification credentials
   cli_alias: sign-idcred
+  required_when:
+  - evaluation: property-equals
+    attribute: SignatureRequired
+    value:
+    - 'on'
 - name: SignatureAlgorithm
   type: String
   enum:
@@ -187,6 +238,11 @@ attributes:
   default: rsa-sha1
   description: Signature algorithm
   cli_alias: sign-algorithm
+  required_when:
+  - evaluation: property-equals
+    attribute: SignatureRequired
+    value:
+    - 'on'
 - name: SignDigestAlgorithm
   type: String
   enum:
@@ -200,6 +256,11 @@ attributes:
   default: sha1
   description: Signing digest algorithm
   cli_alias: sign-digest-algorithm
+  required_when:
+  - evaluation: property-equals
+    attribute: SignatureRequired
+    value:
+    - 'on'
 - name: SignatureC14NAlgorithm
   type: String
   enum:
@@ -212,6 +273,11 @@ attributes:
   default: exc-c14n
   description: Signature canonicalization method
   cli_alias: sign-c14n-algorithm
+  required_when:
+  - evaluation: property-equals
+    attribute: SignatureRequired
+    value:
+    - 'on'
 - name: SSLClientConfigType
   type: String
   enum:
@@ -219,8 +285,26 @@ attributes:
   default: client
   description: TLS client type
   cli_alias: ssl-client-type
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: DestEndpointURL
+    value:
+    - ebms2s
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: SSLClientConfigType
+      value:
+      - client
+    - evaluation: property-url-protocol-in-list
+      attribute: DestEndpointURL
+      value:
+      - ebms2s
+  ignored_when:
+  - evaluation: logical-true

@@ -51,3 +51,5 @@ attributes:
     a specific property in the configuration; for example, <tt>Name</tt> .</dd><dt><i>value</i></dt><dd>The
     PCRE match for the property value; For example, <tt>foo(.*)bar</tt> .</dd></dl>
   cli_alias: access-policy
+  string_patterns:
+  - ^[-_a-zA-Z0-9.:*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$

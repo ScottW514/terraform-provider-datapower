@@ -88,6 +88,20 @@ attributes:
   description: Specify the directory to store the output files that processing generates.
     When not specified, the input file location is used.
   cli_alias: output-location
+  required_when:
+  - evaluation: property-equals
+    attribute: UseOutputLocation
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseOutputLocation
+    value:
+    - 'off'
+  file_locations:
+  - logtemp
+  - local
+  - temporary
 - name: DeleteUnused
   type: Bool
   default: true

@@ -41,3 +41,7 @@ attributes:
   type: String
   description: Passphrase
   cli_alias: passphrase
+  string_max_length: 24
+  string_min_length: 8
+  sensitive: true
+  write_only: true

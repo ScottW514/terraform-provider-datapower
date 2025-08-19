@@ -59,12 +59,26 @@ attributes:
     inactivity timeout and session lifetime.</li><li><tt>Path</tt> replaces the form
     POST action URL.</li><li><tt>Secure</tt> replaces the use TLS for login.</li></ul>
   cli_alias: cookie-attributes
+  required_when:
+  - evaluation: property-equals
+    attribute: UseCookieAttributes
+    value:
+    - 'yes'
+  ignored_when:
+  - evaluation: logical-true
 - name: UseSSLForLogin
   type: Bool
   default: true
   description: Specify whether to use TLS for login transactions. By default, uses
     TLS.
   cli_alias: use-ssl
+  required_when:
+  - evaluation: property-equals
+    attribute: FormSupportType
+    value:
+    - static
+  ignored_when:
+  - evaluation: logical-true
 - name: EnableMigration
   type: Bool
   default: false
@@ -83,6 +97,19 @@ attributes:
   description: Specify the listening port to secure TLS redirection during the login
     transaction. The default value is 8080.
   cli_alias: ssl-port
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: FormSupportType
+      value:
+      - static
+    - evaluation: property-equals
+      attribute: UseSSLForLogin
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: SharedSecret
   type: String
   reference_to: CryptoSSKey
@@ -90,6 +117,11 @@ attributes:
     key protects cookies that the service generates and consumes. If allowed, all
     members in the standby group must use the same shared secret.
   cli_alias: shared-secret
+  ignored_when:
+  - evaluation: property-equals
+    attribute: EnableMigration
+    value:
+    - 'off'
 - name: ErrorPage
   type: String
   required: true
@@ -129,24 +161,106 @@ attributes:
     the DataPower Gateway or on an application server. The default value is from an
     application server.
   cli_alias: forms-location
+  required_when:
+  - evaluation: property-equals
+    attribute: FormSupportType
+    value:
+    - static
+  ignored_when:
+  - evaluation: logical-true
 - name: LocalLoginForm
   type: String
   default: store:///LoginPage.htm
   description: Specify the location of the login form on the DataPower Gateway. The
     default value is <tt>store:///LoginPage.htm</tt> .
   cli_alias: local-login-page
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: FormsLocation
+      value:
+      - appliance
+    - evaluation: property-equals
+      attribute: FormSupportType
+      value:
+      - static
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: FormSupportType
+      value:
+      - static
+    - evaluation: property-equals
+      attribute: FormsLocation
+      value:
+      - backend
+  file_locations:
+  - local
+  - store
 - name: LocalErrorPage
   type: String
   default: store:///ErrorPage.htm
   description: Specify the location of the error page on the DataPower Gateway. The
     default value is <tt>store:///ErrorPage.htm</tt> .
   cli_alias: local-error-page
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: FormsLocation
+      value:
+      - appliance
+    - evaluation: property-equals
+      attribute: FormSupportType
+      value:
+      - static
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: FormSupportType
+      value:
+      - static
+    - evaluation: property-equals
+      attribute: FormsLocation
+      value:
+      - backend
+  file_locations:
+  - local
+  - store
 - name: LocalLogoutPage
   type: String
   default: store:///LogoutPage.htm
   description: Specify the location of the logout page on the DataPower Gateway. The
     default value is <tt>store:///LogoutPage.htm</tt> .
   cli_alias: local-logout-page
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: FormsLocation
+      value:
+      - appliance
+    - evaluation: property-equals
+      attribute: FormSupportType
+      value:
+      - static
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: FormSupportType
+      value:
+      - static
+    - evaluation: property-equals
+      attribute: FormsLocation
+      value:
+      - backend
+  file_locations:
+  - local
+  - store
 - name: UsernameField
   type: String
   required: true
@@ -185,6 +299,13 @@ attributes:
   description: Specify the duration in seconds for an inactive session. The default
     value is 600. A value of 0 disables the timer.
   cli_alias: inactivity-timeout
+  required_when:
+  - evaluation: property-equals
+    attribute: UseCookieAttributes
+    value:
+    - 'no'
+  ignored_when:
+  - evaluation: logical-true
 - name: SessionLifetime
   type: Int64
   default: 10800
@@ -192,6 +313,13 @@ attributes:
     The default value is 10800. The minimum value is 1. The special value of 0 sets
     the value to the default value of 10800.
   cli_alias: session-lifetime
+  required_when:
+  - evaluation: property-equals
+    attribute: UseCookieAttributes
+    value:
+    - 'no'
+  ignored_when:
+  - evaluation: logical-true
 - name: RedirectURLType
   type: String
   enum:
@@ -201,6 +329,13 @@ attributes:
   description: Specify how to retrieve host information for URL redirects. By default,
     uses the variable value.
   cli_alias: redirect-url-type
+  required_when:
+  - evaluation: property-equals
+    attribute: FormSupportType
+    value:
+    - static
+  ignored_when:
+  - evaluation: logical-true
 - name: FormSupportType
   type: String
   enum:
@@ -219,3 +354,16 @@ attributes:
     logout page request to generate a logout page with the <tt>logout</tt> operation.</li><li>An
     error page request to generate an error page with the <tt>error</tt> operation.</li></ul>
   cli_alias: script-location
+  required_when:
+  - evaluation: property-equals
+    attribute: FormSupportType
+    value:
+    - custom
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FormSupportType
+    value:
+    - custom
+  file_locations:
+  - local
+  - store

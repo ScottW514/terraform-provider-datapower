@@ -67,7 +67,7 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -78,7 +78,7 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -167,7 +167,10 @@ func (r *SSHServerSourceProtocolHandlerResource) Schema(ctx context.Context, req
 				MarkdownDescription: tfutils.NewAttributeDescription("Default directory", "default-directory", "").AddDefaultValue("/").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("/"),
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^/([^/]+(/[^/]+)*)?$"), "Must match :"+"^/([^/]+(/[^/]+)*)?$"),
+				},
+				Default: stringdefault.StaticString("/"),
 			},
 			"idle_timeout": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in seconds that the SFTP connection can be idle. After the specified duration, the SFTP server closes the control connection. Enter a value in the range 0 - 65535. The default value is 0, which disables the timeout.", "idle-timeout", "").AddIntegerRange(0, 65535).AddDefaultValue("0").String,

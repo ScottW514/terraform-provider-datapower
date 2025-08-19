@@ -23,9 +23,11 @@ package models
 import (
 	"context"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
@@ -69,14 +71,23 @@ var DmB2BMessagePropertiesResourceSchema = ResourceSchema.NestedAttributeObject{
 		"name": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the eb:Property element that is agreed upon between the partners.", "", "").String,
 			Required:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 256),
+			},
 		},
 		"value": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the value of the eb:Property element.", "", "").String,
 			Required:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 256),
+			},
 		},
 		"type": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of the eb:Property element for conflict resolution between message properties with the same name.", "", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 256),
+			},
 		},
 	},
 }

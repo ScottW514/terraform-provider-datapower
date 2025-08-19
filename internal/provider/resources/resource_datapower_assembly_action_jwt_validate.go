@@ -63,7 +63,7 @@ func (r *AssemblyActionJWTValidateResource) Schema(ctx context.Context, req reso
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -74,7 +74,7 @@ func (r *AssemblyActionJWTValidateResource) Schema(ctx context.Context, req reso
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -95,10 +95,16 @@ func (r *AssemblyActionJWTValidateResource) Schema(ctx context.Context, req reso
 			"issuer_claim": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PCRE to validate the issuer claim. When specified, the \"iss\" claim in the JWT is validated. If this claim fails, validation fails. The maximum value length is 256 characters.", "iss-claim", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
 			},
 			"audience_claim": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the PCRE to validate the audience claim. When specified, the \"aud\" claim in the JWT is validated. If this claim fails, the validation fails. The maximum value length is 256 characters.", "aud-claim", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
 			},
 			"decrypt_crypto": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Crypto object for JWT decryption", "jwe-crypto", "").String,

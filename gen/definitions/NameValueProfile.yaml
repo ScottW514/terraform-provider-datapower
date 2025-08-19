@@ -97,6 +97,11 @@ attributes:
   description: An value that does not have a matching entry in the validation list
     is changed to this value if the no match policy is 'set'.
   cli_alias: unvalidated-fixup-map
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: DefaultFixup
+    value:
+    - set
 - name: DefaultXSS
   type: Bool
   default: false
@@ -117,3 +122,16 @@ attributes:
     for invalid characters and various forms of the term &lt;script. Specify a custom
     XML patterns file with PCRE patterns to be used by the XSS filter.
   cli_alias: unvalidated-xss-patternsfile
+  required_when:
+  - evaluation: property-equals
+    attribute: DefaultXSS
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: DefaultXSS
+    value:
+    - 'on'
+  file_locations:
+  - local
+  - store

@@ -19,6 +19,11 @@ attributes:
   default: 1
   description: Indicates the time interval for the burst limit. Specify a value that
     is greater than or equal to 1. The default value is 1.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Burst
+    value:
+    - '0'
 - name: Unit
   type: String
   enum:
@@ -26,6 +31,11 @@ attributes:
   - minute
   default: second
   description: Indicates the time unit for the burst limit. The default value is second.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Burst
+    value:
+    - '0'
 - name: CacheOnly
   type: Bool
   default: true
@@ -33,6 +43,11 @@ attributes:
     limit. In peer group mode, using the local cache first can prevent transaction
     delays if communication problems arise across the peer group. However, the transaction
     count is less precise when this setting is enabled.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Burst
+    value:
+    - '0'
 - name: IsClient
   type: Bool
   default: true
@@ -40,19 +55,39 @@ attributes:
     component. Client burst limits return a 429 error when exceeded. Non-client burst
     limits return a 503 error when exceeded. When set to <tt>off</tt> , burst limit
     information is not included in the response header.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Burst
+    value:
+    - '0'
 - name: UseApiName
   type: Bool
   default: false
   description: Indicates whether to use the API name as part of the burst limit key.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Burst
+    value:
+    - '0'
 - name: UseAppId
   type: Bool
   default: false
   description: Indicates whether to use the application ID as part of the burst limit
     key.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Burst
+    value:
+    - '0'
 - name: UseClientId
   type: Bool
   default: false
   description: Indicates whether to use the client ID as part of the burst limit key.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Burst
+    value:
+    - '0'
 - name: DynamicValue
   type: String
   description: Indicates the dynamic value string for the burst limit, which should
@@ -65,6 +100,11 @@ attributes:
     API context.</p><p><tt>context.set("my.server", "server34")</tt></p><p>The dynamic
     value can then include the variable <tt>my.server</tt> , which resolves to the
     server name <tt>server34</tt> .</p><p>The default value is an empty string.</p>
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Burst
+    value:
+    - '0'
 - name: Weight
   type: String
   default: 1
@@ -73,3 +113,8 @@ attributes:
     burst limit. The default value is 1. If the weight expression evaluates to a value
     that is less than or equal to 0, it is set to 1. An empty string results in an
     error.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Burst
+    value:
+    - '0'

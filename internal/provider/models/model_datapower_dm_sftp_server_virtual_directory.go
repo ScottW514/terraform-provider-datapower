@@ -22,10 +22,13 @@ package models
 
 import (
 	"context"
+	"regexp"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
@@ -55,6 +58,9 @@ var DmSFTPServerVirtualDirectoryResourceSchema = ResourceSchema.NestedAttributeO
 		"virtual_path": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory in the virtual file system of the SFTP server.", "", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.RegexMatches(regexp.MustCompile("^/[^/]+(/[^/]+)*$"), "Must match :"+"^/[^/]+(/[^/]+)*$"),
+			},
 		},
 	},
 }

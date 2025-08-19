@@ -39,6 +39,11 @@ attributes:
     authentication. Encryption must be stopped for compatibility with NAT and other
     firewall applications. Although a security risk, no other option exists when NAT
     is in use.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AuthTLS
+    value:
+    - auth-off
 - name: EncryptData
   type: String
   enum:
@@ -49,6 +54,11 @@ attributes:
   default: enc-data-off
   description: Specify the use of encryption of file transfers. Compatible with NAT
     in all settings.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AuthTLS
+    value:
+    - auth-off
 - name: DataType
   type: String
   enum:

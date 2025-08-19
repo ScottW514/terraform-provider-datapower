@@ -74,6 +74,11 @@ attributes:
     mode are enabled, all peers must use the same crypto material.</li><li>Keys and
     certificates are restricted to PEM and PKCS #12 formats.</li></ul>'
   cli_alias: gateway-peering
+  required_when:
+  - evaluation: property-equals
+    attribute: V5CompatibilityMode
+    value:
+    - 'on'
 - name: GatewayPeeringManager
   type: String
   reference_to: GatewayPeeringManager
@@ -82,6 +87,16 @@ attributes:
     for the gateway service. This property is meaningful when the gateway type is
     an API gateway.
   cli_alias: gateway-peering-manager
+  required_when:
+  - evaluation: property-equals
+    attribute: V5CompatibilityMode
+    value:
+    - 'off'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: V5CompatibilityMode
+    value:
+    - 'on'
 - name: V5CompatibilityMode
   type: Bool
   default: true
@@ -104,6 +119,11 @@ attributes:
     The preferred method for user-defined policies is to define them explicitly so
     that they persist to the startup configuration.</p>
   cli_alias: user-defined-policies
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: V5CompatibilityMode
+    value:
+    - 'off'
 - name: V5CSlmMode
   type: String
   enum:
@@ -114,6 +134,16 @@ attributes:
   description: Specify the peer group type for the SLM policy. This property is meaningful
     when the gateway type is a Multi-Protocol Gateway.
   cli_alias: slm-mode
+  required_when:
+  - evaluation: property-equals
+    attribute: V5CompatibilityMode
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: V5CompatibilityMode
+    value:
+    - 'off'
 - name: IPMulticast
   type: String
   reference_to: IPMulticast
@@ -121,12 +151,56 @@ attributes:
     is meaningful when the gateway type is a Multi-Protocol Gateway and the peer mode
     is multicast.
   cli_alias: ip-multicast
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: V5CSlmMode
+      value:
+      - multicast
+    - evaluation: property-equals
+      attribute: V5CompatibilityMode
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: V5CSlmMode
+      value:
+      - multicast
+    - evaluation: property-equals
+      attribute: V5CompatibilityMode
+      value:
+      - 'off'
 - name: IPUnicast
   type: String
   description: Specify the address of the unicast peer group for the SLM policy. This
     property is meaningful when the gateway type is a Multi-Protocol Gateway and the
     peer mode is unicast.
   cli_alias: ip-unicast
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: V5CSlmMode
+      value:
+      - unicast
+    - evaluation: property-equals
+      attribute: V5CompatibilityMode
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: V5CSlmMode
+      value:
+      - unicast
+    - evaluation: property-equals
+      attribute: V5CompatibilityMode
+      value:
+      - 'off'
 - name: JWTValidationMode
   type: String
   enum:
@@ -141,6 +215,10 @@ attributes:
   type: String
   description: JWT URL
   cli_alias: jwt-url
+  protocols:
+  - https
+  file_locations:
+  - '"NONE"'
 - name: ProxyPolicy
   dm_type: DmAPICGSProxyPolicy
   description: API Manager proxy

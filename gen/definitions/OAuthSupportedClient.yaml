@@ -67,18 +67,48 @@ attributes:
     handle client revocation request.</li><li>owner-revoke-request: handle owner revocation
     request.</li></ul></p>'
   cli_alias: customized-process-url
+  required_when:
+  - evaluation: property-equals
+    attribute: Customized
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - local
+  - store
 - name: OAuthRole
   dm_type: DmOAuthRole
   description: Identifies the role of the client when interacting with a request to
     access a protected resource.
   cli_alias: oauth-role
   test_value: '{"azsvr": true}'
+  required_when:
+  - evaluation: property-equals
+    attribute: Customized
+    value:
+    - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: AZGrant
   dm_type: DmOAuthAZGrantType
   description: Identifies the method to obtain the access token for authorization
     based on the grant type.
   cli_alias: az-grant
   test_value: '{"code": true}'
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+  ignored_when:
+  - evaluation: logical-true
 - name: ClientType
   type: String
   enum:
@@ -91,17 +121,85 @@ attributes:
     exposure of client credentials. If the client can securely authenticate, its classification
     is <tt>confidential</tt> .
   cli_alias: client-type
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Customized
+        value:
+        - 'off'
+      - evaluation: property-value-in-list
+        attribute: OAuthRole
+        value:
+        - azsvr
+      - evaluation: property-value-in-list
+        attribute: AZGrant
+        value:
+        - code
+        - implicit
+        - password
+        - jwt
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Customized
+        value:
+        - 'off'
+      - evaluation: property-value-in-list
+        attribute: OAuthRole
+        value:
+        - rssvr
+      - evaluation: logical-or
+        conditions:
+        - evaluation: property-equals
+          attribute: UseValidationUrl
+          value:
+          - 'on'
+        - evaluation: property-equals
+          attribute: CheckClientCredential
+          value:
+          - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: CheckClientCredential
   type: Bool
   default: false
   description: Identifies whether to verify the client credentials when the DataPower
     Gateway protects the resource server by using access tokens.
   cli_alias: check-client-credential
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: OAuthRole
+      value:
+      - rssvr
 - name: UseValidationUrl
   type: Bool
   default: false
   description: Uses a remote URL to validate the access token.
   cli_alias: use-validation-url
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: OAuthRole
+      value:
+      - rssvr
 - name: ClientAuthenMethod
   type: String
   enum:
@@ -111,12 +209,128 @@ attributes:
   default: secret
   description: Identifies the method to authenticate this client.
   cli_alias: client-authen-method
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-equals
+        attribute: ClientType
+        value:
+        - confidential
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-value-in-list
+          attribute: AZGrant
+          value:
+          - client
+    - evaluation: logical-or
+      conditions:
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-value-in-list
+          attribute: AZGrant
+          value:
+          - code
+          - implicit
+          - password
+          - client
+          - jwt
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - rssvr
+        - evaluation: logical-or
+          conditions:
+          - evaluation: property-equals
+            attribute: UseValidationUrl
+            value:
+            - 'on'
+          - evaluation: property-equals
+            attribute: CheckClientCredential
+            value:
+            - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ClientValCred
   type: String
   reference_to: CryptoValCred
   description: An TLS credential used to authenticate the OAuth client sent by remote
     TLS peer during the TLS handshake.
   cli_alias: client-valcred
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-equals
+        attribute: ClientType
+        value:
+        - confidential
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-value-in-list
+          attribute: AZGrant
+          value:
+          - client
+    - evaluation: property-equals
+      attribute: ClientAuthenMethod
+      value:
+      - ssl
+    - evaluation: logical-or
+      conditions:
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-value-in-list
+          attribute: AZGrant
+          value:
+          - code
+          - implicit
+          - password
+          - client
+          - jwt
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - rssvr
+        - evaluation: property-value-not-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-equals
+          attribute: CheckClientCredential
+          value:
+          - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: GenerateClientSecret
   type: Bool
   default: true
@@ -127,6 +341,51 @@ attributes:
     you generate the passphrase, the passphrase becomes the client secret.</li><li>If
     you do not generate the passphrase, you must explicitly define the client secret.</li></ul>
   cli_alias: generate-client-secret
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-equals
+        attribute: ClientType
+        value:
+        - confidential
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-value-in-list
+          attribute: AZGrant
+          value:
+          - client
+    - evaluation: property-equals
+      attribute: ClientSecret
+      value:
+      - ''
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - code
+      - implicit
+      - password
+      - client
+      - jwt
+    - evaluation: property-equals
+      attribute: ClientAuthenMethod
+      value:
+      - secret
+  ignored_when:
+  - evaluation: logical-true
 - name: ClientSecret
   type: String
   sensitive: true
@@ -135,6 +394,78 @@ attributes:
   cli_alias: client-secret
   test_value: '"secret"'
   write_only: true
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-equals
+        attribute: ClientType
+        value:
+        - confidential
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-value-in-list
+          attribute: AZGrant
+          value:
+          - client
+    - evaluation: property-equals
+      attribute: ClientAuthenMethod
+      value:
+      - secret
+    - evaluation: logical-or
+      conditions:
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-equals
+          attribute: GenerateClientSecret
+          value:
+          - 'off'
+        - evaluation: property-value-in-list
+          attribute: AZGrant
+          value:
+          - code
+          - implicit
+          - password
+          - client
+          - jwt
+          - saml20bearer
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - rssvr
+        - evaluation: property-value-not-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: logical-or
+          conditions:
+          - evaluation: property-equals
+            attribute: CheckClientCredential
+            value:
+            - 'on'
+          - evaluation: property-equals
+            attribute: UseValidationUrl
+            value:
+            - 'on'
+  ignored_when:
+  - evaluation: logical-true
+  string_max_length: 127
+  string_min_length: 4
 - name: Caching
   type: String
   enum:
@@ -145,15 +476,72 @@ attributes:
   default: replay
   description: Specifies the caching mechanism to be used.
   cli_alias: caching
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: OAuthRole
+        value:
+        - azsvr
+      - evaluation: property-value-in-list
+        attribute: OAuthRole
+        value:
+        - rssvr
+      - evaluation: property-equals
+        attribute: UseValidationUrl
+        value:
+        - 'on'
 - name: ValidationURL
   type: String
   example: https://example.com/validate-token
   description: Specifies the validation url.
   cli_alias: validation-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - rssvr
+    - evaluation: property-equals
+      attribute: UseValidationUrl
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
+  string_max_length: 255
+  string_min_length: 7
+  string_patterns:
+  - https://\[?[-_a-z0-9A-Z.:]+\]?(:[0-9]+)?/[ -~]+$
 - name: ValidationFeatures
   dm_type: DmValidationFeatures
   description: Customize how to handle the validation grant type.
   cli_alias: validation-features
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - novalidate
 - name: RedirectURI
   type: List
   element_type: String
@@ -167,6 +555,44 @@ attributes:
     redirection URI can be an application URL; for example, <tt>mobiletrafficapp://</tt>
     that is defined with the <tt>^mobiletrafficapp:\/\/?</tt> PCRE.</p>
   cli_alias: redirect-uri
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - implicit
+      - code
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Customized
+        value:
+        - 'off'
+      - evaluation: property-value-not-in-list
+        attribute: AZGrant
+        value:
+        - code
+        - implicit
 - name: CustomScopeCheck
   type: Bool
   default: false
@@ -181,12 +607,54 @@ attributes:
     the OAuth client requests an access token.</li><li>A resource request where the
     OAuth client requests a resource.</li></ul></p>'
   cli_alias: custom-scope-check
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: OAuthRole
+        value:
+        - azsvr
+      - evaluation: property-equals
+        attribute: UseValidationUrl
+        value:
+        - 'on'
 - name: Scope
   type: String
   example: ^MyPicture$|^MyVideo$
   description: Specifies the PCRE to check the scope. The minimum length of the expression
     is 1 character. The maximum length of the expression is 1023 characters.
   cli_alias: scope
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: CustomScopeCheck
+      value:
+      - 'off'
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-value-in-list
+        attribute: OAuthRole
+        value:
+        - azsvr
+      - evaluation: property-equals
+        attribute: UseValidationUrl
+        value:
+        - 'off'
+  ignored_when:
+  - evaluation: logical-true
+  string_max_length: 1023
+  string_min_length: 1
 - name: ScopeUrl
   type: String
   description: 'Specifies the location of the stylesheet or GatewayScript file for
@@ -194,11 +662,50 @@ attributes:
     or store: directory. The stylesheet or GatewayScript file validates and sets the
     scope to check.'
   cli_alias: scope-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: CustomScopeCheck
+      value:
+      - 'on'
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-value-in-list
+        attribute: OAuthRole
+        value:
+        - azsvr
+      - evaluation: property-equals
+        attribute: UseValidationUrl
+        value:
+        - 'off'
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - local
+  - store
 - name: DefaultScope
   type: String
   description: Specifies the default value of the scope if the client does not define
     any scope value in the request.
   cli_alias: default-scope
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+  string_max_length: 255
+  string_min_length: 0
 - name: TokenSecret
   type: String
   reference_to: CryptoSSKey
@@ -207,6 +714,60 @@ attributes:
   cli_alias: token-secret
   test_value: '"AccTest_CryptoSSKey"'
   test_bed_value: datapower_crypto_sskey.acc_test.id
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Customized
+        value:
+        - 'off'
+      - evaluation: logical-or
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: logical-and
+          conditions:
+          - evaluation: property-value-not-in-list
+            attribute: OAuthRole
+            value:
+            - azsrv
+          - evaluation: property-equals
+            attribute: UseValidationUrl
+            value:
+            - 'off'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Customized
+        value:
+        - 'on'
+      - evaluation: property-value-in-list
+        attribute: AZGrant
+        value:
+        - code
+        - implicit
+      - evaluation: logical-or
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: logical-and
+          conditions:
+          - evaluation: property-value-not-in-list
+            attribute: OAuthRole
+            value:
+            - azsvr
+          - evaluation: property-equals
+            attribute: UseValidationUrl
+            value:
+            - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: LocalAZPageUrl
   type: String
   default: store:///OAuth-Generate-HTML.xsl
@@ -220,6 +781,29 @@ attributes:
     property. If the user does not submit the request before the duration elapses,
     the authorization from the OAuth client is rejected.</p>'
   cli_alias: local-az-page-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-equals
+        attribute: Customized
+        value:
+        - 'on'
+      - evaluation: property-value-in-list
+        attribute: OAuthRole
+        value:
+        - azsvr
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - code
+      - implicit
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - local
+  - store
 - name: DPStateLifeTime
   type: Int64
   minimum: 1
@@ -232,6 +816,26 @@ attributes:
     file that defines the local authorization page and the error handling is set with
     the <b>Authorization Form</b> property.</p>
   cli_alias: dp-state-lifetime
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-equals
+        attribute: Customized
+        value:
+        - 'on'
+      - evaluation: property-value-in-list
+        attribute: OAuthRole
+        value:
+        - azsvr
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - code
+      - implicit
+  ignored_when:
+  - evaluation: logical-true
 - name: AUCodeLifeTime
   type: Int64
   minimum: 1
@@ -244,6 +848,23 @@ attributes:
     receives authorization codes on their redirection URI. Each supported redirection
     URI for the client is defined with the <b>Redirect URI</b> property.</p>
   cli_alias: au-code-lifetime
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - code
+  ignored_when:
+  - evaluation: logical-true
 - name: AccessTokenLifeTime
   type: Int64
   minimum: 1
@@ -252,6 +873,19 @@ attributes:
   description: Sets the lifetime for the access token in seconds. Enter a value in
     the range 1 - 63244800. The default value is 3600.
   cli_alias: access-token-lifetime
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+  ignored_when:
+  - evaluation: logical-true
 - name: RefreshTokenAllowed
   type: Int64
   maximum: 4096
@@ -264,6 +898,25 @@ attributes:
     a value in the range 0 - 4096. The default value is 0. Remember that refresh tokens
     and access tokens are distributed in pairs.</p>
   cli_alias: refresh-token-allowed
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - code
+      - password
+      - jwt
+  ignored_when:
+  - evaluation: logical-true
 - name: RefreshTokenLifeTime
   type: Int64
   minimum: 2
@@ -273,6 +926,29 @@ attributes:
     the range 2 - 252979200. The default value is 5400. The lifetime for a refresh
     token must be longer than that for the corresponding access token.
   cli_alias: refresh-token-lifetime
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - code
+      - password
+      - jwt
+    - evaluation: property-does-not-equal
+      attribute: RefreshTokenAllowed
+      value:
+      - '0'
+  ignored_when:
+  - evaluation: logical-true
 - name: MaxConsentLifeTime
   type: Int64
   maximum: 2529792000
@@ -280,6 +956,29 @@ attributes:
     must gather consent again. Enter a value in the range 0 - 2529792000. The default
     value is 0, which disables this feature.</p>
   cli_alias: max-consent-lifetime
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - code
+      - password
+      - jwt
+    - evaluation: property-does-not-equal
+      attribute: RefreshTokenAllowed
+      value:
+      - '0'
+  ignored_when:
+  - evaluation: logical-true
 - name: CustomResourceOwner
   type: Bool
   default: false
@@ -297,12 +996,43 @@ attributes:
     form to the resource owner</li><li>When issuing a code for an authorization code
     grant type</li><li>When issuing an access token</li></ul></p>'
   cli_alias: custom-resource-owner
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
 - name: ResourceOwnerUrl
   type: String
   description: 'Specifies the location of the stylesheet or GatewayScript file to
     extract information about the resource owner. The file must be in the local: or
     store: directory.'
   cli_alias: resource-owner-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: property-equals
+      attribute: CustomResourceOwner
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - local
+  - store
 - name: AdditionalOAuthProcessUrl
   type: String
   description: '<p>Specifies the location of the stylesheet or GatewayScript file
@@ -339,11 +1069,41 @@ attributes:
     it to the OAuth client. The maximum number of characters in this information is
     512.</li></ul>'
   cli_alias: additional-oauth-process-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: Caching
+      value:
+      - custom
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Customized
+    value:
+    - 'on'
+  file_locations:
+  - local
+  - store
 - name: RSSetHeader
   dm_type: DmOAuthRSSetHeader
   description: Identifies which HTTP headers to create and send to the remote resource
     server.
   cli_alias: rs-set-header
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: OAuthRole
+      value:
+      - rssvr
 - name: ValidationURLSSLClientType
   type: String
   enum:
@@ -352,11 +1112,49 @@ attributes:
   description: The TLS profile type to secure connections between the DataPower Gateway
     and its targets.
   cli_alias: validation-url-ssl-client-type
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - rssvr
+    - evaluation: property-equals
+      attribute: UseValidationUrl
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ValidationURLSSLClient
   type: String
   reference_to: SSLClientProfile
   description: Specifies the TLS Client Profile for the validation URL.
   cli_alias: validation-url-ssl-client
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - rssvr
+    - evaluation: property-equals
+      attribute: UseValidationUrl
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: ValidationURLSSLClientType
+      value:
+      - client
+  ignored_when:
+  - evaluation: logical-true
 - name: JWTGrantValidator
   type: String
   reference_to: AAAJWTValidator
@@ -366,6 +1164,23 @@ attributes:
     check the "aud" claim. The "aud" claim can be a client ID or the redirect URI.</li><li>Must
     be configured to verify a signed JWT.</li></ul>
   cli_alias: jwt-grant-validator
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - jwt
+  ignored_when:
+  - evaluation: logical-true
 - name: ClientJWTValidator
   type: String
   reference_to: AAAJWTValidator
@@ -374,6 +1189,65 @@ attributes:
     "sub" claim must be the same as client ID.</li><li>Must check the "iss" claim.</li><li>Must
     check the "aud" claim.</li><li>Must be configured to verify a signed JWT.</li></ul>
   cli_alias: client-jwt-validator
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-equals
+        attribute: ClientType
+        value:
+        - confidential
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-value-in-list
+          attribute: AZGrant
+          value:
+          - client
+    - evaluation: property-equals
+      attribute: ClientAuthenMethod
+      value:
+      - jwt
+    - evaluation: logical-or
+      conditions:
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-value-in-list
+          attribute: AZGrant
+          value:
+          - code
+          - implicit
+          - password
+          - client
+          - jwt
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-value-in-list
+          attribute: OAuthRole
+          value:
+          - rssvr
+        - evaluation: property-value-not-in-list
+          attribute: OAuthRole
+          value:
+          - azsvr
+        - evaluation: property-equals
+          attribute: CheckClientCredential
+          value:
+          - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: OIDCIDTokenGenerator
   type: String
   reference_to: AAAJWTGenerator
@@ -386,6 +1260,31 @@ attributes:
     claim.</li><li>"Validity period" is used to generate the value of the "exp" claim.</li><li>Requested
     "nonce" is used for the "nonce" claim.</li></ul>
   cli_alias: idtoken-generator
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: property-value-in-list
+      attribute: OAuthRole
+      value:
+      - azsvr
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - oidc
+    - evaluation: property-value-in-list
+      attribute: AZGrant
+      value:
+      - code
+      - implicit
+      - password
+      - client
+      - jwt
+  ignored_when:
+  - evaluation: logical-true
 - name: OAuthFeatures
   dm_type: DmOAuthFeatures
   description: Specify which features to enable.

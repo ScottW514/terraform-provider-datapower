@@ -5,6 +5,7 @@ resource "datapower_zos_nss_client" "test" {
   remote_address = "remote.host"
   remote_port    = 443
   client_id      = "client_id"
-  system_name    = "ResTestsystem"
+  system_name    = "sysname"
   user_name      = "username"
+  ssl_client     = "AccTest_SSLClientProfile"
 }

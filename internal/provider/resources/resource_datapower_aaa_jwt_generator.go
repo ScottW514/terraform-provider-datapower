@@ -65,7 +65,7 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -76,7 +76,7 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -90,7 +90,10 @@ func (r *AAAJWTGeneratorResource) Schema(ctx context.Context, req resource.Schem
 				MarkdownDescription: tfutils.NewAttributeDescription("The issuer claim, \"iss\", identifies the principal that issues the JWT. The maximum length is 256 characters. The default value is <tt>idg</tt> .", "iss", "").AddDefaultValue("idg").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("idg"),
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
+				Default: stringdefault.StaticString("idg"),
 			},
 			"duration": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The validity period identifies the expiration time, \"exp\" claim. Enter a value in the range 1 - 31622400. The default value is 3600.", "duration", "").AddIntegerRange(1, 31622400).AddDefaultValue("3600").String,

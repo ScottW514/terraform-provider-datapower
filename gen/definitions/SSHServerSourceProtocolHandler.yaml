@@ -90,6 +90,11 @@ attributes:
     (SSH_FXP_READDIR) requests to remote servers are allowed. Requires a remote FTP
     or SFTP server.
   cli_alias: allow-backend-listings
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - transparent
 - name: AllowBackendDelete
   type: Bool
   default: false
@@ -97,6 +102,11 @@ attributes:
     (SSH_FXP_REMOVE) to remote servers are allowed. Requires a remote FTP or SFTP
     server.
   cli_alias: allow-backend-delete
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - transparent
 - name: AllowBackendStat
   type: Bool
   default: false
@@ -107,12 +117,22 @@ attributes:
     not follow the DataPower SFTP URL naming conventions. Requires a remote FTP or
     SFTP server.
   cli_alias: allow-backend-stat
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - transparent
 - name: AllowBackendMkdir
   type: Bool
   default: false
   description: In transparent mode, determines whether or not requests to create directories
     (SSH_FXP_MKDIR) on remote servers are allowed. Requires a remote FTP or SFTP server.
   cli_alias: allow-backend-mkdir
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - transparent
 - name: AllowBackendRmdir
   type: Bool
   default: false
@@ -120,6 +140,11 @@ attributes:
     (SSH_FXP_RMDIR) from remote servers are allowed. Requires a remote FTP or SFTP
     server.
   cli_alias: allow-backend-rmdir
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - transparent
 - name: AllowBackendRename
   type: Bool
   default: false
@@ -127,6 +152,11 @@ attributes:
     or directories (SSH_FXP_RENAME) on remote servers are allowed. Requires a remote
     FTP or SFTP server.
   cli_alias: allow-backend-rename
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - transparent
 - name: AAAPolicy
   type: String
   reference_to: AAAPolicy
@@ -147,6 +177,8 @@ attributes:
   default: /
   description: Default directory
   cli_alias: default-directory
+  string_patterns:
+  - ^/([^/]+(/[^/]+)*)?$
 - name: IdleTimeout
   type: Int64
   minimum: 0
@@ -166,6 +198,11 @@ attributes:
     are disconnected. When the timeout expires, the virtual file system object is
     destroyed. Enter a value in the range 1- 43200. The default value is 600.
   cli_alias: persistent-filesystem-timeout
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: FilesystemType
+    value:
+    - virtual-persistent
 - name: VirtualDirectories
   type: List
   element_type: DmSFTPServerVirtualDirectory
@@ -174,3 +211,9 @@ attributes:
     to write file to be processed. The root directory (/) is always present and cannot
     be created.
   cli_alias: virtual-directory
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: FilesystemType
+    value:
+    - virtual-ephemeral
+    - virtual-persistent

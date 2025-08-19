@@ -63,7 +63,7 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -74,7 +74,7 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -87,10 +87,16 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 			"issuer": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The optional issuer claim. The \"iss\" PCRE can be used to verify the JWT. The maximum length of the value is 256 characters.", "iss", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
 			},
 			"aud": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The optional audience claim. The \"aud\" PCRE can be used to verify the JWT. The maximum length of the value is 256 characters.", "aud", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 256),
+				},
 			},
 			"val_method": models.GetDmJWTValMethodResourceSchema("Various methods can be used to validate the JWT. You can decrypt the JWT, verify the JWT signature, and process a custom GatewayScript or XSLT file for further processing.", "validate-method", "", false),
 			"customized_script": schema.StringAttribute{
@@ -120,7 +126,10 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 				MarkdownDescription: tfutils.NewAttributeDescription("The URL indicates the source location where the decryption credentials can be fetched for decrypting the JWT. The URL must be in the format of http or https. By default, the URL is http://example.com/v3/key. This field is meaningful when you choose <tt>Decrypt</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Decrypt method list.", "decrypt-fetch-cred-url", "").AddDefaultValue("http://example.com/v3/key").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("http://example.com/v3/key"),
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(7, 255),
+				},
+				Default: stringdefault.StaticString("http://example.com/v3/key"),
 			},
 			"decrypt_fetch_cred_ssl_profile": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile is specified for fetching the decryption credentials. This field is meaningful when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Decrypt method list.", "decrypt-fetch-cred-sslprofile", "ssl_client_profile").String,
@@ -163,7 +172,10 @@ func (r *AAAJWTValidatorResource) Schema(ctx context.Context, req resource.Schem
 				MarkdownDescription: tfutils.NewAttributeDescription("The URL indicates the source location where the verification credentials can be fetched for verifying the JWT signature. The URL must be in the format of http or https. By default, the URL is http://example.com/v3/certs. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Verify method list.", "verify-fetch-cred-url", "").AddDefaultValue("http://example.com/v3/certs").String,
 				Optional:            true,
 				Computed:            true,
-				Default:             stringdefault.StaticString("http://example.com/v3/certs"),
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(7, 255),
+				},
+				Default: stringdefault.StaticString("http://example.com/v3/certs"),
 			},
 			"verify_fetch_cred_ssl_profile": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS client profile is provided for fetching the verification credentials. This field is meaningful when you select <tt>Verify</tt> in the Validation method field and choose <tt>Remotely retrieve JWK</tt> from the Verify method list.", "verify-fetch-cred-sslprofile", "ssl_client_profile").String,

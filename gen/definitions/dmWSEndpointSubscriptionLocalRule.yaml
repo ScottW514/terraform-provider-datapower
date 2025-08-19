@@ -16,6 +16,11 @@ attributes:
   description: Select the protocol portion of the rewritten web service binding used
     by the local endpoint. The protocol can be different from the one in the WSDL.
   cli_alias: local-endpoint-protocol
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: UseFrontProtocol
+    value:
+    - 'off'
 - name: LocalEndpointHostname
   type: String
   required: true
@@ -25,11 +30,21 @@ attributes:
     Proxy listens on all of the interfaces. Alternatively, you can specify a Host
     Alias.
   cli_alias: local-endpoint-hostname
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: UseFrontProtocol
+    value:
+    - 'off'
 - name: LocalEndpointPort
   type: Int64
   description: Specify the URL portion of the rewritten web service binding that specifies
     the port. If 0, uses the value from the WSDL.
   cli_alias: local-endpoint-port
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: UseFrontProtocol
+    value:
+    - 'off'
 - name: LocalEndpointURI
   type: String
   description: Specify the URL portion of the rewritten web service binding that specifies
@@ -39,6 +54,13 @@ attributes:
   type: String
   description: Select the Front Side Handler to use to determine the IP address, port,
     and protocol.
+  required_when:
+  - evaluation: property-equals
+    attribute: UseFrontProtocol
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: UseFrontProtocol
   type: Bool
   default: false

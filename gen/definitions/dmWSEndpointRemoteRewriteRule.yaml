@@ -29,11 +29,35 @@ attributes:
   description: Specify the URL portion of the rewritten web service binding that specifies
     the host name or IP address. If not specified, uses the value from the WSDL.
   cli_alias: remote-endpoint-hostname
+  required_when:
+  - evaluation: property-value-not-in-list
+    attribute: RemoteEndpointProtocol
+    value:
+    - dpmq
+    - idgmq
+    - dptibems
+    - dpwasjms
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: RemoteEndpointProtocol
+    value:
+    - dpmq
+    - idgmq
+    - dptibems
+    - dpwasjms
 - name: RemoteEndpointPort
   type: Int64
   description: Specify the URL portion of the rewritten web service binding that specifies
     the port. If 0, uses the value from the WSDL.
   cli_alias: remote-endpoint-port
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: RemoteEndpointProtocol
+    value:
+    - dpmq
+    - idgmq
+    - dptibems
+    - dpwasjms
 - name: RemoteEndpointURI
   type: String
   description: Specify the URL portion of the rewritten web service binding that specifies
@@ -47,20 +71,60 @@ attributes:
   description: Specify the URL portion of the rewritten web service binding that specifies
     IBM MQ Queue Manager. Required when remote server is IBM MQ.
   cli_alias: remote-mq-qm
+  required_when:
+  - evaluation: property-equals
+    attribute: RemoteEndpointProtocol
+    value:
+    - dpmq
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: RemoteEndpointProtocol
+    value:
+    - dpmq
 - name: RemoteMQManager
   type: String
   description: Specify the URL portion of the rewritten web service binding that specifies
     IBM MQ v9+ Queue Manager. Required when remote server is IBM MQ v9+.
   cli_alias: remote-idg-mq-qm
+  required_when:
+  - evaluation: property-equals
+    attribute: RemoteEndpointProtocol
+    value:
+    - idgmq
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: RemoteEndpointProtocol
+    value:
+    - idgmq
 - name: RemoteTibcoEMS
   type: String
   reference_to: TibcoEMSServer
   description: Specify the URL portion of the rewritten web service binding that specifies
     TIBCO EMS. Required when remote server is TIBCO EMS.
   cli_alias: remote-tibems-server
+  required_when:
+  - evaluation: property-equals
+    attribute: RemoteEndpointProtocol
+    value:
+    - dptibems
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: RemoteEndpointProtocol
+    value:
+    - dptibems
 - name: RemoteWebSphereJMS
   type: String
   reference_to: WebSphereJMSServer
   description: Specify the URL portion of the rewritten web service binding that specifies
     WebSphere JMS. Required when remote server is WebSphere Application Server.
   cli_alias: remote-wasjms-server
+  required_when:
+  - evaluation: property-equals
+    attribute: RemoteEndpointProtocol
+    value:
+    - dpwasjms
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: RemoteEndpointProtocol
+    value:
+    - dpwasjms

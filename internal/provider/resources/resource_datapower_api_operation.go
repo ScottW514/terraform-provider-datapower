@@ -26,6 +26,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -64,7 +65,7 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -75,7 +76,7 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -108,11 +109,21 @@ func (r *APIOperationResource) Schema(ctx context.Context, req resource.SchemaRe
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify MIME types that the operation can consume. This setting overrides the API-level consume declaration that is defined in the API definition.", "consume", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(
+						stringvalidator.RegexMatches(regexp.MustCompile("[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_]{0,126}\\/[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_+.]{0,126}(;\\s*[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_=\"]{0,126})*$"), "Must match :"+"[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_]{0,126}\\/[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_+.]{0,126}(;\\s*[a-zA-Z0-9][a-zA-Z0-9!#$&\\-^_=\"]{0,126})*$"),
+					),
+				},
 			},
 			"produce": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify MIME types that the operation can produce. This setting overrides the API-level produce declaration that is defined in the API definition.", "produce", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(
+						stringvalidator.RegexMatches(regexp.MustCompile("^(application|audio|image|message|multipart|text|video)\\/[a-zA-Z-]+$"), "Must match :"+"^(application|audio|image|message|multipart|text|video)\\/[a-zA-Z-]+$"),
+					),
+				},
 			},
 			"request_schema": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Request schema", "request-schema", "api_schema").String,

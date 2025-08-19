@@ -26,3 +26,8 @@ attributes:
   - login
   default: plain
   description: Specify the method to authenticate the SMTP client.
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Options
+    value:
+    - Auth

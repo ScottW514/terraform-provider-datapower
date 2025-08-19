@@ -100,10 +100,6 @@ func (d *ZosNSSClientDataSource) Schema(ctx context.Context, req datasource.Sche
 							MarkdownDescription: "<p>Specifies a user name to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The user name must match an existing user ID on the NSS Server.</p>",
 							Computed:            true,
 						},
-						"password": schema.StringAttribute{
-							MarkdownDescription: "<p>Specifies the password to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Password specifies the password to use in conjunction with the value provided by the User Name.</p>",
-							Computed:            true,
-						},
 						"password_alias": schema.StringAttribute{
 							MarkdownDescription: "<p>Specifies the password alias of the password to use to authenticate to the NSS server.</p><p>The associated password is used in conjunction with the value provided by the User Name.</p>",
 							Computed:            true,

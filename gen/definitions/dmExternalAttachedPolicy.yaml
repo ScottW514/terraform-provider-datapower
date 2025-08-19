@@ -14,6 +14,16 @@ attributes:
 - name: ExternalAttachWSDLComponentValue
   type: String
   description: Enter the qname of a WSDL component formatted {ns}ncname
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: ExternalAttachWSDLComponentType
+    value:
+    - rest
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ExternalAttachWSDLComponentType
+    value:
+    - rest
 - name: ExternalAttachPolicyURL
   type: String
   required: true
@@ -22,6 +32,11 @@ attributes:
 - name: ExternalAttachPolicyFragmentID
   type: String
   description: Matches Fragment Identifier
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ExternalAttachWSDLComponentType
+    value:
+    - rest
 - name: ExternalAttachMessageContentFilter
   type: String
   reference_to: MessageContentFilters

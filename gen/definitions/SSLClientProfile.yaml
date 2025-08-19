@@ -136,6 +136,13 @@ attributes:
   reference_to: CryptoValCred
   description: Validation credentials
   cli_alias: valcred
+  required_when:
+  - evaluation: property-equals
+    attribute: ValidateServerCert
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: Caching
   type: Bool
   default: true
@@ -150,6 +157,11 @@ attributes:
     cache before they are removed. Enter a value in the range 1 - 86400. The default
     value is 300.
   cli_alias: cache-timeout
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Caching
+    value:
+    - 'off'
 - name: CacheSize
   type: Int64
   minimum: 1
@@ -158,6 +170,11 @@ attributes:
   description: Specify the maximum number of entries of the session cache. Enter a
     value in the range 1 - 500000. The default value is 100.
   cli_alias: cache-size
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Caching
+    value:
+    - 'off'
 - name: SSLClientFeatures
   dm_type: DmSSLClientFeatures
   description: Features
@@ -209,10 +226,30 @@ attributes:
     the TLS client <tt>hello</tt> message. By default, the hostname of the target
     is used in the SNI extension.
   cli_alias: use-custom-sni-hostname
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: SSLClientFeatures
+    value:
+    - use-sni
+  ignored_when:
+  - evaluation: logical-true
 - name: CustomSNIHostname
   type: String
   description: Custom SNI hostname
   cli_alias: custom-sni-hostname
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: UseCustomSNIHostname
+      value:
+      - 'yes'
+    - evaluation: property-value-in-list
+      attribute: SSLClientFeatures
+      value:
+      - use-sni
+  ignored_when:
+  - evaluation: logical-true
 - name: ValidateHostname
   type: Bool
   default: false
@@ -224,6 +261,11 @@ attributes:
     during the handshake. The default behavior uses the subject DN only when the <tt>Subject
     Alternative Name</tt> (SAN) extension contains no DNS name.
   cli_alias: hostname-validation-flags
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ValidateHostname
+    value:
+    - 'off'
 - name: HostnameValidationFailOnError
   type: Bool
   default: false
@@ -232,6 +274,11 @@ attributes:
     validation. The default behavior is to ignore the failure, log an event, and continue
     with any configured server certificate validation.
   cli_alias: hostname-validation-fail
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ValidateHostname
+    value:
+    - 'off'
 - name: EnableTLS13Compat
   type: Bool
   default: true

@@ -12,6 +12,8 @@ attributes:
     string <tt>default</tt> .</li></ul><p>An exact match of a status code takes precedence
     over a match within a range. When there is no match, the default schema is used.
     When a schema is not specified, a request is accepted without schema validation.</p>
+  string_patterns:
+  - ^(default|[1-9][0-9]{2}|[1-5]XX)$
 - name: ResponseSchema
   type: String
   reference_to: APISchema

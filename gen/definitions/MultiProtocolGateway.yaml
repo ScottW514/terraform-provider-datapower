@@ -53,6 +53,11 @@ attributes:
     the server. Only applicable when the HTTP version to the server is set to HTTP/2
     and the connection uses TLS. The default value is off.
   cli_alias: http2-required
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: BackHTTPVersion
+    value:
+    - HTTP/2
 - name: RequestType
   type: String
   enum:
@@ -95,6 +100,11 @@ attributes:
     <tt>Location</tt> response header, subsequent requests are always sent to the
     gateway.</p>
   cli_alias: rewrite-location-header
+  ignored_when:
+  - evaluation: property-equals
+    attribute: FollowRedirects
+    value:
+    - 'on'
 - name: StylePolicy
   type: String
   reference_to: StylePolicy
@@ -177,6 +187,11 @@ attributes:
     this property only if the spooler can forward full messages.</p><p>Full message-capture
     incurs a performance penalty.</p>
   cli_alias: wsmagent-monitor-capture-mode
+  ignored_when:
+  - evaluation: property-equals
+    attribute: WSMAgentMonitor
+    value:
+    - 'off'
 - name: ProxyHTTPResponse
   type: Bool
   default: false
@@ -269,6 +284,11 @@ attributes:
   description: The TLS client profile to secure connections between the DataPower
     Gateway and its targets.
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: property-equals
+    attribute: SSLClientConfigType
+    value:
+    - proxy
 - name: FWCred
   type: String
   reference_to: CryptoFWCred
@@ -348,6 +368,11 @@ attributes:
     exist.</li></ul><p>For assistance in building a URL, click the appropriate Helper
     button.</p>
   cli_alias: backend-url
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - static-backend
 - name: PropagateURI
   type: Bool
   default: true
@@ -412,6 +437,11 @@ attributes:
   description: Select how to treat client requests with attachments. The default is
     strip.
   cli_alias: request-attachments
+  ignored_when:
+  - evaluation: property-equals
+    attribute: RequestType
+    value:
+    - unprocessed
 - name: ResponseAttachments
   type: String
   enum:
@@ -424,18 +454,49 @@ attributes:
   description: Select how to treat server responses with attachments. The default
     is strip.
   cli_alias: response-attachments
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ResponseType
+    value:
+    - unprocessed
 - name: RequestAttachmentsFlowControl
   type: Bool
   default: false
   description: Specify whether to enable or disable flow control for attachments in
     requests to servers. The default is off.
   cli_alias: request-attachments-flow-control
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: RequestAttachments
+      value:
+      - unprocessed
+    - evaluation: property-does-not-equal
+      attribute: RequestType
+      value:
+      - unprocessed
+  ignored_when:
+  - evaluation: logical-true
 - name: ResponseAttachmentsFlowControl
   type: Bool
   default: false
   description: Specify whether to enable or disable flow control for attachments in
     responses to clients. The default is off.
   cli_alias: response-attachments-flow-control
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ResponseAttachments
+      value:
+      - unprocessed
+    - evaluation: property-does-not-equal
+      attribute: ResponseType
+      value:
+      - unprocessed
+  ignored_when:
+  - evaluation: logical-true
 - name: RootPartNotFirstAction
   type: String
   enum:
@@ -448,6 +509,17 @@ attributes:
     to do BSP conformance checking) and the action is set to "process in order" the
     DP device will buffer attachments up to the root.
   cli_alias: root-part-not-first-action
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: RequestAttachments
+      value:
+      - streaming
+    - evaluation: property-does-not-equal
+      attribute: ResponseAttachments
+      value:
+      - streaming
 - name: FrontAttachmentFormat
   type: String
   enum:
@@ -541,6 +613,13 @@ attributes:
     of the parser limits are set in the DataPower service, they will override those
     on the XML Manager.
   cli_alias: element-depth
+  required_when:
+  - evaluation: property-equals
+    attribute: GatewayParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsAttributeCount
   type: Int64
   default: 128
@@ -548,6 +627,13 @@ attributes:
     of the parser limits are set in the service, they will override those on the XML
     Manager.
   cli_alias: attribute-count
+  required_when:
+  - evaluation: property-equals
+    attribute: GatewayParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsMaxNodeSize
   type: Int64
   minimum: 1024
@@ -560,6 +646,13 @@ attributes:
     value that is the rounded-down, largest power of two that is smaller than the
     defined value.
   cli_alias: max-node-size
+  required_when:
+  - evaluation: property-equals
+    attribute: GatewayParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsExternalReferences
   type: String
   enum:
@@ -570,6 +663,13 @@ attributes:
   description: Select the special handling for input documents that contain external
     references, such as an external entity or external DTD definition.
   cli_alias: external-references
+  required_when:
+  - evaluation: property-equals
+    attribute: GatewayParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsMaxPrefixes
   type: Int64
   default: 1024
@@ -579,6 +679,13 @@ attributes:
     the input document under a single prefix. Enter a value in the range 0 - 262143.
     The default value is 1024. A value of 0 indicates that the limit is 1024.
   cli_alias: max-prefixes
+  required_when:
+  - evaluation: property-equals
+    attribute: GatewayParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsMaxNamespaces
   type: Int64
   default: 1024
@@ -587,6 +694,13 @@ attributes:
     prefixes are used to declare them. Enter a value in the range 0 - 65535. The default
     value is 1024. A value of 0 indicates that the limit is 1024.
   cli_alias: max-namespaces
+  required_when:
+  - evaluation: property-equals
+    attribute: GatewayParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsMaxLocalNames
   type: Int64
   default: 60000
@@ -595,6 +709,13 @@ attributes:
     they are associated with. Enter a value in the range 0 - 1048575. The default
     value is 60000. A value of 0 indicates that the limit is 60000.
   cli_alias: max-local-names
+  required_when:
+  - evaluation: property-equals
+    attribute: GatewayParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsAttachmentByteCount
   type: Int64
   default: 2000000000
@@ -602,6 +723,13 @@ attributes:
     Attachments that exceed this size will result in a failure of the whole transaction.
     If this value is 0, no limit is enforced.
   cli_alias: attachment-byte-count
+  required_when:
+  - evaluation: property-equals
+    attribute: GatewayParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ParserLimitsAttachmentPackageByteCount
   type: Int64
   description: Defines the maximum number of bytes allowed for all parts of an attachment
@@ -609,6 +737,13 @@ attributes:
     result in a failure of the whole transaction. If this value is 0, no limit is
     enforced.
   cli_alias: attachment-package-byte-count
+  required_when:
+  - evaluation: property-equals
+    attribute: GatewayParserLimits
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: DebugMode
   type: String
   enum:
@@ -631,6 +766,13 @@ attributes:
   description: Set the number of records for transaction diagnostic mode in the probe.
     Enter a value in the range 10 - 250. The default value is 25.
   cli_alias: debug-history
+  required_when:
+  - evaluation: property-equals
+    attribute: DebugMode
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: DebugTrigger
   type: List
   element_type: DmMSDebugTriggerType
@@ -640,6 +782,11 @@ attributes:
     one of these conditions, the transaction is captured in diagnostics mode and becomes
     part of the list of transactions that can be viewed.
   cli_alias: debug-trigger
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: DebugMode
+    value:
+    - 'on'
 - name: FlowControl
   type: Bool
   default: false
@@ -651,6 +798,19 @@ attributes:
     Messages. Also, if either the front side or the back end will use the HTTP(S)
     protocol, allow chunked uploads must be set to on.</p>
   cli_alias: flowcontrol
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: RequestType
+      value:
+      - soap
+      - xml
+    - evaluation: property-value-in-list
+      attribute: ResponseType
+      value:
+      - soap
+      - xml
 - name: SOAPSchemaURL
   type: String
   default: store:///schemas/soap-envelope.xsd
@@ -660,6 +820,17 @@ attributes:
     schema is used on a per-firewall basis by changing this property; this can be
     used to accommodate non-standard configurations or other special cases.
   cli_alias: soap-schema-url
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: RequestType
+      value:
+      - soap
+    - evaluation: property-does-not-equal
+      attribute: ResponseType
+      value:
+      - soap
 - name: FrontTimeout
   type: Int64
   minimum: 1
@@ -829,6 +1000,19 @@ attributes:
     Policy configured (or executed) in the processing rules, WS-Addressing processing
     will proceed as if the AAA Policy had executed and failed.</li></ul></p>
   cli_alias: wsa-require-aaa
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSAMode
+      value:
+      - wsa2sync
+      - wsa2wsa
+      - sync2wsa
+    - evaluation: property-value-not-in-list
+      attribute: Type
+      value:
+      - dynamic-backend
 - name: WSARewriteReplyTo
   type: String
   reference_to: URLRewritePolicy
@@ -842,6 +1026,12 @@ attributes:
     the values-list to select the URL Rewrite Policy used to manipulate the contents
     of the original <tt>ReplyTo</tt> header.</p>
   cli_alias: wsa-replyto-rewrite
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSAMode
+    value:
+    - wsa2sync
+    - wsa2wsa
 - name: WSARewriteFaultTo
   type: String
   reference_to: URLRewritePolicy
@@ -855,6 +1045,12 @@ attributes:
     the values-list to specify the URL Rewrite Policy used to manipulate the contents
     of the original <tt>FaultTo</tt> header.</p>
   cli_alias: wsa-faultto-rewrite
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSAMode
+    value:
+    - wsa2sync
+    - wsa2wsa
 - name: WSARewriteTo
   type: String
   reference_to: URLRewritePolicy
@@ -871,6 +1067,12 @@ attributes:
     specify the URL Rewrite Policy used to manipulate the contents of the original
     <tt>To</tt> header.</p>
   cli_alias: wsa-to-rewrite
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSAMode
+    value:
+    - wsa2sync
+    - wsa2wsa
 - name: WSAStrip
   type: Bool
   default: true
@@ -887,6 +1089,12 @@ attributes:
     this is on, WS-Addressing headers are stripped from incoming server SOAP responses
     before they are sent to the client.</p>
   cli_alias: wsa-strip-headers
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSAMode
+    value:
+    - wsa2sync
+    - sync2wsa
 - name: WSADefaultReplyTo
   type: String
   default: http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous
@@ -906,6 +1114,18 @@ attributes:
     to Traditional or Traditional to WS-Addressing and Force Incoming WS-Addressing
     is enabled.</p>
   cli_alias: wsa-default-replyto
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSAMode
+      value:
+      - wsa2sync
+      - wsa2wsa
+    - evaluation: property-value-not-in-list
+      attribute: WSAForce
+      value:
+      - 'on'
 - name: WSADefaultFaultTo
   type: String
   default: http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous
@@ -922,6 +1142,12 @@ attributes:
     property is relevant when the WS-AddressingMode is WS-Addressing to Traditional,
     or Traditional to WS-Addressing.</p>
   cli_alias: wsa-default-faultto
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSAMode
+    value:
+    - wsa2sync
+    - wsa2wsa
 - name: WSAForce
   type: Bool
   default: false
@@ -939,6 +1165,12 @@ attributes:
     is relevant when the WS-Addressing Mode is WS-Addressing to Traditional, or Traditional
     to WS-Addressing.</p>
   cli_alias: wsa-force
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSAMode
+    value:
+    - wsa2sync
+    - wsa2wsa
 - name: WSAGenStyle
   type: String
   enum:
@@ -951,6 +1183,12 @@ attributes:
     property is relevant when the WS-Addressing Mode is Traditional to WS-Addressing
     or WS-Addressing to WS-Addressing.</p>
   cli_alias: wsa-genstyle
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSAMode
+    value:
+    - sync2wsa
+    - wsa2wsa
 - name: WSAHTTPAsyncResponseCode
   type: Int64
   minimum: 200
@@ -967,6 +1205,20 @@ attributes:
     required by current standards.</p><p>This property is relevant when the WS-Addressing
     mode is either Traditional to WS-Addressing or WS-Addressing to WS-Addressing.</p>
   cli_alias: wsa-http-async-response-code
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: WSAMode
+    value:
+    - wsa2sync
+    - wsa2wsa
+    - sync2wsa
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSAMode
+    value:
+    - wsa2sync
+    - wsa2wsa
+    - sync2wsa
 - name: WSABackProtocol
   type: String
   description: <p>Specify the protocol handler that receives asynchronous server responses
@@ -978,6 +1230,26 @@ attributes:
     either Traditional to WS-Addressing or WS-Addressing to WS-Addressing and the
     message generation pattern is asynchronous.</p>
   cli_alias: wsa-back-protocol
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: WSAGenStyle
+      value:
+      - async
+    - evaluation: property-value-in-list
+      attribute: WSAMode
+      value:
+      - wsa2sync
+      - wsa2wsa
+      - sync2wsa
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSAMode
+    value:
+    - wsa2sync
+    - wsa2wsa
+    - sync2wsa
 - name: WSATimeout
   type: Int64
   minimum: 1
@@ -993,6 +1265,18 @@ attributes:
     is relevant when the WS-Addressing mode is either Traditional to WS-Addressing
     WS-Addressing to WS-Addressing and the message generation pattern is asynchronous.</p>
   cli_alias: wsa-timeout
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSAMode
+      value:
+      - wsa2wsa
+      - sync2wsa
+    - evaluation: property-value-not-in-list
+      attribute: WSAGenStyle
+      value:
+      - async
 - name: WSRMEnabled
   type: Bool
   default: false
@@ -1014,6 +1298,11 @@ attributes:
     "PT0S", representing zero seconds).</p><p>This property is relevant only when
     WS-ReliableMessaging is enabled.</p>
   cli_alias: wsrm-sequence-expiration
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSRMEnabled
+    value:
+    - 'on'
 - name: WSRMAAAPolicy
   type: String
   reference_to: AAAPolicy
@@ -1031,6 +1320,11 @@ attributes:
     the RM Source make offers.</p><p>This property is relevant only when WS-RM is
     enabled.</p>
   cli_alias: wsrm-aaa-policy
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSRMEnabled
+    value:
+    - 'on'
 - name: WSRMDestinationAcceptCreateSequence
   type: Bool
   default: true
@@ -1043,6 +1337,11 @@ attributes:
     and <tt>Accept</tt> can create an RM Destination for the server to send WS-RM
     messages to.</p><p>This property is relevant only when WS-RM is enabled.</p>
   cli_alias: wsrm-destination-accept-create-sequence
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSRMEnabled
+    value:
+    - 'on'
 - name: WSRMDestinationMaximumSequences
   type: Int64
   minimum: 1
@@ -1057,6 +1356,17 @@ attributes:
     service.</p><p>This property is relevant only when WS-RM and Destination Accept
     Incoming CreateSequence are enabled.</p>
   cli_alias: wsrm-destination-maximum-sequences
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: WSRMDestinationAcceptCreateSequence
+      value:
+      - 'on'
 - name: WSRMDestinationInOrder
   type: Bool
   default: false
@@ -1069,6 +1379,23 @@ attributes:
     WS-RM is enabled and Destination Accept Incoming CreateSequence or Source Make
     Two-Way Offer are enabled.</p>
   cli_alias: wsrm-destination-inorder
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: WSRMDestinationAcceptCreateSequence
+        value:
+        - 'on'
+      - evaluation: property-value-not-in-list
+        attribute: WSRMSourceMakeOffer
+        value:
+        - 'on'
 - name: WSRMDestinationMaximumInOrderQueueLength
   type: Int64
   minimum: 1
@@ -1079,6 +1406,17 @@ attributes:
     in the queue beyond a gap in the received sequence numbers. This controls memory
     use.
   cli_alias: wsrm-destination-maximum-inorder-queue-length
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: WSRMDestinationInOrder
+      value:
+      - 'off'
 - name: WSRMDestinationAcceptOffers
   type: Bool
   default: false
@@ -1088,6 +1426,17 @@ attributes:
     responses to the client.</p><p>This property is relevant only when WS-RM and Destination
     Accept Incoming CreateSequence are enabled.</p>
   cli_alias: wsrm-destination-accept-offers
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: WSRMDestinationAcceptCreateSequence
+      value:
+      - 'on'
 - name: WSRMFrontForce
   type: Bool
   default: false
@@ -1098,6 +1447,17 @@ attributes:
     property is relevant only when WS-RM and Destination Accept Incoming CreateSequence
     are enabled.</p>
   cli_alias: wsrm-request-force
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: WSRMDestinationAcceptCreateSequence
+      value:
+      - 'on'
 - name: WSRMBackForce
   type: Bool
   default: false
@@ -1109,6 +1469,23 @@ attributes:
     property is relevant only when WS-RM is enabled and Destination Accept Incoming
     CreateSequence or Source Make Two-Way Offer are enabled.</p>
   cli_alias: wsrm-response-force
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: WSRMDestinationAcceptCreateSequence
+        value:
+        - 'on'
+      - evaluation: property-value-not-in-list
+        attribute: WSRMSourceMakeOffer
+        value:
+        - 'on'
 - name: WSRMBackCreateSequence
   type: Bool
   default: false
@@ -1117,6 +1494,11 @@ attributes:
     there is SOAP data to send and there is no RM Source that was created by a MakeOffer
     from the server.</p><p>This property is relevant only when WS-RM is enabled.</p>
   cli_alias: wsrm-source-request-create-sequence
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: WSRMEnabled
+    value:
+    - 'on'
 - name: WSRMFrontCreateSequence
   type: Bool
   default: false
@@ -1128,6 +1510,18 @@ attributes:
     is relevant only when WS-ReliableMessaging is enabled and the WS-Addressing mode
     is WS-Addressing to Traditional or WS-Addressing to WS-Addressing.</p>
   cli_alias: wsrm-source-response-create-sequence
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: WSAMode
+      value:
+      - wsa2sync
+      - wsa2wsa
 - name: WSRMSourceMakeOffer
   type: Bool
   default: false
@@ -1139,6 +1533,17 @@ attributes:
     relevant only when WS-ReliableMessaging and Source Create Sequence on Response
     are enabled.</p>
   cli_alias: wsrm-source-make-offer
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: WSRMBackCreateSequence
+      value:
+      - 'on'
 - name: WSRMUsesSequenceSSL
   type: Bool
   default: false
@@ -1157,6 +1562,27 @@ attributes:
     and when Source Create Sequence on Request, Source Create Sequence on Response,
     or Destination Accept Two-Way Offers are enabled.</p>
   cli_alias: wsrm-source-sequence-ssl
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: WSRMFrontCreateSequence
+        value:
+        - 'on'
+      - evaluation: property-value-not-in-list
+        attribute: WSRMBackCreateSequence
+        value:
+        - 'on'
+      - evaluation: property-value-not-in-list
+        attribute: WSRMDestinationAcceptOffers
+        value:
+        - 'on'
 - name: WSRMFrontAcksTo
   type: String
   description: <p>Selects a particular front-side protocol handler to request to receive
@@ -1177,6 +1603,23 @@ attributes:
     and when Source Create Sequence on Response or Destination Accept Two-Way Offers
     are enabled.</p>
   cli_alias: wsrm-source-front-acks-to
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: WSRMFrontCreateSequence
+        value:
+        - 'on'
+      - evaluation: property-value-not-in-list
+        attribute: WSRMDestinationAcceptOffers
+        value:
+        - 'on'
 - name: WSRMBackAcksTo
   type: String
   description: <p>Selects a particular handler to receive asynchronous WS-ReliableMessaging
@@ -1194,6 +1637,23 @@ attributes:
     .</p><p>This property is relevant only when WS-ReliableMessaging and when Source
     Create Sequence on Request or Destination Accept Two-Way Offers are enabled.</p>
   cli_alias: wsrm-source-back-acks-to
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: WSRMBackCreateSequence
+        value:
+        - 'on'
+      - evaluation: property-value-not-in-list
+        attribute: WSRMDestinationAcceptOffers
+        value:
+        - 'on'
 - name: WSRMSourceMaximumSequences
   type: Int64
   minimum: 1
@@ -1209,6 +1669,27 @@ attributes:
     Request, Source Create Sequence on Response, or Destination Accept Two-Way Offers
     are enabled.</p>
   cli_alias: wsrm-source-maximum-sequences
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: WSRMFrontCreateSequence
+        value:
+        - 'on'
+      - evaluation: property-value-not-in-list
+        attribute: WSRMBackCreateSequence
+        value:
+        - 'on'
+      - evaluation: property-equals
+        attribute: WSRMDestinationAcceptOffers
+        value:
+        - 'off'
 - name: WSRMSourceRetransmissionInterval
   type: Int64
   minimum: 2
@@ -1222,6 +1703,27 @@ attributes:
     on Request, Source Create Sequence on Response, or Destination Accept Two-Way
     Offers are enabled.</p>
   cli_alias: wsrm-source-retransmission-interval
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: WSRMDestinationAcceptOffers
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMFrontCreateSequence
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMBackCreateSequence
+        value:
+        - 'off'
 - name: WSRMSourceExponentialBackoff
   type: Bool
   default: true
@@ -1231,6 +1733,27 @@ attributes:
     on Request, Source Create Sequence on Response, or Destination Accept Two-Way
     Offers are enabled.</p>
   cli_alias: wsrm-source-exponential-backoff
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: WSRMDestinationAcceptOffers
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMFrontCreateSequence
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMBackCreateSequence
+        value:
+        - 'off'
 - name: WSRMSourceMaximumRetransmissions
   type: Int64
   minimum: 1
@@ -1242,6 +1765,27 @@ attributes:
     WS-ReliableMessaging and when Source Create Sequence on Request, Source Create
     Sequence on Response, or Destination Accept Two-Way Offers are enabled.</p>
   cli_alias: wsrm-source-retransmit-count
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: WSRMDestinationAcceptOffers
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMFrontCreateSequence
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMBackCreateSequence
+        value:
+        - 'off'
 - name: WSRMSourceMaximumQueueLength
   type: Int64
   minimum: 1
@@ -1253,6 +1797,27 @@ attributes:
     Create Sequence on Request, Source Create Sequence on Response, or Destination
     Accept Two-Way Offers are enabled.</p>
   cli_alias: wsrm-source-maximum-queue-length
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: WSRMDestinationAcceptOffers
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMFrontCreateSequence
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMBackCreateSequence
+        value:
+        - 'off'
 - name: WSRMSourceRequestAckCount
   type: Int64
   minimum: 1
@@ -1264,6 +1829,27 @@ attributes:
     only when WS-ReliableMessaging and when Source Create Sequence on Request, Source
     Create Sequence on Response, or Destination Accept Two-Way Offers are enabled.</p>
   cli_alias: wsrm-source-request-ack-count
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: WSRMDestinationAcceptOffers
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMFrontCreateSequence
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMBackCreateSequence
+        value:
+        - 'off'
 - name: WSRMSourceInactivityClose
   type: Int64
   minimum: 10
@@ -1277,6 +1863,27 @@ attributes:
     only when WS-ReliableMessaging and when Source Create Sequence on Request, Source
     Create Sequence on Response, or Destination Accept Two-Way Offers are enabled.</p>
   cli_alias: wsrm-source-inactivity-close-interval
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: WSRMEnabled
+      value:
+      - 'on'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: WSRMDestinationAcceptOffers
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMFrontCreateSequence
+        value:
+        - 'off'
+      - evaluation: property-equals
+        attribute: WSRMBackCreateSequence
+        value:
+        - 'off'
 - name: ForcePolicyExec
   type: Bool
   default: false
@@ -1305,6 +1912,11 @@ attributes:
     error messages for the defined duration. When disabled, the DataPower Gateway
     does not delay error messages.
   cli_alias: delay-errors
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: RewriteErrors
+    value:
+    - 'on'
 - name: DelayErrorsDuration
   type: Int64
   minimum: 250
@@ -1316,3 +1928,16 @@ attributes:
     Gateway performed decryption on the requests. Enter a value in the range 250 -
     300000. The default value is 1000.
   cli_alias: delay-errors-duration
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: DelayErrors
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: RewriteErrors
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true

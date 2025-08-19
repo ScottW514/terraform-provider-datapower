@@ -22,6 +22,13 @@ attributes:
   description: Specify the hostname or IP address of an HTTP server. With the remote
     port, this setting designates the HTTP proxy that services the URL set for the
     match pattern. When Skip is on, the remote host is not used.
+  required_when:
+  - evaluation: property-equals
+    attribute: Skip
+    value:
+    - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: RemotePort
   type: Int64
   minimum: 1
@@ -30,10 +37,29 @@ attributes:
   description: Specify the port on the HTTP server. With the remote host, this setting
     designates the HTTP proxy that services the URL set for the match pattern. When
     Skip is on, the remote port is not used.
+  required_when:
+  - evaluation: property-equals
+    attribute: Skip
+    value:
+    - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: UserName
   type: String
   description: Specify the username for authentication.
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Skip
+    value:
+    - 'off'
+  string_patterns:
+  - ^[^ ]+$
 - name: Password
   type: String
   reference_to: PasswordAlias
   description: Specify the password alias for authentication.
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Skip
+    value:
+    - 'off'

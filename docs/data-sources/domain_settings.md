@@ -32,7 +32,6 @@ data "datapower_domain_settings" "test" {
 ### Read-Only
 
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
-- `passphrase` (String) Passphrase
 - `password_treatment` (String) Password treatment
 - `user_summary` (String) Comments
 

@@ -62,7 +62,7 @@ func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -73,7 +73,7 @@ func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -94,23 +94,30 @@ func (r *ZosNSSClientResource) Schema(ctx context.Context, req resource.SchemaRe
 			"client_id": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the client ID to be used for registration with the NSS server. Minimum length is 1. Maximum length is 24.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Client ID identifies the client ID to register the appliance with the NSS server. The NSS client ID is a unique string used by the NSS Server to track clients.</p><p>The Client ID does not have to correspond to any preexisting object. It is provided to the server at the time of registration. If another client attempts to register with the same client ID to the same NSS Server, the NSS server will send a heartbeat to the first client. If the first client responds to the heartbeat, the second client's registration will be rejected. If the first client does not respond, the connect to the first client will be severed and the second client will be registered.</p>", "client-id", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 24),
+				},
 			},
 			"system_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies a name for the NSS client. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The System Name identifies the NSS client to the NSS server. NSS server commands identify NSS clients by system name in the output when displaying information for connected NSS clients.</p>", "system-name", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 8),
+				},
 			},
 			"user_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies a user name to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The user name must match an existing user ID on the NSS Server.</p>", "user-name", "").String,
 				Required:            true,
-			},
-			"password": schema.StringAttribute{
-				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the password to use to authenticate to the NSS server. Minimum length is 1. Maximum length is 8.</p><p>Valid characters are:</p><p><ul><li>a through z</li><li>A through Z</li><li>0 through 9</li><li>_ (underscore)</li><li>- (dash)</li></ul></p><p>Embedded spaces are invalid.</p><p>The Password specifies the password to use in conjunction with the value provided by the User Name.</p>", "password", "").String,
-				Optional:            true,
-				Sensitive:           true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 8),
+				},
 			},
 			"password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specifies the password alias of the password to use to authenticate to the NSS server.</p><p>The associated password is used in conjunction with the value provided by the User Name.</p>", "password-alias", "password_alias").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 127),
+				},
 			},
 			"ssl_client_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("The TLS profile type to secure connections between the DataPower Gateway and the NSS server.", "ssl-client-type", "").AddStringEnum("client").AddDefaultValue("client").String,

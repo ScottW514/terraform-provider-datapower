@@ -38,6 +38,8 @@ attributes:
   example: cert:///cert.crt
   description: Encryption certificate
   cli_alias: server-cert
+  file_locations:
+  - cert
 - name: SecurityOption
   type: String
   enum:

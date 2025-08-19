@@ -105,7 +105,10 @@ var DmSnmpTargetResourceSchema = ResourceSchema.NestedAttributeObject{
 			MarkdownDescription: tfutils.NewAttributeDescription("The SNMP community name included in SNMP Version 1 Traps and SNMP Version 2 Notifications. By default, a community name of public is used.", "", "").AddDefaultValue("public").String,
 			Computed:            true,
 			Optional:            true,
-			Default:             stringdefault.StaticString("public"),
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 255),
+			},
+			Default: stringdefault.StaticString("public"),
 		},
 		"trap_version": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Select the SNMP version to use for sending Traps and Notifications to the recipient. The default is version 1.", "", "").AddStringEnum("1", "2c", "3").AddDefaultValue("1").String,
@@ -119,6 +122,9 @@ var DmSnmpTargetResourceSchema = ResourceSchema.NestedAttributeObject{
 		"security_name": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("The name of the local SNMPv3 user to use for Notifications to this recipient. Determines what authentication and privacy (encryption) protocols are used, and what keys.", "", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 32),
+			},
 		},
 		"security_level": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("The SNMPv3 security level at which Notifications are sent to the recipient. The default is Authentication, Privacy.", "", "").AddStringEnum("noAuthNoPriv", "authNoPriv", "authPriv").AddDefaultValue("authPriv").String,

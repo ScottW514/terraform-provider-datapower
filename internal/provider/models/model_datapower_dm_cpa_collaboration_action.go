@@ -86,10 +86,16 @@ var DmCPACollaborationActionResourceSchema = ResourceSchema.NestedAttributeObjec
 		"name": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specifies an ID for naming the action", "name", "").String,
 			Required:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+			},
 		},
 		"value": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the value of Action. For outbound message, the value is used in the Action element of the ebXML Message Header. For inbound transaction, the Action value is used to identify the action binding for processing the incoming message within the Service.", "value", "").String,
 			Required:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+			},
 		},
 		"capability": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specifies the type of this action binding.", "capability", "").AddStringEnum("cansend", "canreceive").AddDefaultValue("cansend").String,

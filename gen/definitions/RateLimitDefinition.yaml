@@ -64,6 +64,17 @@ attributes:
   description: Specify the interval for the rate limit. Enter a value that is greater
     than or equal to 1. The default value is 1.
   cli_alias: interval
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Rate
+      value:
+      - '0'
+    - evaluation: property-equals
+      attribute: Type
+      value:
+      - count
 - name: Unit
   type: String
   enum:
@@ -76,6 +87,17 @@ attributes:
   description: Specify the time unit for the rate limit. The default value is minute.
     When type is burst, the unit can be second or minute.
   cli_alias: unit
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Rate
+      value:
+      - '0'
+    - evaluation: property-equals
+      attribute: Type
+      value:
+      - count
 - name: HardLimit
   type: Bool
   default: true
@@ -83,6 +105,17 @@ attributes:
     exceeded. By default, requests are rejected when the limit is exceeded. When disabled,
     requests are accepted but a warning is logged.
   cli_alias: hard-limit
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Rate
+      value:
+      - '0'
+    - evaluation: property-equals
+      attribute: Type
+      value:
+      - burst
 - name: IsClient
   type: Bool
   default: true
@@ -91,12 +124,22 @@ attributes:
     return a 429 error when exceeded. When disabled, rate limit information is not
     applied to the client. Non-client rate limits return a 503 error when exceeded.
   cli_alias: is-client
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Rate
+    value:
+    - '0'
 - name: UseApiName
   type: Bool
   default: false
   description: Specify whether to include the API name in the rate limit key. By default,
     the API name is not included. When enabled, the API name is included.
   cli_alias: use-api-name
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Rate
+    value:
+    - '0'
 - name: UseAppId
   type: Bool
   default: false
@@ -104,12 +147,22 @@ attributes:
     By default, the application ID is not included. When enabled, the application
     ID is included.
   cli_alias: use-app-id
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Rate
+    value:
+    - '0'
 - name: UseClientId
   type: Bool
   default: false
   description: Specify whether to include the client ID in the rate limit key. By
     default, the client ID is not included. When enabled, the client ID is included.
   cli_alias: use-client-id
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Rate
+    value:
+    - '0'
 - name: AutoReplenish
   type: Bool
   default: true
@@ -118,6 +171,11 @@ attributes:
     When disabled, the count limit is replenished only by applying a rate limit assembly
     action that contains the count limit with a replenish operation.
   cli_alias: auto-replenish
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - count
 - name: DynamicValue
   type: String
   description: Specify the dynamic value string for the rate limit, which should contain
@@ -131,6 +189,11 @@ attributes:
     , which resolves to the server name <tt>server34</tt> .</p><p><tt>context.set("my.server",
     "server34")</tt></p>
   cli_alias: dynamic-value
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Rate
+    value:
+    - '0'
 - name: Weight
   type: String
   default: 1
@@ -140,6 +203,11 @@ attributes:
     that is less than or equal to 0, it is set to 1. An empty string results in an
     error.
   cli_alias: weight
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Rate
+    value:
+    - '0'
 - name: ResponseHeaders
   type: Bool
   default: true
@@ -155,6 +223,11 @@ attributes:
     the information is in rate limit headers. When enabled, information is in burst
     limit headers.
   cli_alias: emulate-burst-headers
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Type
+    value:
+    - rate
 - name: UseIntervalOffset
   type: Bool
   default: true
@@ -162,6 +235,11 @@ attributes:
     By default, intervals can start at different offsets. When disabled, intervals
     cannot start at different offsets.
   cli_alias: use-interval-offset
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - count
 - name: AllowCacheFallback
   type: Bool
   default: true

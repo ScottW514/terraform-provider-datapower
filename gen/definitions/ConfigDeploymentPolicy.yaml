@@ -59,6 +59,8 @@ attributes:
     for the configuration property. This property limits the match statement to resources
     with the specified property value.</td></tr></table>'
   cli_alias: accept
+  string_patterns:
+  - ^[-_a-zA-Z0-9:.*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$
 - name: FilteredConfig
   type: List
   element_type: String
@@ -87,6 +89,8 @@ attributes:
     for the configuration property. This property limits the match statement to resources
     with the specified property value.</td></tr></table>'
   cli_alias: filter
+  string_patterns:
+  - ^[-_a-zA-Z0-9:.*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$
 - name: ModifiedConfig
   type: List
   element_type: DmConfigModifyType

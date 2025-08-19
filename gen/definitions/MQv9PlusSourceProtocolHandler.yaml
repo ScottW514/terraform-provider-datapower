@@ -51,11 +51,21 @@ attributes:
   description: Specify the name of the get queue associated with the queue manager.
     The handler gets messages from this queue.
   cli_alias: get-queue
+  required_when:
+  - evaluation: property-equals
+    attribute: SubscribeTopicString
+    value:
+    - ''
 - name: SubscribeTopicString
   type: String
   description: Specify the the topic string associated with the queue manager. The
     handler subscribes to this topic string and gets messages from it.
   cli_alias: subscribe-topic-string
+  required_when:
+  - evaluation: property-equals
+    attribute: GetQueue
+    value:
+    - ''
 - name: SubscriptionName
   type: String
   description: Specify the subscription name of a durable subscription associated
@@ -127,6 +137,17 @@ attributes:
   description: Specify the number of concurrent IBM MQ conversations to allocate.
     The default value is 1 but can be increased to improve performance.
   cli_alias: concurrent-connections
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: GetQueue
+      value:
+      - ''
+    - evaluation: property-does-not-equal
+      attribute: SubscribeTopicString
+      value:
+      - ''
 - name: PollingInterval
   type: Int64
   minimum: 0
@@ -156,6 +177,17 @@ attributes:
   type: String
   description: XPath expression to extract Content-Type from IBM MQ header
   cli_alias: content-type-xpath
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: ContentTypeHeader
+    value:
+    - MQRFH
+    - MQRFH2
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: ContentTypeHeader
+    value:
+    - None
 - name: RetrieveBackoutSettings
   type: Bool
   default: false

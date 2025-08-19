@@ -54,6 +54,8 @@ attributes:
   type: String
   description: User name
   cli_alias: username
+  string_patterns:
+  - ^[^ ]+$
 - name: Password
   type: String
   reference_to: PasswordAlias

@@ -65,7 +65,7 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -80,6 +80,9 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Required:            true,
 				WriteOnly:           true,
 				Sensitive:           true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 128),
+				},
 			},
 			"password_update": schema.BoolAttribute{
 				MarkdownDescription: "Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.",

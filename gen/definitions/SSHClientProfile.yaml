@@ -55,17 +55,93 @@ attributes:
     client. Authentication can be public key or password or both public key and password.
     When both methods are defined, public key authentication is attempted first.
   cli_alias: user-auth
+  required_when:
+  - evaluation: property-equals
+    attribute: ProfileUsage
+    value:
+    - sftp
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ProfileUsage
+    value:
+    - sftp
 - name: UserPrivateKey
   type: String
   reference_to: CryptoKey
   description: Specify the private key for public key authentication. User private
     keys must not be password protected.
   cli_alias: user-private-key
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: ProfileUsage
+        value:
+        - sftp
+      - evaluation: property-equals
+        attribute: SSHUserAuthentication
+        value:
+        - publickey
+    - evaluation: property-equals
+      attribute: ProfileUsage
+      value:
+      - scc
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: ProfileUsage
+        value:
+        - sftp
+      - evaluation: property-does-not-equal
+        attribute: SSHUserAuthentication
+        value:
+        - publickey
+    - evaluation: property-does-not-equal
+      attribute: ProfileUsage
+      value:
+      - sftp
 - name: PasswordAlias
   type: String
   reference_to: PasswordAlias
   description: Password Alias
   cli_alias: user-password-alias
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileUsage
+      value:
+      - sftp
+    - evaluation: property-equals
+      attribute: SSHUserAuthentication
+      value:
+      - password
+    - evaluation: property-equals
+      attribute: Password
+      value:
+      - ''
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: ProfileUsage
+        value:
+        - sftp
+      - evaluation: property-does-not-equal
+        attribute: SSHUserAuthentication
+        value:
+        - password
+    - evaluation: property-does-not-equal
+      attribute: ProfileUsage
+      value:
+      - sftp
 - name: PersistentConnections
   type: Bool
   default: true
@@ -74,6 +150,16 @@ attributes:
     of a previous session without reauthentication.</li><li>When not enabled, new
     request must reauthenticate.</li></ul>
   cli_alias: persistent-connections
+  required_when:
+  - evaluation: property-equals
+    attribute: ProfileUsage
+    value:
+    - sftp
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ProfileUsage
+    value:
+    - sftp
 - name: PersistentConnectionTimeout
   type: Int64
   minimum: 1
@@ -83,6 +169,28 @@ attributes:
     the connection remains idle for the specified duration, the connection is closed.
     Enter any value in the range 1 - 86000. The default value is 120.
   cli_alias: persistent-connection-timeout
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProfileUsage
+      value:
+      - sftp
+    - evaluation: property-equals
+      attribute: PersistentConnections
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProfileUsage
+      value:
+      - sftp
+    - evaluation: property-does-not-equal
+      attribute: PersistentConnections
+      value:
+      - 'on'
 - name: StrictHostKeyChecking
   type: Bool
   default: false
@@ -93,6 +201,16 @@ attributes:
     the known hosts list. Host keys that are not in the known host list are added
     to the known hosts list and accepted.</li></ul>
   cli_alias: strict-host-key-checking
+  required_when:
+  - evaluation: property-equals
+    attribute: ProfileUsage
+    value:
+    - sftp
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ProfileUsage
+    value:
+    - sftp
 - name: Ciphers
   type: List
   enum:
@@ -107,6 +225,11 @@ attributes:
   - CHACHA20-POLY1305_AT_OPENSSH.COM
   description: Specify the SSH cipher suites to support.
   cli_alias: ciphers
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileUsage
+    value:
+    - scc
 - name: KEXAlg
   type: List
   enum:
@@ -120,6 +243,11 @@ attributes:
   - DIFFIE-HELLMAN-GROUP-EXCHANGE-SHA256
   description: Specify the key exchange (KEX) algorithms to support.
   cli_alias: kex-alg
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileUsage
+    value:
+    - scc
 - name: MACAlg
   type: List
   enum:
@@ -138,3 +266,8 @@ attributes:
   - HMAC-SHA1
   description: Specify the message authentication codes (MAC) to support.
   cli_alias: mac-alg
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProfileUsage
+    value:
+    - scc

@@ -48,6 +48,11 @@ attributes:
     case, if the interval type is set to fixed, but behaves as concurrent with an
     interval of 0 that allows all messages and never triggers the threshold to enforce
     the action.</p>
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ThreshIntervalType
+    value:
+    - concurrent
 - name: ThreshIntervalType
   type: String
   enum:
@@ -101,6 +106,11 @@ attributes:
   description: Specify the stop point of the high-low algorithm. The stop point is
     the low threshold. The start point is the high threshold that is defined as the
     threshold level property.
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ThreshAlgorithm
+    value:
+    - high-low-thresholds
 - name: BurstLimit
   type: Int64
   description: Specify the maximum size of the committed burst. The default value
@@ -108,6 +118,13 @@ attributes:
     can be sent during a reporting interval. The burst size should be at least twice
     the value of the threshold level. If the burst limit is less than the threshold
     value, the algorithm acts like the greater than algorithm.</p>
+  required_when:
+  - evaluation: property-equals
+    attribute: ThreshAlgorithm
+    value:
+    - token-bucket
+  ignored_when:
+  - evaluation: logical-true
 - name: ReportingAggregationInterval
   type: Int64
   description: Specify the base aggregation level in minutes for the reporting statistics.

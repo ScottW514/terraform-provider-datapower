@@ -59,6 +59,11 @@ attributes:
     to BP 1.0, or remove a Basic Profile 1.0 conformance assertion to the messages
     that don't conform to BP 1.0.
   cli_alias: assert-bp10-conformance
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Profiles
+    value:
+    - BP10
 - name: ReportLevel
   type: String
   enum:
@@ -74,6 +79,13 @@ attributes:
   type: String
   description: Target URL to which conformance reports will be sent
   cli_alias: report-target
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: ReportLevel
+    value:
+    - never
+  ignored_when:
+  - evaluation: logical-true
 - name: RejectLevel
   type: String
   enum:
@@ -90,6 +102,13 @@ attributes:
     reason that the message was rejected. Setting this property causes the conformance
     action to include summary information about the conformance errors found.
   cli_alias: reject-include-summary
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: RejectLevel
+    value:
+    - never
+  ignored_when:
+  - evaluation: logical-true
 - name: ResultIsConformanceReport
   type: Bool
   default: false
@@ -121,10 +140,30 @@ attributes:
   description: Select the degree of nonconformance in a response message to cause
     a conformance report to be recorded.
   cli_alias: response-report-level
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: ResponsePropertiesEnabled
+    value:
+    - 'off'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ResponsePropertiesEnabled
+    value:
+    - 'off'
 - name: ResponseLogTarget
   type: String
   description: Target URL to which response conformance reports will be sent
   cli_alias: response-report-target
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: ResponseReportLevel
+    value:
+    - never
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ResponsePropertiesEnabled
+    value:
+    - 'off'
 - name: ResponseRejectLevel
   type: String
   enum:
@@ -135,6 +174,16 @@ attributes:
   description: Select the degree of nonconformance to cause a response message to
     be rejected.
   cli_alias: response-reject-level
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: ResponsePropertiesEnabled
+    value:
+    - 'off'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ResponsePropertiesEnabled
+    value:
+    - 'off'
 - name: ResponseRejectIncludeSummary
   type: Bool
   default: false
@@ -143,3 +192,15 @@ attributes:
     action to include summary information about the conformance errors found in response
     messages.
   cli_alias: response-reject-include-summary
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ResponseRejectLevel
+      value:
+      - never
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ResponsePropertiesEnabled
+    value:
+    - 'off'

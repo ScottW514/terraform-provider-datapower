@@ -20,14 +20,35 @@ attributes:
     the DynURL output replaces the output of the extracted resource string that is
     added to the prefix.
   cli_alias: custom-url
+  required_when:
+  - evaluation: property-equals
+    attribute: MRMethod
+    value:
+    - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: MRMapURL
   type: String
   description: Specify the location of the AAA XML file that defines how to map resources.
   cli_alias: xmlfile-url
+  required_when:
+  - evaluation: property-equals
+    attribute: MRMethod
+    value:
+    - xmlfile
+  ignored_when:
+  - evaluation: logical-true
 - name: MRMapXPath
   type: String
   description: Specify the XPath expression to apply to the extracted resource.
   cli_alias: xpath
+  required_when:
+  - evaluation: property-equals
+    attribute: MRMethod
+    value:
+    - xpath
+  ignored_when:
+  - evaluation: logical-true
 - name: MRTAMMap
   type: String
   enum:
@@ -39,6 +60,13 @@ attributes:
   description: Specify the Access Manager style-mapping resource. Access Manager organizes
     resources into a hierarchical protected object space. The default value is WebSEAL.
   cli_alias: tam-mapping
+  required_when:
+  - evaluation: property-equals
+    attribute: MRMethod
+    value:
+    - tivoli
+  ignored_when:
+  - evaluation: logical-true
 - name: MRTAMInstancePrefix
   type: String
   description: <p>Specify the prefix to add based on the mapping style. Each protected
@@ -53,6 +81,13 @@ attributes:
     the WebSEAL mapping style, specify the name of the WebSEAL instance. In other
     words, use the <tt>/WebSEAL/ <i>prefix</i></tt> format.</li></ul>
   cli_alias: tam-prefix
+  required_when:
+  - evaluation: property-equals
+    attribute: MRMethod
+    value:
+    - tivoli
+  ignored_when:
+  - evaluation: logical-true
 - name: MRTAMWebSEALDynURLFile
   type: String
   description: Specify the location of the DynURL file. The file must be in the <tt>local:</tt>
@@ -60,3 +95,19 @@ attributes:
     the DynURL output replaces the output of the extracted resource string that is
     added to the prefix.
   cli_alias: webseal-dynurl-file
+  ignored_when:
+  - evaluation: logical-not
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: MRMethod
+        value:
+        - tivoli
+      - evaluation: property-equals
+        attribute: MRTAMMap
+        value:
+        - WebSEAL
+  file_locations:
+  - local
+  - store

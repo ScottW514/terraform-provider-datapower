@@ -134,16 +134,31 @@ attributes:
   test_value: '"AccTest_SSLServerProfile"'
   test_bed_value: datapower_ssl_server_profile.acc_test.id
   cli_alias: ssl-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLConfigType
+    value:
+    - server
 - name: SSLSNIServer
   type: String
   reference_to: SSLSNIServerProfile
   description: TLS SNI server profile
   cli_alias: ssl-sni-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLConfigType
+    value:
+    - sni
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: property-equals
+    attribute: SSLConfigType
+    value:
+    - proxy
 - name: LocalAddress
   type: String
   required: true

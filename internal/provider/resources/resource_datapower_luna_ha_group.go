@@ -62,7 +62,7 @@ func (r *LunaHAGroupResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -73,7 +73,7 @@ func (r *LunaHAGroupResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -86,6 +86,10 @@ func (r *LunaHAGroupResource) Schema(ctx context.Context, req resource.SchemaReq
 			"group_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the label that identifies the HA group on the Luna HSM. The HA group appears as one single logical partition that is identified by the label on the Luna HSM. The minimum length of the label is one character. The maximum length is 32 characters. The group name must be unique across domains.", "group", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 32),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^ ]+$"), "Must match :"+"^[^ ]+$"),
+				},
 			},
 			"member": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the members for HA group. An HA group member is an HSM partition that the system can access. The first member is the primary member. The Luna HSM balances cryptographic requests across the members in the HA group.", "member", "luna_partition").String,

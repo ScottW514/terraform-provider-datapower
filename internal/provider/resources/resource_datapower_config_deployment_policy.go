@@ -26,6 +26,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -62,7 +63,7 @@ func (r *ConfigDeploymentPolicyResource) Schema(ctx context.Context, req resourc
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -73,7 +74,7 @@ func (r *ConfigDeploymentPolicyResource) Schema(ctx context.Context, req resourc
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -87,11 +88,21 @@ func (r *ConfigDeploymentPolicyResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: tfutils.NewAttributeDescription("Matching configuration is accepted during import. To create a match statement, type a correctly formatted resource match in the horizontal text box or select Build. Selecting Build displays the Configuration Match Builder in a popup window. <p>A match statement takes the following general form: <br/><i>Addr</i> / <i>Domain</i> / <i>Resource</i> [? <i>Name=resource-name</i> &amp; <i>Property=property-name</i> &amp; <i>Value=property-value</i> ]</p><table><tr><td valign=\"top\">Addr</td><td>Device Address. Specifies IP address or host alias. The value (*) matches all IP addresses.</td></tr><tr><td valign=\"top\">Domain</td><td>Application Domain. The name of the application domain. The value (*) matches all domains.</td></tr><tr><td valign=\"top\">Resource</td><td>Resource Type. The name of the resource type. The value (*) matches all resource types.</td></tr><tr><td valign=\"top\">Name=resource-name</td><td>An additional specification field, such as \"Name\". Limits the match statement to resources of the specified name. Use a PCRE to select groups of resource instances. For example, \"Name=foo.*\" would match all resources with names that start with \"foo\".</td></tr><tr><td valign=\"top\">Property=property-name</td><td>Property Name. The name of the configuration property. Limits the match statement to resources of the specified property. If change specified, set property-name to null string.</td></tr><tr><td valign=\"top\">Value=property-value</td><td>Property Value. Specifies the value for the configuration property. This property limits the match statement to resources with the specified property value.</td></tr></table>", "accept", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(
+						stringvalidator.RegexMatches(regexp.MustCompile("^[-_a-zA-Z0-9:.*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$"), "Must match :"+"^[-_a-zA-Z0-9:.*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$"),
+					),
+				},
 			},
 			"filtered_config": schema.ListAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Matching configuration is filtered during import. Match statements do not control whether to import files that are part of the imported configuration package. Files are imported regardless of whether the filter disallows the resources with which the files are associated. <p>To create a match statement, type a correctly formatted resource match in the horizontal text box or select Build. Selecting Build displays the Configuration Match Builder in a popup window.</p><p>A match statement takes the following general form: <br/><i>Addr</i> / <i>Domain</i> / <i>Resource</i> [? <i>Name=resource-name</i> &amp; <i>Property=property-name</i> &amp; <i>Value=property-value</i> ]</p><table><tr><td valign=\"top\">Addr</td><td>Device Address. Specifies IP address or host alias. The value (*) matches all IP addresses.</td></tr><tr><td valign=\"top\">Domain</td><td>Application Domain. The name of the application domain. The value (*) matches all domains.</td></tr><tr><td valign=\"top\">Resource</td><td>Resource Type. The name of the resource type. The value (*) matches all resource types.</td></tr><tr><td valign=\"top\">Name=resource-name</td><td>An additional specification field, such as \"Name\". Limits the match statement to resources of the specified name. Use a PCRE to select groups of resource instances. For example, \"Name=foo.*\" would match all resources with names that start with \"foo\".</td></tr><tr><td valign=\"top\">Property=property-name</td><td>Property Name. The name of the configuration property. Limits the match statement to resources of the specified property. If change specified, set property-name to null string.</td></tr><tr><td valign=\"top\">Value=property-value</td><td>Property Value. Specifies the value for the configuration property. This property limits the match statement to resources with the specified property value.</td></tr></table>", "filter", "").String,
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.List{
+					listvalidator.ValueStringsAre(
+						stringvalidator.RegexMatches(regexp.MustCompile("^[-_a-zA-Z0-9:.*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$"), "Must match :"+"^[-_a-zA-Z0-9:.*]+/[-_a-zA-Z0-9.*]+/[-a-z0-9/*]+(\\?[^=]+=[^&]+(&[^=]+=[^&]+)*)?$"),
+					),
+				},
 			},
 			"modified_config": schema.ListNestedAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Matching configuration is modified during import. The matching configuration may be changed, added, or deleted. To create a match statement, type a correctly formatted resource match in the horizontal text box or select Build. Selecting Build displays the Configuration Match Builder in a popup window. <p>A match statement takes the following general form: <br/><i>Addr</i> / <i>Domain</i> / <i>Resource</i> [? <i>Name=resource-name</i> &amp; <i>Property=property-name</i> &amp; <i>Value=property-value</i> ]</p><table><tr><td valign=\"top\">Addr</td><td>Device Address. Specifies IP address or host alias. The value (*) matches all IP addresses.</td></tr><tr><td valign=\"top\">Domain</td><td>Application Domain. The name of the application domain. The value (*) matches all domains.</td></tr><tr><td valign=\"top\">Resource</td><td>Resource Type. The name of the resource type. The value (*) matches all resource types.</td></tr><tr><td valign=\"top\">Name=resource-name</td><td>An additional specification field, such as \"Name\". Limits the match statement to resources of the specified name. Use a PCRE to select groups of resource instances. For example, \"Name=foo.*\" would match all resources with names that start with \"foo\".</td></tr><tr><td valign=\"top\">Property=property-name</td><td>Property Name. The name of the configuration property. Limits the match statement to resources of the specified property. If change specified, set property-name to null string.</td></tr><tr><td valign=\"top\">Value=property-value</td><td>Property Value. Specifies the value for the configuration property. This property limits the match statement to resources with the specified property value.</td></tr></table>", "modify", "").String,

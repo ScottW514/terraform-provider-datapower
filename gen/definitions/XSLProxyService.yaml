@@ -110,16 +110,31 @@ attributes:
   reference_to: SSLServerProfile
   description: ''
   cli_alias: ssl-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLConfigType
+    value:
+    - server
 - name: SSLSNIServer
   type: String
   reference_to: SSLSNIServerProfile
   description: ''
   cli_alias: ssl-sni-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLConfigType
+    value:
+    - sni
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile
   description: ''
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: property-equals
+    attribute: SSLConfigType
+    value:
+    - proxy
 - name: UserSummary
   type: String
   description: Comments
@@ -158,6 +173,13 @@ attributes:
   required: true
   example: 10.10.10.10
   cli_alias: remote-ip-address
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - static-backend
+  ignored_when:
+  - evaluation: logical-true
 - name: RemotePort
   type: Int64
   minimum: 1
@@ -166,6 +188,13 @@ attributes:
   example: 9999
   description: Specify the port number to monitor. Used only when Type is static-backend.
   cli_alias: remote-port
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - static-backend
+  ignored_when:
+  - evaluation: logical-true
 - name: ACL
   type: String
   reference_to: AccessControlList
@@ -380,6 +409,13 @@ attributes:
   description: Set the number of records for transaction diagnostic mode in the probe.
     Enter a value in the range 10 - 250. The default value is 25.
   cli_alias: debug-history
+  required_when:
+  - evaluation: property-equals
+    attribute: DebugMode
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: DebugTrigger
   type: List
   element_type: DmMSDebugTriggerType
@@ -389,6 +425,11 @@ attributes:
     one of these conditions, the transaction is captured in diagnostics mode and becomes
     part of the list of transactions that can be viewed.
   cli_alias: debug-trigger
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: DebugMode
+    value:
+    - 'on'
 - name: LocalAddress
   type: String
   required: true

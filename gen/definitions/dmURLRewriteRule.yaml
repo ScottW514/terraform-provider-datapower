@@ -49,6 +49,11 @@ attributes:
     so forth. To omit the second text subpattern only, specify $1$3.</li></ul>
   cli_alias: input-expression
   example: Replace
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - header-rewrite
 - name: StyleReplaceRegexp
   type: String
   description: <p>Specify a Perl-style replacement that identifies the replacement
@@ -60,23 +65,54 @@ attributes:
     retain the second text subpattern only and not use the third text subpattern,
     specify http://mantis:8000$2.</p>
   cli_alias: stylesheet-expression
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - header-rewrite
+    - content-type
 - name: InputUnescape
   type: Bool
   default: false
   description: Replace URL-encoded characters (for example, "%2F") with the equivalent
     literal character. Select on to replace escape sequences, or off to retain them.
   cli_alias: input-unescape
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - header-rewrite
+    - content-type
 - name: StylesheetUnescape
   type: Bool
   default: true
   description: Replace URL-encoded characters (for example, "%2F") with the equivalent
     literal character. Select on to replace escape sequences, or off to retain them.
   cli_alias: stylesheet-unescape
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - header-rewrite
+    - content-type
 - name: Header
   type: String
   default: none
   description: Name HTTP Header to Rewrite
   example: HEADER
+  required_when:
+  - evaluation: property-equals
+    attribute: Type
+    value:
+    - header-rewrite
+  ignored_when:
+  - evaluation: property-value-in-list
+    attribute: Type
+    value:
+    - post-body
+    - rewrite
+    - absolute-rewrite
+    - content-type
 - name: NormalizeURL
   type: Bool
   default: false

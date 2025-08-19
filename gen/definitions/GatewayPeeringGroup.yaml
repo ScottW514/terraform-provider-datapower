@@ -53,6 +53,16 @@ attributes:
   description: Specify peers for the the group. To add a peer, enter its local IP
     address or host alias and its priority.
   cli_alias: peer-node
+  required_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - peer
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Mode
+    value:
+    - peer
 - name: ClusterPrimaryCount
   type: String
   enum:
@@ -60,6 +70,16 @@ attributes:
   default: '3'
   description: Primary count
   cli_alias: cluster-primary-count
+  required_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - cluster
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Mode
+    value:
+    - cluster
 - name: ClusterNodes
   type: List
   element_type: DmGatewayPeeringGroupClusterNode
@@ -75,6 +95,16 @@ attributes:
     primary nodes and 6 secondary nodes. In this configuration, each primary node
     has 2 secondary nodes.</p>
   cli_alias: cluster-node
+  required_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - cluster
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Mode
+    value:
+    - cluster
 - name: ClusterAutoConfig
   type: Bool
   default: true
@@ -82,6 +112,16 @@ attributes:
     By default, cluster configuration is managed automatically. Unless directed by
     IBM Support, do not change this setting.
   cli_alias: cluster-auto-config
+  required_when:
+  - evaluation: property-equals
+    attribute: Mode
+    value:
+    - cluster
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Mode
+    value:
+    - cluster
 - name: EnableSSL
   type: Bool
   required: true
@@ -98,8 +138,23 @@ attributes:
     that the current member uses to identify itself to other peers. Client authentication
     uses mutual TLS.
   cli_alias: idcred
+  required_when:
+  - evaluation: property-equals
+    attribute: EnableSSL
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: EnableSSL
+    value:
+    - 'off'
 - name: Valcred
   type: String
   reference_to: CryptoValCred
   description: Validation credentials
   cli_alias: valcred
+  ignored_when:
+  - evaluation: property-equals
+    attribute: EnableSSL
+    value:
+    - 'off'

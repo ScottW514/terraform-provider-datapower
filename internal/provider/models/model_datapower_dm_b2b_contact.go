@@ -22,10 +22,13 @@ package models
 
 import (
 	"context"
+	"regexp"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
@@ -83,22 +86,42 @@ var DmB2BContactResourceSchema = ResourceSchema.NestedAttributeObject{
 		"family_name": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the family name of the person to contact. A family name is the surname borne by family members.", "family-name", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-. ]+$"), "Must match :"+"^[_a-zA-Z0-9-. ]+$"),
+			},
 		},
 		"given_name": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the given name of the person to contact. A given name is the name used to identify an individual within a family.", "given-name", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-. ]+$"), "Must match :"+"^[_a-zA-Z0-9-. ]+$"),
+			},
 		},
 		"title": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the title of the person to contact.", "title", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-. ]+$"), "Must match :"+"^[_a-zA-Z0-9-. ]+$"),
+			},
 		},
 		"phone": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the telephone number to contact the person.", "phone", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+				stringvalidator.RegexMatches(regexp.MustCompile("^[(0-9][)0-9- ]+[0-9]$"), "Must match :"+"^[(0-9][)0-9- ]+[0-9]$"),
+			},
 		},
 		"email": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("Specify the email address to contact the person.", "email", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(0, 128),
+				stringvalidator.RegexMatches(regexp.MustCompile("^[_a-zA-Z0-9-.]+@[_a-zA-Z0-9.]+$"), "Must match :"+"^[_a-zA-Z0-9-.]+@[_a-zA-Z0-9.]+$"),
+			},
 		},
 	},
 }

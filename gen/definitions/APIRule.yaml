@@ -44,12 +44,27 @@ attributes:
   description: Specify the processing actions for the rule. With multiple actions,
     ensure that the actions are in the correct processing sequence.
   cli_alias: action
+  ignored_when:
+  - evaluation: property-equals
+    attribute: DynamicActionsMode
+    value:
+    - 'on'
 - name: DynamicActions
   type: List
   element_type: DmDynamicStylePolicyActionBaseReference
   description: Specify the dynamic actions for the rule. With multiple actions, ensure
     that the actions are in the correct processing sequence.
   cli_alias: dynamic-action
+  required_when:
+  - evaluation: property-equals
+    attribute: DynamicActionsMode
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: DynamicActionsMode
+    value:
+    - 'off'
 - name: UserSummary
   type: String
   description: Comments

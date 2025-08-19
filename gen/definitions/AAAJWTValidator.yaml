@@ -38,11 +38,15 @@ attributes:
   description: The optional issuer claim. The "iss" PCRE can be used to verify the
     JWT. The maximum length of the value is 256 characters.
   cli_alias: iss
+  string_max_length: 256
+  string_min_length: 0
 - name: Aud
   type: String
   description: The optional audience claim. The "aud" PCRE can be used to verify the
     JWT. The maximum length of the value is 256 characters.
   cli_alias: aud
+  string_max_length: 256
+  string_min_length: 0
 - name: ValMethod
   dm_type: DmJWTValMethod
   description: Various methods can be used to validate the JWT. You can decrypt the
@@ -56,6 +60,16 @@ attributes:
     or <tt>store:</tt> directory. This field is meaningful when you select <tt>Custom
     processing</tt> in the Validation method field.
   cli_alias: customized-script
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: ValMethod
+    value:
+    - customized
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - local
+  - store
 - name: DecryptCredentialType
   type: String
   enum:
@@ -69,6 +83,13 @@ attributes:
     JWT. The default method is PKIX. This field is meaningful when you select <tt>Decrypt</tt>
     in the Validation method field.
   cli_alias: decrypt-type
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: ValMethod
+    value:
+    - decrypt
+  ignored_when:
+  - evaluation: logical-true
 - name: DecryptKey
   type: String
   reference_to: CryptoKey
@@ -77,6 +98,19 @@ attributes:
     <tt>Decrypt</tt> in the Validation Method field and choose <tt>PKIX</tt> from
     the Decrypt method list.
   cli_alias: decrypt-key
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ValMethod
+      value:
+      - decrypt
+    - evaluation: property-equals
+      attribute: DecryptCredentialType
+      value:
+      - pkix
+  ignored_when:
+  - evaluation: logical-true
 - name: DecryptSSecret
   type: String
   reference_to: CryptoSSKey
@@ -85,6 +119,19 @@ attributes:
     is meaningful when you select <tt>Decrypt</tt> in the Validation method field
     and choose <tt>Shared secret</tt> from the Decrypt method list.
   cli_alias: decrypt-ssecret
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ValMethod
+      value:
+      - decrypt
+    - evaluation: property-equals
+      attribute: DecryptCredentialType
+      value:
+      - ssecret
+  ignored_when:
+  - evaluation: logical-true
 - name: DecryptJWK
   type: String
   description: 'The file containing the JWK or key set is fetched to decrypt the JWT.
@@ -92,6 +139,22 @@ attributes:
     when you select <tt>Decrypt</tt> in the Validation method field and choose <tt>JWK</tt>
     from the Decrypt method list.'
   cli_alias: decrypt-jwk
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ValMethod
+      value:
+      - decrypt
+    - evaluation: property-equals
+      attribute: DecryptCredentialType
+      value:
+      - jwk
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - local
+  - store
 - name: DecryptFetchCredURL
   type: String
   default: http://example.com/v3/key
@@ -102,6 +165,21 @@ attributes:
     when you choose <tt>Decrypt</tt> in the Validation method field and choose <tt>Remotely
     retrieve JWK</tt> from the Decrypt method list.
   cli_alias: decrypt-fetch-cred-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ValMethod
+      value:
+      - decrypt
+    - evaluation: property-equals
+      attribute: DecryptCredentialType
+      value:
+      - jwk-remote
+  ignored_when:
+  - evaluation: logical-true
+  string_max_length: 255
+  string_min_length: 7
 - name: DecryptFetchCredSSLProfile
   type: String
   reference_to: SSLClientProfile
@@ -109,12 +187,53 @@ attributes:
     This field is meaningful when you select <tt>Decrypt</tt> in the Validation method
     field and choose <tt>Remotely retrieve JWK</tt> from the Decrypt method list.
   cli_alias: decrypt-fetch-cred-sslprofile
+  ignored_when:
+  - evaluation: logical-not
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-in-list
+        attribute: ValMethod
+        value:
+        - decrypt
+      - evaluation: property-equals
+        attribute: DecryptCredentialType
+        value:
+        - jwk-remote
 - name: ValidateCustom
   type: String
   description: A custom GatewayScript or XSLT file provides the key material information
     to decrypt or verify the JWT. This field is meaningful when you select <tt>Custom</tt>
     for the Decrypt method or Verify method list.
   cli_alias: validate-custom
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-in-list
+        attribute: ValMethod
+        value:
+        - verify
+      - evaluation: property-equals
+        attribute: VerifyCredentialType
+        value:
+        - custom
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-in-list
+        attribute: ValMethod
+        value:
+        - decrypt
+      - evaluation: property-equals
+        attribute: DecryptCredentialType
+        value:
+        - custom
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - local
+  - store
 - name: VerifyCredentialType
   type: String
   enum:
@@ -128,6 +247,13 @@ attributes:
     is PKIX. This field is meaningful when you select <tt>Verify</tt> in the Validation
     method field.
   cli_alias: verify-type
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: ValMethod
+    value:
+    - verify
+  ignored_when:
+  - evaluation: logical-true
 - name: VerifyCertificate
   type: String
   reference_to: CryptoCertificate
@@ -136,6 +262,19 @@ attributes:
     when you select <tt>Verify</tt> in the Validation method field and choose <tt>PKIX</tt>
     from the Verify method field.
   cli_alias: verify-certificate
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ValMethod
+      value:
+      - verify
+    - evaluation: property-equals
+      attribute: VerifyCredentialType
+      value:
+      - pkix
+  ignored_when:
+  - evaluation: logical-true
 - name: VerifyCertificateAgainstValCred
   type: Bool
   default: false
@@ -143,6 +282,19 @@ attributes:
     signature. This field is meaningful when you select <tt>Verify</tt> in the Validation
     method field and choose <tt>PKIX</tt> from the Verify method list.
   cli_alias: verify-certificate-against-valcred
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ValMethod
+      value:
+      - verify
+    - evaluation: property-equals
+      attribute: VerifyCredentialType
+      value:
+      - pkix
+  ignored_when:
+  - evaluation: logical-true
 - name: VerifyValCred
   type: String
   reference_to: CryptoValCred
@@ -151,6 +303,23 @@ attributes:
     This field is meaningful when you select <tt>on</tt> in the Signature validation
     credentials field.
   cli_alias: valcred
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ValMethod
+      value:
+      - verify
+    - evaluation: property-equals
+      attribute: VerifyCredentialType
+      value:
+      - pkix
+    - evaluation: property-equals
+      attribute: VerifyCertificateAgainstValCred
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: VerifySSecret
   type: String
   reference_to: CryptoSSKey
@@ -158,6 +327,19 @@ attributes:
     field is meaningful when you select <tt>Verify</tt> in the Validation method field
     and choose <tt>Shared secret</tt> from the Verify method list.
   cli_alias: verify-ssecret
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ValMethod
+      value:
+      - verify
+    - evaluation: property-equals
+      attribute: VerifyCredentialType
+      value:
+      - ssecret
+  ignored_when:
+  - evaluation: logical-true
 - name: VerifyJWK
   type: String
   description: 'The file containing the JWK or key set is fetched to verify the JWT
@@ -165,6 +347,22 @@ attributes:
     is meaningful when you select <tt>Verify</tt> in the Validation method field and
     choose <tt>JWK</tt> from the Verify method list.'
   cli_alias: verify-jwk
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ValMethod
+      value:
+      - verify
+    - evaluation: property-equals
+      attribute: VerifyCredentialType
+      value:
+      - jwk
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - local
+  - store
 - name: VerifyFetchCredURL
   type: String
   default: http://example.com/v3/certs
@@ -175,6 +373,21 @@ attributes:
     is meaningful when you select <tt>Verify</tt> in the Validation method field and
     choose <tt>Remotely retrieve JWK</tt> from the Verify method list.
   cli_alias: verify-fetch-cred-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: ValMethod
+      value:
+      - verify
+    - evaluation: property-equals
+      attribute: VerifyCredentialType
+      value:
+      - jwk-remote
+  ignored_when:
+  - evaluation: logical-true
+  string_max_length: 255
+  string_min_length: 7
 - name: VerifyFetchCredSSLProfile
   type: String
   reference_to: SSLClientProfile
@@ -182,6 +395,19 @@ attributes:
     This field is meaningful when you select <tt>Verify</tt> in the Validation method
     field and choose <tt>Remotely retrieve JWK</tt> from the Verify method list.
   cli_alias: verify-fetch-cred-sslprofile
+  ignored_when:
+  - evaluation: logical-not
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-in-list
+        attribute: ValMethod
+        value:
+        - verify
+      - evaluation: property-equals
+        attribute: VerifyCredentialType
+        value:
+        - jwk-remote
 - name: Claims
   type: List
   element_type: DmClaim

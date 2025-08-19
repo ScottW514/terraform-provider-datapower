@@ -14,6 +14,16 @@ attributes:
     messages. The DataPower Gateway writes events to this trace file in the temporary:
     <i>client-name</i> directory.'
   cli_alias: tam-trace-file
+  required_when:
+  - evaluation: property-equals
+    attribute: TAMTraceEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: TAMTraceEnable
+    value:
+    - 'off'
 - name: TAMTraceSize
   type: Int64
   minimum: 100
@@ -22,6 +32,16 @@ attributes:
   description: Specifies the maximum number of log entries for the trace file. Enter
     a value in the range 100 - 1000000. The default value is 100.
   cli_alias: tam-trace-size
+  required_when:
+  - evaluation: property-equals
+    attribute: TAMTraceEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: TAMTraceEnable
+    value:
+    - 'off'
 - name: TAMTraceType
   type: String
   enum:
@@ -30,6 +50,16 @@ attributes:
   - xmlfile
   description: Specifies the format of trace messages in the file.
   cli_alias: tam-trace-type
+  required_when:
+  - evaluation: property-equals
+    attribute: TAMTraceEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: TAMTraceEnable
+    value:
+    - 'off'
 - name: TAMTraceComponents
   type: String
   default: '*:*.9'
@@ -37,6 +67,16 @@ attributes:
     , which is to trace all components and subcomponents at the highest debug level.
     Contact IBM Support to set the value needed to help resolve your problem.
   cli_alias: tam-trace-components
+  required_when:
+  - evaluation: property-equals
+    attribute: TAMTraceEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: TAMTraceEnable
+    value:
+    - 'off'
 - name: LDAPTraceEnable
   type: Bool
   default: false
@@ -50,6 +90,16 @@ attributes:
     The DataPower Gateway writes events to this trace file in the temporary: <i>client-name</i>
     directory.'
   cli_alias: ldap-trace-file
+  required_when:
+  - evaluation: property-equals
+    attribute: LDAPTraceEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: LDAPTraceEnable
+    value:
+    - 'off'
 - name: LDAPTraceSize
   type: Int64
   minimum: 10000
@@ -58,6 +108,16 @@ attributes:
   description: Specifies the maximum number of characters for the trace file. Enter
     a value in the range 10000 - 10000000. The default value is 10000.
   cli_alias: ldap-trace-size
+  required_when:
+  - evaluation: property-equals
+    attribute: LDAPTraceEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: LDAPTraceEnable
+    value:
+    - 'off'
 - name: LDAPTraceLevel
   type: Int64
   minimum: 1
@@ -67,6 +127,16 @@ attributes:
     1 - 65535. The default value is 1. A value of 65535 enables all levels. Contact
     IBM Support to set the value needed to help resolve your problem.
   cli_alias: ldap-trace-level
+  required_when:
+  - evaluation: property-equals
+    attribute: LDAPTraceEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: LDAPTraceEnable
+    value:
+    - 'off'
 - name: GSKitTraceEnable
   type: Bool
   default: false
@@ -80,9 +150,29 @@ attributes:
     DataPower Gateway writes event to this trace file in the temporary: <i>client-name</i>
     directory.'
   cli_alias: gskit-trace-file
+  required_when:
+  - evaluation: property-equals
+    attribute: GSKitTraceEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: GSKitTraceEnable
+    value:
+    - 'off'
 - name: GSKitTraceFlush
   type: Bool
   default: false
   description: Indicates whether to sets the NOBUFFERING flag to force the trace to
     be written to the file without buffering.
   cli_alias: gskit-trace-flush
+  required_when:
+  - evaluation: property-equals
+    attribute: GSKitTraceEnable
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: GSKitTraceEnable
+    value:
+    - 'off'

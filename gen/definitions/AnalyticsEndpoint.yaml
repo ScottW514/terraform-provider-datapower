@@ -47,6 +47,12 @@ attributes:
     specify which request topic to offload analytics data.</li></ul>
   example: https://localhost
   cli_alias: analytics-server-url
+  protocols:
+  - http
+  - https
+  - dpkafka
+  file_locations:
+  - '"NONE"'
 - name: SSLClient
   type: String
   reference_to: SSLClientProfile
@@ -54,10 +60,30 @@ attributes:
   test_value: '"AccTest_SSLClientProfile"'
   test_bed_value: datapower_ssl_client_profile.acc_test.id
   cli_alias: ssl-client
+  required_when:
+  - evaluation: property-url-protocol-in-list
+    attribute: AnalyticsServerURL
+    value:
+    - https
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: AnalyticsServerURL
+    value:
+    - https
 - name: RequestTopic
   type: String
   description: Request topic
   cli_alias: request-topic
+  required_when:
+  - evaluation: property-url-protocol-in-list
+    attribute: AnalyticsServerURL
+    value:
+    - dpkafka
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: AnalyticsServerURL
+    value:
+    - dpkafka
 - name: MaxRecords
   type: Int64
   minimum: 256
@@ -105,30 +131,151 @@ attributes:
     remote server to offload analytics data. Each connection can carry a bulk activity
     log. Enter a value in the range 1 - 100. The default value is 1.
   cli_alias: delivery-connections
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: AnalyticsServerURL
+    value:
+    - dpkafka
 - name: EnableJWT
   type: Bool
   default: false
   description: Enable JWT feature sending logs to analytics server.
   cli_alias: enable-jwt
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: AnalyticsServerURL
+    value:
+    - http
+    - https
 - name: ManagementURL
   type: String
   description: Specify the URL of management platform endpoint to retrieve a JWT.
     The URL must use the <tt>http</tt> or <tt>https</tt> protocol.
   cli_alias: management-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableJWT
+      value:
+      - 'on'
+    - evaluation: property-url-protocol-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: EnableJWT
+      value:
+      - 'on'
+    - evaluation: property-url-protocol-not-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+  protocols:
+  - http
+  - https
+  file_locations:
+  - '"NONE"'
 - name: ManagementURL_SSLClient
   type: String
   reference_to: SSLClientProfile
   description: Management platform TLS client profile
   cli_alias: management-ssl-client
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableJWT
+      value:
+      - 'on'
+    - evaluation: property-url-protocol-in-list
+      attribute: ManagementURL
+      value:
+      - https
+    - evaluation: property-url-protocol-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: EnableJWT
+      value:
+      - 'on'
+    - evaluation: property-url-protocol-in-list
+      attribute: ManagementURL
+      value:
+      - http
+    - evaluation: property-url-protocol-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - dpkafka
 - name: ClientID
   type: String
   description: Client ID
   cli_alias: clientid
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableJWT
+      value:
+      - 'on'
+    - evaluation: property-url-protocol-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+    - evaluation: property-does-not-equal
+      attribute: EnableJWT
+      value:
+      - 'on'
 - name: ClientSecretAlias
   type: String
   reference_to: PasswordAlias
   description: Client secret
   cli_alias: client-secret-alias
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableJWT
+      value:
+      - 'on'
+    - evaluation: property-url-protocol-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+    - evaluation: property-does-not-equal
+      attribute: EnableJWT
+      value:
+      - 'on'
+  string_max_length: 127
+  string_min_length: 0
 - name: GrantType
   type: String
   enum:
@@ -139,11 +286,59 @@ attributes:
   description: Specify the grant type for requesting JWT tokens. Only the client credentials
     grant type is supported.
   cli_alias: grant-type
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableJWT
+      value:
+      - 'on'
+    - evaluation: property-url-protocol-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+    - evaluation: property-does-not-equal
+      attribute: EnableJWT
+      value:
+      - 'on'
 - name: Scope
   type: String
   description: Specify the scope for requesting JWT tokens. The value is in the <tt>openid
     analytics_subsystem_ID/name</tt> format.
   cli_alias: scope
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableJWT
+      value:
+      - 'on'
+    - evaluation: property-url-protocol-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-url-protocol-not-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https
+    - evaluation: property-does-not-equal
+      attribute: EnableJWT
+      value:
+      - 'on'
 - name: PersistentConnection
   type: Bool
   default: true
@@ -151,6 +346,12 @@ attributes:
     connections are enabled. The HTTP/2 protocol controls persistent connections and
     reuse. Therefore, these settings are ignored.
   cli_alias: persistent-connection
+  ignored_when:
+  - evaluation: property-url-protocol-not-in-list
+    attribute: AnalyticsServerURL
+    value:
+    - http
+    - https
 - name: Timeout
   type: Int64
   minimum: 1
@@ -171,3 +372,15 @@ attributes:
     initiation of a new TCP transaction. When the idle time is exceeded, the connection
     is torn down. Enter a value in the range 1 - 86400. The default value is 60.
   cli_alias: persistent-timeout
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: PersistentConnection
+      value:
+      - 'off'
+    - evaluation: property-url-protocol-not-in-list
+      attribute: AnalyticsServerURL
+      value:
+      - http
+      - https

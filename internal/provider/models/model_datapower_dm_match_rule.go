@@ -22,6 +22,7 @@ package models
 
 import (
 	"context"
+	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -143,6 +144,10 @@ var DmMatchRuleResourceSchema = ResourceSchema.NestedAttributeObject{
 		"custom_method": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("For a custom method, the custom HTTP method.", "", "").String,
 			Optional:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(1, 8192),
+				stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9!#$%&'*+-.^_`|~]*$"), "Must match :"+"^[a-zA-Z0-9!#$%&'*+-.^_`|~]*$"),
+			},
 		},
 	},
 }

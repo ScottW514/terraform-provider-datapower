@@ -48,6 +48,11 @@ attributes:
     This property is used with the object name.
   test_value: '"namespace"'
   cli_alias: namespace
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: ObjectType
+    value:
+    - service-version
 - name: ObjectType
   type: String
   enum:
@@ -85,6 +90,11 @@ attributes:
   description: Specify the refresh interval in seconds between polls to synchronize
     the local copy with the registry version.
   cli_alias: refresh-interval
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Method
+    value:
+    - poll
 - name: UseVersion
   type: Bool
   default: false
@@ -95,6 +105,11 @@ attributes:
   type: String
   description: Object version
   cli_alias: version
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseVersion
+    value:
+    - 'off'
 - name: FetchPolicyAttachments
   type: Bool
   default: false

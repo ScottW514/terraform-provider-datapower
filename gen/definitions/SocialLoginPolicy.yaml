@@ -88,6 +88,10 @@ attributes:
     variable. You can set a context variable before you invoke this AAA action and
     specify the context variable name for this value. For example, var://context/AAA/social-login-redirect-uri</li></ul>
   cli_alias: client-redirect-uri
+  string_max_length: 255
+  string_min_length: 1
+  string_patterns:
+  - (^var://)|(/social-login-callback$)
 - name: ClientOptionalQueryParams
   type: String
   description: Specifies the optional query parameters to include in the initial OAuth/OIDC
@@ -125,6 +129,10 @@ attributes:
     Google, you can retrieve the authorization endpoint URL from the Discovery document
     for Google's OpenID Connect service.
   cli_alias: provider-az-endpoint
+  string_max_length: 255
+  string_min_length: 7
+  string_patterns:
+  - ^https?://\[?[-_a-z0-9A-Z.:]+\]?(:[0-9]+)?/[ -~]*$
 - name: ProviderTokenEndpoint
   type: String
   required: true
@@ -134,6 +142,10 @@ attributes:
     When the provider is Google, you can retrieve the token endpoint URL from the
     Discovery document for Google's OpenID Connect service.
   cli_alias: provider-token-endpoint
+  string_max_length: 255
+  string_min_length: 7
+  string_patterns:
+  - ^https?://\[?[-_a-z0-9A-Z.:]+\]?(:[0-9]+)?/[ -~]*$
 - name: ValidateJWTToken
   type: Bool
   default: true
@@ -153,3 +165,10 @@ attributes:
   description: Specify the JWT Validator configuration that defines how to validate
     and verify the ID token.
   cli_alias: jwt-validator
+  required_when:
+  - evaluation: property-equals
+    attribute: ValidateJWTToken
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true

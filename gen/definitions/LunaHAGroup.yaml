@@ -43,6 +43,10 @@ attributes:
     on the Luna HSM. The minimum length of the label is one character. The maximum
     length is 32 characters. The group name must be unique across domains.
   cli_alias: group
+  string_max_length: 32
+  string_min_length: 1
+  string_patterns:
+  - ^[^ ]+$
 - name: Member
   type: List
   reference_to: LunaPartition

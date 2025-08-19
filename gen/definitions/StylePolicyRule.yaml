@@ -87,11 +87,21 @@ attributes:
   description: Normally, processing is only performed on XML content. This option
     allows processing actions to be performed on Non-XML content as well.
   cli_alias: non-xml-processing
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Unprocessed
+    value:
+    - 'on'
 - name: Unprocessed
   type: Bool
   default: false
   description: Permit rule to pass-through data unprocessed
   cli_alias: unprocessed
+  ignored_when:
+  - evaluation: property-equals
+    attribute: NonXMLProcessing
+    value:
+    - 'on'
 - name: UserSummary
   type: String
   description: Comments

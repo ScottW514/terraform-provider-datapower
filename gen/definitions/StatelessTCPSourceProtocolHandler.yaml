@@ -84,9 +84,19 @@ attributes:
   description: The TLS server profile to secure connections between clients and the
     DataPower Gateway.
   cli_alias: ssl-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLServerConfigType
+    value:
+    - server
 - name: SSLSNIServer
   type: String
   reference_to: SSLSNIServerProfile
   description: The TLS SNI server profile to secure connections between clients and
     the DataPower Gateway.
   cli_alias: ssl-sni-server
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLServerConfigType
+    value:
+    - sni

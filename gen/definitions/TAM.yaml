@@ -46,6 +46,44 @@ attributes:
     configuration of the Access Manager server. The registry that you define in this
     configuration is for a client and must match the registry of the server.</p>
   cli_alias: ad-use-ad
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v801
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v901
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v903
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v1005
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: TAMVersion
+      value:
+      - v801
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v901
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v903
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v1005
 - name: TAMVersion
   type: String
   enum:
@@ -66,11 +104,49 @@ attributes:
     client. To be available for selection, files must have .conf or .cfg as their
     file extension.
   cli_alias: file
+  file_locations:
+  - local
+  - store
+  - cert
+  - sharedcert
 - name: ADConfigurationFile
   type: String
   description: Select the location of the configuration file for user directories.
     To be available for selection, files must have .conf or .cfg as their file extension.
   cli_alias: reg_file
+  required_when:
+  - evaluation: property-equals
+    attribute: ADUseAD
+    value:
+    - 'true'
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v801
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v901
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v903
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v1005
+    - evaluation: property-does-not-equal
+      attribute: ADUseAD
+      value:
+      - 'true'
+  file_locations:
+  - local
+  - store
+  - cert
+  - sharedcert
 - name: SSLKeyFile
   type: String
   required: true
@@ -79,6 +155,9 @@ attributes:
     for selection, files must have .kdb as their file extension. Generally, these
     files are in the cert: directory or the sharedcert: directory.'
   cli_alias: ssl-key
+  file_locations:
+  - cert
+  - sharedcert
 - name: SSLKeyStashFile
   type: String
   required: true
@@ -87,6 +166,9 @@ attributes:
     be available for selection, files must have .sth as their file extension. Generally,
     these files are in the cert: directory or the sharedcert: directory.'
   cli_alias: ssl-key-stash
+  file_locations:
+  - cert
+  - sharedcert
 - name: UseLocalMode
   type: Bool
   default: false
@@ -105,6 +187,16 @@ attributes:
     database for requests.</li><li><i>seconds</i> - Specifies the time interval in
     seconds.</li></ul>
   cli_alias: cache-refresh-interval
+  required_when:
+  - evaluation: property-equals
+    attribute: UseLocalMode
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseLocalMode
+    value:
+    - 'off'
 - name: ListenMode
   type: Bool
   default: false
@@ -112,11 +204,32 @@ attributes:
     from the policy server. When you set this property, it overrides the behavior
     defined in configuration files for the Access Manager client.
   cli_alias: listen-mode
+  required_when:
+  - evaluation: property-equals
+    attribute: UseLocalMode
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: UseLocalMode
+    value:
+    - 'off'
 - name: ListenPort
   type: Int64
   description: Enter the listening port on the DataPower Gateway to receive update
     notifications from the remote policy server.
   cli_alias: listen-port
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: ListenMode
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: UseLocalMode
+      value:
+      - 'off'
 - name: ReturningUserAttributes
   type: Bool
   default: false
@@ -135,6 +248,17 @@ attributes:
   description: Enter the listening port that the LDAP server uses for TLS communication.
     This property does not apply for TLS communication with an Active Directory server.
   cli_alias: ldap-ssl-port
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: LDAPUseSSL
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: ADUseAD
+      value:
+      - 'on'
 - name: LDAPSSLKeyFile
   type: String
   description: '<p>Select the location of the key file that contains the certificates
@@ -145,12 +269,27 @@ attributes:
     personal certificate in the key file, you must enter the label of the personal
     certificate.</li></ul><p>This file must be in the cert: or the sharedcert: directory.</p>'
   cli_alias: ldap-ssl-key-file
+  required_when:
+  - evaluation: property-equals
+    attribute: LDAPUseSSL
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - cert
+  - sharedcert
 - name: LDAPSSLKeyFilePasswordAlias
   type: String
   reference_to: PasswordAlias
   description: Enter the password alias of the password for the key file that contains
     the certificates for TLS communication with the registry server.
   cli_alias: ldap-ssl-key-file-password-alias
+  ignored_when:
+  - evaluation: property-equals
+    attribute: LDAPUseSSL
+    value:
+    - 'off'
 - name: LDAPSSLKeyFileLabel
   type: String
   description: <p>Enter the label of the personal certificate in the key file for
@@ -160,6 +299,11 @@ attributes:
     allows client authentication.</li><li>For server-only authentication, do not enter
     a value.</li></ul>
   cli_alias: ldap-ssl-key-file-dn
+  ignored_when:
+  - evaluation: property-equals
+    attribute: LDAPUseSSL
+    value:
+    - 'off'
 - name: TAMUseFIPS
   type: Bool
   default: false
@@ -179,6 +323,39 @@ attributes:
     and registry servers. Note that the NIST and NSA options are available only in
     Access Manager versions 7.0 and later.
   cli_alias: choose-nist
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: TAMUseFIPS
+      value:
+      - 'off'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: TAMVersion
+        value:
+        - default
+      - evaluation: property-does-not-equal
+        attribute: TAMVersion
+        value:
+        - v70
+      - evaluation: property-does-not-equal
+        attribute: TAMVersion
+        value:
+        - v801
+      - evaluation: property-does-not-equal
+        attribute: TAMVersion
+        value:
+        - v901
+      - evaluation: property-does-not-equal
+        attribute: TAMVersion
+        value:
+        - v903
+      - evaluation: property-does-not-equal
+        attribute: TAMVersion
+        value:
+        - v1005
 - name: TAMUseBasicUser
   type: Bool
   default: false
@@ -193,6 +370,16 @@ attributes:
   description: Specify the attribute that identifies the basic user in the LDAP user
     entry. The default value is uid.
   cli_alias: user-principal-attribute
+  required_when:
+  - evaluation: property-equals
+    attribute: TAMUseBasicUser
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: TAMUseBasicUser
+    value:
+    - 'off'
 - name: UserNoDuplicates
   type: Bool
   default: true
@@ -202,6 +389,11 @@ attributes:
     returns an error.</li><li>When disabled, the search for basic users ignores possible
     duplicates. By default, duplicate principals are not allowed.</li></ul>
   cli_alias: user-no-duplicates
+  ignored_when:
+  - evaluation: property-equals
+    attribute: TAMUseBasicUser
+    value:
+    - 'off'
 - name: UserSearchSuffixes
   type: List
   element_type: String
@@ -211,6 +403,11 @@ attributes:
     the suffix optimization order.</p><p>If you do not specify any suffixes, the system
     searches all available suffixes.</p>
   cli_alias: user-search-suffixes
+  ignored_when:
+  - evaluation: property-equals
+    attribute: TAMUseBasicUser
+    value:
+    - 'off'
 - name: UserSuffixOptimiser
   type: Bool
   default: false
@@ -222,6 +419,17 @@ attributes:
     all suffixes are searched to check for duplicates.</li><li>When disabled, the
     search order is provided by the order that is defined by the search suffixes property.</li></ul>
   cli_alias: user-suffix-optimiser
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: TAMUseBasicUser
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: UserNoDuplicates
+      value:
+      - 'on'
 - name: TAMFedDirs
   type: List
   element_type: DmTAMFedDir
@@ -229,6 +437,29 @@ attributes:
     set of LDAP suffixes and LDAP server. Federated directories define all the suffixes
     that can be searched for user identities.
   cli_alias: federated-directory
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - default
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v801
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v901
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v903
+    - evaluation: property-does-not-equal
+      attribute: TAMVersion
+      value:
+      - v1005
 - name: TAMAZReplicas
   type: List
   element_type: DmTAMAZReplica
@@ -267,6 +498,11 @@ attributes:
     Access Manager client. Enter a value in the range 1 - 65535. The default value
     is 180.</p>
   cli_alias: retry-interval
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'
 - name: RetryAttempts
   type: Int64
   default: 3
@@ -276,6 +512,11 @@ attributes:
     in the range 0 - 65535. A value of 0 disables the long interval. The default value
     is 3.
   cli_alias: retry-attempts
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'
 - name: LongRetryInterval
   type: Int64
   minimum: 1
@@ -284,3 +525,8 @@ attributes:
   description: Specifies the number of seconds to wait after reaching the number of
     retry attempts. Enter a value in the range 1 - 65535. The default value is 900.
   cli_alias: long-retry-interval
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'

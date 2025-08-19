@@ -61,12 +61,16 @@ attributes:
     "iss" claim in the JWT is validated. If this claim fails, validation fails. The
     maximum value length is 256 characters.
   cli_alias: iss-claim
+  string_max_length: 256
+  string_min_length: 0
 - name: AudienceClaim
   type: String
   description: Specify the PCRE to validate the audience claim. When specified, the
     "aud" claim in the JWT is validated. If this claim fails, the validation fails.
     The maximum value length is 256 characters.
   cli_alias: aud-claim
+  string_max_length: 256
+  string_min_length: 0
 - name: DecryptCrypto
   type: String
   description: Crypto object for JWT decryption

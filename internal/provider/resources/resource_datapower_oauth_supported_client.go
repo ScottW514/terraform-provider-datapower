@@ -68,7 +68,7 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -79,7 +79,7 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -146,6 +146,9 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 				Optional:            true,
 				WriteOnly:           true,
 				Sensitive:           true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(4, 127),
+				},
 			},
 			"client_secret_update": schema.BoolAttribute{
 				MarkdownDescription: "Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.",
@@ -166,6 +169,10 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			"validation_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the validation url.", "validation-url", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(7, 255),
+					stringvalidator.RegexMatches(regexp.MustCompile("https://\\[?[-_a-z0-9A-Z.:]+\\]?(:[0-9]+)?/[ -~]+$"), "Must match :"+"https://\\[?[-_a-z0-9A-Z.:]+\\]?(:[0-9]+)?/[ -~]+$"),
+				},
 			},
 			"validation_features": models.GetDmValidationFeaturesResourceSchema("Customize how to handle the validation grant type.", "validation-features", "", false),
 			"redirect_uri": schema.ListAttribute{
@@ -182,6 +189,9 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			"scope": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the PCRE to check the scope. The minimum length of the expression is 1 character. The maximum length of the expression is 1023 characters.", "scope", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 1023),
+				},
 			},
 			"scope_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the location of the stylesheet or GatewayScript file for a custom scope check. The stylesheet or GatewayScript file must be in the local: or store: directory. The stylesheet or GatewayScript file validates and sets the scope to check.", "scope-url", "").String,
@@ -190,6 +200,9 @@ func (r *OAuthSupportedClientResource) Schema(ctx context.Context, req resource.
 			"default_scope": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specifies the default value of the scope if the client does not define any scope value in the request.", "default-scope", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 255),
+				},
 			},
 			"token_secret": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Assigns the shared secret key to protect tokens that use the OAuth protocol. The shared secret must be at least 32 bytes in length.", "token-secret", "crypto_sskey").String,

@@ -9,8 +9,20 @@ attributes:
   type: String
   description: Specify the XPath expression to apply to the incoming message.
   cli_alias: xpath
+  required_when:
+  - evaluation: property-equals
+    attribute: ERBitmap
+    value:
+    - XPath
+  ignored_when:
+  - evaluation: logical-true
 - name: ERMetadata
   type: String
   reference_to: ProcessingMetadata
   description: Specify the name of the configuration for processing metadata.
   cli_alias: metadata
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ERBitmap
+    value:
+    - metadata

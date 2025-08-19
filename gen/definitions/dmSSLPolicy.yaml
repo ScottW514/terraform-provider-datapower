@@ -17,3 +17,10 @@ attributes:
   type: String
   reference_to: SSLClientProfile
   description: Specify the TLS client profile to secure connections with targets
+  required_when:
+  - evaluation: property-equals
+    attribute: SSLClientConfigType
+    value:
+    - client
+  ignored_when:
+  - evaluation: logical-true

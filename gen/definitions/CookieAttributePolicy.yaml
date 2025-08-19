@@ -46,6 +46,15 @@ attributes:
     only when the current domain matches the value you enter here. The maximum length
     of the domain is 256 characters.
   cli_alias: domain
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: CookieAttribute
+    value:
+    - domain
+  ignored_when:
+  - evaluation: logical-true
+  string_max_length: 256
+  string_min_length: 1
 - name: Path
   type: String
   default: /
@@ -54,6 +63,15 @@ attributes:
     is attached to HTML Forms Login Policy, this property overrides Form POST Action
     URL property. The maximum length of the path is 256 characters.
   cli_alias: path
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: CookieAttribute
+    value:
+    - path
+  ignored_when:
+  - evaluation: logical-true
+  string_max_length: 256
+  string_min_length: 1
 - name: Interval
   type: Int64
   minimum: 1
@@ -70,6 +88,14 @@ attributes:
     attribute in this policy overrides Inactivity Timeout and Session Lifetime attributes
     in HTML Forms Login policy.</p>
   cli_alias: interval
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: CookieAttribute
+    value:
+    - max-age
+    - expires
+  ignored_when:
+  - evaluation: logical-true
 - name: CustomAttribute
   type: String
   description: The additional attributes to include in the cookie. Enter each attribute
@@ -78,3 +104,10 @@ attributes:
     here. You can use variables instead of name-value pair(s). Enter a context variable
     as var://variablename
   cli_alias: custom-attribute
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: CookieAttribute
+    value:
+    - custom
+  ignored_when:
+  - evaluation: logical-true

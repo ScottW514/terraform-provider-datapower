@@ -108,41 +108,53 @@ type YamlConfig struct {
 	DataResource      []string
 }
 
+type YamlValidationTest struct {
+	Evaluation string               `yaml:"evaluation"`
+	Conditions []YamlValidationTest `yaml:"conditions"`
+	Attribute  string               `yaml:"attribute"`
+	Value      []string             `yaml:"value"`
+}
+
 type YamlActionAttribute struct {
 	Name string `yaml:"name"`
 	Body string `yaml:"body"`
 }
 
 type YamlConfigAttribute struct {
-	Name            string   `yaml:"name"`
-	Path            string   `yaml:"path"`
-	TfName          string   `yaml:"tf_name"`
-	Type            string   `yaml:"type"`
-	BoolType        string   `yaml:"bool_type"`
-	DmType          string   `yaml:"dm_type"`
-	ElementType     string   `yaml:"element_type"`
-	Internal        bool     `yaml:"internal"`
-	Required        bool     `yaml:"required"`
-	Computed        bool     `yaml:"computed"`
-	WriteOnly       bool     `yaml:"write_only"`
-	Description     string   `yaml:"description"`
-	Deprecated      string   `yaml:"deprecated"`
-	Sensitive       string   `yaml:"sensitive"`
-	CliAlias        string   `yaml:"cli_alias"`
-	Example         string   `yaml:"example"`
-	ListExample     []string `yaml:"list_example"`
-	Enum            []string `yaml:"enum"`
-	Minimum         int64    `yaml:"minimum"`
-	Maximum         int64    `yaml:"maximum"`
-	StringPatterns  []string `yaml:"string_patterns"`
-	StringMinLength int64    `yaml:"string_min_length"`
-	StringMaxLength int64    `yaml:"string_max_length"`
-	Default         string   `yaml:"default"`
-	ListDefault     []string `yaml:"list_default"`
-	TestValue       string   `yaml:"test_value"`
-	TestBedValue    string   `yaml:"test_bed_value"`
-	TestExpectDs    string   `yaml:"test_expect_ds"`
-	ReferenceTo     string   `yaml:"reference_to"`
+	Name            string               `yaml:"name"`
+	Path            string               `yaml:"path"`
+	TfName          string               `yaml:"tf_name"`
+	Type            string               `yaml:"type"`
+	BoolType        string               `yaml:"bool_type"`
+	DmType          string               `yaml:"dm_type"`
+	ElementType     string               `yaml:"element_type"`
+	Internal        bool                 `yaml:"internal"`
+	Required        bool                 `yaml:"required"`
+	Computed        bool                 `yaml:"computed"`
+	WriteOnly       bool                 `yaml:"write_only"`
+	Description     string               `yaml:"description"`
+	Deprecated      string               `yaml:"deprecated"`
+	Sensitive       string               `yaml:"sensitive"`
+	CliAlias        string               `yaml:"cli_alias"`
+	Example         string               `yaml:"example"`
+	ListExample     []string             `yaml:"list_example"`
+	Enum            []string             `yaml:"enum"`
+	Minimum         int64                `yaml:"minimum"`
+	Maximum         int64                `yaml:"maximum"`
+	StringPatterns  []string             `yaml:"string_patterns"`
+	StringExclude   []string             `yaml:"string_exclude"`
+	StringMinLength int64                `yaml:"string_min_length"`
+	StringMaxLength int64                `yaml:"string_max_length"`
+	Default         string               `yaml:"default"`
+	ListDefault     []string             `yaml:"list_default"`
+	TestValue       string               `yaml:"test_value"`
+	TestBedValue    string               `yaml:"test_bed_value"`
+	TestExpectDs    string               `yaml:"test_expect_ds"`
+	ReferenceTo     string               `yaml:"reference_to"`
+	FileLocations   []string             `yaml:"file_locations"`
+	Protocols       []string             `yaml:"protocols"`
+	RequiredWhen    []YamlValidationTest `yaml:"required_when"`
+	IgnoredWhen     []YamlValidationTest `yaml:"ignored_when"`
 }
 
 // camelCase converts a string (possibly with spaces or hyphens) to CamelCase.

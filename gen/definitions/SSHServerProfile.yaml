@@ -98,6 +98,11 @@ attributes:
     The banner message must be at least one character. The banner message is truncated
     at 4096 characters.
   cli_alias: preauth-msg
+  ignored_when:
+  - evaluation: property-equals
+    attribute: SendPreAuthMsg
+    value:
+    - 'no'
 - name: HostKeyAlg
   dm_type: DmHostKeyAlgorithms
   description: Host key algorithms

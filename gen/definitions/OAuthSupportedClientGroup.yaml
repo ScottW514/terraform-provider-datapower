@@ -50,11 +50,23 @@ attributes:
   default: custom
   description: Sets the method to customize an OAuth client.
   cli_alias: customized-type
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Customized
+    value:
+    - 'off'
 - name: OAuthRole
   dm_type: DmOAuthRole
   description: Identifies the roles of clients in the group. This property is mutually
     exclusive to the <b>Customized OAuth</b> property.
   cli_alias: oauth-role
+  required_when:
+  - evaluation: property-equals
+    attribute: Customized
+    value:
+    - 'off'
+  ignored_when:
+  - evaluation: logical-true
 - name: Client
   type: List
   reference_to: OAuthSupportedClient
@@ -62,6 +74,25 @@ attributes:
   description: Manages the group of OAuth clients. Use the controls to add or remove
     clients from the group.
   cli_alias: client
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'off'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Customized
+        value:
+        - 'on'
+      - evaluation: property-equals
+        attribute: CustomizedType
+        value:
+        - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: TemplateProcessUrl
   type: String
   description: '<p>Specifies the location of the stylesheet or GatewayScript file
@@ -102,6 +133,22 @@ attributes:
     element value is set to "ssl", the &lt;client-valcred> element value must be provided
     by either the stylesheet or GatewayScript file or the template.</li></ul></p>'
   cli_alias: template-process-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: CustomizedType
+      value:
+      - template
+  ignored_when:
+  - evaluation: logical-true
+  file_locations:
+  - local
+  - store
 - name: ClientTemplate
   type: String
   reference_to: OAuthSupportedClient
@@ -109,3 +156,16 @@ attributes:
     parameters that are not specified in the stylesheet or GatewayScript file of the
     OAuth client.</p>
   cli_alias: client-template
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Customized
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: CustomizedType
+      value:
+      - template
+  ignored_when:
+  - evaluation: logical-true

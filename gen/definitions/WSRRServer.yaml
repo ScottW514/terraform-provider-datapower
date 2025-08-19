@@ -70,3 +70,8 @@ attributes:
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSLClientConfigType
+    value:
+    - client

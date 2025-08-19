@@ -64,3 +64,5 @@ attributes:
   example: keyname
   description: Key name
   cli_alias: key-name
+  string_patterns:
+  - ^[a-zA-Z0-9][a-zA-Z0-9-_]*$

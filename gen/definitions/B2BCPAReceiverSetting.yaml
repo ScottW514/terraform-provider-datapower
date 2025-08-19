@@ -88,6 +88,11 @@ attributes:
   reference_to: CryptoIdentCred
   description: Decryption identification credentials
   cli_alias: decrypt-idcred
+  required_when:
+  - evaluation: property-equals
+    attribute: EncryptionRequired
+    value:
+    - 'on'
 - name: SignatureRequired
   type: Bool
   default: false
@@ -98,6 +103,11 @@ attributes:
   reference_to: CryptoValCred
   description: Signature validation credentials
   cli_alias: verify-valcred
+  required_when:
+  - evaluation: property-equals
+    attribute: SignatureRequired
+    value:
+    - 'on'
 - name: DefaultSignerCert
   type: String
   reference_to: CryptoCertificate
@@ -105,3 +115,8 @@ attributes:
     is used when either the <tt>keyInfo</tt> element is missing or the signature method
     is not supported.
   cli_alias: default-signer-cert
+  required_when:
+  - evaluation: property-equals
+    attribute: SignatureRequired
+    value:
+    - 'on'

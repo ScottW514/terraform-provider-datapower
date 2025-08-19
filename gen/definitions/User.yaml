@@ -36,6 +36,10 @@ attributes:
   cli_alias: password
   example: Password$123
   write_only: true
+  required_when:
+  - evaluation: is-edit-new-object
+  string_max_length: 128
+  string_min_length: 1
 - name: AccessLevel
   type: String
   enum:
@@ -58,6 +62,13 @@ attributes:
   cli_alias: group
   test_value: '"AccTest_UserGroup"'
   test_bed_value: datapower_user_group.acc_test.id
+  required_when:
+  - evaluation: property-equals
+    attribute: AccessLevel
+    value:
+    - group-defined
+  ignored_when:
+  - evaluation: logical-true
 - name: SnmpCreds
   type: List
   element_type: DmSnmpCred
@@ -85,3 +96,5 @@ attributes:
   element_type: DmSnmpCredMasked
   cli_alias: snmp-cred-hashed
   test_value: 'null'
+  ignored_when:
+  - evaluation: logical-true

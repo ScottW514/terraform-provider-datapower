@@ -64,7 +64,7 @@ func (r *SLMScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -75,7 +75,7 @@ func (r *SLMScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -89,6 +89,9 @@ func (r *SLMScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 			"start_time": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Start Time", "start", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^(([01][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]$"), "Must match :"+"^(([01][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]$"),
+				},
 			},
 			"duration": schema.Int64Attribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the duration in minutes to enforce the schedule. Enter any value of 1 - 1440. The default value is 1440.", "duration", "").AddIntegerRange(1, 1440).AddDefaultValue("1440").String,
@@ -103,10 +106,16 @@ func (r *SLMScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 			"start_date": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Start date", "start-date", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$"), "Must match :"+"^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$"),
+				},
 			},
 			"stop_date": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the stop date to enforce the schedule. The enforcement period does not include the stop date.", "stop-date", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$"), "Must match :"+"^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$"),
+				},
 			},
 			"time_zone": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the time zone to enforce the schedule. The default is the device local time zone.", "timezone", "").AddStringEnum("LOCAL", "Pacific/Honolulu", "America/Anchorage", "America/Los_Angeles", "America/Denver", "America/Chicago", "America/New_York", "America/Halifax", "America/Sao_Paulo", "America/Noronha", "Atlantic/Azores", "Europe/London", "Europe/Paris", "Europe/Athens", "Asia/Riyadh", "Europe/Moscow", "Asia/Karachi", "Asia/Kolkata", "Asia/Dhaka", "Asia/Novosibirsk", "Asia/Shanghai", "Australia/Perth", "Asia/Tokyo", "Australia/Adelaide", "Australia/Sydney", "Asia/Vladivostok", "Pacific/Auckland").AddDefaultValue("LOCAL").String,

@@ -5,6 +5,13 @@ attributes:
   type: String
   description: Specify the host name of the other system in the high availability
     cluster.
+  required_when:
+  - evaluation: property-equals
+    attribute: HAEnabled
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: Port
   type: Int64
   minimum: 1
@@ -12,3 +19,10 @@ attributes:
   default: 1320
   description: Specify the listening port on the other system in the high availability
     cluster.
+  required_when:
+  - evaluation: property-equals
+    attribute: HAEnabled
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true

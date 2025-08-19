@@ -7,6 +7,11 @@ description: |-
 
 # Changelog
 
+## UNRELEASED
+
+- Added validation criteria to definitions
+- Fixed `DomainSettings` `passphrase`, sensitive and write-only
+
 ## v0.9.1
 
 - Fixed `dependency_actions` handling of non-existent resources (silently proceed)

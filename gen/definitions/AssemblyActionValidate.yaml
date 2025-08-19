@@ -57,6 +57,13 @@ attributes:
   test_value: '"AccTest_APISchema"'
   test_bed_value: datapower_api_schema.acc_test.id
   cli_alias: schema
+  required_when:
+  - evaluation: property-equals
+    attribute: ValidateAgainst
+    value:
+    - url
+  ignored_when:
+  - evaluation: logical-true
 - name: Input
   type: String
   default: message
@@ -77,6 +84,13 @@ attributes:
     <tt>#/definitions/mySchema</tt> or <tt>mySchema</tt> to specify a previously defined
     schema.
   cli_alias: definition
+  required_when:
+  - evaluation: property-equals
+    attribute: ValidateAgainst
+    value:
+    - definition
+  ignored_when:
+  - evaluation: logical-true
 - name: CompileSettings
   type: String
   reference_to: CompileSettings

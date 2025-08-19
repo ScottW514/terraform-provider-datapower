@@ -61,18 +61,33 @@ attributes:
   - soap-body
   description: XML validation mode
   cli_alias: xml-validation-mode
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: XMLType
+    value:
+    - xml
 - name: XMLSchemaURL
   type: String
   description: Specify the schema URL for XML message validation. For example, <tt>local:///petstore-Pet.xsd</tt>
     . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject
     all input, use the string <tt>reject</tt> instead of a URL.
   cli_alias: xml-schema-url
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: XMLType
+    value:
+    - xml
 - name: WSDLSchemaURL
   type: String
   description: Specify the schema URL for WSDL message validation. For example, <tt>local:///petstore-Pet.wsdl</tt>
     . To accept all input, use the string <tt>accept</tt> instead of a URL. To reject
     all input, use the string <tt>reject</tt> instead of a URL.
   cli_alias: wsdl-schema-url
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: XMLType
+    value:
+    - wsdl
 - name: WSDLPortQName
   type: String
   description: Specify the <tt>wsdl:port</tt> for the traffic to validate. The value
@@ -80,6 +95,11 @@ attributes:
     for all ports in the WSDL file. When specified and not <tt>*</tt> , only messages
     for the named port are valid.
   cli_alias: wsdl-port
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: XMLType
+    value:
+    - wsdl
 - name: WSDLOperationName
   type: String
   description: Specify the <tt>wsdl:operation</tt> for the traffic to validate. The
@@ -87,6 +107,11 @@ attributes:
     in the WSDL file. When specified and not <tt>*</tt> , only messages for the named
     operation are valid.
   cli_alias: wsdl-operation
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: XMLType
+    value:
+    - wsdl
 - name: WSDLMessageDirectionOrName
   type: String
   description: Specify the <tt>wsdl:input</tt> , <tt>wsdl:output</tt> , or <tt>wsdl:fault</tt>
@@ -97,6 +122,11 @@ attributes:
     match the specified direction or name are valid. Faults are valid for the response
     direction.
   cli_alias: wsdl-message-direction-or-name
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: XMLType
+    value:
+    - wsdl
 - name: WSDLAttachmentPart
   type: String
   description: Specify the mime:content to validate in the format <tt>mime:content/@part</tt>
@@ -105,3 +135,8 @@ attributes:
     in the WSDL file. When not specified or <tt>*</tt> , the root MIME part is validated.
     The root MIME part is bound to a <tt>soap:Body</tt> .
   cli_alias: wsdl-attachment-part
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: XMLType
+    value:
+    - wsdl

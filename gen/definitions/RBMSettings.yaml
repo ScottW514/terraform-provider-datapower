@@ -66,6 +66,18 @@ attributes:
     directory for SSH authentication with SSH user certificates. This public key file
     contains the public key for one or more certificate authorities.
   cli_alias: ssh-ca-pubkey-file
+  required_when:
+  - evaluation: property-equals
+    attribute: SSHAUMethod
+    value:
+    - certificate
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSHAUMethod
+    value:
+    - certificate
+  file_locations:
+  - cert
 - name: RevokedKeys
   type: List
   element_type: String
@@ -74,11 +86,23 @@ attributes:
     and must be in the OpenSSH public key format. These keys are signed by the CA
     user public key file.
   cli_alias: ssh-revoked-keys
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: SSHAUMethod
+    value:
+    - certificate
 - name: AUZOSNSSConfig
   type: String
   reference_to: ZosNSSClient
   description: z/OS NSS client
   cli_alias: zos-nss-au
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - zosnss
+  ignored_when:
+  - evaluation: logical-true
 - name: AUOIDCScope
   type: String
   default: openid
@@ -114,29 +138,83 @@ attributes:
   reference_to: CryptoKerberosKeytab
   description: Kerberos keytab
   cli_alias: au-kerberos-keytab
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - spnego
+  ignored_when:
+  - evaluation: logical-true
 - name: AUCustomURL
   type: String
   description: Custom URL
   cli_alias: au-custom-url
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: AUInfoURL
   type: String
   description: Specify the URL of the XML file for authentication. The XML file can
     be on the DataPower Gateway or on a remote server. You can use the same XML file
     to map credentials.
   cli_alias: au-info-url
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - xmlfile
+  ignored_when:
+  - evaluation: logical-true
 - name: AUSSLValcred
   type: String
   reference_to: CryptoValCred
   description: Validation credentials
   cli_alias: au-valcred
+  required_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - client-ssl
+  ignored_when:
+  - evaluation: logical-true
 - name: AUHost
   type: String
   description: Server host
   cli_alias: au-server-host
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-value-in-list
+      attribute: AULDAPLoadBalanceGroup
+      value:
+      - ''
+  ignored_when:
+  - evaluation: logical-true
 - name: AUPort
   type: Int64
   description: Server port
   cli_alias: au-server-port
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-value-in-list
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-value-in-list
+      attribute: AULDAPLoadBalanceGroup
+      value:
+      - ''
+  ignored_when:
+  - evaluation: logical-true
 - name: AULDAPSearchForDN
   type: Bool
   default: false
@@ -146,20 +224,69 @@ attributes:
     presented by the user is used with the LDAP prefix and suffix to construct the
     user DN.</li></ul>
   cli_alias: au-ldap-search
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: AULDAPBindDN
   type: String
   description: LDAP bind DN
   cli_alias: au-ldap-bind-dn
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-equals
+      attribute: AULDAPSearchForDN
+      value:
+      - 'off'
 - name: AULDAPBindPasswordAlias
   type: String
   reference_to: PasswordAlias
   description: LDAP bind password alias
   cli_alias: au-ldap-bind-password-alias
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-equals
+      attribute: AULDAPSearchForDN
+      value:
+      - 'off'
 - name: AULDAPSearchParameters
   type: String
   reference_to: LDAPSearchParameters
   description: LDAP search parameters
   cli_alias: au-ldap-parameters
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-equals
+      attribute: AULDAPSearchForDN
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-equals
+      attribute: AULDAPSearchForDN
+      value:
+      - 'off'
 - name: AULDAPPrefix
   type: String
   default: cn=
@@ -167,6 +294,17 @@ attributes:
     value is <tt>CN=</tt> and the username is <tt>Bob</tt> , the complete DN is <tt>CN=Bob,O=example.com</tt>
     when the LDAP suffix is <tt>O=example.com</tt> .
   cli_alias: ldap-prefix
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-equals
+      attribute: AULDAPSearchForDN
+      value:
+      - 'on'
 - name: AUForceDNLDAPOrder
   type: Bool
   default: false
@@ -178,18 +316,45 @@ attributes:
     in LDAP format. This format arranges the RDNs of the DNs from right to left with
     commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
   cli_alias: au-force-dn-ldap-order
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - client-ssl
 - name: LDAPsuffix
   type: String
   description: Specify the string to add after the username to form the DN. If this
     value is <tt>O=example.com</tt> and the username is <tt>Bob</tt> , the complete
     DN is <tt>CN=Bob,O=example.com</tt> when the LDAP prefix is <tt>CN=</tt> .
   cli_alias: ldap-suffix
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-equals
+      attribute: AULDAPSearchForDN
+      value:
+      - 'on'
 - name: AULDAPLoadBalanceGroup
   type: String
   reference_to: LoadBalancerGroup
   description: Specify the load balancer group of LDAP servers. This setting overrides
     the settings for the server host and port.
   cli_alias: loadbalancer-group
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - custom
 - name: AUCacheAllow
   type: String
   enum:
@@ -209,6 +374,11 @@ attributes:
   description: Specify the expiry for cached authentication decisions. Enter a value
     in the range 1 - 86400. The default value is 600.
   cli_alias: au-cache-ttl
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AUCacheAllow
+    value:
+    - disabled
 - name: AULDAPReadTimeout
   type: Int64
   maximum: 86400
@@ -218,6 +388,11 @@ attributes:
     - 86400. The default value is 60. A value of 0 indicates that the connection never
     times out.
   cli_alias: au-ldap-readtimeout
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: MCMethod
   type: String
   enum:
@@ -232,6 +407,13 @@ attributes:
   type: String
   description: Custom URL
   cli_alias: mc-custom-url
+  required_when:
+  - evaluation: property-equals
+    attribute: MCMethod
+    value:
+    - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: MCLDAPSearchForGroup
   type: Bool
   default: false
@@ -243,39 +425,123 @@ attributes:
     the authenticated identity of the user (DN or user group of local user) is used
     directly as the input credential.</li></ul>
   cli_alias: mc-ldap-search
+  ignored_when:
+  - evaluation: property-equals
+    attribute: MCMethod
+    value:
+    - custom
 - name: MCHost
   type: String
   description: Server host
   cli_alias: mc-server-host
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: MCLDAPSearchForGroup
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: MCMethod
+      value:
+      - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: MCPort
   type: Int64
   description: Server port
   cli_alias: mc-server-port
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: MCLDAPSearchForGroup
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: MCMethod
+      value:
+      - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: MCLDAPLoadBalanceGroup
   type: String
   reference_to: LoadBalancerGroup
   description: Load balancer group
   cli_alias: mc-loadbalancer-group
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: MCLDAPSearchForGroup
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: MCMethod
+      value:
+      - custom
 - name: MCLDAPBindDN
   type: String
   description: LDAP bind DN
   cli_alias: mc-ldap-bind-dn
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: MCLDAPSearchForGroup
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: MCMethod
+      value:
+      - custom
 - name: MCLDAPBindPasswordAlias
   type: String
   reference_to: PasswordAlias
   description: LDAP bind password alias
   cli_alias: mc-ldap-bind-password-alias
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: MCLDAPSearchForGroup
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: MCMethod
+      value:
+      - custom
 - name: MCLDAPSearchParameters
   type: String
   reference_to: LDAPSearchParameters
   description: LDAP search parameters
   cli_alias: mc-ldap-parameters
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: MCLDAPSearchForGroup
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: MCMethod
+      value:
+      - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: MCInfoURL
   type: String
   description: Specify the URL of the XML file to map credentials. The XML file can
     be on the DataPower Gateway or on a remote server. You can use the same XML file
     for authentication.
   cli_alias: mc-info-url
+  required_when:
+  - evaluation: property-equals
+    attribute: MCMethod
+    value:
+    - xmlfile
+  ignored_when:
+  - evaluation: logical-true
 - name: MCLDAPReadTimeout
   type: Int64
   maximum: 86400
@@ -285,6 +551,17 @@ attributes:
     - 86400. The default value is 60. A value of 0 indicates that the connection never
     times out.
   cli_alias: mc-ldap-readtimeout
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: MCLDAPSearchForGroup
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: MCMethod
+      value:
+      - custom
 - name: LDAPVersion
   type: String
   enum:
@@ -292,6 +569,11 @@ attributes:
   - v3
   description: LDAP version
   cli_alias: ldap-version
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: FallbackLogin
   type: String
   enum:
@@ -307,12 +589,32 @@ attributes:
     certificate from a connection peer, you cannot enforce RBM on CLI sessions unless
     fallback users are supported.</p>'
   cli_alias: fallback-login
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AUMethod
+    value:
+    - local
 - name: FallbackUser
   type: List
   reference_to: User
   element_type: String
   description: Fallback users
   cli_alias: fallback-user
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: logical-not
+      conditions:
+      - evaluation: property-equals
+        attribute: AUMethod
+        value:
+        - local
+    - evaluation: property-equals
+      attribute: FallbackLogin
+      value:
+      - restricted
+  ignored_when:
+  - evaluation: logical-true
 - name: ApplyToCLI
   type: Bool
   default: false
@@ -320,6 +622,17 @@ attributes:
     uses a TLS certificate from a connection peer, you cannot enforce RBM on CLI sessions
     unless fallback users are supported.
   cli_alias: apply-cli
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AUMethod
+      value:
+      - client-ssl
+    - evaluation: property-equals
+      attribute: FallbackLogin
+      value:
+      - disabled
 - name: RestrictAdminToSerialPort
   type: Bool
   default: false
@@ -375,6 +688,13 @@ attributes:
     criteria mode. <ul><li>When common criteria is enabled, the default value is 90.</li><li>When
     common criteria is not enabled, the default value is 30.</li></ul>
   cli_alias: pwd-max-age
+  required_when:
+  - evaluation: property-equals
+    attribute: DoPasswordAging
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: DoPasswordHistory
   type: Bool
   required: true
@@ -391,6 +711,13 @@ attributes:
     enabled, the default value is 3.</li><li>When common criteria is not enabled,
     the default value is 5.</li></ul>
   cli_alias: pwd-max-history
+  required_when:
+  - evaluation: property-equals
+    attribute: DoPasswordHistory
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: CliTimeout
   type: Int64
   maximum: 65535
@@ -440,6 +767,21 @@ attributes:
     in LDAP format. This format arranges the RDNs of the DNs from right to left with
     commas as separators; for example, <tt>CN=Fred, O=My Organization, C=US</tt> .</p>
   cli_alias: mc-force-dn-ldap-order
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - client-ssl
+    - evaluation: property-does-not-equal
+      attribute: MCLDAPSearchForGroup
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: MCMethod
+      value:
+      - custom
 - name: PasswordHashAlgorithm
   type: String
   enum:
@@ -460,11 +802,27 @@ attributes:
   test_expect_ds: '"proxy"'
   description: TLS client type
   cli_alias: ssl-client-type
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AUMethod
+    value:
+    - ldap
 - name: LDAPSSLClientProfile
   type: String
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AUMethod
+      value:
+      - ldap
+    - evaluation: property-does-not-equal
+      attribute: LDAPSSLClientConfigType
+      value:
+      - client
 - name: MCLDAPSSLClientConfigType
   type: String
   enum:
@@ -473,8 +831,34 @@ attributes:
   test_expect_ds: '"proxy"'
   description: TLS client type
   cli_alias: mc-ssl-client-type
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: MCLDAPSearchForGroup
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: MCMethod
+      value:
+      - custom
 - name: MCLDAPSSLClientProfile
   type: String
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: mc-ssl-client
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: MCLDAPSearchForGroup
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: MCMethod
+      value:
+      - custom
+    - evaluation: property-does-not-equal
+      attribute: MCLDAPSSLClientConfigType
+      value:
+      - client

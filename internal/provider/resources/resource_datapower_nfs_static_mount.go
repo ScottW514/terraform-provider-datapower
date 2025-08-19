@@ -65,7 +65,7 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -76,7 +76,7 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -89,6 +89,9 @@ func (r *NFSStaticMountResource) Schema(ctx context.Context, req resource.Schema
 			"remote": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the remote NFS file system to mount. Use the form <tt>host:/path</tt> , where <tt>host</tt> is the DNS name or IP address of the NFS server, and <tt>path</tt> is the path exported by the host to mount.", "remote", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^:/]+:/[^/]*(/[^/]+)*$"), "Must match :"+"^[^:/]+:/[^/]*(/[^/]+)*$"),
+				},
 			},
 			"local_filesystem_access": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether to allow local file system access through the <tt>nfs-&lt;name></tt> directory. By default, local access is not enabled. When enabled, the NFS mount is available for file system access through the CLI in the <tt>nfs-&lt;name></tt> directory, where <tt>&lt;name></tt> is the name of the mount.", "local-filesystem-access", "").AddDefaultValue("false").String,

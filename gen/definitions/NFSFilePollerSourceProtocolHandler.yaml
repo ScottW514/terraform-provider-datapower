@@ -128,6 +128,11 @@ attributes:
     the match pattern would be <tt>"(.*)"</tt> and the rename pattern would be <tt>"../processed/$1"</tt>
     .</p>
   cli_alias: success-rename-pattern
+  ignored_when:
+  - evaluation: property-equals
+    attribute: DeleteOnSuccess
+    value:
+    - 'on'
 - name: DeleteOnError
   type: Bool
   default: false
@@ -142,6 +147,11 @@ attributes:
   description: When Delete File on Processing Error is not enabled, enter the PCRE
     to use to rename a file when it could not be processed.
   cli_alias: error-rename-pattern
+  ignored_when:
+  - evaluation: property-equals
+    attribute: DeleteOnError
+    value:
+    - 'on'
 - name: GenerateResultFile
   type: Bool
   default: true
@@ -163,6 +173,13 @@ attributes:
     the match pattern would be <tt>"(.*)"</tt> and the result pattern would be <tt>"../result/$1"</tt>
     .</p>
   cli_alias: result-name-pattern
+  required_when:
+  - evaluation: property-equals
+    attribute: GenerateResultFile
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: ProcessingSeizeTimeout
   type: Int64
   minimum: 0
@@ -191,6 +208,16 @@ attributes:
     example: <tt>(.*.processing).*[.*]([0-9]*)</tt> . This assumes that <tt>$1.processing</tt>
     was supplied as the renaming pattern.</p>'
   cli_alias: processing-seize-pattern
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: ProcessingSeizeTimeout
+    value:
+    - '0'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProcessingSeizeTimeout
+    value:
+    - '0'
 - name: XMLManager
   type: String
   reference_to: XMLManager

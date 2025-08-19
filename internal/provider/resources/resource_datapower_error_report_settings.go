@@ -127,6 +127,9 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 			"smtp_server": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote SMTP server to which to send the error report.", "remote-address", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.NoneOf([]string{"127.0.0.1", "localhost"}...),
+				},
 			},
 			"email_address": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the e-mail address to which to send the error report.", "email-address", "").String,
@@ -139,10 +142,17 @@ func (r *ErrorReportSettingsResource) Schema(ctx context.Context, req resource.S
 			"ftp_server": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the host name or IP address of the remote FTP server to which to upload the error report.", "ftp-server", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 128),
+					stringvalidator.NoneOf([]string{"127.0.0.1", "localhost"}...),
+				},
 			},
 			"ftp_path": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the directory on the FTP server to which to upload the error report. Use <tt>%2F</tt> to specify an absolute path.", "ftp-path", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(0, 128),
+				},
 			},
 			"ftp_user_agent": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the User Agent that describes how to connect to remote FTP servers. In addition to the FTP Policy to define the connection, ensure that this User Agent defines the basic authentication policy (user name and password) to connect to the FTP server.", "ftp-user-agent", "http_user_agent").String,

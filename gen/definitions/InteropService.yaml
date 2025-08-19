@@ -40,6 +40,16 @@ attributes:
   description: Specify the IP address or host alias that the service listens. The
     default value is 0.0.0.0, which indicates that the service is active on all addresses.
   cli_alias: http-ip-address
+  required_when:
+  - evaluation: property-equals
+    attribute: HttpService
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HttpService
+    value:
+    - 'off'
 - name: LocalPort
   type: Int64
   minimum: 1000
@@ -47,11 +57,26 @@ attributes:
   default: 9990
   description: Local port
   cli_alias: http-port
+  required_when:
+  - evaluation: property-equals
+    attribute: HttpService
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HttpService
+    value:
+    - 'off'
 - name: ACL
   type: String
   reference_to: AccessControlList
   description: Access control list
   cli_alias: http-acl
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HttpService
+    value:
+    - 'off'
 - name: HttpsService
   type: Bool
   default: false
@@ -63,6 +88,16 @@ attributes:
   description: Specify the IP address or host alias that the service listens. The
     default value is 0.0.0.0, which indicates that the service is active on all addresses.
   cli_alias: https-ip-address
+  required_when:
+  - evaluation: property-equals
+    attribute: HttpsService
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HttpsService
+    value:
+    - 'off'
 - name: HttpsLocalPort
   type: Int64
   minimum: 1000
@@ -70,11 +105,26 @@ attributes:
   default: 9991
   description: Local port
   cli_alias: https-port
+  required_when:
+  - evaluation: property-equals
+    attribute: HttpsService
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HttpsService
+    value:
+    - 'off'
 - name: HttpsACL
   type: String
   reference_to: AccessControlList
   description: Access control list
   cli_alias: https-acl
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HttpsService
+    value:
+    - 'off'
 - name: SSLServerConfigType
   type: String
   enum:
@@ -83,13 +133,46 @@ attributes:
   default: server
   description: TLS server type
   cli_alias: ssl-config-type
+  required_when:
+  - evaluation: property-equals
+    attribute: HttpsService
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: SSLServer
   type: String
   reference_to: SSLServerProfile
   description: TLS server profile
   cli_alias: ssl-server
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: HttpsService
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: SSLServerConfigType
+      value:
+      - server
+  ignored_when:
+  - evaluation: logical-true
 - name: SSLSNIServer
   type: String
   reference_to: SSLSNIServerProfile
   description: TLS SNI server profile
   cli_alias: ssl-sni-server
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: HttpsService
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: SSLServerConfigType
+      value:
+      - sni
+  ignored_when:
+  - evaluation: logical-true

@@ -74,6 +74,8 @@ attributes:
   description: Specify the name of the channel to use as an alternative to the default
     SYSTEM.DEF.SVRCONN.
   cli_alias: channel-name
+  string_max_length: 20
+  string_min_length: 0
 - name: CSPUserId
   type: String
   description: <p>Specify the user ID value of the MQCSP connection security parameter
@@ -90,6 +92,15 @@ attributes:
     both are defined but one is inconsistent with the value on the IBM MQ server,
     the connection fails and the local queue manager is not up.</li></ul></p>
   cli_alias: mqcsp-userid
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: CSPPassword
+    value:
+    - ''
+  string_max_length: 1024
+  string_min_length: 0
+  string_patterns:
+  - ^[^ ]+$
 - name: CSPPasswordAlias
   type: String
   reference_to: PasswordAlias
@@ -107,6 +118,19 @@ attributes:
     both are defined but one is inconsistent with the value on the IBM MQ server,
     the connection fails and the local queue manager is not up.</li></ul></p>
   cli_alias: mqcsp-password-alias
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: CSPUserId
+      value:
+      - ''
+    - evaluation: property-equals
+      attribute: CSPPassword
+      value:
+      - ''
+  string_max_length: 127
+  string_min_length: 0
 - name: Heartbeat
   type: Int64
   minimum: 0
@@ -200,6 +224,11 @@ attributes:
     the offending message. The message can be rerouted by a custom stylesheet in the
     request rule.</p>
   cli_alias: automatic-backout
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: UnitsOfWork
+    value:
+    - '1'
 - name: BackoutThreshold
   type: Int64
   minimum: 1
@@ -209,6 +238,17 @@ attributes:
     backout queue.</li><li>The unit of work that contains this message is committed.</li></ul><p>Enter
     a value that is equal to or greater than 1.</p>
   cli_alias: backout-threshold
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-less-than
+      attribute: UnitsOfWork
+      value:
+      - '1'
+    - evaluation: property-does-not-equal
+      attribute: AutomaticBackout
+      value:
+      - 'on'
 - name: BackoutQueueName
   type: String
   description: Specify the name of the queue for undeliverable messages. This queue
@@ -217,6 +257,19 @@ attributes:
     queue, typically <tt>SYSTEM.DEAD.LETTER.QUEUE</tt> contains messages that cannot
     be processed or delivered.
   cli_alias: backout-queue
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-less-than
+      attribute: UnitsOfWork
+      value:
+      - '1'
+    - evaluation: property-does-not-equal
+      attribute: AutomaticBackout
+      value:
+      - 'on'
+  string_max_length: 48
+  string_min_length: 0
 - name: TotalConnectionLimit
   type: Int64
   minimum: 1
@@ -255,6 +308,9 @@ attributes:
     , the stash file must be <tt>MQkeys.sth</tt> .</p><p>If these file are not in
     the <tt>cert:</tt> directory, upload or fetch them.</p>
   cli_alias: ssl-key
+  file_locations:
+  - cert
+  - sharedcert
 - name: PermitInsecureServers
   type: Bool
   default: false
@@ -263,6 +319,11 @@ attributes:
     are vulnerable to MITM attacks as documented in CVE-2009-3555. By default, insecure
     connections are rejected during the handshake.
   cli_alias: permit-insecure-servers
+  ignored_when:
+  - evaluation: property-equals
+    attribute: SSLkey
+    value:
+    - ''
 - name: SSLcipher
   type: String
   enum:
@@ -310,6 +371,8 @@ attributes:
   type: String
   description: TLS certificate label
   cli_alias: ssl-cert-label
+  string_max_length: 64
+  string_min_length: 0
 - name: ConvertInput
   type: Bool
   default: true
@@ -333,6 +396,11 @@ attributes:
     to the IBM MQ server. The default value is 10. This setting does not affect established
     connections.
   cli_alias: retry-interval
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'
 - name: RetryAttempts
   type: Int64
   minimum: 0
@@ -342,6 +410,11 @@ attributes:
     is reached, the long interval is used. The default value is 6. When 0, the long
     retry interval is not used. The retry interval is used forever.
   cli_alias: retry-attempts
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'
 - name: LongRetryInterval
   type: Int64
   minimum: 1
@@ -352,6 +425,11 @@ attributes:
     The default value is 600. The long retry interval must be greater than the retry
     interval.
   cli_alias: long-retry-interval
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'
 - name: ReportingInterval
   type: Int64
   minimum: 1
@@ -361,6 +439,11 @@ attributes:
     attempts. This setting filters the generation of identical error messages to IBM
     MQ logging targets. The default value is 10.
   cli_alias: reporting-interval
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AutoRetry
+    value:
+    - 'on'
 - name: AlternateUser
   type: Bool
   default: true
@@ -377,6 +460,8 @@ attributes:
     range of ports use (1,10) or 1.1.1.1(1,10). If the port is set, the range must
     be greater than the total number of allowed connections.
   cli_alias: local-address
+  string_patterns:
+  - ^[^ ]+([(][1-9][0-9]*(,[0-9]+)?[)])?$
 - name: XMLManager
   type: String
   reference_to: XMLManager

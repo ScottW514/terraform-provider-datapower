@@ -54,16 +54,56 @@ attributes:
   dm_type: DmB2BHAHost
   description: Alternate host
   cli_alias: ha-other-hosts
+  required_when:
+  - evaluation: property-equals
+    attribute: HAEnabled
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HAEnabled
+    value:
+    - 'off'
 - name: HALocalIP
   type: String
   description: Replication address
   cli_alias: ha-local-ip
+  required_when:
+  - evaluation: property-equals
+    attribute: HAEnabled
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HAEnabled
+    value:
+    - 'off'
 - name: HALocalPort
   type: Int64
   default: 1320
   description: Replication port
   cli_alias: ha-local-port
+  required_when:
+  - evaluation: property-equals
+    attribute: HAEnabled
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HAEnabled
+    value:
+    - 'off'
 - name: HAVirtualIP
   type: String
   description: Virtual IP address
   cli_alias: ha-virtual-ip
+  required_when:
+  - evaluation: property-equals
+    attribute: HAEnabled
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-equals
+    attribute: HAEnabled
+    value:
+    - 'off'

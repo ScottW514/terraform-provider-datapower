@@ -53,6 +53,8 @@ attributes:
   type: String
   description: Username
   cli_alias: username
+  string_patterns:
+  - ^[^ ]+$
 - name: Password
   type: String
   reference_to: PasswordAlias
@@ -95,6 +97,52 @@ attributes:
   description: Specify the type of payload to send for GraphQL POST requests. When
     GraphQL or JSON, this setting overrides the message type of the payload.
   cli_alias: graphql-send-type
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-equals
+        attribute: Method
+        value:
+        - Keep
+      - evaluation: property-equals
+        attribute: Method
+        value:
+        - POST
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-equals
+        attribute: BackendType
+        value:
+        - detect
+      - evaluation: property-equals
+        attribute: BackendType
+        value:
+        - graphql
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Method
+        value:
+        - Keep
+      - evaluation: property-does-not-equal
+        attribute: Method
+        value:
+        - POST
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: BackendType
+        value:
+        - detect
+      - evaluation: property-does-not-equal
+        attribute: BackendType
+        value:
+        - graphql
 - name: Compression
   type: Bool
   default: false
@@ -116,6 +164,16 @@ attributes:
   description: Specify the validity period in seconds for documents in the cache.
     The default value is 900.
   cli_alias: ttl
+  required_when:
+  - evaluation: property-equals
+    attribute: CacheType
+    value:
+    - TimeToLive
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: CacheType
+    value:
+    - TimeToLive
 - name: CacheUnsafeResponse
   type: Bool
   default: false
@@ -125,6 +183,11 @@ attributes:
     want to cache responses to these requests when you know that the action (for example:
     HTTP POST) will not change the server state.'
   cli_alias: cache-unsafe-response
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: CacheType
+    value:
+    - TimeToLive
 - name: CacheKey
   type: String
   description: Specify the string for the cache key. If omitted, the entire URL is
@@ -153,6 +216,11 @@ attributes:
     the server. Only applicable when the HTTP version to the server is set to HTTP/2
     and the connection uses TLS. The default value is off.
   cli_alias: http2-required
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: HTTPVersion
+    value:
+    - HTTP/2
 - name: DoChunkedUpload
   type: Bool
   default: true
@@ -179,6 +247,16 @@ attributes:
   dm_type: DmInvokeErrorType
   description: Error types
   cli_alias: error-types
+  required_when:
+  - evaluation: property-equals
+    attribute: StopOnError
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: StopOnError
+    value:
+    - 'on'
 - name: Output
   type: String
   default: message

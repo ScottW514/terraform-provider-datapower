@@ -115,6 +115,16 @@ attributes:
   description: Specify the type of group authentication configuration to use. The
     default value is static.
   cli_alias: ldap-group-auth-type
+  required_when:
+  - evaluation: property-equals
+    attribute: LDAPGroupAuthEnabled
+    value:
+    - 'on'
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: LDAPGroupAuthEnabled
+    value:
+    - 'on'
 - name: LDAPGroupScope
   type: String
   enum:
@@ -124,11 +134,44 @@ attributes:
   default: subtree
   description: Specify the depth of the LDAP group search. The default value is subtree.
   cli_alias: ldap-group-scope
+  ignored_when:
+  - evaluation: property-equals
+    attribute: LDAPGroupAuthEnabled
+    value:
+    - 'off'
 - name: LDAPGroupBaseDN
   type: String
   description: Specify the base DN name to begin the group authentication search.
     This value identifies the entry level of the tree used by the LDAP group scope.
   cli_alias: ldap-group-base-dn
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthEnabled
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthType
+      value:
+      - static
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthEnabled
+      value:
+      - 'off'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: LDAPGroupAuthEnabled
+        value:
+        - 'on'
+      - evaluation: property-equals
+        attribute: LDAPGroupAuthType
+        value:
+        - dynamic
 - name: LDAPGroupFilterPrefix
   type: String
   description: Specify the prefix of the LDAP group filter expression. An LDAP group
@@ -137,6 +180,34 @@ attributes:
     , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com))</tt>
     .</p>
   cli_alias: ldap-group-filter-prefix
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthEnabled
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthType
+      value:
+      - static
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthEnabled
+      value:
+      - 'off'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: LDAPGroupAuthEnabled
+        value:
+        - 'on'
+      - evaluation: property-equals
+        attribute: LDAPGroupAuthType
+        value:
+        - dynamic
 - name: LDAPGroupFilterSuffix
   type: String
   description: Specify the suffix of the LDAP group filter expression. <p>When the
@@ -144,9 +215,65 @@ attributes:
     , and the suffix is <tt>)(CN=ibm-group))</tt> , the LDAP search filter is <tt>(&amp;(objectclass=group)(member=CN=bob,DN=ibm,DN=com)(CN=ibm-group))</tt>
     .</p>
   cli_alias: ldap-group-filter-suffix
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthEnabled
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthType
+      value:
+      - static
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthEnabled
+      value:
+      - 'off'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: LDAPGroupAuthEnabled
+        value:
+        - 'on'
+      - evaluation: property-equals
+        attribute: LDAPGroupAuthType
+        value:
+        - dynamic
 - name: LDAPGroupDynamicFilter
   type: String
   description: Specify the filter expression of the LDAP dynamic group configuration.
     Only for dynamic. <p>When the filter is <tt>(memberOf=CN=ibm-group,DC=ibm,DC=com)</tt>
     , the value is used verbatim for LDAP group dynamic search.</p>
   cli_alias: ldap-group-dynamic-filter
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthEnabled
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthType
+      value:
+      - dynamic
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: LDAPGroupAuthEnabled
+      value:
+      - 'off'
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: LDAPGroupAuthEnabled
+        value:
+        - 'on'
+      - evaluation: property-equals
+        attribute: LDAPGroupAuthType
+        value:
+        - static

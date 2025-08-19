@@ -72,6 +72,11 @@ attributes:
   description: <p>Enable to work smoothly with WebSphere server when the "Strict Message
     Ordering" option in the corresponding destination is checked.</p>
   cli_alias: strict-message-order
+  ignored_when:
+  - evaluation: property-equals
+    attribute: AsyncMessageProcessing
+    value:
+    - 'on'
 - name: UserSummary
   type: String
   description: Comments

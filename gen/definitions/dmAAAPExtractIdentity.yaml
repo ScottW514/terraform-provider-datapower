@@ -10,21 +10,47 @@ attributes:
   description: Specify the location of the processing file. This file is the stylesheet
     or GatewayScript that extracts identity information from the candidate XML document.
   cli_alias: custom-url
+  required_when:
+  - evaluation: property-equals
+    attribute: EIBitmap
+    value:
+    - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: EIXPath
   type: String
   description: Specify the XPath expression to apply to the message. The extracted
     identity uses the string value for this expression.
   cli_alias: xpath
+  required_when:
+  - evaluation: property-equals
+    attribute: EIBitmap
+    value:
+    - token
+  ignored_when:
+  - evaluation: logical-true
 - name: EISignerDNValcred
   type: String
   reference_to: CryptoValCred
   description: Specify the validation credentials to verify the signer certificate.
   cli_alias: valcred
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: EIBitmap
+    value:
+    - signer-dn
 - name: EICookieName
   type: String
   description: Specify the cookie in the <tt>Cookie</tt> header to extract and use
     as the identity token.
   cli_alias: cookie-name
+  required_when:
+  - evaluation: property-equals
+    attribute: EIBitmap
+    value:
+    - cookie-token
+  ignored_when:
+  - evaluation: logical-true
 - name: EIBasicAuthRealm
   type: String
   default: login
@@ -32,6 +58,11 @@ attributes:
     by RFC 2617. A web browser might display this name to help the user determine
     which credentials must be supplied. The default value is <tt>login</tt> .
   cli_alias: basic-auth-realm
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: EIBitmap
+    value:
+    - http-basic-auth
 - name: EIUseWSSec
   type: Bool
   default: false
@@ -42,6 +73,13 @@ attributes:
     the <tt>Security</tt> header.</li><li>When not enabled, use the token that is
     extracted somewhere other than the WS-Security <tt>Security</tt> header.</li></ul>
   cli_alias: use-wssec-token
+  required_when:
+  - evaluation: property-equals
+    attribute: EIBitmap
+    value:
+    - ltpa
+  ignored_when:
+  - evaluation: logical-true
 - name: EIMetadata
   type: String
   reference_to: ProcessingMetadata
@@ -50,6 +88,11 @@ attributes:
     metadata items.</li><li>When not specified, processing returns all metadata items
     for the current processing rule.</li></ul>
   cli_alias: metadata
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: EIBitmap
+    value:
+    - metadata
 - name: EIAllowRemoteTokenReference
   type: Bool
   default: false
@@ -58,6 +101,11 @@ attributes:
     indicates that the token is at a remote location. By default, processing cannot
     contact a remote location.
   cli_alias: remote-token-allowed
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: EIBitmap
+    value:
+    - signer-dn
 - name: EIRemoteTokenProcessService
   type: String
   description: <p>Specify the URL of the service that can process the remote security
@@ -67,6 +115,17 @@ attributes:
     pieces of a remote SAML assertion, run an XSLT transform, or the AAA policy can
     assert the token.</p>
   cli_alias: remote-token-url
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: EIBitmap
+      value:
+      - signer-dn
+    - evaluation: property-equals
+      attribute: EIAllowRemoteTokenReference
+      value:
+      - 'off'
 - name: EIPasswordRetrievalMechanism
   type: String
   enum:
@@ -76,25 +135,72 @@ attributes:
   description: Specify the method to obtain the user password. The password is needed
     to calculate the derived symmetric key.
   cli_alias: password-retrieval-method
+  required_when:
+  - evaluation: property-equals
+    attribute: EIBitmap
+    value:
+    - wssec-derived-key
+  ignored_when:
+  - evaluation: logical-true
 - name: EIPasswordRetrievalCustomURL
   type: String
   description: Specify the location of custom file to obtain the password.
   cli_alias: password-retrieval-custom-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EIBitmap
+      value:
+      - wssec-derived-key
+    - evaluation: property-equals
+      attribute: EIPasswordRetrievalMechanism
+      value:
+      - custom
+  ignored_when:
+  - evaluation: logical-true
 - name: EIPasswordRetrievalAAAInfoURL
   type: String
   description: Specify the location of AAA information file to obtain the password.
   cli_alias: password-retrieval-xmlfile-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EIBitmap
+      value:
+      - wssec-derived-key
+    - evaluation: property-equals
+      attribute: EIPasswordRetrievalMechanism
+      value:
+      - xmlfile
+  ignored_when:
+  - evaluation: logical-true
 - name: EIFormsLoginPolicy
   type: String
   reference_to: FormsLoginPolicy
   description: Specify the HTML forms-based login policy. This policy defines the
     forms that collect user and password information.
   cli_alias: forms-login-policy
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: EIBitmap
+    value:
+    - html-forms-auth
+  ignored_when:
+  - evaluation: logical-true
 - name: EIOAuthClientGroup
   type: String
   reference_to: OAuthSupportedClientGroup
   description: Specify the name of the OAuth client group.
   cli_alias: oauth-client-group
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: EIBitmap
+    value:
+    - oauth
+  ignored_when:
+  - evaluation: logical-true
 - name: EISSLClientConfigType
   type: String
   enum:
@@ -103,16 +209,49 @@ attributes:
   default: proxy
   description: Specify the TLS profile type to secure connections.
   cli_alias: ssl-client-type
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: EIBitmap
+      value:
+      - signer-dn
+    - evaluation: property-equals
+      attribute: EIAllowRemoteTokenReference
+      value:
+      - 'off'
 - name: EISSLClientProfile
   type: String
   reference_to: SSLClientProfile
   description: Specify the TLS client profile to secure connections to targets
   cli_alias: ssl-client
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-value-not-in-list
+      attribute: EIBitmap
+      value:
+      - signer-dn
+    - evaluation: property-equals
+      attribute: EIAllowRemoteTokenReference
+      value:
+      - 'off'
+    - evaluation: property-does-not-equal
+      attribute: EISSLClientConfigType
+      value:
+      - client
 - name: EIJWTValidator
   type: String
   reference_to: AAAJWTValidator
   description: Specify the JWT validator to validate the JWT.
   cli_alias: validate-jwt
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: EIBitmap
+    value:
+    - jwt
+  ignored_when:
+  - evaluation: logical-true
 - name: EISocialLoginPolicy
   type: String
   reference_to: SocialLoginPolicy
@@ -121,9 +260,27 @@ attributes:
     When the value is set with a variable before the AAA action, the variable takes
     precedence over this value.
   cli_alias: social-login-policy
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: EIBitmap
+    value:
+    - social-login
+  ignored_when:
+  - evaluation: logical-true
 - name: EISAMLResponseValCred
   type: String
   reference_to: CryptoValCred
   description: Specify the validation credentials to verify the signature of the SAML
     response.
   cli_alias: saml-response-valcred
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: EIBitmap
+      value:
+      - saml-attr-name
+    - evaluation: property-does-not-equal
+      attribute: EIBitmap
+      value:
+      - saml-authen-name

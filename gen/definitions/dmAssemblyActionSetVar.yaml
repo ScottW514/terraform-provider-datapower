@@ -32,6 +32,11 @@ attributes:
   description: Specify the data type of the variable. You must define this property
     to set or add a variable.
   cli_alias: type
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Action
+    value:
+    - clear
 - name: Value
   type: String
   description: 'Specify the value of the variable. You must define this property to
@@ -47,3 +52,13 @@ attributes:
   example: value
   test_value: '"value"'
   cli_alias: value
+  required_when:
+  - evaluation: property-does-not-equal
+    attribute: Action
+    value:
+    - clear
+  ignored_when:
+  - evaluation: property-equals
+    attribute: Action
+    value:
+    - clear

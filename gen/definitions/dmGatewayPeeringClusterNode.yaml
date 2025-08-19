@@ -6,6 +6,11 @@ attributes:
   type: String
   required: true
   description: Specify the local IP address or host alias of the node.
+  string_exclude:
+  - 127.0.0.1
+  - 0.0.0.0
+  - '::'
+  - '::1'
 - name: Port
   type: Int64
   required: true

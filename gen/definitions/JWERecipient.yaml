@@ -52,6 +52,22 @@ attributes:
   reference_to: CryptoSSKey
   description: Shared secret key.
   cli_alias: sskey
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Algorithm
+    value:
+    - A128KW
+    - A192KW
+    - A256KW
+    - dir
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Algorithm
+    value:
+    - A128KW
+    - A192KW
+    - A256KW
+    - dir
 - name: Certificate
   type: String
   reference_to: CryptoCertificate
@@ -59,6 +75,20 @@ attributes:
   test_bed_value: datapower_crypto_certificate.acc_test.id
   description: Certificate.
   cli_alias: cert
+  required_when:
+  - evaluation: property-value-in-list
+    attribute: Algorithm
+    value:
+    - RSA1_5
+    - RSA-OAEP
+    - RSA-OAEP-256
+  ignored_when:
+  - evaluation: property-value-not-in-list
+    attribute: Algorithm
+    value:
+    - RSA1_5
+    - RSA-OAEP
+    - RSA-OAEP-256
 - name: UnprotectedHeader
   type: List
   element_type: DmJOSEHeader

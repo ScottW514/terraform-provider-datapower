@@ -23,9 +23,21 @@ attributes:
   type: String
   description: Enter the name of a WSDL-defined component of the type selected in
     the WSDL Component Type field.
+  ignored_when:
+  - evaluation: property-equals
+    attribute: PolicySubjectOptOutWSDLComponentType
+    value:
+    - subscription
 - name: PolicySubjectOptOutSubscription
   type: String
   description: Select a subscription.
+  required_when:
+  - evaluation: property-equals
+    attribute: PolicySubjectOptOutWSDLComponentType
+    value:
+    - subscription
+  ignored_when:
+  - evaluation: logical-true
 - name: PolicySubjectOptOutFragmentID
   type: String
   description: Matches Fragment Identifier

@@ -66,6 +66,11 @@ attributes:
     does not contain a scope, an invalid scope error is returned.</p><p>Scopes ensure
     that the granted access token is valid to access only specific protected resources.</p>
   cli_alias: default-scopes
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - third_party
 - name: SupportedGrantTypes
   dm_type: DmOAuthProviderGrantType
   description: Specify the supported grant types. Each grant type defines a method
@@ -75,24 +80,52 @@ attributes:
   dm_type: DmAllowedClientType
   description: Supported client types
   cli_alias: supported-client-types
+  required_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - native
+  ignored_when:
+  - evaluation: logical-true
 - name: APICProviderBasePath
   type: String
   default: /
   description: Specify the base path on which the OAuth provider API is served. The
     default value is <tt>/</tt> .
   cli_alias: apic-provider-base-path
+  required_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - native
+  ignored_when:
+  - evaluation: logical-true
 - name: APICAuthorizeEndpoint
   type: String
   default: /oauth2/authorize
   description: Specify the endpoint where the client application obtains authorization
     grant. The default value is <tt>/oauth2/authorize</tt> .
   cli_alias: apic-authorize-endpoint
+  required_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - native
+  ignored_when:
+  - evaluation: logical-true
 - name: APICTokenEndpoint
   type: String
   default: /oauth2/token
   description: Specify the endpoint where the client application exchanges an authorization
     grant for an access token. The default value is <tt>/oauth2/token</tt> .
   cli_alias: apic-token-endpoint
+  required_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - native
+  ignored_when:
+  - evaluation: logical-true
 - name: APICEnableIntrospection
   type: Bool
   default: false
@@ -101,12 +134,30 @@ attributes:
     the metadata for making appropriate authorization decisions. By default, token
     introspection is disabled.
   cli_alias: apic-enable-introspection
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ProviderType
+    value:
+    - native
 - name: APICIntrospectEndpoint
   type: String
   default: /oauth2/introspect
   description: Specify the endpoint for token introspection. The default value is
     <tt>/oauth2/introspect</tt> .
   cli_alias: apic-introspect-endpoint
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-equals
+      attribute: APICEnableIntrospection
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: APICTokenSecret
   type: String
   reference_to: CryptoSSKey
@@ -114,11 +165,25 @@ attributes:
   cli_alias: apic-token-secret
   test_value: '"AccTest_CryptoSSKey"'
   test_bed_value: datapower_crypto_sskey.acc_test.id
+  required_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - native
+  ignored_when:
+  - evaluation: logical-true
 - name: APICOneTimeUseAccesstoken
   type: Bool
   default: false
   description: One-time use access token
   cli_alias: apic-enable-one-time-use-access-token
+  required_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - native
+  ignored_when:
+  - evaluation: logical-true
 - name: APICAccessTokenTTL
   type: Int64
   minimum: 1
@@ -127,6 +192,13 @@ attributes:
   description: Specify the time in seconds that an access token remains valid. The
     default value is 3600.
   cli_alias: apic-access-token-ttl
+  required_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - native
+  ignored_when:
+  - evaluation: logical-true
 - name: APICAuthCodeTTL
   type: Int64
   minimum: 1
@@ -135,6 +207,19 @@ attributes:
   description: Specify the time in seconds that an authorization code remains valid.
     The default value is 300.
   cli_alias: apic-auth-code-ttl
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-value-in-list
+      attribute: SupportedGrantTypes
+      value:
+      - access_code
+  ignored_when:
+  - evaluation: logical-true
 - name: APICEnableRefreshToken
   type: Bool
   default: false
@@ -143,6 +228,11 @@ attributes:
     the current access token becomes invalid, expires, or are used to obtain additional
     access tokens with identical or narrower scope. By default, this setting is disabled.
   cli_alias: apic-enable-refresh-token
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ProviderType
+    value:
+    - native
 - name: APICOneTimeUseRefreshtoken
   type: Bool
   default: true
@@ -150,6 +240,17 @@ attributes:
     the refresh token is one-time use. This setting is the default value.</li><li>When
     disabled, the refresh token can be reused until it expires or is revoked.</li></ul>
   cli_alias: apic-enable-one-time-use-refresh-token
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-does-not-equal
+      attribute: APICEnableRefreshToken
+      value:
+      - 'on'
 - name: APICRefreshTokenLimit
   type: Int64
   minimum: 1
@@ -158,6 +259,23 @@ attributes:
   description: Specify the number of refresh tokens to allow to be generated. The
     default value is 10.
   cli_alias: apic-refresh-token-limit
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-equals
+      attribute: APICEnableRefreshToken
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: APICOneTimeUseRefreshtoken
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: APICRefreshTokenTTL
   type: Int64
   minimum: 2
@@ -166,6 +284,19 @@ attributes:
   description: Specify the time in seconds that a refresh token remains valid. The
     default value is 5400.
   cli_alias: apic-refresh-token-ttl
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-equals
+      attribute: APICEnableRefreshToken
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: logical-true
 - name: APICMaximumConsentTTL
   type: Int64
   minimum: 0
@@ -174,6 +305,17 @@ attributes:
   description: Specify the time in seconds that a consent remains valid. The default
     value is 0, which disables maximum consent.
   cli_alias: apic-maximum-consent-ttl
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: APICEnableRefreshToken
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
 - name: AdvScopeValidationEnabled
   type: Bool
   default: false
@@ -185,52 +327,149 @@ attributes:
   default: false
   description: Use URL from API Security Definition
   cli_alias: advanced-scope-url-from-security
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AdvScopeValidationEnabled
+    value:
+    - 'on'
 - name: AdvancedScopeURL
   type: String
   description: Specify the URL to send scope information for validation. This external
     endpoint is where the specified scope is verified. You must define this property
     for advanced scope validation.
   cli_alias: advanced-scope-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: AdvancedScopeURLOverride
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: AdvScopeValidationEnabled
+      value:
+      - 'on'
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AdvScopeValidationEnabled
+    value:
+    - 'on'
 - name: AdvScopeTLSProfile
   type: String
   reference_to: SSLClientProfile
   description: TLS profile to access advanced scope URL
   cli_alias: advanced-scope-tls-profile
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AdvScopeValidationEnabled
+    value:
+    - 'on'
 - name: AdvScopeURLSecurityEnabled
   type: Bool
   default: false
   description: Enable advanced scope endpoint security
   cli_alias: advanced-scope-url-security-enabled
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AdvScopeValidationEnabled
+    value:
+    - 'on'
 - name: AdvScopeURLSecurity
   dm_type: DmSecurityType
   default: basic-auth
   description: Advanced scope endpoint security
   cli_alias: advanced-scope-url-security
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AdvScopeURLSecurityEnabled
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: AdvScopeValidationEnabled
+      value:
+      - 'on'
 - name: AdvScopeBasicAuthUserName
   type: String
   description: Basic authentication username
   cli_alias: advanced-scope-basic-auth-username
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AdvScopeValidationEnabled
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: AdvScopeURLSecurityEnabled
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: AdvScopeURLSecurity
+      value:
+      - basic-auth
 - name: AdvScopeBasicAuthPassword
   type: String
   reference_to: PasswordAlias
   description: Basic authentication password
   cli_alias: advanced-scope-basic-auth-password-alias
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AdvScopeValidationEnabled
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: AdvScopeURLSecurityEnabled
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: AdvScopeURLSecurity
+      value:
+      - basic-auth
 - name: AdvScopeBasicAuthHeaderName
   type: String
   description: Specify the header name to use for sending encoded or non-encoded authentication
     string in the header. For example, <tt>x-basic-authorization-header</tt> .
   cli_alias: advanced-scope-basic-auth-headername
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: AdvScopeValidationEnabled
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: AdvScopeURLSecurityEnabled
+      value:
+      - 'on'
+    - evaluation: property-value-not-in-list
+      attribute: AdvScopeURLSecurity
+      value:
+      - basic-auth
 - name: AdvancedScopeCustomHeaders
   type: String
   description: Specify the custom headers to send with the advanced scope validation
     request. Use a regular expression match to include headers from the initial request.
   cli_alias: advanced-scope-request-headers
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AdvScopeValidationEnabled
+    value:
+    - 'on'
 - name: AdvancedScopeCustomContexts
   type: String
   description: Specify custom context variables to save headers from the advanced
     scope validation request. Use a regular expression to include headers from the
     advanced scope endpoint response.
   cli_alias: advanced-scope-response-contexts
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: AdvScopeValidationEnabled
+    value:
+    - 'on'
 - name: APICEnableOIDC
   type: Bool
   default: true
@@ -240,28 +479,107 @@ attributes:
     By default, OIDC token generation is enabled. OIDC is only available for implicit
     and AZ code grant types.
   cli_alias: apic-enable-oidc
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: SupportedGrantTypes
+        value:
+        - access_code
+      - evaluation: property-value-not-in-list
+        attribute: SupportedGrantTypes
+        value:
+        - implicit
 - name: APICOIDCHybridResponseTypes
   dm_type: DmOIDCHybridResponseType
   description: OIDC Hybrid Flow Response Types
   cli_alias: apic-oidc-hybrid-response-types
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-value-not-in-list
+        attribute: SupportedGrantTypes
+        value:
+        - access_code
+      - evaluation: property-value-not-in-list
+        attribute: SupportedGrantTypes
+        value:
+        - implicit
+    - evaluation: property-does-not-equal
+      attribute: APICEnableOIDC
+      value:
+      - 'on'
 - name: APICSupportPKCE
   type: Bool
   default: true
   description: Specify whether the application should enforce PKCE if provided by
     the client. For more information, see RFC 7636.
   cli_alias: apic-support-pkce
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-value-not-in-list
+      attribute: SupportedGrantTypes
+      value:
+      - access_code
 - name: APICRequirePKCE
   type: Bool
   default: false
   description: Specify whether the application must enforce PKCE. For more information,
     see RFC 7636.
   cli_alias: apic-require-pkce
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-value-not-in-list
+      attribute: SupportedGrantTypes
+      value:
+      - access_code
+    - evaluation: property-does-not-equal
+      attribute: APICSupportPKCE
+      value:
+      - 'on'
 - name: APICSupportPKCEPlain
   type: Bool
   default: false
   description: Specify whether to support the PKCE <tt>plain</tt> code challenge transform
     method. For more information, see RFC 7636.
   cli_alias: apic-support-pkce-plain
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-value-not-in-list
+      attribute: SupportedGrantTypes
+      value:
+      - access_code
+    - evaluation: property-does-not-equal
+      attribute: APICSupportPKCE
+      value:
+      - 'on'
 - name: APICTokenTypeToGenerate
   type: String
   enum:
@@ -270,69 +588,246 @@ attributes:
   default: Bearer
   description: Type of token to generate
   cli_alias: apic-token-type-to-generate
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ProviderType
+    value:
+    - native
 - name: MetadataFrom
   dm_type: DmMetadataFromType
   description: Obtain metadata from
   cli_alias: metadata-from
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ProviderType
+    value:
+    - native
 - name: MetadataURL
   type: String
   description: Specify the URL to a remote server where the custom metadata is stored.
     The value can include one or more runtime context variables in the <tt>$(variable)</tt>
     format.
   cli_alias: metadata-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-value-in-list
+      attribute: MetadataFrom
+      value:
+      - external_url
+  ignored_when:
+  - evaluation: logical-true
 - name: MetadataSSLProfile
   type: String
   reference_to: SSLClientProfile
   description: TLS profile to access metadata URL
   cli_alias: metadata-ssl-profile
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-value-not-in-list
+      attribute: MetadataFrom
+      value:
+      - external_url
 - name: MetadataHeaderForAccessToken
   type: String
   default: X-API-OAuth-Metadata-For-AccessToken
   description: Specify the response header to place in the access token. These headers
     are in the response from the authentication or metadata endpoint.
   cli_alias: mdheader-for-accesstoken
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-value-not-in-list
+      attribute: MetadataFrom
+      value:
+      - authentication_url
+      - external_url
 - name: MetadataHeaderForPayload
   type: String
   default: X-API-OAuth-Metadata-For-Payload
   description: Specify the response header to place in the response payload. These
     headers are in the response from the authentication or metadata endpoint.
   cli_alias: mdheader-for-payload
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-value-not-in-list
+      attribute: MetadataFrom
+      value:
+      - authentication_url
+      - external_url
 - name: ExternalRevocationURL
   type: String
   description: Specify an external endpoint through which the token management is
     accomplished. The value can include one or more runtime context variables in the
     <tt>$(variable)</tt> format.
   cli_alias: external-revocation-url
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-equals
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: TokenManagerType
+      value:
+      - external
+  ignored_when:
+  - evaluation: logical-true
 - name: ExternalRevocationSSLProfile
   type: String
   reference_to: SSLClientProfile
   description: External management TLS client profile
   cli_alias: external-revocation-ssl-profile
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-does-not-equal
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: TokenManagerType
+      value:
+      - external
 - name: ExternalRevocationURLSecurity
   dm_type: DmSecurityType
   default: basic-auth
   description: External management security
   cli_alias: external-revocation-url-security
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-does-not-equal
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: TokenManagerType
+      value:
+      - external
 - name: ExternalRevocationBasicAuthUserName
   type: String
   description: ''
   cli_alias: external-revocation-basic-auth-username
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-does-not-equal
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: TokenManagerType
+      value:
+      - external
+    - evaluation: property-value-not-in-list
+      attribute: ExternalRevocationURLSecurity
+      value:
+      - basic-auth
 - name: ExternalRevocationBasicAuthPassword
   type: String
   reference_to: PasswordAlias
   description: Basic authentication password
   cli_alias: external-revocation-basic-auth-password-alias
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-does-not-equal
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: TokenManagerType
+      value:
+      - external
+    - evaluation: property-value-not-in-list
+      attribute: ExternalRevocationURLSecurity
+      value:
+      - basic-auth
 - name: ExternalRevocationBasicAuthHeaderName
   type: String
   description: Specify the header name to use for sending encoded or non-encoded authentication
     string in the header. For example, <tt>x-external-basic-authorization-header</tt>
     .
   cli_alias: external-revocation-basic-auth-headername
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-does-not-equal
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: TokenManagerType
+      value:
+      - external
+    - evaluation: property-value-not-in-list
+      attribute: ExternalRevocationURLSecurity
+      value:
+      - basic-auth
 - name: ExternalRevocationCustomHeaderFormat
   type: String
   description: Specify the pattern of header names to include from the original message.
     For example, <tt>x-external-management-*</tt> .
   cli_alias: external-revocation-custom-headername-format
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-does-not-equal
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: TokenManagerType
+      value:
+      - external
 - name: ExternalRevocationCacheType
   type: String
   enum:
@@ -342,6 +837,21 @@ attributes:
   default: NoCache
   description: Cache type
   cli_alias: external-revocation-cache-type
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-does-not-equal
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: TokenManagerType
+      value:
+      - external
 - name: ExternalRevocationCacheTimeToLive
   type: Int64
   minimum: 0
@@ -350,12 +860,46 @@ attributes:
   description: Specify the validity period in seconds for external management service
     responses in the cache. The default value is 900.
   cli_alias: external-revocation-cache-ttl
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-does-not-equal
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: TokenManagerType
+      value:
+      - external
+    - evaluation: property-does-not-equal
+      attribute: ExternalRevocationCacheType
+      value:
+      - TimeToLive
 - name: ExternalRevocationFailOnError
   type: Bool
   default: true
   description: Specify whether to stop processing if connection to external management
     service fails. If failed, stops token-generation or use, and returns an error.
   cli_alias: external-revocation-fail-on-error
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - native
+    - evaluation: property-does-not-equal
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-does-not-equal
+      attribute: TokenManagerType
+      value:
+      - external
 - name: EnableTokenManagement
   type: Bool
   default: true
@@ -364,6 +908,11 @@ attributes:
     use tokens, prevent AZ code reuse, and support allow-listing through the use of
     the token manager.
   cli_alias: enable-token-management
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - third_party
 - name: TokenManagerType
   type: String
   enum:
@@ -372,23 +921,89 @@ attributes:
   default: native
   description: Token manager type
   cli_alias: token-manager-type
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableTokenManagement
+      value:
+      - 'off'
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - third_party
 - name: APISecurityTokenManager
   type: String
   reference_to: APISecurityTokenManager
   default: default
   description: API security token manager
   cli_alias: api-security-token-manager
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: TokenManagerType
+      value:
+      - native
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+  ignored_when:
+  - evaluation: logical-true
 - name: EnableApplicationRevocation
   type: Bool
   default: false
   description: Specify whether to enable revocation by application. Enabling application
     revocation allows the application to revoke consent before the token expires.
   cli_alias: apic-app-revoke-enable
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: TokenManagerType
+      value:
+      - native
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+  ignored_when:
+  - evaluation: logical-true
 - name: ApplicationRevocationEndpoint
   type: String
   default: /oauth2/revoke
   description: Application revocation endpoint
   cli_alias: apic-app-revoke-endpoint
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableApplicationRevocation
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: TokenManagerType
+      value:
+      - native
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+  ignored_when:
+  - evaluation: logical-true
 - name: EnableOwnerRevocation
   type: Bool
   default: false
@@ -396,11 +1011,49 @@ attributes:
     owner revocation allows the resource owner to revoke consent before the token
     expires.
   cli_alias: apic-owner-revoke-enable
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: TokenManagerType
+      value:
+      - native
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+  ignored_when:
+  - evaluation: logical-true
 - name: OwnerRevocationEndpoint
   type: String
   default: /oauth2/issued
   description: Resource owner revocation endpoint
   cli_alias: apic-owner-revoke-endpoint
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: EnableOwnerRevocation
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: EnableTokenManagement
+      value:
+      - 'on'
+    - evaluation: property-equals
+      attribute: TokenManagerType
+      value:
+      - native
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - native
+  ignored_when:
+  - evaluation: logical-true
 - name: TokenValidationReq
   type: String
   enum:
@@ -409,19 +1062,43 @@ attributes:
   - custom
   description: Token validation requirement
   cli_alias: token-validation-requirement
+  required_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - third_party
+  ignored_when:
+  - evaluation: logical-true
 - name: ThirdPartyAZURL
   type: String
   description: Authorization endpoint
   cli_alias: third-party-az-url
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ProviderType
+    value:
+    - third_party
 - name: ThirdPartyTokenURL
   type: String
   description: Token endpoint
   cli_alias: third-party-token-url
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ProviderType
+    value:
+    - third_party
 - name: ThirdPartyIntrospectURL
   type: String
   description: Specify the endpoint for token-introspection operation. The value can
     include one or more runtime context variables in the <tt>$(variable)</tt> format.
   cli_alias: third-party-introspect-url
+  required_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - third_party
+  ignored_when:
+  - evaluation: logical-true
 - name: ThirdPartyIntrospectCacheType
   type: String
   enum:
@@ -431,6 +1108,13 @@ attributes:
   default: NoCache
   description: Cache type
   cli_alias: third-party-introspect-cache-type
+  required_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - third_party
+  ignored_when:
+  - evaluation: logical-true
 - name: ThirdPartyIntrospectCacheTimeToLive
   type: Int64
   minimum: 0
@@ -439,38 +1123,104 @@ attributes:
   description: Specify the validity period in seconds for third-party provider responses
     in the cache. The default value is 900.
   cli_alias: third-party-introspect-cache-ttl
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: ProviderType
+      value:
+      - third_party
+    - evaluation: property-equals
+      attribute: ThirdPartyIntrospectCacheType
+      value:
+      - TimeToLive
+  ignored_when:
+  - evaluation: logical-true
 - name: ThirdPartyAuthorizationHeaderPassThru
   type: Bool
   default: false
   description: Specify whether to retain or remove the <tt>Authorization</tt> header
     for a bearer token. The default behavior is to remove this header.
   cli_alias: third-party-authorization-header-pass-thru
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - native
 - name: ThirdPartyIntrospectURLSecurity
   dm_type: DmSecurityType
   default: basic-auth
   description: Introspection endpoint security
   cli_alias: third-party-introspect-url-security
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - native
 - name: ThirdPartyIntrospectBasicAuthUserName
   type: String
   description: Basic authentication username
   cli_alias: third-party-introspect-basic-auth-username
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - third_party
+    - evaluation: property-value-not-in-list
+      attribute: ThirdPartyIntrospectURLSecurity
+      value:
+      - basic-auth
 - name: ThirdPartyIntrospectBasicAuthPassword
   type: String
   reference_to: PasswordAlias
   description: Basic authentication password
   cli_alias: third-party-introspect-basic-auth-password-alias
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - third_party
+    - evaluation: property-value-not-in-list
+      attribute: ThirdPartyIntrospectURLSecurity
+      value:
+      - basic-auth
 - name: ThirdPartyBasicAuthHeaderName
   type: String
   description: Specify the header name to send the encoded or non-encoded authentication
     string. For example, <tt>x-introspect-basic-authorization-header</tt> .
   cli_alias: third-party-introspect-basic-auth-headername
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: ProviderType
+      value:
+      - third_party
+    - evaluation: property-value-not-in-list
+      attribute: ThirdPartyIntrospectURLSecurity
+      value:
+      - basic-auth
 - name: ThirdPartyCustomHeaderNameFormat
   type: String
   description: Specify the pattern of header name to send additional information.
     For example, <tt>x-introspect-*</tt> .
   cli_alias: third-party-introspect-custom-headername-format
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: ProviderType
+    value:
+    - third_party
 - name: ThirdPartyIntrospectSSLProfile
   type: String
   reference_to: SSLClientProfile
   description: TLS client profile
   cli_alias: third-party-introspect-ssl-profile
+  ignored_when:
+  - evaluation: property-equals
+    attribute: ProviderType
+    value:
+    - native

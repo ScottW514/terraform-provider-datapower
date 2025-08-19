@@ -30,12 +30,15 @@ resource "datapower_domain_settings" "test" {
 
 ### Optional
 
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
+
 - `dependency_actions` (Attributes List) Actions to take on other resources when operations are performed on this resource. (see [below for nested schema](#nestedatt--dependency_actions))
 - `enabled` (Boolean) <p>The administrative state of the configuration.</p><ul><li>To make active, set to enabled.</li><li>To make inactive, set to disabled.</li></ul>
   - CLI Alias: `admin-state`
   - Default value: `true`
-- `passphrase` (String) Passphrase
+- `passphrase` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) Passphrase
   - CLI Alias: `passphrase`
+- `passphrase_update` (Boolean, Deprecated) Set to true by provider if the WRITE ONLY value needs to be updated, otherwise provider will force this to false.
 - `password_treatment` (String) Password treatment
   - CLI Alias: `password-treatment`
   - Choices: `none`, `masked`

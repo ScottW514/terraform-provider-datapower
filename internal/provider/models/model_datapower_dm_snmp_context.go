@@ -23,9 +23,11 @@ package models
 import (
 	"context"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	DataSourceSchema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	ResourceSchema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/scottw514/terraform-provider-datapower/internal/provider/tfutils"
 	"github.com/tidwall/gjson"
@@ -62,6 +64,9 @@ var DmSnmpContextResourceSchema = ResourceSchema.NestedAttributeObject{
 		"context": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("An SNMPv3 context that will allow access to an application domain.", "", "").String,
 			Required:            true,
+			Validators: []validator.String{
+				stringvalidator.LengthBetween(1, 32),
+			},
 		},
 		"domain": ResourceSchema.StringAttribute{
 			MarkdownDescription: tfutils.NewAttributeDescription("The local application domain whose SNMP MIB may be accessed via this context using SNMPv3.", "", "domain").String,

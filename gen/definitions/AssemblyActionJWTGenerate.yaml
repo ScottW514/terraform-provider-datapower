@@ -50,11 +50,15 @@ attributes:
     value. The default value is <tt>iss.claim</tt> . The maximum value length is 256
     characters.
   cli_alias: iss-claim
+  string_max_length: 256
+  string_min_length: 0
 - name: SubjectClaim
   type: String
   description: Specify the variable from which to retrieve the subject (sub) claim
     value. The maximum value length is 256 characters.
   cli_alias: sub-claim
+  string_max_length: 256
+  string_min_length: 0
 - name: AudienceClaim
   type: String
   description: Specify the variable from which to retrieve the audience (aud) claim
@@ -62,6 +66,8 @@ attributes:
     string, a comma-separated string of values, or an array of one or more values
     when you set the variable through GatewayScript processing.
   cli_alias: aud-claim
+  string_max_length: 256
+  string_min_length: 0
 - name: ValidityPeriod
   type: Int64
   minimum: 1
@@ -78,6 +84,8 @@ attributes:
   description: Specify the variable from which to retrieve a valid set of JSON claims.
     These claims are added to any set of claims that are specified previously.
   cli_alias: private-claims
+  string_max_length: 256
+  string_min_length: 0
 - name: SignJWK
   type: String
   description: JWK for JWT signature
@@ -106,6 +114,8 @@ attributes:
     string of values, or an array of values when you set the variable through GatewayScript
     processing.
   cli_alias: custom-kid-value-jws
+  string_max_length: 256
+  string_min_length: 0
 - name: EncryptAlgorithm
   type: String
   description: Specify the encryption algorithm to use. Use one of the following values.
@@ -143,6 +153,8 @@ attributes:
     string of values, or an array of values when you set the variable through GatewayScript
     processing.
   cli_alias: custom-kid-value-jwe
+  string_max_length: 256
+  string_min_length: 0
 - name: UserSummary
   type: String
   description: Comments

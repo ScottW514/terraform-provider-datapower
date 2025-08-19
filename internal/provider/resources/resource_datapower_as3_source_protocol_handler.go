@@ -66,7 +66,7 @@ func (r *AS3SourceProtocolHandlerResource) Schema(ctx context.Context, req resou
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -77,7 +77,7 @@ func (r *AS3SourceProtocolHandlerResource) Schema(ctx context.Context, req resou
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -273,6 +273,9 @@ func (r *AS3SourceProtocolHandlerResource) Schema(ctx context.Context, req resou
 			"unique_filename_prefix": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the prefix for file names that the FTP <tt>STOU</tt> command generates. For the prefix, the directory separator (/ character) is not allowed. The default value is an empty string, which indicates to not add a prefix. <p><b>Note:</b> Processing adds a numeric suffix.</p>", "unique-filename-prefix", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^/]*$"), "Must match :"+"^[^/]*$"),
+				},
 			},
 			"allow_rest": schema.BoolAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify whether the FTP client can use the FTP <tt>REST</tt> command after an interrupted file transfer. Restart ( <tt>REST</tt> ) is supported in the BSD stream style as described in <tt>draft-ietf-ftpext-mlst-16.txt</tt> . The MODE B style that is described in RFC 959 is not supported. The FTP server must be configured with a virtual persistent file system. <p>For written files, the server delays the processing until a timer expires or until the next FTP command other than a <tt>SIZE</tt> or <tt>REST</tt> command. With this processing, the FTP client can return and resume the transfer by using the <tt>SIZE</tt> , <tt>REST</tt> , and <tt>STOR</tt> commands. The argument to the <tt>REST</tt> command must be the same as the byte count the the <tt>SIZE</tt> command returned.</p>", "allow-restart", "").AddDefaultValue("false").String,
@@ -329,10 +332,16 @@ func (r *AS3SourceProtocolHandlerResource) Schema(ctx context.Context, req resou
 			"response_suffix": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Response suffix", "response-suffix", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^/]*$"), "Must match :"+"^[^/]*$"),
+				},
 			},
 			"response_url": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Response URL", "response-url", "").String,
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^ftp://[^/]+(/[^/]+)*$"), "Must match :"+"^ftp://[^/]+(/[^/]+)*$"),
+				},
 			},
 			"ssl_server_config_type": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the type of TLS profile type to secure connections from clients. When a TLS profile is assigned, the FTP <tt>AUTH TLS</tt> command is enabled and clients can encrypt FTP control connection.", "ssl-config-type", "").AddStringEnum("server", "sni").AddDefaultValue("server").String,

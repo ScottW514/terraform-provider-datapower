@@ -65,7 +65,7 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
@@ -76,7 +76,7 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Required:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthBetween(1, 128),
-					stringvalidator.RegexMatches(regexp.MustCompile(`^[a-zA-Z0-9_-]+$`), ""),
+					stringvalidator.RegexMatches(regexp.MustCompile("^[a-zA-Z0-9_-]+$"), "Must match :"+"^[a-zA-Z0-9_-]+$"),
 				},
 				PlanModifiers: []planmodifier.String{
 					modifiers.ImmutableAfterSet(),
@@ -93,10 +93,16 @@ func (r *WXSGridResource) Schema(ctx context.Context, req resource.SchemaRequest
 			"grid": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the name of the eXtreme Scale grid. The value cannot contain whitespace or the following characters: <tt>^ . \\ / , # $ @ : ; * ? &lt; > | = + &amp; % [ ] \" '</tt> .", "grid", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^\\\\\\^\\]./,#$@:;\"'*?<>|=+&%[\\s]+$"), "Must match :"+"^[^\\\\\\^\\]./,#$@:;\"'*?<>|=+&%[\\s]+$"),
+				},
 			},
 			"user_name": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("<p>Specify the user account of the eXtreme Scale user who connects to the eXtreme Scale collective. The value can be up to 64 characters in length and cannot be blank. You can use all alphanumeric characters and most special characters. You cannot use spaces or the following special characters: <tt># &lt;</tt> .</p><p>The user must have sufficient eXtreme Scale permissions to access the grid.</p>", "username", "").String,
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.RegexMatches(regexp.MustCompile("^[^<#\\s]{1,64}$"), "Must match :"+"^[^<#\\s]{1,64}$"),
+				},
 			},
 			"password_alias": schema.StringAttribute{
 				MarkdownDescription: tfutils.NewAttributeDescription("Specify the password alias to use to look up the password of the eXtreme Scale user who connects to the eXtreme Scale collective.", "password-alias", "password_alias").String,

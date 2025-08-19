@@ -72,6 +72,44 @@ attributes:
     with the SQL database. The password alias looks up the password for the user.
     The server maintains the password.
   cli_alias: password-alias
+  required_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Password
+      value:
+      - ''
+    - evaluation: logical-not
+      conditions:
+      - evaluation: logical-and
+        conditions:
+        - evaluation: property-equals
+          attribute: Database
+          value:
+          - DB2
+        - evaluation: property-does-not-equal
+          attribute: EncryptionMethodDB2
+          value:
+          - NoEncryption
+        - evaluation: property-does-not-equal
+          attribute: KeystoreRef
+          value:
+          - ''
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: property-equals
+      attribute: Database
+      value:
+      - DB2
+    - evaluation: property-does-not-equal
+      attribute: EncryptionMethodDB2
+      value:
+      - NoEncryption
+    - evaluation: property-does-not-equal
+      attribute: KeystoreRef
+      value:
+      - ''
 - name: DataSourceID
   type: String
   required: true
@@ -109,6 +147,11 @@ attributes:
   description: Specify the limit in KB on returned data from a <b>SELECT</b> statement.
     The default value is 128.
   cli_alias: limit-size
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: LimitReturnedData
+    value:
+    - 'on'
 - name: SQLDataSourceConfigNVPairs
   type: List
   element_type: DmSQLDataSourceConfigNVPair
@@ -134,6 +177,16 @@ attributes:
   default: SID
   description: Data source type - Oracle
   cli_alias: oracle-datasource-type
+  required_when:
+  - evaluation: property-equals
+    attribute: Database
+    value:
+    - Oracle
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Database
+    value:
+    - Oracle
 - name: ConnectTimeout
   type: Int64
   required: true
@@ -174,6 +227,11 @@ attributes:
     Db2 instance.</p><p>When enabled, you must specify the sysplex DVIPA as the data
     source host.</p>
   cli_alias: load-balancing
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Database
+    value:
+    - DB2
 - name: EncryptionMethodMSSQL
   type: String
   enum:
@@ -186,6 +244,16 @@ attributes:
     When the server does not support the specified encryption method, the connection
     fails.
   cli_alias: mssql-encryption-method
+  required_when:
+  - evaluation: property-equals
+    attribute: Database
+    value:
+    - MSSQLServer
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Database
+    value:
+    - MSSQLServer
 - name: EncryptionMethodOracle
   type: String
   enum:
@@ -196,6 +264,16 @@ attributes:
     server does not support the specified encryption method, the connection fails.
     The default behavior is to not encrypt or decrypt data.
   cli_alias: oracle-encryption-method
+  required_when:
+  - evaluation: property-equals
+    attribute: Database
+    value:
+    - Oracle
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Database
+    value:
+    - Oracle
 - name: EncryptionMethodDB2
   type: String
   enum:
@@ -206,11 +284,87 @@ attributes:
     server does not support the specified encryption method, the connection fails.
     The default behavior is to not encrypt or decrypt data.
   cli_alias: db2-encryption-method
+  required_when:
+  - evaluation: property-equals
+    attribute: Database
+    value:
+    - DB2
+  ignored_when:
+  - evaluation: property-does-not-equal
+    attribute: Database
+    value:
+    - DB2
 - name: TruststoreRef
   type: String
   reference_to: CryptoValCred
   description: Truststore
   cli_alias: truststore
+  required_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Database
+        value:
+        - Oracle
+      - evaluation: property-does-not-equal
+        attribute: EncryptionMethodOracle
+        value:
+        - NoEncryption
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Database
+        value:
+        - MSSQLServer
+      - evaluation: property-does-not-equal
+        attribute: EncryptionMethodMSSQL
+        value:
+        - NoEncryption
+    - evaluation: logical-and
+      conditions:
+      - evaluation: property-equals
+        attribute: Database
+        value:
+        - DB2
+      - evaluation: property-does-not-equal
+        attribute: EncryptionMethodDB2
+        value:
+        - NoEncryption
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - Oracle
+      - evaluation: property-equals
+        attribute: EncryptionMethodOracle
+        value:
+        - NoEncryption
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - MSSQLServer
+      - evaluation: property-equals
+        attribute: EncryptionMethodMSSQL
+        value:
+        - NoEncryption
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - DB2
+      - evaluation: property-equals
+        attribute: EncryptionMethodDB2
+        value:
+        - NoEncryption
 - name: ValidateServerCertificate
   type: String
   enum:
@@ -219,12 +373,68 @@ attributes:
   default: Enabled
   description: Validate server certificate
   cli_alias: validate-server-certificate
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - Oracle
+      - evaluation: property-equals
+        attribute: EncryptionMethodOracle
+        value:
+        - NoEncryption
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - MSSQLServer
+      - evaluation: property-equals
+        attribute: EncryptionMethodMSSQL
+        value:
+        - NoEncryption
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - DB2
+      - evaluation: property-equals
+        attribute: EncryptionMethodDB2
+        value:
+        - NoEncryption
 - name: HostNameInCertificate
   type: String
   description: Specify the hostname that the certificate must contain for hostname
     validation. Hostname validation provides extra security against man-in-the-middle
     (MITM) attacks by ensuring that the connection is to the requested server.
   cli_alias: hostname-in-certificate
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - Oracle
+      - evaluation: property-equals
+        attribute: EncryptionMethodOracle
+        value:
+        - NoEncryption
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - MSSQLServer
+      - evaluation: property-equals
+        attribute: EncryptionMethodMSSQL
+        value:
+        - NoEncryption
 - name: ValidateHostName
   type: Bool
   default: true
@@ -233,8 +443,52 @@ attributes:
     Hostname validation provides extra security against man-in-the-middle (MITM) attacks
     by ensuring that the connection is to the requested server.
   cli_alias: validate-host-name
+  ignored_when:
+  - evaluation: logical-or
+    conditions:
+    - evaluation: property-does-not-equal
+      attribute: Database
+      value:
+      - DB2
+    - evaluation: property-equals
+      attribute: EncryptionMethodDB2
+      value:
+      - NoEncryption
 - name: KeystoreRef
   type: String
   reference_to: CryptoIdentCred
   description: Keystore
   cli_alias: keystore
+  ignored_when:
+  - evaluation: logical-and
+    conditions:
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - Oracle
+      - evaluation: property-equals
+        attribute: EncryptionMethodOracle
+        value:
+        - NoEncryption
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - MSSQLServer
+      - evaluation: property-equals
+        attribute: EncryptionMethodMSSQL
+        value:
+        - NoEncryption
+    - evaluation: logical-or
+      conditions:
+      - evaluation: property-does-not-equal
+        attribute: Database
+        value:
+        - DB2
+      - evaluation: property-equals
+        attribute: EncryptionMethodDB2
+        value:
+        - NoEncryption
